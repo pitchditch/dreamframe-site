@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -6,7 +5,7 @@ import ServiceCard from '../components/ServiceCard';
 import TestimonialCard from '../components/TestimonialCard';
 import ProcessStep from '../components/ProcessStep';
 import CallToAction from '../components/CallToAction';
-import { ArrowRight, Droplets, Home, PencilRuler, Clipboard, Shower } from 'lucide-react';
+import { ArrowRight, Droplets, Home, PencilRuler, Clipboard, DropletIcon } from 'lucide-react';
 
 const Index = () => {
   useEffect(() => {
@@ -98,7 +97,7 @@ const Index = () => {
             </div>
             <div className="animate-on-scroll">
               <ServiceCard
-                icon={<Shower size={24} />}
+                icon={<DropletIcon size={24} />}
                 title="House Washing"
                 description="Safe, low-pressure house washing that removes dirt, algae, and mildew without damaging your home's exterior."
                 link="/services/house-washing"
@@ -324,7 +323,7 @@ const Index = () => {
                 number={3}
                 title="Professional Cleaning"
                 description="Our trained technicians use advanced equipment and eco-friendly solutions to clean your property."
-                icon={<Shower size={48} />}
+                icon={<DropletIcon size={48} />}
               />
             </div>
             <div className="animate-on-scroll">

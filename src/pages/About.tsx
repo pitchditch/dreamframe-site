@@ -1,7 +1,6 @@
-
 import Layout from '../components/Layout';
 import CallToAction from '../components/CallToAction';
-import { Shield, Award, Tool, Users } from 'lucide-react';
+import { Shield, Award, Wrench, Users } from 'lucide-react';
 
 const About = () => {
   return (
@@ -71,7 +70,7 @@ const About = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-bc-red mb-4 mx-auto">
-                <Tool size={32} />
+                <Wrench size={32} />
               </div>
               <h3 className="text-xl font-semibold text-center mb-3">Premium Equipment</h3>
               <p className="text-gray-600 text-center">
