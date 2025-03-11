@@ -1,0 +1,39 @@
+
+import { Link } from 'react-router-dom';
+
+interface CallToActionProps {
+  title?: string;
+  subtitle?: string;
+  primaryButtonText?: string;
+  secondaryButtonText?: string;
+  primaryButtonLink?: string;
+  secondaryButtonLink?: string;
+}
+
+const CallToAction = ({
+  title = "Ready to Transform Your Property?",
+  subtitle = "Contact us today to schedule a service or request a free, no-obligation quote.",
+  primaryButtonText = "Get a Free Quote",
+  secondaryButtonText = "Contact Us",
+  primaryButtonLink = "/contact",
+  secondaryButtonLink = "/contact"
+}: CallToActionProps) => {
+  return (
+    <section className="cta-section">
+      <div className="container mx-auto px-4 max-w-4xl text-center">
+        <h2 className="text-3xl font-bold mb-4">{title}</h2>
+        <p className="text-gray-300 mb-8">{subtitle}</p>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Link to={primaryButtonLink}>
+            <button className="btn-primary w-full sm:w-auto">{primaryButtonText}</button>
+          </Link>
+          <Link to={secondaryButtonLink}>
+            <button className="btn-secondary w-full sm:w-auto">{secondaryButtonText}</button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CallToAction;
