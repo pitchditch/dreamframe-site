@@ -5,6 +5,7 @@ import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const GutterCleaning = () => {
   const benefits = [
@@ -185,11 +186,26 @@ const GutterCleaning = () => {
             </ul>
           </div>
           <div className="image-content">
-            <img 
-              src="/lovable-uploads/1c34be5d-1b8e-4e6b-b9c9-aab9c1c6b86a.png" 
-              alt="Gutter guard installation" 
-              className="rounded-lg shadow-lg w-full h-auto"
-            />
+            <Tabs defaultValue="product" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="product">Product</TabsTrigger>
+                <TabsTrigger value="installation">Installation</TabsTrigger>
+              </TabsList>
+              <TabsContent value="product" className="mt-6">
+                <img 
+                  src="/lovable-uploads/1c34be5d-1b8e-4e6b-b9c9-aab9c1c6b86a.png" 
+                  alt="Gutter guard product" 
+                  className="rounded-lg shadow-lg w-full h-auto"
+                />
+              </TabsContent>
+              <TabsContent value="installation" className="mt-6">
+                <img 
+                  src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" 
+                  alt="Gutter guard installation" 
+                  className="rounded-lg shadow-lg w-full h-auto"
+                />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </section>
