@@ -1,0 +1,55 @@
+
+import { Link, useLocation } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
+
+interface ServicesDropdownProps {
+  isOverVideo: boolean;
+  isServicesMenuOpen: boolean;
+  setIsServicesMenuOpen: (isOpen: boolean) => void;
+}
+
+export const ServicesDropdown = ({ 
+  isOverVideo, 
+  isServicesMenuOpen, 
+  setIsServicesMenuOpen 
+}: ServicesDropdownProps) => {
+  const location = useLocation();
+  const isActive = location.pathname === '/services' || location.pathname.includes('/services/');
+
+  return (
+    <div className="relative group">
+      <button 
+        className={`flex items-center transition-colors ${
+          isOverVideo 
+          ? 'text-white hover:text-gray-200' 
+          : `text-gray-700 hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
+        }`}
+        onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
+        onMouseEnter={() => setIsServicesMenuOpen(true)}
+        onMouseLeave={() => setIsServicesMenuOpen(false)}
+      >
+        Services <ChevronDown className="ml-1 h-4 w-4" />
+      </button>
+
+      <div 
+        className={`service-menu absolute z-10 left-0 mt-2 w-64 bg-white shadow-lg rounded-md overflow-hidden ${
+          isServicesMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+        }`}
+        onMouseEnter={() => setIsServicesMenuOpen(true)}
+        onMouseLeave={() => setIsServicesMenuOpen(false)}
+      >
+        <div className="py-2">
+          <div className="px-4 py-2 text-sm font-medium text-gray-500">Residential</div>
+          <Link to="/services/window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Window Cleaning</Link>
+          <Link to="/services/gutter-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gutter Cleaning</Link>
+          <Link to="/services/house-washing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">House Washing</Link>
+          <Link to="/services/roof-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Roof Cleaning</Link>
+          
+          <div className="px-4 py-2 text-sm font-medium text-gray-500 mt-2">Commercial</div>
+          <Link to="/services/commercial-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Commercial Window Cleaning</Link>
+          <Link to="/services/parking-lot-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Parking Lot Cleaning</Link>
+        </div>
+      </div>
+    </div>
+  );
+};
