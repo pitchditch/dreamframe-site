@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -6,61 +5,41 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
 const GutterCleaning = () => {
-  const benefits = [
-    {
-      title: "Prevent Water Damage",
-      description: "Clean gutters properly channel water away from your home, preventing costly water damage to foundations, walls, and landscaping."
-    },
-    {
-      title: "Eliminate Pest Breeding Grounds",
-      description: "Remove debris that can become a breeding ground for mosquitoes, birds, and other pests that can damage your home."
-    },
-    {
-      title: "Extend Gutter Lifespan",
-      description: "Regular cleaning prevents rust and corrosion, extending the life of your gutter system and saving you money on replacements."
-    },
-    {
-      title: "Protect Roof and Fascia",
-      description: "Prevent water backup that can damage roof shingles, fascia boards, and cause interior leaks during heavy rainfall."
-    },
-    {
-      title: "Maintain Home Value",
-      description: "Well-maintained gutters contribute to your home's curb appeal and help preserve its market value over time."
-    },
-    {
-      title: "Prevent Basement Flooding",
-      description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
-    }
-  ];
-
-  const processes = [
-    {
-      title: "Debris Removal",
-      description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
-      icon: <Leaf size={32} />
-    },
-    {
-      title: "Gutter Flushing",
-      description: "After removing debris, we thoroughly flush your gutters with water to clear any remaining particles and check for proper drainage.",
-      icon: <Droplets size={32} />
-    },
-    {
-      title: "Downspout Inspection",
-      description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
-      icon: <PieChart size={32} />
-    }
-  ];
-
-  return (
-    <Layout>
-      <ServiceHeader
-        title="Gutter Cleaning"
-        description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value."
-        icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/ac700f26-0c3f-4bb6-9297-862295529d82.png"
-      />
+  const benefits = [{
+    title: "Prevent Water Damage",
+    description: "Clean gutters properly channel water away from your home, preventing costly water damage to foundations, walls, and landscaping."
+  }, {
+    title: "Eliminate Pest Breeding Grounds",
+    description: "Remove debris that can become a breeding ground for mosquitoes, birds, and other pests that can damage your home."
+  }, {
+    title: "Extend Gutter Lifespan",
+    description: "Regular cleaning prevents rust and corrosion, extending the life of your gutter system and saving you money on replacements."
+  }, {
+    title: "Protect Roof and Fascia",
+    description: "Prevent water backup that can damage roof shingles, fascia boards, and cause interior leaks during heavy rainfall."
+  }, {
+    title: "Maintain Home Value",
+    description: "Well-maintained gutters contribute to your home's curb appeal and help preserve its market value over time."
+  }, {
+    title: "Prevent Basement Flooding",
+    description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
+  }];
+  const processes = [{
+    title: "Debris Removal",
+    description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
+    icon: <Leaf size={32} />
+  }, {
+    title: "Gutter Flushing",
+    description: "After removing debris, we thoroughly flush your gutters with water to clear any remaining particles and check for proper drainage.",
+    icon: <Droplets size={32} />
+  }, {
+    title: "Downspout Inspection",
+    description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
+    icon: <PieChart size={32} />
+  }];
+  return <Layout>
+      <ServiceHeader title="Gutter Cleaning" description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." icon={<Droplets size={48} />} imagePath="/lovable-uploads/ac700f26-0c3f-4bb6-9297-862295529d82.png" />
 
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -88,11 +67,7 @@ const GutterCleaning = () => {
             </div>
           </div>
           <div className="md:w-1/2">
-            <img 
-              src="/lovable-uploads/8653dcd3-bfeb-430f-91a6-5828fe7eee54.png" 
-              alt="Gutter cleaning service" 
-              className="rounded-lg shadow-lg w-full h-auto"
-            />
+            <img alt="Gutter cleaning service" className="rounded-lg shadow-lg w-full h-auto" src="/lovable-uploads/42b7ee79-c183-4e96-bba0-a83510258d54.jpg" />
           </div>
         </div>
       </section>
@@ -122,46 +97,22 @@ const GutterCleaning = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png" 
-              alt="Before and after gutter cleaning" 
-              className="w-full h-auto"
-            />
+            <img src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="/lovable-uploads/a5671627-3791-4cbe-8df1-e571b18508d5.png" 
-              alt="Before and after gutter cleaning" 
-              className="w-full h-auto"
-            />
+            <img src="/lovable-uploads/a5671627-3791-4cbe-8df1-e571b18508d5.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" 
-              alt="Before and after gutter cleaning" 
-              className="w-full h-auto"
-            />
+            <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="/lovable-uploads/8e7a598a-83f9-4c2b-bfaa-21091b96ffcf.png" 
-              alt="Before and after gutter cleaning" 
-              className="w-full h-auto"
-            />
+            <img src="/lovable-uploads/8e7a598a-83f9-4c2b-bfaa-21091b96ffcf.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png" 
-              alt="Before and after gutter cleaning" 
-              className="w-full h-auto"
-            />
+            <img src="/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png" 
-              alt="Before and after gutter cleaning" 
-              className="w-full h-auto"
-            />
+            <img src="/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
         </div>
       </section>
@@ -192,18 +143,10 @@ const GutterCleaning = () => {
                 <TabsTrigger value="installation">Installation</TabsTrigger>
               </TabsList>
               <TabsContent value="product" className="mt-6">
-                <img 
-                  src="/lovable-uploads/1c34be5d-1b8e-4e6b-b9c9-aab9c1c6b86a.png" 
-                  alt="Gutter guard product" 
-                  className="rounded-lg shadow-lg w-full h-auto"
-                />
+                <img src="/lovable-uploads/1c34be5d-1b8e-4e6b-b9c9-aab9c1c6b86a.png" alt="Gutter guard product" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
               <TabsContent value="installation" className="mt-6">
-                <img 
-                  src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" 
-                  alt="Gutter guard installation" 
-                  className="rounded-lg shadow-lg w-full h-auto"
-                />
+                <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
             </Tabs>
           </div>
@@ -211,8 +154,6 @@ const GutterCleaning = () => {
       </section>
 
       <CallToAction />
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default GutterCleaning;
