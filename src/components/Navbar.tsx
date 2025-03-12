@@ -7,20 +7,31 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isOverVideo, setIsOverVideo] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 60) {
         setIsScrolled(true);
+        setIsOverVideo(false);
       } else {
         setIsScrolled(false);
+        setIsOverVideo(document.body.classList.contains('has-video-header'));
       }
     };
+
+    // Initialize on mount
+    setIsOverVideo(document.body.classList.contains('has-video-header') && window.scrollY <= 60);
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Check for video header when route changes
+  useEffect(() => {
+    setIsOverVideo(document.body.classList.contains('has-video-header') && window.scrollY <= 60);
+  }, [location.pathname]);
 
   // Close mobile menu when navigation occurs
   useEffect(() => {
@@ -35,27 +46,39 @@ const Navbar = () => {
   return (
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white py-4'
+        isOverVideo 
+        ? 'bg-transparent' 
+        : isScrolled 
+          ? 'bg-white shadow-md py-2' 
+          : 'bg-white py-4'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2">
+        <Link to="/" className={`flex items-center space-x-2 ${isOverVideo ? 'text-white' : ''}`}>
           <span className="text-2xl font-bold text-bc-red">BC</span>
-          <span className="text-lg font-medium">Pressure Washing</span>
+          <span className={`text-lg font-medium ${isOverVideo ? 'text-white' : ''}`}>Pressure Washing</span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <Link 
             to="/" 
-            className={`text-gray-700 hover:text-bc-red transition-colors ${isActive('/') ? 'font-medium text-bc-red' : ''}`}
+            className={`transition-colors ${
+              isOverVideo 
+              ? 'text-white hover:text-gray-200' 
+              : `text-gray-700 hover:text-bc-red ${isActive('/') ? 'font-medium text-bc-red' : ''}`
+            }`}
           >
             Home
           </Link>
           <div className="relative group">
             <button 
-              className={`flex items-center text-gray-700 hover:text-bc-red transition-colors ${
-                isActive('/services') || location.pathname.includes('/services/') ? 'font-medium text-bc-red' : ''
+              className={`flex items-center transition-colors ${
+                isOverVideo 
+                ? 'text-white hover:text-gray-200' 
+                : `text-gray-700 hover:text-bc-red ${
+                  isActive('/services') || location.pathname.includes('/services/') ? 'font-medium text-bc-red' : ''
+                }`
               }`}
               onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
               onMouseEnter={() => setIsServicesMenuOpen(true)}
@@ -86,19 +109,31 @@ const Navbar = () => {
           </div>
           <Link 
             to="/about" 
-            className={`text-gray-700 hover:text-bc-red transition-colors ${isActive('/about') ? 'font-medium text-bc-red' : ''}`}
+            className={`transition-colors ${
+              isOverVideo 
+              ? 'text-white hover:text-gray-200' 
+              : `text-gray-700 hover:text-bc-red ${isActive('/about') ? 'font-medium text-bc-red' : ''}`
+            }`}
           >
             About
           </Link>
           <Link 
             to="/testimonials" 
-            className={`text-gray-700 hover:text-bc-red transition-colors ${isActive('/testimonials') ? 'font-medium text-bc-red' : ''}`}
+            className={`transition-colors ${
+              isOverVideo 
+              ? 'text-white hover:text-gray-200' 
+              : `text-gray-700 hover:text-bc-red ${isActive('/testimonials') ? 'font-medium text-bc-red' : ''}`
+            }`}
           >
             Testimonials
           </Link>
           <Link 
             to="/contact" 
-            className={`text-gray-700 hover:text-bc-red transition-colors ${isActive('/contact') ? 'font-medium text-bc-red' : ''}`}
+            className={`transition-colors ${
+              isOverVideo 
+              ? 'text-white hover:text-gray-200' 
+              : `text-gray-700 hover:text-bc-red ${isActive('/contact') ? 'font-medium text-bc-red' : ''}`
+            }`}
           >
             Contact
           </Link>
@@ -111,7 +146,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           type="button"
-          className="md:hidden text-gray-700 hover:text-bc-red"
+          className={`md:hidden ${isOverVideo ? 'text-white' : 'text-gray-700'} hover:text-bc-red`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -1,5 +1,5 @@
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 interface ServiceHeaderProps {
   title: string;
@@ -10,13 +10,22 @@ interface ServiceHeaderProps {
 }
 
 const ServiceHeader = ({ title, description, icon, imagePath, videoUrl }: ServiceHeaderProps) => {
+  useEffect(() => {
+    if (videoUrl) {
+      document.body.classList.add('has-video-header');
+      return () => {
+        document.body.classList.remove('has-video-header');
+      };
+    }
+  }, [videoUrl]);
+
   return (
     <div className="relative bg-black text-white mb-16">
       {videoUrl ? (
         <div className="relative pt-[56.25%] w-full">
           <iframe 
             className="absolute inset-0 w-full h-full"
-            src={videoUrl.replace('watch?v=', 'embed/')}
+            src={`${videoUrl.replace('watch?v=', 'embed/')}?autoplay=1&mute=1&loop=1&playlist=${videoUrl.split('v=')[1]}`}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
