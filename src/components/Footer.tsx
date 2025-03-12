@@ -135,6 +135,16 @@ const Footer = () => {
           </div>
         </div>
 
+        {isHomepage && (
+          <div className="flex justify-center my-8">
+            <img 
+              src="/lovable-uploads/88568a41-b608-4e38-a985-4a4a03c6ab89.png" 
+              alt="BC Pressure Washing Team Members" 
+              className="w-64 md:w-80 h-auto rounded-lg shadow-lg" 
+            />
+          </div>
+        )}
+
         <hr className="border-gray-800 my-8" />
         
         <div className="text-center text-gray-500 text-sm">
