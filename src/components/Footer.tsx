@@ -1,10 +1,24 @@
 
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const Footer = () => {
+  const location = useLocation();
+  const isHomepage = location.pathname === '/';
+
   return (
-    <footer className="bg-black text-white pt-16 pb-8">
+    <footer className="bg-black text-white pt-16 pb-8 relative">
+      {isHomepage && (
+        <div className="absolute -top-16 right-4 lg:right-16 z-10 w-64 md:w-80 h-auto">
+          <img 
+            src="/lovable-uploads/88568a41-b608-4e38-a985-4a4a03c6ab89.png" 
+            alt="BC Pressure Washing Team Members" 
+            className="w-full h-auto rounded-lg shadow-lg" 
+          />
+        </div>
+      )}
+      
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {/* Company Info */}
