@@ -14,6 +14,7 @@ interface Testimonial {
   quote: string;
   name: string;
   location: string;
+  beforeAfterImage?: string;
 }
 
 const Testimonials = () => {
@@ -27,7 +28,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I was really impressed with this service! They came out and cleaned my gutters so quickly. We've had some heavy rain, and everything is draining properly now. Super professional and thorough. I'll definitely use them again next season!",
       name: "James Wilson",
-      location: "Langley, BC"
+      location: "Langley, BC",
+      beforeAfterImage: "/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png"
     },
     {
       id: 2,
@@ -59,7 +61,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "Had my gutters cleaned today, and I couldn't be happier with the service. They showed up on time, cleaned everything thoroughly, and even pointed out some things I should keep an eye on. Very professional!",
       name: "David Miller",
-      location: "Coquitlam, BC"
+      location: "Coquitlam, BC",
+      beforeAfterImage: "/lovable-uploads/a5671627-3791-4cbe-8df1-e571b18508d5.png"
     },
     {
       id: 6,
@@ -91,7 +94,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "Great service! My gutters were overflowing, and these guys came in and cleaned them out quickly. They also took care of the mess and left everything spotless. Highly recommend!",
       name: "Thomas Clark",
-      location: "Delta, BC"
+      location: "Delta, BC",
+      beforeAfterImage: "/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png"
     },
     {
       id: 10,
@@ -123,7 +127,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I'm so relieved to have my gutters cleaned before the rain hits! The team showed up right on time, cleaned everything efficiently, and didn't leave a mess. Very happy with the service!",
       name: "Jason Brown",
-      location: "Langley, BC"
+      location: "Langley, BC",
+      beforeAfterImage: "/lovable-uploads/8e7a598a-83f9-4c2b-bfaa-21091b96ffcf.png"
     },
     {
       id: 14,
@@ -155,7 +160,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "These guys were awesome. I called them when I noticed my gutters were clogged, and they came out right away. They did a great job cleaning everything and even gave me tips on keeping them clear. Will definitely use them again!",
       name: "Peter Harris",
-      location: "Coquitlam, BC"
+      location: "Coquitlam, BC",
+      beforeAfterImage: "/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png"
     },
     {
       id: 18,
@@ -193,7 +199,7 @@ const Testimonials = () => {
       <div className="relative bg-black text-white mb-16">
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40"
-          style={{ backgroundImage: `url('/images/testimonials-hero.jpg')` }}
+          style={{ backgroundImage: `url('/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png')` }}
         />
         <div className="relative container mx-auto px-4 py-24 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">What Our Customers Say</h1>
@@ -265,25 +271,34 @@ const Testimonials = () => {
               name={testimonial.name}
               location={testimonial.location}
               rating={testimonial.rating}
+              beforeAfterImage={testimonial.beforeAfterImage}
             />
           ))}
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="cta-section mb-16">
-        <div className="container mx-auto px-4 py-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Experience Our Quality Service?</h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
-            Join our satisfied customers and see the difference our professional services can make for your home.
-          </p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Button asChild className="bg-bc-red hover:bg-red-700 text-white px-6 py-6 h-auto text-lg">
-              <a href="/contact">Get a Free Quote</a>
-            </Button>
-            <Button asChild variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 px-6 py-6 h-auto text-lg">
-              <a href="/services">Explore Our Services</a>
-            </Button>
+      <div className="cta-section bg-bc-black mb-16">
+        <div 
+          className="relative bg-cover bg-center py-16"
+          style={{ 
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/lovable-uploads/1a1f8b2e-bcc7-4d88-ae7c-ed4024c70ae4.png')`,
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="container mx-auto px-4 py-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Ready to Experience Our Quality Service?</h2>
+            <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
+              Join our satisfied customers and see the difference our professional services can make for your home.
+            </p>
+            <div className="flex justify-center gap-4 flex-wrap">
+              <Button asChild className="bg-bc-red hover:bg-red-700 text-white px-6 py-6 h-auto text-lg">
+                <a href="/contact">Get a Free Quote</a>
+              </Button>
+              <Button asChild variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 px-6 py-6 h-auto text-lg">
+                <a href="/services">Explore Our Services</a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

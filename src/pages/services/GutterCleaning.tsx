@@ -58,7 +58,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning"
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value."
         icon={<Droplets size={48} />}
-        imagePath="https://images.unsplash.com/photo-1520971081497-36b2c9974e8e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
+        imagePath="/lovable-uploads/ac700f26-0c3f-4bb6-9297-862295529d82.png"
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -88,7 +88,7 @@ const GutterCleaning = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="https://images.unsplash.com/photo-1605893477799-b99e3b8b93fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+              src="/lovable-uploads/8653dcd3-bfeb-430f-91a6-5828fe7eee54.png" 
               alt="Gutter cleaning service" 
               className="rounded-lg shadow-lg w-full h-auto"
             />
@@ -112,6 +112,86 @@ const GutterCleaning = () => {
           We follow a thorough process to ensure your gutters are completely clean and functional
         </p>
         <ServiceProcess processes={processes} />
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="section-title">Before & After Results</h2>
+        <p className="section-subtitle mb-12">
+          See the difference our professional gutter cleaning services can make
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png" 
+              alt="Before and after gutter cleaning" 
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/lovable-uploads/a5671627-3791-4cbe-8df1-e571b18508d5.png" 
+              alt="Before and after gutter cleaning" 
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" 
+              alt="Before and after gutter cleaning" 
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/lovable-uploads/8e7a598a-83f9-4c2b-bfaa-21091b96ffcf.png" 
+              alt="Before and after gutter cleaning" 
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png" 
+              alt="Before and after gutter cleaning" 
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
+            <img 
+              src="/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png" 
+              alt="Before and after gutter cleaning" 
+              className="w-full h-auto"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="section-title">Gutter Protection Solutions</h2>
+        <p className="section-subtitle mb-12">
+          Ask about our gutter protection systems to keep debris out while letting water flow
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="text-content">
+            <h3 className="text-2xl font-bold mb-4">Gutter Guards & Protectors</h3>
+            <p className="text-gray-600 mb-6">
+              We offer high-quality gutter protection systems that prevent leaves, twigs, and debris from entering your gutters while still allowing water to flow through. These systems can dramatically reduce the frequency of gutter cleanings and protect your home from water damage.
+            </p>
+            <ul className="list-disc list-inside space-y-2 mb-6">
+              <li>Keeps debris out while letting water flow in</li>
+              <li>Reduces the need for frequent gutter cleaning</li>
+              <li>Prevents rust and corrosion of gutter systems</li>
+              <li>Extends the lifespan of your gutters</li>
+              <li>Prevents pests from nesting in your gutters</li>
+            </ul>
+          </div>
+          <div className="image-content">
+            <img 
+              src="/lovable-uploads/1c34be5d-1b8e-4e6b-b9c9-aab9c1c6b86a.png" 
+              alt="Gutter guard installation" 
+              className="rounded-lg shadow-lg w-full h-auto"
+            />
+          </div>
+        </div>
       </section>
 
       <CallToAction />

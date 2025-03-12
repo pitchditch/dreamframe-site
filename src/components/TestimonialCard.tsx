@@ -7,11 +7,21 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   avatar?: string;
+  beforeAfterImage?: string;
 }
 
-const TestimonialCard = ({ quote, name, location, rating = 5, avatar }: TestimonialCardProps) => {
+const TestimonialCard = ({ quote, name, location, rating = 5, avatar, beforeAfterImage }: TestimonialCardProps) => {
   return (
-    <div className="testimonial-card hover:shadow-lg transition-all">
+    <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
+      {beforeAfterImage && (
+        <div className="mb-6 overflow-hidden rounded-md">
+          <img 
+            src={beforeAfterImage} 
+            alt="Before and after gutter cleaning" 
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      )}
       <div className="flex mb-4">
         <div className="text-4xl font-serif text-red-200 mr-2">❝</div>
       </div>
