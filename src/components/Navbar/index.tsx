@@ -10,7 +10,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOverVideo, setIsOverVideo] = useState(false);
+  const [isOverVideo, setIsOverVideo] = useState(true); // Set default to true for immediate transparency
   const location = useLocation();
 
   useEffect(() => {
@@ -24,16 +24,18 @@ const Navbar = () => {
       }
     };
 
-    // Initialize on mount
-    setIsOverVideo(document.body.classList.contains('has-video-header') && window.scrollY <= 60);
+    // Initialize on mount - set to transparent by default on homepage
+    const isHomepage = location.pathname === '/';
+    setIsOverVideo(isHomepage || document.body.classList.contains('has-video-header'));
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   // Check for video header when route changes
   useEffect(() => {
-    setIsOverVideo(document.body.classList.contains('has-video-header') && window.scrollY <= 60);
+    const isHomepage = location.pathname === '/';
+    setIsOverVideo(isHomepage || document.body.classList.contains('has-video-header') && window.scrollY <= 60);
   }, [location.pathname]);
 
   // Close mobile menu when navigation occurs

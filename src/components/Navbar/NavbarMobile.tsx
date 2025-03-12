@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -13,20 +14,22 @@ export const NavbarMobile = ({
   isServicesMenuOpen,
   setIsServicesMenuOpen
 }: NavbarMobileProps) => {
-  // useLocation is now used in the parent component
-  const isActive = (path: string) => {
-    // This will be handled by the parent component
-    return false;
-  };
+  const location = useLocation();
+  const isHomepage = location.pathname === '/';
+  const isActive = (path: string) => location.pathname === path;
   
   return (
     isMenuOpen && (
-      <div className="md:hidden bg-white shadow-lg animate-slide-down">
+      <div className={`md:hidden ${isHomepage && !document.body.classList.contains('scrolled') ? 'bg-black/70 backdrop-blur-md' : 'bg-white'} shadow-lg animate-slide-down`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           <Link 
             to="/" 
             className={`block px-3 py-2 rounded-md ${
-              isActive('/') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100'
+              isActive('/') 
+                ? 'bg-bc-red text-white' 
+                : isHomepage && !document.body.classList.contains('scrolled')
+                  ? 'text-white hover:bg-white/10'
+                  : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             Home
