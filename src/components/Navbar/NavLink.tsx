@@ -16,7 +16,7 @@ export const NavLink = ({ to, isOverVideo, children }: NavLinkProps) => {
       to={to} 
       className={`transition-colors ${
         isOverVideo 
-        ? 'text-white hover:text-gray-200' 
+        ? 'text-white hover:text-gray-200 text-shadow-sm' 
         : `text-gray-700 hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
       }`}
     >

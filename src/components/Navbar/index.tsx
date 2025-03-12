@@ -48,7 +48,7 @@ const Navbar = () => {
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
         isOverVideo 
-        ? 'bg-transparent' 
+        ? 'bg-transparent backdrop-blur-sm' 
         : isScrolled 
           ? 'bg-white shadow-md py-2' 
           : 'bg-white py-4'

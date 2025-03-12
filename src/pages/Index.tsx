@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -9,6 +10,9 @@ import { ArrowRight, Droplets, Home, PencilRuler, Clipboard, DropletIcon } from 
 
 const Index = () => {
   useEffect(() => {
+    // Mark body to have video header (for navbar transparency)
+    document.body.classList.add('has-video-header');
+
     // Animation for elements when they enter viewport
     const observerOptions = {
       root: null,
@@ -29,26 +33,35 @@ const Index = () => {
     animatedElements.forEach(el => observer.observe(el));
 
     return () => {
+      // Clean up
+      document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, []);
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="hero-section relative h-[90vh] flex items-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1433086966358-54859d0ed716')" }}>
-        <div className="hero-overlay"></div>
+      {/* Hero Section with new background image */}
+      <section 
+        className="hero-section relative h-[90vh] flex items-center" 
+        style={{ 
+          backgroundImage: "url('/lovable-uploads/d3e9158d-b4a3-42c1-b2de-803c9651efd1.png')",
+          backgroundPosition: "center",
+          backgroundSize: "cover"
+        }}
+      >
+        <div className="hero-overlay bg-black/40"></div>
         <div className="container mx-auto px-4 relative z-10 text-white">
           <div className="max-w-3xl">
-            <div className="badge-pill animate-on-scroll mb-4">
+            <div className="badge-pill animate-on-scroll mb-4 bg-red-50/80 backdrop-blur-sm">
               Professional Pressure Washing Services
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-on-scroll">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow">
               The Ultimate Cleaning
               <span className="text-bc-red block"> Solution </span>
               for Your Property
             </h1>
-            <p className="text-lg md:text-xl mb-8 animate-on-scroll">
+            <p className="text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm">
               We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">
@@ -58,7 +71,7 @@ const Index = () => {
                 </button>
               </Link>
               <Link to="/services">
-                <button className="btn-secondary">
+                <button className="btn-secondary bg-white/80 backdrop-blur-sm hover:bg-white">
                   Explore Our Services
                 </button>
               </Link>

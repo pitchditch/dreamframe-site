@@ -85,6 +85,14 @@
 }
 
 @layer components {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  
+  .text-shadow-sm {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  }
+
   .badge-pill {
     @apply inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-red-50 text-bc-red;
   }
@@ -166,7 +174,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
 }
 
 .checkmark-list li {
@@ -178,4 +186,10 @@
 .checkmark-list li svg {
   margin-right: 0.5rem;
   flex-shrink: 0;
+}
+
+/* Transparent navbar over hero image */
+.has-video-header .navbar-transparent {
+  background-color: transparent;
+  box-shadow: none;
 }
