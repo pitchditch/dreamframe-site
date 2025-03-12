@@ -143,7 +143,7 @@ const GutterCleaning = () => {
                 <TabsTrigger value="installation">Installation</TabsTrigger>
               </TabsList>
               <TabsContent value="product" className="mt-6">
-                <img src="/lovable-uploads/1c34be5d-1b8e-4e6b-b9c9-aab9c1c6b86a.png" alt="Gutter guard product" className="rounded-lg shadow-lg w-full h-auto" />
+                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down" />
               </TabsContent>
               <TabsContent value="installation" className="mt-6">
                 <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
