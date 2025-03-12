@@ -7,9 +7,12 @@ interface LogoProps {
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
-    <Link to="/" className={`flex items-center space-x-2 ${isOverVideo ? 'text-white' : ''}`}>
-      <span className={`text-2xl font-bold ${isOverVideo ? 'text-white text-shadow-sm' : 'text-bc-red'}`}>BC</span>
-      <span className={`text-lg font-medium ${isOverVideo ? 'text-white text-shadow-sm' : ''}`}>Pressure Washing</span>
+    <Link to="/" className="flex items-center">
+      <img 
+        src="/lovable-uploads/105fbc2d-b1cc-452e-bf1d-636a23a1bbe8.png" 
+        alt="BC Pressure Washing Logo" 
+        className={`h-10 md:h-12 ${isOverVideo ? 'drop-shadow-md' : ''}`}
+      />
     </Link>
   );
 };
