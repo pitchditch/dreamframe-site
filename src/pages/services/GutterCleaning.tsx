@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -41,6 +42,10 @@ const GutterCleaning = () => {
     icon: <PieChart size={32} />
   }];
   
+  const handleVideoClick = () => {
+    window.open("https://www.youtube.com/watch?v=VzcQ2S5axEE", "_blank");
+  };
+  
   return <Layout>
       <ServiceHeader 
         title="Gutter Cleaning" 
@@ -74,8 +79,25 @@ const GutterCleaning = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2">
-            <img alt="Gutter cleaning service" className="rounded-lg shadow-lg w-full h-auto" src="/lovable-uploads/42b7ee79-c183-4e96-bba0-a83510258d54.jpg" />
+          <div className="md:w-1/2 cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
+            <div className="relative pt-[56.25%] w-full">
+              <iframe 
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/VzcQ2S5axEE?mute=1"
+                title="Gutter Cleaning"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-bc-red text-white rounded-full p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
