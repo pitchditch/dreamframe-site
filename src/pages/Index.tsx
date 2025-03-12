@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -41,13 +40,14 @@ const Index = () => {
 
   return (
     <Layout>
-      {/* Hero Section with new background image */}
+      {/* Hero Section with background image */}
       <section 
         className="hero-section relative h-[90vh] flex items-center" 
         style={{ 
           backgroundImage: "url('/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png')",
           backgroundPosition: "center",
-          backgroundSize: "cover"
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat"
         }}
       >
         <div className="hero-overlay bg-black/40"></div>
