@@ -4,8 +4,8 @@ import { ArrowRight } from 'lucide-react';
 
 const CTABanner = () => {
   return (
-    <section className="relative py-16" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86')", backgroundPosition: "center", backgroundSize: "cover" }}>
-      <div className="absolute inset-0 bg-black opacity-70"></div>
+    <section className="relative py-16" style={{ backgroundImage: "url('/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png')", backgroundPosition: "center", backgroundSize: "cover" }}>
+      <div className="absolute inset-0 bg-black opacity-60"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll">Ready to Transform Your Property?</h2>

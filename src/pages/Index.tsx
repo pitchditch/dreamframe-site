@@ -8,6 +8,7 @@ import PackagesSection from '../components/home/PackagesSection';
 import CTABanner from '../components/home/CTABanner';
 import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 
 const Index = () => {
   useEffect(() => {
@@ -44,6 +45,7 @@ const Index = () => {
     <Layout>
       <HeroSection />
       <ServicesSection />
+      <FeaturedProjectSection />
       <PackagesSection />
       <CTABanner />
       <ProcessSection />

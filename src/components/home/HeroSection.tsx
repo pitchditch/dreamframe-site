@@ -7,13 +7,13 @@ const HeroSection = () => {
     <section 
       className="hero-section relative h-[90vh] flex items-center" 
       style={{ 
-        backgroundImage: "url('/lovable-uploads/0b849d1b-b782-4a74-9e61-b65797cbcabb.png')",
+        backgroundImage: "url('/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png')",
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
       }}
     >
-      <div className="hero-overlay bg-black/40"></div>
+      <div className="hero-overlay absolute inset-0 bg-black/30"></div>
       <div className="container mx-auto px-4 relative z-10 text-white">
         <div className="max-w-3xl">
           <div className="badge-pill animate-on-scroll mb-4 bg-red-50/80 backdrop-blur-sm">
