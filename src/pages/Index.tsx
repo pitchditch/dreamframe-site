@@ -44,7 +44,7 @@ const Index = () => {
       <section 
         className="hero-section relative h-[90vh] flex items-center" 
         style={{ 
-          backgroundImage: "url('/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png')",
+          backgroundImage: "url('/lovable-uploads/0b849d1b-b782-4a74-9e61-b65797cbcabb.png')",
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat"
