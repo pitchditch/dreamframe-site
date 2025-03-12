@@ -11,7 +11,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ quote, name, location, rating = 5, avatar }: TestimonialCardProps) => {
   return (
-    <div className="testimonial-card">
+    <div className="testimonial-card hover:shadow-lg transition-all">
       <div className="flex mb-4">
         <div className="text-4xl font-serif text-red-200 mr-2">❝</div>
       </div>
