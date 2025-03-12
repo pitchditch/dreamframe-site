@@ -5,6 +5,7 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 const GutterCleaning = () => {
   const benefits = [{
     title: "Prevent Water Damage",
@@ -25,6 +26,7 @@ const GutterCleaning = () => {
     title: "Prevent Basement Flooding",
     description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
   }];
+  
   const processes = [{
     title: "Debris Removal",
     description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
@@ -38,8 +40,14 @@ const GutterCleaning = () => {
     description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
     icon: <PieChart size={32} />
   }];
+  
   return <Layout>
-      <ServiceHeader title="Gutter Cleaning" description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." icon={<Droplets size={48} />} imagePath="/lovable-uploads/ac700f26-0c3f-4bb6-9297-862295529d82.png" />
+      <ServiceHeader 
+        title="Gutter Cleaning" 
+        description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
+        icon={<Droplets size={48} />}
+        videoUrl="https://www.youtube.com/watch?v=VzcQ2S5axEE"
+      />
 
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -156,4 +164,5 @@ const GutterCleaning = () => {
       <CallToAction />
     </Layout>;
 };
+
 export default GutterCleaning;
