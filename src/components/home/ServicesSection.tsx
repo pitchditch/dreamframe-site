@@ -35,10 +35,10 @@ const ServicesSection = () => {
           <div className="animate-on-scroll">
             <ServiceCard
               icon={<DropletIcon size={24} />}
-              title="House Washing"
-              description="Safe, low-pressure house washing that removes dirt, algae, and mildew without damaging your home's exterior."
+              title="Pressure Washing"
+              description="Safe, effective pressure washing that removes dirt, algae, and mildew without damaging your home's exterior surfaces."
               link="/services/house-washing"
-              image="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9"
+              image="/lovable-uploads/ef45fd36-a81d-41a3-8184-d3a91694f5ca.png"
             />
           </div>
         </div>
