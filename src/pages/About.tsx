@@ -1,6 +1,8 @@
+
 import Layout from '../components/Layout';
 import CallToAction from '../components/CallToAction';
-import { Shield, Award, Wrench, Users } from 'lucide-react';
+import { Shield, Award, Wrench, Users, ThumbsUp, Check } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const About = () => {
   return (
@@ -91,6 +93,134 @@ const About = () => {
         </div>
       </section>
 
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Premium Services</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="h-56 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1594873272550-7cc741973dd0" 
+                  alt="Window Cleaning Service" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-semibold mb-3">Window Cleaning</h3>
+                <p className="text-gray-600 mb-4">
+                  Our professional window cleaning service uses purified water technology for crystal clear, streak-free results on all window types.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Interior and exterior cleaning</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Residential and commercial properties</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Screen and track cleaning included</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="h-56 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb" 
+                  alt="Gutter Cleaning Service" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-semibold mb-3">Gutter Cleaning</h3>
+                <p className="text-gray-600 mb-4">
+                  Our thorough gutter cleaning service removes debris, ensures proper water flow, and helps prevent water damage to your property.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Complete debris removal</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Downspout flushing</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Minor repairs available</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="h-56 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1611156892126-60bea747f2b0" 
+                  alt="Roof Cleaning Service" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-semibold mb-3">Roof Cleaning</h3>
+                <p className="text-gray-600 mb-4">
+                  Our specialized roof cleaning service safely removes moss, algae, and debris while protecting your roof's integrity.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Soft washing techniques</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Extends roof lifespan</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Improves curb appeal</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="h-56 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9" 
+                  alt="Pressure Washing Service" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-semibold mb-3">House Washing</h3>
+                <p className="text-gray-600 mb-4">
+                  Our low-pressure house washing service safely removes dirt, mold, and mildew from your home's exterior surfaces.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Safe for all siding types</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Biodegradable cleaning solutions</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={18} />
+                    <span>Revitalizes home appearance</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -105,21 +235,15 @@ const About = () => {
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
+                  <Check className="text-bc-red mr-2 mt-1" size={18} />
                   <span>Eco-friendly, biodegradable cleaning solutions</span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
+                  <Check className="text-bc-red mr-2 mt-1" size={18} />
                   <span>Water conservation techniques</span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
+                  <Check className="text-bc-red mr-2 mt-1" size={18} />
                   <span>Safe for plants, pets, and your family</span>
                 </li>
               </ul>
@@ -130,6 +254,43 @@ const About = () => {
                 alt="Environmentally friendly cleaning" 
                 className="rounded-lg shadow-lg w-full"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Our Quality Guarantee</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-all text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-bc-red mb-4 mx-auto">
+                <Shield size={32} />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">100% Satisfaction</h3>
+              <p className="text-gray-600">
+                If you're not completely satisfied with our work, we'll return and make it right at no additional cost.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-all text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-bc-red mb-4 mx-auto">
+                <ThumbsUp size={32} />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">Professional Results</h3>
+              <p className="text-gray-600">
+                Our team is trained to deliver consistent, high-quality results that exceed industry standards.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-all text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-bc-red mb-4 mx-auto">
+                <Award size={32} />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">5-Star Service</h3>
+              <p className="text-gray-600">
+                We're proud of our consistently high ratings and positive reviews from satisfied customers.
+              </p>
             </div>
           </div>
         </div>

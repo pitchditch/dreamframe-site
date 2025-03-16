@@ -11,6 +11,7 @@ import WindowCleaning from "./pages/services/WindowCleaning";
 import RoofCleaning from "./pages/services/RoofCleaning";
 import PressureWashing from "./pages/services/PressureWashing";
 import Testimonials from "./pages/Testimonials";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
           <Route path="/services/house-washing" element={<PressureWashing />} />
           <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
