@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -90,7 +91,7 @@ const PressureWashing = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="https://images.unsplash.com/photo-1596758900146-f6d4a768c5c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+              src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
               alt="House washing service" 
               className="rounded-lg shadow-lg w-full h-auto"
             />
