@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <>
       {isHomepage && (
-        <div className="bg-bc-darkGray py-12 relative">
+        <div className="bg-black py-12 relative">
           <div className="container mx-auto px-4">
             <h2 className="text-white text-center text-3xl font-bold mb-8">Meet Our Team</h2>
             <div className="flex justify-center">
