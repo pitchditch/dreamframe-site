@@ -1,11 +1,10 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import { Link } from 'react-router-dom';
-import { DropletIcon, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles, ArrowRight, HomeIcon, Road } from 'lucide-react';
+import { DropletIcon, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles, ArrowRight, HomeIcon, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -231,7 +230,7 @@ const PressureWashing = () => {
           </div>
           <div className="md:w-1/2">
             <div className="flex items-center mb-4">
-              <Road className="text-bc-red mr-3" size={28} />
+              <Navigation className="text-bc-red mr-3" size={28} />
               <h3 className="text-2xl font-bold">Driveway Restoration</h3>
             </div>
             <p className="text-gray-600 mb-4">
