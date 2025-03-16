@@ -10,14 +10,17 @@ const Footer = () => {
   return (
     <>
       {isHomepage && (
-        <div className="bg-bc-darkGray py-10 relative">
-          <div className="container mx-auto px-4 flex justify-center">
-            <div className="w-full max-w-md">
-              <img 
-                src="/lovable-uploads/88568a41-b608-4e38-a985-4a4a03c6ab89.png" 
-                alt="BC Pressure Washing Team Members" 
-                className="w-full h-auto rounded-lg shadow-lg" 
-              />
+        <div className="bg-bc-darkGray py-12 relative">
+          <div className="container mx-auto px-4">
+            <h2 className="text-white text-center text-3xl font-bold mb-8">Meet Our Team</h2>
+            <div className="flex justify-center">
+              <div className="w-full max-w-4xl">
+                <img 
+                  src="/lovable-uploads/9d522a8f-7afd-455e-a842-1ac662af3305.png" 
+                  alt="BC Pressure Washing Team Members" 
+                  className="w-full h-auto rounded-lg" 
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -32,7 +35,7 @@ const Footer = () => {
                 <img 
                   src="/lovable-uploads/105fbc2d-b1cc-452e-bf1d-636a23a1bbe8.png" 
                   alt="BC Pressure Washing Logo" 
-                  className="h-16 mb-4"
+                  className="h-20 mb-4"
                 />
               </div>
               <p className="text-gray-400 mb-6">
