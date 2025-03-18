@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Layout from '@/components/Layout';
 import TestimonialCard from '@/components/TestimonialCard';
@@ -187,6 +188,24 @@ const Testimonials = () => {
       quote: "My roof looks so much better now after they cleaned it! They took their time, worked carefully, and made sure everything was perfect. Super happy with the results and will definitely hire them again.",
       name: "Jessica Martin",
       location: "Richmond, BC"
+    },
+    {
+      id: 21,
+      service: 'pressure-washing',
+      rating: 5,
+      quote: "My vinyl siding was covered in green mold and dirt. After their pressure washing service, it looks like a completely different house! Neighbors have been asking who did the work. Excellent service!",
+      name: "Richard Brooks",
+      location: "Surrey, BC",
+      beforeAfterImage: "/lovable-uploads/43002110-e9f7-4e22-826e-a90e5dc6687e.png"
+    },
+    {
+      id: 22,
+      service: 'pressure-washing',
+      rating: 5,
+      quote: "The green mildew on my house siding was embarrassing. Their team came in and completely transformed it! Amazing how much brighter and cleaner the whole house looks now. Worth every penny.",
+      name: "Patricia Chen",
+      location: "Langley, BC",
+      beforeAfterImage: "/lovable-uploads/55261385-ad80-4322-9551-dbc3392a881c.png"
     },
   ];
 
