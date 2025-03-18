@@ -4,7 +4,8 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
-import { Droplets, ShieldCheck, Sun, Sparkles, RotateCw, Shield, Clock, ThumbsUp } from 'lucide-react';
+import { Droplets, ShieldCheck, Sun, Sparkles, RotateCw, Shield, Clock, ThumbsUp, Building } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const WindowCleaning = () => {
   const benefits = [
@@ -112,6 +113,50 @@ const WindowCleaning = () => {
           We follow a meticulous process to ensure spotless, streak-free windows every time
         </p>
         <ServiceProcess processes={processes} />
+      </section>
+
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            <div className="md:w-1/2">
+              <img 
+                src="/lovable-uploads/5b73077f-b551-44dc-9605-1b642b923e9c.png" 
+                alt="Commercial window cleaning service" 
+                className="rounded-lg shadow-lg w-full h-auto"
+              />
+            </div>
+            <div className="md:w-1/2">
+              <div className="badge-pill w-fit mb-4">Commercial Services</div>
+              <h2 className="text-3xl font-bold mb-6">Commercial Window Cleaning</h2>
+              <p className="text-gray-600 mb-6">
+                For multi-story buildings and commercial properties, our specialized equipment and trained technicians provide safe and efficient window cleaning services without the need for ladders.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start">
+                  <span className="text-bc-red font-bold mr-2">✓</span>
+                  <span>No ladders necessary - we use water-fed pole systems</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-bc-red font-bold mr-2">✓</span>
+                  <span>No water spots or streaks - pure water cleaning technology</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-bc-red font-bold mr-2">✓</span>
+                  <span>Reaches windows up to 5 stories high safely</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-bc-red font-bold mr-2">✓</span>
+                  <span>Minimal disruption to your business operations</span>
+                </li>
+              </ul>
+              <Link to="/services/commercial-window-cleaning">
+                <button className="btn-primary">
+                  Learn More About Commercial Services
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       <CallToAction />

@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import ServiceCard from '../ServiceCard';
-import { ArrowRight, Droplets, Home, DropletIcon } from 'lucide-react';
+import { ArrowRight, Droplets, Home, DropletIcon, Building } from 'lucide-react';
 
 const ServicesSection = () => {
   return (
@@ -13,7 +13,7 @@ const ServicesSection = () => {
           We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
           <div className="animate-on-scroll">
             <ServiceCard
               icon={<Droplets size={24} />}
@@ -39,6 +39,15 @@ const ServicesSection = () => {
               description="Safe, effective pressure washing that removes dirt, algae, and mildew without damaging your home's exterior surfaces."
               link="/services/house-washing"
               image="/lovable-uploads/ef45fd36-a81d-41a3-8184-d3a91694f5ca.png"
+            />
+          </div>
+          <div className="animate-on-scroll">
+            <ServiceCard
+              icon={<Building size={24} />}
+              title="Commercial Window Cleaning"
+              description="No ladders necessary! No water spots or streaks! Professional window cleaning for multi-story buildings and offices."
+              link="/services/commercial-window-cleaning"
+              image="/lovable-uploads/5b73077f-b551-44dc-9605-1b642b923e9c.png"
             />
           </div>
         </div>
