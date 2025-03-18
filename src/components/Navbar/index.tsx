@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -50,8 +49,8 @@ const Navbar = () => {
         isOverVideo 
         ? 'bg-transparent backdrop-blur-sm' 
         : isScrolled 
-          ? 'bg-white shadow-md py-2' 
-          : 'bg-white py-4'
+          ? 'bg-white shadow-md py-1' 
+          : 'bg-white py-2'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
