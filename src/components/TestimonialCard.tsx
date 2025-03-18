@@ -17,7 +17,7 @@ const TestimonialCard = ({ quote, name, location, rating = 5, avatar, beforeAfte
         <div className="mb-6 overflow-hidden rounded-md">
           <img 
             src={beforeAfterImage} 
-            alt="Before and after gutter cleaning" 
+            alt="Before and after transformation" 
             className="w-full h-auto object-cover"
           />
         </div>

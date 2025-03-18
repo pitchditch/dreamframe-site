@@ -207,6 +207,24 @@ const Testimonials = () => {
       location: "Langley, BC",
       beforeAfterImage: "/lovable-uploads/55261385-ad80-4322-9551-dbc3392a881c.png"
     },
+    {
+      id: 23,
+      service: 'pressure-washing',
+      rating: 5,
+      quote: "I couldn't believe the difference in my house siding after their pressure washing service. The before and after is incredible! It looks like we painted the house, but it's just clean now. Highly recommended!",
+      name: "James Peterson",
+      location: "Surrey, BC",
+      beforeAfterImage: "/lovable-uploads/0ed0aa87-882b-4618-8a15-18d4ed7e4838.png"
+    },
+    {
+      id: 24,
+      service: 'pressure-washing',
+      rating: 5,
+      quote: "My house had years of dirt and mildew buildup on the siding. These guys did an amazing job restoring it to like-new condition. Their attention to detail around windows and fixtures was impressive!",
+      name: "Emma Rodriguez",
+      location: "Langley, BC",
+      beforeAfterImage: "/lovable-uploads/3dd77762-89a1-4273-ae3e-1c6fbc9894aa.png"
+    },
   ];
 
   const filteredTestimonials = activeCategory === 'all' 

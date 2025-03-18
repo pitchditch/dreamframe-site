@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -174,6 +175,30 @@ const PressureWashing = () => {
                     </CardContent>
                   </Card>
                 </CarouselItem>
+
+                <CarouselItem>
+                  <Card className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <img 
+                        src="/lovable-uploads/0ed0aa87-882b-4618-8a15-18d4ed7e4838.png" 
+                        alt="House siding pressure washing before and after transformation" 
+                        className="w-full h-auto"
+                      />
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                
+                <CarouselItem>
+                  <Card className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <img 
+                        src="/lovable-uploads/3dd77762-89a1-4273-ae3e-1c6fbc9894aa.png" 
+                        alt="House exterior pressure washing before and after clean" 
+                        className="w-full h-auto"
+                      />
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
               </CarouselContent>
               <div className="flex justify-center mt-4">
                 <CarouselPrevious className="relative static mx-2" />
@@ -337,7 +362,7 @@ const PressureWashing = () => {
                 Safe and effective cleaning for wooden decks, composite decking, and concrete or stone patios.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1558618666-fcd25a19f0b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                src="/lovable-uploads/efa781f2-757d-4950-bf2b-3686f7d24cb1.png" 
                 alt="Deck cleaning" 
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
