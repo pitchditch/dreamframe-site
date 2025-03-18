@@ -10,7 +10,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center">
       <div className={`relative h-20 md:h-24 ${isOverVideo ? 'drop-shadow-lg' : ''}`}>
         <img 
-          src="/lovable-uploads/105fbc2d-b1cc-452e-bf1d-636a23a1bbe8.png" 
+          src="/lovable-uploads/dcb2a9fb-bf21-4abb-a08d-49a6e1969711.png" 
           alt="BC Pressure Washing Logo" 
           className={`h-full w-auto ${
             isOverVideo 
