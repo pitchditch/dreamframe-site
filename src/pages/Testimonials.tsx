@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Layout from '@/components/Layout';
 import TestimonialCard from '@/components/TestimonialCard';
@@ -24,28 +23,30 @@ const Testimonials = () => {
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      service: 'gutter-cleaning',
+      service: 'pressure-washing',
       rating: 5,
-      quote: "I was really impressed with this service! They came out and cleaned my gutters so quickly. We've had some heavy rain, and everything is draining properly now. Super professional and thorough. I'll definitely use them again next season!",
-      name: "James Wilson",
-      location: "Langley, BC",
-      beforeAfterImage: "/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png"
+      quote: "I was amazed by how clean my house looks now! The pressure washing service was incredible. The team was professional and thorough, and the results speak for themselves.",
+      name: "Michael Johnson",
+      location: "Surrey, BC",
+      beforeAfterImage: "/lovable-uploads/ef45fd36-a81d-41a3-8184-d3a91694f5ca.png"
     },
     {
       id: 2,
-      service: 'window-cleaning',
+      service: 'pressure-washing',
       rating: 5,
-      quote: "Hands down, the best window cleaning service I've had. My windows are so clear, and the entire house feels brighter. The team was punctual, friendly, and did an excellent job. Will absolutely book again!",
+      quote: "Outstanding pressure washing service! My siding was covered in dirt and grime, but now it looks brand new. Highly recommend their services!",
       name: "Sarah Thompson",
-      location: "Surrey, BC"
+      location: "Langley, BC",
+      beforeAfterImage: "/lovable-uploads/148003bb-352d-4ff8-af0b-2637eabaf9eb.png"
     },
     {
       id: 3,
       service: 'pressure-washing',
       rating: 5,
-      quote: "My driveway looks brand new! The team did a fantastic job pressure washing my driveway and patio. They took their time, didn't rush, and made sure everything looked perfect. Highly recommend them for any pressure washing needs!",
-      name: "Michael Roberts",
-      location: "Abbotsford, BC"
+      quote: "The transformation of my house exterior is incredible! The pressure washing team did an amazing job. Very satisfied with the results.",
+      name: "David Wilson",
+      location: "Richmond, BC",
+      beforeAfterImage: "/lovable-uploads/6485c6c5-3c65-46de-b9f2-c054c708124b.png"
     },
     {
       id: 4,
