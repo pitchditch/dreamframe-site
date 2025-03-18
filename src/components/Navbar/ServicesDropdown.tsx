@@ -17,7 +17,11 @@ export const ServicesDropdown = ({
   const isActive = location.pathname === '/services' || location.pathname.includes('/services/');
 
   return (
-    <div className="relative group">
+    <div 
+      className="relative group"
+      onMouseEnter={() => setIsServicesMenuOpen(true)}
+      onMouseLeave={() => setIsServicesMenuOpen(false)}
+    >
       <button 
         className={`flex items-center transition-colors ${
           isOverVideo 
@@ -25,8 +29,7 @@ export const ServicesDropdown = ({
           : `text-gray-700 hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
         }`}
         onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
-        onMouseEnter={() => setIsServicesMenuOpen(true)}
-        onMouseLeave={() => setIsServicesMenuOpen(false)}
+        aria-expanded={isServicesMenuOpen}
       >
         Services <ChevronDown className="ml-1 h-4 w-4" />
       </button>
@@ -35,8 +38,6 @@ export const ServicesDropdown = ({
         className={`service-menu absolute z-10 left-0 mt-2 w-64 bg-white shadow-lg rounded-md overflow-hidden ${
           isServicesMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         }`}
-        onMouseEnter={() => setIsServicesMenuOpen(true)}
-        onMouseLeave={() => setIsServicesMenuOpen(false)}
       >
         <div className="py-2">
           <div className="px-4 py-2 text-sm font-medium text-gray-500">Residential</div>
