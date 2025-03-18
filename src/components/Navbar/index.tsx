@@ -10,7 +10,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOverVideo, setIsOverVideo] = useState(false); // Changed to false for better initial visibility
+  const [isOverVideo, setIsOverVideo] = useState(false); 
   const location = useLocation();
 
   useEffect(() => {
@@ -25,7 +25,6 @@ const Navbar = () => {
     };
 
     // Initialize on mount - set to visible by default
-    const isHomepage = location.pathname === '/';
     setIsOverVideo(false);
 
     window.addEventListener('scroll', handleScroll);
@@ -34,7 +33,6 @@ const Navbar = () => {
 
   // Check for video header when route changes
   useEffect(() => {
-    const isHomepage = location.pathname === '/';
     setIsOverVideo(false); // Always start with visible navbar
   }, [location.pathname]);
 
