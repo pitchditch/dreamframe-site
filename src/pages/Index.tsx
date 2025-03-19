@@ -9,6 +9,7 @@ import CTABanner from '../components/home/CTABanner';
 import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
+import CallButton from '../components/CallButton';
 
 const Index = () => {
   useEffect(() => {
@@ -51,6 +52,7 @@ const Index = () => {
       <ProcessSection />
       <TestimonialsSection />
       <CallToAction />
+      <CallButton />
     </Layout>
   );
 };
