@@ -32,11 +32,13 @@ const Footer = () => {
             {/* Company Info */}
             <div className="col-span-1">
               <div className="mb-4">
-                <img 
-                  src="/lovable-uploads/105fbc2d-b1cc-452e-bf1d-636a23a1bbe8.png" 
-                  alt="BC Pressure Washing Logo" 
-                  className="h-20 mb-4"
-                />
+                <Link to="/">
+                  <img 
+                    src="/lovable-uploads/105fbc2d-b1cc-452e-bf1d-636a23a1bbe8.png" 
+                    alt="BC Pressure Washing Logo" 
+                    className="h-24 md:h-28 mb-4 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                  />
+                </Link>
               </div>
               <p className="text-gray-400 mb-6">
                 Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.
