@@ -17,10 +17,10 @@ const Navbar = () => {
     const handleScroll = () => {
       if (window.scrollY > 60) {
         setIsScrolled(true);
-        setIsOverVideo(true); // Make it transparent when scrolling down
+        setIsOverVideo(true); // Enable white shadow when scrolling down
       } else {
         setIsScrolled(false);
-        setIsOverVideo(false); // Make it visible when at the top
+        setIsOverVideo(false);
       }
     };
 
