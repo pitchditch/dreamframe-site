@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 interface CallToActionProps {
   title?: string;
@@ -25,7 +24,7 @@ const CallToAction = ({
     }}></div>
       
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-70 py-0 my-[50px]"></div>
+      <div className="absolute inset-0 bg-black opacity-70 py-0 my-0"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
