@@ -1,6 +1,4 @@
-
 import { Link } from 'react-router-dom';
-
 interface CallToActionProps {
   title?: string;
   subtitle?: string;
@@ -10,7 +8,6 @@ interface CallToActionProps {
   secondaryButtonLink?: string;
   backgroundImage?: string;
 }
-
 const CallToAction = ({
   title = "Ready to Transform Your Property?",
   subtitle = "Contact us today to schedule a service or request a free, no-obligation quote.",
@@ -20,16 +17,14 @@ const CallToAction = ({
   secondaryButtonLink = "/contact",
   backgroundImage = "/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"
 }: CallToActionProps) => {
-  return (
-    <section className="relative py-16">
+  return <section className="relative py-16">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center" 
-        style={{ backgroundImage: `url(${backgroundImage})` }}
-      ></div>
+      <div className="absolute inset-0 bg-cover bg-center" style={{
+      backgroundImage: `url(${backgroundImage})`
+    }}></div>
       
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-70"></div>
+      <div className="absolute inset-0 bg-black opacity-70 py-0 my-[50px]"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
@@ -44,8 +39,6 @@ const CallToAction = ({
           </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CallToAction;
