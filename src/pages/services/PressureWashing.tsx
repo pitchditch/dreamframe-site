@@ -1,10 +1,11 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import { Link } from 'react-router-dom';
-import { DropletIcon, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles, ArrowRight, HomeIcon, Navigation } from 'lucide-react';
+import { DropletIcon, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles, ArrowRight, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -258,55 +259,6 @@ const PressureWashing = () => {
         <ServiceProcess processes={processes} />
       </section>
       
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-6 text-center">Roof Soft Wash</h2>
-        <div className="flex flex-col md:flex-row gap-12 items-center">
-          <div className="md:w-1/2">
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <img 
-                  src="/lovable-uploads/0f23c4b4-d99c-454c-8cf7-fb5cdfd5f414.png" 
-                  alt="Roof soft wash before and after" 
-                  className="w-full h-auto"
-                />
-              </CardContent>
-            </Card>
-          </div>
-          <div className="md:w-1/2">
-            <div className="flex items-center mb-4">
-              <HomeIcon className="text-bc-red mr-3" size={28} />
-              <h3 className="text-2xl font-bold">Gentle Roof Cleaning</h3>
-            </div>
-            <p className="text-gray-600 mb-4">
-              Our specialized soft wash technique safely removes black streaks, moss, algae, and lichen from your roof without causing damage to shingles or tiles. This preserves your roof's integrity while restoring its appearance.
-            </p>
-            <ul className="space-y-2 mb-6">
-              <li className="flex items-start">
-                <span className="text-bc-red mr-2">✓</span>
-                <span>Extends roof life by removing harmful growth</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-bc-red mr-2">✓</span>
-                <span>Improves energy efficiency</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-bc-red mr-2">✓</span>
-                <span>Prevents expensive roof repairs</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-bc-red mr-2">✓</span>
-                <span>Enhances curb appeal instantly</span>
-              </li>
-            </ul>
-            <Button asChild>
-              <Link to="/contact">
-                Schedule Roof Cleaning <ArrowRight className="ml-2" size={16} />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-      
       <section className="container mx-auto px-4 py-16 bg-gray-50">
         <h2 className="text-3xl font-bold mb-6 text-center">Driveway Pressure Washing</h2>
         <div className="flex flex-col md:flex-row-reverse gap-12 items-center">
@@ -366,7 +318,7 @@ const PressureWashing = () => {
                 Restore wood, vinyl, or composite fencing to like-new condition with our specialized cleaning techniques.
               </p>
               <img 
-                src="/lovable-uploads/52002e8d-2bde-48cb-b8c6-c80c92e54a10.png" 
+                src="/lovable-uploads/254da245-ca71-40fe-b92b-267d40458f73.png" 
                 alt="Fence cleaning" 
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
@@ -399,13 +351,13 @@ const PressureWashing = () => {
           
           <Card>
             <CardContent className="pt-6">
-              <h3 className="text-xl font-bold mb-2">Commercial Services</h3>
+              <h3 className="text-xl font-bold mb-2">Glass Awning Cleaning</h3>
               <p className="text-gray-600 mb-4">
-                Comprehensive pressure washing solutions for commercial properties, storefronts, and businesses.
+                Professional glass awning and skylight cleaning to remove dirt, water spots, and debris for crystal clear results.
               </p>
               <img 
-                src="https://images.unsplash.com/photo-1596758900146-f6d4a768c5c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                alt="Commercial pressure washing" 
+                src="/lovable-uploads/35c992fa-e658-4504-9244-560758af2df7.png" 
+                alt="Glass awning cleaning before and after" 
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
               <Button variant="outline" asChild className="w-full">
