@@ -34,9 +34,9 @@ const Footer = () => {
               <div className="mb-4">
                 <Link to="/">
                   <img 
-                    src="/lovable-uploads/105fbc2d-b1cc-452e-bf1d-636a23a1bbe8.png" 
+                    src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" 
                     alt="BC Pressure Washing Logo" 
-                    className="h-24 md:h-28 mb-4 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                    className="h-24 md:h-28 mb-4"
                   />
                 </Link>
               </div>
@@ -126,21 +126,7 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <MapPin className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
-                  <div>
-                    <span className="text-gray-400">15501 Marine Dr, White Rock, BC</span>
-                    <a 
-                      href="https://maps.google.com/?q=15501+Marine+Dr,+White+Rock,+BC" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="block mt-2"
-                    >
-                      <img 
-                        src="https://maps.googleapis.com/maps/api/staticmap?center=15501+Marine+Dr,+White+Rock,+BC&zoom=14&size=300x150&markers=color:red%7C15501+Marine+Dr,+White+Rock,+BC&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" 
-                        alt="Map showing 15501 Marine Dr, White Rock location" 
-                        className="rounded-md w-full max-w-[300px] h-auto"
-                      />
-                    </a>
-                  </div>
+                  <span className="text-gray-400">15501 Marine Dr, White Rock, BC</span>
                 </li>
                 <li className="flex items-center">
                   <Phone className="text-bc-red mr-3 flex-shrink-0" size={18} />
@@ -148,7 +134,7 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center">
                   <Mail className="text-bc-red mr-3 flex-shrink-0" size={18} />
-                  <span className="text-gray-400">info@bcpressurewashing.ca</span>
+                  <span className="text-gray-400">bcpressurewashing.ca@gmail.com</span>
                 </li>
                 <li className="flex items-start">
                   <Clock className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
@@ -159,6 +145,15 @@ const Footer = () => {
                   </div>
                 </li>
               </ul>
+              
+              {/* White Rock Based Business Image */}
+              <div className="mt-6">
+                <img 
+                  src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
+                  alt="White Rock Based Business" 
+                  className="w-full rounded-md h-auto"
+                />
+              </div>
             </div>
           </div>
 
