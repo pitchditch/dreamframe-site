@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -61,14 +60,14 @@ const PressureWashing = () => {
       icon: <Sparkles size={32} />
     }
   ];
-
+  
   return (
     <Layout>
       <ServiceHeader
         title="House Washing"
         description="Safe, effective pressure washing services to restore your home's exterior and protect your investment."
         icon={<DropletIcon size={48} />}
-        imagePath="https://images.unsplash.com/photo-1558618666-fcd25a19f0b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        imagePath="/lovable-uploads/a8be056c-8537-4e17-9559-6514a98817f0.png"
       />
 
       <section className="container mx-auto px-4 py-16">

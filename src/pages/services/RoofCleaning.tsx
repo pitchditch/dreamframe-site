@@ -58,7 +58,7 @@ const RoofCleaning = () => {
         title="Roof Cleaning"
         description="Safe and effective roof cleaning solutions to protect your investment and enhance your home's appearance."
         icon={<Home size={48} />}
-        imagePath="https://images.unsplash.com/photo-1605808896470-cd7009c90d7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+        imagePath="/lovable-uploads/0e9565e9-5c55-469b-9373-28abcec11dcb.png"
       />
 
       <section className="container mx-auto px-4 py-16">

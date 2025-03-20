@@ -77,7 +77,7 @@ const Services = () => {
               title="Commercial Window Cleaning"
               description="Professional window cleaning services for office buildings, retail stores, and other commercial properties."
               link="/services/commercial-window-cleaning"
-              image="https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+              image="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png"
             />
             <ServiceCard
               icon={<Warehouse size={24} />}

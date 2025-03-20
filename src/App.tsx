@@ -10,6 +10,7 @@ import GutterCleaning from "./pages/services/GutterCleaning";
 import WindowCleaning from "./pages/services/WindowCleaning";
 import RoofCleaning from "./pages/services/RoofCleaning";
 import PressureWashing from "./pages/services/PressureWashing";
+import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import Testimonials from "./pages/Testimonials";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/services/window-cleaning" element={<WindowCleaning />} />
           <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
           <Route path="/services/house-washing" element={<PressureWashing />} />
+          <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
