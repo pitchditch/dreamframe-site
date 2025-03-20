@@ -90,33 +90,11 @@ const WindowCleaning = () => {
             </div>
           </div>
           <div className="md:w-1/2">
-            <Carousel className="w-full">
-              <CarouselContent>
-                <CarouselItem>
-                  <img 
-                    src="/lovable-uploads/82d69edb-6210-433b-a762-4610f454fc2c.png" 
-                    alt="Window cleaning service" 
-                    className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
-                  />
-                </CarouselItem>
-                <CarouselItem>
-                  <img 
-                    src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
-                    alt="Window cleaning service in action" 
-                    className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
-                  />
-                </CarouselItem>
-                <CarouselItem>
-                  <img 
-                    src="/lovable-uploads/5dc10f3c-9463-4153-94b3-4b99d908580a.png" 
-                    alt="Professional window cleaner" 
-                    className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
-                  />
-                </CarouselItem>
-              </CarouselContent>
-              <CarouselPrevious className="lg:-left-12 left-2" />
-              <CarouselNext className="lg:-right-12 right-2" />
-            </Carousel>
+            <img 
+              src="/lovable-uploads/97ab1ee0-b864-4d9e-b37b-9a526229a18f.png" 
+              alt="Window cleaning service" 
+              className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
+            />
           </div>
         </div>
       </section>
@@ -173,33 +151,11 @@ const WindowCleaning = () => {
               </Link>
             </div>
             <div className="md:w-1/2">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  <CarouselItem>
-                    <img 
-                      src="/lovable-uploads/5b73077f-b551-44dc-9605-1b642b923e9c.png" 
-                      alt="Commercial window cleaning service" 
-                      className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img 
-                      src="/lovable-uploads/1df640e3-9599-46e5-b9d3-db5ae3ca2b1c.png" 
-                      alt="Window cleaning before and after" 
-                      className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <img 
-                      src="/lovable-uploads/37834da4-f27b-417b-8c10-b7190243dac5.png" 
-                      alt="Skylight cleaning before and after" 
-                      className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
-                    />
-                  </CarouselItem>
-                </CarouselContent>
-                <CarouselPrevious className="lg:-left-12 left-2" />
-                <CarouselNext className="lg:-right-12 right-2" />
-              </Carousel>
+              <img 
+                src="/lovable-uploads/2429e4a3-7077-402a-813a-f3b996ffa8cd.png" 
+                alt="Commercial window cleaning service" 
+                className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
+              />
             </div>
           </div>
         </div>
