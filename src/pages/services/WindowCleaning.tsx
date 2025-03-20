@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -166,7 +165,9 @@ const WindowCleaning = () => {
         <PriceCalculatorForm />
       </section>
 
-      <CallToAction />
+      <CallToAction 
+        backgroundImage="/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"
+      />
     </Layout>
   );
 };

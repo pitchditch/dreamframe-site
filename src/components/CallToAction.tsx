@@ -8,6 +8,7 @@ interface CallToActionProps {
   secondaryButtonText?: string;
   primaryButtonLink?: string;
   secondaryButtonLink?: string;
+  backgroundImage?: string;
 }
 
 const CallToAction = ({
@@ -16,12 +17,23 @@ const CallToAction = ({
   primaryButtonText = "Get a Free Quote",
   secondaryButtonText = "Contact Us",
   primaryButtonLink = "/contact",
-  secondaryButtonLink = "/contact"
+  secondaryButtonLink = "/contact",
+  backgroundImage = "/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"
 }: CallToActionProps) => {
   return (
-    <section className="cta-section">
-      <div className="container mx-auto px-4 max-w-4xl text-center">
-        <h2 className="text-3xl font-bold mb-4">{title}</h2>
+    <section className="relative py-16">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center" 
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      ></div>
+      
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black opacity-70"></div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
+        <h2 className="text-3xl font-bold mb-4 text-white">{title}</h2>
         <p className="text-gray-300 mb-8">{subtitle}</p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link to={primaryButtonLink}>
