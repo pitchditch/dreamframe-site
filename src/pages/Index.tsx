@@ -1,7 +1,6 @@
 
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
-import CallToAction from '../components/CallToAction';
 import HeroSection from '../components/home/HeroSection';
 import ServicesSection from '../components/home/ServicesSection';
 import ServiceSlideshow from '../components/home/ServiceSlideshow';
@@ -52,10 +51,8 @@ const Index = () => {
       <FeaturedProjectSection />
       <PackagesSection />
       <PriceCalculatorForm />
-      <CTABanner />
       <ProcessSection />
       <TestimonialsSection />
-      <CallToAction />
       <CallButton />
     </Layout>
   );
