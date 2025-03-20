@@ -126,7 +126,21 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <MapPin className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
-                  <span className="text-gray-400">Langley, BC, Canada</span>
+                  <div>
+                    <span className="text-gray-400">15501 Marine Dr, White Rock, BC</span>
+                    <a 
+                      href="https://maps.google.com/?q=15501+Marine+Dr,+White+Rock,+BC" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="block mt-2"
+                    >
+                      <img 
+                        src="https://maps.googleapis.com/maps/api/staticmap?center=15501+Marine+Dr,+White+Rock,+BC&zoom=14&size=300x150&markers=color:red%7C15501+Marine+Dr,+White+Rock,+BC&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" 
+                        alt="Map showing 15501 Marine Dr, White Rock location" 
+                        className="rounded-md w-full max-w-[300px] h-auto"
+                      />
+                    </a>
+                  </div>
                 </li>
                 <li className="flex items-center">
                   <Phone className="text-bc-red mr-3 flex-shrink-0" size={18} />

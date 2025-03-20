@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import CallToAction from '../components/CallToAction';
 import HeroSection from '../components/home/HeroSection';
 import ServicesSection from '../components/home/ServicesSection';
+import ServiceSlideshow from '../components/home/ServiceSlideshow';
 import PackagesSection from '../components/home/PackagesSection';
 import CTABanner from '../components/home/CTABanner';
 import ProcessSection from '../components/home/ProcessSection';
@@ -47,6 +48,7 @@ const Index = () => {
     <Layout>
       <HeroSection />
       <ServicesSection />
+      <ServiceSlideshow />
       <FeaturedProjectSection />
       <PackagesSection />
       <PriceCalculatorForm />
