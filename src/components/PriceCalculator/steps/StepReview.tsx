@@ -14,6 +14,11 @@ const serviceLabels: Record<string, string> = {
   'roof-cleaning': 'Roof Cleaning',
 };
 
+const propertyLabels: Record<string, string> = {
+  'residential': 'Residential',
+  'commercial': 'Commercial',
+};
+
 const sizeLabels: Record<string, { label: string, price: number }> = {
   'small': { label: 'Small (Up to 1,500 sq. ft.)', price: 0 },
   'medium': { label: 'Medium (1,500 - 2,500 sq. ft.)', price: 50 },
@@ -41,12 +46,16 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
   const basePrice = baseServicePrices[formValues.service] || 0;
   const sizePrice = sizeLabels[formValues.size]?.price || 0;
   
+  // Apply commercial multiplier if it's a commercial property
+  const propertyMultiplier = formValues.propertyType === 'commercial' ? 1.5 : 1.0;
+  
   const addonsTotal = (formValues.addons || []).reduce(
     (total: number, addon: string) => total + (addonLabels[addon]?.price || 0),
     0
   );
   
-  const totalPrice = basePrice + sizePrice + addonsTotal;
+  const subtotal = basePrice + sizePrice + addonsTotal;
+  const totalPrice = Math.round(subtotal * propertyMultiplier);
 
   const formatDate = (date: Date | undefined) => {
     if (!date) return 'Not specified';
@@ -60,7 +69,7 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Review Your Order</h2>
+        <h2 className="text-2xl font-bold mb-2">Review Your Quote</h2>
         <p className="text-gray-600">Please review your information before submitting</p>
       </div>
 
@@ -69,6 +78,11 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
           <div>
             <h3 className="text-lg font-bold">Selected Service</h3>
             <p>{serviceLabels[formValues.service] || 'Not selected'}</p>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-bold">Property Type</h3>
+            <p>{propertyLabels[formValues.propertyType] || 'Not selected'}</p>
           </div>
           
           <div>
@@ -119,6 +133,16 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
                   </div>
                 ))}
               </>
+            )}
+            <div className="flex justify-between pt-2">
+              <p>Subtotal</p>
+              <p>${subtotal}</p>
+            </div>
+            {formValues.propertyType === 'commercial' && (
+              <div className="flex justify-between">
+                <p>Commercial Property (1.5x)</p>
+                <p>×1.5</p>
+              </div>
             )}
             <div className="flex justify-between font-bold text-lg mt-2 pt-2 border-t">
               <p>Total Estimated Price</p>

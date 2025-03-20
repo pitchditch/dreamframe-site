@@ -34,6 +34,9 @@ export const NavbarDesktop = ({
         <NavLink to="/contact" isOverVideo={isOverVideo}>
           Contact
         </NavLink>
+        <NavLink to="/calculator" isOverVideo={isOverVideo}>
+          Price Calculator
+        </NavLink>
       </nav>
       
       <Link to="/contact" className="hidden md:block">

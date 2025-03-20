@@ -100,6 +100,7 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
                     selected={field.value}
                     onSelect={field.onChange}
                     initialFocus
+                    disabled={(date) => date < new Date()}
                   />
                 </PopoverContent>
               </Popover>
@@ -115,7 +116,11 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
             <FormItem>
               <FormLabel>Service Address</FormLabel>
               <FormControl>
-                <Input placeholder="123 Main St, Anytown, US" {...field} />
+                <Input 
+                  placeholder="123 Marine Dr, White Rock, BC" 
+                  defaultValue="Marine Dr, White Rock, BC"
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

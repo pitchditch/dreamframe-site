@@ -35,7 +35,7 @@ export const ServicesDropdown = ({
       </button>
 
       <div 
-        className={`service-menu absolute z-10 left-0 mt-2 w-64 bg-white shadow-lg rounded-md overflow-hidden ${
+        className={`service-menu fixed z-50 mt-2 w-64 bg-white shadow-lg rounded-md overflow-hidden transition-all duration-200 ${
           isServicesMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         }`}
       >
