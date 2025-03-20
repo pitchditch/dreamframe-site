@@ -10,6 +10,7 @@ import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CallButton from '../components/CallButton';
+import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 
 const Index = () => {
   useEffect(() => {
@@ -48,6 +49,7 @@ const Index = () => {
       <ServicesSection />
       <FeaturedProjectSection />
       <PackagesSection />
+      <PriceCalculatorForm />
       <CTABanner />
       <ProcessSection />
       <TestimonialsSection />

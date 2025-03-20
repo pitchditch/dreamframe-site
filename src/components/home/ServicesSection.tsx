@@ -20,7 +20,7 @@ const ServicesSection = () => {
               title="Window Cleaning"
               description="Professional window cleaning using purified water for crystal clear, streak-free results on homes and commercial buildings."
               link="/services/window-cleaning"
-              image="https://images.unsplash.com/photo-1426604966848-d7adac402bff"
+              image="/lovable-uploads/931d71f9-6756-4b2d-aeed-7004b3fcdcdb.png"
             />
           </div>
           <div className="animate-on-scroll">
@@ -29,7 +29,7 @@ const ServicesSection = () => {
               title="Gutter Cleaning"
               description="Thorough gutter cleaning to prevent damage and maintain proper drainage, extending the life of your gutter system."
               link="/services/gutter-cleaning"
-              image="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb"
+              image="/lovable-uploads/ca44edd3-e620-4298-96b2-32f6f8332cae.png"
             />
           </div>
           <div className="animate-on-scroll">
@@ -38,16 +38,16 @@ const ServicesSection = () => {
               title="Pressure Washing"
               description="Safe, effective pressure washing that removes dirt, algae, and mildew without damaging your home's exterior surfaces."
               link="/services/house-washing"
-              image="/lovable-uploads/ef45fd36-a81d-41a3-8184-d3a91694f5ca.png"
+              image="/lovable-uploads/a8d9837b-5c66-4e74-a9a9-34e018c71a02.png"
             />
           </div>
           <div className="animate-on-scroll">
             <ServiceCard
               icon={<Building size={24} />}
-              title="Commercial Window Cleaning"
-              description="No ladders necessary! No water spots or streaks! Professional window cleaning for multi-story buildings and offices."
-              link="/services/commercial-window-cleaning"
-              image="/lovable-uploads/5b73077f-b551-44dc-9605-1b642b923e9c.png"
+              title="Roof Cleaning"
+              description="Professional roof cleaning that safely removes moss, algae, and debris, extending the life of your roof."
+              link="/services/roof-cleaning"
+              image="/lovable-uploads/ca94e1e6-7640-44e9-bc41-2389ccf948c1.png"
             />
           </div>
         </div>
