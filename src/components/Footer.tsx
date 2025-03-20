@@ -44,10 +44,10 @@ const Footer = () => {
                 Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.facebook.com/BCPressureWashing" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <Facebook size={20} />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <Instagram size={20} />
                 </a>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -145,16 +145,16 @@ const Footer = () => {
                   </div>
                 </li>
               </ul>
-              
-              {/* White Rock Based Business Image */}
-              <div className="mt-6">
-                <img 
-                  src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
-                  alt="White Rock Based Business" 
-                  className="w-full rounded-md h-auto"
-                />
-              </div>
             </div>
+          </div>
+          
+          {/* White Rock Based Business Image - Full Width */}
+          <div className="mt-8 w-full">
+            <img 
+              src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
+              alt="White Rock Based Business" 
+              className="w-full rounded-md h-auto"
+            />
           </div>
 
           <hr className="border-gray-800 my-8" />
