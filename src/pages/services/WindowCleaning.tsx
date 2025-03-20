@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -59,7 +58,7 @@ const WindowCleaning = () => {
         title="Window Cleaning"
         description="Professional window cleaning services that deliver crystal clear, streak-free results for your home or business."
         icon={<Sun size={48} />}
-        imagePath="https://images.unsplash.com/photo-1594873272550-7cc741973dd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+        imagePath="/lovable-uploads/302cbdcc-ad2e-496b-bb73-502eb77f353a.png"
       />
 
       <section className="container mx-auto px-4 py-16">

@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -51,7 +50,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/50f8b489-144a-4e76-a0d2-b14543e5acf3.png"
+        imagePath="/lovable-uploads/760a47b6-0ed1-4cac-bcb0-b915374332a7.png"
       />
 
       <section className="container mx-auto px-4 py-16">

@@ -67,7 +67,7 @@ const PressureWashing = () => {
         title="House Washing"
         description="Safe, effective pressure washing services to restore your home's exterior and protect your investment."
         icon={<DropletIcon size={48} />}
-        imagePath="/lovable-uploads/a8be056c-8537-4e17-9559-6514a98817f0.png"
+        imagePath="/lovable-uploads/ff4fb258-bc33-4114-83e8-05d0d9f02770.png"
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -96,11 +96,35 @@ const PressureWashing = () => {
             </div>
           </div>
           <div className="md:w-1/2">
-            <img 
-              src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
-              alt="House washing service" 
-              className="rounded-lg shadow-lg w-full h-auto"
-            />
+            <Carousel className="w-full">
+              <CarouselContent>
+                <CarouselItem>
+                  <img 
+                    src="/lovable-uploads/ff4fb258-bc33-4114-83e8-05d0d9f02770.png" 
+                    alt="House washing service" 
+                    className="rounded-lg shadow-lg w-full h-auto"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <img 
+                    src="/lovable-uploads/1ea22860-90d1-4355-b94c-94bfdd2d1657.png" 
+                    alt="Driveway pressure washing" 
+                    className="rounded-lg shadow-lg w-full h-auto"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <img 
+                    src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
+                    alt="Pressure washing service" 
+                    className="rounded-lg shadow-lg w-full h-auto"
+                  />
+                </CarouselItem>
+              </CarouselContent>
+              <div className="flex justify-center mt-4">
+                <CarouselPrevious className="relative static mx-2" />
+                <CarouselNext className="relative static mx-2" />
+              </div>
+            </Carousel>
           </div>
         </div>
       </section>

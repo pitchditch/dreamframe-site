@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -58,7 +57,7 @@ const RoofCleaning = () => {
         title="Roof Cleaning"
         description="Safe and effective roof cleaning solutions to protect your investment and enhance your home's appearance."
         icon={<Home size={48} />}
-        imagePath="/lovable-uploads/0e9565e9-5c55-469b-9373-28abcec11dcb.png"
+        imagePath="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
       />
 
       <section className="container mx-auto px-4 py-16">
