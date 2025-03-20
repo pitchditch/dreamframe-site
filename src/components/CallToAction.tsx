@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 interface CallToActionProps {
   title?: string;
@@ -15,7 +16,7 @@ const CallToAction = ({
   secondaryButtonText = "Contact Us",
   primaryButtonLink = "/contact",
   secondaryButtonLink = "/contact",
-  backgroundImage = "/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"
+  backgroundImage = "/lovable-uploads/1d7d3c0f-21a5-4ae2-80c7-7f156797449f.png"
 }: CallToActionProps) => {
   return <section className="relative py-16">
       {/* Background Image */}
