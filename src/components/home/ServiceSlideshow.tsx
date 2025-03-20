@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Carousel,
@@ -8,6 +8,7 @@ import {
   CarouselPrevious,
   CarouselNext
 } from "@/components/ui/carousel";
+import useEmblaCarousel from 'embla-carousel-react';
 
 const slides = [
   {
@@ -33,22 +34,39 @@ const slides = [
 ];
 
 const ServiceSlideshow = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [api, setApi] = useState<any>(null);
   
+  const onSelect = useCallback(() => {
+    if (!api) return;
+  }, [api]);
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 3000);
+    if (!api) return;
+
+    onSelect();
+    api.on("select", onSelect);
     
-    return () => clearInterval(timer);
-  }, []);
+    // Setup autoplay
+    const autoplay = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0);
+      }
+    }, 3000);
+
+    return () => {
+      clearInterval(autoplay);
+      api.off("select", onSelect);
+    };
+  }, [api, onSelect]);
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Professional Services</h2>
         
-        <div className="relative max-w-5xl mx-auto">
+        <div className="w-full overflow-hidden">
           <Carousel
             opts={{
               loop: true,
@@ -56,15 +74,16 @@ const ServiceSlideshow = () => {
             }}
             className="w-full"
             orientation="horizontal"
+            setApi={setApi}
           >
             <CarouselContent>
               {slides.map((slide, index) => (
-                <CarouselItem key={index} className="h-[500px] md:h-[600px] w-full">
-                  <div className="relative w-full h-full rounded-lg overflow-hidden">
+                <CarouselItem key={index} className="w-full">
+                  <div className="relative w-full overflow-hidden">
                     <img 
                       src={slide.image} 
                       alt={slide.title} 
-                      className="w-full h-full object-cover"
+                      className="w-full object-cover" 
                     />
                     <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center p-8">
                       <h3 className="text-white text-2xl md:text-3xl font-bold mb-4">{slide.title}</h3>
