@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -62,7 +63,7 @@ const PressureWashing = () => {
     }
   ];
 
-  // Automatic slideshow for the top carousel
+  // Automatic slideshow for the carousel
   const [api, setApi] = useState<any>(null);
 
   useEffect(() => {
@@ -82,43 +83,11 @@ const PressureWashing = () => {
         title="House Washing"
         description="Safe, effective pressure washing services to restore your home's exterior and protect your investment."
         icon={<DropletIcon size={48} />}
-        imagePath="/lovable-uploads/ff4fb258-bc33-4114-83e8-05d0d9f02770.png"
+        imagePath="/lovable-uploads/d24d1e3b-a9e0-4367-8302-d98085212f73.png"
       />
 
-      {/* Swapped sections - Carousel now first */}
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
-          <div className="md:w-1/2">
-            <Carousel className="w-full" setApi={setApi}>
-              <CarouselContent>
-                <CarouselItem>
-                  <img 
-                    src="/lovable-uploads/ff4fb258-bc33-4114-83e8-05d0d9f02770.png" 
-                    alt="House washing service" 
-                    className="rounded-lg shadow-lg w-full h-auto"
-                  />
-                </CarouselItem>
-                <CarouselItem>
-                  <img 
-                    src="/lovable-uploads/1ea22860-90d1-4355-b94c-94bfdd2d1657.png" 
-                    alt="Driveway pressure washing" 
-                    className="rounded-lg shadow-lg w-full h-auto"
-                  />
-                </CarouselItem>
-                <CarouselItem>
-                  <img 
-                    src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
-                    alt="Pressure washing service" 
-                    className="rounded-lg shadow-lg w-full h-auto"
-                  />
-                </CarouselItem>
-              </CarouselContent>
-              <div className="flex justify-center mt-4">
-                <CarouselPrevious className="relative static mx-2" />
-                <CarouselNext className="relative static mx-2" />
-              </div>
-            </Carousel>
-          </div>
           <div className="md:w-1/2">
             <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
             <p className="text-gray-600 mb-6">
@@ -142,101 +111,46 @@ const PressureWashing = () => {
               </div>
             </div>
           </div>
+          <div className="md:w-1/2">
+            <img 
+              src="/lovable-uploads/d24d1e3b-a9e0-4367-8302-d98085212f73.png" 
+              alt="House pressure washing service" 
+              className="rounded-lg shadow-lg w-full h-auto"
+            />
+          </div>
         </div>
       </section>
 
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="section-title">Dramatic Before & After Transformations</h2>
+          <h2 className="section-title">Our Pressure Washing Services</h2>
           <p className="section-subtitle">
-            See the incredible difference our house washing services make on homes just like yours
+            Professional pressure washing solutions for your home and commercial property
           </p>
           
-          <div className="mt-12 max-w-4xl mx-auto">
-            <Carousel className="w-full">
+          <div className="mt-12 w-full">
+            <Carousel className="w-full" setApi={setApi}>
               <CarouselContent>
                 <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/ef45fd36-a81d-41a3-8184-d3a91694f5ca.png" 
-                        alt="House washing before and after transformation" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
+                  <img 
+                    src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" 
+                    alt="Commercial pressure washing" 
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
                 </CarouselItem>
-                
                 <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/148003bb-352d-4ff8-af0b-2637eabaf9eb.png" 
-                        alt="Siding cleaning before and after transformation" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
+                  <img 
+                    src="/lovable-uploads/116727c7-867b-4c6c-b291-da7848be87ac.png" 
+                    alt="Window washing service" 
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
                 </CarouselItem>
-                
                 <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/6485c6c5-3c65-46de-b9f2-c054c708124b.png" 
-                        alt="House exterior washing before and after" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                
-                <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/43002110-e9f7-4e22-826e-a90e5dc6687e.png" 
-                        alt="Vinyl siding pressure washing before and after" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                
-                <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/55261385-ad80-4322-9551-dbc3392a881c.png" 
-                        alt="House siding pressure washing before and after" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-
-                <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/0ed0aa87-882b-4618-8a15-18d4ed7e4838.png" 
-                        alt="House siding pressure washing before and after transformation" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                
-                <CarouselItem>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src="/lovable-uploads/3dd77762-89a1-4273-ae3e-1c6fbc9894aa.png" 
-                        alt="House exterior pressure washing before and after clean" 
-                        className="w-full h-auto"
-                      />
-                    </CardContent>
-                  </Card>
+                  <img 
+                    src="/lovable-uploads/df1d5443-a527-44af-b261-a7bfde6064f7.png" 
+                    alt="Surface cleaning pressure washing" 
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
                 </CarouselItem>
               </CarouselContent>
               <div className="flex justify-center mt-4">
@@ -281,8 +195,8 @@ const PressureWashing = () => {
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <img 
-                  src="/lovable-uploads/fb43637a-3ca5-4495-997e-7cdb8fcaf83f.png" 
-                  alt="Driveway pressure washing before and after" 
+                  src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" 
+                  alt="Driveway pressure washing" 
                   className="w-full h-auto"
                 />
               </CardContent>
