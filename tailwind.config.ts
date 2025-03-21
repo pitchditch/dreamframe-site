@@ -137,6 +137,10 @@ export default {
 				},
 				'slide': {
 					'0%': { transform: 'translateX(0)' },
+					'100%': { transform: 'translateX(-50%)' }
+				},
+				'testimonial-carousel': {
+					'0%': { transform: 'translateX(0)' },
 					'100%': { transform: 'translateX(-100%)' }
 				}
 			},
@@ -149,6 +153,7 @@ export default {
 				'scale-out': 'scale-out 0.2s ease-out',
 				'slide-down': 'slide-down 0.3s ease-out',
 				'slide-up': 'slide-up 0.3s ease-out',
+				'testimonial-carousel': 'testimonial-carousel 40s linear infinite'
 			}
 		}
 	},

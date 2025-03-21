@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Language = 'en' | 'pa';
@@ -11,6 +10,11 @@ const translations: TranslationsType = {
   en: {
     // General
     "Contact Us": "Contact Us",
+    "Home": "Home",
+    "About": "About",
+    "Services": "Services",
+    "Testimonials": "Testimonials",
+    "Contact": "Contact",
     "Have questions or ready to schedule a service? Get in touch with our team for exceptional pressure washing solutions.": "Have questions or ready to schedule a service? Get in touch with our team for exceptional pressure washing solutions.",
     "Get In Touch": "Get In Touch",
     "Send Us a Message": "Send Us a Message",
@@ -31,6 +35,22 @@ const translations: TranslationsType = {
     "Maple Ridge": "Maple Ridge",
     "Burnaby": "Burnaby",
     "And surrounding communities": "And surrounding communities",
+    "We Proudly Serve the following cities": "We Proudly Serve the following cities",
+    
+    // Home Page
+    "Professional Pressure Washing Services": "Professional Pressure Washing Services",
+    "Residential & Commercial": "Residential & Commercial",
+    "Revitalize Your Property": "Revitalize Your Property",
+    "Transform your home's exterior with our expert pressure washing services. We remove dirt, grime, and mold to reveal the beautiful property underneath.": "Transform your home's exterior with our expert pressure washing services. We remove dirt, grime, and mold to reveal the beautiful property underneath.",
+    "Get a Free Quote": "Get a Free Quote",
+    "Learn More": "Learn More",
+    "Our Services": "Our Services",
+    "Comprehensive Cleaning Solutions": "Comprehensive Cleaning Solutions",
+    "We offer a complete range of exterior cleaning services for residential and commercial properties throughout the Fraser Valley and Lower Mainland.": "We offer a complete range of exterior cleaning services for residential and commercial properties throughout the Fraser Valley and Lower Mainland.",
+    "View All Services": "View All Services",
+    "What Our Clients Say": "What Our Clients Say",
+    "Don't just take our word for it. Hear what our satisfied customers have to say about our services.": "Don't just take our word for it. Hear what our satisfied customers have to say about our services.",
+    "View More Testimonials": "View More Testimonials",
     
     // Form Fields
     "Your Name": "Your Name",
@@ -51,6 +71,20 @@ const translations: TranslationsType = {
     "Send Message": "Send Message",
     "Message Sent!": "Message Sent!",
     "Thank you for reaching out. We'll get back to you shortly.": "Thank you for reaching out. We'll get back to you shortly.",
+    
+    // Services
+    "Pressure Washing": "Pressure Washing",
+    "Professional pressure washing for your home's exterior surfaces.": "Professional pressure washing for your home's exterior surfaces.",
+    "Window Cleaning": "Window Cleaning",
+    "Streak-free window cleaning for residential and commercial properties.": "Streak-free window cleaning for residential and commercial properties.",
+    "Gutter Cleaning": "Gutter Cleaning",
+    "Complete gutter cleaning and maintenance services.": "Complete gutter cleaning and maintenance services.",
+    "Roof Cleaning": "Roof Cleaning",
+    "Effective roof cleaning to remove moss, algae, and debris.": "Effective roof cleaning to remove moss, algae, and debris.",
+    "House Washing": "House Washing",
+    "Soft washing techniques to clean siding without damage.": "Soft washing techniques to clean siding without damage.",
+    "Commercial Services": "Commercial Services",
+    "Specialized cleaning solutions for commercial properties.": "Specialized cleaning solutions for commercial properties.",
     
     // FAQ
     "Frequently Asked Questions": "Frequently Asked Questions",
@@ -87,6 +121,11 @@ const translations: TranslationsType = {
   pa: {
     // General
     "Contact Us": "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+    "Home": "ਘਰ",
+    "About": "ਬਾਰੇ",
+    "Services": "ਸੇਵਾਵਾਂ",
+    "Testimonials": "ਗਾਹਕਾਂ ਦੀ ਰਾਏ",
+    "Contact": "ਸੰਪਰਕ",
     "Have questions or ready to schedule a service? Get in touch with our team for exceptional pressure washing solutions.": "ਸਵਾਲ ਹਨ ਜਾਂ ਸੇਵਾ ਦਾ ਸਮਾਂ ਨਿਰਧਾਰਤ ਕਰਨ ਲਈ ਤਿਆਰ ਹੋ? ਵਧੀਆ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸਮਾਧਾਨਾਂ ਲਈ ਸਾਡੀ ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।",
     "Get In Touch": "ਸੰਪਰਕ ਵਿੱਚ ਰਹੋ",
     "Send Us a Message": "ਸਾਨੂੰ ਇੱਕ ਸੁਨੇਹਾ ਭੇਜੋ",
@@ -107,6 +146,22 @@ const translations: TranslationsType = {
     "Maple Ridge": "ਮੇਪਲ ਰਿੱਜ",
     "Burnaby": "ਬਰਨਬੀ",
     "And surrounding communities": "ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਭਾਈਚਾਰੇ",
+    "We Proudly Serve the following cities": "ਅਸੀਂ ਮਾਣ ਨਾਲ ਹੇਠ ਲਿਖੇ ਸ਼ਹਿਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ",
+    
+    // Home Page
+    "Professional Pressure Washing Services": "ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ",
+    "Residential & Commercial": "ਰਿਹਾਇਸ਼ੀ ਅਤੇ ਵਪਾਰਕ",
+    "Revitalize Your Property": "ਆਪਣੀ ਜਾਇਦਾਦ ਨੂੰ ਮੁੜ ਸੁਰਜੀਤ ਕਰੋ",
+    "Transform your home's exterior with our expert pressure washing services. We remove dirt, grime, and mold to reveal the beautiful property underneath.": "ਸਾਡੀਆਂ ਮਾਹਿਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ ਨਾਲ ਆਪਣੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਨੂੰ ਬਦਲੋ। ਅਸੀਂ ਹੇਠਾਂ ਮੌਜੂਦ ਸੁੰਦਰ ਜਾਇਦਾਦ ਨੂੰ ਪ੍ਰਗਟ ਕਰਨ ਲਈ ਗੰਦਗੀ, ਮੈਲ, ਅਤੇ ਫਫੂੰਦੀ ਨੂੰ ਹਟਾਉਂਦੇ ਹਾਂ।",
+    "Get a Free Quote": "ਮੁਫਤ ਭਾਅ ਪ੍ਰਾਪਤ ਕਰੋ",
+    "Learn More": "ਹੋਰ ਜਾਣੋ",
+    "Our Services": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ",
+    "Comprehensive Cleaning Solutions": "ਵਿਆਪਕ ਸਫਾਈ ਹੱਲ",
+    "We offer a complete range of exterior cleaning services for residential and commercial properties throughout the Fraser Valley and Lower Mainland.": "ਅਸੀਂ ਫ੍ਰੇਜ਼ਰ ਵੈਲੀ ਅਤੇ ਲੋਅਰ ਮੇਨਲੈਂਡ ਵਿੱਚ ਰਿਹਾਇਸ਼ੀ ਅਤੇ ਵਪਾਰਕ ਜਾਇਦਾਦਾਂ ਲਈ ਬਾਹਰੀ ਸਫਾਈ ਸੇਵਾਵਾਂ ਦੀ ਪੂਰੀ ਰੇਂਜ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ।",
+    "View All Services": "ਸਾਰੀਆਂ ਸੇਵਾਵਾਂ ਦੇਖੋ",
+    "What Our Clients Say": "ਸਾਡੇ ਗਾਹਕ ਕੀ ਕਹਿੰਦੇ ਹਨ",
+    "Don't just take our word for it. Hear what our satisfied customers have to say about our services.": "ਸਿਰਫ ਸਾਡੀ ਗੱਲ 'ਤੇ ਭਰੋਸਾ ਨਾ ਕਰੋ। ਸੁਣੋ ਕਿ ਸਾਡੇ ਸੰਤੁਸ਼ਟ ਗਾਹਕਾਂ ਦਾ ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਕੀ ਕਹਿਣਾ ਹੈ।",
+    "View More Testimonials": "ਹੋਰ ਗਵਾਹੀਆਂ ਦੇਖੋ",
     
     // Form Fields
     "Your Name": "ਤੁਹਾਡਾ ਨਾਮ",
@@ -127,6 +182,20 @@ const translations: TranslationsType = {
     "Send Message": "ਸੁਨੇਹਾ ਭੇਜੋ",
     "Message Sent!": "ਸੁਨੇਹਾ ਭੇਜਿਆ ਗਿਆ!",
     "Thank you for reaching out. We'll get back to you shortly.": "ਸੰਪਰਕ ਕਰਨ ਲਈ ਧੰਨਵਾਦ। ਅਸੀਂ ਜਲਦੀ ਹੀ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਾਂਗੇ।",
+    
+    // Services 
+    "Pressure Washing": "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ",
+    "Professional pressure washing for your home's exterior surfaces.": "ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਸਤਹਾਂ ਲਈ ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ।",
+    "Window Cleaning": "ਵਿੰਡੋ ਕਲੀਨਿੰਗ",
+    "Streak-free window cleaning for residential and commercial properties.": "ਰਿਹਾਇਸ਼ੀ ਅਤੇ ਵਪਾਰਕ ਜਾਇਦਾਦਾਂ ਲਈ ਧੱਬਾ-ਮੁਕਤ ਵਿੰਡੋ ਕਲੀਨਿੰਗ।",
+    "Gutter Cleaning": "ਗਟਰ ਕਲੀਨਿੰਗ",
+    "Complete gutter cleaning and maintenance services.": "ਪੂਰੀ ਗਟਰ ਸਫਾਈ ਅਤੇ ਰੱਖ-ਰਖਾਵ ਸੇਵਾਵਾਂ।",
+    "Roof Cleaning": "ਛੱਤ ਕਲੀਨਿੰਗ",
+    "Effective roof cleaning to remove moss, algae, and debris.": "ਕਾਈ, ਕਾਈ, ਅਤੇ ਮਲਬੇ ਨੂੰ ਹਟਾਉਣ ਲਈ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਛੱਤ ਦੀ ਸਫਾਈ।",
+    "House Washing": "ਘਰ ਦੀ ਧੁਲਾਈ",
+    "Soft washing techniques to clean siding without damage.": "ਬਿਨਾਂ ਨੁਕਸਾਨ ਦੇ ਸਾਈਡਿੰਗ ਨੂੰ ਸਾਫ਼ ਕਰਨ ਲਈ ਨਰਮ ਧੋਣ ਦੀਆਂ ਤਕਨੀਕਾਂ।",
+    "Commercial Services": "ਵਪਾਰਕ ਸੇਵਾਵਾਂ",
+    "Specialized cleaning solutions for commercial properties.": "ਵਪਾਰਕ ਜਾਇਦਾਦਾਂ ਲਈ ਵਿਸ਼ੇਸ਼ ਸਫਾਈ ਦੇ ਹੱਲ।",
     
     // FAQ
     "Frequently Asked Questions": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਣ ਵਾਲੇ ਸਵਾਲ",
