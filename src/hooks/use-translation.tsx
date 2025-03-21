@@ -32,14 +32,7 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('language', language);
   }, [language]);
 
-  // Auto-switch language every 5 seconds
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setLanguage(prevLang => prevLang === 'en' ? 'pa' : 'en');
-    }, 5000);
-    
-    return () => clearInterval(intervalId);
-  }, []);
+  // Remove the auto-switch functionality to only change when user selects
 
   const t = (key: TranslationKey): string => {
     // Return the translation for the key or the key itself if not found
