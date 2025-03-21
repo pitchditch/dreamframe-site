@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const services = [
   { name: 'Window Cleaning', price: '$199' },
@@ -9,56 +9,107 @@ const services = [
 ];
 
 const PriceBanner = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [visibleServices, setVisibleServices] = useState<Array<{name: string, price: string, id: string, position: number}>>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-  // Get 3 services starting from currentIndex with wraparound
-  const getVisibleServices = () => {
-    const visibleServices = [];
-    for (let i = 0; i < 3; i++) {
-      const index = (currentIndex + i) % services.length;
-      visibleServices.push(services[index]);
-    }
-    return visibleServices;
-  };
-
+  // Initialize and measure container width
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
       
-      // Wait for animation to complete before changing index
-      setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % services.length);
-        setIsAnimating(false);
-      }, 800); // Slightly faster transition
+      // Set up resize listener
+      const handleResize = () => {
+        if (containerRef.current) {
+          setContainerWidth(containerRef.current.offsetWidth);
+        }
+      };
       
-    }, 4000); // Longer duration between rotations
-
-    return () => clearInterval(interval);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
+  // Service rotation logic
+  useEffect(() => {
+    // Create initial services
+    const initialServices = services.slice(0, 2).map((service, idx) => ({
+      ...service,
+      id: `${service.name}-${Date.now()}-${idx}`,
+      position: idx === 0 ? -300 : -800 // Start off-screen to the left
+    }));
+    
+    setVisibleServices(initialServices);
+    
+    let nextServiceIndex = 2 % services.length;
+    
+    // Service rotation interval
+    const interval = setInterval(() => {
+      setVisibleServices(prev => {
+        // Filter out services that have moved off-screen
+        const currentServices = prev.filter(s => s.position < containerWidth + 200);
+        
+        // Add a new service if we have fewer than 2
+        if (currentServices.length < 2) {
+          const newService = {
+            ...services[nextServiceIndex],
+            id: `${services[nextServiceIndex].name}-${Date.now()}`,
+            position: -300 // Start off-screen to the left
+          };
+          
+          nextServiceIndex = (nextServiceIndex + 1) % services.length;
+          return [...currentServices, newService];
+        }
+        
+        return currentServices;
+      });
+    }, 5000); // Add a new service every 5 seconds
+    
+    // Animation frame for smooth movement
+    let animationFrameId: number;
+    
+    const animate = () => {
+      setVisibleServices(prev => 
+        prev.map(service => ({
+          ...service,
+          position: service.position + 1 // Move 1px per frame, slower movement
+        }))
+      );
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animationFrameId = requestAnimationFrame(animate);
+    
+    return () => {
+      clearInterval(interval);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [containerWidth]);
+
   return (
-    <div className="bg-bc-red py-2 text-white text-center text-sm font-medium overflow-hidden">
-      <div className="flex justify-center items-center gap-6 max-w-6xl mx-auto">
-        {getVisibleServices().map((service, idx) => (
-          <div 
-            key={`${service.name}-${idx}`}
-            className={`transition-all duration-800 ease-in-out transform hover:scale-110 cursor-pointer ${
-              isAnimating 
-                ? 'translate-x-full opacity-0' 
-                : 'translate-x-0 opacity-100'
-            }`}
-          >
-            <p>
-              {service.name} starting at{' '}
-              <span className="font-bold relative inline-block">
-                <span className="relative z-10">{service.price}</span>
-                <span className="absolute inset-0 bg-[#FEF7CD] opacity-50 rounded-sm -z-0 blur-sm transform scale-110"></span>
-              </span>
-            </p>
-          </div>
-        ))}
-      </div>
+    <div 
+      ref={containerRef}
+      className="bg-bc-red py-3 text-white text-center text-sm font-medium overflow-hidden relative"
+    >
+      {visibleServices.map(service => (
+        <div 
+          key={service.id}
+          className="absolute top-1/2 -translate-y-1/2 transition-transform hover:scale-110 cursor-pointer whitespace-nowrap duration-300"
+          style={{ 
+            left: `${service.position}px`,
+            transition: 'transform 0.3s ease'
+          }}
+        >
+          <p className="flex items-center">
+            <span className="inline-block">{service.name} starting at </span>
+            <span className="font-bold relative inline-block ml-1">
+              <span className="relative z-10">{service.price}</span>
+              <span className="absolute inset-0 bg-[#FEF7CD] opacity-50 rounded-sm -z-0 blur-sm transform scale-110"></span>
+            </span>
+          </p>
+        </div>
+      ))}
     </div>
   );
 };
