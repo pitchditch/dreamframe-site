@@ -23,9 +23,9 @@ export const ServicesDropdown = ({
       onMouseLeave={() => setIsServicesMenuOpen(false)}
     >
       <button 
-        className={`flex items-center transition-colors ${
+        className={`flex items-center transition-colors hover:scale-110 transition-all duration-300 ${
           isOverVideo 
-          ? 'text-white hover:text-gray-200' 
+          ? 'text-white hover:text-bc-red' 
           : `text-gray-700 hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
         }`}
         onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
@@ -41,14 +41,14 @@ export const ServicesDropdown = ({
       >
         <div className="py-2">
           <div className="px-4 py-2 text-sm font-medium text-gray-500">Residential</div>
-          <Link to="/services/window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Window Cleaning</Link>
-          <Link to="/services/gutter-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gutter Cleaning</Link>
-          <Link to="/services/house-washing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">House Washing</Link>
-          <Link to="/services/roof-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Roof Cleaning</Link>
+          <Link to="/services/window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red">Window Cleaning</Link>
+          <Link to="/services/gutter-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red">Gutter Cleaning</Link>
+          <Link to="/services/house-washing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red">House Washing</Link>
+          <Link to="/services/roof-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red">Roof Cleaning</Link>
           
           <div className="px-4 py-2 text-sm font-medium text-gray-500 mt-2">Commercial</div>
-          <Link to="/services/commercial-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Commercial Window Cleaning</Link>
-          <Link to="/services/parking-lot-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Parking Lot Cleaning</Link>
+          <Link to="/services/commercial-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red">Commercial Window Cleaning</Link>
+          <Link to="/services/parking-lot-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red">Parking Lot Cleaning</Link>
         </div>
       </div>
     </div>
