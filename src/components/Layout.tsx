@@ -7,13 +7,14 @@ import PriceBanner from './PriceBanner';
 
 interface LayoutProps {
   children: ReactNode;
+  hidePriceBanner?: boolean;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, hidePriceBanner = false }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <PriceBanner />
+      {!hidePriceBanner && <PriceBanner />}
       <main className="flex-grow">
         {children}
       </main>
