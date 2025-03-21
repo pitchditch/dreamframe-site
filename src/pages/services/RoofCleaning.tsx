@@ -4,7 +4,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
-import PortfolioGallery from '../../components/PortfolioGallery';
+import RoofCleaningGallery from '../../components/RoofCleaningGallery';
 import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
 
 const RoofCleaning = () => {
@@ -97,14 +97,14 @@ const RoofCleaning = () => {
         </div>
       </section>
 
-      {/* Past Work Gallery */}
+      {/* Before & After Gallery - NEW */}
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="section-title">Our Roof Cleaning Projects</h2>
+          <h2 className="section-title">Roof Cleaning Transformations</h2>
           <p className="section-subtitle">
-            View our impressive transformations on different types of roofs
+            See the dramatic difference our roof cleaning service makes on homes across British Columbia
           </p>
-          <PortfolioGallery />
+          <RoofCleaningGallery />
         </div>
       </section>
 
