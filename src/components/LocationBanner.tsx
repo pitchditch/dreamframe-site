@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from '@/hooks/use-translation';
 
 const locations = [
   "Vancouver",
@@ -20,6 +21,7 @@ const LocationBanner = () => {
   const [currentLocation, setCurrentLocation] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Clear any existing timeout to avoid memory leaks
@@ -54,11 +56,11 @@ const LocationBanner = () => {
   return (
     <div className="bg-bc-red py-3 text-white text-center overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center">
-          <span className="text-lg font-medium mr-3">We Serve</span>
-          <div className="min-w-32 text-center">
+        <div className="flex items-center justify-center relative">
+          <div className="whitespace-nowrap animate-[slide_20s_linear_infinite]">
+            <span className="text-lg font-medium mr-3">We Proudly Serve the following cities:</span>
             <span 
-              className={`text-lg font-medium italic inline-block transition-opacity duration-1000 ${
+              className={`text-lg font-medium italic inline-block transition-opacity duration-1000 ml-3 ${
                 isAnimating ? 'opacity-0' : 'opacity-100'
               }`}
             >

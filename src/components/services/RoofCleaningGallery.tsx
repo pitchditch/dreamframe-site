@@ -153,7 +153,7 @@ const RoofCleaningGallery = () => {
                         <img 
                           src={testimonial.image} 
                           alt={`Roof cleaning - ${testimonial.customerName}`}
-                          className="w-full h-auto rounded-t-lg object-cover aspect-[16/9]"
+                          className="w-full h-auto rounded-t-lg object-cover aspect-[1/1]"
                         />
                         
                         <div className="bg-white p-6 rounded-b-lg shadow-md">
