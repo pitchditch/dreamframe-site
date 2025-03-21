@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import ChatAssistant from "@/components/ChatAssistant";
 import {
   Form,
   FormControl,
@@ -72,55 +73,63 @@ const Contact = () => {
 
   return (
     <Layout>
-      <div className="bg-gradient-to-b from-black to-gray-900 text-white py-16">
+      {/* Hero section with background image */}
+      <div 
+        className="relative bg-cover bg-center py-20" 
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/lovable-uploads/48ff9838-e801-4c37-8a4d-eabefd80ad0b.png')`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
+        }}
+      >
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">Contact Us</h1>
-          <p className="text-gray-300 text-center max-w-2xl mx-auto mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">Contact Us</h1>
+          <p className="text-gray-200 text-center max-w-2xl mx-auto mb-12">
             Have questions or ready to schedule a service? 
             Get in touch with our team for exceptional pressure washing solutions.
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* Contact Information */}
-            <div className="bg-gray-800 rounded-lg p-8 shadow-lg">
-              <h2 className="text-2xl font-bold mb-6">Get In Touch</h2>
+            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-gray-700 hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px]">
+              <h2 className="text-2xl font-bold mb-6 text-white">Get In Touch</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start">
                   <MapPin className="text-bc-red mr-4 flex-shrink-0 mt-1" size={24} />
                   <div>
-                    <h3 className="font-medium mb-1">Location</h3>
-                    <p className="text-gray-400">Langley, BC, Canada</p>
-                    <p className="text-gray-400">Serving the Fraser Valley and surrounding areas</p>
+                    <h3 className="font-medium mb-1 text-white">Location</h3>
+                    <p className="text-gray-300">Langley, BC, Canada</p>
+                    <p className="text-gray-300">Serving the Fraser Valley and surrounding areas</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
                   <Phone className="text-bc-red mr-4 flex-shrink-0 mt-1" size={24} />
                   <div>
-                    <h3 className="font-medium mb-1">Phone</h3>
-                    <p className="text-gray-400">778 808 7620</p>
-                    <p className="text-gray-400">Monday-Friday: 8AM - 6PM</p>
-                    <p className="text-gray-400">Saturday: 9AM - 5PM</p>
+                    <h3 className="font-medium mb-1 text-white">Phone</h3>
+                    <p className="text-gray-300">778 808 7620</p>
+                    <p className="text-gray-300">Monday-Friday: 8AM - 6PM</p>
+                    <p className="text-gray-300">Saturday: 9AM - 5PM</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
                   <Mail className="text-bc-red mr-4 flex-shrink-0 mt-1" size={24} />
                   <div>
-                    <h3 className="font-medium mb-1">Email</h3>
-                    <p className="text-gray-400">info@bcpressurewashing.ca</p>
-                    <p className="text-gray-400">We typically respond within 24 hours</p>
+                    <h3 className="font-medium mb-1 text-white">Email</h3>
+                    <p className="text-gray-300">info@bcpressurewashing.ca</p>
+                    <p className="text-gray-300">We typically respond within 24 hours</p>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-8 p-6 bg-black/30 rounded-lg">
-                <h3 className="text-xl font-medium mb-4">Service Areas</h3>
-                <p className="text-gray-400 mb-2">
+              <div className="mt-8 p-6 bg-gray-900/60 rounded-lg">
+                <h3 className="text-xl font-medium mb-4 text-white">Service Areas</h3>
+                <p className="text-gray-300 mb-2">
                   We proudly serve residential and commercial clients throughout:
                 </p>
-                <ul className="list-disc pl-5 text-gray-400 space-y-1">
+                <ul className="list-disc pl-5 text-gray-300 space-y-1">
                   <li>Langley</li>
                   <li>Surrey</li>
                   <li>Abbotsford</li>
@@ -133,8 +142,8 @@ const Contact = () => {
             </div>
             
             {/* Contact Form */}
-            <div className="bg-gray-800 rounded-lg p-8 shadow-lg">
-              <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-gray-700 hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px]">
+              <h2 className="text-2xl font-bold mb-6 text-white text-center">Send Us a Message</h2>
               
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -143,18 +152,18 @@ const Contact = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Your Name</FormLabel>
+                        <FormLabel className="text-white">Your Name</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                             <Input
                               placeholder="John Doe"
-                              className="pl-10"
+                              className="pl-10 bg-gray-800/70 border-gray-700 text-white"
                               {...field}
                             />
                           </div>
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-400" />
                       </FormItem>
                     )}
                   />
@@ -165,18 +174,18 @@ const Contact = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email Address</FormLabel>
+                          <FormLabel className="text-white">Email Address</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                               <Input
                                 placeholder="your.email@example.com"
-                                className="pl-10"
+                                className="pl-10 bg-gray-800/70 border-gray-700 text-white"
                                 {...field}
                               />
                             </div>
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-400" />
                         </FormItem>
                       )}
                     />
@@ -186,18 +195,18 @@ const Contact = () => {
                       name="phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Phone Number</FormLabel>
+                          <FormLabel className="text-white">Phone Number</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                               <Input
                                 placeholder="(123) 456-7890"
-                                className="pl-10"
+                                className="pl-10 bg-gray-800/70 border-gray-700 text-white"
                                 {...field}
                               />
                             </div>
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-400" />
                         </FormItem>
                       )}
                     />
@@ -208,29 +217,30 @@ const Contact = () => {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Your Message</FormLabel>
+                        <FormLabel className="text-white">Your Message</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <MessageSquare className="absolute left-3 top-3 text-gray-400" size={18} />
                             <Textarea
                               placeholder="Tell us about your needs..."
-                              className="min-h-[120px] pl-10 resize-none"
+                              className="min-h-[120px] pl-10 resize-none bg-gray-800/70 border-gray-700 text-white"
                               {...field}
                             />
                           </div>
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-400" />
                       </FormItem>
                     )}
                   />
                   
                   <div>
-                    <p className="text-sm font-medium mb-3">Services you're interested in:</p>
+                    <p className="text-sm font-medium mb-3 text-white">Services you're interested in:</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {["Window Cleaning", "Gutter Cleaning", "Roof Cleaning", "House Washing", "Commercial Services"].map((service) => (
                         <div className="flex items-center space-x-2" key={service}>
                           <Checkbox
                             id={service.toLowerCase().replace(/\s+/g, '-')}
+                            className="border-gray-600 data-[state=checked]:bg-bc-red data-[state=checked]:border-bc-red"
                             onCheckedChange={(checked) => {
                               const serviceInterest = form.getValues().serviceInterest || [];
                               if (checked) {
@@ -278,46 +288,54 @@ const Contact = () => {
               </Form>
             </div>
           </div>
-          
-          <div className="mt-16 max-w-6xl mx-auto">
-            <div className="bg-gray-800 rounded-lg p-8 shadow-lg">
+        </div>
+      </div>
+      
+      {/* FAQ Section */}
+      <div className="bg-gray-100 py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-white rounded-lg p-8 shadow-lg">
               <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <h3 className="text-lg font-medium mb-2 text-bc-red">Do you offer free quotes?</h3>
-                  <p className="text-gray-400">Yes, we provide free, no-obligation quotes for all our services. Contact us to schedule an assessment.</p>
+                  <p className="text-gray-700">Yes, we provide free, no-obligation quotes for all our services. Contact us to schedule an assessment.</p>
                 </div>
                 
                 <div>
                   <h3 className="text-lg font-medium mb-2 text-bc-red">What areas do you serve?</h3>
-                  <p className="text-gray-400">We serve Langley, Surrey, Abbotsford, White Rock, Maple Ridge, Burnaby, and surrounding areas in BC.</p>
+                  <p className="text-gray-700">We serve Langley, Surrey, Abbotsford, White Rock, Maple Ridge, Burnaby, and surrounding areas in BC.</p>
                 </div>
                 
                 <div>
                   <h3 className="text-lg font-medium mb-2 text-bc-red">How often should I have my gutters cleaned?</h3>
-                  <p className="text-gray-400">We recommend cleaning gutters at least twice a year, typically in spring and fall, to prevent clogs and water damage.</p>
+                  <p className="text-gray-700">We recommend cleaning gutters at least twice a year, typically in spring and fall, to prevent clogs and water damage.</p>
                 </div>
                 
                 <div>
                   <h3 className="text-lg font-medium mb-2 text-bc-red">Are your cleaning products eco-friendly?</h3>
-                  <p className="text-gray-400">Yes, we use environmentally-friendly cleaning solutions that effectively remove dirt and grime without harming plants or wildlife.</p>
+                  <p className="text-gray-700">Yes, we use environmentally-friendly cleaning solutions that effectively remove dirt and grime without harming plants or wildlife.</p>
                 </div>
                 
                 <div>
                   <h3 className="text-lg font-medium mb-2 text-bc-red">How long does a typical service take?</h3>
-                  <p className="text-gray-400">Service times vary depending on the size of your property and the specific service. Most residential jobs are completed within a few hours.</p>
+                  <p className="text-gray-700">Service times vary depending on the size of your property and the specific service. Most residential jobs are completed within a few hours.</p>
                 </div>
                 
                 <div>
                   <h3 className="text-lg font-medium mb-2 text-bc-red">Do you offer any guarantees?</h3>
-                  <p className="text-gray-400">Yes, we stand behind our work with a satisfaction guarantee. If you're not satisfied, we'll return to address any issues.</p>
+                  <p className="text-gray-700">Yes, we stand behind our work with a satisfaction guarantee. If you're not satisfied, we'll return to address any issues.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Add the ChatAssistant component */}
+      <ChatAssistant />
     </Layout>
   );
 };
