@@ -14,10 +14,10 @@ export const NavLink = ({ to, isOverVideo, children }: NavLinkProps) => {
   return (
     <Link 
       to={to} 
-      className={`transition-colors ${
+      className={`transition-colors hover:text-bc-red ${
         isOverVideo 
-        ? 'text-white hover:text-gray-200 text-shadow-sm' 
-        : `text-gray-700 hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
+        ? 'text-white hover:text-bc-red hover:text-shadow-white text-shadow-sm' 
+        : `text-gray-700 hover:text-bc-red hover:text-shadow-dark ${isActive ? 'font-medium text-bc-red' : ''}`
       }`}
     >
       {children}

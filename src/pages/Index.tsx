@@ -1,11 +1,9 @@
-
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import ServicesSection from '../components/home/ServicesSection';
 import ServiceSlideshow from '../components/home/ServiceSlideshow';
 import PackagesSection from '../components/home/PackagesSection';
-import CTABanner from '../components/home/CTABanner';
 import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
@@ -53,7 +51,6 @@ const Index = () => {
       <PriceCalculatorForm />
       <ProcessSection />
       <TestimonialsSection />
-      <CTABanner />
       <CallButton />
     </Layout>
   );

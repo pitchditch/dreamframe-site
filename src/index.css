@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -91,6 +90,14 @@
   
   .text-shadow-sm {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  }
+  
+  .text-shadow-white {
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+  }
+  
+  .text-shadow-dark {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   }
 
   .badge-pill {
