@@ -23,10 +23,10 @@ export const ServicesDropdown = ({
       onMouseLeave={() => setIsServicesMenuOpen(false)}
     >
       <button 
-        className={`flex items-center transition-colors ${
+        className={`flex items-center transition-all duration-200 px-3 py-1 rounded-md hover:scale-110 ${
           isOverVideo 
-          ? 'text-white hover:text-gray-200' 
-          : `text-gray-700 hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
+          ? 'text-white hover:text-bc-red hover:bg-white/90' 
+          : `text-gray-700 hover:text-bc-red hover:bg-gray-100 ${isActive ? 'font-medium text-bc-red' : ''}`
         }`}
         onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
         aria-expanded={isServicesMenuOpen}
@@ -41,15 +41,15 @@ export const ServicesDropdown = ({
       >
         <div className="py-2">
           <div className="px-4 py-2 text-sm font-medium text-gray-500">Residential</div>
-          <Link to="/services/window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Window Cleaning</Link>
-          <Link to="/services/gutter-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Gutter Cleaning</Link>
-          <Link to="/services/house-washing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">House Washing</Link>
-          <Link to="/services/roof-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Roof Cleaning</Link>
+          <Link to="/services/window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">Window Cleaning</Link>
+          <Link to="/services/gutter-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">Gutter Cleaning</Link>
+          <Link to="/services/house-washing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">House Washing</Link>
+          <Link to="/services/roof-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">Roof Cleaning</Link>
           
           <div className="px-4 py-2 text-sm font-medium text-gray-500 mt-2">Commercial</div>
-          <Link to="/services/commercial-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Commercial Window Cleaning</Link>
-          <Link to="/services/storefront-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Storefront Window Cleaning</Link>
-          <Link to="/services/parking-lot-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Parking Lot Cleaning</Link>
+          <Link to="/services/commercial-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">Commercial Window Cleaning</Link>
+          <Link to="/services/storefront-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">Storefront Window Cleaning</Link>
+          <Link to="/services/parking-lot-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red transition-colors">Parking Lot Cleaning</Link>
         </div>
       </div>
     </div>

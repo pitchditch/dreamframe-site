@@ -4,8 +4,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
-import RoofTypeGallery from '../../components/RoofTypeGallery';
-import BeforeAfterCarousel from '../../components/BeforeAfterCarousel';
+import PortfolioGallery from '../../components/PortfolioGallery';
 import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
 
 const RoofCleaning = () => {
@@ -98,15 +97,14 @@ const RoofCleaning = () => {
         </div>
       </section>
 
-      {/* Roof Types Gallery */}
-      <section className="container mx-auto px-4 py-8">
-        <RoofTypeGallery />
-      </section>
-
-      {/* Before & After Section */}
+      {/* Past Work Gallery */}
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <BeforeAfterCarousel />
+          <h2 className="section-title">Our Roof Cleaning Projects</h2>
+          <p className="section-subtitle">
+            View our impressive transformations on different types of roofs
+          </p>
+          <PortfolioGallery />
         </div>
       </section>
 
