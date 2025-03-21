@@ -4,6 +4,8 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
+import RoofTypeGallery from '../../components/RoofTypeGallery';
+import BeforeAfterCarousel from '../../components/BeforeAfterCarousel';
 import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
 
 const RoofCleaning = () => {
@@ -93,6 +95,18 @@ const RoofCleaning = () => {
               className="rounded-lg shadow-lg w-full h-auto"
             />
           </div>
+        </div>
+      </section>
+
+      {/* Roof Types Gallery */}
+      <section className="container mx-auto px-4 py-8">
+        <RoofTypeGallery />
+      </section>
+
+      {/* Before & After Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <BeforeAfterCarousel />
         </div>
       </section>
 

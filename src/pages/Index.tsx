@@ -10,6 +10,7 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CallButton from '../components/CallButton';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
+import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   useEffect(() => {
@@ -52,6 +53,7 @@ const Index = () => {
       <PriceCalculatorForm />
       <ProcessSection />
       <TestimonialsSection />
+      <CTABanner />
       <CallButton />
     </Layout>
   );
