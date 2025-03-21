@@ -71,7 +71,9 @@ const translations: TranslationsType = {
     // Services
     "Pressure Washing": "Pressure Washing",
     "Professional pressure washing for your home's exterior surfaces.": "Professional pressure washing for your home's exterior surfaces.",
+    "Window Cleaning": "Window Cleaning",
     "Streak-free window cleaning for residential and commercial properties.": "Streak-free window cleaning for residential and commercial properties.",
+    "Gutter Cleaning": "Gutter Cleaning",
     "Complete gutter cleaning and maintenance services.": "Complete gutter cleaning and maintenance services.",
     "Roof Cleaning": "Roof Cleaning",
     "Effective roof cleaning to remove moss, algae, and debris.": "Effective roof cleaning to remove moss, algae, and debris.",
@@ -211,10 +213,8 @@ const translations: TranslationsType = {
     "Review Your Quote": "Review Your Quote",
     "Please review your information before submitting": "Please review your information before submitting",
     "Selected Service": "Selected Service",
-    "Property Type": "Property Type",
     "Property Size": "Property Size",
     "Add-ons": "Add-ons",
-    "Contact Information": "Contact Information", 
     "Name:": "Name:",
     "Email:": "Email:",
     "Phone:": "Phone:",
@@ -235,7 +235,6 @@ const translations: TranslationsType = {
     "Recent Roof Cleaning Projects": "Recent Roof Cleaning Projects",
     "See our professional roof cleaning results and what our happy customers have to say about our service.": "See our professional roof cleaning results and what our happy customers have to say about our service.",
     "Read Full Testimonial": "Read Full Testimonial",
-    "View All Testimonials": "View All Testimonials",
     
     // CTA 
     "Ready to Transform Your Property?": "Ready to Transform Your Property?",
