@@ -3,6 +3,7 @@ import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
+import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
 import CallToAction from '../../components/CallToAction';
 import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
 
@@ -95,6 +96,8 @@ const RoofCleaning = () => {
           </div>
         </div>
       </section>
+
+      <RoofCleaningGallery />
 
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
