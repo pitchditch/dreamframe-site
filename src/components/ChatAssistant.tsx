@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { toast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/use-translation";
 
 // Pre-defined responses for common questions
 const RESPONSES = {
@@ -142,10 +143,11 @@ type CallbackInfo = {
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      text: "Hi there! Ask me any questions about our pressure washing services.",
+      text: t("Hi there! Ask me any questions about our pressure washing services."),
       isUser: false,
     },
   ]);
@@ -371,7 +373,7 @@ const ChatAssistant = () => {
     setIsSchedulingCall(true);
     const scheduleMessage = {
       id: Date.now().toString(),
-      text: "I'd like to schedule a callback.",
+      text: t("I'd like to schedule a callback."),
       isUser: true,
     };
     
@@ -380,7 +382,7 @@ const ChatAssistant = () => {
     setTimeout(() => {
       const aiResponse = {
         id: (Date.now() + 1).toString(),
-        text: "Great! To schedule a callback, I'll need some information. What's your name?",
+        text: t("Great! To schedule a callback, I'll need some information. What's your name?"),
         isUser: false,
       };
       setMessages((prev) => [...prev, aiResponse]);
@@ -455,7 +457,7 @@ const ChatAssistant = () => {
           <div className="bg-bc-red p-3 flex justify-between items-center rounded-t-lg">
             <div className="flex items-center gap-2 text-white">
               <Bot size={18} />
-              <span className="font-medium">BC Pressure Washing Assistant</span>
+              <span className="font-medium">{t("BC Pressure Washing Assistant")}</span>
             </div>
             <Button 
               size="icon" 
@@ -484,10 +486,10 @@ const ChatAssistant = () => {
                     {!message.isUser && (
                       <div className="flex items-center gap-2 mb-1">
                         <Avatar className="h-6 w-6">
-                          <AvatarImage src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="BC Logo" />
+                          <AvatarImage src="/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png" alt="BC Logo" />
                           <AvatarFallback>BC</AvatarFallback>
                         </Avatar>
-                        <span className="text-xs font-medium text-gray-700">BC Assistant</span>
+                        <span className="text-xs font-medium text-gray-700">{t("BC Assistant")}</span>
                       </div>
                     )}
                     <p className={`text-sm ${message.isUser ? 'text-white' : 'text-gray-800'}`}>
@@ -501,7 +503,7 @@ const ChatAssistant = () => {
 
             {suggestions.length > 0 && (
               <div className="p-2 border-t border-gray-200">
-                <p className="text-xs text-gray-500 mb-2">Suggested questions:</p>
+                <p className="text-xs text-gray-500 mb-2">{t("Suggested questions:")}</p>
                 <div className="flex flex-wrap gap-2">
                   {suggestions.map((suggestion, index) => (
                     <button
@@ -524,7 +526,7 @@ const ChatAssistant = () => {
                 onClick={startSchedulingCall}
               >
                 <CalendarRange size={14} />
-                Schedule a callback
+                {t("Schedule a callback")}
               </Button>
               <Button
                 variant="outline"
@@ -533,13 +535,13 @@ const ChatAssistant = () => {
                 onClick={() => window.location.href = "tel:+17788087620"}
               >
                 <Phone size={14} />
-                Call us now: 778 808 7620
+                {t("Call us now: 778 808 7620")}
               </Button>
             </div>
 
             <form onSubmit={handleSubmit} className="p-3 border-t border-gray-200 flex gap-2">
               <Input
-                placeholder="Type your question..."
+                placeholder={t("Type your question...")}
                 value={inputValue}
                 onChange={handleInputChange}
                 className="flex-grow"
@@ -556,18 +558,29 @@ const ChatAssistant = () => {
                 className="text-xs text-gray-500 hover:text-gray-700"
                 onClick={clearChat}
               >
-                Clear chat
+                {t("Clear chat")}
               </Button>
             </div>
           </CardContent>
         </Card>
       ) : (
         <Button 
-          className="rounded-full h-14 w-14 bg-bc-red hover:bg-red-700 shadow-lg animate-bounce"
+          className="rounded-full h-14 w-14 bg-bc-red hover:bg-red-700 shadow-lg p-0 overflow-hidden"
           onClick={() => setIsOpen(true)}
           aria-label="Chat with AI assistant"
         >
-          <MessageSquare className="h-6 w-6 text-white" />
+          <div className="h-full w-full flex items-center justify-center relative">
+            <Avatar className="h-14 w-14">
+              <AvatarImage 
+                src="/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png" 
+                alt="Chat Assistant" 
+                className="object-cover"
+              />
+              <AvatarFallback className="bg-bc-red">
+                <MessageSquare className="h-6 w-6 text-white" />
+              </AvatarFallback>
+            </Avatar>
+          </div>
         </Button>
       )}
     </div>
