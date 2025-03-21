@@ -18,7 +18,7 @@ const LanguageSelector = () => {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="bg-white/20 backdrop-blur-sm border-white/30 hover:bg-white/30">
           <Globe className="h-4 w-4 mr-2" />
-          <span>{t('Select Language')}</span>
+          <span>{language === 'en' ? 'Select Language' : 'ਭਾਸ਼ਾ ਚੁਣੋ'}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
