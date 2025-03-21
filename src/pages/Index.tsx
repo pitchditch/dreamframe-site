@@ -53,6 +53,7 @@ const Index = () => {
       <PriceCalculatorForm />
       <ProcessSection />
       <TestimonialsSection />
+      <CTABanner />
       <CallButton />
     </Layout>
   );
