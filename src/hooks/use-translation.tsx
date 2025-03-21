@@ -22,8 +22,8 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
   // Load language preference from localStorage on mount
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage === 'pa') {
-      setLanguage('pa');
+    if (savedLanguage === 'pa' || savedLanguage === 'en') {
+      setLanguage(savedLanguage as Language);
     }
   }, []);
 
@@ -31,8 +31,6 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     localStorage.setItem('language', language);
   }, [language]);
-
-  // Remove the auto-switch functionality to only change when user selects
 
   const t = (key: TranslationKey): string => {
     // Return the translation for the key or the key itself if not found
