@@ -7,6 +7,7 @@ const services = [
   { name: 'Gutter Cleaning', price: '$199' },
   { name: 'Pressure Washing', price: '$250' },
   { name: 'Roof Cleaning', price: '$350' },
+  { name: 'Storefront Cleaning', price: '$50/mo', link: '/services/storefront-window-cleaning' },
   { name: 'Monthly Subscription', price: '$50/mo', link: '/subscription' },
   { name: 'Yearly Subscription', price: '$600/yr', link: '/subscription' },
 ];
@@ -91,8 +92,8 @@ const PriceBanner = () => {
     };
   }, [containerWidth]);
 
-  // Don't render the banner on the subscription page
-  if (location.pathname === '/subscription') {
+  // Don't render the banner on the subscription page or storefront window cleaning page
+  if (location.pathname === '/subscription' || location.pathname === '/services/storefront-window-cleaning') {
     return null;
   }
 

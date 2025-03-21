@@ -48,6 +48,7 @@ export const ServicesDropdown = ({
           
           <div className="px-4 py-2 text-sm font-medium text-gray-500 mt-2">Commercial</div>
           <Link to="/services/commercial-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Commercial Window Cleaning</Link>
+          <Link to="/services/storefront-window-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Storefront Window Cleaning</Link>
           <Link to="/services/parking-lot-cleaning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Parking Lot Cleaning</Link>
         </div>
       </div>
