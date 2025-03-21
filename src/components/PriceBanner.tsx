@@ -16,7 +16,7 @@ const PriceBanner = () => {
     const interval = setInterval(() => {
       setIsAnimating(true);
       
-      // Wait for fade out animation to complete before changing index
+      // Wait for animation to complete before changing index
       setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % services.length);
         setIsAnimating(false);
@@ -31,7 +31,9 @@ const PriceBanner = () => {
     <div className="bg-bc-red py-1 text-white text-center text-sm font-medium overflow-hidden">
       <div 
         className={`transition-all duration-1000 ease-in-out ${
-          isAnimating ? 'opacity-0 transform translate-x-full' : 'opacity-100 transform translate-x-0'
+          isAnimating 
+            ? 'opacity-0 transform -translate-x-full' 
+            : 'opacity-100 transform translate-x-0'
         }`}
       >
         <p>
