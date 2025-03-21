@@ -18,7 +18,56 @@ const RESPONSES = {
   quote: "We offer free, no-obligation quotes for all our services. You can request one through our contact form or call us directly.",
   schedule: "We'd be happy to schedule a service for you! You can book an appointment by calling us at 778 808 7620, or I can help you schedule a call with our team. Would you like to schedule a call now?",
   scheduleCall: "Great! What's the best date and time for our team to call you? Also, could you provide your name and phone number so we can reach out to you?",
+  different: "We take pride in our attention to detail, eco-friendly cleaning solutions, and customer satisfaction guarantee. Plus, we customize our approach based on your property's needs.",
+  presence: "Not necessarily! As long as we have access to the areas that need cleaning, you can go about your day while we take care of everything.",
+  needsCleaning: "If you notice dirt, discoloration, mold, streaks, or clogged gutters, it's time for a professional cleaning. Regular maintenance prevents damage and costly repairs.",
+  weekends: "Yes, we offer flexible scheduling, including weekends, to accommodate your needs.",
+  payment: "We accept cash, credit/debit cards, and online payments for your convenience.",
   fallback: "Thanks for your question. For specific information, please give us a call at 778 808 7620 or fill out our contact form, and we'll get back to you promptly."
+};
+
+// Detailed responses for specific service questions
+const DETAILED_RESPONSES = {
+  // Pressure Washing
+  oilStains: "Yes! We use specialized cleaning solutions and high-pressure techniques to break down and remove oil stains effectively.",
+  pestProblems: "Definitely! It can remove spider webs, wasp nests, and other insect buildups around your home or business.",
+  diyPressureWash: "While DIY pressure washing is possible, improper techniques can cause damage. Our professional service ensures a safe and thorough clean.",
+  waterType: "We use both, depending on the surface and the type of stain. Hot water is great for grease and oil, while cold water works well for general cleaning.",
+  surfaces: "We clean driveways, sidewalks, patios, decks, fences, siding, and more!",
+  damageSurfaces: "Not at all! We adjust pressure levels based on the surface to ensure a deep clean without damage.",
+  frequencyPressureWash: "We recommend at least once a year to maintain your home's curb appeal and prevent buildup of dirt and mold.",
+  
+  // Window Cleaning
+  highRise: "We specialize in low- to mid-rise buildings, but we can discuss options for taller structures.",
+  hardWater: "We use professional-grade solutions that break down mineral deposits and restore your glass to its original clarity.",
+  energyBills: "Yes! Clean windows allow more natural light in, reducing the need for artificial lighting and improving energy efficiency.",
+  interiorExterior: "Yes! We offer streak-free cleaning for both interior and exterior windows.",
+  windowTypes: "We clean all types, including standard windows, skylights, glass doors, and storefronts.",
+  windowChemicals: "We use eco-friendly, streak-free cleaning solutions that are safe for your home and the environment.",
+  
+  // Gutter Cleaning
+  foundationDamage: "Yes! Overflowing water from clogged gutters can erode your foundation and lead to cracks or leaks in your basement.",
+  gutterGuards: "Yes, we offer gutter guard installation to help minimize debris buildup and reduce the need for frequent cleaning.",
+  neglectedGutters: "You risk water damage, mold growth, pest infestations, and even structural issues over time.",
+  gutterImportance: "Clogged gutters can lead to water damage, roof leaks, and foundation issues. Regular cleaning helps prevent costly repairs.",
+  cleaningFrequency: "At least twice a year—typically in the spring and fall.",
+  debrisRemoval: "Yes! We make sure to clear out all debris and leave your property looking spotless.",
+  
+  // Roof Cleaning
+  resaleValue: "Absolutely! A clean roof enhances curb appeal and can make a great first impression for potential buyers.",
+  solarPanels: "Yes! We provide safe cleaning for solar panels to ensure they work efficiently and generate maximum energy.",
+  serviceTime: "It depends on the size of the roof and the level of buildup, but most jobs take between 2–4 hours.",
+  roofCleaning: "Roof cleaning removes algae, moss, and debris, helping to extend your roof's lifespan and improve your home's appearance.",
+  highPressure: "No! We use a soft wash system to clean roofs safely without causing damage.",
+  shingles: "Not at all! Our gentle cleaning process protects shingles while effectively removing dirt and growth.",
+  
+  // Commercial Services
+  afterHours: "Yes! We can clean your commercial property outside of business hours to minimize disruption.",
+  hoaServices: "Yes! We work with property managers and HOAs to maintain clean and attractive communities.",
+  allergies: "Yes! Removing mold, pollen, and dust from surfaces can improve air quality and reduce allergy symptoms.",
+  bothHomesBusiness: "Yes! We provide professional cleaning services for residential properties, offices, storefronts, apartment complexes, and more.",
+  maintenancePlans: "Yes! We offer routine cleaning plans to keep your home or business looking its best year-round.",
+  insurance: "Absolutely! We are fully insured for your peace of mind."
 };
 
 // Service-specific questions suggestions
@@ -26,27 +75,54 @@ const QUESTION_SUGGESTIONS = {
   pressure: [
     "What surfaces can you pressure wash?",
     "Will pressure washing damage my surfaces?",
-    "How often should I pressure wash my property?"
+    "How often should I pressure wash my property?",
+    "Can pressure washing remove oil stains from my driveway?",
+    "Will pressure washing help with pest problems?",
+    "Can I pressure wash my property myself?",
+    "Do you use hot or cold water for pressure washing?"
   ],
   window: [
     "Do you clean both interior and exterior windows?",
     "What type of windows can you clean?",
-    "Do you use chemicals for window cleaning?"
+    "Do you use chemicals for window cleaning?",
+    "Do you clean high-rise windows?",
+    "How do you handle hard water stains on windows?",
+    "Will window cleaning help reduce my energy bills?"
   ],
   gutter: [
     "Why is gutter cleaning important?",
     "How often should I clean my gutters?",
-    "Do you remove debris from my property after cleaning?"
+    "Do you remove debris from my property after cleaning?",
+    "Can clogged gutters cause foundation damage?",
+    "Do you install gutter guards?",
+    "What happens if I don't clean my gutters regularly?"
   ],
   roof: [
     "Why should I clean my roof?",
     "Do you use high-pressure washing on roofs?",
-    "Will roof cleaning affect my shingles?"
+    "Will roof cleaning affect my shingles?",
+    "Will roof cleaning help my home's resale value?",
+    "Do you clean solar panels?",
+    "How long does a roof cleaning service take?"
   ],
   commercial: [
     "Do you clean both homes and businesses?",
     "Do you offer maintenance plans?",
-    "Are you insured?"
+    "Are you insured?",
+    "Do you offer after-hours cleaning for businesses?",
+    "Do you provide services for HOAs and apartment complexes?",
+    "Can regular exterior cleaning help with allergies?"
+  ],
+  general: [
+    "What services do you offer?",
+    "Do you offer free estimates?",
+    "Are your cleaning methods safe for my home or business?",
+    "How do I schedule a service?",
+    "What makes your cleaning service different from others?",
+    "Do I need to be home for the service?",
+    "How do I know if my property needs cleaning?",
+    "Do you work on weekends?",
+    "What payment methods do you accept?"
   ]
 };
 
@@ -119,8 +195,59 @@ const ChatAssistant = () => {
     const lowerQuestion = question.toLowerCase();
     let response = "";
     
-    // Determine the appropriate response
-    if (lowerQuestion.includes("hi") || lowerQuestion.includes("hello") || lowerQuestion.includes("hey")) {
+    // Helper function to find a match in detailed responses
+    const findDetailedResponse = () => {
+      // Pressure washing specific questions
+      if (lowerQuestion.includes("oil stain")) return DETAILED_RESPONSES.oilStains;
+      if (lowerQuestion.includes("pest") || lowerQuestion.includes("spider") || lowerQuestion.includes("insect")) return DETAILED_RESPONSES.pestProblems;
+      if ((lowerQuestion.includes("diy") || lowerQuestion.includes("myself") || lowerQuestion.includes("self")) && lowerQuestion.includes("pressure")) return DETAILED_RESPONSES.diyPressureWash;
+      if (lowerQuestion.includes("hot") || lowerQuestion.includes("cold") || lowerQuestion.includes("water type")) return DETAILED_RESPONSES.waterType;
+      if (lowerQuestion.includes("surface") && lowerQuestion.includes("pressure")) return DETAILED_RESPONSES.surfaces;
+      if (lowerQuestion.includes("damage") && lowerQuestion.includes("pressure")) return DETAILED_RESPONSES.damageSurfaces;
+      if (lowerQuestion.includes("often") && lowerQuestion.includes("pressure")) return DETAILED_RESPONSES.frequencyPressureWash;
+      
+      // Window cleaning specific questions
+      if (lowerQuestion.includes("high") && lowerQuestion.includes("rise")) return DETAILED_RESPONSES.highRise;
+      if (lowerQuestion.includes("hard water") || lowerQuestion.includes("mineral")) return DETAILED_RESPONSES.hardWater;
+      if (lowerQuestion.includes("energy") || lowerQuestion.includes("bill")) return DETAILED_RESPONSES.energyBills;
+      if ((lowerQuestion.includes("interior") || lowerQuestion.includes("inside")) && (lowerQuestion.includes("exterior") || lowerQuestion.includes("outside")) && lowerQuestion.includes("window")) return DETAILED_RESPONSES.interiorExterior;
+      if (lowerQuestion.includes("type") && lowerQuestion.includes("window")) return DETAILED_RESPONSES.windowTypes;
+      if ((lowerQuestion.includes("chemical") || lowerQuestion.includes("solution")) && lowerQuestion.includes("window")) return DETAILED_RESPONSES.windowChemicals;
+      
+      // Gutter cleaning specific questions
+      if (lowerQuestion.includes("foundation") && lowerQuestion.includes("damage")) return DETAILED_RESPONSES.foundationDamage;
+      if (lowerQuestion.includes("guard") && lowerQuestion.includes("gutter")) return DETAILED_RESPONSES.gutterGuards;
+      if ((lowerQuestion.includes("neglect") || lowerQuestion.includes("don't") || lowerQuestion.includes("dont")) && lowerQuestion.includes("gutter")) return DETAILED_RESPONSES.neglectedGutters;
+      if ((lowerQuestion.includes("important") || lowerQuestion.includes("why")) && lowerQuestion.includes("gutter")) return DETAILED_RESPONSES.gutterImportance;
+      if ((lowerQuestion.includes("often") || lowerQuestion.includes("frequency")) && lowerQuestion.includes("gutter")) return DETAILED_RESPONSES.cleaningFrequency;
+      if (lowerQuestion.includes("debris") && lowerQuestion.includes("gutter")) return DETAILED_RESPONSES.debrisRemoval;
+      
+      // Roof cleaning specific questions
+      if (lowerQuestion.includes("resale") || lowerQuestion.includes("value") || lowerQuestion.includes("sell")) return DETAILED_RESPONSES.resaleValue;
+      if (lowerQuestion.includes("solar")) return DETAILED_RESPONSES.solarPanels;
+      if ((lowerQuestion.includes("long") || lowerQuestion.includes("time") || lowerQuestion.includes("duration")) && lowerQuestion.includes("roof")) return DETAILED_RESPONSES.serviceTime;
+      if ((lowerQuestion.includes("why") || lowerQuestion.includes("reason")) && lowerQuestion.includes("roof")) return DETAILED_RESPONSES.roofCleaning;
+      if (lowerQuestion.includes("high") && lowerQuestion.includes("pressure") && lowerQuestion.includes("roof")) return DETAILED_RESPONSES.highPressure;
+      if (lowerQuestion.includes("shingle")) return DETAILED_RESPONSES.shingles;
+      
+      // Commercial services specific questions
+      if (lowerQuestion.includes("after") && (lowerQuestion.includes("hour") || lowerQuestion.includes("business"))) return DETAILED_RESPONSES.afterHours;
+      if (lowerQuestion.includes("hoa") || lowerQuestion.includes("apartment") || lowerQuestion.includes("complex")) return DETAILED_RESPONSES.hoaServices;
+      if (lowerQuestion.includes("allerg")) return DETAILED_RESPONSES.allergies;
+      if ((lowerQuestion.includes("home") && lowerQuestion.includes("business")) || (lowerQuestion.includes("residential") && lowerQuestion.includes("commercial"))) return DETAILED_RESPONSES.bothHomesBusiness;
+      if (lowerQuestion.includes("maintenance") || lowerQuestion.includes("plan") || lowerQuestion.includes("routine")) return DETAILED_RESPONSES.maintenancePlans;
+      if (lowerQuestion.includes("insur") || lowerQuestion.includes("liabil")) return DETAILED_RESPONSES.insurance;
+      
+      return null;
+    };
+    
+    // Check for detailed responses first
+    const detailedResponse = findDetailedResponse();
+    if (detailedResponse) {
+      response = detailedResponse;
+    } 
+    // If no detailed response, check general responses
+    else if (lowerQuestion.includes("hi") || lowerQuestion.includes("hello") || lowerQuestion.includes("hey")) {
       response = RESPONSES.greeting;
     } else if (lowerQuestion.includes("service") || lowerQuestion.includes("offer") || lowerQuestion.includes("provide")) {
       response = RESPONSES.services;
@@ -136,6 +263,16 @@ const ChatAssistant = () => {
       response = RESPONSES.quote;
     } else if (lowerQuestion.includes("book") || lowerQuestion.includes("schedule") || lowerQuestion.includes("appointment")) {
       response = RESPONSES.schedule;
+    } else if (lowerQuestion.includes("different") || lowerQuestion.includes("unique") || lowerQuestion.includes("special")) {
+      response = RESPONSES.different;
+    } else if (lowerQuestion.includes("home") && (lowerQuestion.includes("presence") || lowerQuestion.includes("be there"))) {
+      response = RESPONSES.presence;
+    } else if (lowerQuestion.includes("need") && lowerQuestion.includes("cleaning")) {
+      response = RESPONSES.needsCleaning;
+    } else if (lowerQuestion.includes("weekend")) {
+      response = RESPONSES.weekends;
+    } else if (lowerQuestion.includes("payment") || lowerQuestion.includes("pay") || lowerQuestion.includes("accept")) {
+      response = RESPONSES.payment;
     } else {
       response = RESPONSES.fallback;
     }
@@ -285,6 +422,9 @@ const ChatAssistant = () => {
       newSuggestions = QUESTION_SUGGESTIONS.roof;
     } else if (lowerValue.includes("commercial") || lowerValue.includes("business")) {
       newSuggestions = QUESTION_SUGGESTIONS.commercial;
+    } else if (lowerValue.length > 0) {
+      // Show general questions if typing but no specific service mentioned
+      newSuggestions = QUESTION_SUGGESTIONS.general.slice(0, 3);
     } else {
       newSuggestions = [];
     }

@@ -77,7 +77,7 @@ const Contact = () => {
       <div 
         className="relative bg-cover bg-center py-20" 
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/lovable-uploads/48ff9838-e801-4c37-8a4d-eabefd80ad0b.png')`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/lovable-uploads/48ff9838-e801-4c37-8a4d-eabefd80ad0b.png')`,
           backgroundPosition: 'center',
           backgroundSize: 'cover'
         }}
