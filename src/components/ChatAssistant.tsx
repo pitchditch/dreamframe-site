@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Bot, X, Send, MessageSquare, CalendarRange, Phone } from "lucide-react";
 import { Button } from "./ui/button";
@@ -572,7 +571,7 @@ const ChatAssistant = () => {
           <div className="h-full w-full flex items-center justify-center relative">
             <Avatar className="h-14 w-14">
               <AvatarImage 
-                src="/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png" 
+                src="/lovable-uploads/33b17d07-4d4c-4555-8e1e-4e898ab03c04.png" 
                 alt="Chat Assistant" 
                 className="object-cover"
               />
