@@ -1,3 +1,4 @@
+
 // Punjabi translations
 const punjabiTranslations = {
   // General
@@ -268,4 +269,7 @@ const punjabiTranslations = {
   "Our House Washing Process": "ਸਾਡੀ ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਪ੍ਰਕਿਰਿਆ",
   "We follow a comprehensive approach to safely clean and restore your home's exterior": "ਅਸੀਂ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸਾਫ਼ ਅਤੇ ਬਹਾਲ ਕਰਨ ਲਈ ਇੱਕ ਵਿਆਪਕ ਪਹੁੰਚ ਦੀ ਪਾਲਣਾ ਕਰਦੇ ਹਾਂ",
   "Surface Inspection": "ਸਤਹ ਨਿਰੀਖਣ",
-  "We carefully assess your home's exterior to determine the appropriate cleaning method and identify any areas needing special attention.": "ਅਸੀਂ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਦਾ
+  "We carefully assess your home's exterior to determine the appropriate cleaning method and identify any areas needing special attention.": "ਅਸੀਂ ਉਚਿਤ ਸਫਾਈ ਵਿਧੀ ਨਿਰਧਾਰਤ ਕਰਨ ਅਤੇ ਵਿਸ਼ੇਸ਼ ਧਿਆਨ ਦੀ ਲੋੜ ਵਾਲੇ ਕਿਸੇ ਵੀ ਖੇਤਰ ਦੀ ਪਛਾਣ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਦਾ ਧਿਆਨ ਨਾਲ ਮੁਲਾਂਕਣ ਕਰਦੇ ਹਾਂ।"
+};
+
+export default punjabiTranslations;
