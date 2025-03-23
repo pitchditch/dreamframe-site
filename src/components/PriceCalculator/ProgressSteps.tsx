@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface ProgressStepsProps {
   currentStep: number;
@@ -7,13 +8,15 @@ interface ProgressStepsProps {
 }
 
 const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
+  const { t } = useTranslation();
+  
   const steps = [
-    { number: 1, label: 'Service' },
-    { number: 2, label: 'Property' },
-    { number: 3, label: 'Size' },
-    { number: 4, label: 'Add-ons' },
-    { number: 5, label: 'Contact' },
-    { number: 6, label: 'Review' },
+    { number: 1, label: t('Service') },
+    { number: 2, label: t('Property') },
+    { number: 3, label: t('Size') },
+    { number: 4, label: t('Add-ons') },
+    { number: 5, label: t('Contact') },
+    { number: 6, label: t('Review') },
   ].slice(0, totalSteps);
 
   return (
