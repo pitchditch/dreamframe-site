@@ -87,32 +87,27 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
         render={({ field }) => (
           <FormItem>
             <div className="grid gap-4">
-              {getAddons().map((addon) => {
-                // Get the current values safely
-                const currentValues = field.value || [];
-                const isChecked = Array.isArray(currentValues) && currentValues.includes(addon.id);
-                
-                return (
-                  <label
-                    key={addon.id}
-                    className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:border-bc-red"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <Checkbox
-                        checked={isChecked}
-                        onCheckedChange={(checked) => {
-                          const newValues = checked
-                            ? [...currentValues, addon.id]
-                            : currentValues.filter((value: string) => value !== addon.id);
-                          field.onChange(newValues);
-                        }}
-                      />
-                      <span className="font-medium">{addon.label}</span>
-                    </div>
-                    <span className="text-bc-red">{addon.price}</span>
-                  </label>
-                );
-              })}
+              {getAddons().map((addon) => (
+                <label
+                  key={addon.id}
+                  className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:border-bc-red"
+                >
+                  <div className="flex items-center space-x-3">
+                    <Checkbox
+                      checked={field.value?.includes(addon.id)}
+                      onCheckedChange={(checked) => {
+                        const currentValues = field.value || [];
+                        const newValues = checked
+                          ? [...currentValues, addon.id]
+                          : currentValues.filter((value: string) => value !== addon.id);
+                        field.onChange(newValues);
+                      }}
+                    />
+                    <span className="font-medium">{addon.label}</span>
+                  </div>
+                  <span className="text-bc-red">{addon.price}</span>
+                </label>
+              ))}
             </div>
             <FormMessage />
           </FormItem>

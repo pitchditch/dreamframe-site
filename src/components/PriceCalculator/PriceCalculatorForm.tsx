@@ -12,8 +12,6 @@ import StepReview from './steps/StepReview';
 import StepPropertyType from './steps/StepPropertyType';
 import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useChatFormData } from '@/hooks/use-chat-form-data';
-import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   services: z.array(z.string()).min(1, "Please select at least one service"),
@@ -35,9 +33,6 @@ const formSchema = z.object({
 
 const PriceCalculatorForm = () => {
   const [step, setStep] = useState(1);
-  const { formData, clearFormData } = useChatFormData();
-  const { toast } = useToast();
-  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,47 +46,6 @@ const PriceCalculatorForm = () => {
       }
     },
   });
-
-  // Apply chat data to form when available
-  useEffect(() => {
-    if (Object.keys(formData).length > 0) {
-      // Apply each field from formData to the form
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'services' && Array.isArray(value) && value.length > 0) {
-          form.setValue('services', value);
-          toast({
-            title: "Information Applied",
-            description: "We've pre-filled your service selection based on your chat.",
-            duration: 5000,
-          });
-        } 
-        else if (key === 'propertyType' && value) {
-          form.setValue('propertyType', value as string);
-        }
-        else if (key === 'size' && value) {
-          form.setValue('size', value as string);
-        }
-        else if (key === 'fullName' && value) {
-          form.setValue('fullName', value as string);
-        }
-        else if (key === 'email' && value) {
-          form.setValue('email', value as string);
-        }
-        else if (key === 'phone' && value) {
-          form.setValue('phone', value as string);
-        }
-        else if (key === 'address' && value) {
-          form.setValue('address', value as string);
-        }
-        else if (key === 'notes' && value) {
-          form.setValue('notes', value as string);
-        }
-      });
-      
-      // Clear chat form data after applying to prevent duplicate applications
-      clearFormData();
-    }
-  }, [formData, form.setValue, clearFormData]);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data);

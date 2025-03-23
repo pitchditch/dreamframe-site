@@ -115,8 +115,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
                       <Checkbox 
                         checked={isSelected}
-                        // Removed the onCheckedChange here to prevent double triggers
-                        // since we're already handling it in the onClick of the parent div
+                        onCheckedChange={() => toggleServiceSelection(service.id)}
                         className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
                       />
                     </div>
@@ -133,18 +132,14 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                       <FormField
                         control={form.control}
                         name={fieldName}
-                        render={({ field }) => (
+                        render={() => (
                           <div className="space-y-3">
                             {service.options.map((option) => (
                               <FormField
                                 key={option.id}
                                 control={form.control}
                                 name={fieldName}
-                                render={({ field: optionField }) => {
-                                  // Fix: properly handle the checked state and onChange
-                                  const values = optionField.value || [];
-                                  const isChecked = Array.isArray(values) && values.includes(option.id);
-                                  
+                                render={({ field }) => {
                                   return (
                                     <FormItem
                                       key={option.id}
@@ -152,15 +147,16 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                                     >
                                       <FormControl>
                                         <Checkbox
-                                          checked={isChecked}
+                                          checked={field.value?.includes(option.id)}
                                           onCheckedChange={(checked) => {
-                                            const currentValues = optionField.value || [];
-                                            const newValues = checked
-                                              ? [...currentValues, option.id]
-                                              : currentValues.filter(
-                                                  (value: string) => value !== option.id
+                                            const currentValue = field.value || [];
+                                            return checked
+                                              ? field.onChange([...currentValue, option.id])
+                                              : field.onChange(
+                                                  currentValue.filter(
+                                                    (value: string) => value !== option.id
+                                                  )
                                                 );
-                                            optionField.onChange(newValues);
                                           }}
                                         />
                                       </FormControl>
@@ -184,7 +180,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                             <FormControl>
                               <RadioGroup
                                 onValueChange={field.onChange}
-                                value={field.value}
+                                defaultValue={field.value}
                                 className="space-y-3"
                               >
                                 {service.options.map((option) => (

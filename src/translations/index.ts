@@ -13,4 +13,3 @@ const translations: TranslationsType = {
 };
 
 export default translations;
-
