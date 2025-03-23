@@ -2,7 +2,6 @@
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card } from '@/components/ui/card';
-import { Sparkles } from 'lucide-react';
 
 interface ServiceCardProps {
   service: {
@@ -17,17 +16,25 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardProps) => {
+  const handleToggle = () => {
+    onToggle(service.id);
+  };
+
   return (
     <Card className={`p-0 overflow-hidden ${isSelected ? 'border-2 border-blue-500' : 'border border-gray-200'}`}>
       <div 
         className="p-4 cursor-pointer"
-        onClick={() => onToggle(service.id)}
+        onClick={handleToggle}
       >
         <div className="flex items-center mb-2">
           <div className="flex items-center justify-center w-6 h-6 mr-3">
             <Checkbox 
               checked={isSelected}
-              // No onCheckedChange to avoid double updates
+              // Prevent click events on the checkbox from bubbling up
+              // to avoid duplicate toggle calls
+              onClick={(e) => e.stopPropagation()}
+              // Remove onCheckedChange to avoid double updates
+              readOnly
             />
           </div>
           <span className="font-semibold text-lg">{service.title}</span>
