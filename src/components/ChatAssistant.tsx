@@ -1,26 +1,15 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, Phone, MessageCircle, Calendar, ArrowRight, HelpCircle, User, Info } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
-import { Link } from 'react-router-dom';
-import { useToast } from '@/hooks/use-toast';
 
 type MessageType = {
   type: 'user' | 'bot';
   text: string;
   isTyping?: boolean;
 };
-
-type ChatStep = 
-  | 'greeting' 
-  | 'booking' 
-  | 'qa' 
-  | 'human-support' 
-  | 'question-detail'
-  | 'follow-up';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,18 +19,15 @@ const ChatAssistant = () => {
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [currentSuggestion, setCurrentSuggestion] = useState(0);
   const [activeSuggestions, setActiveSuggestions] = useState<string[]>([]);
-  const [currentStep, setCurrentStep] = useState<ChatStep>('greeting');
-  const [currentQuestion, setCurrentQuestion] = useState('');
   const { t } = useTranslation();
-  const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const suggestions = [
-    t("Hi, I'm Jayden Fisher! Ask me any questions or call me"),
-    t("Got a question about pressure washing?"),
-    t("Need a free quote? I'm here to help!"),
-    t("Ask me about our pressure washing services"),
-    t("Questions about pricing? I can help!")
+    t("Have a question?"),
+    t("Need help with a quote?"),
+    t("Want to learn more about our services?"),
+    t("Looking for pricing information?"),
+    t("Wondering about our availability?")
   ];
 
   // Common questions and answers for the bot
@@ -141,39 +127,6 @@ const ChatAssistant = () => {
     { question: "Can regular exterior cleaning help with allergies?", answer: "Yes! Removing mold, pollen, and dust from surfaces can improve air quality and reduce allergy symptoms." }
   ];
 
-  // Suggested questions based on current step
-  const getStepSuggestions = (step: ChatStep) => {
-    switch (step) {
-      case 'greeting':
-        return [
-          "Book a Service",
-          "Ask a Question",
-          "Talk to a Human"
-        ];
-      case 'qa':
-        return [
-          "How much does it cost?",
-          "Do you service my area?",
-          "What's included in a cleaning?",
-          "What's your availability?"
-        ];
-      case 'follow-up':
-        return [
-          "Yes, Book Now",
-          "No, Show More Answers",
-          "Talk to a Human"
-        ];
-      case 'human-support':
-        return [
-          "Call Us",
-          "Leave a Message",
-          "Go Back"
-        ];
-      default:
-        return updateSuggestedQuestions(message);
-    }
-  };
-
   // Dynamic suggested questions based on user input
   const updateSuggestedQuestions = (inputText: string) => {
     if (!inputText.trim()) {
@@ -202,12 +155,8 @@ const ChatAssistant = () => {
   };
 
   useEffect(() => {
-    if (currentStep === 'question-detail') {
-      setActiveSuggestions(updateSuggestedQuestions(message));
-    } else {
-      setActiveSuggestions(getStepSuggestions(currentStep));
-    }
-  }, [message, currentStep]);
+    setActiveSuggestions(updateSuggestedQuestions(message));
+  }, [message]);
 
   useEffect(() => {
     const suggestionTimer = setTimeout(() => {
@@ -233,12 +182,11 @@ const ChatAssistant = () => {
   const toggleChat = () => {
     setIsOpen(!isOpen);
     if (!isOpen && messages.length === 0) {
-      setCurrentStep('greeting');
       setTimeout(() => {
         setMessages([
           { 
             type: 'bot', 
-            text: "Hi! I'm Jayden from BC Pressure Washing. Looking to book a service or have a question? I can help with both." 
+            text: "Hey there! 👋 I'm the AI version of Jayden Fisher, here to help with all your pressure washing questions! I can answer anything about our services, but if you need the real deal, Jayden is just a call away at 778-808-7620. What can I help you with today?" 
           }
         ]);
       }, 300);
@@ -270,109 +218,6 @@ const ChatAssistant = () => {
     }, 50);
   };
 
-  const handleBookingOption = () => {
-    setCurrentStep('booking');
-    const newMessages = [...messages, { type: 'user' as const, text: "I'd like to book a service" }];
-    
-    setMessages(newMessages);
-    
-    // Add a typing indicator
-    setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
-      
-      const responseText = "Great! Our online booking form will guide you through the process, including house size, service type, and date. Click below to get started.";
-      
-      // Simulate typing effect
-      simulateTyping(responseText, () => {
-        // This gets called when typing is complete
-      });
-    }, 500);
-  };
-
-  const handleQAOption = () => {
-    setCurrentStep('qa');
-    const newMessages = [...messages, { type: 'user' as const, text: "I have a question" }];
-    
-    setMessages(newMessages);
-    
-    // Add a typing indicator
-    setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
-      
-      const responseText = "I can answer questions about our services, pricing, availability, and more. What do you need help with?";
-      
-      // Simulate typing effect
-      simulateTyping(responseText, () => {
-        // This gets called when typing is complete
-      });
-    }, 500);
-  };
-
-  const handleHumanSupportOption = () => {
-    setCurrentStep('human-support');
-    const newMessages = [...messages, { type: 'user' as const, text: "I'd like to speak with a human" }];
-    
-    setMessages(newMessages);
-    
-    // Add a typing indicator
-    setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
-      
-      const responseText = "I'm happy to connect you with a team member. How would you like to chat?";
-      
-      // Simulate typing effect
-      simulateTyping(responseText, () => {
-        // This gets called when typing is complete
-      });
-    }, 500);
-  };
-
-  const handleFollowUpOption = (option: string) => {
-    const newMessages = [...messages, { type: 'user' as const, text: option }];
-    setMessages(newMessages);
-    
-    setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
-      
-      let responseText = "";
-      
-      if (option === "Yes, Book Now") {
-        setCurrentStep('booking');
-        responseText = "Great! Our online booking form will guide you through the process, including house size, service type, and date. Click below to get started.";
-      } else if (option === "No, Show More Answers") {
-        setCurrentStep('qa');
-        responseText = "I'd be happy to help you find a better answer. Here are some more topics I can assist with:";
-      } else if (option === "Talk to a Human") {
-        setCurrentStep('human-support');
-        responseText = "I'm happy to connect you with a team member. How would you like to chat?";
-      }
-      
-      simulateTyping(responseText, () => {});
-    }, 500);
-  };
-
-  const handleHumanSupportDetailOption = (option: string) => {
-    const newMessages = [...messages, { type: 'user' as const, text: option }];
-    setMessages(newMessages);
-    
-    setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
-      
-      let responseText = "";
-      
-      if (option === "Call Us") {
-        responseText = "You can reach us directly at 778-808-7620. We're available Monday to Saturday, 8am to 6pm.";
-      } else if (option === "Leave a Message") {
-        responseText = "Please visit our contact page to send us a message. We'll get back to you within 24 hours: https://bcpressurewashing.ca/contact";
-      } else if (option === "Go Back") {
-        setCurrentStep('greeting');
-        responseText = "No problem! What would you like to do?";
-      }
-      
-      simulateTyping(responseText, () => {});
-    }, 500);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -400,38 +245,13 @@ const ChatAssistant = () => {
       
       // Simulate typing effect
       simulateTyping(responseText, () => {
-        // Set up follow-up options
-        setCurrentStep('follow-up');
+        // This will be called when typing is complete
       });
     }, 500);
   };
 
-  const handleSuggestedQuestion = (option: string) => {
-    if (currentStep === 'greeting') {
-      if (option === "Book a Service") {
-        handleBookingOption();
-      } else if (option === "Ask a Question") {
-        handleQAOption();
-      } else if (option === "Talk to a Human") {
-        handleHumanSupportOption();
-      }
-      return;
-    }
-    
-    if (currentStep === 'follow-up') {
-      handleFollowUpOption(option);
-      return;
-    }
-    
-    if (currentStep === 'human-support') {
-      handleHumanSupportDetailOption(option);
-      return;
-    }
-
-    setCurrentStep('question-detail');
-    setCurrentQuestion(option);
-    
-    const userMessage: MessageType = { type: 'user', text: option };
+  const handleSuggestedQuestion = (question: string) => {
+    const userMessage: MessageType = { type: 'user', text: question };
     const newMessages = [...messages, userMessage];
     
     setMessages(newMessages);
@@ -442,8 +262,8 @@ const ChatAssistant = () => {
       
       // Find the matching FAQ
       const matchingFaq = faqData.find(faq => 
-        option.toLowerCase().includes(faq.question.toLowerCase()) ||
-        faq.question.toLowerCase().includes(option.toLowerCase())
+        question.toLowerCase().includes(faq.question.toLowerCase()) ||
+        faq.question.toLowerCase().includes(question.toLowerCase())
       );
       
       const responseText = matchingFaq 
@@ -452,19 +272,17 @@ const ChatAssistant = () => {
       
       // Simulate typing effect
       simulateTyping(responseText, () => {
-        // Set up follow-up options after answer is shown
-        setCurrentStep('follow-up');
+        // This will be called when typing is complete
       });
     }, 500);
   };
 
   const clearChat = () => {
     setChatHistory([...messages]);
-    setCurrentStep('greeting');
     setMessages([
       { 
         type: 'bot', 
-        text: "Hi! I'm Jayden from BC Pressure Washing. Looking to book a service or have a question? I can help with both." 
+        text: "Hey there! 👋 I'm the AI version of Jayden Fisher, here to help with all your pressure washing questions! I can answer anything about our services, but if you need the real deal, Jayden is just a call away at 778-808-7620. What can I help you with today?" 
       }
     ]);
   };
@@ -534,27 +352,16 @@ const ChatAssistant = () => {
           </div>
           
           <div className="p-2 border-t">
-            {currentStep === 'booking' && (
-              <div className="flex justify-center mb-2">
-                <Link to="/calculator">
-                  <Button className="bg-bc-red hover:bg-red-700 w-full">
-                    <Calendar className="mr-2" size={16} />
-                    Book Now
-                  </Button>
-                </Link>
-              </div>
-            )}
-          
             <div className="mb-2 overflow-x-auto pb-2">
               <ToggleGroup type="single" className="inline-flex space-x-1 min-w-max">
-                {activeSuggestions.map((suggestion, index) => (
+                {activeSuggestions.map((question, index) => (
                   <ToggleGroupItem 
                     key={index} 
-                    value={`suggestion-${index}`}
-                    onClick={() => handleSuggestedQuestion(suggestion)}
+                    value={`question-${index}`}
+                    onClick={() => handleSuggestedQuestion(question)}
                     className="text-xs py-1 px-2 border rounded bg-gray-50 whitespace-nowrap"
                   >
-                    {suggestion}
+                    {question}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
@@ -595,54 +402,46 @@ const ChatAssistant = () => {
             </div>
           </div>
           
-          <style dangerouslySetInnerHTML={{
-            __html: `
-              .typing-indicator {
-                display: inline-flex;
-                align-items: center;
-                margin-left: 5px;
-              }
-              .dot {
-                width: 4px;
-                height: 4px;
-                border-radius: 50%;
-                background-color: currentColor;
-                margin: 0 1px;
-                opacity: 0.7;
-                animation: pulse 1.5s infinite;
-              }
-              .dot:nth-child(2) {
-                animation-delay: 0.2s;
-              }
-              .dot:nth-child(3) {
-                animation-delay: 0.4s;
-              }
-              @keyframes pulse {
-                0%, 100% { opacity: 0.4; }
-                50% { opacity: 1; }
-              }
-              @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-              }
-              @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-5px); }
-              }
-            `
-          }}/>
+          <style jsx>{`
+            .typing-indicator {
+              display: inline-flex;
+              align-items: center;
+              margin-left: 5px;
+            }
+            .dot {
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background-color: currentColor;
+              margin: 0 1px;
+              opacity: 0.7;
+              animation: pulse 1.5s infinite;
+            }
+            .dot:nth-child(2) {
+              animation-delay: 0.2s;
+            }
+            .dot:nth-child(3) {
+              animation-delay: 0.4s;
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 0.4; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.2); }
+            }
+          `}</style>
         </div>
       )}
       
-      {!isOpen && (
-        <button
-          onClick={toggleChat}
-          className="bg-bc-red text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-red-700 transition-colors"
-          aria-label="Chat with us"
-        >
-          <MessageCircle size={28} />
-        </button>
-      )}
+      <Avatar 
+        className="h-14 w-14 border-2 border-white shadow-lg cursor-pointer hover:scale-105 transition-transform"
+        onClick={toggleChat}
+      >
+        <AvatarImage 
+          src="/lovable-uploads/f2a8fb4d-7253-4cb8-a13c-30140d7ccaf4.png" 
+          alt="Jayden Fisher" 
+          className="object-cover"
+        />
+        <AvatarFallback>JF</AvatarFallback>
+      </Avatar>
     </div>
   );
 };

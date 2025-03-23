@@ -1,5 +1,5 @@
 
-import React, { useMemo } from 'react';
+import React from 'react';
 
 interface ProgressStepsProps {
   currentStep: number;
@@ -7,24 +7,14 @@ interface ProgressStepsProps {
 }
 
 const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
-  // Create steps based on the totalSteps parameter using useMemo to avoid recreating on each render
-  const steps = useMemo(() => {
-    const labels = ['Service', 'Property', 'Size', 'Add-ons', 'Contact', 'Review'];
-    return Array.from({ length: totalSteps }, (_, i) => {
-      const stepNumber = i + 1;
-      return {
-        number: stepNumber,
-        label: labels[i] || `Step ${stepNumber}`
-      };
-    });
-  }, [totalSteps]);
-
-  // Calculate progress percentage safely
-  const progressPercentage = useMemo(() => {
-    return totalSteps <= 1 
-      ? 100 
-      : Math.max(0, Math.min(100, ((currentStep - 1) / (totalSteps - 1)) * 100));
-  }, [currentStep, totalSteps]);
+  const steps = [
+    { number: 1, label: 'Service' },
+    { number: 2, label: 'Property' },
+    { number: 3, label: 'Size' },
+    { number: 4, label: 'Add-ons' },
+    { number: 5, label: 'Contact' },
+    { number: 6, label: 'Review' },
+  ].slice(0, totalSteps);
 
   return (
     <div className="mb-8">
@@ -48,7 +38,7 @@ const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
         <div className="absolute top-4 left-0 right-0 h-0.5 bg-gray-200 -z-0 transform -translate-y-1/2">
           <div 
             className="h-full bg-bc-red transition-all duration-300" 
-            style={{ width: `${progressPercentage}%` }}
+            style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
           ></div>
         </div>
       </div>

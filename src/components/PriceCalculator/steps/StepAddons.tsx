@@ -1,5 +1,4 @@
 
-import { useState, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
   FormField,
@@ -18,21 +17,9 @@ interface StepAddonsProps {
 }
 
 const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
-  // Use state to store the services once instead of watching them on every render
-  const [currentServices, setCurrentServices] = useState<string[]>(form.getValues('services') || []);
-  
-  useEffect(() => {
-    // Update services only when the form value changes
-    const subscription = form.watch((value, { name }) => {
-      if (name === 'services') {
-        setCurrentServices(value.services || []);
-      }
-    });
-    
-    return () => subscription.unsubscribe();
-  }, [form]);
+  const service = form.watch('service');
 
-  // Create addon list based on services (static, doesn't change during render)
+  // Different addons based on selected service
   const getAddons = () => {
     const commonAddons = [
       {
@@ -57,8 +44,8 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
       },
     ];
 
-    // Check if pressure-washing is in the services array
-    if (currentServices && currentServices.includes('pressure-washing')) {
+    // Service specific add-ons
+    if (service === 'pressure-washing') {
       return [
         {
           id: 'house-washing',
@@ -87,18 +74,6 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
     return commonAddons;
   };
 
-  // Memoize the addons list
-  const [addonsList] = useState(() => getAddons());
-
-  // When services change, update the addon list
-  useEffect(() => {
-    const newAddonsList = getAddons();
-    if (JSON.stringify(newAddonsList) !== JSON.stringify(addonsList)) {
-      // Only update when necessary
-      setAddonsList(newAddonsList);
-    }
-  }, [currentServices]);
-
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -112,7 +87,7 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
         render={({ field }) => (
           <FormItem>
             <div className="grid gap-4">
-              {addonsList.map((addon) => (
+              {getAddons().map((addon) => (
                 <label
                   key={addon.id}
                   className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:border-bc-red"

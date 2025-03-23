@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -17,7 +17,7 @@ const formSchema = z.object({
   services: z.array(z.string()).min(1, "Please select at least one service"),
   size: z.string(),
   propertyType: z.string(),
-  addons: z.array(z.string()).default([]),
+  addons: z.array(z.string()),
   cleaning_options: z.object({
     window_cleaning: z.string().optional(),
     gutter_cleaning: z.string().optional(),
@@ -37,19 +37,13 @@ const PriceCalculatorForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       services: [],
-      size: '',
-      propertyType: 'residential',
       addons: [],
+      propertyType: 'residential',
       cleaning_options: {
         window_cleaning: '',
         gutter_cleaning: '',
         pressure_washing: [],
-      },
-      fullName: '',
-      email: '',
-      phone: '',
-      address: '',
-      notes: '',
+      }
     },
   });
 

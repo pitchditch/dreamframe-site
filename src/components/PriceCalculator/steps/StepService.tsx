@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
   FormField,
@@ -66,13 +66,15 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
   ];
 
   const toggleServiceSelection = (serviceId: string) => {
-    const isSelected = selectedServices.includes(serviceId);
-    const newSelection = isSelected 
-      ? selectedServices.filter(id => id !== serviceId)
-      : [...selectedServices, serviceId];
-    
-    setSelectedServices(newSelection);
-    form.setValue('services', newSelection, { shouldValidate: true });
+    setSelectedServices(prev => {
+      const isSelected = prev.includes(serviceId);
+      const newSelection = isSelected 
+        ? prev.filter(id => id !== serviceId)
+        : [...prev, serviceId];
+      
+      form.setValue('services', newSelection, { shouldValidate: true });
+      return newSelection;
+    });
   };
 
   const getFieldName = (serviceId: string) => {
@@ -113,7 +115,8 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
                       <Checkbox 
                         checked={isSelected}
-                        // Remove the onCheckedChange handler to avoid double toggling
+                        onCheckedChange={() => toggleServiceSelection(service.id)}
+                        className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
                       />
                     </div>
                     <span className="font-semibold text-lg">{service.title}</span>
@@ -147,12 +150,13 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                                           checked={field.value?.includes(option.id)}
                                           onCheckedChange={(checked) => {
                                             const currentValue = field.value || [];
-                                            const newValue = checked
-                                              ? [...currentValue, option.id]
-                                              : currentValue.filter(
-                                                  (value: string) => value !== option.id
+                                            return checked
+                                              ? field.onChange([...currentValue, option.id])
+                                              : field.onChange(
+                                                  currentValue.filter(
+                                                    (value: string) => value !== option.id
+                                                  )
                                                 );
-                                            field.onChange(newValue);
                                           }}
                                         />
                                       </FormControl>
