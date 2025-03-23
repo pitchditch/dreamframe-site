@@ -5,6 +5,7 @@ import { Logo } from './Logo';
 import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
+import LanguageSelector from '../LanguageSelector';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,17 +58,23 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Logo isOverVideo={isOverVideo} />
 
-        <NavbarDesktop 
-          isOverVideo={isOverVideo}
-          isServicesMenuOpen={isServicesMenuOpen}
-          setIsServicesMenuOpen={setIsServicesMenuOpen}
-        />
-        
-        <MobileMenuButton 
-          isOverVideo={isOverVideo}
-          isMenuOpen={isMenuOpen}
-          toggleMenu={toggleMenu}
-        />
+        <div className="flex items-center space-x-4">
+          <NavbarDesktop 
+            isOverVideo={isOverVideo}
+            isServicesMenuOpen={isServicesMenuOpen}
+            setIsServicesMenuOpen={setIsServicesMenuOpen}
+          />
+          
+          <div className="hidden md:block">
+            <LanguageSelector />
+          </div>
+          
+          <MobileMenuButton 
+            isOverVideo={isOverVideo}
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+          />
+        </div>
       </div>
 
       <NavbarMobile 
