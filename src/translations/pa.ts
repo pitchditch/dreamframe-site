@@ -50,33 +50,6 @@ const punjabiTranslations = {
   "Get a Free Quote": "ਮੁਫ਼ਤ ਕੋਟੇਸ਼ਨ ਲਓ",
   "Explore Our Services": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਪੜਚੋਲ ਕਰੋ",
 
-  // Price Calculator
-  "Service Price Calculator": "ਸੇਵਾ ਮੁੱਲ ਕੈਲਕੁਲੇਟਰ",
-  "Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements. We serve residential and commercial properties in White Rock and surrounding areas.": "ਆਪਣੀਆਂ ਸੇਵਾ ਜ਼ਰੂਰਤਾਂ ਲਈ ਤੁਰੰਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ। ਸਾਡਾ ਕੈਲਕੁਲੇਟਰ ਤੁਹਾਡੀਆਂ ਵਿਸ਼ੇਸ਼ ਜ਼ਰੂਰਤਾਂ ਦੇ ਅਧਾਰ 'ਤੇ ਇੱਕ ਕਸਟਮਾਈਜ਼ਡ ਕੋਟੇਸ਼ਨ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ। ਅਸੀਂ ਵਾਈਟ ਰਾਕ ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਖੇਤਰਾਂ ਵਿੱਚ ਰਿਹਾਇਸ਼ੀ ਅਤੇ ਵਪਾਰਕ ਜਾਇਦਾਦਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।",
-  "Price Calculator": "ਮੁੱਲ ਕੈਲਕੁਲੇਟਰ",
-  "Get an instant estimate for your service needs": "ਆਪਣੀਆਂ ਸੇਵਾ ਲੋੜਾਂ ਲਈ ਤੁਰੰਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ",
-  "Leave your address and we can send you a quick estimate based on Google Maps, or contact us for an on-site estimate.": "ਆਪਣਾ ਪਤਾ ਛੱਡੋ ਅਤੇ ਅਸੀਂ ਤੁਹਾਨੂੰ Google Maps ਦੇ ਅਧਾਰ 'ਤੇ ਇੱਕ ਤੇਜ਼ ਅਨੁਮਾਨ ਭੇਜ ਸਕਦੇ ਹਾਂ, ਜਾਂ ਸਾਈਟ 'ਤੇ ਅਨੁਮਾਨ ਲਈ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ।",
-  "All of our prices are competitive with other companies, including Shackshine, Men in Kilts, and we are fully insured.": "ਸਾਡੇ ਸਾਰੇ ਮੁੱਲ ਹੋਰ ਕੰਪਨੀਆਂ ਦੇ ਨਾਲ ਪ੍ਰਤੀਯੋਗੀ ਹਨ, ਜਿਸ ਵਿੱਚ ਸ਼ੈਕਸ਼ਾਈਨ, ਮੈਨ ਇਨ ਕਿਲਟਸ ਸ਼ਾਮਲ ਹਨ, ਅਤੇ ਅਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ ਹਾਂ।",
-  "Every job is checked by me personally": "ਹਰ ਕੰਮ ਮੇਰੇ ਦੁਆਰਾ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਚੈਕ ਕੀਤਾ ਜਾਂਦਾ ਹੈ",
-
-  // Calculator Steps
-  "Service": "ਸੇਵਾ",
-  "Property": "ਜਾਇਦਾਦ",
-  "Size": "ਆਕਾਰ",
-  "Add-ons": "ਐਡ-ਆਨ",
-  "Contact": "ਸੰਪਰਕ",
-  "Review": "ਸਮੀਖਿਆ",
-  "Continue": "ਜਾਰੀ ਰੱਖੋ",
-  "Back": "ਵਾਪਸ",
-  
-  // PropertyType
-  "Property Type": "ਜਾਇਦਾਦ ਦੀ ਕਿਸਮ",
-  "Select the type of property for the service": "ਸੇਵਾ ਲਈ ਜਾਇਦਾਦ ਦੀ ਕਿਸਮ ਚੁਣੋ",
-  "Residential": "ਰਿਹਾਇਸ਼ੀ",
-  "Home, apartment, or residential property": "ਘਰ, ਅਪਾਰਟਮੈਂਟ, ਜਾਂ ਰਿਹਾਇਸ਼ੀ ਜਾਇਦਾਦ",
-  "Commercial": "ਵਪਾਰਕ",
-  "Office, storefront, or business property": "ਦਫਤਰ, ਸਟੋਰਫਰੰਟ, ਜਾਂ ਵਪਾਰਕ ਜਾਇਦਾਦ",
-
   // Services Section
   "Our Professional Services": "ਸਾਡੀਆਂ ਪੇਸ਼ੇਵਰ ਸੇਵਾਵਾਂ",
   "Premium Cleaning Solutions for Every Surface": "ਹਰ ਸਤ੍ਹਾ ਲਈ ਪ੍ਰੀਮੀਅਮ ਸਫਾਈ ਹੱਲ",
@@ -103,10 +76,6 @@ const punjabiTranslations = {
   "Our experienced team arrives with all equipment and completes the job with attention to detail.": "ਸਾਡੀ ਤਜਰਬੇਕਾਰ ਟੀਮ ਸਾਰੇ ਉਪਕਰਣਾਂ ਦੇ ਨਾਲ ਪਹੁੰਚਦੀ ਹੈ ਅਤੇ ਵੇਰਵਿਆਂ ਤੇ ਧਿਆਨ ਦੇ ਕੇ ਕੰਮ ਪੂਰਾ ਕਰਦੀ ਹੈ।",
   "Satisfaction Guaranteed": "ਸੰਤੁਸ਼ਟੀ ਦੀ ਗਾਰੰਟੀ",
   "We inspect our work with you to ensure your complete satisfaction before we consider the job done.": "ਅਸੀਂ ਕੰਮ ਨੂੰ ਪੂਰਾ ਮੰਨਣ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਡੀ ਪੂਰੀ ਸੰਤੁਸ਼ਟੀ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ ਤੁਹਾਡੇ ਨਾਲ ਆਪਣੇ ਕੰਮ ਦੀ ਜਾਂਚ ਕਰਦੇ ਹਾਂ।",
-
-  // Call to Action
-  "Ready to Transform Your Property?": "ਆਪਣੀ ਜਾਇਦਾਦ ਨੂੰ ਬਦਲਣ ਲਈ ਤਿਆਰ ਹੋ?",
-  "Contact us today to schedule a service or request a free, no-obligation quote.": "ਸੇਵਾ ਨਿਰਧਾਰਤ ਕਰਨ ਜਾਂ ਮੁਫ਼ਤ, ਬਿਨਾਂ ਜ਼ਿੰਮੇਵਾਰੀ ਵਾਲੀ ਕੋਟੇਸ਼ਨ ਦੀ ਬੇਨਤੀ ਕਰਨ ਲਈ ਅੱਜ ਹੀ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।",
 
   // Testimonials Section
   "What Our Customers Say": "ਸਾਡੇ ਗਾਹਕ ਕੀ ਕਹਿੰਦੇ ਹਨ",
@@ -153,6 +122,10 @@ const punjabiTranslations = {
   "Frequently Asked Questions": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ",
   "Find Answers to Common Questions": "ਆਮ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਲੱਭੋ",
   "Have more questions? Contact us directly and we'll be happy to help.": "ਹੋਰ ਸਵਾਲ ਹਨ? ਸਿੱਧੇ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ਅਤੇ ਅਸੀਂ ਮਦਦ ਕਰਨ ਵਿੱਚ ਖੁਸ਼ੀ ਮਹਿਸੂਸ ਕਰਾਂਗੇ।",
+
+  // Call to Action
+  "Ready to Transform Your Property?": "ਆਪਣੀ ਜਾਇਦਾਦ ਨੂੰ ਬਦਲਣ ਲਈ ਤਿਆਰ ਹੋ?",
+  "Contact us today to schedule a service or request a free, no-obligation quote.": "ਸੇਵਾ ਨਿਰਧਾਰਤ ਕਰਨ ਜਾਂ ਮੁਫ਼ਤ, ਬਿਨਾਂ ਜ਼ਿੰਮੇਵਾਰੀ ਵਾਲੀ ਕੋਟੇਸ਼ਨ ਦੀ ਬੇਨਤੀ ਕਰਨ ਲਈ ਅੱਜ ਹੀ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।",
 
   // Footer
   "Quick Links": "ਤੁਰੰਤ ਲਿੰਕ",

@@ -12,7 +12,6 @@ import StepReview from './steps/StepReview';
 import StepPropertyType from './steps/StepPropertyType';
 import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useTranslation } from '@/hooks/use-translation';
 
 const formSchema = z.object({
   services: z.array(z.string()).min(1, "Please select at least one service"),
@@ -33,7 +32,6 @@ const formSchema = z.object({
 });
 
 const PriceCalculatorForm = () => {
-  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,9 +60,9 @@ const PriceCalculatorForm = () => {
     <div className="max-w-2xl mx-auto px-4 py-8 bg-white rounded-lg shadow-sm">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold mb-2">{t('Price Calculator')}</h1>
+          <h1 className="text-3xl font-bold mb-2">Price Calculator</h1>
           <p className="text-gray-600">
-            {t('Get an instant estimate for your service needs')}
+            Get an instant estimate for your service needs
           </p>
         </div>
         <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
@@ -74,17 +72,17 @@ const PriceCalculatorForm = () => {
           </Avatar>
           <div>
             <p className="font-semibold text-sm">Jayden Fisher</p>
-            <p className="text-xs text-gray-500">{t('Every job is checked by me personally')}</p>
+            <p className="text-xs text-gray-500">Every job is checked by me personally</p>
           </div>
         </div>
       </div>
 
       <div className="bg-blue-50 p-4 rounded-lg mb-8 text-sm">
         <p className="mb-2">
-          {t('Leave your address and we can send you a quick estimate based on Google Maps, or contact us for an on-site estimate.')}
+          Leave your address and we can send you a quick estimate based on Google Maps, or contact us for an on-site estimate.
         </p>
         <p>
-          {t('All of our prices are competitive with other companies, including Shackshine, Men in Kilts, and we are fully insured.')}
+          All of our prices are competitive with other companies, including Shackshine, Men in Kilts, and we are fully insured.
         </p>
       </div>
       
