@@ -48,7 +48,7 @@ const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
                 className="grid gap-4"
               >
                 {propertyTypes.map((type) => (
