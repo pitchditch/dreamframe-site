@@ -24,6 +24,10 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage === 'pa' || savedLanguage === 'en') {
       setLanguage(savedLanguage as Language);
+    } else {
+      // Default to English if no language is set
+      setLanguage('en');
+      localStorage.setItem('language', 'en');
     }
   }, []);
 

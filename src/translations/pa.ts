@@ -1,3 +1,4 @@
+
 const punjabiTranslations = {
   "Our Professional Services": "ਸਾਡੀਆਂ ਪੇਸ਼ੇਵਰ ਸੇਵਾਵਾਂ",
   "Premium Cleaning Solutions for Every Surface": "ਹਰ ਸਤਹ ਲਈ ਪ੍ਰੀਮੀਅਮ ਸਫਾਈ ਹੱਲ",
@@ -103,7 +104,6 @@ const punjabiTranslations = {
   "What type of service do you need?": "ਤੁਹਾਨੂੰ ਕਿਸ ਕਿਸਮ ਦੀ ਸੇਵਾ ਦੀ ਲੋੜ ਹੈ?",
   "House Washing (Exterior)": "ਘਰ ਦੀ ਸਫਾਈ (ਬਾਹਰੀ)",
   "Driveway/Walkway Cleaning": "ਡਰਾਈਵਵੇਅ/ਵਾਕਵੇਅ ਦੀ ਸਫਾਈ",
-  "Gutter Cleaning": "ਗਟਰ ਦੀ ਸਫਾਈ",
   "Roof Cleaning": "ਛੱਤ ਦੀ ਸਫਾਈ",
   "Deck/Patio Cleaning": "ਡੈੱਕ/ਪੇਟੀਓ ਦੀ ਸਫਾਈ",
   "Fence Cleaning": "ਵਾੜ ਦੀ ਸਫਾਈ",
@@ -117,8 +117,6 @@ const punjabiTranslations = {
   "Estimated Price": "ਅਨੁਮਾਨਿਤ ਕੀਮਤ",
   "Please provide the service type and square footage to get an estimate.": "ਕਿਰਪਾ ਕਰਕੇ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸੇਵਾ ਦੀ ਕਿਸਮ ਅਤੇ ਵਰਗ ਫੁੱਟ ਪ੍ਰਦਾਨ ਕਰੋ।",
   "This is only an estimate. Actual price may vary.": "ਇਹ ਸਿਰਫ਼ ਇੱਕ ਅਨੁਮਾਨ ਹੈ। ਅਸਲ ਕੀਮਤ ਵੱਖ-ਵੱਖ ਹੋ ਸਕਦੀ ਹੈ।",
-  "Book Service": "ਬੁੱਕ ਸੇਵਾ",
-  "Loading...": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
   "Your Name": "ਤੁਹਾਡਾ ਨਾਮ",
   "Your Email": "ਤੁਹਾਡੀ ਈਮੇਲ",
   "Your Phone Number": "ਤੁਹਾਡਾ ਫ਼ੋਨ ਨੰਬਰ",
@@ -126,7 +124,6 @@ const punjabiTranslations = {
   "Date": "ਮਿਤੀ",
   "Time": "ਸਮਾਂ",
   "Additional Notes": "ਵਧੀਕ ਨੋਟਸ",
-  "Book Now": "ਹੁਣੇ ਬੁੱਕ ਕਰੋ",
   "Thank you! We will contact you shortly to confirm your booking.": "ਤੁਹਾਡਾ ਧੰਨਵਾਦ! ਅਸੀਂ ਤੁਹਾਡੀ ਬੁਕਿੰਗ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਜਲਦੀ ਹੀ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਾਂਗੇ।",
   "Request a Free Quote": "ਮੁਫ਼ਤ ਹਵਾਲੇ ਦੀ ਬੇਨਤੀ ਕਰੋ",
   "Ready to transform your property?": "ਕੀ ਤੁਸੀਂ ਆਪਣੀ ਜਾਇਦਾਦ ਨੂੰ ਬਦਲਣ ਲਈ ਤਿਆਰ ਹੋ?",
@@ -135,7 +132,6 @@ const punjabiTranslations = {
   "Our Gallery": "ਸਾਡੀ ਗੈਲਰੀ",
   "Explore our gallery of completed projects and see the quality of our work.": "ਮੁਕੰਮਲ ਹੋਏ ਪ੍ਰੋਜੈਕਟਾਂ ਦੀ ਸਾਡੀ ਗੈਲਰੀ ਦੀ ਪੜਚੋਲ ਕਰੋ ਅਤੇ ਸਾਡੇ ਕੰਮ ਦੀ ਗੁਣਵੱਤਾ ਦੇਖੋ।",
   "View Our Work": "ਸਾਡਾ ਕੰਮ ਵੇਖੋ",
-  "Contact Information": "ਸੰਪਰਕ ਜਾਣਕਾਰੀ",
   "Have questions? Contact us today!": "ਕੋਈ ਸਵਾਲ ਹਨ? ਅੱਜ ਹੀ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ!",
   "We are here to help with all your pressure washing needs.": "ਅਸੀਂ ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਲੋੜਾਂ ਵਿੱਚ ਮਦਦ ਕਰਨ ਲਈ ਇੱਥੇ ਹਾਂ।",
   "Send us a message": "ਸਾਨੂੰ ਇੱਕ ਸੁਨੇਹਾ ਭੇਜੋ",
@@ -148,33 +144,44 @@ const punjabiTranslations = {
   "Back to Top": "ਸਿਖਰ 'ਤੇ ਵਾਪਸ ਜਾਓ",
   "Check out our latest projects": "ਸਾਡੇ ਨਵੀਨਤਮ ਪ੍ਰੋਜੈਕਟਾਂ ਦੀ ਜਾਂਚ ਕਰੋ",
   "View All": "ਸਭ ਵੇਖੋ",
-   // Referral Program Dialog
-   "Referral Program": "ਰੈਫਰਲ ਪ੍ਰੋਗਰਾਮ",
-   "Our Guarantee": "ਸਾਡੀ ਗਾਰੰਟੀ",
-   "Refer a Friend & Save 50%": "ਦੋਸਤ ਨੂੰ ਭੇਜੋ ਅਤੇ 50% ਬਚਾਓ",
-   "Get your windows cleaned at 50% off when you recommend a friend!": "ਜਦੋਂ ਤੁਸੀਂ ਦੋਸਤ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹੋ ਤਾਂ ਆਪਣੀਆਂ ਖਿੜਕੀਆਂ ਨੂੰ 50% ਛੂਟ 'ਤੇ ਸਾਫ਼ ਕਰੋ!",
-   "How It Works:": "ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ:",
-   "Recommend our services to a friend, family member, or neighbor": "ਆਪਣੇ ਦੋਸਤ, ਪਰਿਵਾਰਕ ਮੈਂਬਰ, ਜਾਂ ਗੁਆਂਢੀ ਨੂੰ ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਸਿਫਾਰਸ਼ ਕਰੋ",
-   "When they book a service, have them mention your name": "ਜਦੋਂ ਉਹ ਇੱਕ ਸੇਵਾ ਬੁੱਕ ਕਰਦੇ ਹਨ, ਉਨ੍ਹਾਂ ਨੂੰ ਤੁਹਾਡਾ ਨਾਮ ਦੱਸਣ ਲਈ ਕਹੋ",
-   "Receive 50% off your next window cleaning service": "ਆਪਣੀ ਅਗਲੀ ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਸੇਵਾ 'ਤੇ 50% ਛੂਟ ਪ੍ਰਾਪਤ ਕਰੋ",
-   "Your friend gets the highest quality service in the area": "ਤੁਹਾਡੇ ਦੋਸਤ ਨੂੰ ਇਲਾਕੇ ਵਿੱਚ ਸਭ ਤੋਂ ਵਧੀਆ ਗੁਣਵੱਤਾ ਵਾਲੀ ਸੇਵਾ ਮਿਲਦੀ ਹੈ",
-   "Call to Refer a Friend": "ਦੋਸਤ ਨੂੰ ਰੈਫਰ ਕਰਨ ਲਈ ਕਾਲ ਕਰੋ",
-   "Contact Us About a Referral": "ਰੈਫਰਲ ਬਾਰੇ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
-   "*Terms and conditions apply. Offer valid for existing customers only. The 50% discount applies to window cleaning services only and cannot be combined with other offers. Your friend must complete their first service before the discount can be applied to your next service.": "*ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ ਲਾਗੂ ਹੁੰਦੀਆਂ ਹਨ। ਆਫਰ ਸਿਰਫ ਮੌਜੂਦਾ ਗਾਹਕਾਂ ਲਈ ਵੈਧ ਹੈ। 50% ਛੂਟ ਸਿਰਫ ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਸੇਵਾਵਾਂ 'ਤੇ ਲਾਗੂ ਹੁੰਦੀ ਹੈ ਅਤੇ ਇਸਨੂੰ ਹੋਰ ਆਫਰਾਂ ਨਾਲ ਜੋੜਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ। ਤੁਹਾਡੀ ਅਗਲੀ ਸੇਵਾ 'ਤੇ ਛੂਟ ਲਾਗੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਡੇ ਦੋਸਤ ਨੂੰ ਆਪਣੀ ਪਹਿਲੀ ਸੇਵਾ ਪੂਰੀ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।",
    
-   // Personal Guarantee
-   "Our Personal Guarantee": "ਸਾਡੀ ਨਿੱਜੀ ਗਾਰੰਟੀ",
-   "We don't consider the job done until you're completely satisfied": "ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੁੰਦੇ ਅਸੀਂ ਕੰਮ ਨੂੰ ਪੂਰਾ ਨਹੀਂ ਮੰਨਦੇ",
-   "Our Promise To You:": "ਤੁਹਾਡੇ ਨਾਲ ਸਾਡਾ ਵਾਅਦਾ:",
-   "At BC Pressure Washing, we stand behind our work with a personal guarantee. Before you make any payment, we'll walk through the completed job together to ensure it meets your expectations.": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ 'ਤੇ, ਅਸੀਂ ਨਿੱਜੀ ਗਾਰੰਟੀ ਨਾਲ ਆਪਣੇ ਕੰਮ ਦਾ ਸਮਰਥਨ ਕਰਦੇ ਹਾਂ। ਤੁਹਾਡੇ ਕੋਈ ਵੀ ਭੁਗਤਾਨ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ, ਅਸੀਂ ਇਹ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ ਇਕੱਠੇ ਪੂਰੇ ਕੀਤੇ ਕੰਮ ਦੀ ਸਮੀਖਿਆ ਕਰਾਂਗੇ ਕਿ ਇਹ ਤੁਹਾਡੀਆਂ ਉਮੀਦਾਂ 'ਤੇ ਖਰਾ ਉਤਰਦਾ ਹੈ।",
-   "Personal walkthrough inspection with every job": "ਹਰ ਕੰਮ ਨਾਲ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਵਾਕਥਰੂ ਨਿਰੀਖਣ",
-   "No payment required until you're completely satisfied": "ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੁੰਦੇ ਕੋਈ ਭੁਗਤਾਨ ਦੀ ਲੋੜ ਨਹੀਂ",
-   "Friendly, professional service with attention to detail": "ਵੇਰਵੇ ਵੱਲ ਧਿਆਨ ਦੇਣ ਵਾਲੀ ਦੋਸਤਾਨਾ, ਪੇਸ਼ੇਵਰ ਸੇਵਾ",
-   "\"We personally guarantee your satisfaction with every service we provide.\"": "\"ਅਸੀਂ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਤੁਹਾਨੂੰ ਸਾਡੀ ਹਰ ਸੇਵਾ ਨਾਲ ਸੰਤੁਸ਼ਟੀ ਦੀ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹਾਂ।\"",
+  // Referral Program Dialog
+  "Referral Program": "ਰੈਫਰਲ ਪ੍ਰੋਗਰਾਮ",
+  "Our Guarantee": "ਸਾਡੀ ਗਾਰੰਟੀ",
+  "Refer a Friend & Save 50%": "ਦੋਸਤ ਨੂੰ ਭੇਜੋ ਅਤੇ 50% ਬਚਾਓ",
+  "Get your windows cleaned at 50% off when you recommend a friend!": "ਜਦੋਂ ਤੁਸੀਂ ਦੋਸਤ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹੋ ਤਾਂ ਆਪਣੀਆਂ ਖਿੜਕੀਆਂ ਨੂੰ 50% ਛੂਟ 'ਤੇ ਸਾਫ਼ ਕਰੋ!",
+  "How It Works:": "ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ:",
+  "Recommend our services to a friend, family member, or neighbor": "ਆਪਣੇ ਦੋਸਤ, ਪਰਿਵਾਰਕ ਮੈਂਬਰ, ਜਾਂ ਗੁਆਂਢੀ ਨੂੰ ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਸਿਫਾਰਸ਼ ਕਰੋ",
+  "When they book a service, have them mention your name": "ਜਦੋਂ ਉਹ ਇੱਕ ਸੇਵਾ ਬੁੱਕ ਕਰਦੇ ਹਨ, ਉਨ੍ਹਾਂ ਨੂੰ ਤੁਹਾਡਾ ਨਾਮ ਦੱਸਣ ਲਈ ਕਹੋ",
+  "Receive 50% off your next window cleaning service": "ਆਪਣੀ ਅਗਲੀ ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਸੇਵਾ 'ਤੇ 50% ਛੂਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+  "Your friend gets the highest quality service in the area": "ਤੁਹਾਡੇ ਦੋਸਤ ਨੂੰ ਇਲਾਕੇ ਵਿੱਚ ਸਭ ਤੋਂ ਵਧੀਆ ਗੁਣਵੱਤਾ ਵਾਲੀ ਸੇਵਾ ਮਿਲਦੀ ਹੈ",
+  "Call to Refer a Friend": "ਦੋਸਤ ਨੂੰ ਰੈਫਰ ਕਰਨ ਲਈ ਕਾਲ ਕਰੋ",
+  "Contact Us About a Referral": "ਰੈਫਰਲ ਬਾਰੇ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+  "*Terms and conditions apply. Offer valid for existing customers only. The 50% discount applies to window cleaning services only and cannot be combined with other offers. Your friend must complete their first service before the discount can be applied to your next service.": "*ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ ਲਾਗੂ ਹੁੰਦੀਆਂ ਹਨ। ਆਫਰ ਸਿਰਫ ਮੌਜੂਦਾ ਗਾਹਕਾਂ ਲਈ ਵੈਧ ਹੈ। 50% ਛੂਟ ਸਿਰਫ ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਸੇਵਾਵਾਂ 'ਤੇ ਲਾਗੂ ਹੁੰਦੀ ਹੈ ਅਤੇ ਇਸਨੂੰ ਹੋਰ ਆਫਰਾਂ ਨਾਲ ਜੋੜਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ। ਤੁਹਾਡੀ ਅਗਲੀ ਸੇਵਾ 'ਤੇ ਛੂਟ ਲਾਗੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਡੇ ਦੋਸਤ ਨੂੰ ਆਪਣੀ ਪਹਿਲੀ ਸੇਵਾ ਪੂਰੀ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।",
    
-   // Special Offers Button
-   "Special Offers": "ਵਿਸ਼ੇਸ਼ ਆਫਰ",
-   "View Offers": "ਆਫਰ ਵੇਖੋ",
+  // Personal Guarantee
+  "Our Personal Guarantee": "ਸਾਡੀ ਨਿੱਜੀ ਗਾਰੰਟੀ",
+  "We don't consider the job done until you're completely satisfied": "ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੁੰਦੇ ਅਸੀਂ ਕੰਮ ਨੂੰ ਪੂਰਾ ਨਹੀਂ ਮੰਨਦੇ",
+  "Our Promise To You:": "ਤੁਹਾਡੇ ਨਾਲ ਸਾਡਾ ਵਾਅਦਾ:",
+  "At BC Pressure Washing, we stand behind our work with a personal guarantee. Before you make any payment, we'll walk through the completed job together to ensure it meets your expectations.": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ 'ਤੇ, ਅਸੀਂ ਨਿੱਜੀ ਗਾਰੰਟੀ ਨਾਲ ਆਪਣੇ ਕੰਮ ਦਾ ਸਮਰਥਨ ਕਰਦੇ ਹਾਂ। ਤੁਹਾਡੇ ਕੋਈ ਵੀ ਭੁਗਤਾਨ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ, ਅਸੀਂ ਇਹ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ ਇਕੱਠੇ ਪੂਰੇ ਕੀਤੇ ਕੰਮ ਦੀ ਸਮੀਖਿਆ ਕਰਾਂਗੇ ਕਿ ਇਹ ਤੁਹਾਡੀਆਂ ਉਮੀਦਾਂ 'ਤੇ ਖਰਾ ਉਤਰਦਾ ਹੈ।",
+  "Personal walkthrough inspection with every job": "ਹਰ ਕੰਮ ਨਾਲ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਵਾਕਥਰੂ ਨਿਰੀਖਣ",
+  "No payment required until you're completely satisfied": "ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੁੰਦੇ ਕੋਈ ਭੁਗਤਾਨ ਦੀ ਲੋੜ ਨਹੀਂ",
+  "Friendly, professional service with attention to detail": "ਵੇਰਵੇ ਵੱਲ ਧਿਆਨ ਦੇਣ ਵਾਲੀ ਦੋਸਤਾਨਾ, ਪੇਸ਼ੇਵਰ ਸੇਵਾ",
+  "\"We personally guarantee your satisfaction with every service we provide.\"": "\"ਅਸੀਂ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਤੁਹਾਨੂੰ ਸਾਡੀ ਹਰ ਸੇਵਾ ਨਾਲ ਸੰਤੁਸ਼ਟੀ ਦੀ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹਾਂ।\"",
+   
+  // Special Offers Button
+  "Special Offers": "ਵਿਸ਼ੇਸ਼ ਆਫਰ",
+  "View Offers": "ਆਫਰ ਵੇਖੋ",
+  
+  // Chat Assistant
+  "Have a question?": "ਕੋਈ ਸਵਾਲ ਹੈ?",
+  "Need help with a quote?": "ਕਿਸੇ ਕੋਟੇਸ਼ਨ ਨਾਲ ਮਦਦ ਚਾਹੀਦੀ ਹੈ?",
+  "Want to learn more about our services?": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਹੋਰ ਜਾਣਨਾ ਚਾਹੁੰਦੇ ਹੋ?",
+  "BC Pressure Washing Assistant": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸਹਾਇਕ",
+  "Hi there! Ask me any questions about our services.": "ਹੈਲੋ! ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਮੈਨੂੰ ਕੋਈ ਵੀ ਸਵਾਲ ਪੁੱਛੋ।",
+  
+  // Surface Inspection
+  "We carefully assess your home's exterior to determine the appropriate cleaning method and identify any areas needing special attention.": "ਅਸੀਂ ਢੁਕਵੀਂ ਸਫਾਈ ਵਿਧੀ ਨਿਰਧਾਰਤ ਕਰਨ ਅਤੇ ਕਿਸੇ ਵੀ ਅਜਿਹੇ ਖੇਤਰਾਂ ਦੀ ਪਛਾਣ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਦਾ ਧਿਆਨ ਨਾਲ ਮੁਲਾਂਕਣ ਕਰਦੇ ਹਾਂ ਜਿਨ੍ਹਾਂ ਨੂੰ ਵਿਸ਼ੇਸ਼ ਧਿਆਨ ਦੀ ਲੋੜ ਹੈ।"
 };
 
 export default punjabiTranslations;

@@ -30,7 +30,7 @@ const LanguageSelector = () => {
           onClick={() => setLanguage('en')}
           className={language === 'en' ? "bg-slate-100" : ""}
         >
-          <span className="mr-2">🇺🇸</span> {t('English')}
+          <span className="mr-2">🇨🇦</span> {t('English')}
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => setLanguage('pa')}

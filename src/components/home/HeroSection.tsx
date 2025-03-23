@@ -8,7 +8,7 @@ const HeroSection = () => {
   
   return (
     <section 
-      className="hero-section relative h-[90vh] flex items-center" 
+      className="hero-section relative h-[90vh] flex items-center w-full" 
       style={{ 
         backgroundImage: "url('/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png')",
         backgroundPosition: "center",

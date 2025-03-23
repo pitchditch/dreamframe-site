@@ -1,3 +1,4 @@
+
 const englishTranslations = {
   // General
   "Home": "Home",
@@ -129,7 +130,6 @@ const englishTranslations = {
   // Footer
   "Quick Links": "Quick Links",
   "Connect With Us": "Connect With Us",
-  "Service Areas": "Service Areas",
   "Vancouver": "Vancouver",
   "Burnaby": "Burnaby",
   "Richmond": "Richmond",
@@ -147,16 +147,6 @@ const englishTranslations = {
   "Abbotsford": "Abbotsford",
   "Chilliwack": "Chilliwack",
   "Mission": "Mission",
-  "Pitt Meadows": "Pitt Meadows",
-  "Tsawwassen": "Tsawwassen",
-  "Ladner": "Ladner",
-  "Squamish": "Squamish",
-  "Whistler": "Whistler",
-  "Pemberton": "Pemberton",
-  "Bowen Island": "Bowen Island",
-  "Lions Bay": "Lions Bay",
-  "Anmore": "Anmore",
-  "Belcarra": "Belcarra",
   "Pitt Meadows": "Pitt Meadows",
   "Tsawwassen": "Tsawwassen",
   "Ladner": "Ladner",
@@ -194,7 +184,14 @@ const englishTranslations = {
   
   // Special Offers Button
   "Special Offers": "Special Offers",
-  "View Offers": "View Offers"
+  "View Offers": "View Offers",
+  
+  // Chat Assistant
+  "Have a question?": "Have a question?",
+  "Need help with a quote?": "Need help with a quote?",
+  "Want to learn more about our services?": "Want to learn more about our services?",
+  "BC Pressure Washing Assistant": "BC Pressure Washing Assistant",
+  "Hi there! Ask me any questions about our services.": "Hi there! Ask me any questions about our services."
 };
 
 export default englishTranslations;
