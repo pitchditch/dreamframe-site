@@ -10,6 +10,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import { Building, Home } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface StepPropertyTypeProps {
   form: UseFormReturn<any>;
@@ -18,17 +19,19 @@ interface StepPropertyTypeProps {
 }
 
 const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
+  const { t } = useTranslation();
+  
   const propertyTypes = [
     {
       id: 'residential',
-      title: 'Residential',
-      description: 'Home, apartment, or residential property',
+      title: t('Residential'),
+      description: t('Home, apartment, or residential property'),
       icon: <Home className="h-6 w-6 text-bc-red" />,
     },
     {
       id: 'commercial',
-      title: 'Commercial',
-      description: 'Office, storefront, or business property',
+      title: t('Commercial'),
+      description: t('Office, storefront, or business property'),
       icon: <Building className="h-6 w-6 text-bc-red" />,
     },
   ];
@@ -36,8 +39,8 @@ const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Property Type</h2>
-        <p className="text-gray-600">Select the type of property for the service</p>
+        <h2 className="text-2xl font-bold mb-2">{t("Property Type")}</h2>
+        <p className="text-gray-600">{t("Select the type of property for the service")}</p>
       </div>
 
       <FormField
@@ -81,10 +84,10 @@ const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
 
       <div className="flex justify-between">
         <Button type="button" onClick={onBack} variant="outline">
-          Back
+          {t("Back")}
         </Button>
         <Button type="button" onClick={onNext} className="bg-bc-red hover:bg-red-700">
-          Continue
+          {t("Continue")}
         </Button>
       </div>
     </div>
@@ -92,3 +95,4 @@ const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
 };
 
 export default StepPropertyType;
+
