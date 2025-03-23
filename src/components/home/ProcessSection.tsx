@@ -12,7 +12,7 @@ const ProcessSection = () => {
           Our systematic approach ensures that every cleaning project is completed with precision and care.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 max-w-[95%] mx-auto">
           <div className="animate-on-scroll">
             <ProcessStep
               number={1}

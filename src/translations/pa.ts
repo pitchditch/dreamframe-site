@@ -1,4 +1,3 @@
-
 const punjabiTranslations = {
   // General
   "Home": "ਹੋਮ",
@@ -52,7 +51,7 @@ const punjabiTranslations = {
 
   // Services Section
   "Our Professional Services": "ਸਾਡੀਆਂ ਪੇਸ਼ੇਵਰ ਸੇਵਾਵਾਂ",
-  "Premium Cleaning Solutions for Every Surface": "ਹਰ ਸਤਹ ਲਈ ਪ੍ਰੀਮੀਅਮ ਸਫਾਈ ਹੱਲ",
+  "Premium Cleaning Solutions for Every Surface": "ਹਰ ਸਤ੍ਹਾ ਲਈ ਪ੍ਰੀਮੀਅਮ ਸਫਾਈ ਹੱਲ",
   "We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.": "ਅਸੀਂ ਰਿਹਾਇਸ਼ੀ ਅਤੇ ਵਪਾਰਕ ਦੋਵਾਂ ਜਾਇਦਾਦਾਂ ਦੀਆਂ ਵਿਲੱਖਣ ਜ਼ਰੂਰਤਾਂ ਨੂੰ ਪੂਰਾ ਕਰਨ ਲਈ ਤਿਆਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ ਦੀ ਇੱਕ ਵਿਆਪਕ ਰੇਂਜ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ।",
   "Window Cleaning": "ਵਿੰਡੋ ਕਲੀਨਿੰਗ",
   "Professional window cleaning using purified water for crystal clear, streak-free results on homes and commercial buildings.": "ਘਰਾਂ ਅਤੇ ਵਪਾਰਕ ਇਮਾਰਤਾਂ 'ਤੇ ਕ੍ਰਿਸਟਲ ਕਲੀਅਰ, ਧਾਰੀ-ਮੁਕਤ ਨਤੀਜਿਆਂ ਲਈ ਸ਼ੁੱਧ ਪਾਣੀ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋਏ ਪੇਸ਼ੇਵਰ ਵਿੰਡੋ ਕਲੀਨਿੰਗ।",

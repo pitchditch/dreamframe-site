@@ -20,7 +20,7 @@ const HeroSection = () => {
     >
       <div className="hero-overlay absolute inset-0 bg-black/30"></div>
       <div className="container mx-auto px-4 relative z-10 text-white">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl text-left">
           <div className="badge-pill animate-on-scroll mb-4 bg-red-50/80 backdrop-blur-sm">
             {t("Professional Pressure Washing Services")}
           </div>

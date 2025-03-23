@@ -29,21 +29,21 @@ const testimonials = [
     name: "Michael R.",
     location: "Richmond, BC",
     rating: 5,
-    beforeAfterImage: "/lovable-uploads/788b3744-e48b-4db6-ae93-e540cf78b4e3.png"
+    beforeAfterImage: "/lovable-uploads/7e1a9bdf-7cca-4b17-857e-6acaedd8309c.png"
   },
   {
     quote: "Our house looks brand new after their pressure washing service. Will definitely recommend to friends and family.",
     name: "Sarah T.",
     location: "Burnaby, BC",
     rating: 5,
-    beforeAfterImage: "/lovable-uploads/67b32856-04c4-4832-9c20-9a0e56c5c2b8.png"
+    beforeAfterImage: "/lovable-uploads/50c2db1c-d293-4826-95da-7b717ef4280d.png"
   },
   {
     quote: "Quick response, fair pricing, and excellent work. Couldn't ask for more!",
     name: "David K.",
     location: "North Vancouver, BC",
     rating: 5,
-    beforeAfterImage: "/lovable-uploads/e6fbc792-e8b4-40f8-8a66-042b53317347.png"
+    beforeAfterImage: "/lovable-uploads/41660181-42c5-445c-83e3-23681140d569.png"
   }
 ];
 

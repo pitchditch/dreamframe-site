@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Dialog, 
   DialogContent, 
@@ -9,7 +9,7 @@ import {
   DialogClose
 } from './ui/dialog';
 import { Button } from './ui/button';
-import { Share2, MessageSquare, Phone, UserCheck } from 'lucide-react';
+import { Share2, MessageSquare, Phone, UserCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 interface ReferralProgramDialogProps {
@@ -20,6 +20,33 @@ interface ReferralProgramDialogProps {
 const ReferralProgramDialog = ({ open, onOpenChange }: ReferralProgramDialogProps) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'referral' | 'guarantee'>('referral');
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const referralImages = [
+    "/lovable-uploads/7e1a9bdf-7cca-4b17-857e-6acaedd8309c.png",
+    "/lovable-uploads/50c2db1c-d293-4826-95da-7b717ef4280d.png",
+    "/lovable-uploads/41660181-42c5-445c-83e3-23681140d569.png",
+    "/lovable-uploads/45a70e02-ffa7-448e-8f24-49018c195812.png"
+  ];
+
+  // Auto-rotate slideshow every 5 seconds
+  useEffect(() => {
+    if (!open) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % referralImages.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [open, referralImages.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide(prev => (prev + 1) % referralImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(prev => (prev - 1 + referralImages.length) % referralImages.length);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -61,11 +88,48 @@ const ReferralProgramDialog = ({ open, onOpenChange }: ReferralProgramDialogProp
                 <div className="mt-6 space-y-6">
                   <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/2">
-                      <img 
-                        src="/lovable-uploads/cd976364-60c1-46ed-a80e-c660a4d1d652.png" 
-                        alt="Referral program" 
-                        className="rounded-lg shadow-md w-full h-auto"
-                      />
+                      {/* Slideshow */}
+                      <div className="relative rounded-lg shadow-md overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-between z-10 px-2">
+                          <button 
+                            onClick={prevSlide}
+                            className="bg-white/60 hover:bg-white/80 rounded-full p-1"
+                            aria-label="Previous slide"
+                          >
+                            <ChevronLeft size={24} />
+                          </button>
+                          <button 
+                            onClick={nextSlide}
+                            className="bg-white/60 hover:bg-white/80 rounded-full p-1"
+                            aria-label="Next slide"
+                          >
+                            <ChevronRight size={24} />
+                          </button>
+                        </div>
+                        
+                        <div className="w-full h-[300px] relative">
+                          {referralImages.map((src, idx) => (
+                            <img 
+                              key={idx}
+                              src={src} 
+                              alt={`BC Pressure Washing referral program ${idx + 1}`}
+                              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${currentSlide === idx ? 'opacity-100' : 'opacity-0'}`}
+                            />
+                          ))}
+                        </div>
+                        
+                        {/* Slide indicator dots */}
+                        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+                          {referralImages.map((_, idx) => (
+                            <button 
+                              key={idx}
+                              className={`w-2 h-2 rounded-full ${currentSlide === idx ? 'bg-bc-red' : 'bg-white/70'}`}
+                              onClick={() => setCurrentSlide(idx)}
+                              aria-label={`Go to slide ${idx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </div>
                     <div className="md:w-1/2">
                       <h3 className="text-lg font-semibold mb-2">{t("How It Works:")}</h3>
