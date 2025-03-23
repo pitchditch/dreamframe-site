@@ -20,7 +20,9 @@ interface StepServiceProps {
 }
 
 const StepService = ({ form, onNext }: StepServiceProps) => {
-  const [selectedServices, setSelectedServices] = useState<string[]>(form.getValues('services') || []);
+  // Get initial services from form, defaulting to empty array
+  const initialServices = form.getValues('services') || [];
+  const [selectedServices, setSelectedServices] = useState<string[]>(initialServices);
 
   const services = [
     {
@@ -66,15 +68,16 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
   ];
 
   const toggleServiceSelection = (serviceId: string) => {
-    setSelectedServices(prev => {
-      const isSelected = prev.includes(serviceId);
-      const newSelection = isSelected 
-        ? prev.filter(id => id !== serviceId)
-        : [...prev, serviceId];
-      
-      form.setValue('services', newSelection, { shouldValidate: true });
-      return newSelection;
-    });
+    // Create a new array (don't mutate state directly)
+    const newSelection = selectedServices.includes(serviceId)
+      ? selectedServices.filter(id => id !== serviceId)
+      : [...selectedServices, serviceId];
+    
+    // Update local state
+    setSelectedServices(newSelection);
+    
+    // Update form value
+    form.setValue('services', newSelection, { shouldValidate: true });
   };
 
   const getFieldName = (serviceId: string) => {
@@ -115,8 +118,8 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
                       <Checkbox 
                         checked={isSelected}
-                        onCheckedChange={() => toggleServiceSelection(service.id)}
-                        className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
+                        // Remove the onCheckedChange handler as it causes double updates
+                        // with the parent div click handler
                       />
                     </div>
                     <span className="font-semibold text-lg">{service.title}</span>
@@ -150,13 +153,13 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                                           checked={field.value?.includes(option.id)}
                                           onCheckedChange={(checked) => {
                                             const currentValue = field.value || [];
-                                            return checked
-                                              ? field.onChange([...currentValue, option.id])
-                                              : field.onChange(
-                                                  currentValue.filter(
+                                            return field.onChange(
+                                              checked
+                                                ? [...currentValue, option.id]
+                                                : currentValue.filter(
                                                     (value: string) => value !== option.id
                                                   )
-                                                );
+                                            );
                                           }}
                                         />
                                       </FormControl>

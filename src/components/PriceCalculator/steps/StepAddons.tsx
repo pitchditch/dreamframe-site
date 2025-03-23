@@ -1,4 +1,5 @@
 
+import { useState, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
   FormField,
@@ -17,10 +18,12 @@ interface StepAddonsProps {
 }
 
 const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
-  const service = form.watch('service');
+  // Safely access service with fallback
+  const services = form.getValues('services') || [];
+  const hasSelectedService = (serviceId: string) => services.includes(serviceId);
 
-  // Different addons based on selected service
-  const getAddons = () => {
+  // Memoize addons to prevent recreation on every render
+  const addonsList = useMemo(() => {
     const commonAddons = [
       {
         id: 'moss-treatment',
@@ -45,7 +48,7 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
     ];
 
     // Service specific add-ons
-    if (service === 'pressure-washing') {
+    if (hasSelectedService('pressure-washing')) {
       return [
         {
           id: 'house-washing',
@@ -72,7 +75,7 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
     }
 
     return commonAddons;
-  };
+  }, [services]); // Only recompute if services changes
 
   return (
     <div className="space-y-6">
@@ -87,7 +90,7 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
         render={({ field }) => (
           <FormItem>
             <div className="grid gap-4">
-              {getAddons().map((addon) => (
+              {addonsList.map((addon) => (
                 <label
                   key={addon.id}
                   className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:border-bc-red"
@@ -96,10 +99,12 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
                     <Checkbox
                       checked={field.value?.includes(addon.id)}
                       onCheckedChange={(checked) => {
-                        const currentValues = field.value || [];
+                        // Use a safer approach to handle state updates
+                        const currentValues = Array.isArray(field.value) ? field.value : [];
                         const newValues = checked
                           ? [...currentValues, addon.id]
                           : currentValues.filter((value: string) => value !== addon.id);
+                        
                         field.onChange(newValues);
                       }}
                     />
