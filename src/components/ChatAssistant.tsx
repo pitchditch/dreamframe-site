@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Phone, MessageCircle, Calendar, ArrowRight, HelpCircle, User, Info } from 'lucide-react';
 import { Button } from './ui/button';
@@ -613,4 +614,37 @@ const ChatAssistant = () => {
               .dot:nth-child(2) {
                 animation-delay: 0.2s;
               }
-              .dot:nth-child
+              .dot:nth-child(3) {
+                animation-delay: 0.4s;
+              }
+              @keyframes pulse {
+                0%, 100% { opacity: 0.4; }
+                50% { opacity: 1; }
+              }
+              @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+              }
+              @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+              }
+            `
+          }}/>
+        </div>
+      )}
+      
+      {!isOpen && (
+        <button
+          onClick={toggleChat}
+          className="bg-bc-red text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-red-700 transition-colors"
+          aria-label="Chat with us"
+        >
+          <MessageCircle size={28} />
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ChatAssistant;
