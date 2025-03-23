@@ -272,13 +272,13 @@ const ChatAssistant = () => {
 
   const handleBookingOption = () => {
     setCurrentStep('booking');
-    const newMessages = [...messages, { type: 'user', text: "I'd like to book a service" }];
+    const newMessages = [...messages, { type: 'user' as const, text: "I'd like to book a service" }];
     
     setMessages(newMessages);
     
     // Add a typing indicator
     setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
       
       const responseText = "Great! Our online booking form will guide you through the process, including house size, service type, and date. Click below to get started.";
       
@@ -291,13 +291,13 @@ const ChatAssistant = () => {
 
   const handleQAOption = () => {
     setCurrentStep('qa');
-    const newMessages = [...messages, { type: 'user', text: "I have a question" }];
+    const newMessages = [...messages, { type: 'user' as const, text: "I have a question" }];
     
     setMessages(newMessages);
     
     // Add a typing indicator
     setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
       
       const responseText = "I can answer questions about our services, pricing, availability, and more. What do you need help with?";
       
@@ -310,13 +310,13 @@ const ChatAssistant = () => {
 
   const handleHumanSupportOption = () => {
     setCurrentStep('human-support');
-    const newMessages = [...messages, { type: 'user', text: "I'd like to speak with a human" }];
+    const newMessages = [...messages, { type: 'user' as const, text: "I'd like to speak with a human" }];
     
     setMessages(newMessages);
     
     // Add a typing indicator
     setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
       
       const responseText = "I'm happy to connect you with a team member. How would you like to chat?";
       
@@ -328,11 +328,11 @@ const ChatAssistant = () => {
   };
 
   const handleFollowUpOption = (option: string) => {
-    const newMessages = [...messages, { type: 'user', text: option }];
+    const newMessages = [...messages, { type: 'user' as const, text: option }];
     setMessages(newMessages);
     
     setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
       
       let responseText = "";
       
@@ -352,11 +352,11 @@ const ChatAssistant = () => {
   };
 
   const handleHumanSupportDetailOption = (option: string) => {
-    const newMessages = [...messages, { type: 'user', text: option }];
+    const newMessages = [...messages, { type: 'user' as const, text: option }];
     setMessages(newMessages);
     
     setTimeout(() => {
-      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
       
       let responseText = "";
       
