@@ -8,8 +8,11 @@ import { Droplets, ShieldCheck, Sun, Sparkles, RotateCw, Shield, Clock, ThumbsUp
 import { Link } from 'react-router-dom';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PriceCalculatorForm from '@/components/PriceCalculator/PriceCalculatorForm';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const WindowCleaning = () => {
+  const isMobile = useIsMobile();
+  
   const benefits = [
     {
       title: "Improved Curb Appeal",
@@ -93,7 +96,7 @@ const WindowCleaning = () => {
             <img 
               src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
               alt="Window cleaning service" 
-              className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
+              className="rounded-lg shadow-lg w-full h-auto object-cover"
             />
           </div>
         </div>
@@ -154,7 +157,7 @@ const WindowCleaning = () => {
               <img 
                 src="/lovable-uploads/2429e4a3-7077-402a-813a-f3b996ffa8cd.png" 
                 alt="Commercial window cleaning service" 
-                className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
+                className="rounded-lg shadow-lg w-full h-auto object-cover"
               />
             </div>
           </div>
@@ -168,6 +171,7 @@ const WindowCleaning = () => {
 
       <CallToAction 
         backgroundImage="/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"
+        hideImage={true}
       />
     </Layout>
   );

@@ -2,9 +2,11 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Footer = () => {
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   return (
     <footer className="bg-black text-white pt-16 pb-8">
@@ -134,7 +136,7 @@ const Footer = () => {
           <img 
             src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
             alt="White Rock Based Business" 
-            className="w-full rounded-md h-auto"
+            className={`rounded-md h-auto ${isMobile ? 'max-w-full' : 'w-full'}`}
           />
         </div>
 
