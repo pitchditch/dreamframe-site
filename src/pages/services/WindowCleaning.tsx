@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -90,7 +91,7 @@ const WindowCleaning = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="/lovable-uploads/97ab1ee0-b864-4d9e-b37b-9a526229a18f.png" 
+              src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
               alt="Window cleaning service" 
               className="rounded-lg shadow-lg w-full h-auto aspect-video object-cover"
             />

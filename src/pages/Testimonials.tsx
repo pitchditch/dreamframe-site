@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Layout from '@/components/Layout';
 import TestimonialCard from '@/components/TestimonialCard';
@@ -55,7 +54,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I didn't realize how dirty my roof had gotten until these guys came out! They were quick, careful, and did a great job removing moss and debris. My roof looks so much better now. I'm really happy with the results.",
       name: "Emily Johnson",
-      location: "White Rock, BC"
+      location: "White Rock, BC",
+      beforeAfterImage: "/lovable-uploads/d7fad83e-0097-44d1-8343-f62f754321ba.png"
     },
     {
       id: 5,
@@ -72,7 +72,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I'm so happy with how my windows turned out! They were a little streaky before, but now they're spotless. The crew was really friendly, and they took care not to make a mess inside. Will definitely call again!",
       name: "Jennifer Davis",
-      location: "Burnaby, BC"
+      location: "Burnaby, BC",
+      beforeAfterImage: "/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
     },
     {
       id: 7,
@@ -88,7 +89,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I was worried about the condition of my roof, and they came through! The team cleaned it up, removed moss, and left it looking like new. They were professional, polite, and got the job done right.",
       name: "Lisa Martinez",
-      location: "Richmond, BC"
+      location: "Richmond, BC",
+      beforeAfterImage: "/lovable-uploads/9d9ccd18-e160-4e9f-b928-bd8314763a7a.png"
     },
     {
       id: 9,
@@ -121,7 +123,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I had a lot of moss buildup on my roof, and these professionals came out and cleaned it all off. They were careful with the process and made sure everything was spotless. My roof looks so much better now!",
       name: "Karen Walker",
-      location: "New Westminster, BC"
+      location: "New Westminster, BC",
+      beforeAfterImage: "/lovable-uploads/788b3744-e48b-4db6-ae93-e540cf78b4e3.png"
     },
     {
       id: 13,
@@ -154,7 +157,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "I had no idea my roof was in such bad shape until these guys cleaned it! They did an excellent job removing moss and debris. My roof looks so much better, and I feel much more confident about it now.",
       name: "Michelle Taylor",
-      location: "White Rock, BC"
+      location: "White Rock, BC",
+      beforeAfterImage: "/lovable-uploads/67b32856-04c4-4832-9c20-9a0e56c5c2b8.png"
     },
     {
       id: 17,
@@ -187,7 +191,8 @@ const Testimonials = () => {
       rating: 5,
       quote: "My roof looks so much better now after they cleaned it! They took their time, worked carefully, and made sure everything was perfect. Super happy with the results and will definitely hire them again.",
       name: "Jessica Martin",
-      location: "Richmond, BC"
+      location: "Richmond, BC",
+      beforeAfterImage: "/lovable-uploads/e6fbc792-e8b4-40f8-8a66-042b53317347.png"
     },
     {
       id: 21,

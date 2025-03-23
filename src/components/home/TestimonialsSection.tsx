@@ -7,37 +7,43 @@ const testimonials = [
     quote: "Jayden did an amazing job on the roof. I'll be using his services again.",
     name: "John P.",
     location: "Langley, BC",
-    rating: 5
+    rating: 5,
+    beforeAfterImage: "/lovable-uploads/d7fad83e-0097-44d1-8343-f62f754321ba.png"
   },
   {
     quote: "Great work! Totally satisfied with the result of the window cleaning. left no mess and my windows are perfect.",
     name: "Liz S.",
     location: "Surrey, BC",
-    rating: 5
+    rating: 5,
+    beforeAfterImage: "/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
   },
   {
     quote: "He used some fancy equipment, did my windows with a water fed pole which I've never seen before. It did a great job on the windows and left no streaks!",
     name: "Emily C.",
     location: "Langley, BC",
-    rating: 5
+    rating: 5,
+    beforeAfterImage: "/lovable-uploads/9d9ccd18-e160-4e9f-b928-bd8314763a7a.png"
   },
   {
     quote: "Professional service from start to finish. They were on time, courteous, and did an excellent job on our gutters.",
     name: "Michael R.",
     location: "Richmond, BC",
-    rating: 5
+    rating: 5,
+    beforeAfterImage: "/lovable-uploads/788b3744-e48b-4db6-ae93-e540cf78b4e3.png"
   },
   {
     quote: "Our house looks brand new after their pressure washing service. Will definitely recommend to friends and family.",
     name: "Sarah T.",
     location: "Burnaby, BC",
-    rating: 5
+    rating: 5,
+    beforeAfterImage: "/lovable-uploads/67b32856-04c4-4832-9c20-9a0e56c5c2b8.png"
   },
   {
     quote: "Quick response, fair pricing, and excellent work. Couldn't ask for more!",
     name: "David K.",
     location: "North Vancouver, BC",
-    rating: 5
+    rating: 5,
+    beforeAfterImage: "/lovable-uploads/e6fbc792-e8b4-40f8-8a66-042b53317347.png"
   }
 ];
 
@@ -65,6 +71,7 @@ const TestimonialsSection = () => {
                   name={testimonial.name}
                   location={testimonial.location}
                   rating={testimonial.rating}
+                  beforeAfterImage={testimonial.beforeAfterImage}
                 />
               </div>
             ))}
