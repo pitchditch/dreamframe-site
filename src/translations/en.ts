@@ -39,7 +39,7 @@ const englishTranslations = {
   "Sort": "Sort",
   "English": "English",
   "Punjabi": "Punjabi",
-
+  
   // Hero Section
   "Professional Pressure Washing Services": "Professional Pressure Washing Services",
   "The Ultimate Cleaning": "The Ultimate Cleaning",
@@ -156,7 +156,7 @@ const englishTranslations = {
   "Lions Bay": "Lions Bay",
   "Anmore": "Anmore",
   "Belcarra": "Belcarra",
-
+  
   // Referral Program Dialog
   "Referral Program": "Referral Program",
   "Our Guarantee": "Our Guarantee",
@@ -215,7 +215,6 @@ const englishTranslations = {
   "We use a soft washing method to clean roofs, removing moss, algae, and dirt. The process is gentle, protecting your roof from damage. Would you like to book an estimate for roof cleaning?": "We use a soft washing method to clean roofs, removing moss, algae, and dirt. The process is gentle, protecting your roof from damage. Would you like to book an estimate for roof cleaning?",
   "Schedule Roof Cleaning Estimate": "Schedule Roof Cleaning Estimate",
   "Awesome! Click below to book your service. Every job is checked by Jayden Fisher, and we're fully insured!": "Awesome! Click below to book your service. Every job is checked by Jayden Fisher, and we're fully insured!",
-  "Book Now": "Book Now",
   "Talk to a Human": "Talk to a Human",
   "Our team is ready to help you! You can reach us by phone at 778-808-7620 or by email at info@bcpressurewashing.com. Would you like us to call you instead?": "Our team is ready to help you! You can reach us by phone at 778-808-7620 or by email at info@bcpressurewashing.com. Would you like us to call you instead?",
   "Yes, call me": "Yes, call me",
