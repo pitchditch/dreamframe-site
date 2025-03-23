@@ -27,7 +27,7 @@ const HeroSection = () => {
             <span className="text-bc-red block"> {t("Solution")} </span>
             {t("for Your Property")}
           </h1>
-          <p className="text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm">
+          <p className="text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm max-w-2xl">
             {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">

@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
@@ -9,6 +10,7 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CallButton from '../components/CallButton';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
+import ReferralButton from '../components/ReferralButton';
 
 const Index = () => {
   useEffect(() => {
@@ -52,6 +54,7 @@ const Index = () => {
       <ProcessSection />
       <TestimonialsSection />
       <CallButton />
+      <ReferralButton />
     </Layout>
   );
 };
