@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Phone, MessageCircle, Calendar, ArrowRight, HelpCircle, User, Info } from 'lucide-react';
 import { Button } from './ui/button';
@@ -37,11 +36,11 @@ const ChatAssistant = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const suggestions = [
-    t("Have a question?"),
-    t("Need help with a quote?"),
-    t("Want to learn more about our services?"),
-    t("Looking for pricing information?"),
-    t("Wondering about our availability?")
+    t("Hi, I'm Jayden Fisher! Ask me any questions or call me"),
+    t("Got a question about pressure washing?"),
+    t("Need a free quote? I'm here to help!"),
+    t("Ask me about our pressure washing services"),
+    t("Questions about pricing? I can help!")
   ];
 
   // Common questions and answers for the bot
@@ -614,35 +613,4 @@ const ChatAssistant = () => {
               .dot:nth-child(2) {
                 animation-delay: 0.2s;
               }
-              .dot:nth-child(3) {
-                animation-delay: 0.4s;
-              }
-              @keyframes pulse {
-                0%, 100% { opacity: 0.7; transform: scale(1); }
-                50% { opacity: 1; transform: scale(1.2); }
-              }
-              @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-              }
-              @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-5px); }
-              }
-            `
-          }} />
-        </div>
-      )}
-      
-      <Button
-        onClick={toggleChat}
-        className={`rounded-full bg-bc-red hover:bg-red-700 h-14 w-14 flex items-center justify-center shadow-lg transition-colors duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        aria-label={isOpen ? t("Close chat") : t("Open chat")}
-      >
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
-      </Button>
-    </div>
-  );
-};
-
-export default ChatAssistant;
+              .dot:nth-child

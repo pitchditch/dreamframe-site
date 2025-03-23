@@ -1,4 +1,3 @@
-
 import Layout from '../components/Layout';
 import CallToAction from '../components/CallToAction';
 import { Shield, Award, Wrench, Users, ThumbsUp, Check } from 'lucide-react';
@@ -22,8 +21,8 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151" 
-                alt="Gutter cleaning process" 
+                src="/lovable-uploads/49c483c7-e8fc-4cac-82b4-68d35c367bf5.png" 
+                alt="BC Pressure Washing team member" 
                 className="rounded-lg shadow-lg w-full"
               />
             </div>
@@ -250,7 +249,7 @@ const About = () => {
             </div>
             <div className="order-1 md:order-2">
               <img 
-                src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" 
+                src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb" 
                 alt="Environmentally friendly cleaning" 
                 className="rounded-lg shadow-lg w-full"
               />
@@ -336,7 +335,10 @@ const About = () => {
         </div>
       </section>
 
-      <CallToAction />
+      <CallToAction 
+        backgroundImage="/lovable-uploads/1d7d3c0f-21a5-4ae2-80c7-7f156797449f.png"
+        hideImage={false}
+      />
     </Layout>
   );
 };
