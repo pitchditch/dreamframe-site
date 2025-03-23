@@ -4,11 +4,16 @@ import { MessageCircle, X, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 
+type MessageType = {
+  type: 'user' | 'bot';
+  text: string;
+};
+
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<{type: 'user' | 'bot', text: string}[]>([]);
-  const [chatHistory, setChatHistory] = useState<{type: 'user' | 'bot', text: string}[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [chatHistory, setChatHistory] = useState<MessageType[]>([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [currentSuggestion, setCurrentSuggestion] = useState(0);
   const { t } = useTranslation();
@@ -50,10 +55,8 @@ const ChatAssistant = () => {
     
     if (!message.trim()) return;
     
-    const newMessages = [
-      ...messages,
-      { type: 'user', text: message }
-    ];
+    const userMessage: MessageType = { type: 'user', text: message };
+    const newMessages = [...messages, userMessage];
     
     setMessages(newMessages);
     setMessage('');
@@ -175,7 +178,8 @@ const ChatAssistant = () => {
         </Button>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
@@ -193,7 +197,8 @@ const ChatAssistant = () => {
         .animate-fade-in-right {
           animation: fadeIn 0.3s ease-out;
         }
-      `}</style>
+        `}
+      </style>
     </>
   );
 };

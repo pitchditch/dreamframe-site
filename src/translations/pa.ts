@@ -181,7 +181,15 @@ const punjabiTranslations = {
   "Hi there! Ask me any questions about our services.": "ਹੈਲੋ! ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਮੈਨੂੰ ਕੋਈ ਵੀ ਸਵਾਲ ਪੁੱਛੋ।",
   
   // Surface Inspection
-  "We carefully assess your home's exterior to determine the appropriate cleaning method and identify any areas needing special attention.": "ਅਸੀਂ ਢੁਕਵੀਂ ਸਫਾਈ ਵਿਧੀ ਨਿਰਧਾਰਤ ਕਰਨ ਅਤੇ ਕਿਸੇ ਵੀ ਅਜਿਹੇ ਖੇਤਰਾਂ ਦੀ ਪਛਾਣ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਦਾ ਧਿਆਨ ਨਾਲ ਮੁਲਾਂਕਣ ਕਰਦੇ ਹਾਂ ਜਿਨ੍ਹਾਂ ਨੂੰ ਵਿਸ਼ੇਸ਼ ਧਿਆਨ ਦੀ ਲੋੜ ਹੈ।"
+  "We carefully assess your home's exterior to determine the appropriate cleaning method and identify any areas needing special attention.": "ਅਸੀਂ ਢੁਕਵੀਂ ਸਫਾਈ ਵਿਧੀ ਨਿਰਧਾਰਤ ਕਰਨ ਅਤੇ ਕਿਸੇ ਵੀ ਅਜਿਹੇ ਖੇਤਰਾਂ ਦੀ ਪਛਾਣ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਦਾ ਧਿਆਨ ਨਾਲ ਮੁਲਾਂਕਣ ਕਰਦੇ ਹਾਂ ਜਿਨ੍ਹਾਂ ਨੂੰ ਵਿਸ਼ੇਸ਼ ਧਿਆਨ ਦੀ ਲੋੜ ਹੈ।",
+  
+  // Chat Assistant specific translations
+  "Type your question...": "ਆਪਣਾ ਸਵਾਲ ਟਾਈਪ ਕਰੋ...",
+  "Clear chat": "ਚੈਟ ਸਾਫ਼ ਕਰੋ",
+  "Call us now: 778 808 7620": "ਹੁਣੇ ਸਾਨੂੰ ਕਾਲ ਕਰੋ: 778 808 7620",
+  "Our House Washing Process": "ਸਾਡੀ ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਪ੍ਰਕਿਰਿਆ",
+  "We follow a comprehensive approach to safely clean and restore your home's exterior": "ਅਸੀਂ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸਾਫ਼ ਅਤੇ ਬਹਾਲ ਕਰਨ ਲਈ ਇੱਕ ਵਿਆਪਕ ਪਹੁੰਚ ਦੀ ਪਾਲਣਾ ਕਰਦੇ ਹਾਂ",
+  "Surface Inspection": "ਸਤਹ ਨਿਰੀਖਣ"
 };
 
 export default punjabiTranslations;
