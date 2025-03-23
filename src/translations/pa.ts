@@ -1,7 +1,7 @@
 
-import { Translations } from './index';
+import { TranslationKey } from './index';
 
-export const punjabiTranslations: Translations = {
+export const punjabiTranslations: Record<TranslationKey, string> = {
   // General
   "About": "ਬਾਰੇ",
   "Contact": "ਸੰਪਰਕ",
@@ -53,7 +53,6 @@ export const punjabiTranslations: Translations = {
   "Property": "ਜਾਇਦਾਦ",
   "Size": "ਆਕਾਰ",
   "Add-ons": "ਐਡ-ਔਨਸ",
-  "Contact": "ਸੰਪਰਕ",
   "Review": "ਸਮੀਖਿਆ",
   "Instant Quote Calculator": "ਤੁਰੰਤ ਕੋਟੇਸ਼ਨ ਕੈਲਕੁਲੇਟਰ",
   "Get an instant price estimate for your cleaning needs": "ਆਪਣੀਆਂ ਸਫਾਈ ਲੋੜਾਂ ਲਈ ਤੁਰੰਤ ਕੀਮਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ",
@@ -87,6 +86,20 @@ export const punjabiTranslations: Translations = {
   "Privacy Policy": "ਪਰਾਈਵੇਟ ਨੀਤੀ",
   "Terms of Service": "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ",
   "Follow Us": "ਸਾਨੂੰ ਫਾਲੋ ਕਰੋ",
+  
+  // Chat Assistant
+  "Hi, I'm Jayden Fisher! Ask me any questions or call me": "ਹੈਲੋ, ਮੈਂ ਜੇਡਨ ਫਿਸ਼ਰ ਹਾਂ! ਮੈਨੂੰ ਕੋਈ ਵੀ ਸਵਾਲ ਪੁੱਛੋ ਜਾਂ ਮੈਨੂੰ ਕਾਲ ਕਰੋ",
+  "Got a question about pressure washing?": "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਬਾਰੇ ਕੋਈ ਸਵਾਲ ਹੈ?",
+  "Need a free quote? I'm here to help!": "ਮੁਫ਼ਤ ਕੋਟੇਸ਼ਨ ਦੀ ਲੋੜ ਹੈ? ਮੈਂ ਮਦਦ ਕਰਨ ਲਈ ਇੱਥੇ ਹਾਂ!",
+  "Ask me about our pressure washing services": "ਮੈਨੂੰ ਸਾਡੀਆਂ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ ਬਾਰੇ ਪੁੱਛੋ",
+  "Questions about pricing? I can help!": "ਕੀਮਤਾਂ ਬਾਰੇ ਸਵਾਲ? ਮੈਂ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ!",
+  "Type your question...": "ਆਪਣਾ ਸਵਾਲ ਟਾਈਪ ਕਰੋ...",
+  "Clear chat": "ਚੈਟ ਸਾਫ਼ ਕਰੋ",
+  "Call us now: 778 808 7620": "ਹੁਣੇ ਕਾਲ ਕਰੋ: 778 808 7620",
+  "Special Offers": "ਵਿਸ਼ੇਸ਼ ਪੇਸ਼ਕਸ਼ਾਂ",
+  
+  // Location Banner
+  "We Proudly Serve the following cities": "ਅਸੀਂ ਮਾਣ ਨਾਲ ਹੇਠ ਲਿਖੇ ਸ਼ਹਿਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ",
 };
 
 export default punjabiTranslations;
