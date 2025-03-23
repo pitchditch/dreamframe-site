@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send } from 'lucide-react';
 import { Button } from './ui/button';
@@ -9,6 +8,7 @@ import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
 type MessageType = {
   type: 'user' | 'bot';
   text: string;
+  isTyping?: boolean;
 };
 
 const ChatAssistant = () => {
@@ -18,13 +18,16 @@ const ChatAssistant = () => {
   const [chatHistory, setChatHistory] = useState<MessageType[]>([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [currentSuggestion, setCurrentSuggestion] = useState(0);
+  const [activeSuggestions, setActiveSuggestions] = useState<string[]>([]);
   const { t } = useTranslation();
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const suggestions = [
     t("Have a question?"),
     t("Need help with a quote?"),
-    t("Want to learn more about our services?")
+    t("Want to learn more about our services?"),
+    t("Looking for pricing information?"),
+    t("Wondering about our availability?")
   ];
 
   // Common questions and answers for the bot
@@ -124,13 +127,36 @@ const ChatAssistant = () => {
     { question: "Can regular exterior cleaning help with allergies?", answer: "Yes! Removing mold, pollen, and dust from surfaces can improve air quality and reduce allergy symptoms." }
   ];
 
-  // Suggested question buttons - reduced to make space for Special Offers
-  const suggestedQuestions = [
-    "What services do you offer?",
-    "How much does pressure washing cost?",
-    "Do you offer free estimates?",
-    "How often should I clean my gutters?"
-  ];
+  // Dynamic suggested questions based on user input
+  const updateSuggestedQuestions = (inputText: string) => {
+    if (!inputText.trim()) {
+      return [
+        "What services do you offer?",
+        "How much does pressure washing cost?",
+        "Do you offer free estimates?",
+        "How often should I clean my gutters?"
+      ];
+    }
+    
+    const inputLower = inputText.toLowerCase();
+    const matchingQuestions = faqData
+      .filter(faq => faq.question.toLowerCase().includes(inputLower))
+      .map(faq => faq.question)
+      .slice(0, 4);
+    
+    return matchingQuestions.length > 0 
+      ? matchingQuestions 
+      : [
+          "What services do you offer?",
+          "How much does pressure washing cost?",
+          "Do you offer free estimates?",
+          "How often should I clean my gutters?"
+        ];
+  };
+
+  useEffect(() => {
+    setActiveSuggestions(updateSuggestedQuestions(message));
+  }, [message]);
 
   useEffect(() => {
     const suggestionTimer = setTimeout(() => {
@@ -167,6 +193,31 @@ const ChatAssistant = () => {
     }
   };
 
+  const simulateTyping = (text: string, onComplete: () => void) => {
+    let i = 0;
+    const typing = setInterval(() => {
+      if (i <= text.length) {
+        setMessages(prev => {
+          const newMessages = [...prev];
+          // Update the last message's text with more characters
+          if (newMessages.length > 0 && newMessages[newMessages.length - 1].isTyping) {
+            newMessages[newMessages.length - 1].text = text.substring(0, i);
+            if (i === text.length) {
+              newMessages[newMessages.length - 1].isTyping = false;
+              clearInterval(typing);
+              onComplete();
+            }
+          }
+          return newMessages;
+        });
+        i += Math.floor(Math.random() * 3) + 1; // Random typing speed
+      } else {
+        clearInterval(typing);
+        onComplete();
+      }
+    }, 50);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -178,24 +229,25 @@ const ChatAssistant = () => {
     setMessages(newMessages);
     setMessage('');
     
-    // Check if the user's message matches any FAQ
-    const matchingFaq = faqData.find(faq => 
-      message.toLowerCase().includes(faq.question.toLowerCase())
-    );
-    
+    // Add a typing indicator
     setTimeout(() => {
-      if (matchingFaq) {
-        setMessages([
-          ...newMessages,
-          { type: 'bot', text: matchingFaq.answer }
-        ]);
-      } else {
-        setMessages([
-          ...newMessages,
-          { type: 'bot', text: "Thanks for your question! For a personalized response, please call Jayden at 778-808-7620. We're eager to help with all your pressure washing needs!" }
-        ]);
-      }
-    }, 1000);
+      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      
+      // Check if the user's message matches any FAQ
+      const matchingFaq = faqData.find(faq => 
+        message.toLowerCase().includes(faq.question.toLowerCase()) ||
+        faq.question.toLowerCase().includes(message.toLowerCase())
+      );
+      
+      const responseText = matchingFaq 
+        ? matchingFaq.answer 
+        : "Thanks for your question! For a personalized response, please call Jayden at 778-808-7620. We're eager to help with all your pressure washing needs!";
+      
+      // Simulate typing effect
+      simulateTyping(responseText, () => {
+        // This will be called when typing is complete
+      });
+    }, 500);
   };
 
   const handleSuggestedQuestion = (question: string) => {
@@ -204,24 +256,25 @@ const ChatAssistant = () => {
     
     setMessages(newMessages);
     
-    // Find the matching FAQ
-    const matchingFaq = faqData.find(faq => 
-      question.toLowerCase().includes(faq.question.toLowerCase())
-    );
-    
+    // Add a typing indicator
     setTimeout(() => {
-      if (matchingFaq) {
-        setMessages([
-          ...newMessages,
-          { type: 'bot', text: matchingFaq.answer }
-        ]);
-      } else {
-        setMessages([
-          ...newMessages,
-          { type: 'bot', text: "Thanks for your question! For a personalized response, please call Jayden at 778-808-7620. We're eager to help with all your pressure washing needs!" }
-        ]);
-      }
-    }, 1000);
+      setMessages([...newMessages, { type: 'bot', text: "", isTyping: true }]);
+      
+      // Find the matching FAQ
+      const matchingFaq = faqData.find(faq => 
+        question.toLowerCase().includes(faq.question.toLowerCase()) ||
+        faq.question.toLowerCase().includes(question.toLowerCase())
+      );
+      
+      const responseText = matchingFaq 
+        ? matchingFaq.answer 
+        : "Thanks for your question! For a personalized response, please call Jayden at 778-808-7620. We're eager to help with all your pressure washing needs!";
+      
+      // Simulate typing effect
+      simulateTyping(responseText, () => {
+        // This will be called when typing is complete
+      });
+    }, 500);
   };
 
   const clearChat = () => {
@@ -285,6 +338,13 @@ const ChatAssistant = () => {
                   }`}
                 >
                   {msg.text}
+                  {msg.isTyping && (
+                    <span className="typing-indicator">
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -294,7 +354,7 @@ const ChatAssistant = () => {
           <div className="p-2 border-t">
             <div className="mb-2 overflow-x-auto pb-2">
               <ToggleGroup type="single" className="inline-flex space-x-1 min-w-max">
-                {suggestedQuestions.map((question, index) => (
+                {activeSuggestions.map((question, index) => (
                   <ToggleGroupItem 
                     key={index} 
                     value={`question-${index}`}
@@ -341,6 +401,33 @@ const ChatAssistant = () => {
               </a>
             </div>
           </div>
+          
+          <style jsx>{`
+            .typing-indicator {
+              display: inline-flex;
+              align-items: center;
+              margin-left: 5px;
+            }
+            .dot {
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background-color: currentColor;
+              margin: 0 1px;
+              opacity: 0.7;
+              animation: pulse 1.5s infinite;
+            }
+            .dot:nth-child(2) {
+              animation-delay: 0.2s;
+            }
+            .dot:nth-child(3) {
+              animation-delay: 0.4s;
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 0.4; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.2); }
+            }
+          `}</style>
         </div>
       )}
       

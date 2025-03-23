@@ -21,9 +21,9 @@ const propertyLabels: Record<string, string> = {
 };
 
 const sizeLabels: Record<string, { label: string }> = {
-  'small': { label: 'Small (Up to 1,500 sq. ft.)' },
-  'medium': { label: 'Medium (1,500 - 2,500 sq. ft.)' },
-  'large': { label: 'Large (2,500 - 3,500 sq. ft.)' },
+  'small': { label: 'Small (Up to 1,800 sq. ft.)' },
+  'medium': { label: 'Medium (1,800 - 2,800 sq. ft.)' },
+  'large': { label: 'Large (2,800 - 3,500 sq. ft.)' },
   'x-large': { label: 'Extra Large (3,500+ sq. ft.)' },
 };
 
@@ -80,122 +80,124 @@ const pricingData = {
 const StepReview = ({ form, onBack }: StepReviewProps) => {
   const formValues = form.getValues();
   const cleaningOptions = formValues.cleaning_options || {};
+  const services = formValues.services || [];
   
-  // Determine pricing based on service, size, and options
-  const getServicePrice = () => {
-    const { service, size, addons = [] } = formValues;
+  // Determine pricing based on services, size, and options
+  const calculateServicePrices = () => {
+    const { size, addons = [] } = formValues;
+    const hasWindowCleaning = services.includes('window-cleaning');
+    const hasGutterCleaning = services.includes('gutter-cleaning');
+    const hasPressureWashing = services.includes('pressure-washing');
+    const hasRoofCleaning = services.includes('roof-cleaning');
     
-    // Special case for roof cleaning
-    if (service === 'roof-cleaning') {
-      return {
-        subtotal: 0,
-        totalPrice: 0,
-        priceNote: pricingData['roof-cleaning'].message
-      };
-    }
+    let totalPrice = 0;
+    let totalMessage = '';
+    const priceBreakdown: Record<string, number> = {};
     
-    // For extra large properties
+    // Special case for x-large properties
     if (size === 'x-large') {
       return {
         subtotal: 0,
         totalPrice: 0,
-        priceNote: pricingData[service][size].message
+        priceNote: 'Please contact us for an on-site estimate for properties larger than 3,500 sq. ft.'
       };
     }
     
-    // For window cleaning
-    if (service === 'window-cleaning') {
+    // Calculate window cleaning price
+    if (hasWindowCleaning) {
       const option = cleaningOptions.window_cleaning || 'both';
-      return {
-        basePrice: pricingData[service][size][option],
-        subtotal: pricingData[service][size][option],
-        totalPrice: pricingData[service][size][option] * (formValues.propertyType === 'commercial' ? 1.5 : 1.0),
-        priceBreakdown: {
-          [option === 'outside' ? 'Outside Windows' : option === 'inside' ? 'Inside Windows' : 'Windows (Inside & Outside)']: pricingData[service][size][option]
-        }
-      };
+      const price = pricingData['window-cleaning'][size][option];
+      
+      totalPrice += price;
+      priceBreakdown[`Window Cleaning (${option === 'outside' ? 'Outside Only' : option === 'inside' ? 'Inside Only' : 'Inside & Outside'})`] = price;
     }
     
-    // For gutter cleaning
-    if (service === 'gutter-cleaning') {
+    // Calculate gutter cleaning price
+    if (hasGutterCleaning) {
       const option = cleaningOptions.gutter_cleaning || 'both';
-      return {
-        basePrice: pricingData[service][size][option],
-        subtotal: pricingData[service][size][option],
-        totalPrice: pricingData[service][size][option] * (formValues.propertyType === 'commercial' ? 1.5 : 1.0),
-        priceBreakdown: {
-          [option === 'inside' ? 'Inside Gutters' : option === 'outside' ? 'Outside Gutters' : 'Gutters (Inside & Outside)']: pricingData[service][size][option]
-        }
-      };
+      const price = pricingData['gutter-cleaning'][size][option];
+      
+      totalPrice += price;
+      priceBreakdown[`Gutter Cleaning (${option === 'inside' ? 'Inside Only' : option === 'outside' ? 'Outside Only' : 'Inside & Outside'})`] = price;
     }
     
-    // For pressure washing
-    if (service === 'pressure-washing') {
-      // Check what pressure washing options were selected
+    // Calculate pressure washing price
+    if (hasPressureWashing) {
       const options = cleaningOptions.pressure_washing || [];
       const hasHouseWashing = options.includes('house-washing');
       const hasDrivewayWashing = options.includes('driveway-washing');
       const hasDeckWashing = options.includes('deck-washing');
       
-      let basePrice = 0;
-      const priceBreakdown: Record<string, number> = {};
-      
       if (hasHouseWashing) {
-        // Check if window cleaning is also selected in addons
-        const hasWindowCleaning = addons.includes('window-cleaning');
-        basePrice += hasWindowCleaning 
-          ? pricingData[service][size].houseWithWindows 
-          : pricingData[service][size].house;
+        // Check if window cleaning is also selected
+        const price = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
+          ? pricingData['pressure-washing'][size].houseWithWindows
+          : pricingData['pressure-washing'][size].house;
         
-        priceBreakdown["House Washing"] = hasWindowCleaning 
-          ? pricingData[service][size].houseWithWindows 
-          : pricingData[service][size].house;
+        totalPrice += price;
+        priceBreakdown[`House Washing${hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' ? ' (with window cleaning)' : ''}`] = price;
       }
       
       if (hasDrivewayWashing) {
-        const drivewayPrice = hasHouseWashing 
-          ? pricingData[service][size].driveWithHouse - pricingData[service][size].house
-          : pricingData[service][size].driveway;
-        
-        basePrice += drivewayPrice;
-        priceBreakdown["Driveway Washing"] = drivewayPrice;
+        // If house washing is also selected, use the combined price
+        if (hasHouseWashing) {
+          const combinedPrice = pricingData['pressure-washing'][size].driveWithHouse;
+          // Subtract the house price we already added
+          const housePriceAlone = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
+            ? pricingData['pressure-washing'][size].houseWithWindows
+            : pricingData['pressure-washing'][size].house;
+          
+          const drivePrice = combinedPrice - housePriceAlone;
+          totalPrice += drivePrice;
+          priceBreakdown["Driveway Washing (with house washing)"] = drivePrice;
+        } else {
+          totalPrice += pricingData['pressure-washing'][size].driveway;
+          priceBreakdown["Driveway Washing"] = pricingData['pressure-washing'][size].driveway;
+        }
       }
       
       if (hasDeckWashing) {
-        basePrice += pricingData[service][size].deck;
-        priceBreakdown["Deck Washing"] = pricingData[service][size].deck;
+        totalPrice += pricingData['pressure-washing'][size].deck;
+        priceBreakdown["Deck Washing"] = pricingData['pressure-washing'][size].deck;
       }
-      
-      return {
-        basePrice,
-        subtotal: basePrice,
-        totalPrice: basePrice * (formValues.propertyType === 'commercial' ? 1.5 : 1.0),
-        priceBreakdown
-      };
     }
     
-    // Default return
+    // Special message for roof cleaning
+    if (hasRoofCleaning) {
+      totalMessage = pricingData['roof-cleaning'].message;
+    }
+    
+    // Add addon prices
+    const addonsTotal = (formValues.addons || []).reduce(
+      (total: number, addon: string) => {
+        // Skip service-specific addons that were handled in getServicePrice
+        if (['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)) {
+          return total;
+        }
+        const addonPrice = addonLabels[addon]?.price || 0;
+        if (addonPrice > 0) {
+          priceBreakdown[addonLabels[addon]?.label || addon] = addonPrice;
+        }
+        return total + addonPrice;
+      },
+      0
+    );
+    
+    totalPrice += addonsTotal;
+    
+    // Apply commercial property multiplier
+    const propertyMultiplier = formValues.propertyType === 'commercial' ? 1.5 : 1.0;
+    
     return {
-      subtotal: 0,
-      totalPrice: 0,
-      priceNote: "Please contact us for a detailed quote."
+      subtotal: totalPrice,
+      totalPrice: totalPrice * propertyMultiplier,
+      priceBreakdown,
+      priceNote: totalMessage
     };
   };
   
-  const pricing = getServicePrice();
+  const pricing = calculateServicePrices();
   const propertyMultiplier = formValues.propertyType === 'commercial' ? 1.5 : 1.0;
-  
-  // Add on prices
-  const addonsTotal = (formValues.addons || []).reduce(
-    (total: number, addon: string) => {
-      // Skip service-specific addons that were handled in getServicePrice
-      if (['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)) {
-        return total;
-      }
-      return total + (addonLabels[addon]?.price || 0);
-    },
-    0
-  );
   
   const formatDate = (date: Date | undefined) => {
     if (!date) return 'Not specified';
@@ -225,7 +227,7 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
             {pricing.priceNote ? (
               <span className="text-lg font-bold">{pricing.priceNote}</span>
             ) : (
-              <span className="text-xl font-bold">${formatPrice((pricing.subtotal + addonsTotal) * propertyMultiplier)}</span>
+              <span className="text-xl font-bold">${formatPrice(pricing.totalPrice)}</span>
             )}
           </div>
           <p className="text-sm text-gray-500 mt-3">
@@ -238,8 +240,10 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
             <h3 className="font-semibold text-lg mb-2">Service Details</h3>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-600">Service:</span>
-                <span>{serviceLabels[formValues.service] || 'Not selected'}</span>
+                <span className="text-gray-600">Services:</span>
+                <span className="text-right">
+                  {services.map(service => serviceLabels[service]).join(', ') || 'Not selected'}
+                </span>
               </div>
               
               <div className="flex justify-between">
@@ -252,26 +256,26 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
                 <span>{sizeLabels[formValues.size]?.label || 'Not selected'}</span>
               </div>
               
-              {formValues.service === 'window-cleaning' && cleaningOptions.window_cleaning && (
+              {services.includes('window-cleaning') && cleaningOptions.window_cleaning && (
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Cleaning option:</span>
+                  <span className="text-gray-600">Window cleaning option:</span>
                   <span>{cleaningOptions.window_cleaning === 'both' ? 'Inside & Outside' : 
                          cleaningOptions.window_cleaning === 'inside' ? 'Inside Only' : 'Outside Only'}</span>
                 </div>
               )}
               
-              {formValues.service === 'gutter-cleaning' && cleaningOptions.gutter_cleaning && (
+              {services.includes('gutter-cleaning') && cleaningOptions.gutter_cleaning && (
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Cleaning option:</span>
+                  <span className="text-gray-600">Gutter cleaning option:</span>
                   <span>{cleaningOptions.gutter_cleaning === 'both' ? 'Inside & Outside' : 
                          cleaningOptions.gutter_cleaning === 'inside' ? 'Inside Only' : 'Outside Only'}</span>
                 </div>
               )}
               
-              {formValues.service === 'pressure-washing' && cleaningOptions.pressure_washing && cleaningOptions.pressure_washing.length > 0 && (
+              {services.includes('pressure-washing') && cleaningOptions.pressure_washing && cleaningOptions.pressure_washing.length > 0 && (
                 <div className="flex justify-between">
                   <span className="text-gray-600">Areas to clean:</span>
-                  <span>
+                  <span className="text-right">
                     {cleaningOptions.pressure_washing.map((option: string) => 
                       option === 'house-washing' ? 'House' : 
                       option === 'driveway-washing' ? 'Driveway' : 
@@ -287,7 +291,9 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
             <div>
               <h3 className="font-semibold text-lg mb-2">Add-ons</h3>
               <ul className="list-disc list-inside text-gray-700">
-                {formValues.addons.map((addon: string) => (
+                {formValues.addons.filter((addon: string) => 
+                  !['house-washing', 'driveway-washing', 'deck-washing'].includes(addon)
+                ).map((addon: string) => (
                   <li key={addon}>{addonLabels[addon]?.label || addon}</li>
                 ))}
               </ul>
@@ -326,35 +332,20 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
             </div>
           </div>
           
-          {!pricing.priceNote && (
+          {!pricing.priceNote && pricing.priceBreakdown && Object.entries(pricing.priceBreakdown).length > 0 && (
             <div>
               <h3 className="font-semibold text-lg mb-2">Price Breakdown</h3>
               <div className="border rounded-md overflow-hidden">
-                {pricing.priceBreakdown && Object.entries(pricing.priceBreakdown).length > 0 && (
-                  <>
-                    {Object.entries(pricing.priceBreakdown).map(([service, price]) => (
-                      <div key={service} className="flex justify-between px-4 py-2 border-b">
-                        <p>{service}</p>
-                        <p>${formatPrice(price)}</p>
-                      </div>
-                    ))}
-                  </>
-                )}
-                
-                {addonsTotal > 0 && formValues.addons && (
-                  <>
-                    {formValues.addons.filter(addon => !['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)).map((addon: string) => (
-                      <div key={addon} className="flex justify-between px-4 py-2 border-b">
-                        <p>{addonLabels[addon]?.label}</p>
-                        <p>+${addonLabels[addon]?.price}</p>
-                      </div>
-                    ))}
-                  </>
-                )}
+                {Object.entries(pricing.priceBreakdown).map(([service, price]) => (
+                  <div key={service} className="flex justify-between px-4 py-2 border-b">
+                    <p>{service}</p>
+                    <p>${formatPrice(price)}</p>
+                  </div>
+                ))}
                 
                 <div className="flex justify-between px-4 py-2 border-b bg-gray-50">
                   <p>Subtotal</p>
-                  <p>${formatPrice(pricing.subtotal + addonsTotal)}</p>
+                  <p>${formatPrice(pricing.subtotal)}</p>
                 </div>
                 
                 {formValues.propertyType === 'commercial' && (
@@ -366,7 +357,7 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
                 
                 <div className="flex justify-between px-4 py-2 bg-gray-100 font-semibold">
                   <p>Total Estimated Price</p>
-                  <p>${formatPrice((pricing.subtotal + addonsTotal) * propertyMultiplier)}</p>
+                  <p>${formatPrice(pricing.totalPrice)}</p>
                 </div>
               </div>
             </div>

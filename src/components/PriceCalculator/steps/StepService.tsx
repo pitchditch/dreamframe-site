@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
   FormField,
@@ -20,7 +20,7 @@ interface StepServiceProps {
 }
 
 const StepService = ({ form, onNext }: StepServiceProps) => {
-  const [selectedService, setSelectedService] = useState<string | null>(form.getValues('service') || null);
+  const [selectedServices, setSelectedServices] = useState<string[]>(form.getValues('services') || []);
 
   const services = [
     {
@@ -65,15 +65,15 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
     },
   ];
 
-  const handleServiceChange = (value: string) => {
-    setSelectedService(value);
-    form.setValue('service', value);
-    
-    // Reset cleaning options when service changes
-    form.setValue('cleaning_options', {
-      window_cleaning: '',
-      gutter_cleaning: '',
-      pressure_washing: [],
+  const toggleServiceSelection = (serviceId: string) => {
+    setSelectedServices(prev => {
+      const isSelected = prev.includes(serviceId);
+      const newSelection = isSelected 
+        ? prev.filter(id => id !== serviceId)
+        : [...prev, serviceId];
+      
+      form.setValue('services', newSelection, { shouldValidate: true });
+      return newSelection;
     });
   };
 
@@ -94,12 +94,12 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
     <div className="space-y-6">
       <div className="text-left">
         <h2 className="text-3xl font-bold mb-2">Choose your services</h2>
-        <p className="text-gray-600 mb-4">Select the service you need</p>
+        <p className="text-gray-600 mb-4">Select one or more services you need</p>
       </div>
 
       <div className="space-y-6">
         {services.map((service) => {
-          const isSelected = selectedService === service.id;
+          const isSelected = selectedServices.includes(service.id);
           const fieldName = getFieldName(service.id);
           
           return (
@@ -109,17 +109,15 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
               >
                 <div 
                   className="p-4 cursor-pointer"
-                  onClick={() => handleServiceChange(service.id)}
+                  onClick={() => toggleServiceSelection(service.id)}
                 >
                   <div className="flex items-center mb-2">
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
-                      {isSelected ? (
-                        <div className="rounded-sm w-5 h-5 bg-blue-500 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </div>
-                      ) : (
-                        <div className="rounded-sm w-5 h-5 border-2 border-gray-300"></div>
-                      )}
+                      <Checkbox 
+                        checked={isSelected}
+                        onCheckedChange={() => toggleServiceSelection(service.id)}
+                        className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
+                      />
                     </div>
                     <span className="font-semibold text-lg">{service.title}</span>
                   </div>
@@ -233,7 +231,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
         <Button 
           type="button" 
           onClick={onNext} 
-          disabled={!selectedService} 
+          disabled={selectedServices.length === 0} 
           className="bg-blue-500 hover:bg-blue-600"
         >
           Continue

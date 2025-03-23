@@ -21,13 +21,8 @@ const CallToAction = ({
   hideImage = false
 }: CallToActionProps) => {
   return <section className="relative py-16">
-      {/* Background Image */}
-      <div className="absolute inset-0 bg-cover bg-center" style={{
-      backgroundImage: `url(${backgroundImage})`
-    }}></div>
-      
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-70 py-0 my-0"></div>
+      {/* Background Color instead of image */}
+      <div className="absolute inset-0 bg-gray-900"></div>
       
       {/* Content */}
       <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">

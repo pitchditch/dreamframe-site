@@ -14,7 +14,7 @@ import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const formSchema = z.object({
-  service: z.string(),
+  services: z.array(z.string()).min(1, "Please select at least one service"),
   size: z.string(),
   propertyType: z.string(),
   addons: z.array(z.string()),
@@ -36,6 +36,7 @@ const PriceCalculatorForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      services: [],
       addons: [],
       propertyType: 'residential',
       cleaning_options: {
