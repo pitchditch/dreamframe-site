@@ -17,7 +17,7 @@ interface StepAddonsProps {
 }
 
 const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
-  const service = form.watch('service');
+  const services = form.watch('services');
 
   // Different addons based on selected service
   const getAddons = () => {
@@ -44,8 +44,8 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
       },
     ];
 
-    // Service specific add-ons
-    if (service === 'pressure-washing') {
+    // Check if pressure-washing is in the services array
+    if (services && services.includes('pressure-washing')) {
       return [
         {
           id: 'house-washing',

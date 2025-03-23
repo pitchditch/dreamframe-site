@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
@@ -115,7 +114,6 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
                       <Checkbox 
                         checked={isSelected}
-                        onCheckedChange={() => toggleServiceSelection(service.id)}
                         className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
                       />
                     </div>
@@ -150,13 +148,12 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                                           checked={field.value?.includes(option.id)}
                                           onCheckedChange={(checked) => {
                                             const currentValue = field.value || [];
-                                            return checked
-                                              ? field.onChange([...currentValue, option.id])
-                                              : field.onChange(
-                                                  currentValue.filter(
-                                                    (value: string) => value !== option.id
-                                                  )
+                                            const newValue = checked
+                                              ? [...currentValue, option.id]
+                                              : currentValue.filter(
+                                                  (value: string) => value !== option.id
                                                 );
+                                            field.onChange(newValue);
                                           }}
                                         />
                                       </FormControl>

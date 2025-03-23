@@ -7,14 +7,20 @@ interface ProgressStepsProps {
 }
 
 const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
-  const steps = [
-    { number: 1, label: 'Service' },
-    { number: 2, label: 'Property' },
-    { number: 3, label: 'Size' },
-    { number: 4, label: 'Add-ons' },
-    { number: 5, label: 'Contact' },
-    { number: 6, label: 'Review' },
-  ].slice(0, totalSteps);
+  // Create steps based on the totalSteps parameter
+  const steps = Array.from({ length: totalSteps }, (_, i) => {
+    const stepNumber = i + 1;
+    const labels = ['Service', 'Property', 'Size', 'Add-ons', 'Contact', 'Review'];
+    return {
+      number: stepNumber,
+      label: labels[i] || `Step ${stepNumber}`
+    };
+  });
+
+  // Calculate progress percentage safely
+  const progressPercentage = totalSteps <= 1 
+    ? 100 
+    : ((currentStep - 1) / (totalSteps - 1)) * 100;
 
   return (
     <div className="mb-8">
@@ -38,7 +44,7 @@ const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
         <div className="absolute top-4 left-0 right-0 h-0.5 bg-gray-200 -z-0 transform -translate-y-1/2">
           <div 
             className="h-full bg-bc-red transition-all duration-300" 
-            style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
+            style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
       </div>
