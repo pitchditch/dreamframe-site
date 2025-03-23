@@ -1,3 +1,4 @@
+
 const punjabiTranslations = {
   // General
   "Home": "ਹੋਮ",
