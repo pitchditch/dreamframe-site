@@ -22,25 +22,25 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
       id: 'small',
       title: 'Small',
       description: 'Up to 1,500 sq. ft.',
-      price: '+$0',
+      price: 'Starting at $300',
     },
     {
       id: 'medium',
       title: 'Medium',
       description: '1,500 - 2,500 sq. ft.',
-      price: '+$50',
+      price: 'Starting at $357',
     },
     {
       id: 'large',
       title: 'Large',
       description: '2,500 - 3,500 sq. ft.',
-      price: '+$100',
+      price: 'Starting at $431',
     },
     {
       id: 'x-large',
       title: 'Extra Large',
       description: '3,500+ sq. ft.',
-      price: '+$150',
+      price: 'Contact for pricing',
     },
   ];
 
@@ -50,6 +50,10 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
         <h2 className="text-2xl font-bold mb-2">Select Property Size</h2>
         <p className="text-gray-600">Choose the size of your property</p>
       </div>
+
+      <p className="text-sm text-gray-500 italic mb-4">
+        Pricing varies based on property size and selected services. Exact costs will be displayed on the final quote.
+      </p>
 
       <FormField
         control={form.control}

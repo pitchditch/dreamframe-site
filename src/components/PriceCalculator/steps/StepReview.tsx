@@ -19,11 +19,11 @@ const propertyLabels: Record<string, string> = {
   'commercial': 'Commercial',
 };
 
-const sizeLabels: Record<string, { label: string, price: number }> = {
-  'small': { label: 'Small (Up to 1,500 sq. ft.)', price: 0 },
-  'medium': { label: 'Medium (1,500 - 2,500 sq. ft.)', price: 50 },
-  'large': { label: 'Large (2,500 - 3,500 sq. ft.)', price: 100 },
-  'x-large': { label: 'Extra Large (3,500+ sq. ft.)', price: 150 },
+const sizeLabels: Record<string, { label: string }> = {
+  'small': { label: 'Small (Up to 1,500 sq. ft.)' },
+  'medium': { label: 'Medium (1,500 - 2,500 sq. ft.)' },
+  'large': { label: 'Large (2,500 - 3,500 sq. ft.)' },
+  'x-large': { label: 'Extra Large (3,500+ sq. ft.)' },
 };
 
 const addonLabels: Record<string, { label: string, price: number }> = {
@@ -33,30 +33,166 @@ const addonLabels: Record<string, { label: string, price: number }> = {
   'exterior-wax': { label: 'Exterior Wax', price: 125 },
 };
 
-const baseServicePrices: Record<string, number> = {
-  'window-cleaning': 200,
-  'gutter-cleaning': 200,
-  'pressure-washing': 250,
-  'roof-cleaning': 350,
+// Pricing structure for different services and property sizes
+const pricingData = {
+  'window-cleaning': {
+    'small': { outside: 300, inside: 300, both: 547.20 },
+    'medium': { outside: 357.30, inside: 411.30, both: 768.60 },
+    'large': { outside: 431.10, inside: 521.10, both: 952.20 },
+    'x-large': { message: 'Please contact us for an on-site estimate.' }
+  },
+  'gutter-cleaning': {
+    'small': { inside: 300, outside: 154, both: 454 },
+    'medium': { inside: 386.10, outside: 300, both: 682.20 },
+    'large': { inside: 465.30, outside: 357.30, both: 822.60 },
+    'x-large': { message: 'Please contact us for an on-site estimate.' }
+  },
+  'pressure-washing': {
+    'small': { 
+      house: 414.30, 
+      driveway: 300, 
+      deck: 300,
+      houseWithWindows: 664.20,
+      driveWithHouse: 635.40
+    },
+    'medium': { 
+      house: 627.30, 
+      driveway: 314.10, 
+      deck: 300,
+      houseWithWindows: 984.60,
+      driveWithHouse: 941.10
+    },
+    'large': { 
+      house: 888.30, 
+      driveway: 384.30, 
+      deck: 300,
+      houseWithWindows: 1319.40,
+      driveWithHouse: 1272.60
+    },
+    'x-large': { message: 'Please contact us for an on-site estimate.' }
+  },
+  'roof-cleaning': {
+    message: 'All roof cleaning prices require an on-site estimate, as prices vary based on condition, size and slope of roof.'
+  }
 };
 
 const StepReview = ({ form, onBack }: StepReviewProps) => {
   const formValues = form.getValues();
   
-  const basePrice = baseServicePrices[formValues.service] || 0;
-  const sizePrice = sizeLabels[formValues.size]?.price || 0;
+  // Determine pricing based on service, size, and options
+  const getServicePrice = () => {
+    const { service, size, addons = [] } = formValues;
+    
+    // Special case for roof cleaning
+    if (service === 'roof-cleaning') {
+      return {
+        subtotal: 0,
+        totalPrice: 0,
+        priceNote: pricingData['roof-cleaning'].message
+      };
+    }
+    
+    // For extra large properties
+    if (size === 'x-large') {
+      return {
+        subtotal: 0,
+        totalPrice: 0,
+        priceNote: pricingData[service][size].message
+      };
+    }
+    
+    // For window cleaning
+    if (service === 'window-cleaning') {
+      return {
+        basePrice: pricingData[service][size].both,
+        subtotal: pricingData[service][size].both,
+        totalPrice: pricingData[service][size].both * (formValues.propertyType === 'commercial' ? 1.5 : 1.0),
+        priceBreakdown: {
+          outsideWindows: pricingData[service][size].outside,
+          insideWindows: pricingData[service][size].inside
+        }
+      };
+    }
+    
+    // For gutter cleaning
+    if (service === 'gutter-cleaning') {
+      return {
+        basePrice: pricingData[service][size].both,
+        subtotal: pricingData[service][size].both,
+        totalPrice: pricingData[service][size].both * (formValues.propertyType === 'commercial' ? 1.5 : 1.0),
+        priceBreakdown: {
+          insideGutters: pricingData[service][size].inside,
+          outsideGutters: pricingData[service][size].outside
+        }
+      };
+    }
+    
+    // For pressure washing
+    if (service === 'pressure-washing') {
+      // Check if additional services were selected as addons
+      const hasHouseWashing = addons.includes('house-washing');
+      const hasWindowCleaning = addons.includes('window-cleaning');
+      const hasDrivewayWashing = addons.includes('driveway-washing');
+      const hasDeckWashing = addons.includes('deck-washing');
+      
+      let basePrice = 0;
+      const priceBreakdown: Record<string, number> = {};
+      
+      if (hasHouseWashing) {
+        basePrice += hasWindowCleaning 
+          ? pricingData[service][size].houseWithWindows 
+          : pricingData[service][size].house;
+        
+        priceBreakdown["House Washing"] = hasWindowCleaning 
+          ? pricingData[service][size].houseWithWindows 
+          : pricingData[service][size].house;
+      }
+      
+      if (hasDrivewayWashing) {
+        const drivewayPrice = hasHouseWashing 
+          ? pricingData[service][size].driveWithHouse - pricingData[service][size].house
+          : pricingData[service][size].driveway;
+        
+        basePrice += drivewayPrice;
+        priceBreakdown["Driveway Washing"] = drivewayPrice;
+      }
+      
+      if (hasDeckWashing) {
+        basePrice += pricingData[service][size].deck;
+        priceBreakdown["Deck Washing"] = pricingData[service][size].deck;
+      }
+      
+      return {
+        basePrice,
+        subtotal: basePrice,
+        totalPrice: basePrice * (formValues.propertyType === 'commercial' ? 1.5 : 1.0),
+        priceBreakdown
+      };
+    }
+    
+    // Default return
+    return {
+      subtotal: 0,
+      totalPrice: 0,
+      priceNote: "Please contact us for a detailed quote."
+    };
+  };
   
-  // Apply commercial multiplier if it's a commercial property
+  const pricing = getServicePrice();
   const propertyMultiplier = formValues.propertyType === 'commercial' ? 1.5 : 1.0;
   
+  // Add on prices
   const addonsTotal = (formValues.addons || []).reduce(
-    (total: number, addon: string) => total + (addonLabels[addon]?.price || 0),
+    (total: number, addon: string) => {
+      // Skip service-specific addons that were handled in getServicePrice
+      if (['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)) {
+        return total;
+      }
+      return total + (addonLabels[addon]?.price || 0);
+    },
     0
   );
   
-  const subtotal = basePrice + sizePrice + addonsTotal;
-  const totalPrice = Math.round(subtotal * propertyMultiplier);
-
   const formatDate = (date: Date | undefined) => {
     if (!date) return 'Not specified';
     return new Intl.DateTimeFormat('en-US', {
@@ -64,6 +200,10 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
       month: 'long',
       day: 'numeric',
     }).format(date);
+  };
+
+  const formatPrice = (price: number) => {
+    return price.toFixed(2);
   };
 
   return (
@@ -95,7 +235,7 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
               <h3 className="text-lg font-bold">Add-ons</h3>
               <ul className="list-disc list-inside">
                 {formValues.addons.map((addon: string) => (
-                  <li key={addon}>{addonLabels[addon]?.label}</li>
+                  <li key={addon}>{addonLabels[addon]?.label || addon}</li>
                 ))}
               </ul>
             </div>
@@ -115,39 +255,54 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
           
           <div className="border-t pt-4 mt-4">
             <h3 className="text-lg font-bold">Price Breakdown</h3>
-            <div className="flex justify-between">
-              <p>Base Price ({serviceLabels[formValues.service]})</p>
-              <p>${basePrice}</p>
-            </div>
-            <div className="flex justify-between">
-              <p>Size ({sizeLabels[formValues.size]?.label})</p>
-              <p>+${sizePrice}</p>
-            </div>
-            {formValues.addons && formValues.addons.length > 0 && (
+            
+            {pricing.priceNote ? (
+              <div className="p-3 bg-yellow-50 rounded-lg my-2">
+                <p>{pricing.priceNote}</p>
+              </div>
+            ) : (
               <>
-                <p className="font-medium">Add-ons:</p>
-                {formValues.addons.map((addon: string) => (
-                  <div key={addon} className="flex justify-between pl-4">
-                    <p>{addonLabels[addon]?.label}</p>
-                    <p>+${addonLabels[addon]?.price}</p>
+                {pricing.priceBreakdown && Object.entries(pricing.priceBreakdown).length > 0 && (
+                  <>
+                    {Object.entries(pricing.priceBreakdown).map(([service, price]) => (
+                      <div key={service} className="flex justify-between">
+                        <p>{service}</p>
+                        <p>${formatPrice(price)}</p>
+                      </div>
+                    ))}
+                  </>
+                )}
+                
+                {addonsTotal > 0 && formValues.addons && (
+                  <>
+                    <p className="font-medium mt-2">Add-ons:</p>
+                    {formValues.addons.filter(addon => !['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)).map((addon: string) => (
+                      <div key={addon} className="flex justify-between pl-4">
+                        <p>{addonLabels[addon]?.label}</p>
+                        <p>+${addonLabels[addon]?.price}</p>
+                      </div>
+                    ))}
+                  </>
+                )}
+                
+                <div className="flex justify-between pt-2">
+                  <p>Subtotal</p>
+                  <p>${formatPrice(pricing.subtotal + addonsTotal)}</p>
+                </div>
+                
+                {formValues.propertyType === 'commercial' && (
+                  <div className="flex justify-between">
+                    <p>Commercial Property (1.5x)</p>
+                    <p>×1.5</p>
                   </div>
-                ))}
+                )}
+                
+                <div className="flex justify-between font-bold text-lg mt-2 pt-2 border-t">
+                  <p>Total Estimated Price</p>
+                  <p>${formatPrice((pricing.subtotal + addonsTotal) * propertyMultiplier)}</p>
+                </div>
               </>
             )}
-            <div className="flex justify-between pt-2">
-              <p>Subtotal</p>
-              <p>${subtotal}</p>
-            </div>
-            {formValues.propertyType === 'commercial' && (
-              <div className="flex justify-between">
-                <p>Commercial Property (1.5x)</p>
-                <p>×1.5</p>
-              </div>
-            )}
-            <div className="flex justify-between font-bold text-lg mt-2 pt-2 border-t">
-              <p>Total Estimated Price</p>
-              <p>${totalPrice}</p>
-            </div>
           </div>
         </div>
       </div>
