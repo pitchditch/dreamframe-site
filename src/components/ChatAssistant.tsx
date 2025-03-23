@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Phone, MessageCircle, Calendar, ArrowRight, HelpCircle, User, Info } from 'lucide-react';
 import { Button } from './ui/button';
@@ -264,8 +263,8 @@ const ChatAssistant = () => {
     // If we extracted useful information, let the user know
     if (Object.keys(extractedData).length > 0) {
       toast({
-        title: "Information Saved",
-        description: "We've saved your information for when you're ready to book.",
+        title: t("Information Saved"),
+        description: t("We've saved your information for when you're ready to book."),
         duration: 3000,
       });
     }
@@ -281,7 +280,7 @@ const ChatAssistant = () => {
     setTimeout(() => {
       setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
       
-      const responseText = "Great! Our online booking form will guide you through the process, including house size, service type, and date. Click below to get started.";
+      const responseText = t("Great! Our online calculator will guide you through the process, including house size, service type, and date. Any information you've already shared with me will be pre-filled. Click below to get started.");
       
       // Simulate typing effect
       simulateTyping(responseText, () => {
@@ -413,11 +412,11 @@ const ChatAssistant = () => {
         responseText = matchingFaq.answer;
       } else {
         // Generic response if no match found
-        responseText = "I don't have a specific answer for that question. Would you like to speak with one of our team members who can help you better? You can call us at 778-808-7620 or click 'Talk to a Human' below.";
+        responseText = t("I don't have a specific answer for that question. Would you like to speak with one of our team members who can help you better? You can call us at 778-808-7620 or click 'Talk to a Human' below.");
       }
       
       // Add suggestions for follow-up based on the context
-      responseText += "\n\nDoes that help with your question?";
+      responseText += "\n\n" + t("Does that help with your question?");
       
       // Simulate typing effect
       simulateTyping(responseText, () => {

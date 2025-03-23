@@ -196,7 +196,49 @@ const punjabiTranslations = {
   "Call us now: 778 808 7620": "ਹੁਣੇ ਸਾਨੂੰ ਕਾਲ ਕਰੋ: 778 808 7620",
   "Our House Washing Process": "ਸਾਡੀ ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਪ੍ਰਕਿਰਿਆ",
   "We follow a comprehensive approach to safely clean and restore your home's exterior": "ਅਸੀਂ ਤੁਹਾਡੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਸਾਫ਼ ਅਤੇ ਬਹਾਲ ਕਰਨ ਲਈ ਇੱਕ ਵਿਆਪਕ ਪਹੁੰਚ ਦੀ ਪਾਲਣਾ ਕਰਦੇ ਹਾਂ",
-  "Surface Inspection": "ਸਤਹ ਨਿਰੀਖਣ"
+  "Surface Inspection": "ਸਤਹ ਨਿਰੀਖਣ",
+
+  // Price Calculator Form
+  "Price Calculator": "ਮੁੱਲ ਕੈਲਕੂਲੇਟਰ",
+  "Get an instant estimate for your service needs": "ਆਪਣੀਆਂ ਸੇਵਾ ਜ਼ਰੂਰਤਾਂ ਲਈ ਤੁਰੰਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ",
+  "Jayden Fisher": "ਜੇਡਨ ਫਿਸ਼ਰ",
+  "Every job is checked by me personally": "ਹਰ ਕੰਮ ਦੀ ਜਾਂਚ ਮੈਂ ਖੁਦ ਕਰਦਾ ਹਾਂ",
+  "Leave your address and we can send you a quick estimate based on Google Maps, or contact us for an on-site estimate.": "ਆਪਣਾ ਪਤਾ ਛੱਡੋ ਅਤੇ ਅਸੀਂ ਤੁਹਾਨੂੰ Google Maps ਦੇ ਆਧਾਰ 'ਤੇ ਇੱਕ ਤੇਜ਼ ਅਨੁਮਾਨ ਭੇਜ ਸਕਦੇ ਹਾਂ, ਜਾਂ ਸਾਈਟ 'ਤੇ ਅਨੁਮਾਨ ਲਈ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ।",
+  "All of our prices are competitive with other companies, including Shackshine, Men in Kilts, and we are fully insured.": "ਸਾਡੀਆਂ ਸਾਰੀਆਂ ਕੀਮਤਾਂ ਹੋਰ ਕੰਪਨੀਆਂ ਦੇ ਨਾਲ ਮੁਕਾਬਲੇਬਾਜ਼ ਹਨ, ਜਿਸ ਵਿੱਚ ਸ਼ੈਕਸ਼ਾਈਨ, ਮੈਨ ਇਨ ਕਿਲਟਸ ਸ਼ਾਮਲ ਹਨ, ਅਤੇ ਅਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ ਹਾਂ।",
+  "Information Applied": "ਜਾਣਕਾਰੀ ਲਾਗੂ ਕੀਤੀ ਗਈ",
+  "We've pre-filled your service selection based on your chat.": "ਅਸੀਂ ਤੁਹਾਡੀ ਗੱਲਬਾਤ ਦੇ ਆਧਾਰ 'ਤੇ ਤੁਹਾਡੀ ਸੇਵਾ ਚੋਣ ਨੂੰ ਪਹਿਲਾਂ ਤੋਂ ਭਰ ਦਿੱਤਾ ਹੈ।",
+  "Your quote request has been submitted! We'll contact you shortly.": "ਤੁਹਾਡੀ ਕੋਟੇਸ਼ਨ ਬੇਨਤੀ ਜਮ੍ਹਾਂ ਕਰ ਦਿੱਤੀ ਗਈ ਹੈ! ਅਸੀਂ ਤੁਹਾਨੂੰ ਛੇਤੀ ਹੀ ਸੰਪਰਕ ਕਰਾਂਗੇ।",
+
+  // Steps and Navigation
+  "Contact Information": "ਸੰਪਰਕ ਜਾਣਕਾਰੀ",
+  "Provide your details so we can contact you": "ਆਪਣੇ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਕਰੋ ਤਾਂ ਜੋ ਅਸੀਂ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕੀਏ",
+  "Full Name": "ਪੂਰਾ ਨਾਮ",
+  "John Doe": "ਜੌਨ ਡੋ",
+  "Email": "ਈਮੇਲ",
+  "your@email.com": "ਤੁਹਾਡਾ@ਈਮੇਲ.ਕਾਮ",
+  "Phone Number": "ਫੋਨ ਨੰਬਰ",
+  "(123) 456-7890": "(123) 456-7890",
+  "Preferred Service Date": "ਤਰਜੀਹੀ ਸੇਵਾ ਦੀ ਤਾਰੀਖ",
+  "Select a date": "ਇੱਕ ਤਾਰੀਖ ਚੁਣੋ",
+  "Service Address": "ਸੇਵਾ ਪਤਾ",
+  "123 Marine Dr, White Rock, BC": "123 ਮਰੀਨ ਡਰ, ਵਾਈਟ ਰਾਕ, ਬੀਸੀ",
+  "Marine Dr, White Rock, BC": "ਮਰੀਨ ਡਰ, ਵਾਈਟ ਰਾਕ, ਬੀਸੀ",
+  "Additional Notes": "ਵਾਧੂ ਨੋਟਸ",
+  "Any special instructions or requirements...": "ਕੋਈ ਵਿਸ਼ੇਸ਼ ਹਿਦਾਇਤਾਂ ਜਾਂ ਜ਼ਰੂਰਤਾਂ...",
+  "Back": "ਪਿੱਛੇ",
+  "Review Order": "ਆਰਡਰ ਦੀ ਸਮੀਖਿਆ ਕਰੋ",
+  "Next": "ਅੱਗੇ",
+  
+  // Chatbot Booking Flow
+  "Great! Our online calculator will guide you through the process, including house size, service type, and date. Any information you've already shared with me will be pre-filled. Click below to get started.": "ਵਧੀਆ! ਸਾਡਾ ਔਨਲਾਈਨ ਕੈਲਕੂਲੇਟਰ ਤੁਹਾਨੂੰ ਪ੍ਰਕਿਰਿਆ ਦੇ ਦੌਰਾਨ ਮਾਰਗਦਰਸ਼ਨ ਕਰੇਗਾ, ਜਿਸ ਵਿੱਚ ਘਰ ਦਾ ਆਕਾਰ, ਸੇਵਾ ਦੀ ਕਿਸਮ, ਅਤੇ ਤਾਰੀਖ ਸ਼ਾਮਲ ਹੈ। ਤੁਸੀਂ ਮੇਰੇ ਨਾਲ ਪਹਿਲਾਂ ਹੀ ਸਾਂਝੀ ਕੀਤੀ ਕੋਈ ਵੀ ਜਾਣਕਾਰੀ ਪਹਿਲਾਂ ਤੋਂ ਭਰੀ ਹੋਵੇਗੀ। ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਹੇਠਾਂ ਕਲਿੱਕ ਕਰੋ।",
+  "I don't have a specific answer for that question. Would you like to speak with one of our team members who can help you better? You can call us at 778-808-7620 or click 'Talk to a Human' below.": "ਮੇਰੇ ਕੋਲ ਉਸ ਸਵਾਲ ਦਾ ਕੋਈ ਖਾਸ ਜਵਾਬ ਨਹੀਂ ਹੈ। ਕੀ ਤੁਸੀਂ ਸਾਡੀ ਟੀਮ ਦੇ ਕਿਸੇ ਮੈਂਬਰ ਨਾਲ ਗੱਲ ਕਰਨਾ ਚਾਹੋਗੇ ਜੋ ਤੁਹਾਡੀ ਬਿਹਤਰ ਮਦਦ ਕਰ ਸਕਦਾ ਹੈ? ਤੁਸੀਂ ਸਾਨੂੰ 778-808-7620 'ਤੇ ਕਾਲ ਕਰ ਸਕਦੇ ਹੋ ਜਾਂ ਹੇਠਾਂ 'ਇੱਕ ਮਨੁੱਖ ਨਾਲ ਗੱਲ ਕਰੋ' 'ਤੇ ਕਲਿੱਕ ਕਰ ਸਕਦੇ ਹੋ।",
+  "Does that help with your question?": "ਕੀ ਇਹ ਤੁਹਾਡੇ ਸਵਾਲ ਦੇ ਜਵਾਬ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ?",
+  "Information Saved": "ਜਾਣਕਾਰੀ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ",
+  "We've saved your information for when you're ready to book.": "ਅਸੀਂ ਤੁਹਾਡੀ ਜਾਣਕਾਰੀ ਸੁਰੱਖਿਅਤ ਕਰ ਲਈ ਹੈ ਜਦੋਂ ਤੁਸੀਂ ਬੁੱਕ ਕਰਨ ਲਈ ਤਿਆਰ ਹੋ।",
+  
+  // Calculator Page
+  "Service Price Calculator": "ਸੇਵਾ ਮੁੱਲ ਕੈਲਕੂਲੇਟਰ",
+  "Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements. We serve residential and commercial properties in White Rock and surrounding areas.": "ਆਪਣੀਆਂ ਸੇਵਾ ਜ਼ਰੂਰਤਾਂ ਲਈ ਤੁਰੰਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ। ਸਾਡਾ ਕੈਲਕੂਲੇਟਰ ਤੁਹਾਡੀਆਂ ਵਿਸ਼ੇਸ਼ ਜ਼ਰੂਰਤਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਇੱਕ ਕਸਟਮਾਈਜ਼ਡ ਕੋਟੇਸ਼ਨ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ। ਅਸੀਂ ਵਾਈਟ ਰਾਕ ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਖੇਤਰਾਂ ਵਿੱਚ ਰਿਹਾਇਸ਼ੀ ਅਤੇ ਵਪਾਰਕ ਜਾਇਦਾਦਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।"
 };
 
 export default punjabiTranslations;
