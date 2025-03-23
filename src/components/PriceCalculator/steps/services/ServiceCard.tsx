@@ -7,11 +7,12 @@ interface ServiceCardProps {
   service: {
     id: string;
     title: string;
-    description: string;
-    hasOptions: boolean;
+    description?: string;
+    price?: number;
+    image?: string;
   };
   isSelected: boolean;
-  onToggle: (serviceId: string) => void;
+  onToggle: (id: string) => void;
   children?: React.ReactNode;
 }
 
@@ -33,16 +34,26 @@ const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardPro
               // Prevent click events on the checkbox from bubbling up
               // to avoid duplicate toggle calls
               onClick={(e) => e.stopPropagation()}
-              // Remove onCheckedChange to avoid double updates
-              readOnly
+              // No onCheckedChange to avoid double updates
             />
           </div>
           <span className="font-semibold text-lg">{service.title}</span>
         </div>
-        <p className="text-gray-600 ml-9">{service.description}</p>
+        
+        {service.description && (
+          <p className="text-gray-600 text-sm mb-2">{service.description}</p>
+        )}
+        
+        {service.price && (
+          <div className="font-bold text-blue-600">${service.price}</div>
+        )}
       </div>
       
-      {isSelected && service.hasOptions && children}
+      {children && (
+        <div className={`bg-gray-50 p-4 border-t ${isSelected ? 'block' : 'hidden'}`}>
+          {children}
+        </div>
+      )}
     </Card>
   );
 };
