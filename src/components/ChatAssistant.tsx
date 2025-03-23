@@ -142,10 +142,10 @@ const ChatAssistant = () => {
 
   return (
     <>
-      <div className="fixed bottom-24 right-6 md:right-10 z-40 flex flex-col items-end space-y-4">
+      <div className="fixed bottom-6 right-6 md:right-10 z-40 flex flex-col items-end space-y-4">
         {showSuggestion && !isOpen && (
           <div 
-            className="chat-suggestion bg-white rounded-lg shadow-lg p-3 mb-3 text-sm max-w-xs animate-fade-in-right"
+            className="chat-suggestion bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-3 mb-3 text-sm max-w-xs animate-fade-in-right"
             style={{ 
               animation: 'fadeIn 0.5s ease-out, float 2s ease-in-out infinite',
               transformOrigin: 'center bottom'
@@ -252,7 +252,7 @@ const ChatAssistant = () => {
         
         <Button 
           onClick={toggleChat} 
-          className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg bg-bc-red hover:bg-red-700 fixed bottom-8 right-6 md:right-10 z-40"
+          className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg bg-bc-red hover:bg-red-700"
         >
           <MessageCircle size={24} className="text-white" />
         </Button>
