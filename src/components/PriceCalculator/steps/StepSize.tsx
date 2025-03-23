@@ -10,7 +10,6 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { useTranslation } from '@/hooks/use-translation';
 
 interface StepSizeProps {
   form: UseFormReturn<any>;
@@ -19,36 +18,34 @@ interface StepSizeProps {
 }
 
 const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
-  const { t } = useTranslation();
-  
   const sizes = [
     {
       id: 'small',
-      title: t('Small'),
-      description: t('Up to 1,500 sq. ft.'),
+      title: 'Small',
+      description: 'Up to 1,500 sq. ft.',
     },
     {
       id: 'medium',
-      title: t('Medium'),
-      description: t('1,500 - 2,500 sq. ft.'),
+      title: 'Medium',
+      description: '1,500 - 2,500 sq. ft.',
     },
     {
       id: 'large',
-      title: t('Large'),
-      description: t('2,500 - 3,500 sq. ft.'),
+      title: 'Large',
+      description: '2,500 - 3,500 sq. ft.',
     },
     {
       id: 'x-large',
-      title: t('Extra Large'),
-      description: t('3,500+ sq. ft.'),
+      title: 'Extra Large',
+      description: '3,500+ sq. ft.',
     },
   ];
 
   return (
     <div className="space-y-6">
       <div className="text-left">
-        <h2 className="text-3xl font-bold mb-2">{t('Choose your property size')}</h2>
-        <p className="text-gray-600 mb-4">{t('This helps us estimate the right price for your needs')}</p>
+        <h2 className="text-3xl font-bold mb-2">Choose your property size</h2>
+        <p className="text-gray-600 mb-4">This helps us estimate the right price for your needs</p>
       </div>
 
       <FormField
@@ -59,7 +56,7 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                value={field.value}
+                defaultValue={field.value}
                 className="space-y-2"
               >
                 {sizes.map((size) => (
@@ -101,14 +98,14 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
             <path d="M19 12H5M12 19l-7-7 7-7"></path>
           </svg>
-          {t('Back')}
+          Back
         </Button>
         <Button 
           type="button" 
           onClick={onNext} 
           className="bg-blue-500 hover:bg-blue-600"
         >
-          {t('Continue')}
+          Continue
         </Button>
       </div>
     </div>

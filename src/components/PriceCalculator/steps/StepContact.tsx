@@ -14,7 +14,6 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { useTranslation } from '@/hooks/use-translation';
 
 interface StepContactProps {
   form: UseFormReturn<any>;
@@ -23,13 +22,11 @@ interface StepContactProps {
 }
 
 const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
-  const { t } = useTranslation();
-  
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">{t("Contact Information")}</h2>
-        <p className="text-gray-600">{t("Provide your details so we can contact you")}</p>
+        <h2 className="text-2xl font-bold mb-2">Contact Information</h2>
+        <p className="text-gray-600">Provide your details so we can contact you</p>
       </div>
 
       <div className="grid gap-4">
@@ -38,9 +35,9 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Full Name")}</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder={t("John Doe")} {...field} />
+                <Input placeholder="John Doe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,9 +49,9 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Email")}</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder={t("your@email.com")} {...field} />
+                <Input placeholder="your@email.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,9 +63,9 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Phone Number")}</FormLabel>
+              <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder={t("(123) 456-7890")} {...field} />
+                <Input placeholder="(123) 456-7890" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -80,7 +77,7 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>{t("Preferred Service Date")}</FormLabel>
+              <FormLabel>Preferred Service Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -91,7 +88,7 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
                       {field.value ? (
                         format(field.value, "PPP")
                       ) : (
-                        t("Select a date")
+                        "Select a date"
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -117,11 +114,11 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Service Address")}</FormLabel>
+              <FormLabel>Service Address</FormLabel>
               <FormControl>
                 <Input 
-                  placeholder={t("123 Marine Dr, White Rock, BC")} 
-                  defaultValue={t("Marine Dr, White Rock, BC")}
+                  placeholder="123 Marine Dr, White Rock, BC" 
+                  defaultValue="Marine Dr, White Rock, BC"
                   {...field} 
                 />
               </FormControl>
@@ -135,10 +132,10 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Additional Notes")}</FormLabel>
+              <FormLabel>Additional Notes</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder={t("Any special instructions or requirements...")}
+                  placeholder="Any special instructions or requirements..."
                   {...field}
                 />
               </FormControl>
@@ -150,10 +147,10 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
 
       <div className="flex justify-between">
         <Button type="button" onClick={onBack} variant="outline">
-          {t("Back")}
+          Back
         </Button>
         <Button type="button" onClick={onNext} className="bg-bc-red hover:bg-red-700">
-          {t("Review Order")}
+          Review Order
         </Button>
       </div>
     </div>

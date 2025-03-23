@@ -13,7 +13,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Sparkles } from 'lucide-react';
-import { useTranslation } from '@/hooks/use-translation';
 
 interface StepServiceProps {
   form: UseFormReturn<any>;
@@ -21,53 +20,47 @@ interface StepServiceProps {
 }
 
 const StepService = ({ form, onNext }: StepServiceProps) => {
-  const { t } = useTranslation();
   const [selectedServices, setSelectedServices] = useState<string[]>(form.getValues('services') || []);
-
-  // Update form when selectedServices change
-  useEffect(() => {
-    form.setValue('services', selectedServices, { shouldValidate: true });
-  }, [selectedServices, form]);
 
   const services = [
     {
       id: 'window-cleaning',
-      title: t('Window Cleaning'),
-      description: t('Professional window cleaning with streak-free results'),
+      title: 'Window Cleaning',
+      description: 'Professional window cleaning with streak-free results',
       hasOptions: true,
       options: [
-        { id: 'outside', label: t('Outside') },
-        { id: 'inside', label: t('Inside') },
-        { id: 'both', label: t('Both') }
+        { id: 'outside', label: 'Outside' },
+        { id: 'inside', label: 'Inside' },
+        { id: 'both', label: 'Both' }
       ]
     },
     {
       id: 'gutter-cleaning',
-      title: t('Gutter Cleaning'),
-      description: t('Thorough gutter cleaning to prevent damage'),
+      title: 'Gutter Cleaning',
+      description: 'Thorough gutter cleaning to prevent damage',
       hasOptions: true,
       options: [
-        { id: 'inside', label: t('Inside the gutter') },
-        { id: 'outside', label: t('Outside the gutter') },
-        { id: 'both', label: t('Both') }
+        { id: 'inside', label: 'Inside the gutter' },
+        { id: 'outside', label: 'Outside the gutter' },
+        { id: 'both', label: 'Both' }
       ]
     },
     {
       id: 'pressure-washing',
-      title: t('Pressure Washing'),
-      description: t('High-pressure cleaning for stubborn dirt and grime'),
+      title: 'Pressure Washing',
+      description: 'High-pressure cleaning for stubborn dirt and grime',
       hasOptions: true,
       options: [
-        { id: 'house-washing', label: t('House washing') },
-        { id: 'driveway-washing', label: t('Driveway washing') },
-        { id: 'deck-washing', label: t('Deck washing') }
+        { id: 'house-washing', label: 'House washing' },
+        { id: 'driveway-washing', label: 'Driveway washing' },
+        { id: 'deck-washing', label: 'Deck washing' }
       ],
       multiSelect: true
     },
     {
       id: 'roof-cleaning',
-      title: t('Roof Cleaning'),
-      description: t('Gentle roof cleaning to remove moss and algae'),
+      title: 'Roof Cleaning',
+      description: 'Gentle roof cleaning to remove moss and algae',
       hasOptions: false
     },
   ];
@@ -75,9 +68,12 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
   const toggleServiceSelection = (serviceId: string) => {
     setSelectedServices(prev => {
       const isSelected = prev.includes(serviceId);
-      return isSelected 
+      const newSelection = isSelected 
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId];
+      
+      form.setValue('services', newSelection, { shouldValidate: true });
+      return newSelection;
     });
   };
 
@@ -97,8 +93,8 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
   return (
     <div className="space-y-6">
       <div className="text-left">
-        <h2 className="text-3xl font-bold mb-2">{t('Choose your services')}</h2>
-        <p className="text-gray-600 mb-4">{t('Select one or more services you need')}</p>
+        <h2 className="text-3xl font-bold mb-2">Choose your services</h2>
+        <p className="text-gray-600 mb-4">Select one or more services you need</p>
       </div>
 
       <div className="space-y-6">
@@ -119,7 +115,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
                       <Checkbox 
                         checked={isSelected}
-                        // Don't use onCheckedChange here to avoid duplicate state updates
+                        onCheckedChange={() => toggleServiceSelection(service.id)}
                         className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
                       />
                     </div>
@@ -130,7 +126,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
 
                 {isSelected && service.hasOptions && (
                   <div className="bg-gray-50 p-4 border-t">
-                    <p className="font-medium mb-3">{t('What would you like cleaned?')}</p>
+                    <p className="font-medium mb-3">What would you like cleaned?</p>
                     
                     {service.multiSelect ? (
                       <FormField
@@ -154,12 +150,13 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                                           checked={field.value?.includes(option.id)}
                                           onCheckedChange={(checked) => {
                                             const currentValue = field.value || [];
-                                            const newValue = checked
-                                              ? [...currentValue, option.id]
-                                              : currentValue.filter(
-                                                  (value: string) => value !== option.id
+                                            return checked
+                                              ? field.onChange([...currentValue, option.id])
+                                              : field.onChange(
+                                                  currentValue.filter(
+                                                    (value: string) => value !== option.id
+                                                  )
                                                 );
-                                            field.onChange(newValue);
                                           }}
                                         />
                                       </FormControl>
@@ -183,7 +180,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                             <FormControl>
                               <RadioGroup
                                 onValueChange={field.onChange}
-                                value={field.value}
+                                defaultValue={field.value}
                                 className="space-y-3"
                               >
                                 {service.options.map((option) => (
@@ -209,7 +206,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                       <div className="mt-4 bg-blue-50 p-3 rounded-md flex items-start space-x-2">
                         <Sparkles size={18} className="text-blue-500 mt-1 flex-shrink-0" />
                         <p className="text-sm">
-                          {t('Our water purification technology ensures that windows are spot free and streak free.')}
+                          Our water purification technology ensures that windows are spot free and streak free.
                         </p>
                       </div>
                     )}
@@ -218,7 +215,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                       <div className="mt-4 bg-blue-50 p-3 rounded-md flex items-start space-x-2">
                         <Sparkles size={18} className="text-blue-500 mt-1 flex-shrink-0" />
                         <p className="text-sm">
-                          {t('With our equipment and professional training, we\'ll take the worry out of cleaning your gutters.')}
+                          With our equipment and professional training, we'll take the worry out of cleaning your gutters.
                         </p>
                       </div>
                     )}
@@ -237,7 +234,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
           disabled={selectedServices.length === 0} 
           className="bg-blue-500 hover:bg-blue-600"
         >
-          {t('Continue')}
+          Continue
         </Button>
       </div>
     </div>
