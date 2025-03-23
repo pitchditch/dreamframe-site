@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 interface StepSizeProps {
   form: UseFormReturn<any>;
@@ -22,38 +23,30 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
       id: 'small',
       title: 'Small',
       description: 'Up to 1,500 sq. ft.',
-      price: 'Starting at $300',
     },
     {
       id: 'medium',
       title: 'Medium',
       description: '1,500 - 2,500 sq. ft.',
-      price: 'Starting at $357',
     },
     {
       id: 'large',
       title: 'Large',
       description: '2,500 - 3,500 sq. ft.',
-      price: 'Starting at $431',
     },
     {
       id: 'x-large',
       title: 'Extra Large',
       description: '3,500+ sq. ft.',
-      price: 'Contact for pricing',
     },
   ];
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Select Property Size</h2>
-        <p className="text-gray-600">Choose the size of your property</p>
+      <div className="text-left">
+        <h2 className="text-3xl font-bold mb-2">Choose your property size</h2>
+        <p className="text-gray-600 mb-4">This helps us estimate the right price for your needs</p>
       </div>
-
-      <p className="text-sm text-gray-500 italic mb-4">
-        Pricing varies based on property size and selected services. Exact costs will be displayed on the final quote.
-      </p>
 
       <FormField
         control={form.control}
@@ -64,24 +57,34 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid gap-4"
+                className="space-y-2"
               >
                 {sizes.map((size) => (
-                  <div key={size.id} className="relative">
-                    <RadioGroupItem
-                      value={size.id}
-                      id={size.id}
-                      className="peer sr-only"
-                    />
+                  <Card key={size.id} className={`p-0 overflow-hidden ${field.value === size.id ? 'border-2 border-blue-500' : 'border border-gray-200'}`}>
                     <FormLabel
                       htmlFor={size.id}
-                      className="flex flex-col p-4 border rounded-lg cursor-pointer hover:border-bc-red peer-data-[state=checked]:border-bc-red"
+                      className="flex items-center p-4 cursor-pointer w-full"
                     >
-                      <span className="text-lg font-semibold">{size.title}</span>
-                      <span className="text-gray-600">{size.description}</span>
-                      <span className="text-bc-red font-medium mt-2">{size.price}</span>
+                      <div className="flex items-center justify-center w-6 h-6 mr-3">
+                        {field.value === size.id ? (
+                          <div className="rounded-full w-5 h-5 bg-blue-500 flex items-center justify-center">
+                            <div className="rounded-full w-2 h-2 bg-white"></div>
+                          </div>
+                        ) : (
+                          <div className="rounded-full w-5 h-5 border-2 border-gray-300"></div>
+                        )}
+                        <RadioGroupItem
+                          value={size.id}
+                          id={size.id}
+                          className="sr-only"
+                        />
+                      </div>
+                      <div>
+                        <span className="font-medium">{size.title}</span>
+                        <p className="text-sm text-gray-500">{size.description}</p>
+                      </div>
                     </FormLabel>
-                  </div>
+                  </Card>
                 ))}
               </RadioGroup>
             </FormControl>
@@ -91,10 +94,17 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
       />
 
       <div className="flex justify-between">
-        <Button type="button" onClick={onBack} variant="outline">
+        <Button type="button" onClick={onBack} variant="outline" className="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
           Back
         </Button>
-        <Button type="button" onClick={onNext} className="bg-bc-red hover:bg-red-700">
+        <Button 
+          type="button" 
+          onClick={onNext} 
+          className="bg-blue-500 hover:bg-blue-600"
+        >
           Continue
         </Button>
       </div>

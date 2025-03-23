@@ -18,6 +18,11 @@ const formSchema = z.object({
   size: z.string(),
   propertyType: z.string(),
   addons: z.array(z.string()),
+  cleaning_options: z.object({
+    window_cleaning: z.string().optional(),
+    gutter_cleaning: z.string().optional(),
+    pressure_washing: z.array(z.string()).optional(),
+  }).optional(),
   fullName: z.string().min(2),
   email: z.string().email(),
   phone: z.string().min(10),
@@ -33,6 +38,11 @@ const PriceCalculatorForm = () => {
     defaultValues: {
       addons: [],
       propertyType: 'residential',
+      cleaning_options: {
+        window_cleaning: '',
+        gutter_cleaning: '',
+        pressure_washing: [],
+      }
     },
   });
 
@@ -46,17 +56,16 @@ const PriceCalculatorForm = () => {
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 py-8 bg-white rounded-lg shadow-sm">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-4xl font-bold mb-2">Price Calculator</h1>
+          <h1 className="text-3xl font-bold mb-2">Price Calculator</h1>
           <p className="text-gray-600">
-            Get an instant estimate for your service needs. Follow the steps
-            below to receive a customized quote.
+            Get an instant estimate for your service needs
           </p>
         </div>
         <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
-          <Avatar className="h-12 w-12 border-2 border-bc-red">
+          <Avatar className="h-12 w-12 border-2 border-blue-500">
             <AvatarImage src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="Jayden Fisher" />
             <AvatarFallback>JF</AvatarFallback>
           </Avatar>
@@ -69,14 +78,16 @@ const PriceCalculatorForm = () => {
 
       <div className="bg-blue-50 p-4 rounded-lg mb-8 text-sm">
         <p className="mb-2">
-          <strong>Note:</strong> Leave your address and we can send you a quick estimate based on Google Maps. Contact us for an on-site estimate.
+          Leave your address and we can send you a quick estimate based on Google Maps, or contact us for an on-site estimate.
         </p>
         <p>
           All of our prices are competitive with other companies, including Shackshine, Men in Kilts, and we are fully insured.
         </p>
       </div>
-
-      <ProgressSteps currentStep={step} totalSteps={6} />
+      
+      <div className="mb-6">
+        <ProgressSteps currentStep={step} totalSteps={6} />
+      </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
