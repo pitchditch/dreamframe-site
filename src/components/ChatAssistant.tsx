@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Phone, MessageCircle, Calendar, ArrowRight, HelpCircle, User, Info } from 'lucide-react';
 import { Button } from './ui/button';
@@ -97,88 +98,24 @@ const ChatAssistant = () => {
     { question: "Do I need to be home for the service?", answer: "It depends on the service. For exterior-only services like pressure washing or gutter cleaning, you don't need to be present as long as we have access to water spigots and the areas to be cleaned. For window cleaning that includes interiors, someone should be home to provide access." },
     { question: "What happens if it rains on my service day?", answer: "If weather conditions prevent us from completing your service safely or effectively, we'll contact you to reschedule for the next available date that works for you. There's no charge for weather-related rescheduling." },
     { question: "Do you provide any guarantees?", answer: "Yes! We offer a satisfaction guarantee on all our services. We don't consider the job complete until you're fully satisfied with the results. If you notice any issues within 48 hours of service completion, we'll return to address them at no additional cost." },
-    { question: "What areas do you serve?", answer: "We proudly serve the entire Greater Vancouver area, including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, and surrounding communities." },
-    { question: "How much does pressure washing cost?", answer: "The cost of pressure washing depends on the size and surface area of the space. Contact us for a free quote!" },
-    { question: "Do you offer commercial services?", answer: "Yes, we offer commercial pressure washing services. Contact us today to learn more!" },
-    { question: "How long does a typical job take?", answer: "A typical pressure washing job takes between 1 and 4 hours, depending on the size of the space." },
-    { question: "Is pressure washing safe for all surfaces?", answer: "Yes, pressure washing is safe for most surfaces. We will assess the surface before beginning work to ensure that it can withstand the pressure." },
-    { question: "Do you use eco-friendly cleaning solutions?", answer: "Yes, we use eco-friendly cleaning solutions that are safe for your family and pets." },
-    { question: "How often should I have my property pressure washed?", answer: "We recommend having your property pressure washed at least once a year to remove dirt, grime, and algae." },
-    { question: "Can you remove oil stains from my driveway?", answer: "Yes, we can remove oil stains from your driveway using specialized cleaning solutions." },
-    { question: "Do you offer any guarantees?", answer: "Yes, we offer a 100% satisfaction guarantee. If you are not happy with our work, we will make it right." },
-    { question: "What should I do to prepare for your service?", answer: "Please remove any furniture or other items from the area to be pressure washed." },
-    { question: "Can you clean my solar panels?", answer: "Yes, we can clean your solar panels using a soft-bristled brush and deionized water." },
-    { question: "What payment methods do you accept?", answer: "We accept cash, check, credit card, and e-transfer." },
-    { question: "What services do you offer?", answer: "We offer pressure washing, window cleaning, gutter cleaning, and roof cleaning services." },
-    { question: "Do you offer free estimates?", answer: "Yes! Contact us today for a free, no-obligation estimate." },
+    
+    // Calculator-Related Questions
+    { question: "What size is considered a small property?", answer: "A small property is typically up to 1,500 sq. ft. This usually includes smaller homes, townhouses, or condos with fewer windows and smaller exterior areas." },
+    { question: "What size is considered a medium property?", answer: "A medium property is typically between 1,500-2,500 sq. ft. This includes average-sized single-family homes with a standard number of windows and exterior areas." },
+    { question: "What size is considered a large property?", answer: "A large property is typically between 2,500-3,500 sq. ft. This includes larger single-family homes with more windows and extensive exterior areas." },
+    { question: "What is an extra-large property?", answer: "An extra-large property is typically over 3,500 sq. ft. This includes mansions, estate homes, and properties with numerous windows and expansive exterior areas requiring more time and resources to clean." },
+    { question: "What's the difference between residential and commercial services?", answer: "Residential services are tailored for homes and smaller properties, while commercial services are designed for businesses, storefronts, and larger buildings that may require different equipment, scheduling, and approaches." },
+    { question: "Why do you need my contact information?", answer: "We collect your contact information to provide you with an accurate quote, confirm appointment details, send reminders, and follow up after service to ensure your satisfaction." },
+    { question: "Do you need my full address for a quote?", answer: "Yes, having your full address helps us provide the most accurate quote as we can check your property on Google Maps, assess access issues, and determine travel distances. For very precise quotes, we might suggest an on-site assessment." },
+    
+    // Additional common questions
     { question: "Are your cleaning methods safe for my home or business?", answer: "Absolutely! We use professional-grade, eco-friendly cleaning solutions that are safe for your property, landscaping, and pets." },
     { question: "How do I schedule a service?", answer: "You can schedule a service by calling us, filling out our online form, or messaging us here!" },
-    { question: "How far in advance should I book a service?", answer: "We recommend booking at least a week in advance, but we do our best to accommodate last-minute requests!" },
     { question: "Can I bundle multiple services together?", answer: "Absolutely! We offer package deals for pressure washing, window cleaning, gutter cleaning, and roof cleaning." },
     { question: "Do you offer any warranties or guarantees?", answer: "Yes! We stand by our work with a 100% satisfaction guarantee. If you're not happy, we'll make it right." },
     { question: "What should I do to prepare for a cleaning service?", answer: "We recommend moving fragile items, vehicles, and outdoor furniture away from the cleaning area. For window cleaning, please ensure we have access to both inside and outside." },
     { question: "Do you offer seasonal or annual maintenance plans?", answer: "Yes! We offer scheduled maintenance plans to keep your home or business looking great year-round." },
-    { question: "What makes your cleaning service different from others?", answer: "We take pride in our attention to detail, eco-friendly cleaning solutions, and customer satisfaction guarantee. Plus, we customize our approach based on your property's needs." },
-    { question: "Do I need to be home for the service?", answer: "Not necessarily! As long as we have access to the areas that need cleaning, you can go about your day while we take care of everything." },
-    { question: "How do I know if my property needs cleaning?", answer: "If you notice dirt, discoloration, mold, streaks, or clogged gutters, it's time for a professional cleaning. Regular maintenance prevents damage and costly repairs." },
-    { question: "Do you work on weekends?", answer: "Yes, we offer flexible scheduling, including weekends, to accommodate your needs." },
-    { question: "What payment methods do you accept?", answer: "We accept cash, credit/debit cards, and online payments for your convenience." },
-    { question: "What surfaces can you pressure wash?", answer: "We clean driveways, sidewalks, patios, decks, fences, siding, and more!" },
-    { question: "Will pressure washing damage my surfaces?", answer: "Not at all! We adjust pressure levels based on the surface to ensure a deep clean without damage." },
-    { question: "How often should I pressure wash my property?", answer: "We recommend at least once a year to maintain your home's curb appeal and prevent buildup of dirt and mold." },
-    { question: "Can pressure washing remove rust stains?", answer: "Yes! We use specialized cleaning solutions to safely remove rust stains from concrete, driveways, and other surfaces." },
-    { question: "Is pressure washing safe for painted surfaces?", answer: "It depends on the paint and the surface. We use low-pressure techniques for painted areas to prevent chipping or peeling." },
-    { question: "Can pressure washing help prevent slips and falls?", answer: "Absolutely! Removing algae, moss, and buildup from driveways, walkways, and patios reduces the risk of slipping." },
-    { question: "Can you remove old gum from sidewalks?", answer: "Yes! Our high-pressure cleaning method effectively removes stuck-on gum from sidewalks and other surfaces." },
-    { question: "How long does a pressure washing job take?", answer: "The time varies based on the size and condition of the area, but most jobs take 1–4 hours." },
-    { question: "Can pressure washing remove oil stains from my driveway?", answer: "Yes! We use specialized cleaning solutions and high-pressure techniques to break down and remove oil stains effectively." },
-    { question: "Will pressure washing help with pest problems?", answer: "Definitely! It can remove spider webs, wasp nests, and other insect buildups around your home or business." },
-    { question: "Can I pressure wash my property myself?", answer: "While DIY pressure washing is possible, improper techniques can cause damage. Our professional service ensures a safe and thorough clean." },
-    { question: "Do you use hot or cold water for pressure washing?", answer: "We use both, depending on the surface and the type of stain. Hot water is great for grease and oil, while cold water works well for general cleaning." },
-    { question: "Do you clean both interior and exterior windows?", answer: "Yes! We offer streak-free cleaning for both interior and exterior windows." },
-    { question: "What type of windows can you clean?", answer: "We clean all types, including standard windows, skylights, glass doors, and storefronts." },
-    { question: "Do you use chemicals for window cleaning?", answer: "We use eco-friendly, streak-free cleaning solutions that are safe for your home and the environment." },
-    { question: "Do you clean windows in cold weather?", answer: "Yes! We offer window cleaning year-round, using solutions that prevent freezing in colder months." },
-    { question: "Do you remove screens before cleaning the windows?", answer: "Yes! We carefully remove screens, clean them separately, and reinstall them after the job." },
-    { question: "Can you remove paint or sticker residue from windows?", answer: "Yes! We use safe techniques to remove paint splatters, adhesive residue, and other stubborn marks." },
-    { question: "Do you clean window tracks and frames?", answer: "Yes! We don't just clean the glass—we also wipe down frames, sills, and tracks for a complete clean." },
-    { question: "How often should I have my windows professionally cleaned?", answer: "We recommend every 3–6 months for homes and at least monthly for businesses." },
-    { question: "Do you clean high-rise windows?", answer: "We specialize in low- to mid-rise buildings, but we can discuss options for taller structures." },
-    { question: "How do you handle hard water stains on windows?", answer: "We use professional-grade solutions that break down mineral deposits and restore your glass to its original clarity." },
-    { question: "Will window cleaning help reduce my energy bills?", answer: "Yes! Clean windows allow more natural light in, reducing the need for artificial lighting and improving energy efficiency." },
-    { question: "Why is gutter cleaning important?", answer: "Clogged gutters can lead to water damage, roof leaks, and foundation issues. Regular cleaning helps prevent costly repairs." },
-    { question: "How often should I clean my gutters?", answer: "At least twice a year—typically in the spring and fall." },
-    { question: "Do you remove debris from my property after cleaning?", answer: "Yes! We make sure to clear out all debris and leave your property looking spotless." },
-    { question: "Do you check for gutter damage while cleaning?", answer: "Yes! We inspect your gutters for leaks, cracks, or sagging and notify you of any issues we find." },
-    { question: "What do you do with the debris you remove from gutters?", answer: "We bag up and dispose of all debris so your property is left clean and tidy." },
-    { question: "Can you fix loose or damaged gutters?", answer: "While we specialize in cleaning, we can reattach loose gutters and advise on needed repairs." },
-    { question: "How can I prevent my gutters from clogging so often?", answer: "We recommend installing gutter guards and scheduling regular cleanings to keep debris out." },
-    { question: "Do I need to clean my gutters if I don't have trees near my house?", answer: "Yes! Leaves aren't the only problem—dirt, roof granules, and debris can still clog your gutters over time." },
-    { question: "Can clogged gutters cause foundation damage?", answer: "Yes! Overflowing water from clogged gutters can erode your foundation and lead to cracks or leaks in your basement." },
-    { question: "Do you install gutter guards?", answer: "Yes, we offer gutter guard installation to help minimize debris buildup and reduce the need for frequent cleaning." },
-    { question: "What happens if I don't clean my gutters regularly?", answer: "You risk water damage, mold growth, pest infestations, and even structural issues over time." },
-    { question: "Why should I clean my roof?", answer: "Roof cleaning removes algae, moss, and debris, helping to extend your roof's lifespan and improve your home's appearance." },
-    { question: "Do you use high-pressure washing on roofs?", answer: "No! We use a soft wash system to clean roofs safely without causing damage." },
-    { question: "Will roof cleaning affect my shingles?", answer: "Not at all! Our gentle cleaning process protects shingles while effectively removing dirt and growth." },
-    { question: "What are those black streaks on my roof?", answer: "Those are algae stains, which can damage your shingles over time. Our roof cleaning service safely removes them." },
-    { question: "Will roof cleaning help lower my energy bills?", answer: "Yes! A clean roof reflects more sunlight, keeping your home cooler and reducing energy costs." },
-    { question: "How do you clean a roof without damaging it?", answer: "We use a soft wash method, which applies a special cleaning solution at low pressure to remove stains and buildup without harming shingles." },
-    { question: "Can you remove moss from my roof?", answer: "Yes! Our roof treatment safely removes moss and prevents regrowth." },
-    { question: "How long will my roof stay clean after a professional cleaning?", answer: "Most roofs stay clean for 2–5 years, depending on environmental factors and maintenance." },
-    { question: "Will roof cleaning help my home's resale value?", answer: "Absolutely! A clean roof enhances curb appeal and can make a great first impression for potential buyers." },
-    { question: "Do you clean solar panels?", answer: "Yes! We provide safe cleaning for solar panels to ensure they work efficiently and generate maximum energy." },
-    { question: "How long does a roof cleaning service take?", answer: "It depends on the size of the roof and the level of buildup, but most jobs take between 2–4 hours." },
-    { question: "Do you clean both homes and businesses?", answer: "Yes! We provide professional cleaning services for residential properties, offices, storefronts, apartment complexes, and more." },
-    { question: "Do you offer maintenance plans?", answer: "Yes! We offer routine cleaning plans to keep your home or business looking its best year-round." },
-    { question: "Are you insured?", answer: "Absolutely! We are fully insured for your peace of mind." },
-    { question: "Do you offer discounts for businesses with multiple locations?", answer: "Yes! We offer special pricing for businesses that need regular cleaning at multiple sites." },
-    { question: "How does commercial window cleaning differ from residential?", answer: "Commercial cleaning often involves larger windows, higher access points, and more frequent service to maintain a professional appearance." },
-    { question: "Do you offer cleaning for apartment complexes and HOAs?", answer: "Yes! We provide exterior cleaning services for residential communities, including common areas." },
-    { question: "How can regular exterior cleaning benefit my business?", answer: "Clean storefronts and sidewalks create a positive first impression, attract customers, and help maintain property value." },
-    { question: "Do you provide cleaning services for newly constructed buildings?", answer: "Yes! We offer post-construction cleaning to remove dirt, dust, and debris from new builds." },
-    { question: "Do you offer after-hours cleaning for businesses?", answer: "Yes! We can clean your commercial property outside of business hours to minimize disruption." },
-    { question: "Do you provide services for HOAs and apartment complexes?", answer: "Yes! We work with property managers and HOAs to maintain clean and attractive communities." },
-    { question: "Can regular exterior cleaning help with allergies?", answer: "Yes! Removing mold, pollen, and dust from surfaces can improve air quality and reduce allergy symptoms." }
+    { question: "Are you insured?", answer: "Yes, we are fully insured for your peace of mind and protection." },
   ];
 
   // Suggested questions based on current step
@@ -323,6 +260,15 @@ const ChatAssistant = () => {
         setFormValue(key as any, value as any);
       }
     });
+    
+    // If we extracted useful information, let the user know
+    if (Object.keys(extractedData).length > 0) {
+      toast({
+        title: "Information Saved",
+        description: "We've saved your information for when you're ready to book.",
+        duration: 3000,
+      });
+    }
   };
 
   const handleBookingOption = () => {
@@ -432,3 +378,207 @@ const ChatAssistant = () => {
       
       simulateTyping(responseText, () => {});
     }, 500);
+  };
+  
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+    
+    const userMessage = message;
+    setMessage('');
+    
+    // Add user message to the chat
+    const newMessages = [...messages, { type: 'user' as const, text: userMessage }];
+    setMessages(newMessages);
+    
+    // Process the message for form data extraction
+    processUserMessageForFormData(userMessage);
+    
+    // Find matching FAQs
+    const lowerCaseMessage = userMessage.toLowerCase();
+    const matchingFaq = faqData.find(faq => 
+      faq.question.toLowerCase().includes(lowerCaseMessage) || 
+      lowerCaseMessage.includes(faq.question.toLowerCase().replace(/\?/g, ''))
+    );
+    
+    setCurrentStep('question-detail');
+    
+    // Add a typing indicator
+    setTimeout(() => {
+      setMessages([...newMessages, { type: 'bot' as const, text: "", isTyping: true }]);
+      
+      // If we found a matching FAQ, use that answer
+      let responseText = "";
+      
+      if (matchingFaq) {
+        responseText = matchingFaq.answer;
+      } else {
+        // Generic response if no match found
+        responseText = "I don't have a specific answer for that question. Would you like to speak with one of our team members who can help you better? You can call us at 778-808-7620 or click 'Talk to a Human' below.";
+      }
+      
+      // Add suggestions for follow-up based on the context
+      responseText += "\n\nDoes that help with your question?";
+      
+      // Simulate typing effect
+      simulateTyping(responseText, () => {
+        setCurrentStep('follow-up');
+      });
+    }, 500);
+  };
+  
+  const handleSuggestionClick = (suggestion: string) => {
+    if (currentStep === 'greeting') {
+      if (suggestion === "Book a Service") {
+        handleBookingOption();
+      } else if (suggestion === "Ask a Question") {
+        handleQAOption();
+      } else if (suggestion === "Talk to a Human") {
+        handleHumanSupportOption();
+      }
+    } else if (currentStep === 'follow-up') {
+      handleFollowUpOption(suggestion);
+    } else if (currentStep === 'human-support') {
+      handleHumanSupportDetailOption(suggestion);
+    } else {
+      // For QA or question-detail steps
+      setMessage(suggestion);
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <div className="fixed right-4 bottom-4 z-50 flex flex-col items-end">
+      {/* Chat Trigger Button */}
+      {!isOpen && showSuggestion && (
+        <div className="mb-3 bg-white rounded-lg shadow-lg p-3 max-w-xs animate-fadeIn">
+          <p className="text-gray-800">{suggestions[currentSuggestion]}</p>
+        </div>
+      )}
+      
+      <button
+        onClick={toggleChat}
+        className={`flex items-center justify-center rounded-full shadow-lg transition-all duration-300 ${
+          isOpen ? 'bg-gray-700 rotate-45' : 'bg-bc-red hover:bg-red-700'
+        } h-14 w-14`}
+      >
+        {isOpen ? (
+          <X className="text-white" size={24} />
+        ) : (
+          <MessageCircle className="text-white" size={24} />
+        )}
+      </button>
+      
+      {/* Chat Window */}
+      {isOpen && (
+        <div className="absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-lg shadow-xl flex flex-col max-h-[80vh] border border-gray-200 overflow-hidden">
+          {/* Chat Header */}
+          <div className="bg-bc-red text-white p-4 flex items-center">
+            <Avatar className="h-8 w-8 mr-3">
+              <AvatarImage src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="Logo" />
+              <AvatarFallback>JF</AvatarFallback>
+            </Avatar>
+            <div>
+              <h3 className="font-semibold">{t("BC Pressure Washing")}</h3>
+              <p className="text-xs text-gray-100">{t("Usually responds in minutes")}</p>
+            </div>
+            <button onClick={toggleChat} className="ml-auto text-white hover:text-gray-200">
+              <X size={20} />
+            </button>
+          </div>
+          
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50" style={{ maxHeight: 'calc(80vh - 180px)' }}>
+            {messages.map((msg, idx) => (
+              <div 
+                key={idx} 
+                className={`mb-4 flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                {msg.type === 'bot' && (
+                  <Avatar className="h-8 w-8 mr-2 mt-1 flex-shrink-0">
+                    <AvatarImage src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="Agent" />
+                    <AvatarFallback>JF</AvatarFallback>
+                  </Avatar>
+                )}
+                <div 
+                  className={`rounded-lg px-4 py-2 max-w-[85%] ${
+                    msg.type === 'user' 
+                      ? 'bg-bc-red text-white rounded-tr-none' 
+                      : 'bg-gray-200 text-gray-800 rounded-tl-none'
+                  } ${msg.isTyping ? 'animate-pulse' : ''}`}
+                >
+                  <p className="whitespace-pre-line">{msg.text}</p>
+                  {msg.isTyping && (
+                    <div className="flex space-x-1 mt-1 justify-center items-center">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                  )}
+                </div>
+                {msg.type === 'user' && (
+                  <Avatar className="h-8 w-8 ml-2 mt-1 flex-shrink-0">
+                    <AvatarFallback>You</AvatarFallback>
+                  </Avatar>
+                )}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          
+          {/* Suggested Questions or Actions */}
+          {activeSuggestions.length > 0 && (
+            <div className="p-3 border-t border-gray-200 bg-white">
+              <div className="flex flex-wrap gap-2">
+                {activeSuggestions.map((suggestion, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm px-3 py-1.5 rounded-full transition-colors"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Booking Button for booking step */}
+          {currentStep === 'booking' && (
+            <div className="p-3 border-t border-gray-200 bg-white">
+              <Button 
+                onClick={redirectToCalculator}
+                className="w-full bg-bc-red hover:bg-red-700"
+              >
+                <Calendar className="mr-2" size={16} />
+                Book Now
+              </Button>
+            </div>
+          )}
+          
+          {/* Chat Input */}
+          <div className="p-3 border-t border-gray-200 bg-white flex items-center">
+            <input
+              type="text"
+              placeholder={t("Type your message...")}
+              className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-bc-red"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={!message.trim()}
+              className={`ml-2 rounded-full w-10 h-10 flex items-center justify-center ${
+                message.trim() ? 'bg-bc-red text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              <Send size={18} />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ChatAssistant;
