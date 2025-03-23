@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
@@ -33,7 +33,13 @@ const ChatAssistant = () => {
     { question: "Do you offer commercial services?", answer: "Yes! We provide pressure washing services for both residential and commercial properties, with specialized solutions for businesses." },
     { question: "How long does a typical job take?", answer: "Most residential jobs are completed in 1-4 hours, depending on the size of the property and services requested. Commercial jobs may take longer." },
     { question: "Is pressure washing safe for all surfaces?", answer: "Not all surfaces can handle the same pressure. We evaluate each surface and use appropriate techniques and equipment to ensure effective cleaning without damage." },
-    { question: "Do you use eco-friendly cleaning solutions?", answer: "Yes, we use environmentally friendly cleaning solutions that effectively remove dirt, mold, and stains without harming your landscaping or the environment." }
+    { question: "Do you use eco-friendly cleaning solutions?", answer: "Yes, we use environmentally friendly cleaning solutions that effectively remove dirt, mold, and stains without harming your landscaping or the environment." },
+    { question: "How often should I have my property pressure washed?", answer: "Most properties benefit from annual pressure washing, but this can vary based on your local environment. Areas with more moisture, shade, or organic debris may need cleaning more frequently." },
+    { question: "Can you remove oil stains from my driveway?", answer: "Yes, we can remove most oil stains from driveways and other concrete surfaces using specialized cleaning solutions and techniques. For deep-set or older stains, we may recommend a two-step treatment process." },
+    { question: "Do you offer any guarantees?", answer: "Absolutely! We stand behind our work with a 100% satisfaction guarantee. We don't consider the job complete until you're fully satisfied with the results." },
+    { question: "What should I do to prepare for your service?", answer: "Before we arrive, please ensure the work area is clear of personal items, vehicles, and pets. Make sure water spigots are accessible and functioning if our service requires water access." },
+    { question: "Can you clean my solar panels?", answer: "Yes, we offer specialized cleaning for solar panels that helps maintain their efficiency. We use gentle, non-abrasive cleaning methods that won't damage your panels." },
+    { question: "What payment methods do you accept?", answer: "We accept cash, check, credit cards, e-transfer, and mobile payment options like Apple Pay and Google Pay for your convenience." }
   ];
 
   // Suggested question buttons
@@ -41,7 +47,9 @@ const ChatAssistant = () => {
     "What areas do you serve?",
     "How much does pressure washing cost?",
     "Do you offer commercial services?", 
-    "How long does a typical job take?"
+    "How long does a typical job take?",
+    "How often should I clean my gutters?",
+    "Can you remove oil stains?"
   ];
 
   useEffect(() => {
@@ -145,7 +153,7 @@ const ChatAssistant = () => {
       <div className="fixed bottom-6 right-6 md:right-10 z-40 flex flex-col items-end space-y-4">
         {showSuggestion && !isOpen && (
           <div 
-            className="chat-suggestion bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-3 mb-3 text-sm max-w-xs animate-fade-in-right mr-16"
+            className="chat-suggestion bg-white/40 backdrop-blur-md rounded-lg shadow-lg p-3 mb-3 text-sm max-w-xs animate-fade-in-right mr-16"
             style={{ 
               animation: 'fadeIn 0.5s ease-out, float 2s ease-in-out infinite',
               transformOrigin: 'center bottom'
@@ -156,7 +164,7 @@ const ChatAssistant = () => {
         )}
         
         {isOpen && (
-          <div className="bg-white rounded-lg shadow-2xl w-80 md:w-96 mb-3 overflow-hidden animate-fade-in-up">
+          <div className="bg-white rounded-lg shadow-2xl w-80 md:w-96 mb-3 overflow-hidden animate-fade-in-up border border-gray-200">
             <div className="bg-bc-red text-white p-3 flex justify-between items-center">
               <div className="flex items-center">
                 <Avatar className="h-10 w-10 mr-2 border-2 border-white">
@@ -178,7 +186,7 @@ const ChatAssistant = () => {
               </Button>
             </div>
             
-            <div className="h-72 overflow-y-auto p-3 bg-gray-50" id="chat-messages">
+            <div className="h-80 overflow-y-auto p-3 bg-gray-50" id="chat-messages">
               {messages.map((msg, i) => (
                 <div 
                   key={i} 
@@ -253,18 +261,23 @@ const ChatAssistant = () => {
         <div className="flex items-center">
           {showSuggestion && !isOpen && (
             <div className="mr-4">
-              <Avatar className="h-12 w-12 border-2 border-white shadow-md cursor-pointer" onClick={toggleChat}>
-                <AvatarImage src="/lovable-uploads/f2a8fb4d-7253-4cb8-a13c-30140d7ccaf4.png" alt="Jayden Fisher" />
-                <AvatarFallback>JF</AvatarFallback>
-              </Avatar>
+              <div className="bg-white/40 backdrop-blur-md p-2 rounded-lg shadow-lg">
+                <p className="text-sm font-medium text-gray-800 mb-1">{suggestions[currentSuggestion]}</p>
+                <p className="text-xs text-gray-600">Click to chat with me →</p>
+              </div>
             </div>
           )}
-          <Button 
-            onClick={toggleChat} 
-            className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg bg-bc-red hover:bg-red-700"
+          <Avatar 
+            className="h-14 w-14 border-2 border-white shadow-lg cursor-pointer hover:scale-105 transition-transform"
+            onClick={toggleChat}
           >
-            <MessageCircle size={24} className="text-white" />
-          </Button>
+            <AvatarImage 
+              src="/lovable-uploads/f2a8fb4d-7253-4cb8-a13c-30140d7ccaf4.png" 
+              alt="Jayden Fisher" 
+              className="object-cover"
+            />
+            <AvatarFallback>JF</AvatarFallback>
+          </Avatar>
         </div>
       </div>
 
