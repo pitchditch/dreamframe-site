@@ -66,15 +66,13 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
   ];
 
   const toggleServiceSelection = (serviceId: string) => {
-    setSelectedServices(prev => {
-      const isSelected = prev.includes(serviceId);
-      const newSelection = isSelected 
-        ? prev.filter(id => id !== serviceId)
-        : [...prev, serviceId];
-      
-      form.setValue('services', newSelection, { shouldValidate: true });
-      return newSelection;
-    });
+    const isSelected = selectedServices.includes(serviceId);
+    const newSelection = isSelected 
+      ? selectedServices.filter(id => id !== serviceId)
+      : [...selectedServices, serviceId];
+    
+    setSelectedServices(newSelection);
+    form.setValue('services', newSelection, { shouldValidate: true });
   };
 
   const getFieldName = (serviceId: string) => {
@@ -115,7 +113,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
                     <div className="flex items-center justify-center w-6 h-6 mr-3">
                       <Checkbox 
                         checked={isSelected}
-                        className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white"
+                        // Remove the onCheckedChange handler to avoid double toggling
                       />
                     </div>
                     <span className="font-semibold text-lg">{service.title}</span>

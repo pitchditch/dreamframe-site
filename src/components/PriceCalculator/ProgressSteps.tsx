@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 interface ProgressStepsProps {
   currentStep: number;
@@ -7,20 +7,24 @@ interface ProgressStepsProps {
 }
 
 const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
-  // Create steps based on the totalSteps parameter
-  const steps = Array.from({ length: totalSteps }, (_, i) => {
-    const stepNumber = i + 1;
+  // Create steps based on the totalSteps parameter using useMemo to avoid recreating on each render
+  const steps = useMemo(() => {
     const labels = ['Service', 'Property', 'Size', 'Add-ons', 'Contact', 'Review'];
-    return {
-      number: stepNumber,
-      label: labels[i] || `Step ${stepNumber}`
-    };
-  });
+    return Array.from({ length: totalSteps }, (_, i) => {
+      const stepNumber = i + 1;
+      return {
+        number: stepNumber,
+        label: labels[i] || `Step ${stepNumber}`
+      };
+    });
+  }, [totalSteps]);
 
   // Calculate progress percentage safely
-  const progressPercentage = totalSteps <= 1 
-    ? 100 
-    : ((currentStep - 1) / (totalSteps - 1)) * 100;
+  const progressPercentage = useMemo(() => {
+    return totalSteps <= 1 
+      ? 100 
+      : Math.max(0, Math.min(100, ((currentStep - 1) / (totalSteps - 1)) * 100));
+  }, [currentStep, totalSteps]);
 
   return (
     <div className="mb-8">

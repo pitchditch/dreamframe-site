@@ -37,13 +37,19 @@ const PriceCalculatorForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       services: [],
-      addons: [],
+      size: '',
       propertyType: 'residential',
+      addons: [],
       cleaning_options: {
         window_cleaning: '',
         gutter_cleaning: '',
         pressure_washing: [],
-      }
+      },
+      fullName: '',
+      email: '',
+      phone: '',
+      address: '',
+      notes: '',
     },
   });
 
