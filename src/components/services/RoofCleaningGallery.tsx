@@ -19,6 +19,7 @@ interface RoofCleaningTestimonial {
   rating: number;
   review: string;
   testimonialId: number;
+  beforeAfterImage?: string;
 }
 
 const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
@@ -29,7 +30,8 @@ const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
     location: "Langley, BC",
     rating: 5,
     review: "The transformation is incredible! My roof looks brand new and the team was professional and efficient.",
-    testimonialId: 8
+    testimonialId: 8,
+    beforeAfterImage: "/lovable-uploads/89515ed3-256d-4840-a9ed-2049bb5d0d1f.png"
   },
   {
     id: 2,
@@ -38,7 +40,8 @@ const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
     location: "Surrey, BC",
     rating: 5,
     review: "Amazing job removing all the moss and algae. My roof hasn't looked this good in years!",
-    testimonialId: 12
+    testimonialId: 12,
+    beforeAfterImage: "/lovable-uploads/e2607535-f225-440b-8ea4-b3d5db21acfc.png"
   },
   {
     id: 3,
@@ -47,7 +50,8 @@ const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
     location: "Richmond, BC",
     rating: 5,
     review: "Professional service from start to finish. The difference in my roof is night and day.",
-    testimonialId: 16
+    testimonialId: 16,
+    beforeAfterImage: "/lovable-uploads/281422a1-6eb1-4353-9f93-de7d6163152e.png"
   },
   {
     id: 4,
@@ -56,7 +60,8 @@ const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
     location: "North Vancouver, BC",
     rating: 5,
     review: "My roof was in terrible condition with moss everywhere. Now it looks brand new! Highly recommend.",
-    testimonialId: 20
+    testimonialId: 20,
+    beforeAfterImage: "/lovable-uploads/cf8d9662-3846-4e1a-8919-9cbaec254941.png"
   },
   {
     id: 5,
@@ -65,7 +70,8 @@ const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
     location: "White Rock, BC",
     rating: 5,
     review: "Great service and attention to detail. The roof cleaning made a tremendous difference.",
-    testimonialId: 4
+    testimonialId: 4,
+    beforeAfterImage: "/lovable-uploads/8094c1a2-06bf-4a0c-955f-17cfad036166.png"
   },
   {
     id: 6,
@@ -74,7 +80,8 @@ const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
     location: "Burnaby, BC",
     rating: 5,
     review: "The roof cleaning service was excellent. My home looks so much better now!",
-    testimonialId: 8
+    testimonialId: 8,
+    beforeAfterImage: "/lovable-uploads/8ebd925c-5b93-484f-9271-d891851d3e7a.png"
   }
 ];
 
@@ -150,11 +157,18 @@ const RoofCleaningGallery = () => {
                   <Card className="border-none shadow-lg">
                     <CardContent className="p-0">
                       <div className="relative">
-                        <img 
-                          src={testimonial.image} 
-                          alt={`Roof cleaning - ${testimonial.customerName}`}
-                          className="w-full h-auto rounded-t-lg object-cover aspect-[1/1]"
-                        />
+                        <div className="relative">
+                          <img 
+                            src={testimonial.image} 
+                            alt={`Roof cleaning - ${testimonial.customerName}`}
+                            className="w-full h-auto rounded-t-lg object-cover aspect-[1/1]"
+                          />
+                          {testimonial.beforeAfterImage && (
+                            <div className="absolute top-2 right-2 bg-bc-red text-white text-xs py-1 px-2 rounded">
+                              Before/After
+                            </div>
+                          )}
+                        </div>
                         
                         <div className="bg-white p-6 rounded-b-lg shadow-md">
                           <div className="flex items-center justify-between mb-3">

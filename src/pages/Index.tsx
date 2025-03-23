@@ -8,10 +8,8 @@ import PackagesSection from '../components/home/PackagesSection';
 import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
-import CallButton from '../components/CallButton';
-import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import ReferralButton from '../components/ReferralButton';
-import ChatAssistant from '../components/ChatAssistant';
+import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import { useTranslation } from '@/hooks/use-translation';
 
 const Index = () => {
@@ -80,9 +78,7 @@ const Index = () => {
       <PriceCalculatorForm />
       <ProcessSection />
       <TestimonialsSection />
-      <CallButton />
       <ReferralButton />
-      <ChatAssistant />
     </Layout>
   );
 };

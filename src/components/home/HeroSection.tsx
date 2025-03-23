@@ -13,7 +13,9 @@ const HeroSection = () => {
         backgroundImage: "url('/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png')",
         backgroundPosition: "center",
         backgroundSize: "cover",
-        backgroundRepeat: "no-repeat"
+        backgroundRepeat: "no-repeat",
+        width: "100vw",
+        maxWidth: "100%"
       }}
     >
       <div className="hero-overlay absolute inset-0 bg-black/30"></div>

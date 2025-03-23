@@ -145,7 +145,7 @@ const ChatAssistant = () => {
       <div className="fixed bottom-6 right-6 md:right-10 z-40 flex flex-col items-end space-y-4">
         {showSuggestion && !isOpen && (
           <div 
-            className="chat-suggestion bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-3 mb-3 text-sm max-w-xs animate-fade-in-right"
+            className="chat-suggestion bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-3 mb-3 text-sm max-w-xs animate-fade-in-right mr-16"
             style={{ 
               animation: 'fadeIn 0.5s ease-out, float 2s ease-in-out infinite',
               transformOrigin: 'center bottom'
@@ -250,12 +250,22 @@ const ChatAssistant = () => {
           </div>
         )}
         
-        <Button 
-          onClick={toggleChat} 
-          className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg bg-bc-red hover:bg-red-700"
-        >
-          <MessageCircle size={24} className="text-white" />
-        </Button>
+        <div className="flex items-center">
+          {showSuggestion && !isOpen && (
+            <div className="mr-4">
+              <Avatar className="h-12 w-12 border-2 border-white shadow-md cursor-pointer" onClick={toggleChat}>
+                <AvatarImage src="/lovable-uploads/f2a8fb4d-7253-4cb8-a13c-30140d7ccaf4.png" alt="Jayden Fisher" />
+                <AvatarFallback>JF</AvatarFallback>
+              </Avatar>
+            </div>
+          )}
+          <Button 
+            onClick={toggleChat} 
+            className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg bg-bc-red hover:bg-red-700"
+          >
+            <MessageCircle size={24} className="text-white" />
+          </Button>
+        </div>
       </div>
 
       <style>
