@@ -1,21 +1,10 @@
-
 import { Phone } from "lucide-react";
 import { Button } from "./ui/button";
 
+// This component is no longer used, but keeping the file
+// to avoid breaking any imports or references
 const CallButton = () => {
-  return (
-    <a 
-      href="tel:+17788087620" 
-      className="fixed bottom-6 right-6 z-30"
-    >
-      <Button 
-        className="h-14 w-14 rounded-full bg-bc-red hover:bg-red-700 shadow-lg"
-        aria-label="Call now"
-      >
-        <Phone className="h-6 w-6 text-white" />
-      </Button>
-    </a>
-  );
+  return null;
 };
 
 export default CallButton;
