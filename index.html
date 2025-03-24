@@ -11,6 +11,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <!-- Force reload on navigation -->
+    <script>
+      if (performance.navigation.type === 1) {
+        // This is a page reload
+        console.log('Page reloaded');
+        localStorage.setItem('lastReload', Date.now().toString());
+      }
+    </script>
   </head>
 
   <body>
@@ -18,5 +26,6 @@
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
