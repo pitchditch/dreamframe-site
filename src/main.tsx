@@ -3,7 +3,10 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { StrictMode } from 'react'
-import { register } from './serviceWorker'
+import { register, unregister } from './serviceWorker'
+
+// First, unregister any existing service workers to force fresh content
+unregister();
 
 // Create a container element if it doesn't exist
 const rootElement = document.getElementById("root");
@@ -22,10 +25,13 @@ try {
   const root = createRoot(container!);
   root.render(
     <StrictMode>
-      <App />
+      <App key={Date.now().toString()} />
     </StrictMode>
   );
   console.log("App rendered successfully");
+  
+  // Log the app version for debugging
+  console.log("App version:", window.appVersion || Date.now());
 } catch (error) {
   console.error("Error rendering the app:", error);
   // Display a visible error in the UI
@@ -34,14 +40,20 @@ try {
       <div style="color: red; padding: 20px;">
         <h2>Error rendering the application</h2>
         <p>${error instanceof Error ? error.message : 'Unknown error'}</p>
-        <button onclick="window.location.reload()">Reload page</button>
+        <button onclick="window.location.reload(true)">Reload page</button>
       </div>
     `;
   }
 }
 
-// Register the service worker for better caching
+// Register the service worker for better caching, but set skipWaiting to true
 register({
   onSuccess: () => console.log('Service worker registered successfully'),
-  onUpdate: () => console.log('New content is available; please refresh')
+  onUpdate: (registration) => {
+    console.log('New content is available; please refresh');
+    // Force the waiting service worker to become active
+    if (registration && registration.waiting) {
+      registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    }
+  }
 });

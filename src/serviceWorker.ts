@@ -1,3 +1,4 @@
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -31,7 +32,8 @@ export function register(config?: Config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      // Add a version parameter to force fresh service worker
+      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js?v=${Date.now()}`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -41,6 +43,13 @@ export function register(config?: Config) {
         registerValidSW(swUrl, config);
       }
     });
+    
+    // Listen for the skipWaiting message
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SKIP_WAITING') {
+        window.location.reload(true);
+      }
+    });
   }
 }
 
@@ -48,6 +57,9 @@ function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
+      // Force update check immediately
+      registration.update();
+      
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
@@ -102,7 +114,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
-            window.location.reload();
+            window.location.reload(true);
           });
         });
       } else {
