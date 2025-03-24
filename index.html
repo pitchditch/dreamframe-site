@@ -5,9 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BC Pressure Washing - Professional Cleaning Services</title>
-    <meta name="description" content="Professional Cleaning Services for residential and commercial properties in BC" />
+    <meta name="description" content="Professional pressure washing services for residential and commercial properties in White Rock, Surrey and Metro Vancouver. Window cleaning, roof cleaning, gutter cleaning and more." />
     <meta name="author" content="Lovable" />
     <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Location-specific meta tags -->
+    <meta name="geo.region" content="CA-BC" />
+    <meta name="geo.placename" content="White Rock" />
+    <meta name="geo.position" content="49.0253;-122.8026" />
+    <meta name="ICBM" content="49.0253, -122.8026" />
     
     <!-- Extremely aggressive cache control directives -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -42,6 +48,91 @@
             console.log('Cache deleted:', name);
           });
         });
+      }
+    </script>
+    
+    <!-- Local Business Schema for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "BC Pressure Washing",
+        "image": "https://bcpressurewashing.ca/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png",
+        "@id": "https://bcpressurewashing.ca",
+        "url": "https://bcpressurewashing.ca",
+        "telephone": "778 808 7620",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "15501 Marine Dr",
+          "addressLocality": "White Rock",
+          "addressRegion": "BC",
+          "postalCode": "V4B 1C9",
+          "addressCountry": "CA"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 49.0253,
+          "longitude": -122.8026
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "18:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "17:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/BCPressureWashing",
+          "https://www.instagram.com/bc.pressure.washing"
+        ],
+        "servesAreaCoverage": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": 49.0253,
+            "longitude": -122.8026
+          },
+          "geoRadius": "50000"
+        },
+        "areaServed": ["White Rock, BC", "Surrey, BC", "Vancouver, BC", "Burnaby, BC", "Richmond, BC"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Pressure Washing Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Residential Pressure Washing",
+                "description": "Professional pressure washing for homes and residential properties"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Commercial Pressure Washing",
+                "description": "Professional pressure washing for commercial buildings and properties"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Window Cleaning",
+                "description": "Professional window cleaning for homes and businesses"
+              }
+            }
+          ]
+        }
       }
     </script>
   </head>

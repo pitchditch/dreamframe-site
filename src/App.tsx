@@ -19,6 +19,8 @@ const GutterCleaning = lazy(() => import("./pages/services/GutterCleaning"));
 const RoofCleaning = lazy(() => import("./pages/services/RoofCleaning"));
 const CommercialWindowCleaning = lazy(() => import("./pages/services/CommercialWindowCleaning"));
 const Calculator = lazy(() => import("./pages/Calculator"));
+// New location pages
+const WhiteRock = lazy(() => import("./pages/locations/WhiteRock"));
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -64,6 +66,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/calculator" element={<Calculator />} />
+              {/* New location routes */}
+              <Route path="/locations/white-rock" element={<WhiteRock />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           ) : (

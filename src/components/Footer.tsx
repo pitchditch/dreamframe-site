@@ -71,33 +71,33 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Service Areas and Links */}
           <div className="col-span-1">
-            <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-6">Service Areas</h4>
             <ul className="space-y-3">
               <li>
+                <Link to="/locations/white-rock" className="text-gray-400 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> White Rock
+                </Link>
+              </li>
+              <li>
                 <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Home
+                  <span className="mr-2">→</span> Surrey
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> About Us
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> Vancouver
                 </Link>
               </li>
               <li>
-                <Link to="/testimonials" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Testimonials
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> Burnaby
                 </Link>
               </li>
               <li>
-                <Link to="/packages" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Packages
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Contact
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> Richmond
                 </Link>
               </li>
             </ul>
@@ -133,17 +133,31 @@ const Footer = () => {
         
         {/* White Rock Based Business Image - Full Width */}
         <div className="mt-8 w-full">
-          <img 
-            src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
-            alt="White Rock Based Business" 
-            className={`rounded-md h-auto ${isMobile ? 'max-w-full' : 'w-full'}`}
-          />
+          <Link to="/locations/white-rock">
+            <img 
+              src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
+              alt="White Rock Based Business" 
+              className={`rounded-md h-auto ${isMobile ? 'max-w-full' : 'w-full'}`}
+            />
+          </Link>
         </div>
 
         <hr className="border-gray-800 my-8" />
         
         <div className="text-center text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} BC Pressure Washing. All rights reserved.</p>
+          {/* Structured address for SEO */}
+          <div itemScope itemType="http://schema.org/LocalBusiness" className="sr-only">
+            <span itemProp="name">BC Pressure Washing</span>
+            <div itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
+              <span itemProp="streetAddress">15501 Marine Dr</span>
+              <span itemProp="addressLocality">White Rock</span>,
+              <span itemProp="addressRegion">BC</span>
+              <span itemProp="postalCode">V4B 1C9</span>
+            </div>
+            <span itemProp="telephone">778 808 7620</span>
+            <a href="https://bcpressurewashing.ca" itemProp="url">bcpressurewashing.ca</a>
+          </div>
         </div>
       </div>
     </footer>
