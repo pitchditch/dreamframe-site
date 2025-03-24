@@ -47,7 +47,7 @@ export function register(config?: Config) {
     // Listen for the skipWaiting message
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'SKIP_WAITING') {
-        window.location.reload(true);
+        window.location.reload();
       }
     });
   }
@@ -114,7 +114,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
-            window.location.reload(true);
+            window.location.reload();
           });
         });
       } else {

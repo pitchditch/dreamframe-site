@@ -30,8 +30,8 @@ try {
   );
   console.log("App rendered successfully");
   
-  // Log the app version for debugging
-  console.log("App version:", window.appVersion || Date.now());
+  // Log the app version for debugging - fix TypeScript error by checking if property exists
+  console.log("App version:", (window as any).appVersion || Date.now());
 } catch (error) {
   console.error("Error rendering the app:", error);
   // Display a visible error in the UI
