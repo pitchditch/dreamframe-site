@@ -6,6 +6,7 @@ import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
 import LanguageSelector from '../LanguageSelector';
+import { useTranslation } from '@/hooks/use-translation';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,20 +14,27 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(false); 
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 60) {
         setIsScrolled(true);
-        setIsOverVideo(true); // Enable white shadow when scrolling down
+        // Only set isOverVideo if we're on the home page
+        if (location.pathname === '/') {
+          setIsOverVideo(true);
+        }
       } else {
         setIsScrolled(false);
-        setIsOverVideo(false);
+        // Only update isOverVideo if we're on the home page
+        if (location.pathname === '/') {
+          setIsOverVideo(false);
+        }
       }
     };
 
-    // Initialize on mount - set to visible by default
-    setIsOverVideo(false);
+    // Initialize on mount - only set to transparent on home page
+    setIsOverVideo(location.pathname === '/');
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -34,7 +42,8 @@ const Navbar = () => {
 
   // Check for video header when route changes
   useEffect(() => {
-    setIsOverVideo(false); // Always start with visible navbar
+    // Only set to transparent on home page
+    setIsOverVideo(location.pathname === '/');
   }, [location.pathname]);
 
   // Close mobile menu when navigation occurs

@@ -22,25 +22,6 @@ const Index = () => {
     // Mark body to have video header (for navbar transparency)
     document.body.classList.add('has-video-header');
 
-    // Add responsive styles for landscape mode
-    const landscapeStyle = document.createElement('style');
-    landscapeStyle.innerHTML = `
-      @media (orientation: landscape) and (max-height: 500px) {
-        .hero-section {
-          height: 100vh !important;
-        }
-        
-        .hero-section h1 {
-          font-size: 2rem !important;
-        }
-        
-        .hero-section p {
-          font-size: 1rem !important;
-        }
-      }
-    `;
-    document.head.appendChild(landscapeStyle);
-
     // Animation for elements when they enter viewport
     const observerOptions = {
       root: null,
@@ -64,7 +45,6 @@ const Index = () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
-      document.head.removeChild(landscapeStyle);
     };
   }, [setLanguage]);
 

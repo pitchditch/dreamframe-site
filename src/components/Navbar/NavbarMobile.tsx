@@ -2,6 +2,8 @@
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import LanguageSelector from '../LanguageSelector';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -15,7 +17,7 @@ export const NavbarMobile = ({
   setIsServicesMenuOpen
 }: NavbarMobileProps) => {
   const location = useLocation();
-  const isHomepage = location.pathname === '/';
+  const { t } = useTranslation();
   const isActive = (path: string) => location.pathname === path;
   
   return (
@@ -30,7 +32,7 @@ export const NavbarMobile = ({
                 : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
             }`}
           >
-            Home
+            {t('Home')}
           </Link>
           <button 
             className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base ${
@@ -40,21 +42,20 @@ export const NavbarMobile = ({
             }`}
             onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
           >
-            <span>Services</span>
+            <span>{t('Services')}</span>
             <ChevronDown className={`h-4 w-4 transition-transform ${isServicesMenuOpen ? 'rotate-180' : ''}`} />
           </button>
           
           {isServicesMenuOpen && (
             <div className="pl-4 mt-1 mb-1">
-              <div className="py-1 text-sm font-medium text-gray-500">Residential</div>
-              <Link to="/services/window-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">Window Cleaning</Link>
-              <Link to="/services/gutter-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">Gutter Cleaning</Link>
-              <Link to="/services/house-washing" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">House Washing</Link>
-              <Link to="/services/roof-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">Roof Cleaning</Link>
+              <div className="py-1 text-sm font-medium text-gray-500">{t('Residential')}</div>
+              <Link to="/services/window-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Window Cleaning')}</Link>
+              <Link to="/services/gutter-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Gutter Cleaning')}</Link>
+              <Link to="/services/pressure-washing" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Pressure Washing')}</Link>
+              <Link to="/services/roof-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Roof Cleaning')}</Link>
               
-              <div className="py-1 text-sm font-medium text-gray-500 mt-1">Commercial</div>
-              <Link to="/services/commercial-window-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">Commercial Window Cleaning</Link>
-              <Link to="/services/parking-lot-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">Parking Lot Cleaning</Link>
+              <div className="py-1 text-sm font-medium text-gray-500 mt-1">{t('Commercial')}</div>
+              <Link to="/services/commercial-window-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Commercial Window Cleaning')}</Link>
             </div>
           )}
           
@@ -64,7 +65,7 @@ export const NavbarMobile = ({
               isActive('/about') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
             }`}
           >
-            About
+            {t('About')}
           </Link>
           <Link 
             to="/testimonials" 
@@ -72,7 +73,15 @@ export const NavbarMobile = ({
               isActive('/testimonials') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
             }`}
           >
-            Testimonials
+            {t('Testimonials')}
+          </Link>
+          <Link 
+            to="/calculator" 
+            className={`block px-3 py-2 rounded-md text-base ${
+              isActive('/calculator') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
+            }`}
+          >
+            {t('Price Calculator')}
           </Link>
           <Link 
             to="/contact" 
@@ -80,13 +89,18 @@ export const NavbarMobile = ({
               isActive('/contact') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
             }`}
           >
-            Contact
+            {t('Contact')}
           </Link>
+          
+          <div className="mt-3 pt-3 border-t border-gray-200">
+            <LanguageSelector />
+          </div>
+          
           <Link 
             to="/contact" 
             className="block px-3 py-3"
           >
-            <button className="btn-primary w-full">Get a Quote</button>
+            <button className="btn-primary w-full">{t('Get a Quote')}</button>
           </Link>
         </div>
       </div>
