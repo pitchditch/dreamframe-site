@@ -1,3 +1,4 @@
+
 const punjabiTranslations = {
   // General
   "Home": "ਹੋਮ",
@@ -192,7 +193,6 @@ const punjabiTranslations = {
   "BC Pressure Washing Assistant": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਅਸਿਸਟੈਂਟ",
   "Hi there! Ask me any questions about our services.": "ਹੈਲੋ! ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਮੈਨੂੰ ਕੋਈ ਵੀ ਸਵਾਲ ਪੁੱਛੋ।",
   "Type your message...": "ਆਪਣਾ ਸੁਨੇਹਾ ਟਾਈਪ ਕਰੋ...",
-  "Clear chat": "ਚੈਟ ਸਾਫ਼ ਕਰੋ",
   "Hi! I'm here to help with window cleaning, pressure washing, roof cleaning, and gutter cleaning. Would you like more details about a service or are you ready for an estimate?": "ਹੈਲੋ! ਮੈਂ ਵਿੰਡੋ ਕਲੀਨਿੰਗ, ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਛੱਤ ਦੀ ਸਫਾਈ, ਅਤੇ ਗਟਰ ਕਲੀਨਿੰਗ ਵਿੱਚ ਮਦਦ ਕਰਨ ਲਈ ਇੱਥੇ ਹਾਂ। ਕੀ ਤੁਸੀਂ ਕਿਸੇ ਸੇਵਾ ਬਾਰੇ ਹੋਰ ਵੇਰਵੇ ਚਾਹੁੰਦੇ ਹੋ ਜਾਂ ਤੁਸੀਂ ਅਨੁਮਾਨ ਲਈ ਤਿਆਰ ਹੋ?",
   "Get More Information": "ਹੋਰ ਜਾਣਕਾਰੀ ਪ੍ਰਾਪਤ ਕਰੋ",
   "Get an Estimate": "ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ",
@@ -215,18 +215,12 @@ const punjabiTranslations = {
   "We use a soft washing method to clean roofs, removing moss, algae, and dirt. The process is gentle, protecting your roof from damage. Would you like to book an estimate for roof cleaning?": "ਅਸੀਂ ਛੱਤਾਂ ਨੂੰ ਸਾਫ਼ ਕਰਨ ਲਈ ਸੌਫਟ ਵਾਸ਼ਿੰਗ ਵਿਧੀ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹਾਂ, ਕਾਈ, ਐਲਗੀ, ਅਤੇ ਮਿੱਟੀ ਨੂੰ ਹਟਾਉਂਦੇ ਹਾਂ। ਪ੍ਰਕਿਰਿਆ ਨਰਮ ਹੈ, ਤੁਹਾਡੀ ਛੱਤ ਨੂੰ ਨੁਕਸਾਨ ਤੋਂ ਬਚਾਉਂਦੀ ਹੈ। ਕੀ ਤੁਸੀਂ ਛੱਤ ਦੀ ਸਫਾਈ ਲਈ ਅਨੁਮਾਨ ਬੁੱਕ ਕਰਨਾ ਚਾਹੋਗੇ?",
   "Schedule Roof Cleaning Estimate": "ਛੱਤ ਦੀ ਸਫਾਈ ਦਾ ਅਨੁਮਾਨ ਸ਼ੈਡਿਊਲ ਕਰੋ",
   "Awesome! Click below to book your service. Every job is checked by Jayden Fisher, and we're fully insured!": "ਵਧੀਆ! ਆਪਣੀ ਸੇਵਾ ਬੁੱਕ ਕਰਨ ਲਈ ਹੇਠਾਂ ਕਲਿੱਕ ਕਰੋ। ਹਰ ਕੰਮ ਜੇਡਨ ਫਿਸ਼ਰ ਦੁਆਰਾ ਚੈੱਕ ਕੀਤਾ ਜਾਂਦਾ ਹੈ, ਅਤੇ ਅਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਾ ਕੀਤੇ ਹਨ!",
-  "Book Now": "ਹੁਣੇ ਬੁੱਕ ਕਰੋ",
   "Talk to a Human": "ਕਿਸੇ ਵਿਅਕਤੀ ਨਾਲ ਗੱਲ ਕਰੋ",
   "Our team is ready to help you! You can reach us by phone at 778-808-7620 or by email at info@bcpressurewashing.com. Would you like us to call you instead?": "ਸਾਡੀ ਟੀਮ ਤੁਹਾਡੀ ਮਦਦ ਕਰਨ ਲਈ ਤਿਆਰ ਹੈ! ਤੁਸੀਂ ਸਾਨੂੰ ਫੋਨ 'ਤੇ 778-808-7620 'ਤੇ ਜਾਂ ਈਮੇਲ ਰਾਹੀਂ info@bcpressurewashing.com 'ਤੇ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ। ਕੀ ਤੁਸੀਂ ਚਾਹੁੰਦੇ ਹੋ ਕਿ ਅਸੀਂ ਤੁਹਾਨੂੰ ਕਾਲ ਕਰੀਏ?",
   "Yes, call me": "ਹਾਂ, ਮੈਨੂੰ ਕਾਲ ਕਰੋ",
   "I'll call you": "ਮੈਂ ਤੁਹਾਨੂੰ ਕਾਲ ਕਰਾਂਗਾ",
   "I want to make sure you get the best answer! Would you like to talk to a real person?": "ਮੈਂ ਯਕੀਨੀ ਬਣਾਉਣਾ ਚਾਹੁੰਦਾ ਹਾਂ ਕਿ ਤੁਹਾਨੂੰ ਸਭ ਤੋਂ ਵਧੀਆ ਜਵਾਬ ਮਿਲੇ! ਕੀ ਤੁਸੀਂ ਕਿਸੇ ਅਸਲ ਵਿਅਕਤੀ ਨਾਲ ਗੱਲ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?",
   "See More FAQs": "ਹੋਰ FAQs ਵੇਖੋ",
-  "Window Cleaning": "ਵਿੰਡੋ ਕਲੀਨਿੰਗ",
-  "House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ",
-  "Roof Cleaning": "ਛੱਤ ਦੀ ਸਫਾਈ",
-  "Gutter Cleaning": "ਗਟਰ ਕਲੀਨਿੰਗ",
-  "Pressure Washing": "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ",
   "What specific service would you like to learn more about?": "ਤੁਸੀਂ ਕਿਸ ਖਾਸ ਸੇਵਾ ਬਾਰੇ ਹੋਰ ਜਾਣਨਾ ਚਾਹੁੰਦੇ ਹੋ?",
   "Typing...": "ਟਾਈਪਿੰਗ...",
   "Operated by Jayden Fisher": "ਜੇਡਨ ਫਿਸ਼ਰ ਦੁਆਰਾ ਸੰਚਾਲਿਤ",

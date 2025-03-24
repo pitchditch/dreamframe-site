@@ -1,3 +1,4 @@
+
 const englishTranslations = {
   // General
   "Home": "Home",
@@ -192,7 +193,6 @@ const englishTranslations = {
   "BC Pressure Washing Assistant": "BC Pressure Washing Assistant",
   "Hi there! Ask me any questions about our services.": "Hi there! Ask me any questions about our services.",
   "Type your message...": "Type your message...",
-  "Clear chat": "Clear chat",
   "Hi! I'm here to help with window cleaning, pressure washing, roof cleaning, and gutter cleaning. Would you like more details about a service or are you ready for an estimate?": "Hi! I'm here to help with window cleaning, pressure washing, roof cleaning, and gutter cleaning. Would you like more details about a service or are you ready for an estimate?",
   "Get More Information": "Get More Information",
   "Get an Estimate": "Get an Estimate",
@@ -215,21 +215,21 @@ const englishTranslations = {
   "We use a soft washing method to clean roofs, removing moss, algae, and dirt. The process is gentle, protecting your roof from damage. Would you like to book an estimate for roof cleaning?": "We use a soft washing method to clean roofs, removing moss, algae, and dirt. The process is gentle, protecting your roof from damage. Would you like to book an estimate for roof cleaning?",
   "Schedule Roof Cleaning Estimate": "Schedule Roof Cleaning Estimate",
   "Awesome! Click below to book your service. Every job is checked by Jayden Fisher, and we're fully insured!": "Awesome! Click below to book your service. Every job is checked by Jayden Fisher, and we're fully insured!",
-  "Book Now": "Book Now",
   "Talk to a Human": "Talk to a Human",
   "Our team is ready to help you! You can reach us by phone at 778-808-7620 or by email at info@bcpressurewashing.com. Would you like us to call you instead?": "Our team is ready to help you! You can reach us by phone at 778-808-7620 or by email at info@bcpressurewashing.com. Would you like us to call you instead?",
   "Yes, call me": "Yes, call me",
   "I'll call you": "I'll call you",
   "I want to make sure you get the best answer! Would you like to talk to a real person?": "I want to make sure you get the best answer! Would you like to talk to a real person?",
   "See More FAQs": "See More FAQs",
-  "Window Cleaning": "Window Cleaning",
-  "House Washing": "House Washing",
-  "Roof Cleaning": "Roof Cleaning",
-  "Gutter Cleaning": "Gutter Cleaning",
-  "Pressure Washing": "Pressure Washing",
   "What specific service would you like to learn more about?": "What specific service would you like to learn more about?",
   "Typing...": "Typing...",
   "Operated by Jayden Fisher": "Operated by Jayden Fisher",
+  "Type your question...": "Type your question...",
+  "Clear chat": "Clear chat",
+  "Call us now: 778 808 7620": "Call us now: 778 808 7620",
+  "Our House Washing Process": "Our House Washing Process",
+  "We follow a comprehensive approach to safely clean and restore your home's exterior": "We follow a comprehensive approach to safely clean and restore your home's exterior",
+  "Surface Inspection": "Surface Inspection"
 };
 
 export default englishTranslations;
