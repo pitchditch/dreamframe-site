@@ -49,12 +49,12 @@ try {
   }
 }
 
-// Register the service worker for better caching
+// Register the service worker for better caching with improved error handling
 register({
   onSuccess: () => {
     console.log('Service worker registered successfully');
     // Force refresh on successful registration
-    if (navigator.serviceWorker.controller) {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
     }
   },
@@ -64,5 +64,21 @@ register({
     if (registration && registration.waiting) {
       registration.waiting.postMessage({ type: 'SKIP_WAITING' });
     }
+  },
+  onError: (error) => {
+    console.error('Service worker registration failed:', error);
+    // Continue without service worker if there's an SSL or other error
+  }
+});
+
+// Add a global error handler for network and SSL issues
+window.addEventListener('error', (event) => {
+  if (event.message && (
+    event.message.includes('SSL') || 
+    event.message.includes('protocol') || 
+    event.message.includes('network')
+  )) {
+    console.error('Network or SSL error detected:', event.message);
+    // You could implement a retry mechanism or notification here
   }
 });
