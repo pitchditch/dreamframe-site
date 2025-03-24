@@ -5,7 +5,7 @@ import './index.css'
 import { StrictMode } from 'react'
 import { register, unregister } from './serviceWorker'
 
-// First, unregister any existing service workers to force fresh content
+// First, aggressively unregister any existing service workers to force fresh content
 unregister();
 
 // Create a container element if it doesn't exist
@@ -20,18 +20,21 @@ if (!rootElement) {
 // Get the root element (original or newly created)
 const container = document.getElementById("root");
 
+// Set a timestamp for version tracking
+(window as any).appVersion = Date.now();
+
 // Use StrictMode for better development experience
 try {
   const root = createRoot(container!);
   root.render(
     <StrictMode>
-      <App key={Date.now().toString()} />
+      <App key={(window as any).appVersion.toString()} />
     </StrictMode>
   );
   console.log("App rendered successfully");
   
-  // Log the app version for debugging - fix TypeScript error by checking if property exists
-  console.log("App version:", (window as any).appVersion || Date.now());
+  // Log the app version for debugging - fix TypeScript error by using 'as any' type casting
+  console.log("App version:", (window as any).appVersion);
 } catch (error) {
   console.error("Error rendering the app:", error);
   // Display a visible error in the UI
@@ -40,7 +43,7 @@ try {
       <div style="color: red; padding: 20px;">
         <h2>Error rendering the application</h2>
         <p>${error instanceof Error ? error.message : 'Unknown error'}</p>
-        <button onclick="window.location.reload(true)">Reload page</button>
+        <button onclick="window.location.reload()">Reload page</button>
       </div>
     `;
   }
@@ -48,9 +51,15 @@ try {
 
 // Register the service worker for better caching, but set skipWaiting to true
 register({
-  onSuccess: () => console.log('Service worker registered successfully'),
+  onSuccess: () => {
+    console.log('Service worker registered successfully');
+    // Force refresh on successful registration
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+    }
+  },
   onUpdate: (registration) => {
-    console.log('New content is available; please refresh');
+    console.log('New content is available; forcing refresh');
     // Force the waiting service worker to become active
     if (registration && registration.waiting) {
       registration.waiting.postMessage({ type: 'SKIP_WAITING' });

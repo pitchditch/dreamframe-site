@@ -4,35 +4,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dreamframe-site</title>
-    <meta name="description" content="Professional Cleaning Services" />
+    <title>BC Pressure Washing - Professional Cleaning Services</title>
+    <meta name="description" content="Professional Cleaning Services for residential and commercial properties in BC" />
     <meta name="author" content="Lovable" />
     <meta property="og:image" content="/og-image.png" />
-    <!-- Strong cache control directives -->
+    
+    <!-- Extremely aggressive cache control directives -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <!-- Version parameter to force reload -->
+    <meta http-equiv="Clear-Site-Data" content="cache" />
+    
+    <!-- Dynamic timestamp to force browser reload -->
     <script>
       // Add version parameter to all resource URLs
       window.appVersion = Date.now();
+      document.write('<meta http-equiv="last-modified" content="' + new Date().toUTCString() + '" />');
       
-      // Force reload if cached version detected
-      if (performance.navigation.type === 1 || !sessionStorage.getItem('app_refresh')) {
-        // Store that we've refreshed this session
-        sessionStorage.setItem('app_refresh', 'true');
-        sessionStorage.setItem('last_load', window.appVersion.toString());
-        console.log('Cache busting: Forcing application refresh');
-        
-        // Clear application cache if possible
-        if ('caches' in window) {
-          caches.keys().then(function(names) {
-            names.forEach(function(name) {
-              caches.delete(name);
-              console.log('Cache deleted:', name);
-            });
-          });
+      // Check if the page needs a forced reload
+      const lastVisit = localStorage.getItem('last_visit');
+      const currentTime = Date.now();
+      if (lastVisit && (currentTime - parseInt(lastVisit, 10)) < 3600000) { // Within last hour
+        if (!sessionStorage.getItem('force_reloaded')) {
+          // Force reload once per session if visited recently
+          sessionStorage.setItem('force_reloaded', 'true');
+          console.log('Force reloading page to ensure latest version');
+          window.location.reload(true);
         }
+      }
+      localStorage.setItem('last_visit', currentTime.toString());
+      
+      // Clear application cache on every visit
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          names.forEach(function(name) {
+            caches.delete(name);
+            console.log('Cache deleted:', name);
+          });
+        });
       }
     </script>
   </head>
@@ -41,7 +50,8 @@
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx?v=${Date.now()}"></script>
+    <!-- Add timestamp to script urls to force reload -->
+    <script type="module" src="/src/main.tsx?v=<?php echo time(); ?>"></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
