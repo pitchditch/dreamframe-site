@@ -49,7 +49,7 @@ try {
   }
 }
 
-// Register the service worker for better caching, but set skipWaiting to true
+// Register the service worker for better caching
 register({
   onSuccess: () => {
     console.log('Service worker registered successfully');
