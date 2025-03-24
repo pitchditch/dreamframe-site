@@ -13,18 +13,18 @@ const WhiteRock = () => {
   
   useEffect(() => {
     // Update page metadata for SEO
-    document.title = "White Rock Pressure Washing Services | BC Pressure Washing";
+    document.title = "White Rock Window Cleaning & Pressure Washing Services | BC Pressure Washing";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Professional pressure washing services in White Rock, BC. Driveway cleaning, house washing, roof cleaning and more. Local, trusted White Rock pressure washing company.');
+      metaDescription.setAttribute('content', 'Professional window cleaning and pressure washing services in White Rock, BC. Residential and commercial window cleaning, house washing, roof cleaning and more. Local, trusted White Rock cleaning experts.');
     }
   }, []);
 
   return (
     <Layout>
       <ServiceHeader
-        title="White Rock Pressure Washing Services"
-        description="Professional pressure washing and exterior cleaning services for White Rock residents and businesses"
+        title="White Rock Window Cleaning Services"
+        description="Professional window cleaning and exterior cleaning services for White Rock residents and businesses"
         imagePath="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png"
       />
 
@@ -33,12 +33,12 @@ const WhiteRock = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="badge-pill mb-4">Local White Rock Service</div>
-              <h2 className="text-3xl font-bold mb-6">Your Trusted White Rock Pressure Washing Experts</h2>
+              <h2 className="text-3xl font-bold mb-6">White Rock's #1 Window Cleaning Experts</h2>
               <p className="text-gray-600 mb-6">
-                At BC Pressure Washing, we're proud to be White Rock's premier pressure washing company, serving our local community with exceptional cleaning services for over 10 years. Our deep understanding of White Rock's unique coastal climate conditions allows us to deliver superior results for your property.
+                At BC Pressure Washing, we're proud to be White Rock's premier window cleaning company, serving our local community with exceptional glass cleaning services for over 10 years. Our deep understanding of White Rock's unique coastal climate conditions allows us to deliver superior streak-free results for your windows.
               </p>
               <p className="text-gray-600 mb-6">
-                Whether you're dealing with salt air corrosion, moss growth on your roof, or algae on your siding - common issues for White Rock properties - our locally-based team has the expertise to restore your home or business to pristine condition.
+                Whether you're dealing with salt air buildup, water spots from ocean spray, or mineral deposits on your glass - common issues for White Rock properties - our locally-based team has the expertise to restore crystal clear visibility to every window of your home or business.
               </p>
               <div className="flex items-center mb-6">
                 <MapPin className="text-bc-red mr-2" />
@@ -51,8 +51,8 @@ const WhiteRock = () => {
             </div>
             <div>
               <img 
-                src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
-                alt="White Rock Pressure Washing Services" 
+                src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
+                alt="White Rock Window Cleaning Services" 
                 className="rounded-lg shadow-xl"
               />
             </div>
@@ -64,48 +64,48 @@ const WhiteRock = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="badge-pill mx-auto w-fit mb-4">Popular Services in White Rock</div>
-            <h2 className="text-3xl font-bold">Pressure Washing Services for White Rock Properties</h2>
+            <h2 className="text-3xl font-bold">Window Cleaning Services for White Rock Properties</h2>
             <p className="text-gray-600 max-w-3xl mx-auto mt-4">
-              Our comprehensive pressure washing services are tailored to address the specific needs of White Rock homes and businesses.
+              Our comprehensive window cleaning services are tailored to address the specific needs of White Rock homes and businesses.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-bc-red mb-4">
-                <DropletIcon size={32} />
+                <Sun size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-3">Driveway & Patio Cleaning</h3>
+              <h3 className="text-xl font-bold mb-3">Residential Window Cleaning</h3>
               <p className="text-gray-600 mb-4">
-                White Rock driveways and patios can quickly accumulate dirt, algae, and moss due to our coastal climate. Our specialized cleaning restores your concrete, pavers, or stonework to like-new condition.
+                White Rock homes with ocean views deserve crystal clear windows. Our streak-free cleaning process removes salt spray, hard water spots, and all buildup to maximize your beautiful views.
               </p>
-              <Link to="/services/driveway-cleaning" className="text-bc-red font-medium flex items-center">
+              <Link to="/services/window-cleaning" className="text-bc-red font-medium flex items-center">
                 Learn more <ArrowRight size={16} className="ml-2" />
               </Link>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-bc-red mb-4">
-                <Home size={32} />
+                <Building size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-3">House Washing</h3>
+              <h3 className="text-xl font-bold mb-3">Commercial Window Cleaning</h3>
               <p className="text-gray-600 mb-4">
-                White Rock homes face unique challenges from salt air, sea spray, and our damp climate. Our gentle soft washing technique safely removes dirt, algae, and stains from all types of siding.
+                For White Rock businesses, clean windows create a professional impression. Our commercial window cleaning services keep storefronts, offices, and multi-story buildings looking their best.
               </p>
-              <Link to="/services/house-washing" className="text-bc-red font-medium flex items-center">
+              <Link to="/services/commercial-window-cleaning" className="text-bc-red font-medium flex items-center">
                 Learn more <ArrowRight size={16} className="ml-2" />
               </Link>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-bc-red mb-4">
-                <CloudRain size={32} />
+                <Droplets size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-3">Roof Cleaning</h3>
+              <h3 className="text-xl font-bold mb-3">Interior/Exterior Glass</h3>
               <p className="text-gray-600 mb-4">
-                Black streaks and moss growth are common on White Rock roofs due to our humid climate. Our eco-friendly roof cleaning solutions eliminate these issues while extending your roof's lifespan.
+                Complete window cleaning services for White Rock properties. We clean both interior and exterior glass, screens, tracks, and frames for a thorough, comprehensive clean.
               </p>
-              <Link to="/services/roof-cleaning" className="text-bc-red font-medium flex items-center">
+              <Link to="/services/window-cleaning" className="text-bc-red font-medium flex items-center">
                 Learn more <ArrowRight size={16} className="ml-2" />
               </Link>
             </div>
@@ -118,40 +118,40 @@ const WhiteRock = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <img 
-                src="/lovable-uploads/dcf682db-4e98-4608-b2f1-871ded513f5c.jpg" 
-                alt="White Rock Beach Properties" 
+                src="/lovable-uploads/302cbdcc-ad2e-496b-bb73-502eb77f353a.png" 
+                alt="White Rock Ocean View Windows" 
                 className="rounded-lg shadow-xl"
               />
             </div>
             <div>
-              <div className="badge-pill mb-4">White Rock Specialists</div>
-              <h2 className="text-3xl font-bold mb-6">Why White Rock Properties Need Regular Pressure Washing</h2>
+              <div className="badge-pill mb-4">White Rock Window Specialists</div>
+              <h2 className="text-3xl font-bold mb-6">Why White Rock Properties Need Professional Window Cleaning</h2>
               <p className="text-gray-600 mb-6">
-                White Rock's beautiful coastal location presents unique challenges for property maintenance:
+                White Rock's beautiful coastal location presents unique challenges for window maintenance:
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                   <div>
-                    <span className="font-medium">Salt Air Exposure:</span> Prolonged exposure to salt air can deteriorate exterior surfaces, leading to premature aging and damage.
+                    <span className="font-medium">Salt Air Exposure:</span> Ocean salt creates a film on windows that regular cleaning can't remove, requiring our specialized solutions.
                   </div>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                   <div>
-                    <span className="font-medium">High Humidity:</span> White Rock's humid climate creates perfect conditions for moss, algae, and mildew growth on exterior surfaces.
+                    <span className="font-medium">Hard Water Spots:</span> White Rock's mineral-rich water leaves stubborn spots on glass that require professional treatment.
                   </div>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                   <div>
-                    <span className="font-medium">Ocean Spray:</span> Properties near the beach experience mineral deposits from ocean spray, which can stain and deteriorate surfaces over time.
+                    <span className="font-medium">Ocean Views:</span> Many White Rock homes feature premium ocean views that deserve to be enjoyed through perfectly clean windows.
                   </div>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                   <div>
-                    <span className="font-medium">Property Value Protection:</span> Regular pressure washing maintains White Rock's property values, which are among the highest in BC.
+                    <span className="font-medium">Property Value Protection:</span> Regular professional window cleaning maintains White Rock's property values, which are among the highest in BC.
                   </div>
                 </li>
               </ul>
@@ -160,35 +160,40 @@ const WhiteRock = () => {
         </div>
       </section>
 
-      <ServiceBenefits 
-        title="Benefits of Professional Pressure Washing in White Rock"
-        benefits={[
-          {
-            title: "Preserve Property Value",
-            description: "Maintain your White Rock property's value with regular professional cleaning that prevents deterioration and enhances curb appeal."
-          },
-          {
-            title: "Prevent Costly Damage",
-            description: "Avoid expensive repairs by removing harmful contaminants before they can cause structural damage to your White Rock home."
-          },
-          {
-            title: "Healthier Environment",
-            description: "Eliminate allergens, mold, and mildew from your property's exterior, creating a healthier living environment for your family."
-          },
-          {
-            title: "Local Expertise",
-            description: "Benefit from our specialized knowledge of White Rock's unique climate challenges and how they affect different surfaces and materials."
-          }
-        ]}
-      />
-
+      <div className="py-16 bg-bc-gray">
+        <div className="container mx-auto px-4">
+          <h2 className="section-title">Benefits of Professional Window Cleaning in White Rock</h2>
+          <p className="section-subtitle">
+            Professional window cleaning offers numerous advantages for White Rock residents and businesses
+          </p>
+          <ServiceBenefits benefits={[
+            {
+              title: "Crystal Clear Views",
+              description: "Enjoy White Rock's stunning ocean panoramas through perfectly clean, streak-free windows that maximize visibility."
+            },
+            {
+              title: "Extended Window Lifespan",
+              description: "Protect your investment by removing corrosive salt deposits and mineral buildup that can permanently damage glass surfaces."
+            },
+            {
+              title: "Enhanced Curb Appeal",
+              description: "Maintain your White Rock property's pristine appearance with spotless windows that reflect your attention to detail."
+            },
+            {
+              title: "Local Expertise",
+              description: "Benefit from our specialized knowledge of White Rock's unique coastal challenges and how they affect your windows."
+            }
+          ]} />
+        </div>
+      </div>
+      
       <section className="py-16 bg-bc-gray">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="badge-pill mx-auto w-fit mb-4">Local Service Areas</div>
             <h2 className="text-3xl font-bold">White Rock Neighborhoods We Serve</h2>
             <p className="text-gray-600 max-w-3xl mx-auto mt-4">
-              Our White Rock pressure washing services cover all local neighborhoods and surrounding areas.
+              Our White Rock window cleaning services cover all local neighborhoods and surrounding areas.
             </p>
           </div>
 
@@ -214,12 +219,12 @@ const WhiteRock = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="col-span-1 lg:col-span-2">
               <div className="badge-pill mb-4">White Rock Community</div>
-              <h2 className="text-3xl font-bold mb-6">Proudly Serving White Rock Since 2013</h2>
+              <h2 className="text-3xl font-bold mb-6">White Rock's Most Trusted Window Cleaners Since 2013</h2>
               <p className="text-gray-600 mb-4">
-                As a locally owned and operated business based in White Rock, we're deeply committed to helping our neighbors maintain beautiful, well-preserved properties. Our team members live in the White Rock area and understand the unique challenges that local homeowners and businesses face.
+                As a locally owned and operated business based in White Rock, we're deeply committed to helping our neighbors maintain beautiful, well-preserved properties with crystal clear windows. Our team members live in the White Rock area and understand the unique challenges that local homeowners and businesses face.
               </p>
               <p className="text-gray-600 mb-4">
-                We've built our reputation on providing exceptional pressure washing services throughout White Rock, from the beachfront properties along Marine Drive to the hillside homes with panoramic ocean views. Our knowledge of local architecture, building materials, and environmental conditions ensures that we deliver optimal results for every White Rock property we service.
+                We've built our reputation on providing exceptional window cleaning services throughout White Rock, from the beachfront properties along Marine Drive to the hillside homes with panoramic ocean views. Our knowledge of local architecture, building materials, and environmental conditions ensures that we deliver optimal results for every White Rock property we service.
               </p>
               <p className="text-gray-600 mb-6">
                 When you choose BC Pressure Washing, you're supporting a local White Rock business that reinvests in our community. We're proud members of the White Rock Business Improvement Association and regularly participate in community events and initiatives.
@@ -237,30 +242,27 @@ const WhiteRock = () => {
             </div>
             <div className="col-span-1">
               <div className="bg-bc-gray p-6 rounded-lg">
-                <h3 className="text-xl font-bold mb-4">White Rock Quick Facts</h3>
+                <h3 className="text-xl font-bold mb-4">White Rock Window Cleaning FAQ</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start">
                     <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                     <div>
-                      <span className="font-medium">Average Home Age:</span> 35+ years, requiring special care for exterior cleaning
+                      <span className="font-medium">How often should White Rock homes have their windows cleaned?</span>
+                      <p className="text-sm mt-1">For optimal results, we recommend quarterly cleaning for oceanfront properties and bi-annual cleaning for homes further inland.</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                     <div>
-                      <span className="font-medium">Annual Rainfall:</span> 1,300+ mm, contributing to moss and algae growth
+                      <span className="font-medium">Do you clean high windows in White Rock homes?</span>
+                      <p className="text-sm mt-1">Yes! We have specialized equipment to safely clean windows up to 5 stories high without using ladders.</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
                     <div>
-                      <span className="font-medium">Coastal Influence:</span> Salt air affects all exterior surfaces within 3km of shoreline
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="text-bc-red flex-shrink-0 mr-3 mt-1" size={20} />
-                    <div>
-                      <span className="font-medium">Property Value:</span> Average White Rock home value over $1.2M, making maintenance essential
+                      <span className="font-medium">Do you offer same-day service in White Rock?</span>
+                      <p className="text-sm mt-1">Yes, we often have same-day availability for White Rock residents. Call us to check today's schedule!</p>
                     </div>
                   </li>
                 </ul>
@@ -271,7 +273,7 @@ const WhiteRock = () => {
       </section>
 
       <CallToAction
-        title="Ready to Restore Your White Rock Property?"
+        title="Ready for Spotless Windows in White Rock?"
         subtitle="Contact us today for a free, no-obligation quote tailored to your White Rock property's specific needs."
       />
     </Layout>
@@ -280,4 +282,4 @@ const WhiteRock = () => {
 
 export default WhiteRock;
 
-import { DropletIcon, CloudRain, Home, ArrowRight } from 'lucide-react';
+import { Sun, Droplets, Building, ArrowRight } from 'lucide-react';

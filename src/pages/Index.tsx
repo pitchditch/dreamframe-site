@@ -12,7 +12,7 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import ReferralButton from '../components/ReferralButton';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import { useTranslation } from '@/hooks/use-translation';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight, Sun } from 'lucide-react';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -22,10 +22,10 @@ const Index = () => {
     setLanguage('en');
     
     // Set metadata for SEO
-    document.title = "BC Pressure Washing - Professional Cleaning Services in White Rock & Surrey";
+    document.title = "BC Pressure Washing - #1 Window Cleaning Services in White Rock & Surrey";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Professional pressure washing, window cleaning, and exterior cleaning services for residential and commercial properties in White Rock, Surrey, and Metro Vancouver.');
+      metaDescription.setAttribute('content', 'Professional window cleaning, pressure washing, and exterior cleaning services for residential and commercial properties in White Rock, Surrey, and Metro Vancouver. Top-rated local window cleaners.');
     }
     
     // Mark body to have video header (for navbar transparency)
@@ -63,31 +63,35 @@ const Index = () => {
       <ServicesSection />
       <ServiceSlideshow />
       
-      {/* New White Rock Featured Location Section */}
+      {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
       <section className="py-16 bg-bc-gray">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="badge-pill mb-4">Featured Location</div>
-              <h2 className="text-3xl font-bold mb-6">White Rock Pressure Washing Experts</h2>
+              <div className="badge-pill mb-4">White Rock Window Cleaning</div>
+              <h2 className="text-3xl font-bold mb-6">White Rock's Top-Rated Window Cleaning Experts</h2>
               <p className="text-gray-600 mb-6">
-                Based in White Rock, we understand the unique challenges that our coastal climate presents for property maintenance. From salt air corrosion to moss growth, our specialized services are tailored to the specific needs of White Rock homes and businesses.
+                Based in White Rock, we understand the unique challenges that our coastal climate presents for window maintenance. Salt spray, mineral deposits, and hard water spots require specialized cleaning techniques that our trained professionals have mastered.
               </p>
               <div className="flex items-center mb-6">
                 <MapPin className="text-bc-red mr-2" />
                 <span className="font-medium">Locally owned and operated in White Rock, BC</span>
               </div>
+              <div className="flex items-center mb-6">
+                <Sun className="text-bc-red mr-2" />
+                <span className="font-medium">Crystal clear, streak-free window cleaning guaranteed</span>
+              </div>
               <Link to="/locations/white-rock">
                 <button className="btn-primary">
-                  White Rock Services <ArrowRight className="ml-2 inline-block" size={16} />
+                  White Rock Window Cleaning <ArrowRight className="ml-2 inline-block" size={16} />
                 </button>
               </Link>
             </div>
             <div>
               <Link to="/locations/white-rock">
                 <img 
-                  src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
-                  alt="White Rock Pressure Washing Services" 
+                  src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
+                  alt="White Rock Window Cleaning Services" 
                   className="rounded-lg shadow-xl hover:opacity-90 transition-opacity"
                 />
               </Link>
