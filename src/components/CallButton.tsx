@@ -1,9 +1,9 @@
+
 import { Phone } from "lucide-react";
 import { Button } from "./ui/button";
 
-// This component is no longer used, but keeping the file
-// to avoid breaking any imports or references
 const CallButton = () => {
+  // Return null to prevent rendering if the component is not being used
   return null;
 };
 

@@ -64,10 +64,6 @@ register({
     if (registration && registration.waiting) {
       registration.waiting.postMessage({ type: 'SKIP_WAITING' });
     }
-  },
-  onError: (error) => {
-    console.error('Service worker registration failed:', error);
-    // Continue without service worker if there's an SSL or other error
   }
 });
 

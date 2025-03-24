@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { TranslationProvider } from "@/hooks/use-translation";
-import CallButton from "./components/CallButton";
 import "./App.css";
 
 // Use lazy loading to improve performance
@@ -74,7 +73,6 @@ function App() {
             <LoadingFallback />
           )}
         </Suspense>
-        <CallButton />
         <Toaster />
       </Router>
     </TranslationProvider>
