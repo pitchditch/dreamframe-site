@@ -17,27 +17,11 @@ const defaultContext: TranslationContextType = {
 const TranslationContext = createContext<TranslationContextType>(defaultContext);
 
 export const TranslationProvider = ({ children }: { children: ReactNode }) => {
+  // We're now only using English, removing Punjabi
   const [language, setLanguage] = useState<Language>('en');
 
-  // Load language preference from localStorage on mount
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage === 'pa' || savedLanguage === 'en') {
-      setLanguage(savedLanguage as Language);
-    } else {
-      // Default to English if no language is set
-      setLanguage('en');
-      localStorage.setItem('language', 'en');
-    }
-  }, []);
-
-  // Save language preference to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem('language', language);
-  }, [language]);
-
+  // Translation function - just returns English translations or the key if not found
   const t = (key: TranslationKey): string => {
-    // Return the translation for the key or the key itself if not found
     return translations[language][key] || key;
   };
 

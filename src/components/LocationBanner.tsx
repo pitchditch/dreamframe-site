@@ -1,6 +1,4 @@
 
-import { useEffect } from 'react';
-import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
 
 // Enhanced with county/region information and service keywords for better SEO
@@ -26,8 +24,6 @@ const locations = [
 ];
 
 const LocationBanner = () => {
-  const { t, language } = useTranslation();
-  
   // Create duplicate array for seamless scrolling
   const duplicatedLocations = [...locations, ...locations];
   
@@ -36,7 +32,7 @@ const LocationBanner = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center">
           <div className="text-lg font-medium mr-4 whitespace-nowrap">
-            {t("Professional Window Cleaning in")}:
+            Professional Window Cleaning in:
           </div>
           <div className="overflow-hidden relative w-full">
             <div className="flex whitespace-nowrap animate-[slide_30s_linear_infinite] space-x-8">
