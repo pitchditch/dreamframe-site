@@ -29,14 +29,20 @@ const ChatAssistant = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedHouseSize, setSelectedHouseSize] = useState<HouseSize | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Common questions for suggestion bubbles
+  // Common questions for suggestion bubbles - expanded list for rotation
   const commonQuestions = [
     t("How much is window cleaning?"),
     t("What's involved in house washing?"),
-    t("How do you clean roofs?")
+    t("How do you clean roofs?"),
+    t("Do you clean gutters?"),
+    t("How much for pressure washing?"),
+    t("Do you offer discounts?"),
+    t("How to book a service?"),
+    t("Are you insured?")
   ];
 
   const scrollToBottom = () => {
@@ -52,6 +58,17 @@ const ChatAssistant = () => {
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Rotate questions every 4 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentQuestionIndex(prevIndex => 
+        prevIndex === commonQuestions.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 4000);
+    
+    return () => clearInterval(intervalId);
+  }, [commonQuestions.length]);
 
   const handleSendMessage = async (text?: string) => {
     const messageText = text || input;
@@ -168,22 +185,19 @@ const ChatAssistant = () => {
         <Bot className="h-6 w-6" />
       </Button>
 
-      {/* Question suggestions (visible when chat is closed) */}
+      {/* Single line rotating question suggestion (visible when chat is closed) */}
       {!isOpen && (
-        <div className="fixed bottom-20 right-6 space-y-2 w-48">
-          {commonQuestions.map((question, index) => (
-            <div 
-              key={index}
-              onClick={() => {
-                setIsOpen(true);
-                setTimeout(() => handleSendMessage(question), 500);
-              }}
-              className="bg-white/80 backdrop-blur-sm text-blue-700 text-sm px-3 py-2 rounded-full shadow-md hover:bg-white cursor-pointer transition-all transform hover:scale-105 flex items-center"
-            >
-              <span className="mr-2">💬</span>
-              {question}
-            </div>
-          ))}
+        <div className="fixed bottom-20 right-6 w-auto max-w-xs">
+          <div 
+            onClick={() => {
+              setIsOpen(true);
+              setTimeout(() => handleSendMessage(commonQuestions[currentQuestionIndex]), 500);
+            }}
+            className="bg-white/80 backdrop-blur-sm text-blue-700 text-sm px-4 py-2 rounded-full shadow-md hover:bg-white cursor-pointer transition-all transform hover:scale-105 flex items-center"
+          >
+            <span className="mr-2">💬</span>
+            {commonQuestions[currentQuestionIndex]}
+          </div>
         </div>
       )}
 

@@ -18,7 +18,7 @@ export const NavbarMobile = ({
   setIsServicesMenuOpen
 }: NavbarMobileProps) => {
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const isActive = (path: string) => location.pathname === path;
   
   // Effect to log mobile navigation rendering
@@ -27,6 +27,13 @@ export const NavbarMobile = ({
       console.log("Mobile menu opened");
     }
   }, [isMenuOpen]);
+  
+  // Get language-specific classes for Punjabi and Hindi
+  const getLanguageClass = () => {
+    if (language === 'pa') return 'font-pa-font';
+    if (language === 'hi') return 'font-hi-font';
+    return '';
+  };
   
   return (
     <div className={`md:hidden bg-white shadow-lg animate-slide-down transition-all duration-300 ${isMenuOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
@@ -37,7 +44,7 @@ export const NavbarMobile = ({
             isActive('/') 
               ? 'bg-bc-red text-white' 
               : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          }`}
+          } ${getLanguageClass()}`}
         >
           {t('Home')}
         </Link>
@@ -46,7 +53,7 @@ export const NavbarMobile = ({
             isActive('/services') || location.pathname.includes('/services/') 
               ? 'bg-bc-red text-white' 
               : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          }`}
+          } ${getLanguageClass()}`}
           onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
         >
           <span>{t('Services')}</span>
@@ -55,14 +62,14 @@ export const NavbarMobile = ({
         
         {isServicesMenuOpen && (
           <div className="pl-4 mt-1 mb-1">
-            <div className="py-1 text-sm font-medium text-gray-500">{t('Residential')}</div>
-            <Link to="/services/window-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Window Cleaning')}</Link>
-            <Link to="/services/gutter-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Gutter Cleaning')}</Link>
-            <Link to="/services/pressure-washing" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Pressure Washing')}</Link>
-            <Link to="/services/roof-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Roof Cleaning')}</Link>
+            <div className={`py-1 text-sm font-medium text-gray-500 ${getLanguageClass()}`}>{t('Residential')}</div>
+            <Link to="/services/window-cleaning" className={`block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md ${getLanguageClass()}`}>{t('Window Cleaning')}</Link>
+            <Link to="/services/gutter-cleaning" className={`block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md ${getLanguageClass()}`}>{t('Gutter Cleaning')}</Link>
+            <Link to="/services/pressure-washing" className={`block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md ${getLanguageClass()}`}>{t('Pressure Washing')}</Link>
+            <Link to="/services/roof-cleaning" className={`block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md ${getLanguageClass()}`}>{t('Roof Cleaning')}</Link>
             
-            <div className="py-1 text-sm font-medium text-gray-500 mt-1">{t('Commercial')}</div>
-            <Link to="/services/commercial-window-cleaning" className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md">{t('Commercial Window Cleaning')}</Link>
+            <div className={`py-1 text-sm font-medium text-gray-500 mt-1 ${getLanguageClass()}`}>{t('Commercial')}</div>
+            <Link to="/services/commercial-window-cleaning" className={`block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red rounded-md ${getLanguageClass()}`}>{t('Commercial Window Cleaning')}</Link>
           </div>
         )}
         
@@ -70,7 +77,7 @@ export const NavbarMobile = ({
           to="/about" 
           className={`block px-3 py-2 rounded-md text-base ${
             isActive('/about') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          }`}
+          } ${getLanguageClass()}`}
         >
           {t('About')}
         </Link>
@@ -78,7 +85,7 @@ export const NavbarMobile = ({
           to="/testimonials" 
           className={`block px-3 py-2 rounded-md text-base ${
             isActive('/testimonials') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          }`}
+          } ${getLanguageClass()}`}
         >
           {t('Testimonials')}
         </Link>
@@ -86,7 +93,7 @@ export const NavbarMobile = ({
           to="/calculator" 
           className={`block px-3 py-2 rounded-md text-base ${
             isActive('/calculator') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          }`}
+          } ${getLanguageClass()}`}
         >
           {t('Price Calculator')}
         </Link>
@@ -94,7 +101,7 @@ export const NavbarMobile = ({
           to="/contact" 
           className={`block px-3 py-2 rounded-md text-base ${
             isActive('/contact') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          }`}
+          } ${getLanguageClass()}`}
         >
           {t('Contact')}
         </Link>
@@ -107,7 +114,7 @@ export const NavbarMobile = ({
           to="/contact" 
           className="block px-3 py-3"
         >
-          <button className="btn-primary w-full">{t('Get a Quote')}</button>
+          <button className={`btn-primary w-full ${getLanguageClass()}`}>{t('Get a Quote')}</button>
         </Link>
       </div>
     </div>

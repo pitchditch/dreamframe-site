@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { NavLink } from './NavLink';
 import { ServicesDropdown } from './ServicesDropdown';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
@@ -14,11 +15,20 @@ export const NavbarDesktop = ({
   isServicesMenuOpen, 
   setIsServicesMenuOpen
 }: NavbarDesktopProps) => {
+  const { t, language } = useTranslation();
+  
+  // Get language-specific classes for Punjabi and Hindi
+  const getLanguageClass = () => {
+    if (language === 'pa') return 'font-pa-font';
+    if (language === 'hi') return 'font-hi-font';
+    return '';
+  };
+  
   return (
     <>
-      <nav className="hidden md:flex items-center space-x-8">
+      <nav className={`hidden md:flex items-center space-x-8 ${getLanguageClass()}`}>
         <NavLink to="/" isOverVideo={isOverVideo}>
-          Home
+          {t('Home')}
         </NavLink>
         <ServicesDropdown 
           isOverVideo={isOverVideo} 
@@ -26,21 +36,21 @@ export const NavbarDesktop = ({
           setIsServicesMenuOpen={setIsServicesMenuOpen}
         />
         <NavLink to="/about" isOverVideo={isOverVideo}>
-          About
+          {t('About')}
         </NavLink>
         <NavLink to="/testimonials" isOverVideo={isOverVideo}>
-          Testimonials
+          {t('Testimonials')}
         </NavLink>
         <NavLink to="/contact" isOverVideo={isOverVideo}>
-          Contact
+          {t('Contact')}
         </NavLink>
         <NavLink to="/calculator" isOverVideo={isOverVideo}>
-          Price Calculator
+          {t('Price Calculator')}
         </NavLink>
       </nav>
       
       <Link to="/contact" className="hidden md:block">
-        <button className="btn-primary">Get a Quote</button>
+        <button className={`btn-primary ${getLanguageClass()}`}>{t('Get a Quote')}</button>
       </Link>
     </>
   );

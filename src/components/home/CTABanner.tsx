@@ -24,12 +24,12 @@ const CTABanner = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-on-scroll">
             <Link to="/contact">
-              <button className="btn-primary">
+              <button className={`btn-primary ${getLanguageClass()}`}>
                 {t("Get a Free Quote")} <ArrowRight className="ml-2 inline-block" size={16} />
               </button>
             </Link>
             <a href="tel:7788087620">
-              <button className="btn-secondary">
+              <button className={`btn-secondary ${getLanguageClass()}`}>
                 {t("Call Us")}: 778 808 7620
               </button>
             </a>
