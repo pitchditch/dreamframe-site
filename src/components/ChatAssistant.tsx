@@ -178,6 +178,22 @@ const ChatAssistant = () => {
 
   return (
     <>
+      {/* Single line rotating question suggestion positioned to the left of chat button */}
+      {!isOpen && (
+        <div className="fixed bottom-4 left-4 md:left-auto md:right-24 z-40">
+          <div 
+            onClick={() => {
+              setIsOpen(true);
+              setTimeout(() => handleSendMessage(commonQuestions[currentQuestionIndex]), 500);
+            }}
+            className="question-bubble text-blue-700 text-sm px-4 py-2 rounded-full shadow-md cursor-pointer transition-all transform hover:scale-105 flex items-center"
+          >
+            <span className="mr-2">💬</span>
+            {commonQuestions[currentQuestionIndex]}
+          </div>
+        </div>
+      )}
+
       {/* Chat Bot Button - just the image, no background */}
       <div 
         onClick={() => setIsOpen(true)}
@@ -189,22 +205,6 @@ const ChatAssistant = () => {
           className="h-14 w-14 rounded-full object-cover shadow-lg"
         />
       </div>
-
-      {/* Single line rotating question suggestion positioned to the left of chat button */}
-      {!isOpen && (
-        <div className="fixed bottom-20 right-20 left-auto z-40">
-          <div 
-            onClick={() => {
-              setIsOpen(true);
-              setTimeout(() => handleSendMessage(commonQuestions[currentQuestionIndex]), 500);
-            }}
-            className="bg-white/60 backdrop-blur-sm text-blue-700 text-sm px-4 py-2 rounded-full shadow-md hover:bg-white/80 cursor-pointer transition-all transform hover:scale-105 flex items-center question-bubble"
-          >
-            <span className="mr-2">💬</span>
-            {commonQuestions[currentQuestionIndex]}
-          </div>
-        </div>
-      )}
 
       {isOpen && (
         <Card className="fixed bottom-4 right-4 w-80 sm:w-96 h-[500px] z-50 flex flex-col shadow-xl rounded-lg overflow-hidden">
