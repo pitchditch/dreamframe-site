@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { 
   Dialog, 
@@ -177,7 +176,7 @@ const ReferralProgramDialog = ({ open, onOpenChange }: ReferralProgramDialogProp
                   <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/2">
                       <img 
-                        src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" 
+                        src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" 
                         alt="Quality inspection" 
                         className="rounded-lg shadow-md w-full h-auto"
                       />
@@ -205,7 +204,7 @@ const ReferralProgramDialog = ({ open, onOpenChange }: ReferralProgramDialogProp
 
                   <div className="rounded-lg bg-slate-50 p-4 flex items-center gap-4">
                     <img 
-                      src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" 
+                      src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" 
                       alt="Jayden Fisher" 
                       className="w-16 h-16 rounded-full object-cover"
                     />

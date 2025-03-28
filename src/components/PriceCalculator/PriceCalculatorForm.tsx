@@ -67,7 +67,7 @@ const PriceCalculatorForm = () => {
         </div>
         <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
           <Avatar className="h-12 w-12 border-2 border-blue-500">
-            <AvatarImage src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="Jayden Fisher" />
+            <AvatarImage src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" alt="Jayden Fisher" />
             <AvatarFallback>JF</AvatarFallback>
           </Avatar>
           <div>

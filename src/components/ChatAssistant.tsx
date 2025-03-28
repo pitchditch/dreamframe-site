@@ -178,16 +178,21 @@ const ChatAssistant = () => {
 
   return (
     <>
+      {/* Chat Bot Button with new profile picture */}
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 rounded-full p-4 shadow-lg bg-blue-500 hover:bg-blue-600"
+        className="fixed bottom-4 right-4 rounded-full p-1 shadow-lg bg-blue-500 hover:bg-blue-600"
       >
-        <Bot className="h-6 w-6" />
+        <img 
+          src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png"
+          alt="Chat with us"
+          className="h-12 w-12 rounded-full object-cover"
+        />
       </Button>
 
-      {/* Single line rotating question suggestion (visible when chat is closed) */}
+      {/* Single line rotating question suggestion positioned to the left */}
       {!isOpen && (
-        <div className="fixed bottom-20 right-6 w-auto max-w-xs">
+        <div className="fixed bottom-20 right-20 left-auto">
           <div 
             onClick={() => {
               setIsOpen(true);
@@ -207,7 +212,7 @@ const ChatAssistant = () => {
             <div className="flex items-center gap-2">
               <Avatar className="h-8 w-8 border-2 border-white">
                 <img 
-                  src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" 
+                  src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" 
                   alt="Jayden Fisher"
                   className="h-full w-full object-cover"
                 />
@@ -239,7 +244,7 @@ const ChatAssistant = () => {
                 {message.role === 'assistant' && (
                   <Avatar className="h-8 w-8 border border-gray-200">
                     <img 
-                      src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" 
+                      src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" 
                       alt="Jayden Fisher"
                       className="h-full w-full object-cover"
                     />
@@ -289,7 +294,7 @@ const ChatAssistant = () => {
               <div className="flex items-start gap-2">
                 <Avatar className="h-8 w-8 border border-gray-200">
                   <img 
-                    src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" 
+                    src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" 
                     alt="Jayden Fisher"
                     className="h-full w-full object-cover"
                   />
