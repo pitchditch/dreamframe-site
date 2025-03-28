@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { TranslationProvider } from "@/hooks/use-translation";
+import { Helmet } from "react-helmet";
 import "./App.css";
 
 // Use lazy loading to improve performance
@@ -50,6 +51,18 @@ function App() {
 
   return (
     <TranslationProvider>
+      <Helmet>
+        <title>BC Pressure Washing - Professional Window & Pressure Washing Services</title>
+        <meta name="description" content="Expert window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey and Metro Vancouver. Satisfaction guaranteed." />
+        <meta name="keywords" content="window cleaning, pressure washing, roof cleaning, gutter cleaning, White Rock, Surrey, BC" />
+        <meta property="og:title" content="BC Pressure Washing - Window & Pressure Washing Services" />
+        <meta property="og:description" content="Professional exterior cleaning services in Metro Vancouver. Window cleaning, pressure washing, roof & gutter cleaning with satisfaction guaranteed." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://bcpressurewashing.com/" />
+      </Helmet>
+      
       <Router>
         <Suspense fallback={<LoadingFallback />}>
           {isLoaded ? (

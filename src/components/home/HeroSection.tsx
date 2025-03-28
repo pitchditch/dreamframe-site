@@ -4,7 +4,14 @@ import { ArrowRight } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const HeroSection = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  
+  // Additional language-specific class for font adjustments
+  const getLanguageClass = () => {
+    if (language === 'pa') return 'font-pa-font';
+    if (language === 'hi') return 'font-hi-font';
+    return '';
+  };
   
   return (
     <section 
@@ -24,12 +31,12 @@ const HeroSection = () => {
           <div className="badge-pill animate-on-scroll mb-4 bg-red-50/80 backdrop-blur-sm">
             {t("Professional Pressure Washing Services")}
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow">
+          <h1 className={`text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow ${getLanguageClass()}`}>
             {t("The Ultimate Cleaning")}
             <span className="text-bc-red block"> {t("Solution")} </span>
             {t("for Your Property")}
           </h1>
-          <p className="text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm max-w-2xl">
+          <p className={`text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm max-w-2xl ${getLanguageClass()}`}>
             {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">

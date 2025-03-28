@@ -17,7 +17,7 @@ interface Message {
 type HouseSize = '0-1800 sqft' | '1800-2800 sqft' | '2800-3500 sqft' | 'More than 3500 sqft';
 
 const ChatAssistant = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -31,6 +31,13 @@ const ChatAssistant = () => {
   const [selectedHouseSize, setSelectedHouseSize] = useState<HouseSize | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Common questions for suggestion bubbles
+  const commonQuestions = [
+    t("How much is window cleaning?"),
+    t("What's involved in house washing?"),
+    t("How do you clean roofs?")
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -160,6 +167,25 @@ const ChatAssistant = () => {
       >
         <Bot className="h-6 w-6" />
       </Button>
+
+      {/* Question suggestions (visible when chat is closed) */}
+      {!isOpen && (
+        <div className="fixed bottom-20 right-6 space-y-2 w-48">
+          {commonQuestions.map((question, index) => (
+            <div 
+              key={index}
+              onClick={() => {
+                setIsOpen(true);
+                setTimeout(() => handleSendMessage(question), 500);
+              }}
+              className="bg-white/80 backdrop-blur-sm text-blue-700 text-sm px-3 py-2 rounded-full shadow-md hover:bg-white cursor-pointer transition-all transform hover:scale-105 flex items-center"
+            >
+              <span className="mr-2">💬</span>
+              {question}
+            </div>
+          ))}
+        </div>
+      )}
 
       {isOpen && (
         <Card className="fixed bottom-4 right-4 w-80 sm:w-96 h-[500px] z-50 flex flex-col shadow-xl rounded-lg overflow-hidden">

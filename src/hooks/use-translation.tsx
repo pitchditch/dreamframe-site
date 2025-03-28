@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import translations, { Language, TranslationKey } from '../translations';
 
 type TranslationContextType = {
@@ -16,12 +16,35 @@ const defaultContext: TranslationContextType = {
 
 const TranslationContext = createContext<TranslationContextType>(defaultContext);
 
-export const TranslationProvider = ({ children }: { children: ReactNode }) => {
-  // We're now only using English, removing Punjabi
-  const [language, setLanguage] = useState<Language>('en');
+// Get browser language or stored preference
+const getBrowserLanguage = (): Language => {
+  const savedLanguage = localStorage.getItem('preferred_language');
+  if (savedLanguage && ['en', 'pa', 'hi'].includes(savedLanguage)) {
+    return savedLanguage as Language;
+  }
+  
+  const browserLang = navigator.language.split('-')[0];
+  if (browserLang === 'pa') return 'pa';
+  if (browserLang === 'hi') return 'hi';
+  return 'en';
+};
 
-  // Translation function - just returns English translations or the key if not found
+export const TranslationProvider = ({ children }: { children: ReactNode }) => {
+  const [language, setLanguage] = useState<Language>(getBrowserLanguage());
+
+  // Save language preference when it changes
+  useEffect(() => {
+    localStorage.setItem('preferred_language', language);
+    document.documentElement.lang = language;
+    
+    // Add language class to body for CSS targeting
+    document.body.classList.remove('lang-en', 'lang-pa', 'lang-hi');
+    document.body.classList.add(`lang-${language}`);
+  }, [language]);
+
+  // Translation function
   const t = (key: TranslationKey): string => {
+    if (!translations[language]) return key;
     return translations[language][key] || key;
   };
 
