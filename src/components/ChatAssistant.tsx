@@ -15,6 +15,13 @@ interface Message {
 
 type HouseSize = '0-1800 sqft' | '1800-2800 sqft' | '2800-3500 sqft' | 'More than 3500 sqft';
 
+// Define question/answer pairs to ensure each question has a set response
+interface QuestionAnswer {
+  question: string;
+  answer: string;
+  options?: string[];
+}
+
 const ChatAssistant = () => {
   const { t, language } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -32,17 +39,52 @@ const ChatAssistant = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Common questions for suggestion bubbles - expanded list for rotation
-  const commonQuestions = [
-    t("How much is window cleaning?"),
-    t("What's involved in house washing?"),
-    t("How do you clean roofs?"),
-    t("Do you clean gutters?"),
-    t("How much for pressure washing?"),
-    t("Do you offer discounts?"),
-    t("How to book a service?"),
-    t("Are you insured?")
+  // Define predefined question-answer pairs
+  const questionAnswers: QuestionAnswer[] = [
+    {
+      question: t("How much is window cleaning?"),
+      answer: t("Window cleaning prices start at $300 for exterior only, $300 for interior only, or $547.20 for both. Prices may vary based on your property size and number of windows."),
+      options: [t("Get a Custom Quote"), t("Book Window Cleaning")]
+    },
+    {
+      question: t("What's involved in house washing?"),
+      answer: t("Our house washing service includes soft washing with eco-friendly detergents that remove dirt, algae, mold, and stains from your siding without damage. We clean all exterior surfaces including vinyl, stucco, brick, and cement fiber siding."),
+      options: [t("Get a House Washing Quote"), t("Ask Another Question")]
+    },
+    {
+      question: t("How do you clean roofs?"),
+      answer: t("We use a gentle soft washing technique for roof cleaning that safely removes moss, algae, and black streaks without damaging your shingles. This extends roof life and improves your home's appearance and energy efficiency."),
+      options: [t("Schedule Roof Cleaning Estimate"), t("Ask About Other Services")]
+    },
+    {
+      question: t("Do you clean gutters?"),
+      answer: t("Yes! Our gutter cleaning service includes removing debris, flushing downspouts, and checking for proper water flow. We recommend cleaning gutters at least twice a year to prevent water damage to your home."),
+      options: [t("Get a Gutter Cleaning Quote"), t("Ask About Another Service")]
+    },
+    {
+      question: t("How much for pressure washing?"),
+      answer: t("Pressure washing services start at $350 for a standard driveway and walkway. The final price depends on the surface area, level of soiling, and any additional areas you'd like cleaned such as patios or decks."),
+      options: [t("Get a Custom Quote"), t("Learn More")]
+    },
+    {
+      question: t("Do you offer discounts?"),
+      answer: t("Yes! We offer a 10% discount when you bundle multiple services together. We also have seasonal promotions and referral discounts when you recommend us to friends and family."),
+      options: [t("Bundle Services"), t("Tell Me More")]
+    },
+    {
+      question: t("How to book a service?"),
+      answer: t("Booking is easy! You can request an appointment through our online form, chat with us here, or call us directly at 778-808-7620. We'll schedule a convenient time for you and confirm all details before your appointment."),
+      options: [t("Book Now"), t("Talk to a Human")]
+    },
+    {
+      question: t("Are you insured?"),
+      answer: t("Absolutely! We're fully insured with both liability and workers' compensation insurance for your peace of mind. We're also bonded and all our technicians undergo thorough background checks."),
+      options: [t("Learn More About Our Company"), t("Get a Quote")]
+    }
   ];
+
+  // Use the predefined questions for the suggestion bubbles
+  const commonQuestions = questionAnswers.map(qa => qa.question);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -79,7 +121,23 @@ const ChatAssistant = () => {
     setIsLoading(true);
 
     try {
-      // Process the message and provide a response based on context
+      // First check if the message is one of our predefined questions
+      const matchedQA = questionAnswers.find(qa => qa.question === messageText);
+      
+      if (matchedQA) {
+        // If it's a predefined question, use the predefined answer
+        setTimeout(() => {
+          setMessages(prev => [...prev, { 
+            role: 'assistant', 
+            content: matchedQA.answer,
+            options: matchedQA.options
+          }]);
+          setIsLoading(false);
+        }, 800);
+        return;
+      }
+      
+      // Otherwise process the message based on content
       let response: Message;
       
       if (messageText.toLowerCase().includes('window cleaning') || messageText === t("Tell me about window cleaning.")) {
@@ -112,7 +170,7 @@ const ChatAssistant = () => {
           content: t("Great! To provide the most accurate estimate, could you tell me your house size?"),
           options: [t("0-1800 sqft"), t("1800-2800 sqft"), t("2800-3500 sqft"), t("More than 3500 sqft")]
         };
-      } else if (['0-1800 sqft', '1800-2800 sqft', '2800-3500 sqft', 'More than 3500 sqft'].includes(messageText)) {
+      } else if (['0-1800 sqft', '1800-2800 sqft', '2800-3500 sqft'].includes(messageText) || messageText === t("More than 3500 sqft")) {
         setSelectedHouseSize(messageText as HouseSize);
         response = {
           role: 'assistant',
@@ -126,7 +184,7 @@ const ChatAssistant = () => {
           content: t(`For a ${size} house, window cleaning is $300 outside, $300 inside, or $547.20 for both. Would you like to schedule this service?`),
           options: [t("Book Window Cleaning"), t("Ask Another Question")]
         };
-      } else if (messageText === t("Book Window Cleaning") || messageText.toLowerCase().includes('book') || messageText === t("Book Now") || messageText === t("Schedule Roof Cleaning Estimate")) {
+      } else if (messageText === t("Book Window Cleaning") || messageText === t("Get a House Washing Quote") || messageText === t("Get a Gutter Cleaning Quote") || messageText === t("Get a Custom Quote") || messageText.toLowerCase().includes('book') || messageText === t("Book Now") || messageText === t("Schedule Roof Cleaning Estimate")) {
         response = {
           role: 'assistant',
           content: t("Awesome! Click below to book your service. Every job is checked by Jayden Fisher, and we're fully insured!"),
