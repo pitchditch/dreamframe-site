@@ -178,23 +178,9 @@ const ChatAssistant = () => {
 
   return (
     <>
-      {/* Chat Bot Button with aligned question bubble */}
-      <div className="fixed bottom-4 right-4 flex items-center z-50">
-        {/* Question bubble positioned to the left of the chat button */}
-        {!isOpen && (
-          <div 
-            onClick={() => {
-              setIsOpen(true);
-              setTimeout(() => handleSendMessage(commonQuestions[currentQuestionIndex]), 500);
-            }}
-            className="question-bubble text-blue-700 text-sm px-4 py-2 rounded-full shadow-md cursor-pointer transition-all transform hover:scale-105 flex items-center mr-3"
-          >
-            <span className="mr-2">💬</span>
-            {commonQuestions[currentQuestionIndex]}
-          </div>
-        )}
-        
-        {/* Chat Button - just the image */}
+      {/* Chat Bot Button with contained suggestion bubble */}
+      <div className="fixed bottom-4 right-4 z-50 flex flex-row-reverse items-center">
+        {/* Chat Button - avatar image */}
         <div 
           onClick={() => setIsOpen(true)}
           className="cursor-pointer transition-transform hover:scale-105"
@@ -205,6 +191,20 @@ const ChatAssistant = () => {
             className="h-14 w-14 rounded-full object-cover shadow-lg"
           />
         </div>
+        
+        {/* Question bubble positioned to the left of the chat button */}
+        {!isOpen && (
+          <div 
+            onClick={() => {
+              setIsOpen(true);
+              setTimeout(() => handleSendMessage(commonQuestions[currentQuestionIndex]), 500);
+            }}
+            className="question-bubble mr-3"
+          >
+            <span className="mr-2">💬</span>
+            {commonQuestions[currentQuestionIndex]}
+          </div>
+        )}
       </div>
 
       {isOpen && (
