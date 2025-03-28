@@ -18,11 +18,13 @@
 .question-bubble {
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .question-bubble:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* SEO Schema Data - Hidden but read by search engines */
