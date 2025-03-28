@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Bot, User, X, Send, Loader2, Info, Home, DollarSign, Phone } from 'lucide-react';
 import { Button } from './ui/button';
@@ -199,10 +198,10 @@ const ChatAssistant = () => {
               setIsOpen(true);
               setTimeout(() => handleSendMessage(commonQuestions[currentQuestionIndex]), 500);
             }}
-            className="question-bubble mr-3"
+            className="question-bubble"
           >
             <span className="mr-2">💬</span>
-            {commonQuestions[currentQuestionIndex]}
+            <span>{commonQuestions[currentQuestionIndex]}</span>
           </div>
         )}
       </div>
