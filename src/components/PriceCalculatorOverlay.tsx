@@ -8,7 +8,7 @@ import { useTranslation } from '@/hooks/use-translation';
 interface PriceCalculatorOverlayProps {
   buttonText?: string;
   className?: string;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "bc-red";
 }
 
 const PriceCalculatorOverlay = ({ 
