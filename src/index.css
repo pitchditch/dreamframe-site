@@ -161,18 +161,6 @@
   transform: translateY(0);
 }
 
-/* Testimonial carousel animation - faster on mobile */
-@media (max-width: 768px) {
-  @keyframes testimonial-carousel-mobile {
-    '0%': { transform: 'translateX(0)' },
-    '100%': { transform: 'translateX(-100%)' }
-  }
-  
-  .animate-testimonial-carousel {
-    animation: testimonial-carousel-mobile 20s linear infinite !important;
-  }
-}
-
 /* Service menu animation */
 .service-menu {
   transform-origin: top center;
@@ -251,39 +239,4 @@
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-/* Chat bot suggestion bubbles */
-.chat-suggestion-container {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  z-index: 40;
-  max-width: 250px;
-  transition: opacity 0.3s ease;
-  opacity: 0.7;
-}
-
-.chat-suggestion-container:hover {
-  opacity: 1;
-}
-
-.question-bubble {
-  background-color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(204, 0, 0, 0.3);
-  border-radius: 15px;
-  padding: 6px 12px;
-  font-size: 0.75rem;
-  color: #333;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(4px);
-  text-align: left;
-}
-
-.question-bubble:hover {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-color: rgba(204, 0, 0, 0.7);
-  transform: translateY(-2px);
 }

@@ -4,13 +4,11 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
-import ServicesSection from '../../components/home/ServicesSection';
 import { Droplets, ShieldCheck, Sun, Sparkles, RotateCw, Shield, Clock, ThumbsUp, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Helmet } from 'react-helmet';
 
 const WindowCleaning = () => {
   const isMobile = useIsMobile();
@@ -62,18 +60,6 @@ const WindowCleaning = () => {
 
   return (
     <Layout>
-      <Helmet>
-        <title>Window Cleaning White Rock | Professional Services | BC Pressure Washing</title>
-        <meta name="description" content="Professional window cleaning in White Rock, BC. Get crystal clear, streak-free windows with our specialized cleaning techniques. Free quotes available!" />
-        <meta name="keywords" content="window cleaning White Rock, residential window cleaning, commercial window cleaning, crystal clear windows, streak-free cleaning" />
-        <link rel="canonical" href="https://bcpressurewashing.ca/services/window-cleaning" />
-        <meta property="og:title" content="White Rock Window Cleaning | Professional Services | BC Pressure Washing" />
-        <meta property="og:description" content="Professional window cleaning in White Rock that delivers crystal clear, streak-free results. We use purified water systems for superior results." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bcpressurewashing.ca/services/window-cleaning" />
-        <meta property="og:image" content="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" />
-      </Helmet>
-      
       <ServiceHeader
         title="Window Cleaning"
         description="Professional window cleaning services that deliver crystal clear, streak-free results for your home or business."
@@ -89,7 +75,7 @@ const WindowCleaning = () => {
               Windows are the eyes of your home, allowing natural light to flood your interior spaces while providing views of the outside world. Over time, windows collect dirt, dust, water spots, and other contaminants that diminish their clarity and appearance.
             </p>
             <p className="text-gray-600 mb-6">
-              Our professional window cleaning service in White Rock removes all buildup, leaving your windows spotless and streak-free. We use premium, environmentally friendly cleaning solutions and professional tools to achieve results that simply aren't possible with DIY methods.
+              Our professional window cleaning service removes all buildup, leaving your windows spotless and streak-free. We use premium, environmentally friendly cleaning solutions and professional tools to achieve results that simply aren't possible with DIY methods.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center">
@@ -109,7 +95,7 @@ const WindowCleaning = () => {
           <div className="md:w-1/2">
             <img 
               src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
-              alt="Window cleaning service in White Rock" 
+              alt="Window cleaning service" 
               className="rounded-lg shadow-lg w-full h-auto object-cover"
             />
           </div>
@@ -120,7 +106,7 @@ const WindowCleaning = () => {
         <div className="container mx-auto px-4">
           <h2 className="section-title">Benefits of Professional Window Cleaning</h2>
           <p className="section-subtitle">
-            Clean windows do more than just improve your view - they offer numerous benefits for your White Rock home
+            Clean windows do more than just improve your view - they offer numerous benefits for your home
           </p>
           <ServiceBenefits benefits={benefits} />
         </div>
@@ -139,9 +125,9 @@ const WindowCleaning = () => {
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/2">
               <div className="badge-pill w-fit mb-4">Commercial Services</div>
-              <h2 className="text-3xl font-bold mb-6">Commercial Window Cleaning in White Rock</h2>
+              <h2 className="text-3xl font-bold mb-6">Commercial Window Cleaning</h2>
               <p className="text-gray-600 mb-6">
-                For multi-story buildings and commercial properties in White Rock, our specialized equipment and trained technicians provide safe and efficient window cleaning services without the need for ladders.
+                For multi-story buildings and commercial properties, our specialized equipment and trained technicians provide safe and efficient window cleaning services without the need for ladders.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start">
@@ -170,7 +156,7 @@ const WindowCleaning = () => {
             <div className="md:w-1/2">
               <img 
                 src="/lovable-uploads/0562cfd9-348f-4daf-82ee-dfc2feef6c68.png" 
-                alt="Commercial storefront window cleaning in White Rock" 
+                alt="Commercial storefront window cleaning" 
                 className="rounded-lg shadow-lg w-full h-auto object-cover"
               />
             </div>
@@ -179,7 +165,7 @@ const WindowCleaning = () => {
       </section>
 
       <section className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-3xl font-bold mb-8">Ready for Crystal Clear Windows in White Rock?</h2>
+        <h2 className="text-3xl font-bold mb-8">Ready for Crystal Clear Windows?</h2>
         <div className="max-w-md mx-auto">
           <PriceCalculatorOverlay 
             buttonText="Get Your Free Quote" 
@@ -188,9 +174,6 @@ const WindowCleaning = () => {
           />
         </div>
       </section>
-
-      {/* Add ServicesSection to this page */}
-      <ServicesSection />
 
       <CallToAction 
         backgroundImage="/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"

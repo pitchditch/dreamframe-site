@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -8,7 +8,6 @@ import { Input } from './ui/input';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(true);
   const [messages, setMessages] = useState<{text: string, fromUser: boolean}[]>([
     {text: "Hi there! I'm Jayden, the owner of BC Pressure Washing. How can I help you today?", fromUser: false}
   ]);
@@ -22,27 +21,6 @@ const ChatAssistant = () => {
     "How soon can you schedule a service?",
     "Do you offer commercial services?"
   ];
-
-  // Hide suggestions after chat is opened
-  useEffect(() => {
-    if (isOpen) {
-      setShowSuggestions(false);
-    } else {
-      // Show suggestions again when chat is closed
-      const timer = setTimeout(() => {
-        setShowSuggestions(true);
-      }, 2000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
-  // Hide suggestions after user interacts
-  useEffect(() => {
-    if (messages.length > 3) {
-      setShowSuggestions(false);
-    }
-  }, [messages]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,51 +48,33 @@ const ChatAssistant = () => {
 
   // Function to handle clicking on a suggestion
   const handleSuggestionClick = (suggestion: string) => {
-    setIsOpen(true);
+    setMessages(prev => [...prev, {text: suggestion, fromUser: true}]);
+    
+    // Simulate response
     setTimeout(() => {
-      setMessages(prev => [...prev, {text: suggestion, fromUser: true}]);
+      let response = "";
       
-      // Simulate response
-      setTimeout(() => {
-        let response = "";
-        
-        // Custom responses based on the suggestion
-        if (suggestion.includes("services do you offer")) {
-          response = "We offer a variety of services including window cleaning, pressure washing, gutter cleaning, and roof cleaning for both residential and commercial properties!";
-        } else if (suggestion.includes("free quote")) {
-          response = "Absolutely! We provide free, no-obligation quotes. You can use our online calculator or I can collect some basic information about your project and provide an estimate.";
-        } else if (suggestion.includes("areas do you serve")) {
-          response = "We serve White Rock, Surrey, Langley, and the greater Metro Vancouver area. Are you located in one of these areas?";
-        } else if (suggestion.includes("How soon")) {
-          response = "We can typically schedule services within 2-3 business days, depending on current demand. For urgent needs, we try our best to accommodate!";
-        } else if (suggestion.includes("commercial")) {
-          response = "Yes, we offer specialized commercial services for businesses of all sizes, including window cleaning, exterior washing, and more. Do you have a commercial property that needs our attention?";
-        } else {
-          response = "Thanks for your question! I'd be happy to help with that. Could you provide a few more details so I can better assist you?";
-        }
-        
-        setMessages(prev => [...prev, {text: response, fromUser: false}]);
-      }, 1000);
-    }, 100);
+      // Custom responses based on the suggestion
+      if (suggestion.includes("services do you offer")) {
+        response = "We offer a variety of services including window cleaning, pressure washing, gutter cleaning, and roof cleaning for both residential and commercial properties!";
+      } else if (suggestion.includes("free quote")) {
+        response = "Absolutely! We provide free, no-obligation quotes. You can use our online calculator or I can collect some basic information about your project and provide an estimate.";
+      } else if (suggestion.includes("areas do you serve")) {
+        response = "We serve White Rock, Surrey, Langley, and the greater Metro Vancouver area. Are you located in one of these areas?";
+      } else if (suggestion.includes("How soon")) {
+        response = "We can typically schedule services within 2-3 business days, depending on current demand. For urgent needs, we try our best to accommodate!";
+      } else if (suggestion.includes("commercial")) {
+        response = "Yes, we offer specialized commercial services for businesses of all sizes, including window cleaning, exterior washing, and more. Do you have a commercial property that needs our attention?";
+      } else {
+        response = "Thanks for your question! I'd be happy to help with that. Could you provide a few more details so I can better assist you?";
+      }
+      
+      setMessages(prev => [...prev, {text: response, fromUser: false}]);
+    }, 1000);
   };
 
   return (
     <>
-      {/* Transparent Suggestion Bubbles */}
-      {showSuggestions && !isOpen && (
-        <div className="chat-suggestion-container">
-          {suggestions.slice(0, 3).map((suggestion, index) => (
-            <div
-              key={index}
-              onClick={() => handleSuggestionClick(suggestion)}
-              className="question-bubble"
-            >
-              {suggestion}
-            </div>
-          ))}
-        </div>
-      )}
-      
       {/* Floating Chat Button */}
       <Button 
         onClick={() => setIsOpen(true)} 

@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom';
 import ServiceCard from '../ServiceCard';
 import { ArrowRight, Droplets, Home, DropletIcon, Building } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const ServicesSection = () => {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
   
   return (
-    <section className="section-padding bg-bc-gray w-full">
+    <section className="section-padding bg-bc-gray">
       <div className="container mx-auto px-4">
         <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Our Professional Services")}</div>
         <h2 className="section-title animate-on-scroll">{t("Premium Cleaning Solutions for Every Surface")}</h2>
@@ -18,8 +16,8 @@ const ServicesSection = () => {
           {t("We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mt-12 w-full">
-          <div className="animate-on-scroll w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mt-12">
+          <div className="animate-on-scroll">
             <ServiceCard
               icon={<Droplets size={24} />}
               title={t("Window Cleaning")}
@@ -28,7 +26,7 @@ const ServicesSection = () => {
               image="/lovable-uploads/931d71f9-6756-4b2d-aeed-7004b3fcdcdb.png"
             />
           </div>
-          <div className="animate-on-scroll w-full">
+          <div className="animate-on-scroll">
             <ServiceCard
               icon={<Home size={24} />}
               title={t("Gutter Cleaning")}
@@ -37,7 +35,7 @@ const ServicesSection = () => {
               image="/lovable-uploads/ca44edd3-e620-4298-96b2-32f6f8332cae.png"
             />
           </div>
-          <div className="animate-on-scroll w-full">
+          <div className="animate-on-scroll">
             <ServiceCard
               icon={<DropletIcon size={24} />}
               title={t("Pressure Washing")}
@@ -46,7 +44,7 @@ const ServicesSection = () => {
               image="/lovable-uploads/a8d9837b-5c66-4e74-a9a9-34e018c71a02.png"
             />
           </div>
-          <div className="animate-on-scroll w-full">
+          <div className="animate-on-scroll">
             <ServiceCard
               icon={<Building size={24} />}
               title={t("Roof Cleaning")}
