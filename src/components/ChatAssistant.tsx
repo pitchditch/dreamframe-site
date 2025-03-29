@@ -42,9 +42,13 @@ const ChatAssistant = () => {
       {/* Floating Chat Button */}
       <Button 
         onClick={() => setIsOpen(true)} 
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-bc-red hover:bg-red-700 z-50"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50"
       >
-        <MessageCircle className="h-6 w-6" />
+        <img 
+          src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" 
+          alt="Jayden" 
+          className="h-full w-full object-cover"
+        />
       </Button>
       
       {/* Chat Dialog */}
@@ -53,7 +57,7 @@ const ChatAssistant = () => {
           <DialogHeader className="p-4 border-b bg-bc-red text-white">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10 border-2 border-white">
-                <AvatarImage src="/lovable-uploads/7000bc3f-00cd-43c9-a2c1-714b6cc52a9d.png" alt="Jayden Fisher" />
+                <AvatarImage src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" alt="Jayden Fisher" />
                 <AvatarFallback>JF</AvatarFallback>
               </Avatar>
               <div>
@@ -81,7 +85,7 @@ const ChatAssistant = () => {
                 >
                   {!message.fromUser && (
                     <Avatar className="h-8 w-8 mr-2 mt-1 flex-shrink-0">
-                      <AvatarImage src="/lovable-uploads/7000bc3f-00cd-43c9-a2c1-714b6cc52a9d.png" alt="Jayden Fisher" />
+                      <AvatarImage src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" alt="Jayden Fisher" />
                       <AvatarFallback>JF</AvatarFallback>
                     </Avatar>
                   )}

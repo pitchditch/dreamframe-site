@@ -1,6 +1,5 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 
@@ -40,16 +39,11 @@ const HeroSection = () => {
           <p className={`text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm max-w-2xl ${getLanguageClass()}`}>
             {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">
+          <div className="animate-on-scroll">
             <PriceCalculatorOverlay 
               buttonText={t("Check Price & Availability")} 
-              className="bg-bc-red hover:bg-red-700 text-white py-3 px-6 text-lg font-medium"
+              className="bg-bc-red hover:bg-red-700 text-white py-4 px-8 text-xl font-medium"
             />
-            <Link to="/services">
-              <button className="btn-secondary bg-white/80 backdrop-blur-sm hover:bg-white py-3 px-6 text-lg font-medium">
-                {t("Explore Our Services")}
-              </button>
-            </Link>
           </div>
         </div>
       </div>
