@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -415,7 +414,7 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
               
               {packageDiscount.applied && (
                 <div className="mt-2 bg-green-50 text-green-800 p-2 rounded-md border border-green-200 flex items-center">
-                  <Badge variant="success" className="mr-2 bg-green-600">SAVINGS</Badge>
+                  <Badge variant="secondary" className="mr-2 bg-green-600 text-white">SAVINGS</Badge>
                   <p className="text-sm">
                     You're saving ${formatPrice(pricing.discount || 0)} with your {packageDiscount.packageName} discount!
                   </p>
