@@ -4,6 +4,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
+import MaintenanceProgramForm from '../../components/MaintenanceProgramForm';
 import { Building, Shield, Clock, ThumbsUp, Droplets, SparkleIcon, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -60,7 +61,7 @@ const CommercialWindowCleaning = () => {
         title="Commercial Window Cleaning"
         description="Professional window cleaning services for office buildings, retail stores, and multi-story commercial properties."
         icon={<Building size={48} />}
-        imagePath="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png"
+        imagePath="/lovable-uploads/1098ec4c-d871-4d0a-94ee-571ef6c50c9b.png"
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -88,40 +89,12 @@ const CommercialWindowCleaning = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2 relative">
+          <div className="md:w-1/2">
             <img 
               src="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png" 
               alt="Commercial window cleaning service" 
               className="rounded-lg shadow-lg w-full h-auto"
             />
-            <div className="absolute inset-0 bg-black/60 rounded-lg p-6 flex flex-col justify-center">
-              <h3 className="text-white text-2xl font-bold mb-4">Professional Commercial Window Cleaning</h3>
-              <ul className="space-y-3 text-white">
-                <li className="flex items-start">
-                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
-                  <span>Crystal clear, streak-free results every time</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
-                  <span>Safe cleaning at any height with specialized equipment</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
-                  <span>Flexible scheduling to minimize business disruption</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
-                  <span>Fully insured and professionally trained technicians</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
-                  <span>Eco-friendly, chemical-free cleaning methods</span>
-                </li>
-              </ul>
-              <Button asChild className="mt-6 bg-bc-red hover:bg-red-700 w-fit">
-                <Link to="/contact">Get a Free Quote</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -207,6 +180,14 @@ const CommercialWindowCleaning = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="section-title">Apply for Monthly Window Cleaning</h2>
+        <p className="section-subtitle mb-8">
+          Join our maintenance program starting at just $10 per window per month
+        </p>
+        <MaintenanceProgramForm />
       </section>
 
       <CallToAction />
