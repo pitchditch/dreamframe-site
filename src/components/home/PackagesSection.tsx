@@ -20,7 +20,10 @@ const PackageCard = ({
   savings: number;
 }) => {
   return (
-    <div className={`${isPrimary ? 'bg-bc-red text-white' : 'bg-white'} p-8 rounded-lg shadow-md ${!isPrimary && 'border border-gray-100'} relative transform transition-transform duration-300 hover:scale-105`}>
+    <div 
+      className={`${isPrimary ? 'bg-bc-red text-white' : 'bg-white'} p-8 rounded-lg shadow-md ${!isPrimary && 'border border-gray-100'} relative transform transition-transform duration-300 hover:scale-105 cursor-pointer`}
+      onClick={onSelectPackage}
+    >
       {isPrimary && (
         <div className="absolute -top-3 right-6 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">
           POPULAR
@@ -58,7 +61,10 @@ const PackageCard = ({
       </ul>
       
       <button 
-        onClick={onSelectPackage}
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent the parent div's onClick from firing
+          onSelectPackage();
+        }}
         className={isPrimary 
           ? "bg-white text-bc-red px-6 py-3 rounded-md font-medium w-full hover:bg-gray-100 transition-colors"
           : "btn-primary w-full"

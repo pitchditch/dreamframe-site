@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -12,6 +13,7 @@ import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
 import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning';
 import WhiteRock from './pages/locations/WhiteRock';
+import Calculator from './pages/Calculator';
 
 const App = () => {
   return (
@@ -27,6 +29,7 @@ const App = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/testimonials" element={<Testimonials />} />
       <Route path="/locations/white-rock" element={<WhiteRock />} />
+      <Route path="/calculator" element={<Calculator />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
