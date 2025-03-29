@@ -51,7 +51,7 @@ const MaintenanceProgramForm = () => {
     },
   });
 
-  const calculateEstimate = (numWindows: number) => {
+  const calculateEstimate = (numWindows: number): number => {
     return numWindows * 10; // $10 per window
   };
 
