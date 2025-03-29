@@ -31,10 +31,9 @@ const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardPro
           <div className="flex items-center justify-center w-6 h-6 mr-3">
             <Checkbox 
               checked={isSelected}
-              // Prevent click events on the checkbox from bubbling up
-              // to avoid duplicate toggle calls
+              onCheckedChange={() => handleToggle()}
+              // Prevent propagation to avoid double firing with the parent div click
               onClick={(e) => e.stopPropagation()}
-              // No onCheckedChange to avoid double updates
             />
           </div>
           <span className="font-semibold text-lg">{service.title}</span>

@@ -100,7 +100,7 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
                       checked={field.value?.includes(addon.id)}
                       onCheckedChange={(checked) => {
                         // Use a safer approach to handle state updates
-                        const currentValues = Array.isArray(field.value) ? field.value : [];
+                        const currentValues = Array.isArray(field.value) ? [...field.value] : [];
                         const newValues = checked
                           ? [...currentValues, addon.id]
                           : currentValues.filter((value: string) => value !== addon.id);

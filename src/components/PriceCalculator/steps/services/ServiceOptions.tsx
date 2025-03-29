@@ -38,6 +38,10 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                   control={form.control}
                   name={fieldName}
                   render={({ field }) => {
+                    // Create a stable checked value
+                    const currentValue = field.value || [];
+                    const isChecked = currentValue.includes(option.id);
+                    
                     return (
                       <FormItem
                         key={option.id}
@@ -45,16 +49,13 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                       >
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(option.id)}
+                            checked={isChecked}
                             onCheckedChange={(checked) => {
-                              const currentValue = field.value || [];
-                              return field.onChange(
-                                checked
-                                  ? [...currentValue, option.id]
-                                  : currentValue.filter(
-                                      (value: string) => value !== option.id
-                                    )
-                              );
+                              const updatedValue = checked
+                                ? [...currentValue, option.id]
+                                : currentValue.filter((value: string) => value !== option.id);
+                              
+                              field.onChange(updatedValue);
                             }}
                           />
                         </FormControl>

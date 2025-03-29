@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { MapPin, Phone, Mail, Send, User, MessageSquare } from "lucide-react";
@@ -248,31 +247,38 @@ const Contact = () => {
                         t("Roof Cleaning"), 
                         t("House Washing"), 
                         t("Commercial Services")
-                      ].map((service) => (
-                        <div className="flex items-center space-x-2" key={service}>
-                          <Checkbox
-                            id={service.toLowerCase().replace(/\s+/g, '-')}
-                            className="border-gray-600 data-[state=checked]:bg-bc-red data-[state=checked]:border-bc-red"
-                            onCheckedChange={(checked) => {
-                              const serviceInterest = form.getValues().serviceInterest || [];
-                              if (checked) {
-                                form.setValue('serviceInterest', [...serviceInterest, service]);
-                              } else {
-                                form.setValue(
-                                  'serviceInterest',
-                                  serviceInterest.filter((s) => s !== service)
-                                );
-                              }
-                            }}
-                          />
-                          <label
-                            htmlFor={service.toLowerCase().replace(/\s+/g, '-')}
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-300"
-                          >
-                            {service}
-                          </label>
-                        </div>
-                      ))}
+                      ].map((service) => {
+                        const serviceId = service.toLowerCase().replace(/\s+/g, '-');
+                        const serviceInterest = form.getValues().serviceInterest || [];
+                        const isChecked = serviceInterest.includes(service);
+                        
+                        return (
+                          <div className="flex items-center space-x-2" key={service}>
+                            <Checkbox
+                              id={serviceId}
+                              className="border-gray-600 data-[state=checked]:bg-bc-red data-[state=checked]:border-bc-red"
+                              checked={isChecked}
+                              onCheckedChange={(checked) => {
+                                const currentInterests = [...serviceInterest];
+                                if (checked) {
+                                  form.setValue('serviceInterest', [...currentInterests, service]);
+                                } else {
+                                  form.setValue(
+                                    'serviceInterest',
+                                    currentInterests.filter((s) => s !== service)
+                                  );
+                                }
+                              }}
+                            />
+                            <label
+                              htmlFor={serviceId}
+                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-300"
+                            >
+                              {service}
+                            </label>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                   
