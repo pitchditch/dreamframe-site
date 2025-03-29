@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { StrictMode } from 'react'
 import { register, unregister } from './serviceWorker'
+import { BrowserRouter } from 'react-router-dom'
 
 // Ensure the service worker is properly unregistered before loading new content
 const clearServiceWorkerCache = async () => {
@@ -48,7 +49,9 @@ const initializeApp = async () => {
     const root = createRoot(container!);
     root.render(
       <StrictMode>
-        <App key={(window as any).appVersion.toString()} />
+        <BrowserRouter>
+          <App key={(window as any).appVersion.toString()} />
+        </BrowserRouter>
       </StrictMode>
     );
     console.log("App rendered successfully");
