@@ -147,31 +147,45 @@ const StepReview = ({ form, onBack, selectedPackage }: StepReviewProps) => {
     // Calculate window cleaning price
     if (hasWindowCleaning) {
       const option = cleaningOptions.window_cleaning || 'both';
-      const originalPrice = pricingData['window-cleaning'][size][option];
-      const discountedPrice = packageDiscount.applied 
-        ? originalPrice * (1 - packageDiscount.percent / 100) 
-        : originalPrice;
-      
-      totalPrice += discountedPrice;
-      priceBreakdown[`Window Cleaning (${option === 'outside' ? 'Outside Only' : option === 'inside' ? 'Inside Only' : 'Inside & Outside'})`] = {
-        original: originalPrice,
-        discounted: discountedPrice
-      };
+      // Making sure we handle the case if pricingData['window-cleaning'][size] could be undefined
+      if (pricingData['window-cleaning'][size] && pricingData['window-cleaning'][size][option]) {
+        const originalPrice = pricingData['window-cleaning'][size][option];
+        const discountedPrice = packageDiscount.applied 
+          ? originalPrice * (1 - packageDiscount.percent / 100) 
+          : originalPrice;
+        
+        totalPrice += discountedPrice;
+        priceBreakdown[`Window Cleaning (${option === 'outside' ? 'Outside Only' : option === 'inside' ? 'Inside Only' : 'Inside & Outside'})`] = {
+          original: originalPrice,
+          discounted: discountedPrice
+        };
+      } else {
+        // Handle case where pricing is not available
+        totalMessage = 'Some pricing information is not available. Please contact us for a quote.';
+      }
     }
     
     // Calculate gutter cleaning price
     if (hasGutterCleaning) {
       const option = cleaningOptions.gutter_cleaning || 'both';
-      const originalPrice = pricingData['gutter-cleaning'][size][option];
-      const discountedPrice = packageDiscount.applied 
-        ? originalPrice * (1 - packageDiscount.percent / 100) 
-        : originalPrice;
-      
-      totalPrice += discountedPrice;
-      priceBreakdown[`Gutter Cleaning (${option === 'inside' ? 'Inside Only' : option === 'outside' ? 'Outside Only' : 'Inside & Outside'})`] = {
-        original: originalPrice,
-        discounted: discountedPrice
-      };
+      // Making sure we handle the case if pricingData['gutter-cleaning'][size] could be undefined
+      if (pricingData['gutter-cleaning'][size] && pricingData['gutter-cleaning'][size][option]) {
+        const originalPrice = pricingData['gutter-cleaning'][size][option];
+        const discountedPrice = packageDiscount.applied 
+          ? originalPrice * (1 - packageDiscount.percent / 100) 
+          : originalPrice;
+        
+        totalPrice += discountedPrice;
+        priceBreakdown[`Gutter Cleaning (${option === 'inside' ? 'Inside Only' : option === 'outside' ? 'Outside Only' : 'Inside & Outside'})`] = {
+          original: originalPrice,
+          discounted: discountedPrice
+        };
+      } else {
+        // Handle case where pricing is not available
+        if (!totalMessage) {
+          totalMessage = 'Some pricing information is not available. Please contact us for a quote.';
+        }
+      }
     }
     
     // Calculate pressure washing price
@@ -181,72 +195,88 @@ const StepReview = ({ form, onBack, selectedPackage }: StepReviewProps) => {
       const hasDrivewayWashing = options.includes('driveway-washing');
       const hasDeckWashing = options.includes('deck-washing');
       
-      if (hasHouseWashing) {
-        // Check if window cleaning is also selected
-        const originalPrice = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
-          ? pricingData['pressure-washing'][size].houseWithWindows
-          : pricingData['pressure-washing'][size].house;
-        
-        const discountedPrice = packageDiscount.applied 
-          ? originalPrice * (1 - packageDiscount.percent / 100) 
-          : originalPrice;
-        
-        totalPrice += discountedPrice;
-        priceBreakdown[`House Washing${hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' ? ' (with window cleaning)' : ''}`] = {
-          original: originalPrice,
-          discounted: discountedPrice
-        };
-      }
+      // Make sure the size pricing exists in data before trying to access
+      const sizePricing = pricingData['pressure-washing'][size];
       
-      if (hasDrivewayWashing) {
-        // If house washing is also selected, use the combined price
+      if (sizePricing) {
         if (hasHouseWashing) {
-          const combinedOriginalPrice = pricingData['pressure-washing'][size].driveWithHouse;
-          // Subtract the house price we already added
-          const housePriceAlone = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
-            ? pricingData['pressure-washing'][size].houseWithWindows
-            : pricingData['pressure-washing'][size].house;
+          // Check if window cleaning is also selected
+          let housePriceKey = 'house';
+          if (hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' && sizePricing.houseWithWindows) {
+            housePriceKey = 'houseWithWindows';
+          }
           
-          const driveOriginalPrice = combinedOriginalPrice - housePriceAlone;
-          const driveDiscountedPrice = packageDiscount.applied 
-            ? driveOriginalPrice * (1 - packageDiscount.percent / 100) 
-            : driveOriginalPrice;
-          
-          totalPrice += driveDiscountedPrice;
-          priceBreakdown["Driveway Washing (with house washing)"] = {
-            original: driveOriginalPrice,
-            discounted: driveDiscountedPrice
-          };
-        } else {
-          const originalPrice = pricingData['pressure-washing'][size].driveway;
+          if (sizePricing[housePriceKey]) {
+            const originalPrice = sizePricing[housePriceKey];
+            const discountedPrice = packageDiscount.applied 
+              ? originalPrice * (1 - packageDiscount.percent / 100) 
+              : originalPrice;
+            
+            totalPrice += discountedPrice;
+            priceBreakdown[`House Washing${hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' ? ' (with window cleaning)' : ''}`] = {
+              original: originalPrice,
+              discounted: discountedPrice
+            };
+          }
+        }
+        
+        if (hasDrivewayWashing) {
+          // If house washing is also selected, use the combined price
+          if (hasHouseWashing && sizePricing.driveWithHouse) {
+            const combinedOriginalPrice = sizePricing.driveWithHouse;
+            // Subtract the house price we already added
+            const housePriceKey = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' && sizePricing.houseWithWindows
+              ? 'houseWithWindows' 
+              : 'house';
+            
+            if (sizePricing[housePriceKey]) {
+              const housePriceAlone = sizePricing[housePriceKey];
+              const driveOriginalPrice = combinedOriginalPrice - housePriceAlone;
+              const driveDiscountedPrice = packageDiscount.applied 
+                ? driveOriginalPrice * (1 - packageDiscount.percent / 100) 
+                : driveOriginalPrice;
+              
+              totalPrice += driveDiscountedPrice;
+              priceBreakdown["Driveway Washing (with house washing)"] = {
+                original: driveOriginalPrice,
+                discounted: driveDiscountedPrice
+              };
+            }
+          } else if (sizePricing.driveway) {
+            const originalPrice = sizePricing.driveway;
+            const discountedPrice = packageDiscount.applied 
+              ? originalPrice * (1 - packageDiscount.percent / 100) 
+              : originalPrice;
+            
+            totalPrice += discountedPrice;
+            priceBreakdown["Driveway Washing"] = {
+              original: originalPrice,
+              discounted: discountedPrice
+            };
+          }
+        }
+        
+        if (hasDeckWashing && sizePricing.deck) {
+          const originalPrice = sizePricing.deck;
           const discountedPrice = packageDiscount.applied 
             ? originalPrice * (1 - packageDiscount.percent / 100) 
             : originalPrice;
           
           totalPrice += discountedPrice;
-          priceBreakdown["Driveway Washing"] = {
+          priceBreakdown["Deck Washing"] = {
             original: originalPrice,
             discounted: discountedPrice
           };
         }
-      }
-      
-      if (hasDeckWashing) {
-        const originalPrice = pricingData['pressure-washing'][size].deck;
-        const discountedPrice = packageDiscount.applied 
-          ? originalPrice * (1 - packageDiscount.percent / 100) 
-          : originalPrice;
-        
-        totalPrice += discountedPrice;
-        priceBreakdown["Deck Washing"] = {
-          original: originalPrice,
-          discounted: discountedPrice
-        };
+      } else {
+        if (!totalMessage) {
+          totalMessage = 'Some pricing information is not available. Please contact us for a quote.';
+        }
       }
     }
     
     // Special message for roof cleaning
-    if (hasRoofCleaning) {
+    if (hasRoofCleaning && pricingData['roof-cleaning'].message) {
       totalMessage = pricingData['roof-cleaning'].message;
     }
     
@@ -257,18 +287,21 @@ const StepReview = ({ form, onBack, selectedPackage }: StepReviewProps) => {
         if (['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)) {
           return total;
         }
-        const originalPrice = addonLabels[addon]?.price || 0;
-        const discountedPrice = packageDiscount.applied 
-          ? originalPrice * (1 - packageDiscount.percent / 100) 
-          : originalPrice;
-        
-        if (originalPrice > 0) {
-          priceBreakdown[addonLabels[addon]?.label || addon] = {
-            original: originalPrice,
-            discounted: discountedPrice
-          };
+        if (addonLabels[addon]) {
+          const originalPrice = addonLabels[addon]?.price || 0;
+          const discountedPrice = packageDiscount.applied 
+            ? originalPrice * (1 - packageDiscount.percent / 100) 
+            : originalPrice;
+          
+          if (originalPrice > 0) {
+            priceBreakdown[addonLabels[addon]?.label || addon] = {
+              original: originalPrice,
+              discounted: discountedPrice
+            };
+          }
+          return total + discountedPrice;
         }
-        return total + discountedPrice;
+        return total;
       },
       0
     );
