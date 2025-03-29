@@ -22,7 +22,7 @@ const PriceCalculatorOverlay = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={variant} className={className}>
+        <Button variant={variant} className={className || "bg-bc-red hover:bg-red-700 text-white py-3 px-6 text-lg font-medium rounded-lg shadow-md transform hover:translate-y-[-2px] transition-all duration-300"}>
           {displayText}
         </Button>
       </SheetTrigger>

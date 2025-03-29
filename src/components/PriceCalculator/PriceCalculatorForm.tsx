@@ -65,7 +65,7 @@ const PriceCalculatorForm = () => {
         </div>
         <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
           <Avatar className="h-12 w-12 border-2 border-blue-500">
-            <AvatarImage src="/lovable-uploads/7000bc3f-00cd-43c9-a2c1-714b6cc52a9d.png" alt="Jayden Fisher" />
+            <AvatarImage src="/lovable-uploads/d173e141-19f8-4b80-a02e-e2472f49e7fe.png" alt="Jayden Fisher" />
             <AvatarFallback>JF</AvatarFallback>
           </Avatar>
           <div>
@@ -77,12 +77,15 @@ const PriceCalculatorForm = () => {
 
       <div className="bg-blue-50 p-4 rounded-lg mb-8">
         <div className="flex items-start gap-3">
-          <Avatar className="h-12 w-12 mt-1">
-            <AvatarImage src="/lovable-uploads/7000bc3f-00cd-43c9-a2c1-714b6cc52a9d.png" alt="Jayden Fisher" />
-            <AvatarFallback>JF</AvatarFallback>
-          </Avatar>
+          <div className="flex-shrink-0">
+            <img 
+              src="/lovable-uploads/c15cdd73-8e52-4372-9bce-100fe07cf035.png" 
+              alt="Built on Trust and Quality" 
+              className="h-32 w-auto rounded-lg"
+            />
+          </div>
           <div>
-            <p className="font-medium text-blue-800 mb-1">My Personal Guarantee</p>
+            <p className="font-medium text-blue-800 mb-1">Built on Trust and Quality</p>
             <p className="text-sm mb-2">
               Leave your address and we can send you a quick estimate based on Google Maps, or contact us for an on-site estimate.
             </p>

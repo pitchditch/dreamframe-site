@@ -155,8 +155,8 @@ const WindowCleaning = () => {
             </div>
             <div className="md:w-1/2">
               <img 
-                src="/lovable-uploads/2429e4a3-7077-402a-813a-f3b996ffa8cd.png" 
-                alt="Commercial window cleaning service" 
+                src="/lovable-uploads/0562cfd9-348f-4daf-82ee-dfc2feef6c68.png" 
+                alt="Commercial storefront window cleaning" 
                 className="rounded-lg shadow-lg w-full h-auto object-cover"
               />
             </div>
@@ -170,7 +170,7 @@ const WindowCleaning = () => {
           <PriceCalculatorOverlay 
             buttonText="Get Your Free Quote" 
             variant="bc-red"
-            className="w-full"
+            className="w-full py-4 px-8 text-xl font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
           />
         </div>
       </section>

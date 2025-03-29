@@ -42,7 +42,7 @@ const HeroSection = () => {
           <div className="animate-on-scroll">
             <PriceCalculatorOverlay 
               buttonText={t("Check Price & Availability")} 
-              className="bg-bc-red hover:bg-red-700 text-white py-4 px-8 text-xl font-medium"
+              className="bg-bc-red hover:bg-red-700 text-white py-4 px-10 text-xl font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
             />
           </div>
         </div>
