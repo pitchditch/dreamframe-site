@@ -51,7 +51,7 @@ export const NavbarDesktop = ({
         <PriceCalculatorOverlay
           buttonText={t('Get a Quote')}
           variant={isOverVideo ? "outline" : "bc-red"}
-          className={`${getLanguageClass()} ${isOverVideo ? "bg-white/20 hover:bg-white/40 text-white" : ""}`}
+          className={`${getLanguageClass()} ${isOverVideo ? "bg-white/20 hover:bg-white/40 text-white font-bold py-3 px-6" : "font-bold py-3 px-6"}`}
         />
       </div>
     </>

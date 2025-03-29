@@ -80,11 +80,7 @@ const ChatAssistant = () => {
         onClick={() => setIsOpen(true)} 
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50"
       >
-        <img 
-          src="/lovable-uploads/d173e141-19f8-4b80-a02e-e2472f49e7fe.png" 
-          alt="Jayden" 
-          className="h-full w-full object-cover"
-        />
+        <MessageCircle className="h-6 w-6 text-bc-red" />
       </Button>
       
       {/* Chat Dialog */}
@@ -92,13 +88,9 @@ const ChatAssistant = () => {
         <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden">
           <DialogHeader className="p-4 border-b bg-bc-red text-white">
             <div className="flex items-center gap-3">
-              <Avatar className="h-10 w-10 border-2 border-white">
-                <AvatarImage src="/lovable-uploads/d173e141-19f8-4b80-a02e-e2472f49e7fe.png" alt="Jayden Fisher" />
-                <AvatarFallback>JF</AvatarFallback>
-              </Avatar>
               <div>
-                <DialogTitle>Chat with Jayden</DialogTitle>
-                <p className="text-xs text-white/80">Owner, BC Pressure Washing</p>
+                <DialogTitle>Chat with BC Pressure Washing</DialogTitle>
+                <p className="text-xs text-white/80">Customer Support</p>
               </div>
             </div>
             <Button 
@@ -120,10 +112,9 @@ const ChatAssistant = () => {
                   className={`flex ${message.fromUser ? 'justify-end' : 'justify-start'}`}
                 >
                   {!message.fromUser && (
-                    <Avatar className="h-8 w-8 mr-2 mt-1 flex-shrink-0">
-                      <AvatarImage src="/lovable-uploads/d173e141-19f8-4b80-a02e-e2472f49e7fe.png" alt="Jayden Fisher" />
-                      <AvatarFallback>JF</AvatarFallback>
-                    </Avatar>
+                    <div className="w-8 h-8 rounded-full bg-bc-red flex items-center justify-center text-white text-xs font-bold mr-2 mt-1 flex-shrink-0">
+                      BC
+                    </div>
                   )}
                   
                   <div 

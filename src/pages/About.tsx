@@ -1,4 +1,3 @@
-
 import Layout from '../components/Layout';
 import CallToAction from '../components/CallToAction';
 import { Shield, Award, Wrench, Users, ThumbsUp, Check } from 'lucide-react';
@@ -22,8 +21,8 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151" 
-                alt="Gutter cleaning process" 
+                src="/lovable-uploads/0bc0389d-92a2-418d-a875-f14cdc237b83.png" 
+                alt="Built on Trust and Quality" 
                 className="rounded-lg shadow-lg w-full"
               />
             </div>
@@ -101,7 +100,7 @@ const About = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="h-56 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1594873272550-7cc741973dd0" 
+                  src="/lovable-uploads/931d71f9-6756-4b2d-aeed-7004b3fcdcdb.png" 
                   alt="Window Cleaning Service" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -131,7 +130,7 @@ const About = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="h-56 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb" 
+                  src="/lovable-uploads/ca44edd3-e620-4298-96b2-32f6f8332cae.png" 
                   alt="Gutter Cleaning Service" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -161,7 +160,7 @@ const About = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="h-56 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1611156892126-60bea747f2b0" 
+                  src="/lovable-uploads/ca94e1e6-7640-44e9-bc41-2389ccf948c1.png" 
                   alt="Roof Cleaning Service" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -191,7 +190,7 @@ const About = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="h-56 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9" 
+                  src="/lovable-uploads/a8d9837b-5c66-4e74-a9a9-34e018c71a02.png" 
                   alt="Pressure Washing Service" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />

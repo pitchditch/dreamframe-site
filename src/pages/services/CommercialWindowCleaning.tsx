@@ -88,12 +88,40 @@ const CommercialWindowCleaning = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 relative">
             <img 
               src="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png" 
               alt="Commercial window cleaning service" 
               className="rounded-lg shadow-lg w-full h-auto"
             />
+            <div className="absolute inset-0 bg-black/60 rounded-lg p-6 flex flex-col justify-center">
+              <h3 className="text-white text-2xl font-bold mb-4">Professional Commercial Window Cleaning</h3>
+              <ul className="space-y-3 text-white">
+                <li className="flex items-start">
+                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
+                  <span>Crystal clear, streak-free results every time</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
+                  <span>Safe cleaning at any height with specialized equipment</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
+                  <span>Flexible scheduling to minimize business disruption</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
+                  <span>Fully insured and professionally trained technicians</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="text-bc-red mr-2 flex-shrink-0" size={20} />
+                  <span>Eco-friendly, chemical-free cleaning methods</span>
+                </li>
+              </ul>
+              <Button asChild className="mt-6 bg-bc-red hover:bg-red-700 w-fit">
+                <Link to="/contact">Get a Free Quote</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
