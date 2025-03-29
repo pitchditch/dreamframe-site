@@ -3,11 +3,12 @@ import { UseFormReturn } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Tag } from 'lucide-react';
+import { Tag, Check } from 'lucide-react';
 
 interface StepReviewProps {
   form: UseFormReturn<any>;
   onBack: () => void;
+  selectedPackage?: any;
 }
 
 const serviceLabels: Record<string, string> = {
@@ -79,7 +80,7 @@ const pricingData = {
   }
 };
 
-const StepReview = ({ form, onBack }: StepReviewProps) => {
+const StepReview = ({ form, onBack, selectedPackage }: StepReviewProps) => {
   const formValues = form.getValues();
   const cleaningOptions = formValues.cleaning_options || {};
   const services = formValues.services || [];
@@ -94,23 +95,33 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
   });
   
   useEffect(() => {
-    // Check if a package was selected from the packages page
-    const selectedPackage = sessionStorage.getItem('selectedPackage');
-    if (selectedPackage) {
-      try {
-        const packageData = JSON.parse(selectedPackage);
-        if (packageData.discountApplied) {
-          setPackageDiscount({
-            applied: true,
-            percent: packageData.discountPercent || 10,
-            packageName: packageData.title || 'Selected Package'
-          });
+    // Check if a package was directly passed as prop
+    if (selectedPackage && selectedPackage.discountApplied) {
+      setPackageDiscount({
+        applied: true,
+        percent: selectedPackage.discountPercent || 10,
+        packageName: selectedPackage.title || 'Selected Package'
+      });
+    } 
+    // Otherwise check if a package was selected from the packages page
+    else {
+      const storedPackage = sessionStorage.getItem('selectedPackage');
+      if (storedPackage) {
+        try {
+          const packageData = JSON.parse(storedPackage);
+          if (packageData.discountApplied) {
+            setPackageDiscount({
+              applied: true,
+              percent: packageData.discountPercent || 10,
+              packageName: packageData.title || 'Selected Package'
+            });
+          }
+        } catch (e) {
+          console.error('Error parsing selected package', e);
         }
-      } catch (e) {
-        console.error('Error parsing selected package', e);
       }
     }
-  }, []);
+  }, [selectedPackage]);
   
   // Determine pricing based on services, size, and options
   const calculateServicePrices = () => {
@@ -122,7 +133,7 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
     
     let totalPrice = 0;
     let totalMessage = '';
-    const priceBreakdown: Record<string, number> = {};
+    const priceBreakdown: Record<string, { original: number, discounted: number }> = {};
     
     // Special case for x-large properties
     if (size === 'x-large') {
@@ -136,19 +147,31 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
     // Calculate window cleaning price
     if (hasWindowCleaning) {
       const option = cleaningOptions.window_cleaning || 'both';
-      const price = pricingData['window-cleaning'][size][option];
+      const originalPrice = pricingData['window-cleaning'][size][option];
+      const discountedPrice = packageDiscount.applied 
+        ? originalPrice * (1 - packageDiscount.percent / 100) 
+        : originalPrice;
       
-      totalPrice += price;
-      priceBreakdown[`Window Cleaning (${option === 'outside' ? 'Outside Only' : option === 'inside' ? 'Inside Only' : 'Inside & Outside'})`] = price;
+      totalPrice += discountedPrice;
+      priceBreakdown[`Window Cleaning (${option === 'outside' ? 'Outside Only' : option === 'inside' ? 'Inside Only' : 'Inside & Outside'})`] = {
+        original: originalPrice,
+        discounted: discountedPrice
+      };
     }
     
     // Calculate gutter cleaning price
     if (hasGutterCleaning) {
       const option = cleaningOptions.gutter_cleaning || 'both';
-      const price = pricingData['gutter-cleaning'][size][option];
+      const originalPrice = pricingData['gutter-cleaning'][size][option];
+      const discountedPrice = packageDiscount.applied 
+        ? originalPrice * (1 - packageDiscount.percent / 100) 
+        : originalPrice;
       
-      totalPrice += price;
-      priceBreakdown[`Gutter Cleaning (${option === 'inside' ? 'Inside Only' : option === 'outside' ? 'Outside Only' : 'Inside & Outside'})`] = price;
+      totalPrice += discountedPrice;
+      priceBreakdown[`Gutter Cleaning (${option === 'inside' ? 'Inside Only' : option === 'outside' ? 'Outside Only' : 'Inside & Outside'})`] = {
+        original: originalPrice,
+        discounted: discountedPrice
+      };
     }
     
     // Calculate pressure washing price
@@ -160,35 +183,65 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
       
       if (hasHouseWashing) {
         // Check if window cleaning is also selected
-        const price = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
+        const originalPrice = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
           ? pricingData['pressure-washing'][size].houseWithWindows
           : pricingData['pressure-washing'][size].house;
         
-        totalPrice += price;
-        priceBreakdown[`House Washing${hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' ? ' (with window cleaning)' : ''}`] = price;
+        const discountedPrice = packageDiscount.applied 
+          ? originalPrice * (1 - packageDiscount.percent / 100) 
+          : originalPrice;
+        
+        totalPrice += discountedPrice;
+        priceBreakdown[`House Washing${hasWindowCleaning && cleaningOptions.window_cleaning === 'outside' ? ' (with window cleaning)' : ''}`] = {
+          original: originalPrice,
+          discounted: discountedPrice
+        };
       }
       
       if (hasDrivewayWashing) {
         // If house washing is also selected, use the combined price
         if (hasHouseWashing) {
-          const combinedPrice = pricingData['pressure-washing'][size].driveWithHouse;
+          const combinedOriginalPrice = pricingData['pressure-washing'][size].driveWithHouse;
           // Subtract the house price we already added
           const housePriceAlone = hasWindowCleaning && cleaningOptions.window_cleaning === 'outside'
             ? pricingData['pressure-washing'][size].houseWithWindows
             : pricingData['pressure-washing'][size].house;
           
-          const drivePrice = combinedPrice - housePriceAlone;
-          totalPrice += drivePrice;
-          priceBreakdown["Driveway Washing (with house washing)"] = drivePrice;
+          const driveOriginalPrice = combinedOriginalPrice - housePriceAlone;
+          const driveDiscountedPrice = packageDiscount.applied 
+            ? driveOriginalPrice * (1 - packageDiscount.percent / 100) 
+            : driveOriginalPrice;
+          
+          totalPrice += driveDiscountedPrice;
+          priceBreakdown["Driveway Washing (with house washing)"] = {
+            original: driveOriginalPrice,
+            discounted: driveDiscountedPrice
+          };
         } else {
-          totalPrice += pricingData['pressure-washing'][size].driveway;
-          priceBreakdown["Driveway Washing"] = pricingData['pressure-washing'][size].driveway;
+          const originalPrice = pricingData['pressure-washing'][size].driveway;
+          const discountedPrice = packageDiscount.applied 
+            ? originalPrice * (1 - packageDiscount.percent / 100) 
+            : originalPrice;
+          
+          totalPrice += discountedPrice;
+          priceBreakdown["Driveway Washing"] = {
+            original: originalPrice,
+            discounted: discountedPrice
+          };
         }
       }
       
       if (hasDeckWashing) {
-        totalPrice += pricingData['pressure-washing'][size].deck;
-        priceBreakdown["Deck Washing"] = pricingData['pressure-washing'][size].deck;
+        const originalPrice = pricingData['pressure-washing'][size].deck;
+        const discountedPrice = packageDiscount.applied 
+          ? originalPrice * (1 - packageDiscount.percent / 100) 
+          : originalPrice;
+        
+        totalPrice += discountedPrice;
+        priceBreakdown["Deck Washing"] = {
+          original: originalPrice,
+          discounted: discountedPrice
+        };
       }
     }
     
@@ -204,27 +257,43 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
         if (['house-washing', 'window-cleaning', 'driveway-washing', 'deck-washing'].includes(addon)) {
           return total;
         }
-        const addonPrice = addonLabels[addon]?.price || 0;
-        if (addonPrice > 0) {
-          priceBreakdown[addonLabels[addon]?.label || addon] = addonPrice;
+        const originalPrice = addonLabels[addon]?.price || 0;
+        const discountedPrice = packageDiscount.applied 
+          ? originalPrice * (1 - packageDiscount.percent / 100) 
+          : originalPrice;
+        
+        if (originalPrice > 0) {
+          priceBreakdown[addonLabels[addon]?.label || addon] = {
+            original: originalPrice,
+            discounted: discountedPrice
+          };
         }
-        return total + addonPrice;
+        return total + discountedPrice;
       },
       0
     );
     
     totalPrice += addonsTotal;
     
+    // Calculate subtotal (before discount)
+    const subtotal = Object.values(priceBreakdown).reduce(
+      (sum, item) => sum + item.original, 
+      0
+    );
+    
+    // Calculate discount amount
+    const discountAmount = subtotal - totalPrice;
+    
     // Apply commercial property multiplier
     const propertyMultiplier = formValues.propertyType === 'commercial' ? 1.5 : 1.0;
     
-    // Apply package discount if applicable
-    const discountAmount = packageDiscount.applied ? (totalPrice * (packageDiscount.percent / 100)) : 0;
+    // Calculate final total
+    const finalTotal = totalPrice * propertyMultiplier;
     
     return {
-      subtotal: totalPrice,
+      subtotal,
       discount: discountAmount,
-      totalPrice: (totalPrice - discountAmount) * propertyMultiplier,
+      totalPrice: finalTotal,
       priceBreakdown,
       priceNote: totalMessage
     };
@@ -252,6 +321,23 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
         <h2 className="text-3xl font-bold mb-2">Review your details</h2>
         <p className="text-gray-600 mb-4">Please review your information before submitting</p>
       </div>
+
+      {packageDiscount.applied && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Tag className="h-5 w-5 text-green-600" />
+            <h3 className="font-semibold text-green-800">{packageDiscount.packageName} Discount Applied</h3>
+          </div>
+          <p className="text-sm text-green-700">
+            Your {packageDiscount.packageName} includes a {packageDiscount.percent}% discount on all services.
+          </p>
+          
+          <div className="mt-3 flex items-center gap-2 text-sm text-green-600">
+            <Check className="h-4 w-4" />
+            <span>Discount will be automatically applied to your final price</span>
+          </div>
+        </div>
+      )}
 
       <Card className="p-6 border border-gray-200">
         <div className="mb-6">
@@ -380,10 +466,19 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
             <div>
               <h3 className="font-semibold text-lg mb-2">Price Breakdown</h3>
               <div className="border rounded-md overflow-hidden">
-                {Object.entries(pricing.priceBreakdown).map(([service, price]) => (
+                {Object.entries(pricing.priceBreakdown).map(([service, { original, discounted }]) => (
                   <div key={service} className="flex justify-between px-4 py-2 border-b">
                     <p>{service}</p>
-                    <p>${formatPrice(price)}</p>
+                    <div className="text-right">
+                      {packageDiscount.applied ? (
+                        <>
+                          <span className="text-gray-500 line-through mr-2">${formatPrice(original)}</span>
+                          <span className="text-green-600 font-medium">${formatPrice(discounted)}</span>
+                        </>
+                      ) : (
+                        <span>${formatPrice(original)}</span>
+                      )}
+                    </div>
                   </div>
                 ))}
                 

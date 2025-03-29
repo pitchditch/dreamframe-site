@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,6 +9,7 @@ import StepSize from './steps/StepSize';
 import StepContact from './steps/StepContact';
 import StepReview from './steps/StepReview';
 import StepPropertyType from './steps/StepPropertyType';
+import StepAddress from './steps/StepAddress';
 import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check } from 'lucide-react';
@@ -32,6 +33,8 @@ const formSchema = z.object({
 
 const PriceCalculatorForm = () => {
   const [step, setStep] = useState(1);
+  const [selectedPackage, setSelectedPackage] = useState<any>(null);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,14 +48,61 @@ const PriceCalculatorForm = () => {
     },
   });
 
+  // Check if there's a selected package in sessionStorage on mount
+  useEffect(() => {
+    const packageData = sessionStorage.getItem('selectedPackage');
+    if (packageData) {
+      try {
+        const parsedPackage = JSON.parse(packageData);
+        setSelectedPackage(parsedPackage);
+        
+        // Prefill form with package services
+        if (parsedPackage.services && parsedPackage.services.length > 0) {
+          form.setValue('services', parsedPackage.services);
+          
+          // Set default options for services
+          if (parsedPackage.services.includes('window-cleaning')) {
+            form.setValue('cleaning_options.window_cleaning', 'both');
+          }
+          
+          if (parsedPackage.services.includes('gutter-cleaning')) {
+            form.setValue('cleaning_options.gutter_cleaning', 'both');
+          }
+          
+          if (parsedPackage.services.includes('pressure-washing')) {
+            form.setValue('cleaning_options.pressure_washing', ['house-washing', 'driveway-washing']);
+          }
+          
+          // For package selections, we'll show the address step directly
+          setStep(0);
+        }
+      } catch (e) {
+        console.error('Error parsing selected package', e);
+      }
+    }
+  }, [form]);
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data);
     // Here you would typically send the data to your backend
     alert("Your quote request has been submitted! We'll contact you shortly.");
   };
 
-  const nextStep = () => setStep(prev => Math.min(prev + 1, 5));
-  const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
+  const nextStep = () => setStep(prev => {
+    if (selectedPackage && prev === 0) {
+      // If coming from address step with a package selected, jump to review
+      return 5;
+    }
+    return Math.min(prev + 1, 5);
+  });
+  
+  const prevStep = () => setStep(prev => {
+    if (selectedPackage && prev === 5) {
+      // If going back from review step with a package selected, go to address
+      return 0;
+    }
+    return Math.max(prev - 1, selectedPackage ? 0 : 1);
+  });
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 bg-white rounded-lg shadow-sm">
@@ -74,6 +124,18 @@ const PriceCalculatorForm = () => {
           </div>
         </div>
       </div>
+
+      {selectedPackage && (
+        <div className="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
+          <div className="flex items-center mb-2">
+            <Check className="text-green-600 mr-2" size={20} />
+            <h3 className="text-lg font-semibold text-green-800">{selectedPackage.title} Selected</h3>
+          </div>
+          <p className="text-sm text-green-700">
+            You've selected our {selectedPackage.title}. We just need your address details to provide a personalized quote with your {selectedPackage.discountPercent}% discount.
+          </p>
+        </div>
+      )}
 
       <div className="bg-blue-50 p-4 rounded-lg mb-8">
         <div className="flex items-start gap-3">
@@ -106,16 +168,21 @@ const PriceCalculatorForm = () => {
       </div>
       
       <div className="mb-6">
-        <ProgressSteps currentStep={step} totalSteps={5} />
+        <ProgressSteps 
+          currentStep={step} 
+          totalSteps={selectedPackage ? 2 : 5} 
+          customLabels={selectedPackage ? ['Address', 'Review'] : undefined}
+        />
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {step === 0 && <StepAddress form={form} onNext={nextStep} />}
           {step === 1 && <StepService form={form} onNext={nextStep} />}
           {step === 2 && <StepPropertyType form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 3 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 4 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 5 && <StepReview form={form} onBack={prevStep} />}
+          {step === 5 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} />}
         </form>
       </Form>
     </div>

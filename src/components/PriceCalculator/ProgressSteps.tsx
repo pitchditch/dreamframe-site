@@ -1,57 +1,58 @@
 
-import React, { useMemo } from 'react';
+import React from 'react';
 
 interface ProgressStepsProps {
   currentStep: number;
-  totalSteps?: number;
+  totalSteps: number;
+  customLabels?: string[];
 }
 
-const ProgressSteps = ({ currentStep, totalSteps = 5 }: ProgressStepsProps) => {
-  // Use useMemo to prevent recalculations on each render
-  const steps = useMemo(() => {
-    return [
-      { number: 1, label: 'Service' },
-      { number: 2, label: 'Property' },
-      { number: 3, label: 'Size' },
-      { number: 4, label: 'Add-ons' },
-      { number: 5, label: 'Contact' },
-      { number: 6, label: 'Review' },
-    ].slice(0, totalSteps);
-  }, [totalSteps]);
-
-  // Calculate progress width only once per currentStep change
-  const progressWidth = useMemo(() => {
-    // Safely handle the calculation to avoid NaN
-    if (steps.length <= 1) return '0%';
-    const percentage = ((currentStep - 1) / (steps.length - 1)) * 100;
-    return `${Math.max(0, Math.min(100, percentage))}%`;
-  }, [currentStep, steps.length]);
+const ProgressSteps: React.FC<ProgressStepsProps> = ({ 
+  currentStep, 
+  totalSteps,
+  customLabels
+}) => {
+  const defaultLabels = ['Services', 'Property', 'Size', 'Contact', 'Review'];
+  const labels = customLabels || defaultLabels;
+  
+  // Only show the labels that are needed based on totalSteps
+  const displayLabels = labels.slice(0, totalSteps);
 
   return (
-    <div className="mb-8">
-      <div className="flex justify-between relative">
-        {steps.map((step) => (
-          <div key={step.number} className="flex flex-col items-center z-10">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center font-medium text-sm mb-2 ${
-                currentStep >= step.number
-                  ? 'bg-bc-red text-white'
-                  : 'bg-gray-200 text-gray-500'
-              }`}
-            >
-              {step.number}
+    <div className="w-full">
+      <div className="flex items-center justify-between">
+        {Array.from({ length: totalSteps }).map((_, index) => (
+          <React.Fragment key={index}>
+            <div className="relative">
+              <div 
+                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  index + 1 === currentStep 
+                    ? 'bg-blue-500 text-white' 
+                    : index + 1 < currentStep 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-gray-200 text-gray-600'
+                }`}
+              >
+                {index + 1 < currentStep ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                ) : (
+                  index + 1
+                )}
+              </div>
+              <div className="mt-2 text-xs text-center font-medium">
+                {displayLabels[index]}
+              </div>
             </div>
-            <span className="text-xs text-center">{step.label}</span>
-          </div>
+            
+            {index < totalSteps - 1 && (
+              <div className={`flex-1 h-1 mx-2 ${
+                index + 1 < currentStep ? 'bg-green-500' : 'bg-gray-200'
+              }`}></div>
+            )}
+          </React.Fragment>
         ))}
-        
-        {/* Progress line */}
-        <div className="absolute top-4 left-0 right-0 h-0.5 bg-gray-200 -z-0 transform -translate-y-1/2">
-          <div 
-            className="h-full bg-bc-red transition-all duration-300" 
-            style={{ width: progressWidth }}
-          ></div>
-        </div>
       </div>
     </div>
   );

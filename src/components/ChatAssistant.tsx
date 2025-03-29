@@ -112,9 +112,10 @@ const ChatAssistant = () => {
                   className={`flex ${message.fromUser ? 'justify-end' : 'justify-start'}`}
                 >
                   {!message.fromUser && (
-                    <div className="w-8 h-8 rounded-full bg-bc-red flex items-center justify-center text-white text-xs font-bold mr-2 mt-1 flex-shrink-0">
-                      BC
-                    </div>
+                    <Avatar className="w-8 h-8 mr-2 mt-1 flex-shrink-0">
+                      <AvatarImage src="/lovable-uploads/47d43541-d56d-4183-bb3a-ac2730befaae.png" alt="Jayden" />
+                      <AvatarFallback className="bg-bc-red text-white text-xs">BC</AvatarFallback>
+                    </Avatar>
                   )}
                   
                   <div 

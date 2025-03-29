@@ -78,26 +78,29 @@ const PackagesSection = () => {
       price: "$700",
       size: "Based on a 1800 SQFT. House",
       features: features.map((name, i) => ({ name, included: i < 2 })),
-      services: ["window-cleaning", "gutter-cleaning"]
+      services: ["window-cleaning", "gutter-cleaning"],
+      discountPercent: 5
     },
     {
       title: "Upgraded Package",
       price: "$1,200",
       size: "Based on a 1900 SQFT. House",
-      // Mark "Roof Soft Wash" as not included in upgraded package
-      features: features.map((name, i) => ({ 
+      // Uncheck "Roof Soft Wash" from upgraded package
+      features: features.map((name) => ({ 
         name, 
         included: name !== "Roof Soft Wash" 
       })),
       services: ["window-cleaning", "gutter-cleaning", "pressure-washing"],
-      isPrimary: true
+      isPrimary: true,
+      discountPercent: 10
     },
     {
       title: "Premium Package",
       price: "$1,600",
       size: "Based on a 1900 SQFT+ House",
       features: features.map(name => ({ name, included: true })),
-      services: ["window-cleaning", "gutter-cleaning", "pressure-washing", "roof-cleaning"]
+      services: ["window-cleaning", "gutter-cleaning", "pressure-washing", "roof-cleaning"],
+      discountPercent: 15
     }
   ];
   
@@ -107,7 +110,7 @@ const PackagesSection = () => {
       title: pkg.title,
       services: pkg.services,
       discountApplied: true,
-      discountPercent: 10
+      discountPercent: pkg.discountPercent || 10
     }));
     
     // Navigate to calculator page
