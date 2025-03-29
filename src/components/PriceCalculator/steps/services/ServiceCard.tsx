@@ -29,11 +29,23 @@ const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardPro
       >
         <div className="flex items-center mb-2">
           <div className="flex items-center justify-center w-6 h-6 mr-3">
-            <Checkbox 
-              checked={isSelected}
-              id={`service-${service.id}`}
-              className="pointer-events-none" // Prevent direct interaction with checkbox
-            />
+            {/* Use a custom rendered checkbox instead of the interactive component */}
+            <div className="relative w-4 h-4 border rounded-sm border-primary flex items-center justify-center">
+              {isSelected && (
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="h-3 w-3 text-primary-foreground"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
+            </div>
           </div>
           <span className="font-semibold text-lg">{service.title}</span>
         </div>

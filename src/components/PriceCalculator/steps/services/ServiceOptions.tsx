@@ -22,6 +22,15 @@ interface ServiceOptionsProps {
 const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }: ServiceOptionsProps) => {
   const fieldName = getFieldName(serviceId);
 
+  // Use memoized callbacks to prevent unnecessary re-renders
+  const handleMultiChange = React.useCallback((optionId: string, checked: boolean, currentValues: string[]) => {
+    if (checked) {
+      return [...currentValues, optionId];
+    } else {
+      return currentValues.filter((value: string) => value !== optionId);
+    }
+  }, []);
+
   return (
     <div className="bg-gray-50 p-4 border-t">
       <p className="font-medium mb-3">What would you like cleaned?</p>
@@ -51,13 +60,12 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                           <Checkbox
                             checked={isChecked}
                             onCheckedChange={(checked) => {
-                              if (checked === true) {
-                                const newValue = [...currentValue, option.id];
-                                field.onChange(newValue);
-                              } else if (checked === false) {
-                                const newValue = currentValue.filter((value: string) => value !== option.id);
-                                field.onChange(newValue);
-                              }
+                              const newValue = handleMultiChange(
+                                option.id, 
+                                checked === true, 
+                                Array.isArray(currentValue) ? [...currentValue] : []
+                              );
+                              field.onChange(newValue);
                             }}
                           />
                         </FormControl>
