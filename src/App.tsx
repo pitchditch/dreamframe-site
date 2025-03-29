@@ -52,11 +52,11 @@ function App() {
   return (
     <TranslationProvider>
       <Helmet>
-        <title>BC Pressure Washing - Professional Window & Pressure Washing Services</title>
-        <meta name="description" content="Expert window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey and Metro Vancouver. Satisfaction guaranteed." />
-        <meta name="keywords" content="window cleaning, pressure washing, roof cleaning, gutter cleaning, White Rock, Surrey, BC" />
-        <meta property="og:title" content="BC Pressure Washing - Window & Pressure Washing Services" />
-        <meta property="og:description" content="Professional exterior cleaning services in Metro Vancouver. Window cleaning, pressure washing, roof & gutter cleaning with satisfaction guaranteed." />
+        <title>BC Pressure Washing - #1 Pressure Washing & Window Cleaning Services in Surrey & White Rock</title>
+        <meta name="description" content="Expert pressure washing, window cleaning, roof cleaning, and gutter cleaning services in Surrey, White Rock and Metro Vancouver. Satisfaction guaranteed." />
+        <meta name="keywords" content="pressure washing Surrey, power washing services BC, window cleaning Surrey, roof cleaning BC, gutter cleaning Surrey, exterior cleaning services, soft washing, commercial pressure washing, residential power washing, deck cleaning, concrete cleaning" />
+        <meta property="og:title" content="BC Pressure Washing - Professional Exterior Cleaning Services" />
+        <meta property="og:description" content="Top-rated pressure washing, window cleaning, roof & gutter cleaning with satisfaction guaranteed. Serving Surrey, White Rock & Metro Vancouver." />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" />
         <meta name="twitter:card" content="summary_large_image" />
