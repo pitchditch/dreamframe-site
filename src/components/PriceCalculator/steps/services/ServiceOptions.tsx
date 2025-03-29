@@ -51,13 +51,11 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                           <Checkbox
                             checked={isChecked}
                             onCheckedChange={(checked) => {
-                              // Only update if there's a change to prevent loops
-                              if ((checked && !isChecked) || (!checked && isChecked)) {
-                                const updatedValue = checked
-                                  ? [...(currentValue || []), option.id]
-                                  : (currentValue || []).filter((value: string) => value !== option.id);
-                                
-                                field.onChange(updatedValue);
+                              // Only perform the update if the state actually changes
+                              if (checked === true && !isChecked) {
+                                field.onChange([...currentValue, option.id]);
+                              } else if (checked === false && isChecked) {
+                                field.onChange(currentValue.filter((value: string) => value !== option.id));
                               }
                             }}
                           />
