@@ -9,14 +9,15 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { MapPin } from 'lucide-react';
+import { MapPin, Package2 } from 'lucide-react';
 
 interface StepAddressProps {
   form: UseFormReturn<any>;
   onNext: () => void;
+  selectedPackage?: any;
 }
 
-const StepAddress = ({ form, onNext }: StepAddressProps) => {
+const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
   const handleContinue = () => {
     form.trigger('address').then((isValid) => {
       if (isValid) {
@@ -31,6 +32,19 @@ const StepAddress = ({ form, onNext }: StepAddressProps) => {
         <h2 className="text-2xl font-bold mb-2">Where is your property located?</h2>
         <p className="text-gray-600">We serve Surrey, White Rock, and Metro Vancouver areas</p>
       </div>
+
+      {selectedPackage && (
+        <div className="bg-green-50 p-4 rounded-lg border border-green-200 flex items-start space-x-3">
+          <Package2 className="text-green-600 mt-1 flex-shrink-0" size={20} />
+          <div>
+            <h3 className="font-semibold text-green-800">{selectedPackage.title} Selected</h3>
+            <p className="text-sm text-green-700">
+              You'll save ${selectedPackage.savings} with this package! 
+              We just need your address to continue.
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-4">
         <FormField
@@ -62,7 +76,7 @@ const StepAddress = ({ form, onNext }: StepAddressProps) => {
           onClick={handleContinue} 
           className="bg-bc-red hover:bg-red-700 w-full"
         >
-          Continue to Quote
+          {selectedPackage ? "Continue to Review" : "Continue to Quote"}
         </Button>
       </div>
     </div>

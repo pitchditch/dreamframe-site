@@ -32,7 +32,7 @@ const LocationBanner = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center">
           <div className="text-lg font-medium mr-4 whitespace-nowrap">
-            Professional Window Cleaning & Pressure Washing in:
+            Window Cleaning & Pressure Washing in:
           </div>
           <div className="overflow-hidden relative w-full">
             <div className="flex whitespace-nowrap animate-[slide_30s_linear_infinite] space-x-8">

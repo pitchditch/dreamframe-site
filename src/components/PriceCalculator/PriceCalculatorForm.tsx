@@ -115,7 +115,7 @@ const PriceCalculatorForm = () => {
         </div>
         <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
           <Avatar className="h-12 w-12 border-2 border-blue-500">
-            <AvatarImage src="/lovable-uploads/d173e141-19f8-4b80-a02e-e2472f49e7fe.png" alt="Jayden Fisher" />
+            <AvatarImage src="/lovable-uploads/edcb7d53-5333-4117-94a0-3bb1f9f5f624.png" alt="Jayden Fisher" />
             <AvatarFallback>JF</AvatarFallback>
           </Avatar>
           <div>
@@ -125,14 +125,14 @@ const PriceCalculatorForm = () => {
         </div>
       </div>
 
-      {selectedPackage && (
+      {selectedPackage && step !== 0 && step !== 5 && (
         <div className="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
           <div className="flex items-center mb-2">
             <Check className="text-green-600 mr-2" size={20} />
             <h3 className="text-lg font-semibold text-green-800">{selectedPackage.title} Selected</h3>
           </div>
           <p className="text-sm text-green-700">
-            You've selected our {selectedPackage.title}. We just need your address details to provide a personalized quote with your {selectedPackage.discountPercent}% discount.
+            You've selected our {selectedPackage.title}. We just need your address details to provide a personalized quote with savings of ${selectedPackage.savings}.
           </p>
         </div>
       )}
@@ -177,7 +177,7 @@ const PriceCalculatorForm = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {step === 0 && <StepAddress form={form} onNext={nextStep} />}
+          {step === 0 && <StepAddress form={form} onNext={nextStep} selectedPackage={selectedPackage} />}
           {step === 1 && <StepService form={form} onNext={nextStep} />}
           {step === 2 && <StepPropertyType form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 3 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}

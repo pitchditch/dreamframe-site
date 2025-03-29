@@ -8,7 +8,8 @@ const PackageCard = ({
   size, 
   features, 
   isPrimary = false,
-  onSelectPackage
+  onSelectPackage,
+  savings
 }: { 
   title: string; 
   price: string; 
@@ -16,9 +17,10 @@ const PackageCard = ({
   features: { name: string; included: boolean }[];
   isPrimary?: boolean;
   onSelectPackage: () => void;
+  savings: number;
 }) => {
   return (
-    <div className={`${isPrimary ? 'bg-bc-red text-white' : 'bg-white'} p-8 rounded-lg shadow-md ${!isPrimary && 'border border-gray-100'} relative`}>
+    <div className={`${isPrimary ? 'bg-bc-red text-white' : 'bg-white'} p-8 rounded-lg shadow-md ${!isPrimary && 'border border-gray-100'} relative transform transition-transform duration-300 hover:scale-105`}>
       {isPrimary && (
         <div className="absolute -top-3 right-6 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">
           POPULAR
@@ -27,6 +29,12 @@ const PackageCard = ({
       <h3 className="text-2xl font-bold mb-2">{title}</h3>
       <p className="text-3xl font-bold mb-2">{price}</p>
       <p className={`${isPrimary ? 'text-gray-200' : 'text-gray-500'} text-sm mb-6`}>{size}</p>
+      
+      {savings > 0 && (
+        <div className={`text-sm ${isPrimary ? 'text-white/90' : 'text-green-600'} font-medium mb-4 bg-green-100/20 p-2 rounded-md`}>
+          Save ${savings} with this package!
+        </div>
+      )}
       
       <ul className="space-y-3 mb-8">
         {features.map((feature, index) => (
@@ -79,7 +87,8 @@ const PackagesSection = () => {
       size: "Based on a 1800 SQFT. House",
       features: features.map((name, i) => ({ name, included: i < 2 })),
       services: ["window-cleaning", "gutter-cleaning"],
-      discountPercent: 5
+      discountPercent: 5,
+      savings: 105
     },
     {
       title: "Upgraded Package",
@@ -92,7 +101,8 @@ const PackagesSection = () => {
       })),
       services: ["window-cleaning", "gutter-cleaning", "pressure-washing"],
       isPrimary: true,
-      discountPercent: 10
+      discountPercent: 10,
+      savings: 240
     },
     {
       title: "Premium Package",
@@ -100,7 +110,8 @@ const PackagesSection = () => {
       size: "Based on a 1900 SQFT+ House",
       features: features.map(name => ({ name, included: true })),
       services: ["window-cleaning", "gutter-cleaning", "pressure-washing", "roof-cleaning"],
-      discountPercent: 15
+      discountPercent: 15,
+      savings: 434
     }
   ];
   
@@ -110,7 +121,8 @@ const PackagesSection = () => {
       title: pkg.title,
       services: pkg.services,
       discountApplied: true,
-      discountPercent: pkg.discountPercent || 10
+      discountPercent: pkg.discountPercent || 10,
+      savings: pkg.savings
     }));
     
     // Navigate to calculator page
