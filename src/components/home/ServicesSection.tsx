@@ -16,7 +16,7 @@ const ServicesSection = () => {
           {t("We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mt-12">
           <div className="animate-on-scroll">
             <ServiceCard
               icon={<Droplets size={24} />}
@@ -40,7 +40,7 @@ const ServicesSection = () => {
               icon={<DropletIcon size={24} />}
               title={t("Pressure Washing")}
               description={t("Safe, effective pressure washing that removes dirt, algae, and mildew without damaging your home's exterior surfaces.")}
-              link="/services/house-washing"
+              link="/services/pressure-washing"
               image="/lovable-uploads/a8d9837b-5c66-4e74-a9a9-34e018c71a02.png"
             />
           </div>

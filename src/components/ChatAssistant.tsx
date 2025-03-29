@@ -113,7 +113,7 @@ const ChatAssistant = () => {
                 >
                   {!message.fromUser && (
                     <Avatar className="w-8 h-8 mr-2 mt-1 flex-shrink-0">
-                      <AvatarImage src="/lovable-uploads/edcb7d53-5333-4117-94a0-3bb1f9f5f624.png" alt="Jayden" />
+                      <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" />
                       <AvatarFallback className="bg-bc-red text-white text-xs">BC</AvatarFallback>
                     </Avatar>
                   )}

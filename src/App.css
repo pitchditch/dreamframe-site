@@ -1,66 +1,88 @@
 
 /* ... keep existing code */
 
-/* Language-specific font styles */
-.font-pa-font {
-  font-family: 'Noto Sans Gurmukhi', sans-serif;
+/* Mobile-specific improvements for readability */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.75rem !important;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  
+  .service-card h3 {
+    font-size: 1.25rem;
+  }
+  
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem !important;
+    line-height: 1.2;
+  }
+  
+  .hero-section p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
 }
 
-.font-hi-font {
-  font-family: 'Noto Sans Devanagari', sans-serif;
+/* Ensure images in Service Cards are properly displayed */
+.service-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-/* Add font imports in the head */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
+.service-card:hover img {
+  transform: scale(1.05);
+}
 
-/* Transparent question bubbles */
-.question-bubble {
+/* Avatar image object-fit fix */
+.avatar-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Better spacing for mobile displays */
+@media (max-width: 640px) {
+  .section-padding {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .grid-cols-1 {
+    gap: 1rem;
+  }
+}
+
+/* Improved text readability on darker backgrounds */
+.text-on-dark {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Package hover animation improvement */
+.package-card {
   transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  max-width: 300px;
-  width: auto;
-  white-space: normal;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.875rem;
-  color: #1a56db;
-  cursor: pointer;
-  margin-right: 12px;
-  line-height: 1.2;
 }
 
-.question-bubble:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-/* SEO Schema Data - Hidden but read by search engines */
-.schema-data {
-  display: none;
-}
-
-/* SEO-friendly keywords that are visually hidden but accessible to search engines */
-.seo-keywords {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Helper classes for microdata attributes */
-[itemscope],
-[itemprop] {
-  margin: 0;
-  padding: 0;
+.package-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }

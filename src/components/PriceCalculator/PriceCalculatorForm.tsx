@@ -115,7 +115,11 @@ const PriceCalculatorForm = () => {
         </div>
         <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
           <Avatar className="h-12 w-12 border-2 border-blue-500">
-            <AvatarImage src="/lovable-uploads/edcb7d53-5333-4117-94a0-3bb1f9f5f624.png" alt="Jayden Fisher" />
+            <AvatarImage 
+              src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" 
+              alt="Jayden Fisher" 
+              className="object-cover"
+            />
             <AvatarFallback>JF</AvatarFallback>
           </Avatar>
           <div>
@@ -138,7 +142,7 @@ const PriceCalculatorForm = () => {
       )}
 
       <div className="bg-blue-50 p-4 rounded-lg mb-8">
-        <div className="flex items-start gap-3">
+        <div className="flex flex-col sm:flex-row items-start gap-3">
           <div className="flex-shrink-0">
             <img 
               src="/lovable-uploads/c15cdd73-8e52-4372-9bce-100fe07cf035.png" 

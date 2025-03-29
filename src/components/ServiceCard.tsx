@@ -1,31 +1,46 @@
 
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface ServiceCardProps {
-  icon: React.ReactNode;
   title: string;
   description: string;
   link: string;
+  icon?: React.ReactNode;
   image?: string;
 }
 
-const ServiceCard = ({ icon, title, description, link, image }: ServiceCardProps) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, icon, image }) => {
+  const { t } = useTranslation();
+  
   return (
-    <div className="service-card">
-      {image && (
-        <div className="mb-4 overflow-hidden rounded-md">
-          <img src={image} alt={title} className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300" />
-        </div>
-      )}
-      <div className="flex items-start">
-        <div className="feature-icon">{icon}</div>
+    <div className="relative service-card h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+      {/* Image container with fixed height and full width */}
+      <div className="relative h-48 w-full overflow-hidden">
+        {image && (
+          <img 
+            src={image} 
+            alt={title} 
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent"></div>
+        {icon && (
+          <div className="absolute top-4 left-4 p-2 bg-white/90 rounded-full">
+            {icon}
+          </div>
+        )}
       </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-      <Link to={link} className="service-link">
-        Learn More <ArrowRight size={16} />
-      </Link>
+      
+      <div className="p-5 flex-grow flex flex-col">
+        <h3 className="text-xl font-bold mb-2">{title}</h3>
+        <p className="text-gray-600 text-sm flex-grow mb-4">{description}</p>
+        <Link to={link} className="service-link mt-auto">
+          {t("Learn More")} <ArrowRight size={16} className="mt-0.5" />
+        </Link>
+      </div>
     </div>
   );
 };
