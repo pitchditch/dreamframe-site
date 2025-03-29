@@ -34,7 +34,8 @@ const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardPro
               id={`service-${service.id}`}
               // Important: Don't add any onClick or onCheckedChange handlers here
               // to prevent infinite loops. Let the parent div handle the click.
-              readOnly
+              // The Checkbox component doesn't support readOnly, using disabled instead
+              disabled={true} 
             />
           </div>
           <span className="font-semibold text-lg">{service.title}</span>
