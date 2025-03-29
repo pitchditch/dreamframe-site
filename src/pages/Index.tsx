@@ -113,9 +113,9 @@ const Index = () => {
           </p>
           <div className="max-w-md mx-auto">
             <PriceCalculatorOverlay
-              buttonText="Get Your Free Quote Now"
+              buttonText="Check Price & Availability"
               variant="bc-red"
-              className="w-full"
+              className="w-full py-3 px-6 text-lg font-medium"
             />
           </div>
         </div>

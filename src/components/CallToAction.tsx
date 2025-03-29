@@ -15,7 +15,7 @@ interface CallToActionProps {
 const CallToAction = ({
   title = "Ready to Transform Your Property?",
   subtitle = "Contact us today to schedule a service or request a free, no-obligation quote.",
-  primaryButtonText = "Get a Free Quote",
+  primaryButtonText = "Check Price & Availability",
   secondaryButtonText = "Contact Us",
   primaryButtonLink = "/contact",
   secondaryButtonLink = "/contact",
@@ -34,9 +34,10 @@ const CallToAction = ({
           <PriceCalculatorOverlay 
             buttonText={primaryButtonText}
             variant="bc-red"
+            className="py-3 px-6 text-lg font-medium"
           />
           <Link to={secondaryButtonLink}>
-            <button className="btn-secondary w-full sm:w-auto">{secondaryButtonText}</button>
+            <button className="btn-secondary w-full sm:w-auto py-3 px-6 text-lg font-medium">{secondaryButtonText}</button>
           </Link>
         </div>
       </div>

@@ -17,7 +17,7 @@ const PriceCalculatorOverlay = ({
   variant = "default" 
 }: PriceCalculatorOverlayProps) => {
   const { t } = useTranslation();
-  const displayText = buttonText || t('Get a Free Quote');
+  const displayText = buttonText || t('Check Price & Availability');
 
   return (
     <Sheet>

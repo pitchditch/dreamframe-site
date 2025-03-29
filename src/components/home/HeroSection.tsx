@@ -42,11 +42,11 @@ const HeroSection = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">
             <PriceCalculatorOverlay 
-              buttonText={t("Get a Free Quote")} 
-              className="bg-bc-red hover:bg-red-700 text-white"
+              buttonText={t("Check Price & Availability")} 
+              className="bg-bc-red hover:bg-red-700 text-white py-3 px-6 text-lg font-medium"
             />
             <Link to="/services">
-              <button className="btn-secondary bg-white/80 backdrop-blur-sm hover:bg-white">
+              <button className="btn-secondary bg-white/80 backdrop-blur-sm hover:bg-white py-3 px-6 text-lg font-medium">
                 {t("Explore Our Services")}
               </button>
             </Link>

@@ -53,7 +53,7 @@ const ChatAssistant = () => {
           <DialogHeader className="p-4 border-b bg-bc-red text-white">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10 border-2 border-white">
-                <AvatarImage src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" alt="Jayden Fisher" />
+                <AvatarImage src="/lovable-uploads/7000bc3f-00cd-43c9-a2c1-714b6cc52a9d.png" alt="Jayden Fisher" />
                 <AvatarFallback>JF</AvatarFallback>
               </Avatar>
               <div>
@@ -81,7 +81,7 @@ const ChatAssistant = () => {
                 >
                   {!message.fromUser && (
                     <Avatar className="h-8 w-8 mr-2 mt-1 flex-shrink-0">
-                      <AvatarImage src="/lovable-uploads/dd2d0fe6-317b-4070-99d9-d9be62b17f2e.png" alt="Jayden Fisher" />
+                      <AvatarImage src="/lovable-uploads/7000bc3f-00cd-43c9-a2c1-714b6cc52a9d.png" alt="Jayden Fisher" />
                       <AvatarFallback>JF</AvatarFallback>
                     </Avatar>
                   )}
