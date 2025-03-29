@@ -12,7 +12,7 @@ const ServicesSection = () => {
       <div className="container mx-auto px-4">
         <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Our Professional Services")}</div>
         <h2 className="section-title animate-on-scroll">{t("Premium Cleaning Solutions for Every Surface")}</h2>
-        <p className="section-subtitle animate-on-scroll">
+        <p className="section-subtitle animate-on-scroll max-w-3xl mx-auto">
           {t("We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.")}
         </p>
 

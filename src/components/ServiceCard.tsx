@@ -18,7 +18,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, ico
   return (
     <div className="relative service-card h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
       {/* Image container with fixed height and full width */}
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative h-48 sm:h-56 w-full overflow-hidden">
         {image && (
           <img 
             src={image} 
@@ -36,9 +36,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, ico
       
       <div className="p-5 flex-grow flex flex-col">
         <h3 className="text-xl font-bold mb-2">{title}</h3>
-        <p className="text-gray-600 text-sm flex-grow mb-4">{description}</p>
-        <Link to={link} className="service-link mt-auto">
-          {t("Learn More")} <ArrowRight size={16} className="mt-0.5" />
+        <p className="text-gray-600 text-sm md:text-base flex-grow mb-4">{description}</p>
+        <Link to={link} className="service-link mt-auto group flex items-center">
+          <span className="mr-1">{t("Learn More")}</span> 
+          <ArrowRight size={16} className="mt-0.5 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>
     </div>

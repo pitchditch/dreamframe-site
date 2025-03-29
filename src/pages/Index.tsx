@@ -106,62 +106,6 @@ const Index = () => {
       <ProcessSection />
       <TestimonialsSection />
       <ReferralButton />
-      
-      {/* Hidden SEO-optimized keywords section - visible to search engines but not users */}
-      <div className="seo-keywords">
-        <h2>Professional Exterior Cleaning Services in Metro Vancouver</h2>
-        <ul>
-          <li>Pressure washing Surrey BC</li>
-          <li>Window cleaning White Rock</li>
-          <li>Gutter cleaning services Surrey</li>
-          <li>Roof cleaning Metro Vancouver</li>
-          <li>House washing services BC</li>
-          <li>Driveway cleaning Surrey</li>
-          <li>Commercial pressure washing</li>
-          <li>Residential power washing</li>
-          <li>Deck cleaning services</li>
-          <li>Concrete cleaning Surrey</li>
-          <li>Eco-friendly pressure washing</li>
-          <li>Soft washing specialists</li>
-          <li>Exterior cleaning company</li>
-        </ul>
-      </div>
-      
-      {/* Schema.org microdata for Local Business */}
-      <div className="schema-data" itemScope itemType="http://schema.org/LocalBusiness">
-        <h1 itemProp="name">BC Pressure Washing</h1>
-        <div itemProp="description">Professional pressure washing, window cleaning, and exterior cleaning services for residential and commercial properties in Surrey, White Rock, and Metro Vancouver.</div>
-        <div itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
-          <span itemProp="streetAddress">15501 Marine Dr</span>
-          <span itemProp="addressLocality">White Rock</span>,
-          <span itemProp="addressRegion">BC</span>
-          <span itemProp="postalCode">V4B 1C9</span>
-          <span itemProp="addressCountry">CA</span>
-        </div>
-        <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
-          <meta itemProp="latitude" content="49.0253"/>
-          <meta itemProp="longitude" content="-122.8026"/>
-        </div>
-        <div itemProp="openingHoursSpecification" itemScope itemType="http://schema.org/OpeningHoursSpecification">
-          <link itemProp="dayOfWeek" href="http://schema.org/Monday http://schema.org/Tuesday http://schema.org/Wednesday http://schema.org/Thursday http://schema.org/Friday"/>
-          <meta itemProp="opens" content="08:00"/>
-          <meta itemProp="closes" content="18:00"/>
-        </div>
-        <div itemProp="openingHoursSpecification" itemScope itemType="http://schema.org/OpeningHoursSpecification">
-          <link itemProp="dayOfWeek" href="http://schema.org/Saturday"/>
-          <meta itemProp="opens" content="09:00"/>
-          <meta itemProp="closes" content="17:00"/>
-        </div>
-        <div>
-          Phone: <span itemProp="telephone">778 808 7620</span>
-        </div>
-        <div>
-          Website: <a href="https://bcpressurewashing.ca" itemProp="url">bcpressurewashing.ca</a>
-        </div>
-        <div>
-          <meta itemProp="priceRange" content="$$"/>
-        </div>
-      </div>
     </Layout>
   );
 };

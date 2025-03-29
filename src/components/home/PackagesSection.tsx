@@ -100,7 +100,7 @@ const PackagesSection = () => {
       title: "Upgraded Package",
       price: "$1,200",
       size: "Based on a 1900 SQFT. House",
-      // Uncheck "Roof Soft Wash" from upgraded package
+      // Explicitly mark "Roof Soft Wash" as not included
       features: features.map((name) => ({ 
         name, 
         included: name !== "Roof Soft Wash" 

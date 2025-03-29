@@ -80,7 +80,10 @@ const ChatAssistant = () => {
         onClick={() => setIsOpen(true)} 
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50"
       >
-        <MessageCircle className="h-6 w-6 text-bc-red" />
+        <Avatar className="h-full w-full border-2 border-bc-red">
+          <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
+          <AvatarFallback className="bg-bc-red text-white text-xs">BC</AvatarFallback>
+        </Avatar>
       </Button>
       
       {/* Chat Dialog */}
@@ -88,6 +91,10 @@ const ChatAssistant = () => {
         <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden">
           <DialogHeader className="p-4 border-b bg-bc-red text-white">
             <div className="flex items-center gap-3">
+              <Avatar className="h-10 w-10 border-2 border-white">
+                <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
+                <AvatarFallback className="bg-white text-bc-red text-xs">BC</AvatarFallback>
+              </Avatar>
               <div>
                 <DialogTitle>Chat with BC Pressure Washing</DialogTitle>
                 <p className="text-xs text-white/80">Customer Support</p>
@@ -113,7 +120,7 @@ const ChatAssistant = () => {
                 >
                   {!message.fromUser && (
                     <Avatar className="w-8 h-8 mr-2 mt-1 flex-shrink-0">
-                      <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" />
+                      <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
                       <AvatarFallback className="bg-bc-red text-white text-xs">BC</AvatarFallback>
                     </Avatar>
                   )}
