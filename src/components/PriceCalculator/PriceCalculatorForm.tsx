@@ -6,7 +6,6 @@ import * as z from 'zod';
 import { Form } from '@/components/ui/form';
 import StepService from './steps/StepService';
 import StepSize from './steps/StepSize';
-import StepAddons from './steps/StepAddons';
 import StepContact from './steps/StepContact';
 import StepReview from './steps/StepReview';
 import StepPropertyType from './steps/StepPropertyType';
@@ -17,7 +16,6 @@ const formSchema = z.object({
   services: z.array(z.string()).min(1, "Please select at least one service"),
   size: z.string(),
   propertyType: z.string(),
-  addons: z.array(z.string()).default([]),
   cleaning_options: z.object({
     window_cleaning: z.string().optional(),
     gutter_cleaning: z.string().optional(),
@@ -37,7 +35,6 @@ const PriceCalculatorForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       services: [],
-      addons: [],
       propertyType: 'residential',
       cleaning_options: {
         window_cleaning: '',
@@ -53,7 +50,7 @@ const PriceCalculatorForm = () => {
     alert("Your quote request has been submitted! We'll contact you shortly.");
   };
 
-  const nextStep = () => setStep(prev => Math.min(prev + 1, 6));
+  const nextStep = () => setStep(prev => Math.min(prev + 1, 5));
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
 
   return (
@@ -87,7 +84,7 @@ const PriceCalculatorForm = () => {
       </div>
       
       <div className="mb-6">
-        <ProgressSteps currentStep={step} totalSteps={6} />
+        <ProgressSteps currentStep={step} totalSteps={5} />
       </div>
 
       <Form {...form}>
@@ -95,9 +92,8 @@ const PriceCalculatorForm = () => {
           {step === 1 && <StepService form={form} onNext={nextStep} />}
           {step === 2 && <StepPropertyType form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 3 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 4 && <StepAddons form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 5 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 6 && <StepReview form={form} onBack={prevStep} />}
+          {step === 4 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 5 && <StepReview form={form} onBack={prevStep} />}
         </form>
       </Form>
     </div>

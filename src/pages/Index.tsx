@@ -11,7 +11,7 @@ import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import ReferralButton from '../components/ReferralButton';
-import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
+import PriceCalculatorOverlay from '../components/PriceCalculatorOverlay';
 import { useTranslation } from '@/hooks/use-translation';
 import { MapPin, ArrowRight, Sun } from 'lucide-react';
 
@@ -103,7 +103,24 @@ const Index = () => {
       
       <FeaturedProjectSection />
       <PackagesSection />
-      <PriceCalculatorForm />
+      
+      {/* Get a Quote Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Property?</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+            Get a customized quote for your cleaning project in just a few clicks. Our no-obligation estimates help you plan your perfect cleaning solution.
+          </p>
+          <div className="max-w-md mx-auto">
+            <PriceCalculatorOverlay
+              buttonText="Get Your Free Quote Now"
+              variant="bc-red"
+              className="w-full"
+            />
+          </div>
+        </div>
+      </section>
+      
       <ProcessSection />
       <TestimonialsSection />
       <ReferralButton />

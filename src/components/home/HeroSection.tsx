@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
@@ -40,11 +41,10 @@ const HeroSection = () => {
             {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">
-            <Link to="/contact">
-              <button className="btn-primary">
-                {t("Get a Free Quote")} <ArrowRight className="ml-2 inline-block" size={16} />
-              </button>
-            </Link>
+            <PriceCalculatorOverlay 
+              buttonText={t("Get a Free Quote")} 
+              className="bg-bc-red hover:bg-red-700 text-white"
+            />
             <Link to="/services">
               <button className="btn-secondary bg-white/80 backdrop-blur-sm hover:bg-white">
                 {t("Explore Our Services")}

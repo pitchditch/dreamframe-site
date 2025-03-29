@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { NavLink } from './NavLink';
 import { ServicesDropdown } from './ServicesDropdown';
 import { useTranslation } from '@/hooks/use-translation';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
@@ -44,14 +45,14 @@ export const NavbarDesktop = ({
         <NavLink to="/contact" isOverVideo={isOverVideo}>
           {t('Contact')}
         </NavLink>
-        <NavLink to="/calculator" isOverVideo={isOverVideo}>
-          {t('Price Calculator')}
-        </NavLink>
       </nav>
       
-      <Link to="/contact" className="hidden md:block">
-        <button className={`btn-primary ${getLanguageClass()}`}>{t('Get a Quote')}</button>
-      </Link>
+      <div className="hidden md:block">
+        <PriceCalculatorOverlay
+          variant={isOverVideo ? "outline" : "default"}
+          className={`${getLanguageClass()} ${isOverVideo ? "bg-white/20 hover:bg-white/40 text-white" : ""}`}
+        />
+      </div>
     </>
   );
 };

@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import LanguageSelector from '../LanguageSelector';
 import { useTranslation } from '@/hooks/use-translation';
 import { useEffect } from 'react';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -90,14 +91,6 @@ export const NavbarMobile = ({
           {t('Testimonials')}
         </Link>
         <Link 
-          to="/calculator" 
-          className={`block px-3 py-2 rounded-md text-base ${
-            isActive('/calculator') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
-          } ${getLanguageClass()}`}
-        >
-          {t('Price Calculator')}
-        </Link>
-        <Link 
           to="/contact" 
           className={`block px-3 py-2 rounded-md text-base ${
             isActive('/contact') ? 'bg-bc-red text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-bc-red'
@@ -110,12 +103,13 @@ export const NavbarMobile = ({
           <LanguageSelector />
         </div>
         
-        <Link 
-          to="/contact" 
-          className="block px-3 py-3"
-        >
-          <button className={`btn-primary w-full ${getLanguageClass()}`}>{t('Get a Quote')}</button>
-        </Link>
+        <div className="block px-3 py-3">
+          <PriceCalculatorOverlay
+            buttonText={t('Get a Free Quote')} 
+            variant="bc-red"
+            className={`w-full ${getLanguageClass()}`}
+          />
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import CallToAction from '../../components/CallToAction';
 import { Droplets, ShieldCheck, Sun, Sparkles, RotateCw, Shield, Clock, ThumbsUp, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import PriceCalculatorForm from '@/components/PriceCalculator/PriceCalculatorForm';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const WindowCleaning = () => {
@@ -164,9 +164,15 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-8">Get a Free Quote</h2>
-        <PriceCalculatorForm />
+      <section className="container mx-auto px-4 py-16 text-center">
+        <h2 className="text-3xl font-bold mb-8">Ready for Crystal Clear Windows?</h2>
+        <div className="max-w-md mx-auto">
+          <PriceCalculatorOverlay 
+            buttonText="Get Your Free Quote" 
+            variant="bc-red"
+            className="w-full"
+          />
+        </div>
       </section>
 
       <CallToAction 
