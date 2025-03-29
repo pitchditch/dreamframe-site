@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import ServicesSection from '../components/home/ServicesSection';
 import ServiceSlideshow from '../components/home/ServiceSlideshow';
 import PackagesSection from '../components/home/PackagesSection';
 import ProcessSection from '../components/home/ProcessSection';
@@ -55,12 +54,17 @@ const Index = () => {
     <Layout>
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
-        <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
-        <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
+        <meta name="description" content="Professional window cleaning in White Rock, pressure washing, roof & gutter cleaning services in Surrey & Metro Vancouver. Crystal clear, streak-free results guaranteed." />
+        <meta name="keywords" content="window cleaning White Rock, pressure washing Surrey, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
+        <link rel="canonical" href="https://bcpressurewashing.ca/" />
+        <meta property="og:title" content="BC Pressure Washing | White Rock's #1 Window Cleaning Service" />
+        <meta property="og:description" content="Top-rated window cleaning in White Rock and exterior cleaning services. 100% satisfaction guaranteed." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bcpressurewashing.ca/" />
+        <meta property="og:image" content="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" />
       </Helmet>
       
       <HeroSection />
-      <ServicesSection />
       <ServiceSlideshow />
       
       {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
