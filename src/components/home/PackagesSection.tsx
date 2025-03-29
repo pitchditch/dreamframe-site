@@ -1,18 +1,21 @@
 
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PackageCard = ({ 
   title, 
   price, 
   size, 
   features, 
-  isPrimary = false 
+  isPrimary = false,
+  onSelectPackage
 }: { 
   title: string; 
   price: string; 
   size: string; 
   features: { name: string; included: boolean }[];
   isPrimary?: boolean;
+  onSelectPackage: () => void;
 }) => {
   return (
     <div className={`${isPrimary ? 'bg-bc-red text-white' : 'bg-white'} p-8 rounded-lg shadow-md ${!isPrimary && 'border border-gray-100'} relative`}>
@@ -46,19 +49,21 @@ const PackageCard = ({
         ))}
       </ul>
       
-      <Link to="/contact">
-        <button className={isPrimary 
+      <button 
+        onClick={onSelectPackage}
+        className={isPrimary 
           ? "bg-white text-bc-red px-6 py-3 rounded-md font-medium w-full hover:bg-gray-100 transition-colors"
           : "btn-primary w-full"
         }>
-          Get Started
-        </button>
-      </Link>
+        Get Started
+      </button>
     </div>
   );
 };
 
 const PackagesSection = () => {
+  const navigate = useNavigate();
+  
   const features = [
     "Window Cleaning",
     "Gutter Cleaning",
@@ -72,22 +77,42 @@ const PackagesSection = () => {
       title: "Starter Package",
       price: "$700",
       size: "Based on a 1800 SQFT. House",
-      features: features.map((name, i) => ({ name, included: i < 2 }))
+      features: features.map((name, i) => ({ name, included: i < 2 })),
+      services: ["window-cleaning", "gutter-cleaning"]
     },
     {
       title: "Upgraded Package",
       price: "$1,200",
       size: "Based on a 1900 SQFT. House",
-      features: features.map(name => ({ name, included: true })),
+      // Mark "Roof Soft Wash" as not included in upgraded package
+      features: features.map((name, i) => ({ 
+        name, 
+        included: name !== "Roof Soft Wash" 
+      })),
+      services: ["window-cleaning", "gutter-cleaning", "pressure-washing"],
       isPrimary: true
     },
     {
       title: "Premium Package",
       price: "$1,600",
       size: "Based on a 1900 SQFT+ House",
-      features: features.map(name => ({ name, included: true }))
+      features: features.map(name => ({ name, included: true })),
+      services: ["window-cleaning", "gutter-cleaning", "pressure-washing", "roof-cleaning"]
     }
   ];
+  
+  const handleSelectPackage = (pkg: any) => {
+    // Store package selection in sessionStorage
+    sessionStorage.setItem('selectedPackage', JSON.stringify({
+      title: pkg.title,
+      services: pkg.services,
+      discountApplied: true,
+      discountPercent: 10
+    }));
+    
+    // Navigate to calculator page
+    navigate('/calculator');
+  };
 
   return (
     <section className="section-padding bg-white">
@@ -101,7 +126,10 @@ const PackagesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           {packages.map((pkg, index) => (
             <div key={index} className="animate-on-scroll">
-              <PackageCard {...pkg} />
+              <PackageCard 
+                {...pkg} 
+                onSelectPackage={() => handleSelectPackage(pkg)}
+              />
             </div>
           ))}
         </div>

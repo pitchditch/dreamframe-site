@@ -7,8 +7,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Building } from 'lucide-react';
+import { Building, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -29,6 +30,9 @@ const formSchema = z.object({
   address: z.string().min(5, {
     message: "Please enter your business address.",
   }),
+  preferredTime: z.string().min(1, {
+    message: "Please select a preferred time slot.",
+  }),
   additionalInfo: z.string().optional(),
 });
 
@@ -47,6 +51,7 @@ const MaintenanceProgramForm = () => {
       phone: "",
       numberOfWindows: undefined,
       address: "",
+      preferredTime: "",
       additionalInfo: "",
     },
   });
@@ -67,7 +72,7 @@ const MaintenanceProgramForm = () => {
   const onSubmit = (data: FormValues) => {
     toast({
       title: "Application Submitted",
-      description: `Thank you for your interest in our monthly maintenance program. We'll contact you soon to verify the price and schedule your service.`,
+      description: `Thank you for your interest in our monthly maintenance program. We'll contact you soon to schedule your service for ${data.preferredTime}.`,
       duration: 5000,
     });
     
@@ -84,10 +89,11 @@ const MaintenanceProgramForm = () => {
       </div>
       
       <p className="text-gray-600 mb-6">
-        Our monthly maintenance program ensures your commercial property's windows always look their best. 
+        Our monthly maintenance program ensures your commercial property's windows always look their best in 
+        <span className="font-medium"> Surrey, White Rock, and Metro Vancouver</span>. 
         Sign up below for regular scheduled cleaning at just $10 per window per month.
         <span className="block mt-2 font-medium text-bc-red">
-          Note: Final pricing will be verified during an in-person assessment.
+          Note: Final pricing will be verified during an in-person assessment by our professional exterior cleaning team.
         </span>
       </p>
       
@@ -175,12 +181,42 @@ const MaintenanceProgramForm = () => {
             
             <FormField
               control={form.control}
+              name="preferredTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="flex items-center">
+                    <Clock className="mr-1 h-4 w-4" /> Preferred Time Slot
+                  </FormLabel>
+                  <Select 
+                    onValueChange={field.onChange} 
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a time" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="8:00 AM - 10:00 AM">8:00 AM - 10:00 AM</SelectItem>
+                      <SelectItem value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</SelectItem>
+                      <SelectItem value="12:00 PM - 2:00 PM">12:00 PM - 2:00 PM</SelectItem>
+                      <SelectItem value="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</SelectItem>
+                      <SelectItem value="4:00 PM - 6:00 PM">4:00 PM - 6:00 PM</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
               name="address"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Business Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your business address" {...field} />
+                    <Input placeholder="Enter your business address in Surrey, White Rock, or Vancouver" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -196,7 +232,7 @@ const MaintenanceProgramForm = () => {
                 <FormLabel>Additional Information (Optional)</FormLabel>
                 <FormControl>
                   <Textarea 
-                    placeholder="Any special requirements or information about your property" 
+                    placeholder="Any special requirements or information about your property (pressure washing needs, gutter cleaning, etc.)" 
                     className="min-h-[100px]"
                     {...field}
                   />
@@ -209,12 +245,13 @@ const MaintenanceProgramForm = () => {
           {estimatedPrice !== null && (
             <div className="bg-gray-50 p-4 rounded-md">
               <p className="font-medium">Estimated Monthly Price: <span className="text-bc-red font-bold">${estimatedPrice}</span></p>
-              <p className="text-sm text-gray-500">Final price will be verified during an in-person assessment.</p>
+              <p className="text-sm text-gray-600">BC Pressure Washing provides professional window cleaning, pressure washing, and gutter cleaning services at competitive rates.</p>
+              <p className="text-sm text-gray-500">Final price will be verified during an in-person assessment by our exterior cleaning specialists.</p>
             </div>
           )}
           
           <Button type="submit" className="bg-bc-red hover:bg-red-700 w-full">
-            Submit Application
+            Apply for Monthly Maintenance
           </Button>
         </form>
       </Form>

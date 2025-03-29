@@ -1,7 +1,10 @@
 
+import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tag } from 'lucide-react';
 
 interface StepReviewProps {
   form: UseFormReturn<any>;
@@ -81,6 +84,34 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
   const formValues = form.getValues();
   const cleaningOptions = formValues.cleaning_options || {};
   const services = formValues.services || [];
+  const [packageDiscount, setPackageDiscount] = useState<{
+    applied: boolean;
+    percent: number;
+    packageName: string;
+  }>({
+    applied: false,
+    percent: 0,
+    packageName: ''
+  });
+  
+  useEffect(() => {
+    // Check if a package was selected from the packages page
+    const selectedPackage = sessionStorage.getItem('selectedPackage');
+    if (selectedPackage) {
+      try {
+        const packageData = JSON.parse(selectedPackage);
+        if (packageData.discountApplied) {
+          setPackageDiscount({
+            applied: true,
+            percent: packageData.discountPercent || 10,
+            packageName: packageData.title || 'Selected Package'
+          });
+        }
+      } catch (e) {
+        console.error('Error parsing selected package', e);
+      }
+    }
+  }, []);
   
   // Determine pricing based on services, size, and options
   const calculateServicePrices = () => {
@@ -188,9 +219,13 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
     // Apply commercial property multiplier
     const propertyMultiplier = formValues.propertyType === 'commercial' ? 1.5 : 1.0;
     
+    // Apply package discount if applicable
+    const discountAmount = packageDiscount.applied ? (totalPrice * (packageDiscount.percent / 100)) : 0;
+    
     return {
       subtotal: totalPrice,
-      totalPrice: totalPrice * propertyMultiplier,
+      discount: discountAmount,
+      totalPrice: (totalPrice - discountAmount) * propertyMultiplier,
       priceBreakdown,
       priceNote: totalMessage
     };
@@ -230,6 +265,16 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
               <span className="text-xl font-bold">${formatPrice(pricing.totalPrice)}</span>
             )}
           </div>
+          
+          {packageDiscount.applied && (
+            <div className="mt-2 flex items-center gap-2 text-green-600">
+              <Tag size={16} />
+              <span className="text-sm font-medium">
+                {packageDiscount.percent}% discount applied from {packageDiscount.packageName}
+              </span>
+            </div>
+          )}
+          
           <p className="text-sm text-gray-500 mt-3">
             Your final price will be confirmed before your appointment and there is no need to pay until the job is complete.
           </p>
@@ -348,6 +393,13 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
                   <p>${formatPrice(pricing.subtotal)}</p>
                 </div>
                 
+                {packageDiscount.applied && (
+                  <div className="flex justify-between px-4 py-2 border-b bg-green-50 text-green-700">
+                    <p>{packageDiscount.packageName} Discount ({packageDiscount.percent}%)</p>
+                    <p>-${formatPrice(pricing.discount || 0)}</p>
+                  </div>
+                )}
+                
                 {formValues.propertyType === 'commercial' && (
                   <div className="flex justify-between px-4 py-2 border-b bg-gray-50">
                     <p>Commercial Property Factor</p>
@@ -360,6 +412,15 @@ const StepReview = ({ form, onBack }: StepReviewProps) => {
                   <p>${formatPrice(pricing.totalPrice)}</p>
                 </div>
               </div>
+              
+              {packageDiscount.applied && (
+                <div className="mt-2 bg-green-50 text-green-800 p-2 rounded-md border border-green-200 flex items-center">
+                  <Badge variant="success" className="mr-2 bg-green-600">SAVINGS</Badge>
+                  <p className="text-sm">
+                    You're saving ${formatPrice(pricing.discount || 0)} with your {packageDiscount.packageName} discount!
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
