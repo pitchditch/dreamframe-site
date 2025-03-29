@@ -51,16 +51,17 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                           <Checkbox
                             checked={isChecked}
                             onCheckedChange={(checked) => {
-                              // Only perform the update if the state actually changes
-                              if (checked === true && !isChecked) {
-                                field.onChange([...currentValue, option.id]);
-                              } else if (checked === false && isChecked) {
-                                field.onChange(currentValue.filter((value: string) => value !== option.id));
+                              if (checked === true) {
+                                const newValue = [...currentValue, option.id];
+                                field.onChange(newValue);
+                              } else if (checked === false) {
+                                const newValue = currentValue.filter((value: string) => value !== option.id);
+                                field.onChange(newValue);
                               }
                             }}
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">
+                        <FormLabel className="font-normal cursor-pointer">
                           {option.label}
                         </FormLabel>
                       </FormItem>
@@ -91,7 +92,7 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                       <FormControl>
                         <RadioGroupItem value={option.id} />
                       </FormControl>
-                      <FormLabel className="font-normal">{option.label}</FormLabel>
+                      <FormLabel className="font-normal cursor-pointer">{option.label}</FormLabel>
                     </FormItem>
                   ))}
                 </RadioGroup>

@@ -29,12 +29,10 @@ const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardPro
       >
         <div className="flex items-center mb-2">
           <div className="flex items-center justify-center w-6 h-6 mr-3">
-            {/* We'll use the checked prop to show the state, but disable the checkbox itself */}
-            {/* Let the parent div's onClick handle the state change */}
             <Checkbox 
               checked={isSelected}
               id={`service-${service.id}`}
-              disabled={true}
+              className="pointer-events-none" // Prevent direct interaction with checkbox
             />
           </div>
           <span className="font-semibold text-lg">{service.title}</span>
