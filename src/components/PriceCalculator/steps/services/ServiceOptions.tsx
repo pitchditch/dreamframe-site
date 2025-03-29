@@ -40,7 +40,7 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                   render={({ field }) => {
                     // Create a stable checked value
                     const currentValue = field.value || [];
-                    const isChecked = currentValue.includes(option.id);
+                    const isChecked = Array.isArray(currentValue) && currentValue.includes(option.id);
                     
                     return (
                       <FormItem
@@ -51,11 +51,14 @@ const ServiceOptions = ({ serviceId, options, form, multiSelect = false, info }:
                           <Checkbox
                             checked={isChecked}
                             onCheckedChange={(checked) => {
-                              const updatedValue = checked
-                                ? [...currentValue, option.id]
-                                : currentValue.filter((value: string) => value !== option.id);
-                              
-                              field.onChange(updatedValue);
+                              // Only update if there's a change to prevent loops
+                              if ((checked && !isChecked) || (!checked && isChecked)) {
+                                const updatedValue = checked
+                                  ? [...(currentValue || []), option.id]
+                                  : (currentValue || []).filter((value: string) => value !== option.id);
+                                
+                                field.onChange(updatedValue);
+                              }
                             }}
                           />
                         </FormControl>

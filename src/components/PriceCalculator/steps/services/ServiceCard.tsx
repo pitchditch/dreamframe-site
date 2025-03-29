@@ -32,8 +32,9 @@ const ServiceCard = ({ service, isSelected, onToggle, children }: ServiceCardPro
             <Checkbox 
               checked={isSelected}
               id={`service-${service.id}`}
-              // Remove the onCheckedChange handler to prevent double firing
-              // The parent div click handler will handle the toggle
+              // Important: Don't add any onClick or onCheckedChange handlers here
+              // to prevent infinite loops. Let the parent div handle the click.
+              readOnly
             />
           </div>
           <span className="font-semibold text-lg">{service.title}</span>
