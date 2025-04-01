@@ -10,6 +10,7 @@ import StepContact from './steps/StepContact';
 import StepReview from './steps/StepReview';
 import StepPropertyType from './steps/StepPropertyType';
 import StepAddress from './steps/StepAddress';
+import StepAddons from './steps/StepAddons';
 import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check } from 'lucide-react';
@@ -23,6 +24,7 @@ const formSchema = z.object({
     gutter_cleaning: z.string().optional(),
     pressure_washing: z.array(z.string()).optional(),
   }).optional(),
+  addons: z.array(z.string()).optional(),
   fullName: z.string().min(2),
   email: z.string().email(),
   phone: z.string().min(10),
@@ -44,7 +46,8 @@ const PriceCalculatorForm = () => {
         window_cleaning: '',
         gutter_cleaning: '',
         pressure_washing: [],
-      }
+      },
+      addons: []
     },
   });
 
@@ -91,13 +94,13 @@ const PriceCalculatorForm = () => {
   const nextStep = () => setStep(prev => {
     if (selectedPackage && prev === 0) {
       // If coming from address step with a package selected, jump to review
-      return 5;
+      return 6;
     }
-    return Math.min(prev + 1, 5);
+    return Math.min(prev + 1, 6);
   });
   
   const prevStep = () => setStep(prev => {
-    if (selectedPackage && prev === 5) {
+    if (selectedPackage && prev === 6) {
       // If going back from review step with a package selected, go to address
       return 0;
     }
@@ -129,7 +132,7 @@ const PriceCalculatorForm = () => {
         </div>
       </div>
 
-      {selectedPackage && step !== 0 && step !== 5 && (
+      {selectedPackage && step !== 0 && step !== 6 && (
         <div className="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
           <div className="flex items-center mb-2">
             <Check className="text-green-600 mr-2" size={20} />
@@ -147,7 +150,7 @@ const PriceCalculatorForm = () => {
             <img 
               src="/lovable-uploads/c15cdd73-8e52-4372-9bce-100fe07cf035.png" 
               alt="Built on Trust and Quality" 
-              className="h-32 w-auto rounded-lg"
+              className="h-32 w-auto rounded-lg object-cover"
             />
           </div>
           <div>
@@ -174,8 +177,8 @@ const PriceCalculatorForm = () => {
       <div className="mb-6">
         <ProgressSteps 
           currentStep={step} 
-          totalSteps={selectedPackage ? 2 : 5} 
-          customLabels={selectedPackage ? ['Address', 'Review'] : undefined}
+          totalSteps={selectedPackage ? 2 : 6} 
+          customLabels={selectedPackage ? ['Address', 'Review'] : ['Services', 'Property Type', 'Size', 'Add-ons', 'Contact', 'Review']}
         />
       </div>
 
@@ -185,8 +188,9 @@ const PriceCalculatorForm = () => {
           {step === 1 && <StepService form={form} onNext={nextStep} />}
           {step === 2 && <StepPropertyType form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 3 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 4 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 5 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} />}
+          {step === 4 && <StepAddons form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 5 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 6 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} />}
         </form>
       </Form>
     </div>
