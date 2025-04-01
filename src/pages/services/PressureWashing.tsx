@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
+import { Helmet } from 'react-helmet';
 
 const PressureWashing = () => {
   const { t } = useTranslation();
@@ -82,6 +83,12 @@ const PressureWashing = () => {
   
   return (
     <Layout>
+      <Helmet>
+        <title>Professional Pressure Washing Services in White Rock, BC | BC Pressure Washing</title>
+        <meta name="description" content="Expert pressure washing services in White Rock & Surrey. House washing, driveway cleaning, and more. Restore your property's beauty. Free estimates!" />
+        <meta name="keywords" content="pressure washing White Rock, house washing Surrey, driveway cleaning White Rock, exterior cleaning services, soft washing White Rock" />
+      </Helmet>
+      
       <ServiceHeader
         title={t("House Washing")}
         description={t("Safe, effective pressure washing services to restore your home's exterior and protect your investment.")}
@@ -240,69 +247,11 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-6 text-center">{t("Additional Pressure Washing Services")}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-bold mb-2">{t("Fence Cleaning")}</h3>
-              <p className="text-gray-600 mb-4">
-                {t("Restore wood, vinyl, or composite fencing to like-new condition with our specialized cleaning techniques.")}
-              </p>
-              <img 
-                src="/lovable-uploads/254da245-ca71-40fe-b92b-267d40458f73.png" 
-                alt="Fence cleaning" 
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
-              <Button variant="outline" asChild className="w-full">
-                <Link to="/contact">
-                  {t("Learn More")}
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-bold mb-2">{t("Deck & Patio Cleaning")}</h3>
-              <p className="text-gray-600 mb-4">
-                {t("Safe and effective cleaning for wooden decks, composite decking, and concrete or stone patios.")}
-              </p>
-              <img 
-                src="/lovable-uploads/efa781f2-757d-4950-bf2b-3686f7d24cb1.png" 
-                alt="Deck cleaning" 
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
-              <Button variant="outline" asChild className="w-full">
-                <Link to="/contact">
-                  {t("Learn More")}
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-bold mb-2">{t("Glass Awning Cleaning")}</h3>
-              <p className="text-gray-600 mb-4">
-                {t("Professional glass awning and skylight cleaning to remove dirt, water spots, and debris for crystal clear results.")}
-              </p>
-              <img 
-                src="/lovable-uploads/35c992fa-e658-4504-9244-560758af2df7.png" 
-                alt="Glass awning cleaning before and after" 
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
-              <Button variant="outline" asChild className="w-full">
-                <Link to="/contact">
-                  {t("Learn More")}
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <CallToAction />
+      <CallToAction 
+        backgroundImage="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png"
+        title="Ready to Transform Your Property?"
+        subtitle="Contact us today for a free pressure washing quote and consultation."
+      />
     </Layout>
   );
 };

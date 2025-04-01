@@ -1,37 +1,64 @@
 
-import React from 'react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorForm from './PriceCalculator/PriceCalculatorForm';
-import { useTranslation } from '@/hooks/use-translation';
+import { Gift } from 'lucide-react';
 
 interface PriceCalculatorOverlayProps {
   buttonText?: string;
+  variant?: 'default' | 'bc-red';
   className?: string;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "bc-red";
+  icon?: boolean;
 }
 
 const PriceCalculatorOverlay = ({ 
-  buttonText, 
-  className,
-  variant = "default" 
+  buttonText = "Check Price & Availability", 
+  variant = 'default',
+  className = "",
+  icon = false
 }: PriceCalculatorOverlayProps) => {
-  const { t } = useTranslation();
-  const displayText = buttonText || t('Check Price & Availability');
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant={variant} className={className || "bg-bc-red hover:bg-red-700 text-white py-4 px-8 text-lg font-bold rounded-lg shadow-md transform hover:translate-y-[-2px] transition-all duration-300"}>
-          {displayText}
-        </Button>
-      </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md md:max-w-xl lg:max-w-2xl border border-transparent bg-background/95 backdrop-blur-sm">
-        <div className="pt-6 pb-16 overflow-y-auto max-h-[90vh]">
-          <PriceCalculatorForm />
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        {variant === 'bc-red' ? (
+          <Button 
+            className={`bg-bc-red hover:bg-red-700 text-white special-offers-button ${className}`}
+          >
+            {icon && <Gift className="mr-2 h-4 w-4" />}
+            {buttonText}
+          </Button>
+        ) : variant === 'default' ? (
+          <Button 
+            className={`special-offers-button ${className}`}
+          >
+            {icon && <Gift className="mr-2 h-4 w-4" />}
+            {buttonText}
+          </Button>
+        ) : (
+          <Button 
+            variant="outline" 
+            className={`special-offers-button ${className}`}
+          >
+            {icon && <Gift className="mr-2 h-4 w-4" />}
+            {buttonText}
+          </Button>
+        )}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[600px] p-0">
+        <DialogHeader className="p-6 bg-gray-50 border-b">
+          <DialogTitle className="text-2xl font-bold text-center">Get Your Free Quote</DialogTitle>
+          <DialogDescription className="text-center">
+            Complete this quick form to receive an instant estimate for your service.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto">
+          <PriceCalculatorForm onComplete={() => setOpen(false)} />
         </div>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 };
 

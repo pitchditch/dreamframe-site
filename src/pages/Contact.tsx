@@ -1,359 +1,251 @@
-import { useState } from "react";
-import Layout from "@/components/Layout";
-import { MapPin, Phone, Mail, Send, User, MessageSquare } from "lucide-react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "@/hooks/use-toast";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import ChatAssistant from "@/components/ChatAssistant";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import LanguageSelector from "@/components/LanguageSelector";
-import { useTranslation } from "@/hooks/use-translation";
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  phone: z.string().min(10, {
-    message: "Please enter a valid phone number.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-  serviceInterest: z.array(z.string()).optional(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Layout from '../components/Layout';
+import { useToast } from '@/hooks/use-toast';
+import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 
 const Contact = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation();
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-      serviceInterest: [],
-    },
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: 'Window Cleaning',
+    message: ''
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSubmitting(true);
     
-    // Here you would normally send the form data to your backend
-    // For now we'll just simulate a successful submission
-    console.log("Form data:", data);
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    toast({
-      title: t("Message Sent!"),
-      description: t("Thank you for reaching out. We'll get back to you shortly."),
-    });
-    
-    form.reset();
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast({
+        title: "Message Sent!",
+        description: "We've received your message and will get back to you shortly.",
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: 'Window Cleaning',
+        message: ''
+      });
+    }, 1500);
   };
 
   return (
     <Layout>
-      {/* Hero section with background image */}
-      <div 
-        className="relative bg-cover bg-center py-20" 
-        style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png')`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover'
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className="absolute top-4 right-4">
-            <LanguageSelector />
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">{t("Contact Us")}</h1>
-          <p className="text-gray-200 text-center max-w-2xl mx-auto mb-12">
-            {t("Have questions or ready to schedule a service? Get in touch with our team for exceptional pressure washing solutions.")}
+      <Helmet>
+        <title>Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock</title>
+        <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
+      </Helmet>
+      
+      <div className="relative bg-black text-white">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-50"
+          style={{ backgroundImage: "url('/lovable-uploads/fb43637a-3ca5-4495-997e-7cdb8fcaf83f.png')" }}
+        />
+        <div className="banner-overlay"></div>
+        <div className="relative container mx-auto px-4 py-24 text-center z-10">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+          <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
+            Our team is ready to answer your questions and provide a free, no-obligation quote for your service needs.
           </p>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Information */}
-            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-gray-700 hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px]">
-              <h2 className="text-2xl font-bold mb-6 text-white">{t("Get In Touch")}</h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <MapPin className="text-bc-red mr-4 flex-shrink-0 mt-1" size={24} />
-                  <div>
-                    <h3 className="font-medium mb-1 text-white">{t("Location")}</h3>
-                    <p className="text-gray-300">{t("Langley, BC, Canada")}</p>
-                    <p className="text-gray-300">{t("Serving the Fraser Valley and surrounding areas")}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <Phone className="text-bc-red mr-4 flex-shrink-0 mt-1" size={24} />
-                  <div>
-                    <h3 className="font-medium mb-1 text-white">{t("Phone")}</h3>
-                    <p className="text-gray-300">778 808 7620</p>
-                    <p className="text-gray-300">{t("Monday-Friday: 8AM - 6PM")}</p>
-                    <p className="text-gray-300">{t("Saturday: 9AM - 5PM")}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <Mail className="text-bc-red mr-4 flex-shrink-0 mt-1" size={24} />
-                  <div>
-                    <h3 className="font-medium mb-1 text-white">{t("Email")}</h3>
-                    <p className="text-gray-300">info@bcpressurewashing.ca</p>
-                    <p className="text-gray-300">{t("We typically respond within 24 hours")}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8 p-6 bg-gray-900/60 rounded-lg">
-                <h3 className="text-xl font-medium mb-4 text-white">{t("Service Areas")}</h3>
-                <p className="text-gray-300 mb-2">
-                  {t("We proudly serve residential and commercial clients throughout:")}
-                </p>
-                <ul className="list-disc pl-5 text-gray-300 space-y-1">
-                  <li>{t("Langley")}</li>
-                  <li>{t("Surrey")}</li>
-                  <li>{t("Abbotsford")}</li>
-                  <li>{t("White Rock")}</li>
-                  <li>{t("Maple Ridge")}</li>
-                  <li>{t("Burnaby")}</li>
-                  <li>{t("And surrounding communities")}</li>
-                </ul>
-              </div>
-            </div>
-            
-            {/* Contact Form */}
-            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-gray-700 hover:shadow-xl transition-all duration-300 hover:translate-y-[-5px]">
-              <h2 className="text-2xl font-bold mb-6 text-white text-center">{t("Send Us a Message")}</h2>
-              
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">{t("Your Name")}</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                            <Input
-                              placeholder={t("John Doe")}
-                              className="pl-10 bg-gray-800/70 border-gray-700 text-white"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage className="text-red-400" />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">{t("Email Address")}</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                              <Input
-                                placeholder={t("your.email@example.com")}
-                                className="pl-10 bg-gray-800/70 border-gray-700 text-white"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-400" />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">{t("Phone Number")}</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                              <Input
-                                placeholder={t("(123) 456-7890")}
-                                className="pl-10 bg-gray-800/70 border-gray-700 text-white"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-400" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">{t("Your Message")}</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <MessageSquare className="absolute left-3 top-3 text-gray-400" size={18} />
-                            <Textarea
-                              placeholder={t("Tell us about your needs...")}
-                              className="min-h-[120px] pl-10 resize-none bg-gray-800/70 border-gray-700 text-white"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage className="text-red-400" />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div>
-                    <p className="text-sm font-medium mb-3 text-white">{t("Services you're interested in:")}</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {[
-                        t("Window Cleaning"), 
-                        t("Gutter Cleaning"), 
-                        t("Roof Cleaning"), 
-                        t("House Washing"), 
-                        t("Commercial Services")
-                      ].map((service) => {
-                        const serviceId = service.toLowerCase().replace(/\s+/g, '-');
-                        const serviceInterest = form.getValues().serviceInterest || [];
-                        const isChecked = serviceInterest.includes(service);
-                        
-                        return (
-                          <div className="flex items-center space-x-2" key={service}>
-                            <Checkbox
-                              id={serviceId}
-                              className="border-gray-600 data-[state=checked]:bg-bc-red data-[state=checked]:border-bc-red"
-                              checked={isChecked}
-                              onCheckedChange={(checked) => {
-                                const currentInterests = [...serviceInterest];
-                                if (checked) {
-                                  form.setValue('serviceInterest', [...currentInterests, service]);
-                                } else {
-                                  form.setValue(
-                                    'serviceInterest',
-                                    currentInterests.filter((s) => s !== service)
-                                  );
-                                }
-                              }}
-                            />
-                            <label
-                              htmlFor={serviceId}
-                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-300"
-                            >
-                              {service}
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  
-                  <Button
-                    type="submit"
-                    className="w-full bg-bc-red hover:bg-red-700 text-white"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        {t("Sending...")}
-                      </span>
-                    ) : (
-                      <span className="flex items-center">
-                        <Send className="mr-2" size={16} />
-                        {t("Send Message")}
-                      </span>
-                    )}
-                  </Button>
-                </form>
-              </Form>
-            </div>
-          </div>
         </div>
       </div>
       
-      {/* FAQ Section */}
-      <div className="bg-gray-100 py-16">
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-white rounded-lg p-8 shadow-lg">
-              <h2 className="text-2xl font-bold mb-6 text-center">{t("Frequently Asked Questions")}</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-2">
+              <h2 className="text-3xl font-bold mb-6">Get In Touch</h2>
+              <p className="text-gray-600 mb-8">
+                Fill out the form below and we'll get back to you as soon as possible. If you need an immediate response, please call us directly.
+              </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-lg font-medium mb-2 text-bc-red">{t("Do you offer free quotes?")}</h3>
-                  <p className="text-gray-700">{t("Yes, we provide free, no-obligation quotes for all our services. Contact us to schedule an assessment.")}</p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Your Name *</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                      placeholder="John Smith"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email Address *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">Phone Number</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                      placeholder="(123) 456-7890"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="service" className="block text-gray-700 font-medium mb-2">Service Interested In *</label>
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                    >
+                      <option value="Window Cleaning">Window Cleaning</option>
+                      <option value="Pressure Washing">Pressure Washing</option>
+                      <option value="Roof Cleaning">Roof Cleaning</option>
+                      <option value="Gutter Cleaning">Gutter Cleaning</option>
+                      <option value="Commercial Services">Commercial Services</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
                 </div>
                 
                 <div>
-                  <h3 className="text-lg font-medium mb-2 text-bc-red">{t("What areas do you serve?")}</h3>
-                  <p className="text-gray-700">{t("We serve Langley, Surrey, Abbotsford, White Rock, Maple Ridge, Burnaby, and surrounding areas in BC.")}</p>
+                  <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Your Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={6}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                    placeholder="Please provide details about your project or questions..."
+                  ></textarea>
                 </div>
                 
                 <div>
-                  <h3 className="text-lg font-medium mb-2 text-bc-red">{t("How often should I have my gutters cleaned?")}</h3>
-                  <p className="text-gray-700">{t("We recommend cleaning gutters at least twice a year, typically in spring and fall, to prevent clogs and water damage.")}</p>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-bc-red text-white px-8 py-3 rounded-md font-medium inline-flex items-center transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 disabled:opacity-75"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-5 w-5" />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+            
+            <div className="bg-gray-50 p-8 rounded-lg h-fit">
+              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
+              
+              <div className="space-y-6">
+                <div className="flex items-start">
+                  <Phone className="text-bc-red mr-4 mt-1" />
+                  <div>
+                    <h4 className="font-bold">Phone</h4>
+                    <p className="text-gray-600 mt-1">
+                      <a href="tel:7788087620" className="hover:text-bc-red transition-colors">778 808 7620</a>
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">Mon-Sat: 8am - 6pm</p>
+                  </div>
                 </div>
                 
-                <div>
-                  <h3 className="text-lg font-medium mb-2 text-bc-red">{t("Are your cleaning products eco-friendly?")}</h3>
-                  <p className="text-gray-700">{t("Yes, we use environmentally-friendly cleaning solutions that effectively remove dirt and grime without harming plants or wildlife.")}</p>
+                <div className="flex items-start">
+                  <Mail className="text-bc-red mr-4 mt-1" />
+                  <div>
+                    <h4 className="font-bold">Email</h4>
+                    <p className="text-gray-600 mt-1">
+                      <a href="mailto:info@bcpressurewashing.ca" className="hover:text-bc-red transition-colors">info@bcpressurewashing.ca</a>
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
+                  </div>
                 </div>
                 
-                <div>
-                  <h3 className="text-lg font-medium mb-2 text-bc-red">{t("How long does a typical service take?")}</h3>
-                  <p className="text-gray-700">{t("Service times vary depending on the size of your property and the specific service. Most residential jobs are completed within a few hours.")}</p>
+                <div className="flex items-start">
+                  <MapPin className="text-bc-red mr-4 mt-1" />
+                  <div>
+                    <h4 className="font-bold">Location</h4>
+                    <p className="text-gray-600 mt-1">15501 Marine Dr<br />White Rock, BC V4B 1C9</p>
+                    <p className="text-sm text-gray-500 mt-1">Serving Surrey, White Rock & Metro Vancouver</p>
+                  </div>
                 </div>
                 
-                <div>
-                  <h3 className="text-lg font-medium mb-2 text-bc-red">{t("Do you offer any guarantees?")}</h3>
-                  <p className="text-gray-700">{t("Yes, we stand behind our work with a satisfaction guarantee. If you're not satisfied, we'll return to address any issues.")}</p>
+                <div className="flex items-start">
+                  <Clock className="text-bc-red mr-4 mt-1" />
+                  <div>
+                    <h4 className="font-bold">Business Hours</h4>
+                    <div className="text-gray-600 mt-1">
+                      <p>Monday - Friday: 8am - 6pm</p>
+                      <p>Saturday: 9am - 5pm</p>
+                      <p>Sunday: Closed</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Add the ChatAssistant component */}
-      <ChatAssistant />
+      </section>
+      
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-10">Ready for a Cleaner Property?</h2>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="tel:7788087620">
+              <button className="btn-primary w-full sm:w-auto">
+                <Phone className="mr-2 inline-block" size={16} />
+                Call Us: 778 808 7620
+              </button>
+            </a>
+            <button className="btn-secondary w-full sm:w-auto" onClick={() => document.getElementById('name')?.focus()}>
+              <Mail className="mr-2 inline-block" size={16} />
+              Send a Message
+            </button>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };

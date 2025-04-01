@@ -6,6 +6,7 @@ import ServiceProcess from '../../components/ServiceProcess';
 import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
 import CallToAction from '../../components/CallToAction';
 import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 const RoofCleaning = () => {
   const benefits = [
@@ -55,6 +56,12 @@ const RoofCleaning = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Professional Roof Cleaning Services | BC Pressure Washing White Rock</title>
+        <meta name="description" content="Expert roof cleaning services in White Rock, Surrey & Metro Vancouver. Safe moss and algae removal, extending roof lifespan. Free estimates!" />
+        <meta name="keywords" content="roof cleaning White Rock, moss removal BC, roof maintenance Surrey, professional roof cleaning services" />
+      </Helmet>
+      
       <ServiceHeader
         title="Roof Cleaning"
         description="Safe and effective roof cleaning solutions to protect your investment and enhance your home's appearance."
@@ -117,7 +124,11 @@ const RoofCleaning = () => {
         <ServiceProcess processes={processes} />
       </section>
 
-      <CallToAction />
+      <CallToAction 
+        backgroundImage="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
+        title="Ready to Transform Your Roof?"
+        subtitle="Contact us today for a free roof cleaning quote and consultation."
+      />
     </Layout>
   );
 };

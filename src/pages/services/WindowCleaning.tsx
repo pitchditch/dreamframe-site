@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Helmet } from 'react-helmet';
 
 const WindowCleaning = () => {
   const isMobile = useIsMobile();
@@ -60,6 +61,12 @@ const WindowCleaning = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Professional Window Cleaning Services in White Rock, BC | BC Pressure Washing</title>
+        <meta name="description" content="Expert window cleaning services in White Rock & Surrey. Crystal clear, streak-free results for homes and businesses. Free estimates!" />
+        <meta name="keywords" content="window cleaning White Rock, residential window cleaning White Rock, commercial window cleaning Surrey, streak-free window cleaning, professional window cleaner near me" />
+      </Helmet>
+      
       <ServiceHeader
         title="Window Cleaning"
         description="Professional window cleaning services that deliver crystal clear, streak-free results for your home or business."
@@ -176,8 +183,9 @@ const WindowCleaning = () => {
       </section>
 
       <CallToAction 
-        backgroundImage="/lovable-uploads/b937b789-e5a5-4a00-9d06-d7101902b6a5.png"
-        hideImage={true}
+        backgroundImage="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
+        title="Ready to Transform Your Windows?"
+        subtitle="Contact us today for a free window cleaning quote and consultation."
       />
     </Layout>
   );
