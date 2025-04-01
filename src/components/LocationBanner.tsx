@@ -12,19 +12,19 @@ const LocationBanner = () => {
             Areas We Service
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 md:gap-6 text-sm md:text-base">
-            <Link to="/locations/white-rock" className="hover:text-bc-red transition-colors">
+            <Link to="/locations/white-rock" className="hover:text-bc-red transition-colors p-1">
               White Rock, BC
             </Link>
-            <Link to="/locations/surrey" className="hover:text-bc-red transition-colors">
+            <Link to="/locations/surrey" className="hover:text-bc-red transition-colors p-1">
               Surrey, BC
             </Link>
-            <Link to="/locations/langley" className="hover:text-bc-red transition-colors">
+            <Link to="/locations/langley" className="hover:text-bc-red transition-colors p-1">
               Langley, BC
             </Link>
-            <Link to="/locations/south-surrey" className="hover:text-bc-red transition-colors">
+            <Link to="/locations/south-surrey" className="hover:text-bc-red transition-colors p-1">
               South Surrey, BC
             </Link>
-            <Link to="/locations/metro-vancouver" className="hover:text-bc-red transition-colors">
+            <Link to="/locations/metro-vancouver" className="hover:text-bc-red transition-colors p-1">
               Metro Vancouver
             </Link>
           </div>

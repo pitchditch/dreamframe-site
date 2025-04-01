@@ -46,9 +46,10 @@
     line-height: 1.3;
   }
   
-  .location-banner p {
-    font-size: 0.9rem;
-    line-height: 1.4;
+  .location-banner a {
+    font-size: 0.85rem !important;
+    line-height: 1.3;
+    padding: 0.25rem;
   }
 }
 
