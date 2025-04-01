@@ -7,18 +7,27 @@ import { Gift } from 'lucide-react';
 
 interface PriceCalculatorOverlayProps {
   buttonText?: string;
-  variant?: 'default' | 'bc-red';
+  variant?: 'default' | 'outline' | 'bc-red'; // Added 'outline' as valid variant
   className?: string;
   icon?: boolean;
+  onComplete?: () => void; // Added onComplete prop
 }
 
 const PriceCalculatorOverlay = ({ 
   buttonText = "Check Price & Availability", 
   variant = 'default',
   className = "",
-  icon = false
+  icon = false,
+  onComplete
 }: PriceCalculatorOverlayProps) => {
   const [open, setOpen] = useState(false);
+  
+  const handleComplete = () => {
+    setOpen(false);
+    if (onComplete) {
+      onComplete();
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -30,8 +39,9 @@ const PriceCalculatorOverlay = ({
             {icon && <Gift className="mr-2 h-4 w-4" />}
             {buttonText}
           </Button>
-        ) : variant === 'default' ? (
+        ) : variant === 'outline' ? (
           <Button 
+            variant="outline"
             className={`special-offers-button ${className}`}
           >
             {icon && <Gift className="mr-2 h-4 w-4" />}
@@ -39,7 +49,6 @@ const PriceCalculatorOverlay = ({
           </Button>
         ) : (
           <Button 
-            variant="outline" 
             className={`special-offers-button ${className}`}
           >
             {icon && <Gift className="mr-2 h-4 w-4" />}
@@ -55,7 +64,7 @@ const PriceCalculatorOverlay = ({
           </DialogDescription>
         </DialogHeader>
         <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto">
-          <PriceCalculatorForm onComplete={() => setOpen(false)} />
+          <PriceCalculatorForm onComplete={handleComplete} />
         </div>
       </DialogContent>
     </Dialog>
