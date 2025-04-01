@@ -15,6 +15,10 @@ import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check } from 'lucide-react';
 
+interface PriceCalculatorFormProps {
+  onComplete?: () => void;
+}
+
 const formSchema = z.object({
   services: z.array(z.string()).min(1, "Please select at least one service"),
   size: z.string(),
@@ -33,7 +37,7 @@ const formSchema = z.object({
   notes: z.string().optional(),
 });
 
-const PriceCalculatorForm = () => {
+const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
   const [step, setStep] = useState(1);
   const [selectedPackage, setSelectedPackage] = useState<any>(null);
   
@@ -89,6 +93,9 @@ const PriceCalculatorForm = () => {
     console.log(data);
     // Here you would typically send the data to your backend
     alert("Your quote request has been submitted! We'll contact you shortly.");
+    if (onComplete) {
+      onComplete();
+    }
   };
 
   const nextStep = () => setStep(prev => {
