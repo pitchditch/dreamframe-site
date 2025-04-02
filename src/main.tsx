@@ -45,8 +45,8 @@ const initializeApp = async () => {
   (window as any).appVersion = Date.now();
 
   // Track page view in Google Analytics
-  if (typeof gtag === 'function') {
-    gtag('event', 'page_view', {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'page_view', {
       page_title: document.title,
       page_location: window.location.href,
       page_path: window.location.pathname
