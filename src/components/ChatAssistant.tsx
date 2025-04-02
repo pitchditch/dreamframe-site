@@ -27,13 +27,28 @@ const ChatAssistant = () => {
     return () => clearTimeout(timer);
   }, [isOpen, isMobile]);
 
-  // Chat suggestions
-  const suggestions = [
-    "What services do you offer?",
-    "Can I get a free quote?",
-    "What areas do you serve?",
-    "How soon can you schedule a service?",
-    "Do you offer commercial services?"
+  // Chat suggestions with prepared answers
+  const suggestionsData = [
+    {
+      question: "How do you clean windows without streaks?",
+      answer: "We use a professional-grade water-fed pole system with pure water technology. This allows us to clean windows without using chemicals, leaving no streaks or residue. For higher windows, we use squeegees and microfiber cloths with eco-friendly cleaning solutions."
+    },
+    {
+      question: "How often should I pressure wash my home?",
+      answer: "For homes in the Surrey and White Rock area, we recommend pressure washing your home's exterior once a year to prevent buildup of moss, algae, and dirt. However, north-facing surfaces or homes surrounded by trees may benefit from cleaning every 6-8 months due to faster growth of organic material."
+    },
+    {
+      question: "What's your roof cleaning process?",
+      answer: "We use a soft washing technique for roof cleaning that's safe for all roof types. We apply a biodegradable cleaning solution that kills moss and algae at the root, then gently rinse without high pressure to protect your shingles. This method provides longer-lasting results than pressure washing alone."
+    },
+    {
+      question: "Do you offer commercial services?",
+      answer: "Yes, we provide comprehensive commercial cleaning services including storefront window cleaning, building exterior washing, parking lot cleaning, and regular maintenance programs. We work with businesses of all sizes and can schedule services outside business hours for minimal disruption."
+    },
+    {
+      question: "What sets your service apart from others?",
+      answer: "Unlike other companies, we're fully insured, use commercial-grade equipment, environmentally friendly cleaning products, and have specialized training for different surfaces. Plus, as the owner, I personally inspect every job to ensure our high standards are met. We also offer a satisfaction guarantee on all our services."
+    }
   ];
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -44,19 +59,18 @@ const ChatAssistant = () => {
     setMessages(prev => [...prev, {text: newMessage, fromUser: true}]);
     setNewMessage('');
     
-    // Simulate response
+    // Find a matching prepared answer or use a default response
     setTimeout(() => {
-      // Simulate bot response
-      const responses = [
-        "I'd be happy to provide you with a free quote! Could you tell me more about what services you need?",
-        "Thanks for your interest! We serve White Rock, Surrey, and surrounding areas. When would you like to schedule a service?",
-        "Great question! Our pressure washing service includes thorough cleaning of your exterior surfaces using professional equipment and eco-friendly cleaning solutions.",
-        "I'll need a bit more information to provide an accurate quote. Would you prefer if I called you to discuss your project?",
-        "We can typically schedule a service within 2-3 business days. Does that timeline work for you?"
-      ];
+      const lowerCaseMessage = newMessage.toLowerCase();
+      const matchingSuggestion = suggestionsData.find(suggestion => 
+        lowerCaseMessage.includes(suggestion.question.toLowerCase().split(' ').slice(0, 3).join(' '))
+      );
       
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      setMessages(prev => [...prev, {text: randomResponse, fromUser: false}]);
+      const response = matchingSuggestion ? 
+        matchingSuggestion.answer : 
+        "Thanks for your question! I'd be happy to help with that. Could you provide a few more details so I can better assist you?";
+      
+      setMessages(prev => [...prev, {text: response, fromUser: false}]);
     }, 1000);
   };
 
@@ -66,24 +80,12 @@ const ChatAssistant = () => {
     setIsOpen(true);
     setShowSuggestions(false);
     
-    // Simulate response
+    // Get the corresponding answer for this suggestion
     setTimeout(() => {
-      let response = "";
-      
-      // Custom responses based on the suggestion
-      if (suggestion.includes("services do you offer")) {
-        response = "We offer a variety of services including window cleaning, pressure washing, gutter cleaning, and roof cleaning for both residential and commercial properties!";
-      } else if (suggestion.includes("free quote")) {
-        response = "Absolutely! We provide free, no-obligation quotes. You can use our online calculator or I can collect some basic information about your project and provide an estimate.";
-      } else if (suggestion.includes("areas do you serve")) {
-        response = "We serve White Rock, Surrey, Langley, and the greater Metro Vancouver area. Are you located in one of these areas?";
-      } else if (suggestion.includes("How soon")) {
-        response = "We can typically schedule services within 2-3 business days, depending on current demand. For urgent needs, we try our best to accommodate!";
-      } else if (suggestion.includes("commercial")) {
-        response = "Yes, we offer specialized commercial services for businesses of all sizes, including window cleaning, exterior washing, and more. Do you have a commercial property that needs our attention?";
-      } else {
-        response = "Thanks for your question! I'd be happy to help with that. Could you provide a few more details so I can better assist you?";
-      }
+      const matchingSuggestion = suggestionsData.find(item => item.question === suggestion);
+      const response = matchingSuggestion ? 
+        matchingSuggestion.answer : 
+        "Thanks for your question! I'd be happy to help with that. Could you provide a few more details so I can better assist you?";
       
       setMessages(prev => [...prev, {text: response, fromUser: false}]);
     }, 1000);
@@ -94,18 +96,19 @@ const ChatAssistant = () => {
       {/* Transparent Chat Suggestions (desktop only) */}
       {showSuggestions && !isMobile && (
         <div 
-          className="fixed bottom-24 right-6 bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-lg p-4 z-40 max-w-xs animate-fade-in"
+          className="fixed bottom-24 right-28 bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-lg p-4 z-40 max-w-xs animate-fade-in"
           onMouseLeave={() => setShowSuggestions(false)}
+          style={{ bottom: '100px', right: '100px' }} // Position away from special offers button
         >
           <p className="text-sm font-medium text-gray-700 mb-2">Need help? Ask me:</p>
           <div className="space-y-2">
-            {suggestions.slice(0, 3).map((suggestion, idx) => (
+            {suggestionsData.slice(0, 3).map((suggestion, idx) => (
               <button 
                 key={idx} 
-                onClick={() => handleSuggestionClick(suggestion)}
+                onClick={() => handleSuggestionClick(suggestion.question)}
                 className="text-sm w-full text-left px-3 py-2 rounded bg-white bg-opacity-80 hover:bg-opacity-100 border border-gray-200 transition-all hover:shadow-md"
               >
-                {suggestion}
+                {suggestion.question}
               </button>
             ))}
           </div>
@@ -181,18 +184,18 @@ const ChatAssistant = () => {
               ))}
             </div>
             
-            {/* Suggestions */}
+            {/* Suggestions - show only for first few messages */}
             {messages.length < 3 && (
               <div className="p-3 border-t bg-gray-50">
                 <p className="text-xs text-gray-500 mb-2">Suggested questions:</p>
                 <div className="flex flex-wrap gap-2">
-                  {suggestions.map((suggestion, index) => (
+                  {suggestionsData.map((suggestion, index) => (
                     <button
                       key={index}
-                      onClick={() => handleSuggestionClick(suggestion)}
+                      onClick={() => handleSuggestionClick(suggestion.question)}
                       className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                     >
-                      {suggestion}
+                      {suggestion.question}
                     </button>
                   ))}
                 </div>
