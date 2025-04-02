@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -10,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Building, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { trackFormSubmission } from '@/utils/analytics';
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -70,6 +70,12 @@ const MaintenanceProgramForm = () => {
   };
 
   const onSubmit = (data: FormValues) => {
+    // Track the form submission
+    trackFormSubmission('maintenance_program', {
+      form_type: 'window_cleaning_maintenance',
+      window_count: data.numberOfWindows.toString()
+    });
+    
     toast({
       title: "Application Submitted",
       description: `Thank you for your interest in our monthly maintenance program. We'll contact you soon to schedule your service for ${data.preferredTime}.`,

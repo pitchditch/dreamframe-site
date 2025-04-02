@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import { useToast } from '@/hooks/use-toast';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { trackFormSubmission } from '@/utils/analytics';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -25,6 +26,12 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Track the contact form submission
+    trackFormSubmission('contact_form', {
+      form_type: 'contact',
+      service_type: formData.service
+    });
     
     // Simulate form submission
     setTimeout(() => {

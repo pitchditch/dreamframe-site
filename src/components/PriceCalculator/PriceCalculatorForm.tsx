@@ -14,6 +14,7 @@ import StepAddons from './steps/StepAddons';
 import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check } from 'lucide-react';
+import { trackFormSubmission } from '@/utils/analytics';
 
 interface PriceCalculatorFormProps {
   onComplete?: () => void;
@@ -91,6 +92,14 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data);
+    
+    // Track the form submission in Google Analytics
+    trackFormSubmission('price_calculator', {
+      form_type: 'price_calculator',
+      service_type: data.services.join(','),
+      property_type: data.propertyType
+    });
+    
     // Here you would typically send the data to your backend
     alert("Your quote request has been submitted! We'll contact you shortly.");
     if (onComplete) {
