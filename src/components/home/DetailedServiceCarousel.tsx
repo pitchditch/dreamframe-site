@@ -29,8 +29,8 @@ const services = [
     ],
     cta: 'Get your windows sparkling today!',
     link: '/services/window-cleaning',
-    squareImage: '/lovable-uploads/931d71f9-6756-4b2d-aeed-7004b3fcdcdb.png',
-    fullWidthImage: '/lovable-uploads/c1382324-2861-4431-b649-4c7306efae95.png',
+    squareImage: '/lovable-uploads/38bb4e4b-7bbb-43a6-97f0-00c6f2f3df6b.png',
+    fullWidthImage: '/lovable-uploads/38bb4e4b-7bbb-43a6-97f0-00c6f2f3df6b.png',
     keywords: 'Window cleaning, streak-free windows, professional window washing, exterior glass cleaning, house window maintenance'
   },
   {
@@ -92,6 +92,22 @@ const services = [
   }
 ];
 
+// Double the services array to alternate between service info and full-width images
+const allCarouselItems = [];
+services.forEach(service => {
+  // Add service description with square image
+  allCarouselItems.push({
+    type: 'serviceInfo',
+    service: service
+  });
+  
+  // Add full-width image
+  allCarouselItems.push({
+    type: 'fullWidthImage',
+    service: service
+  });
+});
+
 // Function to create SEO-friendly alt text
 const createAltText = (service, location, keyword) => {
   if (service.id === 'window-cleaning') {
@@ -136,14 +152,14 @@ const DetailedServiceCarousel = () => {
 
     api.on("select", onSelect);
     
-    // Setup autoplay with 8-second interval
+    // Setup autoplay with 6-second interval (slightly faster to make experience more dynamic)
     const autoplay = setInterval(() => {
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
         api.scrollTo(0);
       }
-    }, 8000);
+    }, 6000);
 
     return () => {
       clearInterval(autoplay);
@@ -176,72 +192,84 @@ const DetailedServiceCarousel = () => {
             setApi={setApi}
           >
             <CarouselContent>
-              {services.map((service, index) => (
-                <CarouselItem key={index} className="w-full">
-                  <div>
-                    {/* Service card with square image */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 bg-white rounded-lg shadow-lg mb-8">
-                      <div className="flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-center mb-4">
-                            <div className="bg-bc-red p-2 rounded-full mr-3 text-white">
-                              {service.icon}
+              {allCarouselItems.map((item, index) => {
+                const serviceIndex = Math.floor(index / 2);
+                const service = item.service;
+                const location = locations[serviceIndex % locations.length];
+                
+                return (
+                  <CarouselItem key={index} className="w-full">
+                    {item.type === 'serviceInfo' ? (
+                      // Service card with square image
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 bg-white rounded-lg shadow-lg mb-8">
+                        <div className="flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center mb-4">
+                              <div className="bg-bc-red p-2 rounded-full mr-3 text-white">
+                                {service.icon}
+                              </div>
+                              <h3 className="text-xl md:text-2xl font-bold">{service.title}</h3>
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold">{service.title}</h3>
+                            
+                            <div className="mb-4">
+                              <span className="inline-flex items-center text-sm bg-slate-100 px-3 py-1 rounded-full mb-4">
+                                <span className="font-semibold">📍 Serving:</span>&nbsp;{location}, {service.altLocations.slice(0, 2).join(', ')}
+                              </span>
+                            </div>
+                            
+                            <p className="text-gray-600 mb-6">{service.description}</p>
+                            
+                            <div className="mb-6">
+                              <h4 className="font-bold mb-2">✅ Services Include:</h4>
+                              <ul>
+                                {service.includes.map((item, idx) => (
+                                  <li key={idx} className="flex items-start mb-1">
+                                    <span className="text-bc-red mr-2">✔</span> {item}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           </div>
                           
-                          <div className="mb-4">
-                            <span className="inline-flex items-center text-sm bg-slate-100 px-3 py-1 rounded-full mb-4">
-                              <span className="font-semibold">📍 Serving:</span>&nbsp;{locations[index]}, {service.altLocations.slice(0, 2).join(', ')}
-                            </span>
-                          </div>
-                          
-                          <p className="text-gray-600 mb-6">{service.description}</p>
-                          
-                          <div className="mb-6">
-                            <h4 className="font-bold mb-2">✅ Services Include:</h4>
-                            <ul>
-                              {service.includes.map((item, idx) => (
-                                <li key={idx} className="flex items-start mb-1">
-                                  <span className="text-bc-red mr-2">✔</span> {item}
-                                </li>
-                              ))}
-                            </ul>
+                          <div>
+                            <p className="font-bold text-bc-red mb-4">{service.cta}</p>
+                            <Link to={service.link}>
+                              <Button className="w-full sm:w-auto">
+                                Learn More <ArrowRight className="ml-2" size={16} />
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                         
-                        <div>
-                          <p className="font-bold text-bc-red mb-4">{service.cta}</p>
-                          <Link to={service.link}>
-                            <Button className="w-full sm:w-auto">
-                              Learn More <ArrowRight className="ml-2" size={16} />
-                            </Button>
+                        <div className="order-first md:order-last">
+                          <img 
+                            src={service.squareImage} 
+                            alt={createAltText(service, location, service.title.split('–')[0].trim())}
+                            className="w-full h-auto rounded-lg shadow-md"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      // Full-width image
+                      <div className="w-full overflow-hidden rounded-lg shadow-lg mb-4">
+                        <img 
+                          src={service.fullWidthImage} 
+                          alt={createAltText(service, 
+                            service.altLocations[Math.floor(Math.random() * service.altLocations.length)], 
+                            service.title.split('–')[0].trim())}
+                          className="w-full h-auto object-cover"
+                        />
+                        <div className="bg-white/80 backdrop-blur-sm p-4 absolute bottom-0 left-0 right-0">
+                          <h3 className="font-bold">{service.title.split('–')[0].trim()}</h3>
+                          <Link to={service.link} className="text-bc-red flex items-center text-sm">
+                            Learn More <ArrowRight className="ml-1" size={14} />
                           </Link>
                         </div>
                       </div>
-                      
-                      <div className="order-first md:order-last">
-                        <img 
-                          src={service.squareImage} 
-                          alt={createAltText(service, locations[index], service.title.split('–')[0].trim())}
-                          className="w-full h-auto rounded-lg shadow-md"
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Full-width image after service description */}
-                    <div className="w-full overflow-hidden rounded-lg shadow-lg mb-4">
-                      <img 
-                        src={service.fullWidthImage} 
-                        alt={createAltText(service, 
-                          service.altLocations[Math.floor(Math.random() * service.altLocations.length)], 
-                          service.title.split('–')[0].trim())}
-                        className="w-full h-auto object-cover"
-                      />
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
+                    )}
+                  </CarouselItem>
+                );
+              })}
             </CarouselContent>
             <div className="flex justify-center mt-8">
               <CarouselPrevious className="relative static mx-2 bg-white/80" />

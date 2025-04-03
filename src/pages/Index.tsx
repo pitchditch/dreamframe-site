@@ -103,8 +103,8 @@ const Index = () => {
             <div>
               <Link to="/locations/white-rock">
                 <img 
-                  src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
-                  alt="White Rock Window Cleaning Services" 
+                  src="/lovable-uploads/38bb4e4b-7bbb-43a6-97f0-00c6f2f3df6b.png" 
+                  alt="Window Cleaning in White Rock | Professional Storefront Cleaning Services" 
                   className="rounded-lg shadow-xl hover:opacity-90 transition-opacity"
                   loading="lazy"
                 />
