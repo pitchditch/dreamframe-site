@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import ServicesSection from '../components/home/ServicesSection';
-import ServiceSlideshow from '../components/home/ServiceSlideshow';
+import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import PackagesSection from '../components/home/PackagesSection';
 import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
@@ -61,6 +61,9 @@ const Index = () => {
       
       <HeroSection />
       
+      {/* Spring Sale Carousel - added right after hero section */}
+      <SpringSaleCarousel />
+      
       {/* Moved Testimonials to appear right after the Hero Section */}
       <TestimonialsSection />
       
@@ -68,7 +71,6 @@ const Index = () => {
       <ProcessSection />
       
       <ServicesSection />
-      <ServiceSlideshow />
       
       {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
       <section className="py-16 bg-bc-gray">

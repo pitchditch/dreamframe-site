@@ -13,7 +13,7 @@ import StepAddress from './steps/StepAddress';
 import StepAddons from './steps/StepAddons';
 import ProgressSteps from './ProgressSteps';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Check } from 'lucide-react';
+import { Check, Percent } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
 
 interface PriceCalculatorFormProps {
@@ -41,6 +41,7 @@ const formSchema = z.object({
 const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
   const [step, setStep] = useState(1);
   const [selectedPackage, setSelectedPackage] = useState<any>(null);
+  const [isSpringSale, setIsSpringSale] = useState(false);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,6 +65,11 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
         const parsedPackage = JSON.parse(packageData);
         setSelectedPackage(parsedPackage);
         
+        // Check if this is a spring sale package
+        if (parsedPackage.isSpringSale) {
+          setIsSpringSale(true);
+        }
+        
         // Prefill form with package services
         if (parsedPackage.services && parsedPackage.services.length > 0) {
           form.setValue('services', parsedPackage.services);
@@ -78,7 +84,13 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
           }
           
           if (parsedPackage.services.includes('pressure-washing')) {
-            form.setValue('cleaning_options.pressure_washing', ['house-washing', 'driveway-washing']);
+            form.setValue('cleaning_options.pressure_washing', ['house-washing']);
+          }
+          
+          if (parsedPackage.services.includes('driveway-washing')) {
+            form.setValue('cleaning_options.pressure_washing', 
+              [...(form.getValues('cleaning_options.pressure_washing') || []), 'driveway-washing']
+            );
           }
           
           // For package selections, we'll show the address step directly
@@ -97,7 +109,8 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
     trackFormSubmission('price_calculator', {
       form_type: 'price_calculator',
       service_type: data.services.join(','),
-      property_type: data.propertyType
+      property_type: data.propertyType,
+      spring_sale: isSpringSale
     });
     
     // Here you would typically send the data to your backend
@@ -148,7 +161,20 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
         </div>
       </div>
 
-      {selectedPackage && step !== 0 && step !== 6 && (
+      {/* Spring Sale Banner */}
+      {isSpringSale && (
+        <div className="bg-yellow-100 p-4 rounded-lg mb-6 border border-yellow-300">
+          <div className="flex items-center mb-2">
+            <Percent className="text-yellow-600 mr-2" size={20} />
+            <h3 className="text-lg font-semibold text-yellow-800">Spring Sale: 20% Off!</h3>
+          </div>
+          <p className="text-sm text-yellow-700">
+            You've selected a service with our Spring Sale discount. Your 20% discount will be applied automatically to your quote.
+          </p>
+        </div>
+      )}
+
+      {selectedPackage && step !== 0 && step !== 6 && !isSpringSale && (
         <div className="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
           <div className="flex items-center mb-2">
             <Check className="text-green-600 mr-2" size={20} />
@@ -206,7 +232,7 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
           {step === 3 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 4 && <StepAddons form={form} onNext={nextStep} onBack={prevStep} />}
           {step === 5 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 6 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} />}
+          {step === 6 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} isSpringSale={isSpringSale} />}
         </form>
       </Form>
     </div>
