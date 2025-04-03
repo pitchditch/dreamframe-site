@@ -63,7 +63,14 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const isTransparent = isOverVideo || isScrollingFast;
+  // Determine if navbar should be transparent
+  // When at the top of page, use white background, not transparent
+  const isTransparent = !isAtTop() && (isOverVideo || isScrollingFast);
+  
+  // Function to check if at the top of the page
+  function isAtTop() {
+    return window.scrollY <= 0;
+  }
 
   return (
     <header 
