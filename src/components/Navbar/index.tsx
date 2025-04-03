@@ -63,7 +63,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Logo isOverVideo={isOverVideo} />
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between flex-1 max-w-5xl ml-8">
           <NavbarDesktop 
             isOverVideo={isOverVideo}
             isServicesMenuOpen={isServicesMenuOpen}

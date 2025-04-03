@@ -6,9 +6,11 @@ import { blogPosts } from '../data/blogPosts';
 import { Helmet } from 'react-helmet';
 import { Calendar, Tag, Clock, ArrowRight } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
+import { useTranslation } from '@/hooks/use-translation';
 
 const Blog = () => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const { language } = useTranslation();
   
   // Get all unique tags from blog posts
   const allTags = Array.from(
@@ -25,18 +27,38 @@ const Blog = () => {
     trackFormSubmission('blog_page_view');
   }, []);
 
+  // Meta information based on language
+  const getMetaInfo = () => {
+    switch(language) {
+      case 'pa':
+        return {
+          title: "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਨਾਲ ਆਪਣੇ ਘਰ ਦੀ ਖੁਬਸੂਰਤੀ ਸੁਧਾਰੋ | BCProServices - ਵ੍ਹਾਈਟਰੌਕ, ਸਰੀ, ਐਬਟਸਫੋਰਡ, ਵੈਂਕੂਵਰ, ਮੈਪਲ ਰਿਜ, ਚਿਲੀਵੈਕ, ਨਿਊ ਵੈਸਟਮਿੰਸਟਰਨ, ਨਾਰਥ ਵੈਂਕੂਵਰ, ਡੈਲਟਾ, ਬਰਨਾਬੀ",
+          description: "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਨਾਲ ਆਪਣੇ ਘਰ ਦੇ ਬਾਹਰੀ ਹਿੱਸੇ ਨੂੰ ਸਾਫ਼ ਕਰੋ ਅਤੇ ਰੂਫ ਸਾਫ਼ ਕਰਨ ਦੀ ਸੇਵਾ ਲਓ। BCProServices ਨਾਲ ਸੰਪਰਕ ਕਰੋ - ਵ੍ਹਾਈਟਰੌਕ, ਸਰੀ, ਐਬਟਸਫੋਰਡ, ਵੈਂਕੂਵਰ, ਮੈਪਲ ਰਿਜ, ਚਿਲੀਵੈਕ, ਨਿਊ ਵੈਸਟਮਿੰਸਟਰਨ, ਨਾਰਥ ਵੈਂਕੂਵਰ, ਡੈਲਟਾ, ਬਰਨਾਬੀ ਵਿੱਚ ਵੀ!",
+          keywords: "Pressure Washing, Home Exterior Cleaning, Roof Cleaning, Punjabi Pressure Washing, BCProServices, Driveway Cleaning, Roof Cleaning Service, Home Improvement, ਵ੍ਹਾਈਟਰੌਕ, ਸਰੀ, ਐਬਟਸਫੋਰਡ, ਵੈਂਕੂਵਰ, ਮੈਪਲ ਰਿਜ, ਚਿਲੀਵੈਕ, ਨਿਊ ਵੈਸਟਮਿੰਸਟਰਨ, ਨਾਰਥ ਵੈਂਕੂਵਰ, ਡੈਲਟਾ, ਬਰਨਾਬੀ, ਖਿੜਕੀ ਸਾਫ਼ ਕਰਨਾ, ਬਾਹਰੀ ਖਿੜਕੀ ਸਾਫ਼ ਕਰਨਾ, ਅੰਦਰੂਨੀ ਖਿੜਕੀ ਸਾਫ਼ ਕਰਨਾ"
+        };
+      case 'hi':
+        return {
+          title: "प्रेशर वॉशिंग से अपने घर की सुंदरता सुधारें | BCProServices - व्हाइटरॉक, सरी, एबट्सफोर्ड, वैंकूवर, मैपल रिज, चिलिवैक, न्यू वेस्टमिंस्टर, नॉर्थ वैंकूवर, डेल्टा, बर्नाबी",
+          description: "प्रेशर वॉशिंग से अपने घर के बाहरी हिस्से की सफाई करें और छत की सफाई सेवाएं प्राप्त करें। BCProServices से संपर्क करें - व्हाइटरॉक, सरी, एबट्सफोर्ड, वैंकूवर, मैपल रिज, चिलिवैक, न्यू वेस्टमिंस्टर, नॉर्थ वैंकूवर, डेल्टा, बर्नाबी में भी!",
+          keywords: "Pressure Washing, Home Exterior Cleaning, Roof Cleaning, Hindi Pressure Washing, BCProServices, Driveway Cleaning, Roof Cleaning Service, Home Improvement, व्हाइटरॉक, सरी, एबट्सफोर्ड, वैंकूवर, मैपल रिज, चिलिवैक, न्यू वेस्टमिंस्टर, नॉर्थ वैंकूवर, डेल्टा, बर्नाबी, खिड़की की सफाई, बाहरी खिड़की की सफाई, आंतरिक खिड़की की सफाई"
+        };
+      default:
+        return {
+          title: "Blog | BC Pressure Washing & Window Cleaning White Rock",
+          description: "Expert tips and advice on pressure washing, window cleaning, roof cleaning, and property maintenance in White Rock and Lower Mainland.",
+          keywords: "pressure washing blog, window cleaning tips, roof maintenance, exterior cleaning advice, White Rock property care"
+        };
+    }
+  };
+
+  const metaInfo = getMetaInfo();
+
   return (
     <Layout>
       <Helmet>
-        <title>Blog | BC Pressure Washing & Window Cleaning White Rock</title>
-        <meta 
-          name="description" 
-          content="Expert tips and advice on pressure washing, window cleaning, roof cleaning, and property maintenance in White Rock and Lower Mainland." 
-        />
-        <meta 
-          name="keywords" 
-          content="pressure washing blog, window cleaning tips, roof maintenance, exterior cleaning advice, White Rock property care"
-        />
+        <title>{metaInfo.title}</title>
+        <meta name="description" content={metaInfo.description} />
+        <meta name="keywords" content={metaInfo.keywords} />
       </Helmet>
 
       <section className="container mx-auto px-4 py-12 md:py-16">

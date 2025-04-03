@@ -6,10 +6,12 @@ import { blogPosts, getBlogPostBySlug, getRelatedPosts } from '../data/blogPosts
 import { Helmet } from 'react-helmet';
 import { Calendar, User, Tag, ArrowLeft, ArrowRight } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
+import { useTranslation } from '@/hooks/use-translation';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { language } = useTranslation();
   
   const post = getBlogPostBySlug(slug || '');
   const relatedPosts = post ? getRelatedPosts(post.id, 3) : [];
@@ -33,12 +35,38 @@ const BlogPost = () => {
     return null; // Will redirect in useEffect
   }
 
+  // Meta information based on language
+  const getMetaInfo = () => {
+    switch(language) {
+      case 'pa':
+        return {
+          titleSuffix: "BCProServices - ਵ੍ਹਾਈਟਰੌਕ, ਸਰੀ, ਐਬਟਸਫੋਰਡ",
+          description: `${post.excerpt} | BCProServices ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਅਤੇ ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਸੇਵਾਵਾਂ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ - ਵ੍ਹਾਈਟਰੌਕ, ਸਰੀ, ਐਬਟਸਫੋਰਡ, ਵੈਂਕੂਵਰ ਵਿੱਚ`,
+          keywords: `${post.tags.join(', ')}, ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਵਿੰਡੋ ਕਲੀਨਿੰਗ, ਵ੍ਹਾਈਟਰੌਕ, ਸਰੀ, ਐਬਟਸਫੋਰਡ`
+        };
+      case 'hi':
+        return {
+          titleSuffix: "BCProServices - व्हाइटरॉक, सरी, एबट्सफोर्ड",
+          description: `${post.excerpt} | BCProServices प्रेशर वॉशिंग और विंडो क्लीनिंग सेवाएं प्रदान करता है - व्हाइटरॉक, सरी, एबट्सफोर्ड, वैंकूवर में`,
+          keywords: `${post.tags.join(', ')}, प्रेशर वॉशिंग, विंडो क्लीनिंग, व्हाइटरॉक, सरी, एबट्सफोर्ड`
+        };
+      default:
+        return {
+          titleSuffix: "BC Pressure Washing Blog",
+          description: post.excerpt,
+          keywords: post.tags.join(', ')
+        };
+    }
+  };
+
+  const metaInfo = getMetaInfo();
+
   return (
     <Layout>
       <Helmet>
-        <title>{post.title} | BC Pressure Washing Blog</title>
-        <meta name="description" content={post.excerpt} />
-        <meta name="keywords" content={post.tags.join(', ')} />
+        <title>{post.title} | {metaInfo.titleSuffix}</title>
+        <meta name="description" content={metaInfo.description} />
+        <meta name="keywords" content={metaInfo.keywords} />
       </Helmet>
       
       <div className="relative w-full h-[300px] md:h-[400px] bg-gray-900">

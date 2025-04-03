@@ -12,8 +12,8 @@ const ReferralButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the hero section height (approximately 90vh)
-      const heroSectionHeight = window.innerHeight * 0.9;
+      // Get the hero section height (approximately 80vh)
+      const heroSectionHeight = window.innerHeight * 0.8;
       
       // Hide the button when scrolled past the hero section
       if (window.scrollY > heroSectionHeight) {
@@ -38,7 +38,7 @@ const ReferralButton = () => {
       {isVisible && (
         <Button 
           onClick={() => setIsOpen(true)} 
-          className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-5 py-2 flex items-center gap-2 fixed bottom-24 left-6 z-30 shadow-lg md:left-10"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-5 py-2 flex items-center gap-2 fixed bottom-24 left-6 z-30 shadow-lg md:left-10 transition-all duration-300 hover:scale-105"
         >
           <Gift size={20} />
           <span>{t("Special Offers")}</span>

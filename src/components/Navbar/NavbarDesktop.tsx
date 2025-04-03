@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { NavLink } from './NavLink';
-import ServicesDropdown from './ServicesDropdown';
+import { ServicesDropdown } from './ServicesDropdown';
 import { useTranslation } from '@/hooks/use-translation';
 
 interface NavbarDesktopProps {
@@ -14,7 +14,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
   const { t } = useTranslation();
 
   return (
-    <nav className="hidden md:flex items-center space-x-4">
+    <nav className="hidden md:flex items-center justify-between w-full max-w-3xl">
       <NavLink to="/" isOverVideo={isOverVideo}>
         {t('Home')}
       </NavLink>
