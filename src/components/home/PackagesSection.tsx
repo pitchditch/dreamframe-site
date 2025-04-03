@@ -1,10 +1,11 @@
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Flame, ArrowRight, Check } from "lucide-react";
+import { Flame, ArrowRight, Check, Building, Home } from "lucide-react";
 
 interface PackageSizePrice {
   size: string;
@@ -27,6 +28,28 @@ const PackageCard = ({
   isPrimary = false,
   onSelectPackage
 }: PackageProps) => {
+  const [activePriceIndex, setActivePriceIndex] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActivePriceIndex((prevIndex) => (prevIndex + 1) % prices.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [prices.length]);
+  
+  const activePrice = prices[activePriceIndex];
+  
+  const getHouseIcon = (size: string) => {
+    if (size.includes('0-1800')) {
+      return <Home className="w-4 h-4 mr-1" />;
+    } else if (size.includes('1800-2800')) {
+      return <Home className="w-5 h-5 mr-1" />;
+    } else {
+      return <Building className="w-5 h-5 mr-1" />;
+    }
+  };
+
   return (
     <Card className={`${isPrimary ? 'border-bc-red shadow-md' : 'border-gray-200'} h-full flex flex-col relative transform transition-transform duration-300 hover:scale-105`}>
       <div className="absolute -top-3 right-6 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center">
@@ -52,17 +75,19 @@ const PackageCard = ({
           
           <div>
             <h4 className="font-semibold mb-2">Pricing:</h4>
-            <ul className="space-y-2">
-              {prices.map((price, idx) => (
-                <li key={idx} className="flex flex-col">
-                  <span className="font-medium">{price.size}:</span>
-                  <div className="flex items-center">
-                    <span className="text-gray-500 line-through mr-2">${price.regular.toFixed(2)}</span>
-                    <span className="text-bc-red font-bold">${price.discounted.toFixed(2)}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="bg-gray-50 p-3 rounded-md border border-gray-100 transition-all duration-300">
+              <div className="flex items-center mb-1">
+                {getHouseIcon(activePrice.size)}
+                <span className="font-medium">{activePrice.size}:</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-gray-500 line-through mr-2">${activePrice.regular.toFixed(2)}</span>
+                <span className="text-bc-red font-bold">${activePrice.discounted.toFixed(2)}</span>
+              </div>
+              <div className="text-sm text-green-600 mt-1">
+                Save ${(activePrice.regular - activePrice.discounted).toFixed(2)}
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>
@@ -102,22 +127,6 @@ const PackagesSection = () => {
       discountPercent: 20
     },
     {
-      title: "Full Home Refresh",
-      includes: [
-        "House Washing", 
-        "Exterior Window Cleaning", 
-        "Gutter Cleaning"
-      ],
-      prices: [
-        { size: "0-1800 sqft", regular: 1041.60, discounted: 833.28 },
-        { size: "1800-2800 sqft", regular: 1611.90, discounted: 1289.52 },
-        { size: "2800-3500 sqft", regular: 2207.70, discounted: 1766.16 }
-      ],
-      services: ["pressure-washing", "window-cleaning", "gutter-cleaning"],
-      isPrimary: true,
-      discountPercent: 20
-    },
-    {
       title: "Ultimate Clean",
       includes: [
         "House Washing", 
@@ -129,6 +138,22 @@ const PackagesSection = () => {
         { size: "0-1800 sqft", regular: 1677.00, discounted: 1341.60 },
         { size: "1800-2800 sqft", regular: 2553.00, discounted: 2042.40 },
         { size: "2800-3500 sqft", regular: 3480.60, discounted: 2784.48 }
+      ],
+      services: ["pressure-washing", "window-cleaning", "gutter-cleaning"],
+      isPrimary: true,
+      discountPercent: 20
+    },
+    {
+      title: "Full Home Refresh",
+      includes: [
+        "House Washing", 
+        "Exterior Window Cleaning", 
+        "Gutter Cleaning"
+      ],
+      prices: [
+        { size: "0-1800 sqft", regular: 1041.60, discounted: 833.28 },
+        { size: "1800-2800 sqft", regular: 1611.90, discounted: 1289.52 },
+        { size: "2800-3500 sqft", regular: 2207.70, discounted: 1766.16 }
       ],
       services: ["pressure-washing", "window-cleaning", "gutter-cleaning"],
       discountPercent: 20
@@ -169,14 +194,25 @@ const PackagesSection = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          {packages.map((pkg, index) => (
-            <div key={index} className="animate-on-scroll">
-              <PackageCard 
-                {...pkg} 
-                onSelectPackage={() => handleSelectPackage(pkg)}
-              />
-            </div>
-          ))}
+          {/* Reordering packages: Essential Clean, Ultimate Clean (Primary), Full Home Refresh */}
+          <div className="animate-on-scroll">
+            <PackageCard 
+              {...packages[0]} 
+              onSelectPackage={() => handleSelectPackage(packages[0])}
+            />
+          </div>
+          <div className="animate-on-scroll">
+            <PackageCard 
+              {...packages[1]} 
+              onSelectPackage={() => handleSelectPackage(packages[1])}
+            />
+          </div>
+          <div className="animate-on-scroll">
+            <PackageCard 
+              {...packages[2]} 
+              onSelectPackage={() => handleSelectPackage(packages[2])}
+            />
+          </div>
         </div>
         
         <div className="mt-12 text-center">

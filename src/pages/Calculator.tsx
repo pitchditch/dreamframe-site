@@ -3,11 +3,16 @@ import React from 'react';
 import Layout from '../components/Layout';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import { Helmet } from 'react-helmet';
-import { Flame } from 'lucide-react';
+import { Flame, Tag, Home, Building } from 'lucide-react';
 
 const Calculator = () => {
   // Check if a special package was selected
   const hasSelectedPackage = !!sessionStorage.getItem('selectedPackage');
+  
+  // Get package details if available
+  const packageDetails = hasSelectedPackage 
+    ? JSON.parse(sessionStorage.getItem('selectedPackage') || '{}') 
+    : null;
 
   return (
     <Layout>
@@ -23,11 +28,20 @@ const Calculator = () => {
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
             <div className="flex items-center mb-2">
               <Flame className="text-orange-500 mr-2" size={20} />
-              <h2 className="text-xl font-bold text-orange-700">Spring Special Package Selected!</h2>
+              <h2 className="text-xl font-bold text-orange-700">
+                {packageDetails?.title || "Spring Special Package"} Selected!
+              </h2>
             </div>
-            <p className="text-gray-700">
-              Your selected package has been applied with a 20% discount. Complete the form below to finalize your booking.
+            <p className="text-gray-700 mb-2">
+              Your selected package has been applied with a {packageDetails?.discountPercent || 20}% discount. 
+              Complete the form below to finalize your booking.
             </p>
+            {packageDetails?.savings && (
+              <div className="flex items-center text-green-700">
+                <Tag className="mr-2" size={16} />
+                <span>You're saving ${packageDetails.savings} with this special offer!</span>
+              </div>
+            )}
           </div>
         )}
         

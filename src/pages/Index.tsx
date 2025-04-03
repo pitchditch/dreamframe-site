@@ -11,6 +11,7 @@ import ProcessSection from '../components/home/ProcessSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import ReferralButton from '../components/ReferralButton';
 import PriceCalculatorOverlay from '../components/PriceCalculatorOverlay';
+import StorefrontMaintenanceBanner from '../components/home/StorefrontMaintenanceBanner';
 import { useTranslation } from '@/hooks/use-translation';
 import { MapPin, ArrowRight, Sun } from 'lucide-react';
 
@@ -71,6 +72,9 @@ const Index = () => {
       
       {/* New Packages Section with Spring specials */}
       <PackagesSection />
+
+      {/* New Storefront Maintenance Banner */}
+      <StorefrontMaintenanceBanner />
       
       {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
       <section className="py-16 bg-bc-gray">
