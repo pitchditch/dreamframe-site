@@ -2,6 +2,7 @@
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import CTABanner from './home/CTABanner';
 import PriceBanner from './PriceBanner';
 import LocationBanner from './LocationBanner';
 import ChatAssistant from './ChatAssistant';
@@ -22,9 +23,9 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
       <LocationBanner />
       
-      {/* Updated CTA title */}
+      {/* Move CallToAction component right above footer */}
       <CallToAction 
-        title="Ready to Transform Your Property"
+        title="Premium Clean Solutions for Your Property"
         subtitle="Trust our experienced team to restore and maintain your property's appearance with our comprehensive cleaning services."
         primaryButtonText="Get a Free Quote"
         secondaryButtonText="Learn More"
