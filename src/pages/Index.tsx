@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import DetailedServiceCarousel from '../components/home/DetailedServiceCarousel';
+import ServicesSection from '../components/home/ServicesSection';
+import ServiceSlideshow from '../components/home/ServiceSlideshow';
 import PackagesSection from '../components/home/PackagesSection';
 import ProcessSection from '../components/home/ProcessSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import ReferralButton from '../components/ReferralButton';
+import PriceCalculatorOverlay from '../components/PriceCalculatorOverlay';
 import { useTranslation } from '@/hooks/use-translation';
 import { MapPin, ArrowRight, Sun } from 'lucide-react';
 
@@ -59,14 +61,14 @@ const Index = () => {
       
       <HeroSection />
       
-      {/* Testimonials now appears right after the Hero Section */}
+      {/* Moved Testimonials to appear right after the Hero Section */}
       <TestimonialsSection />
       
       {/* How We Deliver Excellence moved below testimonials */}
       <ProcessSection />
       
-      {/* New Detailed Service Carousel - replaces both ServicesSection and ServiceSlideshow */}
-      <DetailedServiceCarousel />
+      <ServicesSection />
+      <ServiceSlideshow />
       
       {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
       <section className="py-16 bg-bc-gray">
@@ -108,7 +110,7 @@ const Index = () => {
       
       <FeaturedProjectSection />
       
-      {/* Packages Section connects to calculator now */}
+      {/* Packages Section remains here but connects to calculator */}
       <PackagesSection />
       
       <ReferralButton />
