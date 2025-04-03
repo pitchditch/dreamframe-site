@@ -30,7 +30,7 @@ const services = [
     cta: 'Get your windows sparkling today!',
     link: '/services/window-cleaning',
     squareImage: '/lovable-uploads/931d71f9-6756-4b2d-aeed-7004b3fcdcdb.png',
-    fullWidthImage: '/lovable-uploads/116727c7-867b-4c6c-b291-da7848be87ac.png',
+    fullWidthImage: '/lovable-uploads/c1382324-2861-4431-b649-4c7306efae95.png',
     keywords: 'Window cleaning, streak-free windows, professional window washing, exterior glass cleaning, house window maintenance'
   },
   {

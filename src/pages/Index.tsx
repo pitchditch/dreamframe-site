@@ -69,6 +69,9 @@ const Index = () => {
       {/* Combined service carousel with detailed descriptions */}
       <DetailedServiceCarousel />
       
+      {/* New Packages Section with Spring specials */}
+      <PackagesSection />
+      
       {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
       <section className="py-16 bg-bc-gray">
         <div className="container mx-auto px-4">
@@ -108,9 +111,6 @@ const Index = () => {
       </section>
       
       <FeaturedProjectSection />
-      
-      {/* Packages Section remains here but connects to calculator */}
-      <PackagesSection />
       
       <ReferralButton />
     </Layout>
