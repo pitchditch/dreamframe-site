@@ -32,12 +32,10 @@ const HeroSection = () => {
             {t("Professional Pressure Washing Services")}
           </div>
           <h1 className={`text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow text-white ${getLanguageClass()}`}>
-            {t("The Ultimate Cleaning")}
-            <span className="text-bc-red block"> {t("Solution")} </span>
-            {t("for Your Property")}
+            {t("Expert Window Cleaning & Pressure Washing Services")}
           </h1>
           <p className={`text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm max-w-2xl ${getLanguageClass()}`}>
-            {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
+            {t("Delivering exceptional results for both residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
           </p>
           <div className="animate-on-scroll">
             <PriceCalculatorOverlay 

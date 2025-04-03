@@ -131,8 +131,14 @@ const PackagesSection = () => {
       savings: pkg.savings
     }));
     
-    // Navigate to calculator page
-    navigate('/calculator');
+    // Open calculator overlay instead of navigating
+    const calculatorOverlay = document.querySelector('.special-offers-button') as HTMLButtonElement;
+    if (calculatorOverlay) {
+      calculatorOverlay.click();
+    } else {
+      // Fallback to navigating to calculator page
+      navigate('/calculator');
+    }
   };
 
   return (

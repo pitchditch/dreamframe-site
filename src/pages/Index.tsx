@@ -60,6 +60,13 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
+      
+      {/* Moved Testimonials to appear right after the Hero Section */}
+      <TestimonialsSection />
+      
+      {/* How We Deliver Excellence moved below testimonials */}
+      <ProcessSection />
+      
       <ServicesSection />
       <ServiceSlideshow />
       
@@ -102,9 +109,10 @@ const Index = () => {
       </section>
       
       <FeaturedProjectSection />
+      
+      {/* Packages Section remains here but connects to calculator */}
       <PackagesSection />
-      <ProcessSection />
-      <TestimonialsSection />
+      
       <ReferralButton />
     </Layout>
   );

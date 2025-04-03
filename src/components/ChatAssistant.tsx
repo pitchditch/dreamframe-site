@@ -109,29 +109,29 @@ const ChatAssistant = () => {
         </div>
       )}
       
-      {/* Floating Chat Button - Made Larger */}
+      {/* Floating Chat Button - Made Larger with Overlapping Question Mark */}
       <Button 
         onClick={() => {
           setIsOpen(true);
           setShowSuggestions(false);
         }} 
-        className="fixed bottom-6 right-6 h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50 chat-button group"
+        className="fixed bottom-6 right-6 h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg p-0 overflow-visible bg-white hover:bg-gray-100 z-50 chat-button group"
         onMouseEnter={() => setShowSuggestions(true)}
       >
         <Avatar className="h-full w-full border-3 border-bc-red relative">
           <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
           <AvatarFallback className="bg-bc-red text-white text-sm">BC</AvatarFallback>
-          
-          {/* Pulsing question mark that shows when not hovering and chat is closed */}
-          {showQuestionMark && (
-            <div className="absolute -top-1 -right-1 bg-bc-red rounded-full h-7 w-7 flex items-center justify-center shadow-md animate-pulse">
-              <HelpCircle className="text-white h-5 w-5" />
-            </div>
-          )}
         </Avatar>
+        
+        {/* Pulsing question mark that shows when not hovering and chat is closed */}
+        {showQuestionMark && (
+          <div className="absolute -top-2 -right-2 bg-bc-red rounded-full h-7 w-7 flex items-center justify-center shadow-md animate-pulse z-10">
+            <HelpCircle className="text-white h-5 w-5" />
+          </div>
+        )}
       </Button>
       
-      {/* Chat Dialog - Made Larger */}
+      {/* Chat Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[500px] md:max-w-[550px] p-0 overflow-hidden">
           <DialogHeader className="p-4 border-b bg-bc-red text-white">

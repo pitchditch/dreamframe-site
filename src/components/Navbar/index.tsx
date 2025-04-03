@@ -71,9 +71,7 @@ const Navbar = () => {
         !isInitialized ? 'bg-white' : // Always start with white background
         isTransparent 
           ? 'bg-black/40 backdrop-blur-sm' 
-          : isScrolled 
-            ? 'bg-white shadow-md py-1' 
-            : 'bg-white py-2'
+          : 'bg-white shadow-md py-1'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
