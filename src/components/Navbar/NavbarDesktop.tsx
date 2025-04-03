@@ -1,9 +1,8 @@
 
 import { Link } from 'react-router-dom';
-import { NavLink } from './NavLink';
-import { ServicesDropdown } from './ServicesDropdown';
+import NavLink from './NavLink';
+import ServicesDropdown from './ServicesDropdown';
 import { useTranslation } from '@/hooks/use-translation';
-import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
@@ -11,49 +10,46 @@ interface NavbarDesktopProps {
   setIsServicesMenuOpen: (isOpen: boolean) => void;
 }
 
-export const NavbarDesktop = ({
-  isOverVideo,
-  isServicesMenuOpen, 
-  setIsServicesMenuOpen
-}: NavbarDesktopProps) => {
-  const { t, language } = useTranslation();
-  
-  // Get language-specific classes for Punjabi and Hindi
-  const getLanguageClass = () => {
-    if (language === 'pa') return 'font-pa-font';
-    if (language === 'hi') return 'font-hi-font';
-    return '';
-  };
-  
+export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarDesktopProps) => {
+  const { t } = useTranslation();
+
   return (
-    <>
-      <nav className={`hidden md:flex items-center space-x-8 ${getLanguageClass()}`}>
-        <NavLink to="/" isOverVideo={isOverVideo}>
-          {t('Home')}
+    <nav className="hidden md:flex items-center space-x-4">
+      <NavLink to="/" isOverVideo={isOverVideo}>
+        {t('Home')}
+      </NavLink>
+      
+      <div 
+        className="relative"
+        onMouseEnter={() => setIsServicesMenuOpen(true)}
+        onMouseLeave={() => setIsServicesMenuOpen(false)}
+      >
+        <NavLink 
+          to="/services" 
+          isOverVideo={isOverVideo}
+        >
+          {t('Services')}
         </NavLink>
         <ServicesDropdown 
-          isOverVideo={isOverVideo} 
-          isServicesMenuOpen={isServicesMenuOpen}
-          setIsServicesMenuOpen={setIsServicesMenuOpen}
-        />
-        <NavLink to="/about" isOverVideo={isOverVideo}>
-          {t('About')}
-        </NavLink>
-        <NavLink to="/testimonials" isOverVideo={isOverVideo}>
-          {t('Testimonials')}
-        </NavLink>
-        <NavLink to="/contact" isOverVideo={isOverVideo}>
-          {t('Contact')}
-        </NavLink>
-      </nav>
-      
-      <div className="hidden md:block">
-        <PriceCalculatorOverlay
-          buttonText={t('Get a Quote')}
-          variant={isOverVideo ? "outline" : "bc-red"}
-          className={`${getLanguageClass()} ${isOverVideo ? "bg-white/20 hover:bg-white/40 text-white font-bold py-3 px-6" : "font-bold py-3 px-6"}`}
+          isOpen={isServicesMenuOpen}
         />
       </div>
-    </>
+      
+      <NavLink to="/blog" isOverVideo={isOverVideo}>
+        {t('Blog')}
+      </NavLink>
+      
+      <NavLink to="/about" isOverVideo={isOverVideo}>
+        {t('About')}
+      </NavLink>
+      
+      <NavLink to="/testimonials" isOverVideo={isOverVideo}>
+        {t('Testimonials')}
+      </NavLink>
+      
+      <NavLink to="/contact" isOverVideo={isOverVideo}>
+        {t('Contact')}
+      </NavLink>
+    </nav>
   );
 };
