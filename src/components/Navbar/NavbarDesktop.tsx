@@ -14,7 +14,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
   const { t } = useTranslation();
 
   return (
-    <nav className="hidden md:flex items-center justify-between w-full max-w-3xl">
+    <nav className="hidden md:flex items-center gap-8 w-full">
       <NavLink to="/" isOverVideo={isOverVideo}>
         {t('Home')}
       </NavLink>
@@ -39,12 +39,12 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
         {t('Blog')}
       </NavLink>
       
-      <NavLink to="/about" isOverVideo={isOverVideo}>
-        {t('About')}
-      </NavLink>
-      
       <NavLink to="/testimonials" isOverVideo={isOverVideo}>
         {t('Testimonials')}
+      </NavLink>
+      
+      <NavLink to="/about" isOverVideo={isOverVideo}>
+        {t('About')}
       </NavLink>
       
       <NavLink to="/contact" isOverVideo={isOverVideo}>

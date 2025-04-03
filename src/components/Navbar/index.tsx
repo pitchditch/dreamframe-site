@@ -20,24 +20,24 @@ const Navbar = () => {
   useEffect(() => {
     // Set initial state
     const isHomePage = location.pathname === '/';
-    setIsOverVideo(isHomePage);
+    setIsOverVideo(isHomePage && !isScrolled);
     setIsInitialized(true);
 
     const handleScroll = () => {
       if (window.scrollY > 60) {
         setIsScrolled(true);
-        if (isHomePage) {
-          setIsOverVideo(true);
-        }
+        setIsOverVideo(false); // Only apply transparent overlay when at the top
       } else {
         setIsScrolled(false);
         if (isHomePage) {
-          setIsOverVideo(false);
+          setIsOverVideo(true);
         }
       }
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call immediately to set initial state
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
