@@ -12,41 +12,36 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOverVideo, setIsOverVideo] = useState(false); 
+  const [isOverVideo, setIsOverVideo] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false); 
   const location = useLocation();
   const { t } = useTranslation();
 
   useEffect(() => {
+    // Set initial state
+    const isHomePage = location.pathname === '/';
+    setIsOverVideo(isHomePage);
+    setIsInitialized(true);
+
     const handleScroll = () => {
       if (window.scrollY > 60) {
         setIsScrolled(true);
-        // Only set isOverVideo if we're on the home page
-        if (location.pathname === '/') {
+        if (isHomePage) {
           setIsOverVideo(true);
         }
       } else {
         setIsScrolled(false);
-        // Only update isOverVideo if we're on the home page
-        if (location.pathname === '/') {
+        if (isHomePage) {
           setIsOverVideo(false);
         }
       }
     };
 
-    // Initialize on mount - only set to transparent on home page
-    setIsOverVideo(location.pathname === '/');
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
-  // Check for video header when route changes
-  useEffect(() => {
-    // Only set to transparent on home page
-    setIsOverVideo(location.pathname === '/');
-  }, [location.pathname]);
-
-  // Close mobile menu when navigation occurs
+  // Reset menu state on route change
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
@@ -57,11 +52,12 @@ const Navbar = () => {
   return (
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
+        !isInitialized ? 'bg-white' : // Always start with white background
         isOverVideo 
-        ? 'bg-transparent backdrop-blur-sm' 
-        : isScrolled 
-          ? 'bg-white shadow-md py-1' 
-          : 'bg-white py-2'
+          ? 'bg-black/40 backdrop-blur-sm' 
+          : isScrolled 
+            ? 'bg-white shadow-md py-1' 
+            : 'bg-white py-2'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
