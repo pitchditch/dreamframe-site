@@ -14,6 +14,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false); 
+  const [isScrollingFast, setIsScrollingFast] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -24,7 +26,19 @@ const Navbar = () => {
     setIsInitialized(true);
 
     const handleScroll = () => {
-      if (window.scrollY > 60) {
+      // Detect scrolling speed
+      const currentScrollY = window.scrollY;
+      const scrollSpeed = Math.abs(currentScrollY - lastScrollY);
+      setLastScrollY(currentScrollY);
+      
+      // Set scrolling fast flag if scrolling faster than threshold
+      if (scrollSpeed > 15) {
+        setIsScrollingFast(true);
+        // Reset after short delay
+        setTimeout(() => setIsScrollingFast(false), 500);
+      }
+      
+      if (currentScrollY > 60) {
         setIsScrolled(true);
         setIsOverVideo(false); // Only apply transparent overlay when at the top
       } else {
@@ -39,7 +53,7 @@ const Navbar = () => {
     handleScroll(); // Call immediately to set initial state
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname]);
+  }, [location.pathname, lastScrollY]);
 
   // Reset menu state on route change
   useEffect(() => {
@@ -49,11 +63,13 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const isTransparent = isOverVideo || isScrollingFast;
+
   return (
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
         !isInitialized ? 'bg-white' : // Always start with white background
-        isOverVideo 
+        isTransparent 
           ? 'bg-black/40 backdrop-blur-sm' 
           : isScrolled 
             ? 'bg-white shadow-md py-1' 
@@ -61,11 +77,11 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Logo isOverVideo={isOverVideo} />
+        <Logo isOverVideo={isTransparent} />
 
         <div className="flex items-center justify-between flex-1 max-w-5xl ml-8">
           <NavbarDesktop 
-            isOverVideo={isOverVideo}
+            isOverVideo={isTransparent}
             isServicesMenuOpen={isServicesMenuOpen}
             setIsServicesMenuOpen={setIsServicesMenuOpen}
           />
@@ -75,7 +91,7 @@ const Navbar = () => {
           </div>
           
           <MobileMenuButton 
-            isOverVideo={isOverVideo}
+            isOverVideo={isTransparent}
             isMenuOpen={isMenuOpen}
             toggleMenu={toggleMenu}
           />

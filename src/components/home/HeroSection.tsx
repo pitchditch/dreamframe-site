@@ -31,7 +31,7 @@ const HeroSection = () => {
           <div className="badge-pill animate-on-scroll mb-4 bg-red-50/80 backdrop-blur-sm">
             {t("Professional Pressure Washing Services")}
           </div>
-          <h1 className={`text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow ${getLanguageClass()}`}>
+          <h1 className={`text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow text-white ${getLanguageClass()}`}>
             {t("The Ultimate Cleaning")}
             <span className="text-bc-red block"> {t("Solution")} </span>
             {t("for Your Property")}

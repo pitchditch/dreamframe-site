@@ -1,30 +1,26 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { MessageCircle, Send, X } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { MessageCircle, Send, X, HelpCircle } from 'lucide-react';
 import { Input } from './ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showQuestionMark, setShowQuestionMark] = useState(true);
   const [messages, setMessages] = useState<{text: string, fromUser: boolean}[]>([
     {text: "Hi there! I'm Jayden, the owner of BC Pressure Washing. How can I help you today?", fromUser: false}
   ]);
   const [newMessage, setNewMessage] = useState('');
   const isMobile = useIsMobile();
 
-  // Show suggestions when hovering over chat button (desktop only)
+  // Hide question mark when suggestions are shown or chat is open
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isOpen && !isMobile) {
-        setShowSuggestions(true);
-      }
-    }, 3000);
-    
-    return () => clearTimeout(timer);
-  }, [isOpen, isMobile]);
+    setShowQuestionMark(!showSuggestions && !isOpen);
+  }, [showSuggestions, isOpen]);
 
   // Chat suggestions with prepared answers
   const suggestionsData = [
@@ -92,12 +88,11 @@ const ChatAssistant = () => {
 
   return (
     <>
-      {/* Transparent Chat Suggestions (desktop only) */}
-      {showSuggestions && !isMobile && (
+      {/* Transparent Chat Suggestions */}
+      {showSuggestions && (
         <div 
-          className="fixed bottom-24 right-28 bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-lg p-4 z-40 max-w-xs animate-fade-in"
+          className="fixed bottom-24 right-8 bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-lg p-4 z-40 max-w-xs animate-fade-in"
           onMouseLeave={() => setShowSuggestions(false)}
-          style={{ bottom: '100px', right: '100px' }} // Position away from special offers button
         >
           <p className="text-sm font-medium text-gray-700 mb-2">Need help? Ask me:</p>
           <div className="space-y-2">
@@ -105,7 +100,7 @@ const ChatAssistant = () => {
               <button 
                 key={idx} 
                 onClick={() => handleSuggestionClick(suggestion.question)}
-                className="text-sm w-full text-left px-3 py-2 rounded bg-white bg-opacity-80 hover:bg-opacity-100 border border-gray-200 transition-all hover:shadow-md"
+                className="text-sm w-full text-left px-3 py-2 rounded bg-white hover:bg-gray-50 border border-gray-200 transition-all hover:shadow-md"
               >
                 {suggestion.question}
               </button>
@@ -120,14 +115,19 @@ const ChatAssistant = () => {
           setIsOpen(true);
           setShowSuggestions(false);
         }} 
-        className="fixed bottom-6 right-6 h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50 chat-button"
-        onMouseEnter={() => {
-          if (!isMobile) setShowSuggestions(true);
-        }}
+        className="fixed bottom-6 right-6 h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50 chat-button group"
+        onMouseEnter={() => setShowSuggestions(true)}
       >
-        <Avatar className="h-full w-full border-3 border-bc-red">
+        <Avatar className="h-full w-full border-3 border-bc-red relative">
           <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
           <AvatarFallback className="bg-bc-red text-white text-sm">BC</AvatarFallback>
+          
+          {/* Pulsing question mark that shows when not hovering and chat is closed */}
+          {showQuestionMark && (
+            <div className="absolute -top-1 -right-1 bg-bc-red rounded-full h-7 w-7 flex items-center justify-center shadow-md animate-pulse">
+              <HelpCircle className="text-white h-5 w-5" />
+            </div>
+          )}
         </Avatar>
       </Button>
       
