@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import ServicesSection from '../components/home/ServicesSection';
-import ServiceSlideshow from '../components/home/ServiceSlideshow';
+import TestimonialsSection from '../components/home/TestimonialsSection';
+import DetailedServiceCarousel from '../components/home/DetailedServiceCarousel';
 import PackagesSection from '../components/home/PackagesSection';
 import ProcessSection from '../components/home/ProcessSection';
-import TestimonialsSection from '../components/home/TestimonialsSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import ReferralButton from '../components/ReferralButton';
 import PriceCalculatorOverlay from '../components/PriceCalculatorOverlay';
@@ -67,8 +66,8 @@ const Index = () => {
       {/* How We Deliver Excellence moved below testimonials */}
       <ProcessSection />
       
-      <ServicesSection />
-      <ServiceSlideshow />
+      {/* Combined service carousel with detailed descriptions */}
+      <DetailedServiceCarousel />
       
       {/* White Rock Featured Location Section - Updated to focus on window cleaning */}
       <section className="py-16 bg-bc-gray">
