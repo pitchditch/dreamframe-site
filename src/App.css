@@ -1,5 +1,149 @@
+/* ./src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ... keep existing code */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* General typography and base styles */
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f9f9f9;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Layout and Section Styles */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.section-padding {
+  padding: 4rem 0;
+}
+
+/* Reusable Components */
+.btn-primary {
+  background-color: #dc3545;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #c82333;
+}
+
+/* Hero Section Styles */
+.hero-section {
+  position: relative;
+  padding: 6rem 0;
+  text-align: center;
+  color: white;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Service Card Styles */
+.service-card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Footer Styles */
+footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 8rem 0;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease forwards;
+}
+
+/* Utility Classes */
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
 
 /* Mobile-specific improvements for readability */
 @media (max-width: 768px) {
@@ -109,16 +253,28 @@
 @media (min-width: 1024px) {
   /* Larger chat button for desktop */
   .chat-button {
-    height: 4rem !important;
-    width: 4rem !important;
-    bottom: 2rem !important;
-    right: 2rem !important;
+    height: 5rem !important;
+    width: 5rem !important;
+    bottom: 2.5rem !important;
+    right: 2.5rem !important;
+    border: 3px solid #dc2626 !important;
+    transition: transform 0.3s ease;
+  }
+  
+  .chat-button:hover {
+    transform: scale(1.1);
   }
   
   /* Larger special offers button for desktop */
   .special-offers-button {
     padding: 1rem 1.5rem !important;
     font-size: 1.25rem !important;
+    left: 2.5rem !important;
+    transition: transform 0.3s ease;
+  }
+  
+  .special-offers-button:hover {
+    transform: scale(1.05);
   }
 }
 
@@ -131,4 +287,21 @@
   bottom: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7));
   z-index: 1;
+}
+
+/* Animation for chat and referral buttons */
+@keyframes pulse-border {
+  0% {
+    border-color: rgba(220, 38, 38, 0.7);
+  }
+  50% {
+    border-color: rgba(220, 38, 38, 1);
+  }
+  100% {
+    border-color: rgba(220, 38, 38, 0.7);
+  }
+}
+
+.chat-button {
+  animation: pulse-border 2s infinite;
 }

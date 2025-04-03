@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -115,35 +114,35 @@ const ChatAssistant = () => {
         </div>
       )}
       
-      {/* Floating Chat Button */}
+      {/* Floating Chat Button - Made Larger */}
       <Button 
         onClick={() => {
           setIsOpen(true);
           setShowSuggestions(false);
         }} 
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50 chat-button"
+        className="fixed bottom-6 right-6 h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg p-0 overflow-hidden bg-white hover:bg-gray-100 z-50 chat-button"
         onMouseEnter={() => {
           if (!isMobile) setShowSuggestions(true);
         }}
       >
-        <Avatar className="h-full w-full border-2 border-bc-red">
+        <Avatar className="h-full w-full border-3 border-bc-red">
           <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
-          <AvatarFallback className="bg-bc-red text-white text-xs">BC</AvatarFallback>
+          <AvatarFallback className="bg-bc-red text-white text-sm">BC</AvatarFallback>
         </Avatar>
       </Button>
       
-      {/* Chat Dialog */}
+      {/* Chat Dialog - Made Larger */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-[500px] md:max-w-[550px] p-0 overflow-hidden">
           <DialogHeader className="p-4 border-b bg-bc-red text-white">
             <div className="flex items-center gap-3">
-              <Avatar className="h-10 w-10 border-2 border-white">
+              <Avatar className="h-12 w-12 border-2 border-white">
                 <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
                 <AvatarFallback className="bg-white text-bc-red text-xs">BC</AvatarFallback>
               </Avatar>
               <div>
-                <DialogTitle>Chat with BC Pressure Washing</DialogTitle>
-                <p className="text-xs text-white/80">Customer Support</p>
+                <DialogTitle className="text-xl">Chat with BC Pressure Washing</DialogTitle>
+                <p className="text-sm text-white/80">Customer Support</p>
               </div>
             </div>
             <Button 
@@ -152,27 +151,27 @@ const ChatAssistant = () => {
               onClick={() => setIsOpen(false)} 
               className="absolute right-4 top-4 text-white hover:bg-red-700/50 hover:text-white"
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </Button>
           </DialogHeader>
           
-          <div className="flex flex-col h-[400px]">
+          <div className="flex flex-col h-[450px] md:h-[500px]">
             {/* Messages Area */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-4">
+            <div className="flex-1 p-5 overflow-y-auto space-y-4">
               {messages.map((message, index) => (
                 <div 
                   key={index} 
                   className={`flex ${message.fromUser ? 'justify-end' : 'justify-start'}`}
                 >
                   {!message.fromUser && (
-                    <Avatar className="w-8 h-8 mr-2 mt-1 flex-shrink-0">
+                    <Avatar className="w-10 h-10 mr-2 mt-1 flex-shrink-0">
                       <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
                       <AvatarFallback className="bg-bc-red text-white text-xs">BC</AvatarFallback>
                     </Avatar>
                   )}
                   
                   <div 
-                    className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                    className={`rounded-lg px-4 py-3 max-w-[80%] text-base ${
                       message.fromUser 
                         ? 'bg-bc-red text-white rounded-tr-none' 
                         : 'bg-gray-200 text-gray-800 rounded-tl-none'
@@ -208,10 +207,10 @@ const ChatAssistant = () => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message..."
-                className="flex-1"
+                className="flex-1 text-base"
               />
-              <Button type="submit" size="icon" className="bg-bc-red hover:bg-red-700">
-                <Send className="h-4 w-4" />
+              <Button type="submit" size="icon" className="bg-bc-red hover:bg-red-700 h-12 w-12">
+                <Send className="h-5 w-5" />
               </Button>
             </form>
           </div>

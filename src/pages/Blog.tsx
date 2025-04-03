@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { blogPosts } from '../data/blogPosts';
@@ -20,10 +20,10 @@ const Blog = () => {
     ? blogPosts.filter(post => post.tags.includes(selectedTag))
     : blogPosts;
 
-  // Track blog page view
-  useState(() => {
+  // Track blog page view - using useEffect instead of useState
+  useEffect(() => {
     trackFormSubmission('blog_page_view');
-  });
+  }, []);
 
   return (
     <Layout>
@@ -101,7 +101,7 @@ const Blog = () => {
                     {post.tags.map(tag => (
                       <span 
                         key={tag} 
-                        className="inline-flex items-center text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"
+                        className="inline-flex items-center text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded cursor-pointer"
                         onClick={(e) => {
                           e.preventDefault();
                           setSelectedTag(tag);

@@ -6,6 +6,7 @@ import CTABanner from './home/CTABanner';
 import PriceBanner from './PriceBanner';
 import LocationBanner from './LocationBanner';
 import ChatAssistant from './ChatAssistant';
+import ReferralButton from './ReferralButton';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,6 +24,7 @@ const Layout = ({ children }: LayoutProps) => {
       <CTABanner />
       <Footer />
       <ChatAssistant />
+      <ReferralButton />
     </div>
   );
 };
