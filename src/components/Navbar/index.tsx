@@ -5,7 +5,7 @@ import { Logo } from './Logo';
 import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
-import CallButton from '../CallButton';
+import LanguageSelector from '../LanguageSelector';
 import { useTranslation } from '@/hooks/use-translation';
 
 const Navbar = () => {
@@ -85,7 +85,7 @@ const Navbar = () => {
           />
           
           <div className="hidden md:block">
-            <CallButton />
+            <LanguageSelector />
           </div>
           
           <MobileMenuButton 

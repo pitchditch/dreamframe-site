@@ -23,9 +23,9 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
       <LocationBanner />
       
-      {/* Move CallToAction component right above footer with updated title */}
+      {/* Move CallToAction component right above footer */}
       <CallToAction 
-        title="Ready to Transform Your Property?"
+        title="Premium Clean Solutions for Your Property"
         subtitle="Trust our experienced team to restore and maintain your property's appearance with our comprehensive cleaning services."
         primaryButtonText="Get a Free Quote"
         secondaryButtonText="Learn More"

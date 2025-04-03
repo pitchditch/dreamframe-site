@@ -71,7 +71,7 @@ const WindowCleaning = () => {
         title="Window Cleaning"
         description="Professional window cleaning services that deliver crystal clear, streak-free results for your home or business."
         icon={<Sun size={48} />}
-        imagePath="/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png"
+        imagePath="/lovable-uploads/302cbdcc-ad2e-496b-bb73-502eb77f353a.png"
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -101,7 +101,7 @@ const WindowCleaning = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png" 
+              src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
               alt="Window cleaning service" 
               className="rounded-lg shadow-lg w-full h-auto object-cover"
             />
@@ -162,7 +162,7 @@ const WindowCleaning = () => {
             </div>
             <div className="md:w-1/2">
               <img 
-                src="/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png" 
+                src="/lovable-uploads/0562cfd9-348f-4daf-82ee-dfc2feef6c68.png" 
                 alt="Commercial storefront window cleaning" 
                 className="rounded-lg shadow-lg w-full h-auto object-cover"
               />
@@ -183,7 +183,7 @@ const WindowCleaning = () => {
       </section>
 
       <CallToAction 
-        backgroundImage="/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png"
+        backgroundImage="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
         title="Ready to Transform Your Windows?"
         subtitle="Contact us today for a free window cleaning quote and consultation."
       />
