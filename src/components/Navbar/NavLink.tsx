@@ -24,3 +24,6 @@ export const NavLink = ({ to, isOverVideo, children }: NavLinkProps) => {
     </Link>
   );
 };
+
+// Add a default export that simply re-exports the named export
+export default NavLink;

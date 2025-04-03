@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import NavLink from './NavLink';
+import { NavLink } from './NavLink';
 import ServicesDropdown from './ServicesDropdown';
 import { useTranslation } from '@/hooks/use-translation';
 
