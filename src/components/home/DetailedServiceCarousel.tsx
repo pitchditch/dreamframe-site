@@ -27,6 +27,8 @@ const services = [
     cta: 'Get your windows sparkling today!',
     image: '/lovable-uploads/931d71f9-6756-4b2d-aeed-7004b3fcdcdb.png',
     imageAlt: 'Window Cleaning in White Rock | Professional Streak-Free Window Washing by BC Pressure Washing',
+    fullWidthImage: '/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png',
+    fullWidthImageAlt: 'Window Cleaning in South Surrey | Professional Exterior Window Washing by BC Pressure Washing',
     path: '/services/window-cleaning'
   },
   {
@@ -43,6 +45,8 @@ const services = [
     cta: 'Protect your roof and home today!',
     image: '/lovable-uploads/ca94e1e6-7640-44e9-bc41-2389ccf948c1.png',
     imageAlt: 'Roof Cleaning in Surrey | Professional Moss Removal & Roof Maintenance by BC Pressure Washing',
+    fullWidthImage: '/lovable-uploads/47d43541-d56d-4183-bb3a-ac2730befaae.png',
+    fullWidthImageAlt: 'Roof Cleaning in White Rock | Professional Moss & Algae Removal by BC Pressure Washing',
     path: '/services/roof-cleaning'
   },
   {
@@ -59,6 +63,8 @@ const services = [
     cta: 'Book your gutter cleaning service now!',
     image: '/lovable-uploads/ca44edd3-e620-4298-96b2-32f6f8332cae.png',
     imageAlt: 'Gutter Cleaning in Burnaby | Rain Gutter Maintenance & Clog Removal by BC Pressure Washing',
+    fullWidthImage: '/lovable-uploads/0562cfd9-348f-4daf-82ee-dfc2feef6c68.png',
+    fullWidthImageAlt: 'Gutter Cleaning in Vancouver | Professional Downspout & Gutter Maintenance by BC Pressure Washing',
     path: '/services/gutter-cleaning'
   },
   {
@@ -75,6 +81,8 @@ const services = [
     cta: 'Refresh your property with professional pressure washing!',
     image: '/lovable-uploads/a8d9837b-5c66-4e74-a9a9-34e018c71a02.png',
     imageAlt: 'Pressure Washing in Maple Ridge | Professional Exterior Cleaning by BC Pressure Washing',
+    fullWidthImage: '/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png',
+    fullWidthImageAlt: 'Pressure Washing in Abbotsford | Professional Surface Cleaning Services by BC Pressure Washing',
     path: '/services/pressure-washing'
   }
 ];
@@ -130,7 +138,7 @@ const DetailedServiceCarousel = () => {
           <CarouselContent>
             {services.map((service, index) => (
               <CarouselItem key={service.id} className="w-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
                   <div className="order-2 md:order-1">
                     <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
                     
@@ -177,6 +185,17 @@ const DetailedServiceCarousel = () => {
                         className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
                       />
                     </div>
+                  </div>
+                </div>
+                
+                {/* Full width image for each service */}
+                <div className="mt-10 mb-16">
+                  <div className="relative overflow-hidden rounded-lg shadow-xl w-full aspect-[21/9]">
+                    <img 
+                      src={service.fullWidthImage}
+                      alt={service.fullWidthImageAlt}
+                      className="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
+                    />
                   </div>
                 </div>
               </CarouselItem>
