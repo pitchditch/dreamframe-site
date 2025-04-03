@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
-import LanguageSelector from '../LanguageSelector';
+import CallButton from '../CallButton';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface NavbarMobileProps {
@@ -74,7 +74,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
           </Link>
           
           <div className="pt-2">
-            <LanguageSelector />
+            <CallButton />
           </div>
         </nav>
       </div>

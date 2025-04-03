@@ -50,7 +50,7 @@ const StorefrontMaintenanceBanner = () => {
           <div className="order-1 lg:order-2">
             <div className="relative">
               <img 
-                src="/lovable-uploads/38bb4e4b-7bbb-43a6-97f0-00c6f2f3df6b.png" 
+                src="/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png" 
                 alt="Commercial Window Cleaning Service in White Rock | Professional Storefront Maintenance" 
                 className="rounded-lg shadow-xl"
               />

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Droplets, Home, DropletIcon, Building } from 'lucide-react';
@@ -29,8 +28,8 @@ const services = [
     ],
     cta: 'Get your windows sparkling today!',
     link: '/services/window-cleaning',
-    squareImage: '/lovable-uploads/38bb4e4b-7bbb-43a6-97f0-00c6f2f3df6b.png',
-    fullWidthImage: '/lovable-uploads/38bb4e4b-7bbb-43a6-97f0-00c6f2f3df6b.png',
+    squareImage: '/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png',
+    fullWidthImage: '/lovable-uploads/778caebd-6aa4-4699-9475-6090b08b7d12.png',
     keywords: 'Window cleaning, streak-free windows, professional window washing, exterior glass cleaning, house window maintenance'
   },
   {
