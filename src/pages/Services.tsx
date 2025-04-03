@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ServiceCard from '../components/ServiceCard';
@@ -31,6 +30,7 @@ const Services = () => {
               description={t("Professional window cleaning using purified water for crystal clear, streak-free results on homes and buildings of all sizes.")}
               link="/services/window-cleaning"
               image="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86"
+              imageAlt="Window Cleaning in White Rock | Streak-Free Window Washing by BC Pressure Washing"
             />
             <ServiceCard
               icon={<Home size={24} />}
@@ -38,6 +38,7 @@ const Services = () => {
               description={t("Thorough gutter cleaning to prevent damage and maintain proper drainage, extending the life of your gutter system.")}
               link="/services/gutter-cleaning"
               image="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb"
+              imageAlt="Gutter Cleaning in Surrey | Rain Gutter Maintenance & Clog Removal by BC Pressure Washing"
             />
             <ServiceCard
               icon={<CloudRain size={24} />}
@@ -45,6 +46,7 @@ const Services = () => {
               description={t("Safe, low-pressure house washing that removes dirt, algae, and mildew without damaging your home's exterior.")}
               link="/services/house-washing"
               image="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9"
+              imageAlt="House Washing in Langley | Low-Pressure Home Cleaning by BC Pressure Washing"
             />
             <ServiceCard
               icon={<Home size={24} />}
@@ -52,6 +54,7 @@ const Services = () => {
               description={t("Gentle roof cleaning to remove moss, algae, and debris, protecting your roof and extending its lifespan.")}
               link="/services/roof-cleaning"
               image="https://images.unsplash.com/photo-1504893524553-b855bce32c67"
+              imageAlt="Roof Cleaning in White Rock | Moss Removal & Soft Washing by BC Pressure Washing"
             />
             <ServiceCard
               icon={<Car size={24} />}
@@ -59,6 +62,7 @@ const Services = () => {
               description={t("Deep cleaning to remove oil stains, tire marks, and built-up grime from your driveway and walkways.")}
               link="/services/driveway-cleaning"
               image="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07"
+              imageAlt="Driveway Cleaning in Abbotsford | Oil Stain Removal by BC Pressure Washing"
             />
             <ServiceCard
               icon={<Droplets size={24} />}
@@ -66,6 +70,7 @@ const Services = () => {
               description={t("Specialized cleaning for wood and composite decks and patios to restore their beauty and extend their life.")}
               link="/services/deck-cleaning"
               image="https://images.unsplash.com/photo-1458668383970-8ddd3927deed"
+              imageAlt="Deck Cleaning in Mission | Patio Restoration by BC Pressure Washing"
             />
           </div>
         </div>
@@ -81,6 +86,7 @@ const Services = () => {
               description={t("Professional window cleaning services for office buildings, retail stores, and other commercial properties.")}
               link="/services/commercial-window-cleaning"
               image="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png"
+              imageAlt="Commercial Window Cleaning in Vancouver | Office Building Glass Cleaning by BC Pressure Washing"
             />
             <ServiceCard
               icon={<Warehouse size={24} />}
@@ -88,6 +94,7 @@ const Services = () => {
               description={t("Professional parking lot cleaning services that enhance your property's appearance, safety, and longevity.")}
               link="/services/parking-lot-cleaning"
               image="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb"
+              imageAlt="Parking Lot Cleaning in White Rock | Commercial Surface Cleaning by BC Pressure Washing"
             />
             <ServiceCard
               icon={<Building size={24} />}
@@ -95,6 +102,7 @@ const Services = () => {
               description={t("Exterior cleaning for commercial buildings to maintain professional appearance and structural integrity.")}
               link="/services/commercial-building-washing"
               image="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05"
+              imageAlt="Commercial Building Washing in South Surrey | Professional Exterior Cleaning by BC Pressure Washing"
             />
           </div>
         </div>

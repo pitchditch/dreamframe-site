@@ -14,22 +14,26 @@ const slides = [
   {
     image: "/lovable-uploads/6d50984b-4523-400a-ae71-f6be7d6f2430.png",
     title: "Professional Roof Cleaning",
-    description: "Extend the life of your roof with our expert cleaning services"
+    description: "Extend the life of your roof with our expert cleaning services",
+    alt: "Roof Cleaning in White Rock | Moss Removal & Roof Maintenance by BC Pressure Washing"
   },
   {
     image: "/lovable-uploads/a0545346-ecaa-4530-b82b-09115dd4503e.png",
     title: "Commercial Pressure Washing",
-    description: "Keep your business property looking its best year-round"
+    description: "Keep your business property looking its best year-round",
+    alt: "Commercial Pressure Washing in Surrey | Professional Building Cleaning by BC Pressure Washing"
   },
   {
     image: "/lovable-uploads/7fd77226-1d57-4c52-a870-871532745a3f.png",
     title: "Residential Window Cleaning",
-    description: "Crystal clear windows for your home, inside and out"
+    description: "Crystal clear windows for your home, inside and out",
+    alt: "Window Cleaning in White Rock | Streak-Free Window Washing by BC Pressure Washing"
   },
   {
     image: "/lovable-uploads/fb88ad63-4e80-4234-9ba4-f648453c2655.png",
     title: "Gutter Cleaning & Maintenance",
-    description: "Prevent water damage with our thorough gutter cleaning"
+    description: "Prevent water damage with our thorough gutter cleaning",
+    alt: "Gutter Cleaning in Langley | Rain Gutter Maintenance by BC Pressure Washing"
   }
 ];
 
@@ -82,7 +86,7 @@ const ServiceSlideshow = () => {
                   <div className="relative w-full overflow-hidden">
                     <img 
                       src={slide.image} 
-                      alt={slide.title} 
+                      alt={slide.alt} 
                       className="w-full object-cover" 
                     />
                     <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center p-8">

@@ -27,6 +27,7 @@ const CallToAction = ({
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
+        aria-hidden="true"
       />
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
       

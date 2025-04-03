@@ -35,7 +35,7 @@ const ServiceFeatures = () => {
         <div className="md:w-1/2">
           <img 
             src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
-            alt="House pressure washing service" 
+            alt="House Washing in White Rock | Professional Exterior Cleaning by BC Pressure Washing" 
             className="rounded-lg shadow-lg w-full h-auto"
           />
         </div>

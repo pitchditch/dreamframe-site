@@ -17,7 +17,7 @@ const FeaturedProjectSection = () => {
           <div className="animate-on-scroll">
             <img 
               src="/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png" 
-              alt="Beautiful clean house after pressure washing service" 
+              alt="House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing" 
               className="rounded-lg shadow-lg w-full h-auto"
             />
           </div>

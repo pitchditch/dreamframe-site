@@ -41,21 +41,21 @@ const ImageCarousel = () => {
               <CarouselItem>
                 <img 
                   src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" 
-                  alt="Commercial pressure washing" 
+                  alt="Commercial Pressure Washing in Vancouver | Professional Building Cleaning by BC Pressure Washing" 
                   className="w-full h-auto rounded-lg shadow-lg"
                 />
               </CarouselItem>
               <CarouselItem>
                 <img 
                   src="/lovable-uploads/116727c7-867b-4c6c-b291-da7848be87ac.png" 
-                  alt="Window washing service" 
+                  alt="Window Washing in White Rock | Professional Glass Cleaning by BC Pressure Washing" 
                   className="w-full h-auto rounded-lg shadow-lg"
                 />
               </CarouselItem>
               <CarouselItem>
                 <img 
                   src="/lovable-uploads/df1d5443-a527-44af-b261-a7bfde6064f7.png" 
-                  alt="Surface cleaning pressure washing" 
+                  alt="Surface Cleaning in South Surrey | Professional Pressure Washing by BC Pressure Washing" 
                   className="w-full h-auto rounded-lg shadow-lg"
                 />
               </CarouselItem>

@@ -10,9 +10,10 @@ interface ServiceCardProps {
   link: string;
   icon?: React.ReactNode;
   image?: string;
+  imageAlt?: string;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, icon, image }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, icon, image, imageAlt }) => {
   const { t } = useTranslation();
   
   return (
@@ -22,7 +23,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, ico
         {image && (
           <img 
             src={image} 
-            alt={title} 
+            alt={imageAlt || title} 
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
         )}
