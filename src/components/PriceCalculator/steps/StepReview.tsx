@@ -22,7 +22,7 @@ const StepReview = ({ form, onBack, selectedPackage, isSpringSale = false }: Ste
   const selectedServices = formValues.services.map((serviceId: string) => {
     const service = services.find(s => s.id === serviceId);
     return {
-      name: service?.name || serviceId,
+      name: service?.title || serviceId,
       id: serviceId
     };
   });
