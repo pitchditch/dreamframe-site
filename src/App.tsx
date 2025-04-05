@@ -8,6 +8,7 @@ import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Services from './pages/Services';
 import Testimonials from './pages/Testimonials';
+import ZipUploader from './pages/ZipUploader';
 
 import PressureWashing from './pages/services/PressureWashing';
 import WindowCleaning from './pages/services/WindowCleaning';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/calculator" element={<Calculator />} />
+          <Route path="/zip-uploader" element={<ZipUploader />} />
           
           {/* Blog */}
           <Route path="/blog" element={<Blog />} />
