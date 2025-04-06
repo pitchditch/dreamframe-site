@@ -1,7 +1,7 @@
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './App.css';
 import Index from './pages/Index';
 import Contact from './pages/Contact';
