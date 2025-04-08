@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -54,7 +53,7 @@ function App() {
       <Helmet>
         <title>BC Pressure Washing - #1 Pressure Washing & Window Cleaning Services</title>
         <meta name="description" content="Expert pressure washing, window cleaning, roof cleaning, and gutter cleaning services in Surrey, White Rock and Metro Vancouver." />
-        <meta property="og:image" content="https://bcpressurewashing.ca/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" />
+        <meta property="og:image" content="/open.png" />
       </Helmet>
       
       <Suspense fallback={<div>Loading...</div>}>

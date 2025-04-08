@@ -21,7 +21,7 @@ const Layout = ({
   children, 
   title = "BC Pressure Washing - #1 Pressure Washing & Window Cleaning Services", 
   description = "Professional pressure washing, window cleaning, roof cleaning and gutter cleaning services in Surrey, White Rock and Metro Vancouver.",
-  image = "/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png"
+  image = "/open.png"
 }: LayoutProps) => {
   const fullTitle = `${title} | BC Pressure Washing`;
   

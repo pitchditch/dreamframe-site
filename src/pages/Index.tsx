@@ -1,7 +1,6 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import ServicesSection from '../components/home/ServicesSection';
@@ -52,11 +51,12 @@ const Index = () => {
   }, [setLanguage]);
 
   return (
-    <Layout>
+    <Layout image="/open.png">
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
+        <meta property="og:image" content="/open.png" />
       </Helmet>
       
       <HeroSection />
