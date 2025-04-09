@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check, Shield, Star, Info } from 'lucide-react';
+import { Check, Shield, Star, Info, Droplet } from 'lucide-react';
 
 const WhySection: React.FC = () => {
   const benefits = [
@@ -30,7 +30,7 @@ const WhySection: React.FC = () => {
     <section className="container mx-auto px-4 py-16">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-6 text-center">Why Post-Construction Window Cleaning Takes a Pro</h2>
-        <p className="text-gray-600 text-lg text-center mb-10">
+        <p className="text-gray-700 text-lg text-center mb-10 leading-relaxed">
           Construction debris like paint splatter, silicone, stickers, and drywall dust require specialized tools and techniques. 
           Our team is trained to clean without scratching the glass or damaging your frames. 
           We make your new build or renovation shine—literally.
@@ -38,7 +38,7 @@ const WhySection: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {benefits.map((benefit, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-sm flex items-start">
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-duration-300 flex items-start">
               <div className="mr-4 bg-gray-50 p-3 rounded-full">{benefit.icon}</div>
               <div>
                 <h3 className="font-bold text-lg mb-1">{benefit.title}</h3>

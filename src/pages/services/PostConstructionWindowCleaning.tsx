@@ -21,12 +21,13 @@ const PostConstructionWindowCleaning: React.FC = () => {
     "Paint overspray",
     "Drywall & cement dust",
     "Silicone smears",
-    "Plaster residue"
+    "Plaster residue",
+    "Adhesive residue"
   ];
 
   return (
     <Layout 
-      title="Crystal Clear After Construction - Post Construction Window Cleaning"
+      title="Post-Construction Window Cleaning in Surrey & Metro Vancouver"
       description="Professional post construction window cleaning services to remove dust, debris, paint, and adhesives. Serving Surrey, White Rock, and Metro Vancouver."
     >
       <HeroSection />

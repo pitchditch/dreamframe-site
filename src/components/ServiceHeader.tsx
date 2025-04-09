@@ -7,9 +7,10 @@ interface ServiceHeaderProps {
   icon?: ReactNode;
   imagePath?: string;
   videoUrl?: string;
+  darkOverlay?: boolean;
 }
 
-const ServiceHeader = ({ title, description, icon, imagePath, videoUrl }: ServiceHeaderProps) => {
+const ServiceHeader = ({ title, description, icon, imagePath, videoUrl, darkOverlay = false }: ServiceHeaderProps) => {
   useEffect(() => {
     if (videoUrl) {
       document.body.classList.add('has-video-header');
@@ -44,7 +45,7 @@ const ServiceHeader = ({ title, description, icon, imagePath, videoUrl }: Servic
             className="absolute inset-0 bg-cover bg-center opacity-40"
             style={{ backgroundImage: `url(${imagePath})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50" />
+          <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />
           <div className="relative container mx-auto px-4 py-24 text-center z-10">
             {icon && <div className="inline-block text-bc-red mb-4">{icon}</div>}
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-shadow">{title}</h1>
