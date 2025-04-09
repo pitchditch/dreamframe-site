@@ -7,6 +7,7 @@ import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
 import LanguageSelector from '../LanguageSelector';
 import { useTranslation } from '@/hooks/use-translation';
+import { Phone } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +41,7 @@ const Navbar = () => {
       
       if (currentScrollY > 60) {
         setIsScrolled(true);
-        setIsOverVideo(false); // Only apply transparent overlay when at the top
+        setIsOverVideo(false);
       } else {
         setIsScrolled(false);
         if (isHomePage) {
@@ -68,7 +69,7 @@ const Navbar = () => {
   return (
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-        !isInitialized ? 'bg-transparent' : // Start with transparent background
+        !isInitialized ? 'bg-white' : // Start with white background
         isTransparent 
           ? 'bg-black/40 backdrop-blur-sm' 
           : 'bg-white shadow-md py-1'
@@ -84,7 +85,14 @@ const Navbar = () => {
             setIsServicesMenuOpen={setIsServicesMenuOpen}
           />
           
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-4">
+            <a href="tel:7788087620" className={`flex items-center ${
+              isTransparent ? 'text-white' : 'text-black'
+            }`}>
+              <Phone size={18} className="mr-1" />
+              <span className="font-medium">778 808 7620</span>
+            </a>
+            
             <LanguageSelector />
           </div>
           

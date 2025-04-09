@@ -13,7 +13,7 @@ export const MobileMenuButton = ({
   return (
     <button
       type="button"
-      className={`md:hidden ${isOverVideo ? 'text-white' : 'text-gray-700'} hover:text-bc-red`}
+      className={`md:hidden ${isOverVideo ? 'text-white' : 'text-black'} hover:text-bc-red`}
       onClick={toggleMenu}
     >
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

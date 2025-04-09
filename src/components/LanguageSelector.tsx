@@ -22,19 +22,18 @@ const LanguageSelector = () => {
           className="bg-white/20 backdrop-blur-sm border-white/30 hover:bg-white/30 text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
         >
           {language === 'en' ? (
-            <span className="flex items-center gap-1">
+            <span className="flex items-center">
               <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
-              <span>English</span>
             </span>
           ) : language === 'pa' ? (
-            <span className="flex items-center gap-1">
+            <span className="flex items-center">
               <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
-              <span>ਪੰਜਾਬੀ</span>
+              <span className="ml-1">ਪੰਜਾਬੀ</span>
             </span>
           ) : (
-            <span className="flex items-center gap-1">
+            <span className="flex items-center">
               <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
-              <span>हिंदी</span>
+              <span className="ml-1">हिंदी</span>
             </span>
           )}
         </Button>
