@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
-import { Check } from 'lucide-react';
+import { Check, MoveRight } from 'lucide-react';
 import { 
   Carousel,
   CarouselContent,
@@ -10,27 +10,30 @@ import {
   CarouselPrevious,
   CarouselNext
 } from "../ui/carousel";
+import { motion } from "framer-motion";
 
 const slides = [
   {
-    image: "/lovable-uploads/ffa692d0-ab2a-469d-a1a6-f5784d0ed566.png",
-    title: "Professional Screen Cleaning",
-    description: "Complete screen removal and deep cleaning"
-  },
-  {
-    image: "/lovable-uploads/5167c4f1-3256-4d05-a390-61f5dd87e358.png",
-    title: "Construction Debris Removal",
-    description: "Specialized removal of construction tape and residue"
-  },
-  {
-    image: "/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png",
+    image: "/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png",
     title: "Professional Window Cleaning",
-    description: "Expert cleaning for crystal clear results"
+    description: "Specialized streak-free window cleaning techniques"
+  },
+  {
+    image: "/lovable-uploads/8bfa7c48-74fb-490c-89e1-e15d87fdcc6d.png",
+    title: "Screen Cleaning",
+    description: "Complete screen removal and thorough cleaning"
+  },
+  {
+    image: "/lovable-uploads/fa16ee2d-1381-4719-80d7-0bec536ba4d8.png",
+    title: "Water-Fed Pole System",
+    description: "Reaching those difficult high windows with ease"
   }
 ];
 
 const ScreenCleaningSection: React.FC = () => {
   const [api, setApi] = useState<any>(null);
+  const counterRef = useRef<HTMLDivElement>(null);
+  const [count, setCount] = useState(0);
   
   useEffect(() => {
     if (!api) return;
@@ -47,6 +50,36 @@ const ScreenCleaningSection: React.FC = () => {
     return () => clearInterval(autoplay);
   }, [api]);
 
+  // Counter animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          let startCount = 0;
+          const interval = setInterval(() => {
+            startCount += 1;
+            if (startCount <= 500) {
+              setCount(startCount);
+            } else {
+              clearInterval(interval);
+            }
+          }, 5);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
@@ -54,10 +87,51 @@ const ScreenCleaningSection: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-6">Window & Screen Cleaning</h2>
-              <p className="text-gray-700 mb-6 text-lg">
-                Complete your post-construction cleanup with our professional window and screen cleaning services.
-                We thoroughly clean both your windows and screens to ensure a perfect finish.
-              </p>
+              
+              <div className="mb-8 relative">
+                <div 
+                  ref={counterRef}
+                  className="text-6xl md:text-8xl font-bold text-bc-red mb-4 flex items-center"
+                >
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.2,
+                      ease: [0, 0.71, 0.2, 1.01]
+                    }}
+                  >
+                    {count}
+                  </motion.span>
+                  <motion.span 
+                    className="text-3xl md:text-4xl ml-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.7 }}
+                  >
+                    +
+                  </motion.span>
+                  <motion.div
+                    className="absolute -top-6 -right-6 bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-bold rotate-12"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 20,
+                      delay: 1.2
+                    }}
+                  >
+                    Satisfied Clients
+                  </motion.div>
+                </div>
+                
+                <p className="text-gray-700 mb-6 text-lg">
+                  Complete your post-construction cleanup with our professional window and screen cleaning services.
+                  We thoroughly clean both your windows and screens to ensure a perfect finish.
+                </p>
+              </div>
               
               <Card className="mb-8 border-l-4 border-l-bc-red">
                 <CardContent className="pt-6">
@@ -82,9 +156,10 @@ const ScreenCleaningSection: React.FC = () => {
                 variant="bc-red"
                 size="lg"
                 onClick={() => document.getElementById('booking-section')?.scrollIntoView({behavior: 'smooth'})}
-                className="text-white"
+                className="text-white group"
               >
-                Add Screen Cleaning to Your Service
+                Add Screen Cleaning to Your Service 
+                <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </div>
             
@@ -100,7 +175,12 @@ const ScreenCleaningSection: React.FC = () => {
                 <CarouselContent>
                   {slides.map((slide, index) => (
                     <CarouselItem key={index}>
-                      <div className="relative">
+                      <motion.div 
+                        className="relative"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                      >
                         <img 
                           src={slide.image} 
                           alt={slide.title} 
@@ -110,7 +190,7 @@ const ScreenCleaningSection: React.FC = () => {
                           <h3 className="text-lg font-bold">{slide.title}</h3>
                           <p className="text-sm text-gray-200">{slide.description}</p>
                         </div>
-                      </div>
+                      </motion.div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>

@@ -3,13 +3,32 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
+import FooterContactForm from './FooterContactForm';
 
 const Footer = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
+  
+  // Determine which background to show based on the current route
+  const getFooterBgImage = () => {
+    if (location.pathname.includes('/services/window-cleaning')) {
+      return "/lovable-uploads/fa16ee2d-1381-4719-80d7-0bec536ba4d8.png";
+    } else if (location.pathname.includes('/services/post-construction')) {
+      return "/lovable-uploads/a047b138-d031-4811-9b48-b46dc707a449.png";
+    } else {
+      return "/lovable-uploads/d924d396-955b-42cd-b850-83ba524d524e.png";
+    }
+  };
 
   return (
-    <footer className="bg-black text-white pt-16 pb-8">
+    <footer 
+      className="bg-black text-white pt-16 pb-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95)), url(${getFooterBgImage()})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -71,38 +90,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Service Areas and Links */}
-          <div className="col-span-1">
-            <h4 className="text-lg font-semibold mb-6">Service Areas</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/locations/white-rock" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> White Rock
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Surrey
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Vancouver
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Burnaby
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Richmond
-                </Link>
-              </li>
-            </ul>
-          </div>
-
           {/* Contact Information */}
           <div className="col-span-1">
             <h4 className="text-lg font-semibold mb-6">Contact Information</h4>
@@ -129,19 +116,13 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
+          {/* Contact Form */}
+          <div className="col-span-1">
+            <FooterContactForm />
+          </div>
         </div>
         
-        {/* White Rock Based Business Image - Full Width */}
-        <div className="mt-8 w-full">
-          <Link to="/locations/white-rock">
-            <img 
-              src="/lovable-uploads/9044bb24-865d-4974-8d4a-8807df54ea8c.png" 
-              alt="White Rock Based Business" 
-              className={`rounded-md h-auto ${isMobile ? 'max-w-full' : 'w-full'}`}
-            />
-          </Link>
-        </div>
-
         <hr className="border-gray-800 my-8" />
         
         <div className="text-center text-gray-500 text-sm">

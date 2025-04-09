@@ -10,7 +10,7 @@ const BeforeAfterSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="relative">
             <img 
-              src="/lovable-uploads/593e10d0-9bf7-48bd-b3f7-5f274e7c50ba.png" 
+              src="/lovable-uploads/1eaed8db-5d8f-4291-b8a6-cf155569badc.png" 
               alt="Before: Tape and debris stuck to every pane" 
               className="rounded-lg shadow-lg w-full h-72 object-cover"
             />
@@ -21,7 +21,7 @@ const BeforeAfterSection: React.FC = () => {
           
           <div className="relative">
             <img 
-              src="/lovable-uploads/3024ec3e-2c83-4ea9-a1b7-ab89fc2bc3c1.png" 
+              src="/lovable-uploads/8bfa7c48-74fb-490c-89e1-e15d87fdcc6d.png" 
               alt="During: Careful removal using specialized techniques" 
               className="rounded-lg shadow-lg w-full h-72 object-cover"
             />
@@ -32,7 +32,7 @@ const BeforeAfterSection: React.FC = () => {
           
           <div className="relative">
             <img 
-              src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png" 
+              src="/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png" 
               alt="Cleaning Windows: Professional window cleaning in progress" 
               className="rounded-lg shadow-lg w-full h-72 object-cover"
             />
