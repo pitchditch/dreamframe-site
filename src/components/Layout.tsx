@@ -51,12 +51,11 @@ const Layout = ({
       </main>
       <LocationBanner />
       
-      {/* Move CallToAction component right above footer */}
       <CallToAction 
-        title="Premium Clean Solutions for Your Property"
-        subtitle="Trust our experienced team to restore and maintain your property's appearance with our comprehensive cleaning services."
+        title="Contact Us Today"
+        subtitle="Get in touch with our team for professional window cleaning and pressure washing services."
         primaryButtonText="Get a Free Quote"
-        secondaryButtonText="Learn More"
+        secondaryButtonText="Call Us Now"
       />
       
       <Footer />

@@ -1,10 +1,52 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { Check } from 'lucide-react';
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext
+} from "../ui/carousel";
+
+const slides = [
+  {
+    image: "/lovable-uploads/ffa692d0-ab2a-469d-a1a6-f5784d0ed566.png",
+    title: "Professional Screen Cleaning",
+    description: "Complete screen removal and deep cleaning"
+  },
+  {
+    image: "/lovable-uploads/5167c4f1-3256-4d05-a390-61f5dd87e358.png",
+    title: "Construction Debris Removal",
+    description: "Specialized removal of construction tape and residue"
+  },
+  {
+    image: "/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png",
+    title: "Professional Window Cleaning",
+    description: "Expert cleaning for crystal clear results"
+  }
+];
 
 const ScreenCleaningSection: React.FC = () => {
+  const [api, setApi] = useState<any>(null);
+  
+  useEffect(() => {
+    if (!api) return;
+    
+    // Setup autoplay
+    const autoplay = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0);
+      }
+    }, 3000);
+
+    return () => clearInterval(autoplay);
+  }, [api]);
+
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
@@ -47,11 +89,35 @@ const ScreenCleaningSection: React.FC = () => {
             </div>
             
             <div className="relative">
-              <img 
-                src="/lovable-uploads/ffa692d0-ab2a-469d-a1a6-f5784d0ed566.png" 
-                alt="Professional window screen cleaning" 
-                className="rounded-lg shadow-xl w-full h-auto"
-              />
+              <Carousel
+                opts={{
+                  loop: true,
+                  align: "center",
+                }}
+                className="w-full"
+                setApi={setApi}
+              >
+                <CarouselContent>
+                  {slides.map((slide, index) => (
+                    <CarouselItem key={index}>
+                      <div className="relative">
+                        <img 
+                          src={slide.image} 
+                          alt={slide.title} 
+                          className="rounded-lg shadow-xl w-full h-[400px] object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white">
+                          <h3 className="text-lg font-bold">{slide.title}</h3>
+                          <p className="text-sm text-gray-200">{slide.description}</p>
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2 bg-white/80" />
+                <CarouselNext className="right-2 bg-white/80" />
+              </Carousel>
+              
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
                 <p className="text-bc-red font-semibold text-lg mb-1">Complete Package</p>
                 <p className="text-gray-700">Windows + Screens = Perfect Finish</p>
