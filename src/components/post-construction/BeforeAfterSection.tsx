@@ -6,15 +6,16 @@ const BeforeAfterSection: React.FC = () => {
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12 text-center">See The Difference</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="relative">
             <img 
               src="/lovable-uploads/c0370288-8f0e-4e72-a406-f0140ba8ddd5.png" 
               alt="Before: Tape and debris stuck to every pane" 
-              className="rounded-lg shadow-lg w-full h-80 object-cover"
+              className="rounded-lg shadow-lg w-full h-72 object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-4 rounded-b-lg">
-              <p className="text-white font-medium text-lg">Before: Tape and debris stuck to every pane</p>
+              <p className="text-white font-medium text-lg">Before: Tape and debris</p>
             </div>
           </div>
           
@@ -22,10 +23,21 @@ const BeforeAfterSection: React.FC = () => {
             <img 
               src="/lovable-uploads/3f865bfb-458a-4ab3-b2d3-a324d755ab27.png" 
               alt="During: Careful removal using specialized techniques" 
-              className="rounded-lg shadow-lg w-full h-80 object-cover"
+              className="rounded-lg shadow-lg w-full h-72 object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-4 rounded-b-lg">
-              <p className="text-white font-medium text-lg">During: Careful removal using specialized techniques</p>
+              <p className="text-white font-medium text-lg">During: Careful removal</p>
+            </div>
+          </div>
+          
+          <div className="relative">
+            <img 
+              src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png" 
+              alt="Cleaning Windows: Professional window cleaning in progress" 
+              className="rounded-lg shadow-lg w-full h-72 object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-4 rounded-b-lg">
+              <p className="text-white font-medium text-lg">Cleaning Windows</p>
             </div>
           </div>
           
@@ -33,10 +45,10 @@ const BeforeAfterSection: React.FC = () => {
             <img 
               src="/lovable-uploads/3af05628-d275-4679-9546-12fcc6178d94.png" 
               alt="After: Sparkling, streak-free windows" 
-              className="rounded-lg shadow-lg w-full h-80 object-cover"
+              className="rounded-lg shadow-lg w-full h-72 object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-4 rounded-b-lg">
-              <p className="text-white font-medium text-lg">After: Sparkling, streak-free windows</p>
+              <p className="text-white font-medium text-lg">After: Sparkling clean</p>
             </div>
           </div>
         </div>
