@@ -30,11 +30,11 @@ const ServiceHeader = ({ title, description, icon, imagePath, videoUrl }: Servic
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
             <div className="text-center p-6 max-w-3xl mx-auto z-10">
               {icon && <div className="inline-block text-bc-red mb-4">{icon}</div>}
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">{title}</h1>
-              <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">{description}</p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-shadow">{title}</h1>
+              <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200 text-shadow-sm">{description}</p>
             </div>
           </div>
         </div>
@@ -44,10 +44,11 @@ const ServiceHeader = ({ title, description, icon, imagePath, videoUrl }: Servic
             className="absolute inset-0 bg-cover bg-center opacity-40"
             style={{ backgroundImage: `url(${imagePath})` }}
           />
-          <div className="relative container mx-auto px-4 py-24 text-center">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50" />
+          <div className="relative container mx-auto px-4 py-24 text-center z-10">
             {icon && <div className="inline-block text-bc-red mb-4">{icon}</div>}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{title}</h1>
-            <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">{description}</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-shadow">{title}</h1>
+            <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200 text-shadow-sm">{description}</p>
           </div>
         </>
       )}

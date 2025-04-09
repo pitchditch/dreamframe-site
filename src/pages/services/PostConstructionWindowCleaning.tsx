@@ -30,10 +30,10 @@ const PostConstructionWindowCleaning: React.FC = () => {
       description="Professional post construction window cleaning services to remove dust, debris, paint, and adhesives. Serving Surrey, White Rock, and Metro Vancouver."
     >
       <HeroSection />
+      <ServiceAreaBanner />
       <WhySection />
       <BeforeAfterSection />
       <RemovalItemsSection items={removalItems} />
-      <ServiceAreaBanner />
       <ProcessSection />
       <BenefitsSection />
       <TrustSection />
