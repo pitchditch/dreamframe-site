@@ -10,7 +10,7 @@ const HeroSection: React.FC = () => {
       <ServiceHeader
         title="Post-Construction Window Cleaning"
         description="We specialize in removing paint, plaster, tape, and dust—leaving your windows spotless and streak-free in Surrey, White Rock & Metro Vancouver."
-        imagePath="/lovable-uploads/46bdd024-275a-4b16-ae57-e690113dae3f.png"
+        imagePath="/lovable-uploads/f56da7c2-761e-45eb-bed4-01f5446db78c.png"
         darkOverlay={true} // Add darker overlay for better text readability
       />
       <div className="absolute bottom-10 left-0 right-0 flex justify-center z-10">

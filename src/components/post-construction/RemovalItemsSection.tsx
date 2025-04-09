@@ -23,8 +23,8 @@ const RemovalItemsSection: React.FC<RemovalItemsSectionProps> = ({ items }) => {
         </div>
         <div className="mt-10 flex justify-center">
           <img 
-            src="/lovable-uploads/2f04c170-64de-43d4-b774-126da572dfd3.png"
-            alt="Window with construction tape and adhesive" 
+            src="/lovable-uploads/4f5100f2-42bb-471b-aad7-f0700e9a1cab.png"
+            alt="Window cleaning in progress with specialized tools" 
             className="rounded-lg shadow-lg max-w-full md:max-w-md h-auto"
           />
         </div>

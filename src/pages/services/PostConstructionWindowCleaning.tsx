@@ -14,6 +14,7 @@ import BenefitsSection from '../../components/post-construction/BenefitsSection'
 import TrustSection from '../../components/post-construction/TrustSection';
 import BookingSection from '../../components/post-construction/BookingSection';
 import FAQSection from '../../components/post-construction/FAQSection';
+import ScreenCleaningSection from '../../components/post-construction/ScreenCleaningSection';
 
 const PostConstructionWindowCleaning: React.FC = () => {
   const removalItems = [
@@ -35,6 +36,7 @@ const PostConstructionWindowCleaning: React.FC = () => {
       <WhySection />
       <BeforeAfterSection />
       <RemovalItemsSection items={removalItems} />
+      <ScreenCleaningSection />
       <ProcessSection />
       <BenefitsSection />
       <TrustSection />
