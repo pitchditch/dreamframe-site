@@ -136,23 +136,23 @@ const SpringSaleCarousel = () => {
                     backgroundPosition: 'center'
                   }}
                 >
-                  {/* Dark overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+                  {/* Improved dark overlay for better text visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/40"></div>
                   
-                  {/* Service info container */}
+                  {/* Service info container with improved visibility */}
                   <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-12 text-white">
-                    <div className="max-w-4xl mx-auto w-full">
-                      <h2 className="text-3xl sm:text-5xl font-bold mb-3">{service.name}</h2>
-                      <p className="text-lg sm:text-xl mb-6">{service.description}</p>
+                    <div className="max-w-4xl mx-auto w-full bg-black/40 backdrop-blur-sm p-6 sm:p-8 rounded-lg">
+                      <h2 className="text-3xl sm:text-5xl font-bold mb-3 text-white drop-shadow-lg">{service.name}</h2>
+                      <p className="text-lg sm:text-xl mb-6 text-white/90 drop-shadow">{service.description}</p>
                       
-                      {/* Pricing grid */}
+                      {/* Pricing grid with improved visibility */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                         {service.pricing.map((price, i) => (
-                          <div key={i} className="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
-                            <p className="text-sm font-medium mb-2">{price.size}</p>
+                          <div key={i} className="bg-white/20 backdrop-blur-sm p-4 rounded-lg border border-white/30">
+                            <p className="text-sm font-medium mb-2 text-white">{price.size}</p>
                             <div className="flex items-center gap-2">
                               <p className="text-gray-300 line-through">${price.before.toFixed(2)}</p>
-                              <p className="text-xl font-bold">${price.after.toFixed(2)}</p>
+                              <p className="text-xl font-bold text-white">${price.after.toFixed(2)}</p>
                             </div>
                           </div>
                         ))}

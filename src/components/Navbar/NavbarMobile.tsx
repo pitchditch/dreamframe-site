@@ -74,7 +74,11 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
           </Link>
           
           <a href="tel:7788087620" className="py-2 text-black hover:text-bc-red transition-colors flex items-center gap-2">
-            <Phone size={18} />
+            <img 
+              src="/lovable-uploads/bc0ef805-203e-473b-a85c-ea359422543e.png" 
+              alt="Canadian Flag" 
+              className="w-5 h-auto" 
+            />
             <span>778 808 7620</span>
           </a>
           

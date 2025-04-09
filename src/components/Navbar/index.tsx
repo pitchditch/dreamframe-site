@@ -86,10 +86,14 @@ const Navbar = () => {
           />
           
           <div className="hidden md:flex items-center space-x-4">
-            <a href="tel:7788087620" className={`flex items-center ${
+            <a href="tel:7788087620" className={`flex items-center whitespace-nowrap ${
               isTransparent ? 'text-white' : 'text-black'
             }`}>
-              <Phone size={18} className="mr-1" />
+              <img 
+                src="/lovable-uploads/bc0ef805-203e-473b-a85c-ea359422543e.png" 
+                alt="Canadian Flag" 
+                className="w-5 h-auto mr-2" 
+              />
               <span className="font-medium">778 808 7620</span>
             </a>
             
