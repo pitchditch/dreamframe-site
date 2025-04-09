@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -15,6 +16,7 @@ import WindowCleaning from './pages/services/WindowCleaning';
 import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning';
 import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
+import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
 
 import WhiteRock from './pages/locations/WhiteRock';
 import { Toaster } from './components/ui/toaster';
@@ -79,6 +81,7 @@ function App() {
           <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
           <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
           <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+          <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
           
           {/* Location Pages */}
           <Route path="/locations/white-rock" element={<WhiteRock />} />
