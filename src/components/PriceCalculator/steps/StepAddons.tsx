@@ -10,8 +10,7 @@ import { Tag, Info } from 'lucide-react';
 import { 
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
-  TooltipProvider
+  TooltipTrigger
 } from '@/components/ui/tooltip';
 
 interface StepAddonsProps {
@@ -99,16 +98,14 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
                             <FormLabel className="font-medium cursor-pointer">
                               {addon.label}
                             </FormLabel>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Info size={14} className="text-gray-400 cursor-help" />
-                                </TooltipTrigger>
-                                <TooltipContent className="max-w-[200px]">
-                                  <p>{addon.tooltip}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Info size={14} className="text-gray-400 cursor-help" />
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-[200px]">
+                                <p>{addon.tooltip}</p>
+                              </TooltipContent>
+                            </Tooltip>
                           </div>
                           <p className="text-sm text-blue-600 font-medium">+${addon.price}</p>
                         </div>
