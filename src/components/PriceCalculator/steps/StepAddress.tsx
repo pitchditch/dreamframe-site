@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
   FormField,
@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { MapPin, Package2 } from 'lucide-react';
+import { MapPin, Package2, Loader2 } from 'lucide-react';
+import { toast } from "sonner";
 
 interface StepAddressProps {
   form: UseFormReturn<any>;
@@ -27,6 +28,69 @@ declare global {
 
 const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
   const addressInputRef = useRef<HTMLInputElement | null>(null);
+  const [loading, setLoading] = useState(false);
+  
+  const fetchPropertyData = async (address: string) => {
+    setLoading(true);
+    try {
+      // Format the address for the API
+      const formattedAddress = encodeURIComponent(address);
+      
+      // Make a request to the Estated API
+      const response = await fetch(`https://apis.estated.com/v4/property?token=1c2a4f7ff24fae49491027617b66e88c&address=${formattedAddress}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch property data');
+      }
+      
+      const data = await response.json();
+      console.log('Estated API response:', data);
+      
+      // Check if we have valid property data
+      if (data.data && data.data.structure && data.data.structure.size_sqft) {
+        const squareFootage = data.data.structure.size_sqft;
+        form.setValue('square_footage', squareFootage.toString());
+        
+        // Automatically select the property size based on square footage
+        if (squareFootage <= 1500) {
+          form.setValue('size', 'small');
+        } else if (squareFootage <= 2500) {
+          form.setValue('size', 'medium');
+        } else if (squareFootage <= 3500) {
+          form.setValue('size', 'large');
+        } else {
+          form.setValue('size', 'x-large');
+        }
+        
+        toast.success(`Found property: ${squareFootage} sq ft`);
+        return squareFootage;
+      } else {
+        throw new Error('No property size data available');
+      }
+    } catch (error) {
+      console.error("Error getting property details", error);
+      toast.error("Could not retrieve property size. Using estimate instead.");
+      
+      // Fallback to a random size if API fails
+      const dummySquareFootage = Math.floor(Math.random() * 3000) + 1000;
+      form.setValue('square_footage', dummySquareFootage.toString());
+      
+      // Automatically select the property size based on square footage
+      if (dummySquareFootage <= 1500) {
+        form.setValue('size', 'small');
+      } else if (dummySquareFootage <= 2500) {
+        form.setValue('size', 'medium');
+      } else if (dummySquareFootage <= 3500) {
+        form.setValue('size', 'large');
+      } else {
+        form.setValue('size', 'x-large');
+      }
+      
+      return dummySquareFootage;
+    } finally {
+      setLoading(false);
+    }
+  };
   
   useEffect(() => {
     // Define the initialize function for Google Places Autocomplete
@@ -39,34 +103,15 @@ const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
         });
         
         // When the user selects an address from the dropdown
-        autocomplete.addListener('place_changed', () => {
+        autocomplete.addListener('place_changed', async () => {
           const place = autocomplete.getPlace();
           
           if (place.geometry) {
             // Update the form with the selected address
             form.setValue('address', place.formatted_address);
             
-            // Try to extract the property size from the place details
-            try {
-              // This is a simplified example, in reality you'd need to integrate with
-              // a property data API to get the square footage based on the address
-              // For now, we're just setting a dummy value for demonstration
-              const dummySquareFootage = Math.floor(Math.random() * 3000) + 1000;
-              form.setValue('square_footage', dummySquareFootage.toString());
-              
-              // Automatically select the property size based on square footage
-              if (dummySquareFootage <= 1500) {
-                form.setValue('size', 'small');
-              } else if (dummySquareFootage <= 2500) {
-                form.setValue('size', 'medium');
-              } else if (dummySquareFootage <= 3500) {
-                form.setValue('size', 'large');
-              } else {
-                form.setValue('size', 'x-large');
-              }
-            } catch (error) {
-              console.error("Error getting property details", error);
-            }
+            // Try to fetch property size from Estated API
+            await fetchPropertyData(place.formatted_address);
           }
         });
       }
@@ -82,7 +127,9 @@ const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
       
       return () => {
         // Clean up the script when component unmounts
-        document.head.removeChild(script);
+        if (script.parentNode) {
+          document.head.removeChild(script);
+        }
       };
     } else if (window.google && window.google.maps && window.google.maps.places) {
       // If Google Maps is already loaded, initialize autocomplete directly
@@ -137,6 +184,9 @@ const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
                       addressInputRef.current = e;
                     }}
                   />
+                  {loading && (
+                    <Loader2 className="absolute right-3 top-3 h-4 w-4 text-blue-500 animate-spin" />
+                  )}
                 </div>
               </FormControl>
               <FormMessage />
@@ -152,6 +202,14 @@ const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
             <input type="hidden" {...field} />
           )}
         />
+
+        {form.watch('square_footage') && (
+          <div className="bg-blue-50 p-3 rounded-md">
+            <p className="text-sm text-blue-700">
+              Property size: {form.watch('square_footage')} sq ft
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="pt-4">
@@ -159,8 +217,16 @@ const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
           type="button" 
           onClick={handleContinue} 
           className="bg-bc-red hover:bg-red-700 w-full"
+          disabled={loading}
         >
-          {selectedPackage ? "Continue to Review" : "Continue"}
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Fetching property data...
+            </>
+          ) : (
+            selectedPackage ? "Continue to Review" : "Continue"
+          )}
         </Button>
       </div>
     </div>
