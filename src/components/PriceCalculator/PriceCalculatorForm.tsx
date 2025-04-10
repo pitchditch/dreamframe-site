@@ -36,6 +36,7 @@ const formSchema = z.object({
   date: z.date(),
   address: z.string().min(5),
   notes: z.string().optional(),
+  square_footage: z.string().optional(), // Add the hidden square footage field
 });
 
 const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
@@ -53,7 +54,8 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
         gutter_cleaning: '',
         pressure_washing: [],
       },
-      addons: []
+      addons: [],
+      square_footage: '', // Initialize square footage
     },
   });
 
@@ -125,6 +127,9 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
       // If coming from address step with a package selected, jump to review
       return 6;
     }
+    // Regular progression: After services -> address -> property type
+    if (prev === 1) return 2; // Service -> Address
+    if (prev === 2) return 3; // Address -> PropertyType
     return Math.min(prev + 1, 6);
   });
   
@@ -133,8 +138,16 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
       // If going back from review step with a package selected, go to address
       return 0;
     }
+    // Regular progression in reverse
+    if (prev === 3) return 2; // PropertyType -> Address
+    if (prev === 2) return 1; // Address -> Service
     return Math.max(prev - 1, selectedPackage ? 0 : 1);
   });
+
+  // Update step labels to reflect the new order
+  const stepLabels = selectedPackage 
+    ? ['Address', 'Review'] 
+    : ['Services', 'Address', 'Property Type', 'Size', 'Add-ons', 'Contact', 'Review'];
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 bg-white rounded-lg shadow-sm">
@@ -219,8 +232,8 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
       <div className="mb-6">
         <ProgressSteps 
           currentStep={step} 
-          totalSteps={selectedPackage ? 2 : 6} 
-          customLabels={selectedPackage ? ['Address', 'Review'] : ['Services', 'Property Type', 'Size', 'Add-ons', 'Contact', 'Review']}
+          totalSteps={selectedPackage ? 2 : 7} // Updated to 7 total steps with address
+          customLabels={stepLabels}
         />
       </div>
 
@@ -228,11 +241,12 @@ const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {step === 0 && <StepAddress form={form} onNext={nextStep} selectedPackage={selectedPackage} />}
           {step === 1 && <StepService form={form} onNext={nextStep} />}
-          {step === 2 && <StepPropertyType form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 3 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 4 && <StepAddons form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 5 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
-          {step === 6 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} isSpringSale={isSpringSale} />}
+          {step === 2 && <StepAddress form={form} onNext={nextStep} />}
+          {step === 3 && <StepPropertyType form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 4 && <StepSize form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 5 && <StepAddons form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 6 && <StepContact form={form} onNext={nextStep} onBack={prevStep} />}
+          {step === 7 && <StepReview form={form} onBack={prevStep} selectedPackage={selectedPackage} isSpringSale={isSpringSale} />}
         </form>
       </Form>
     </div>
