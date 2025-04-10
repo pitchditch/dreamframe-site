@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import { Helmet } from 'react-helmet';
 import { Percent } from 'lucide-react';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const Calculator = () => {
   return (
@@ -25,7 +26,9 @@ const Calculator = () => {
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
-        <PriceCalculatorForm />
+        <TooltipProvider>
+          <PriceCalculatorForm />
+        </TooltipProvider>
       </div>
     </Layout>
   );
