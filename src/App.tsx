@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -23,6 +22,7 @@ import { Toaster } from './components/ui/toaster';
 import Calculator from './pages/Calculator';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import WhyUs from './pages/WhyUs';
 
 // Track page views with Google Analytics
 const trackPageView = (path: string) => {
@@ -65,9 +65,8 @@ function App() {
           
           {/* Main Pages */}
           <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/why-us" element={<WhyUs />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/zip-uploader" element={<ZipUploader />} />
           
