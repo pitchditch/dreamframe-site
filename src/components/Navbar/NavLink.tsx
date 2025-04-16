@@ -5,9 +5,10 @@ interface NavLinkProps {
   to: string;
   isOverVideo: boolean;
   children: React.ReactNode;
+  className?: string; // Add optional className prop
 }
 
-export const NavLink = ({ to, isOverVideo, children }: NavLinkProps) => {
+export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkProps) => {
   const location = useLocation();
   const isActive = location.pathname === to;
 
@@ -18,7 +19,7 @@ export const NavLink = ({ to, isOverVideo, children }: NavLinkProps) => {
         isOverVideo 
         ? 'text-white hover:text-bc-red hover:text-shadow-white text-shadow-sm' 
         : `text-black hover:text-bc-red hover:text-shadow-dark ${isActive ? 'font-medium text-bc-red' : ''}`
-      }`}
+      } ${className}`} // Append the className prop here
     >
       {children}
     </Link>
