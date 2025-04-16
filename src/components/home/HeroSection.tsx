@@ -2,16 +2,11 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
+import { Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
-  const { t, language } = useTranslation();
-  
-  // Additional language-specific class for font adjustments
-  const getLanguageClass = () => {
-    if (language === 'pa') return 'font-pa-font';
-    if (language === 'hi') return 'font-hi-font';
-    return '';
-  };
+  const { t } = useTranslation();
   
   return (
     <section 
@@ -25,26 +20,41 @@ const HeroSection = () => {
         maxWidth: "100%"
       }}
     >
-      <div className="hero-overlay absolute inset-0 bg-black/30"></div>
+      <div className="hero-overlay absolute inset-0 bg-black/40"></div>
       <div className="container mx-auto px-4 relative z-10 text-white">
         <div className="max-w-3xl text-left">
-          <div className="badge-pill animate-on-scroll mb-4 bg-red-50/80 backdrop-blur-sm">
-            {t("Professional Pressure Washing Services")}
-          </div>
-          <h1 className={`text-4xl md:text-6xl font-bold mb-4 animate-on-scroll text-shadow text-white ${getLanguageClass()}`}>
-            {t("Expert Window Cleaning & Pressure Washing Services")}
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow">
+            Professional Window & Pressure Washing in White Rock & Surrey
           </h1>
-          <p className={`text-lg md:text-xl mb-8 animate-on-scroll text-white text-shadow-sm max-w-2xl ${getLanguageClass()}`}>
-            {t("Delivering exceptional results for both residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
+          <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-sm max-w-2xl">
+            Fast, reliable exterior cleaning — windows, gutters, siding, and more.
           </p>
-          <div className="animate-on-scroll">
+          <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">
             <PriceCalculatorOverlay 
-              buttonText={t("Check Price & Availability")} 
-              className="bg-bc-red hover:bg-red-700 text-white py-4 px-10 text-xl font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
+              buttonText="Request a Free Quote in 30 Seconds" 
+              className="bg-bc-red hover:bg-red-700 text-white py-4 px-8 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all"
             />
+            <a 
+              href="tel:7788087620"
+              className="inline-flex items-center justify-center bg-white text-bc-red py-4 px-8 text-lg font-bold rounded-lg shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all"
+            >
+              <Phone className="mr-2 h-5 w-5" />
+              Call Jayden
+            </a>
           </div>
+          <p className="text-sm text-gray-200 mt-4 animate-on-scroll">
+            No spam. No hassle. Just quick pricing and availability.
+          </p>
         </div>
       </div>
+      
+      {/* Floating Call Button for Mobile */}
+      <a 
+        href="tel:7788087620"
+        className="fixed bottom-6 right-6 md:hidden z-50 bg-bc-red text-white p-4 rounded-full shadow-lg animate-pulse"
+      >
+        <Phone className="h-6 w-6" />
+      </a>
     </section>
   );
 };

@@ -14,8 +14,8 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
   const { t } = useTranslation();
 
   return (
-    <nav className="hidden md:flex items-center gap-6 w-full">
-      <NavLink to="/" isOverVideo={isOverVideo}>
+    <nav className="hidden md:flex items-center gap-8 w-full">
+      <NavLink to="/" isOverVideo={isOverVideo} className="text-lg">
         {t('Home')}
       </NavLink>
       
@@ -24,30 +24,25 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
         onMouseEnter={() => setIsServicesMenuOpen(true)}
         onMouseLeave={() => setIsServicesMenuOpen(false)}
       >
-        <NavLink 
-          to="/services" 
-          isOverVideo={isOverVideo}
-        >
+        <NavLink to="/services" isOverVideo={isOverVideo} className="text-lg">
           {t('Services')}
         </NavLink>
-        <ServicesDropdown 
-          isOpen={isServicesMenuOpen}
-        />
+        <ServicesDropdown isOpen={isServicesMenuOpen} />
       </div>
       
-      <NavLink to="/testimonials" isOverVideo={isOverVideo}>
+      <NavLink to="/testimonials" isOverVideo={isOverVideo} className="text-lg">
         {t('Testimonials')}
       </NavLink>
       
-      <NavLink to="/blog" isOverVideo={isOverVideo}>
+      <NavLink to="/blog" isOverVideo={isOverVideo} className="text-lg">
         {t('Blog')}
       </NavLink>
       
-      <NavLink to="/about" isOverVideo={isOverVideo}>
+      <NavLink to="/about" isOverVideo={isOverVideo} className="text-lg">
         {t('About')}
       </NavLink>
       
-      <NavLink to="/contact" isOverVideo={isOverVideo}>
+      <NavLink to="/contact" isOverVideo={isOverVideo} className="text-lg">
         {t('Contact')}
       </NavLink>
     </nav>
