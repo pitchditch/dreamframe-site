@@ -4,7 +4,7 @@ import React from 'react';
 const FounderSection = () => {
   return (
     <section className="py-32 bg-white relative mt-32">
-      {/* Overlapping Founder Image */}
+      {/* Overlapping Founder Image - positioned to extend into video section */}
       <div className="absolute left-1/2 transform -translate-x-1/2 -top-32 z-20">
         <div className="relative w-64 h-64">
           <img 
@@ -17,7 +17,7 @@ const FounderSection = () => {
 
       <div className="container mx-auto px-4">
         <div className="text-center mb-24">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">👋 Meet the Founder</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 ml-32">👋 Meet the Founder</h2>
           <div className="w-24 h-1 bg-bc-red mx-auto"></div>
         </div>
         
