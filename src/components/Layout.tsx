@@ -1,12 +1,11 @@
-
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import LocationBanner from './LocationBanner';
 import ChatAssistant from './ChatAssistant';
+import CallButton from './CallButton';
 import ReferralButton from './ReferralButton';
-import CallToAction from './CallToAction';
 
 interface LayoutProps {
   children: ReactNode;
@@ -48,6 +47,7 @@ const Layout = ({
       </main>
       <LocationBanner />
       <Footer />
+      <CallButton />
       <ChatAssistant />
     </div>
   );

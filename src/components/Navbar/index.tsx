@@ -59,9 +59,9 @@ const Navbar = () => {
   return (
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-        !isInitialized ? 'bg-transparent' : 
-        isTransparent ? 'bg-black/40 backdrop-blur-sm' : 
-        'bg-transparent backdrop-blur-sm'
+        !isInitialized ? 'bg-white' : 
+        isTransparent ? 'bg-transparent text-white' : 
+        'bg-white text-black'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
