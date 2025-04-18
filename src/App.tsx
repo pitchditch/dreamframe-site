@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -68,6 +69,7 @@ function App() {
           <Route path="/why-us" element={<WhyUs />} />
           <Route path="/services" element={<Services />} />
           <Route path="/calculator" element={<Calculator />} />
+          <Route path="/equipment" element={<Equipment />} />
           <Route path="/zip-uploader" element={<ZipUploader />} />
           
           {/* Blog */}
