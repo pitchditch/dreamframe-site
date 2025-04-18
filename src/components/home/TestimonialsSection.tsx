@@ -2,6 +2,8 @@
 import { useTranslation } from '@/hooks/use-translation';
 import TestimonialCard from '../TestimonialCard';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
 import { 
   Carousel, 
   CarouselContent, 
@@ -20,7 +22,7 @@ const TestimonialsSection = () => {
   useEffect(() => {
     if (!api) return;
 
-    // Set up automatic scrolling with different speeds for mobile/desktop
+    // Set up automatic scrolling
     const interval = setInterval(() => {
       api.scrollNext();
     }, isMobile ? 5000 : 8000);
@@ -47,7 +49,7 @@ const TestimonialsSection = () => {
             className="w-full"
           >
             <CarouselContent>
-              {testimonials.map((testimonial, index) => (
+              {testimonials.slice(0, 6).map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <TestimonialCard
                     quote={testimonial.quote}
@@ -62,6 +64,12 @@ const TestimonialsSection = () => {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Button asChild variant="outline" size="lg" className="bg-bc-red text-white hover:bg-bc-red/90">
+            <Link to="/why-us">See More Testimonials</Link>
+          </Button>
         </div>
       </div>
     </section>
