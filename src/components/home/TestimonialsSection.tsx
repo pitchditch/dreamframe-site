@@ -20,11 +20,16 @@ const TestimonialsSection = () => {
   useEffect(() => {
     if (!api) return;
 
-    api.scrollNext({ duration: isMobile ? 15000 : 25000 });
+    // Set up automatic scrolling with different speeds for mobile/desktop
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, isMobile ? 5000 : 8000);
+
+    return () => clearInterval(interval);
   }, [api, isMobile]);
   
   return (
-    <section className="section-padding bg-bc-gray overflow-hidden">
+    <section className="section-padding bg-bc-gray overflow-hidden -mt-24 pt-32 relative z-10">
       <div className="container mx-auto px-4">
         <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Testimonials")}</div>
         <h2 className="section-title animate-on-scroll">{t("What Our Clients Say")}</h2>

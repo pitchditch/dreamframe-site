@@ -1,3 +1,4 @@
+
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
@@ -46,16 +47,8 @@ const Layout = ({
         {children}
       </main>
       <LocationBanner />
-      <CallToAction 
-        title="Contact Us Today"
-        subtitle="Get in touch with our team for professional window cleaning and pressure washing services."
-        primaryButtonText="Get a Free Quote"
-        secondaryButtonText="Call Us Now"
-        backgroundImage="/lovable-uploads/1d7d3c0f-21a5-4ae2-80c7-7f156797449f.png"
-      />
       <Footer />
       <ChatAssistant />
-      <ReferralButton />
     </div>
   );
 };

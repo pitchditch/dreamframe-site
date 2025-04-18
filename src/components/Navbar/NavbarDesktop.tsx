@@ -22,7 +22,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           onMouseLeave={() => setIsServicesMenuOpen(false)}
         >
           <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl">
-            {t('Residential Services')}
+            {t('Residential')}
           </NavLink>
           <ServicesDropdown isOpen={isServicesMenuOpen} />
         </div>
@@ -33,7 +33,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           onMouseLeave={() => setIsServicesMenuOpen(false)}
         >
           <NavLink to="/services/commercial" isOverVideo={isOverVideo} className="text-xl">
-            {t('Commercial Services')}
+            {t('Commercial')}
           </NavLink>
           <ServicesDropdown isOpen={isServicesMenuOpen} />
         </div>
@@ -42,7 +42,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
       <div className="ml-auto">
         <PriceCalculatorOverlay 
           buttonText="Get a Free Quote" 
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium" 
+          className="bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded-lg font-medium" 
         />
       </div>
     </nav>

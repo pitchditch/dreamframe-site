@@ -9,7 +9,8 @@ interface Testimonial {
   beforeAfterImage?: string;
 }
 
-export const testimonials: Testimonial[] = [
+// Full testimonials collection
+const allTestimonials: Testimonial[] = [
   {
     id: 1,
     service: 'pressure-washing',
@@ -220,3 +221,6 @@ export const testimonials: Testimonial[] = [
     beforeAfterImage: "/lovable-uploads/3dd77762-89a1-4273-ae3e-1c6fbc9894aa.png"
   }
 ];
+
+// Filter testimonials to only include those with images
+export const testimonials = allTestimonials.filter(testimonial => testimonial.beforeAfterImage);

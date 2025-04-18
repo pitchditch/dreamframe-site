@@ -51,34 +51,19 @@ const Index = () => {
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
         <meta property="og:image" content="/open.png" />
+        <style>{`
+          .hero-section {
+            margin-bottom: -5rem;
+          }
+          .text-shadow-lg {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+          }
+        `}</style>
       </Helmet>
       
       <HeroSection />
       <TestimonialsSection />
       <ServicesSection />
-      
-      {/* Full Width Contact Section with Featured Project Image */}
-      <section className="relative py-20">
-        <div className="absolute inset-0">
-          <img 
-            src="/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png"
-            alt="Contact Us Background" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
-        <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Contact Us Today</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Ready to transform your property? Get in touch for a free, no-obligation quote.
-          </p>
-          <div className="flex justify-center gap-4">
-            <a href="tel:7788087620" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition-all">
-              Call Now: 778-808-7620
-            </a>
-          </div>
-        </div>
-      </section>
       
       <ReferralButton />
     </Layout>
