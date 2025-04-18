@@ -8,7 +8,6 @@ const HeroSection = () => {
   
   return (
     <section className="hero-section relative h-[90vh] flex items-center w-full overflow-hidden">
-      {/* YouTube Video Background */}
       <div className="absolute inset-0 pointer-events-none">
         <iframe 
           className="absolute inset-0 w-full h-full scale-[1.5]"
@@ -22,11 +21,11 @@ const HeroSection = () => {
       <div className="hero-overlay absolute inset-0 bg-black/60"></div>
       <div className="container mx-auto px-4 relative z-10 text-white">
         <div className="max-w-3xl text-right ml-auto">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow-lg">
-            Make your home's<br />exterior sparkle.
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow-lg text-white">
+            Clean You Can See.<br />Results You Can Trust.
           </h1>
-          <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto">
-            Trust the job to your tough-to-tackle cleaning team.
+          <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto text-white">
+            Professional window and exterior cleaning with 100% satisfaction guarantee — or we re-clean for free.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end">
             <PriceCalculatorOverlay 
