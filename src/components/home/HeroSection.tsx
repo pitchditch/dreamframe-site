@@ -20,13 +20,13 @@ const HeroSection = () => {
         ></iframe>
       </div>
       
-      <div className="hero-overlay absolute inset-0 bg-black/50"></div>
+      <div className="hero-overlay absolute inset-0 bg-black/60"></div>
       <div className="container mx-auto px-4 relative z-10 text-white">
         <div className="max-w-3xl text-left">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow-lg">
             Professional Window & Pressure Washing in White Rock & Surrey
           </h1>
-          <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-sm max-w-2xl">
+          <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl">
             Fast, reliable exterior cleaning — windows, gutters, siding, and more.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll">
@@ -35,19 +35,11 @@ const HeroSection = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all"
             />
           </div>
-          <p className="text-sm text-gray-200 mt-4 animate-on-scroll">
+          <p className="text-sm text-gray-200 mt-4 animate-on-scroll text-shadow-lg">
             Quick and easy process. No obligation.
           </p>
         </div>
       </div>
-      
-      {/* Floating Call Button for Mobile */}
-      <a 
-        href="tel:7788087620"
-        className="fixed bottom-6 right-6 md:hidden z-50 bg-blue-600 text-white p-4 rounded-full shadow-lg animate-pulse"
-      >
-        <Phone className="h-6 w-6" />
-      </a>
     </section>
   );
 };

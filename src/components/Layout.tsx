@@ -2,8 +2,6 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import CTABanner from './home/CTABanner';
-import PriceBanner from './PriceBanner';
 import LocationBanner from './LocationBanner';
 import ChatAssistant from './ChatAssistant';
 import ReferralButton from './ReferralButton';
@@ -44,7 +42,6 @@ const Layout = ({
       </Helmet>
       
       <Navbar />
-      <PriceBanner />
       <main className="flex-grow w-full">
         {children}
       </main>
@@ -54,6 +51,7 @@ const Layout = ({
         subtitle="Get in touch with our team for professional window cleaning and pressure washing services."
         primaryButtonText="Get a Free Quote"
         secondaryButtonText="Call Us Now"
+        backgroundImage="/lovable-uploads/1d7d3c0f-21a5-4ae2-80c7-7f156797449f.png"
       />
       <Footer />
       <ChatAssistant />
