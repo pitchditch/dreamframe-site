@@ -43,7 +43,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 relative z-10 text-white">
         <div className="max-w-3xl text-right ml-auto">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow-lg text-white">
-            Clean You Can See.<br />Results You Can Trust.
+            White Rock & Surrey's<br />Trusted Cleaning Pros
           </h1>
           <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto text-white">
             Professional window and exterior cleaning with 100% satisfaction guarantee — or we re-clean for free.
@@ -74,3 +74,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

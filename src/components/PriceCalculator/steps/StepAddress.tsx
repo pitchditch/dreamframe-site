@@ -14,6 +14,8 @@ interface StepProps {
   onBack: () => void;
   formData: any;
   updateFormData: (data: any) => void;
+  form?: any;
+  selectedPackage?: any;
 }
 
 const formSchema = z.object({
@@ -24,7 +26,7 @@ const formSchema = z.object({
 
 type AddressFormValues = z.infer<typeof formSchema>;
 
-export default function StepAddress({ onNext, onBack, formData, updateFormData }: StepProps) {
+export default function StepAddress({ onNext, onBack, formData, updateFormData, form: parentForm, selectedPackage }: StepProps) {
   // Load saved zip code if available
   const [storedZipCode, setStoredZipCode] = useState('');
   
