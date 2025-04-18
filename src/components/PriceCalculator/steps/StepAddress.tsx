@@ -6,8 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { StepProps } from '../PriceCalculatorForm';
 import { ArrowRight, ArrowLeft, MapPin } from 'lucide-react';
+
+// Define the StepProps interface locally instead of importing it
+interface StepProps {
+  onNext: () => void;
+  onBack: () => void;
+  formData: any;
+  updateFormData: (data: any) => void;
+}
 
 const formSchema = z.object({
   street: z.string().min(3, { message: "Street address is required" }),

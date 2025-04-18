@@ -15,8 +15,16 @@ const HeroSection = () => {
     if (zipCode) {
       sessionStorage.setItem('userZipCode', zipCode);
     }
-    // Open the calculator
-    document.querySelector('.special-offers-button')?.click();
+    // Open the calculator by finding the button and simulating a click event
+    const specialOffersButton = document.querySelector('.special-offers-button');
+    if (specialOffersButton) {
+      // Use dispatchEvent instead of click()
+      specialOffersButton.dispatchEvent(new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      }));
+    }
   };
   
   return (
