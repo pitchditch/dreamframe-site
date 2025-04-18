@@ -37,6 +37,10 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           </NavLink>
           <ServicesDropdown isOpen={isServicesMenuOpen} />
         </div>
+
+        <NavLink to="/why-us" isOverVideo={isOverVideo} className="text-xl">
+          {t('Why Us')}
+        </NavLink>
       </div>
 
       <div className="ml-auto">
