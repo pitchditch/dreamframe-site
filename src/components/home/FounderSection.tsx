@@ -3,7 +3,18 @@ import React from 'react';
 
 const FounderSection = () => {
   return (
-    <section className="py-32 bg-white">
+    <section className="py-32 bg-white relative mt-32">
+      {/* Overlapping Founder Image */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 -top-32 z-20">
+        <div className="relative w-64 h-64">
+          <img 
+            src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+            alt="Jayden Fisher - Founder" 
+            className="w-full h-full object-cover rounded-full border-4 border-bc-red"
+          />
+        </div>
+      </div>
+
       <div className="container mx-auto px-4">
         <div className="text-center mb-24">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">👋 Meet the Founder</h2>
@@ -12,7 +23,7 @@ const FounderSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-6xl mx-auto">
           <div className="md:col-span-6">
-            <div className="mt-16 space-y-4">
+            <div className="space-y-4">
               <h3 className="text-2xl font-bold">Jayden Fisher – Owner & Operator of BC Pressure Washing</h3>
               <p className="text-gray-700">
                 What started with a squeegee, a dream, and some serious door-knocking hustle quickly grew into a full-time business. Two years ago, I went door-to-door offering exterior cleaning services in White Rock and Surrey — and thanks to amazing clients and a reputation for quality work, BC Pressure Washing was born.
