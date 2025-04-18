@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -10,14 +11,11 @@ const HeroSection = () => {
   
   const handleZipCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Store zipcode in session storage for use in calculator later
     if (zipCode) {
       sessionStorage.setItem('userZipCode', zipCode);
     }
-    // Open the calculator by finding the button and simulating a click event
     const specialOffersButton = document.querySelector('.special-offers-button');
     if (specialOffersButton) {
-      // Use dispatchEvent instead of click()
       specialOffersButton.dispatchEvent(new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
@@ -31,7 +29,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 pointer-events-none">
         <iframe 
           className="absolute inset-0 w-full h-full scale-[1.5]"
-          src="https://www.youtube.com/embed/hsUJrLXCrN4?autoplay=1&mute=1&loop=1&playlist=hsUJrLXCrN4&controls=0&showinfo=0&rel=0"
+          src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0"
           title="Background Video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           style={{ border: 'none' }}

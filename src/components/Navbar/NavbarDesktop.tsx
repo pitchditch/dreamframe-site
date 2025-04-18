@@ -16,8 +16,8 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
 
   return (
     <nav className="hidden md:flex items-center justify-between w-full">
-      <div className="flex-1" /> {/* Spacer */}
-      <div className="flex items-center gap-8 justify-center flex-1">
+      <div className="flex-1" />
+      <div className="flex items-center gap-12 justify-center flex-1">
         <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl">
           {t('Residential')}
         </NavLink>
@@ -34,10 +34,10 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
       <div className="flex items-center gap-6 flex-1 justify-end">
         <a 
           href="tel:7788087620" 
-          className={`flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-black'} hover:text-bc-red transition-colors text-xl md:text-2xl`}
+          className={`flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-black'} hover:text-bc-red transition-colors text-2xl md:text-3xl whitespace-nowrap`}
         >
           <Phone className="w-6 h-6" />
-          <span className="font-semibold">778-808-7620</span>
+          778-808-7620
         </a>
         <PriceCalculatorOverlay 
           buttonText="Contact Us" 
