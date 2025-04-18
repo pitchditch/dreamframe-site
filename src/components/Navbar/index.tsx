@@ -59,8 +59,8 @@ const Navbar = () => {
   return (
     <header 
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-        !isInitialized ? 'bg-white' : 
-        isTransparent ? 'bg-transparent text-white' : 
+        !isInitialized ? 'bg-transparent' : 
+        isTransparent ? 'bg-transparent' : 
         'bg-white text-black'
       }`}
     >

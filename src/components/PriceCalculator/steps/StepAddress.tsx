@@ -1,86 +1,124 @@
 
-import { UseFormReturn } from 'react-hook-form';
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from '@/components/ui/form';
+import { useState, useEffect } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { MapPin, Package2 } from 'lucide-react';
+import { StepProps } from '../PriceCalculatorForm';
+import { ArrowRight, ArrowLeft, MapPin } from 'lucide-react';
 
-interface StepAddressProps {
-  form: UseFormReturn<any>;
-  onNext: () => void;
-  selectedPackage?: any;
-}
+const formSchema = z.object({
+  street: z.string().min(3, { message: "Street address is required" }),
+  city: z.string().min(2, { message: "City is required" }),
+  postalCode: z.string().min(5, { message: "Postal code is required" }),
+});
 
-const StepAddress = ({ form, onNext, selectedPackage }: StepAddressProps) => {
-  const handleContinue = () => {
-    form.trigger('address').then((isValid) => {
-      if (isValid) {
-        onNext();
-      }
+type AddressFormValues = z.infer<typeof formSchema>;
+
+export default function StepAddress({ onNext, onBack, formData, updateFormData }: StepProps) {
+  // Load saved zip code if available
+  const [storedZipCode, setStoredZipCode] = useState('');
+  
+  useEffect(() => {
+    const userZipCode = sessionStorage.getItem('userZipCode');
+    if (userZipCode) {
+      setStoredZipCode(userZipCode);
+      updateFormData({ ...formData, address: { ...formData.address, postalCode: userZipCode } });
+    }
+  }, []);
+  
+  const form = useForm<AddressFormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      street: formData.address?.street || '',
+      city: formData.address?.city || '',
+      postalCode: formData.address?.postalCode || storedZipCode || '',
+    },
+  });
+
+  const onSubmit = (values: AddressFormValues) => {
+    updateFormData({
+      ...formData,
+      address: values,
     });
+    onNext();
   };
+  
+  // Update form when stored ZIP code changes
+  useEffect(() => {
+    if (storedZipCode) {
+      form.setValue('postalCode', storedZipCode);
+    }
+  }, [storedZipCode, form]);
 
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Where is your property located?</h2>
-        <p className="text-gray-600">We serve Surrey, White Rock, and Metro Vancouver areas</p>
+    <div className="w-full">
+      <div className="flex items-center mb-6">
+        <MapPin className="text-red-600 mr-2" />
+        <h3 className="text-xl font-medium">Where do you need service?</h3>
       </div>
 
-      {selectedPackage && (
-        <div className="bg-green-50 p-4 rounded-lg border border-green-200 flex items-start space-x-3">
-          <Package2 className="text-green-600 mt-1 flex-shrink-0" size={20} />
-          <div>
-            <h3 className="font-semibold text-green-800">{selectedPackage.title} Selected</h3>
-            <p className="text-sm text-green-700">
-              You'll save ${selectedPackage.savings} with this package! 
-              We just need your address to continue.
-            </p>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="street"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Street Address</FormLabel>
+                <FormControl>
+                  <Input placeholder="123 Main St" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="Vancouver" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="postalCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Postal Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="V1A 1A1" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex justify-between pt-4">
+            <Button 
+              type="button" 
+              variant="outline"
+              onClick={onBack}
+              className="flex items-center"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back
+            </Button>
+            <Button type="submit" className="flex items-center">
+              Continue <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
-        </div>
-      )}
-
-      <div className="grid gap-4">
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Service Address</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input 
-                    placeholder="123 Marine Dr, White Rock, BC" 
-                    defaultValue="Marine Dr, White Rock, BC"
-                    className="pl-10"
-                    {...field} 
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
-
-      <div className="pt-4">
-        <Button 
-          type="button" 
-          onClick={handleContinue} 
-          className="bg-bc-red hover:bg-red-700 w-full"
-        >
-          {selectedPackage ? "Continue to Review" : "Continue to Quote"}
-        </Button>
-      </div>
+        </form>
+      </Form>
     </div>
   );
-};
-
-export default StepAddress;
+}

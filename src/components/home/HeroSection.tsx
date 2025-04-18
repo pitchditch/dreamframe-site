@@ -1,13 +1,26 @@
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
+import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   const { t } = useTranslation();
+  const [zipCode, setZipCode] = useState('');
+  
+  const handleZipCodeSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Store zipcode in session storage for use in calculator later
+    if (zipCode) {
+      sessionStorage.setItem('userZipCode', zipCode);
+    }
+    // Open the calculator
+    document.querySelector('.special-offers-button')?.click();
+  };
   
   return (
-    <section className="hero-section relative h-[90vh] flex items-center w-full overflow-hidden">
+    <section className="hero-section relative h-screen flex items-center w-full overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <iframe 
           className="absolute inset-0 w-full h-full scale-[1.5]"
@@ -27,12 +40,25 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto text-white">
             Professional window and exterior cleaning with 100% satisfaction guarantee — or we re-clean for free.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end">
-            <PriceCalculatorOverlay 
-              buttonText="REQUEST ESTIMATE" 
-              className="bg-yellow-500 hover:bg-yellow-600 text-black py-4 px-8 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all"
-            />
-          </div>
+          <form onSubmit={handleZipCodeSubmit} className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end">
+            <div className="relative">
+              <input 
+                type="text"
+                placeholder="Enter Your ZIP Code"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+                className="px-4 py-4 rounded-lg text-black w-full sm:w-48 text-lg"
+                maxLength={7}
+              />
+            </div>
+            <button
+              type="submit" 
+              className="bg-yellow-500 hover:bg-yellow-600 text-black py-4 px-8 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all flex items-center justify-center"
+            >
+              GET A FREE QUOTE IN 30 SECONDS
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </button>
+          </form>
         </div>
       </div>
     </section>
