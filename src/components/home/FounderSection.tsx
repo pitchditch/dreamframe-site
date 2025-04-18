@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { CircleCheck, Star, Shield, Tool } from 'lucide-react';
+import { CircleCheck, Star, Shield, Wrench } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const FounderSection = () => {
@@ -40,7 +40,7 @@ const FounderSection = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Tool className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <Wrench className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="text-xl font-bold mb-2">State-of-the-Art Equipment</h3>
                     <p className="text-gray-700">From industrial pressure washers to specialized cleaning solutions, we use the best tools for superior results. <Link to="/equipment" className="text-bc-red hover:underline">Learn More →</Link></p>

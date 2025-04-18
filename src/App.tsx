@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import Services from './pages/Services';
 import Testimonials from './pages/Testimonials';
 import ZipUploader from './pages/ZipUploader';
+import Equipment from './pages/Equipment';
 
 import PressureWashing from './pages/services/PressureWashing';
 import WindowCleaning from './pages/services/WindowCleaning';

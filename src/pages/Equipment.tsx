@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Layout from '../components/Layout';
-import { ArrowRight } from 'lucide-react';
+import EquipmentSection from '../components/EquipmentSection';
 
 const Equipment = () => {
   return (
