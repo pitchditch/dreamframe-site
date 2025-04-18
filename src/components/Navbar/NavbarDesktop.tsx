@@ -22,7 +22,18 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           onMouseLeave={() => setIsServicesMenuOpen(false)}
         >
           <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl">
-            {t('Services')}
+            {t('Residential Services')}
+          </NavLink>
+          <ServicesDropdown isOpen={isServicesMenuOpen} />
+        </div>
+        
+        <div 
+          className="relative"
+          onMouseEnter={() => setIsServicesMenuOpen(true)}
+          onMouseLeave={() => setIsServicesMenuOpen(false)}
+        >
+          <NavLink to="/services/commercial" isOverVideo={isOverVideo} className="text-xl">
+            {t('Commercial Services')}
           </NavLink>
           <ServicesDropdown isOpen={isServicesMenuOpen} />
         </div>
@@ -36,8 +47,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
         </NavLink>
       </div>
 
-      <div className="flex items-center gap-4 ml-auto">
-        <span className={`text-lg ${isOverVideo ? 'text-white' : 'text-black'}`}>778 808 7620</span>
+      <div className="ml-auto">
         <PriceCalculatorOverlay 
           buttonText="Get a Free Quote" 
           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium" 

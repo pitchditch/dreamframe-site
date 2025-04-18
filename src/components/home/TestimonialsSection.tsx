@@ -1,4 +1,3 @@
-
 import { useTranslation } from '@/hooks/use-translation';
 import TestimonialCard from '../TestimonialCard';
 
@@ -50,11 +49,8 @@ const testimonials = [
 const TestimonialsSection = () => {
   const { t } = useTranslation();
   
-  // Create duplicate array for seamless carousel
-  const allTestimonials = [...testimonials, ...testimonials];
-  
   return (
-    <section className="section-padding bg-bc-gray">
+    <section className="section-padding bg-bc-gray overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Testimonials")}</div>
         <h2 className="section-title animate-on-scroll">{t("What Our Clients Say")}</h2>
@@ -62,26 +58,17 @@ const TestimonialsSection = () => {
           {t("Don't just take our word for it. Hear what our satisfied customers have to say about our services.")}
         </p>
 
-        <div className="mt-12 overflow-hidden relative">
-          <div className="flex animate-testimonial-carousel space-x-8 py-4">
-            {allTestimonials.map((testimonial, index) => (
-              <div key={index} className="w-full md:w-[350px] flex-shrink-0">
-                <TestimonialCard
-                  quote={testimonial.quote}
-                  name={testimonial.name}
-                  location={testimonial.location}
-                  rating={testimonial.rating}
-                  beforeAfterImage={testimonial.beforeAfterImage}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex justify-center mt-10">
-          <a href="/testimonials">
-            <button className="btn-primary">{t("View More Testimonials")}</button>
-          </a>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard
+              key={index}
+              quote={testimonial.quote}
+              name={testimonial.name}
+              location={testimonial.location}
+              rating={testimonial.rating}
+              beforeAfterImage={testimonial.beforeAfterImage}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
@@ -50,14 +49,12 @@ const Layout = ({
         {children}
       </main>
       <LocationBanner />
-      
       <CallToAction 
         title="Contact Us Today"
         subtitle="Get in touch with our team for professional window cleaning and pressure washing services."
         primaryButtonText="Get a Free Quote"
         secondaryButtonText="Call Us Now"
       />
-      
       <Footer />
       <ChatAssistant />
       <ReferralButton />
