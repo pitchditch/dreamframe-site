@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -52,10 +51,10 @@ const HeroSection = () => {
             <div className="relative">
               <input 
                 type="text"
-                placeholder="Enter Your ZIP Code"
+                placeholder="Enter Your Postal Code"
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
-                className="px-4 py-4 rounded-lg text-black w-full sm:w-48 text-lg"
+                className="px-4 py-4 rounded-lg text-black w-full sm:w-56 text-lg font-medium shadow-lg"
                 maxLength={7}
               />
             </div>
@@ -74,4 +73,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

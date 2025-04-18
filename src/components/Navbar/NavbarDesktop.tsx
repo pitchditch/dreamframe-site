@@ -33,13 +33,13 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
       <div className="ml-auto flex items-center gap-6">
         <a 
           href="tel:7788087620" 
-          className={`flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-black'} hover:text-bc-red transition-colors`}
+          className={`flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-black'} hover:text-bc-red transition-colors text-lg md:text-xl`}
         >
-          <Phone className="w-5 h-5" />
-          <span className="font-medium">778-808-7620</span>
+          <Phone className="w-6 h-6" />
+          <span className="font-semibold">778-808-7620</span>
         </a>
         <PriceCalculatorOverlay 
-          buttonText="Get a Free Quote in 30 Seconds" 
+          buttonText="Contact Us" 
           className="bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded-lg font-medium" 
         />
       </div>
