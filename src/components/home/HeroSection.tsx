@@ -37,6 +37,18 @@ const HeroSection = () => {
       </div>
       
       <div className="hero-overlay absolute inset-0 bg-black/60"></div>
+      
+      {/* Founder Image Overlapping Hero and About Section */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-20">
+        <div className="relative w-64 h-64">
+          <img 
+            src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+            alt="Jayden Fisher - Founder" 
+            className="w-full h-full object-cover rounded-full border-4 border-bc-red"
+          />
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 relative z-10 text-white">
         <div className="max-w-3xl text-right ml-auto">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll text-shadow-lg text-white">
