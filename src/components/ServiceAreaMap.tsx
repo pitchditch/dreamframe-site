@@ -16,8 +16,8 @@ const ServiceAreaMap = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-122.8034, 49.0289], // White Rock coordinates
-      zoom: 11,
+      center: [-122.8434, 49.1329], // Surrey coordinates
+      zoom: 10,
     });
 
     // Add navigation controls
@@ -32,15 +32,15 @@ const ServiceAreaMap = () => {
         type: 'geojson',
         data: {
           type: 'Feature',
-          properties: {},  // Added the required properties field
+          properties: {},
           geometry: {
             type: 'Polygon',
             coordinates: [[
-              [-122.8834, 49.0589], // Surrey/White Rock area approximation
-              [-122.7234, 49.0589],
-              [-122.7234, 48.9989],
-              [-122.8834, 48.9989],
-              [-122.8834, 49.0589]
+              [-123.0234, 49.3289], // Vancouver area
+              [-122.5634, 49.3289],
+              [-122.5634, 48.9989],
+              [-123.0234, 48.9989],
+              [-123.0234, 49.3289]
             ]]
           }
         }

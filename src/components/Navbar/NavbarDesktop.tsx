@@ -3,6 +3,13 @@ import { NavLink } from './NavLink';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
 import { Phone } from 'lucide-react';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
@@ -16,36 +23,58 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
   return (
     <nav className="hidden md:flex items-center justify-between w-full">
       <div className="flex items-center gap-8">
-        <NavLink 
-          to="/services" 
-          isOverVideo={isOverVideo} 
-          className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
-        >
-          {t('Window Cleaning')}
-        </NavLink>
-        
-        <NavLink 
-          to="/services/pressure-washing" 
-          isOverVideo={isOverVideo} 
-          className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
-        >
-          {t('Pressure Washing')}
-        </NavLink>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger 
+                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+              >
+                Residential
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="grid gap-3 p-4 w-[400px]">
+                  <NavLink to="/services/window-cleaning" isOverVideo={isOverVideo}>
+                    Window Cleaning
+                  </NavLink>
+                  <NavLink to="/services/pressure-washing" isOverVideo={isOverVideo}>
+                    Pressure Washing
+                  </NavLink>
+                  <NavLink to="/services/gutter-cleaning" isOverVideo={isOverVideo}>
+                    Gutter Cleaning
+                  </NavLink>
+                  <NavLink to="/services/roof-cleaning" isOverVideo={isOverVideo}>
+                    Roof Cleaning
+                  </NavLink>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger 
+                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+              >
+                Commercial
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="grid gap-3 p-4 w-[400px]">
+                  <NavLink to="/services/commercial-window-cleaning" isOverVideo={isOverVideo}>
+                    Commercial Window Cleaning
+                  </NavLink>
+                  <NavLink to="/services/commercial-pressure-washing" isOverVideo={isOverVideo}>
+                    Commercial Pressure Washing
+                  </NavLink>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <NavLink 
-          to="/services/gutter-cleaning" 
+          to="/why-us" 
           isOverVideo={isOverVideo} 
           className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
         >
-          {t('Gutter Cleaning')}
-        </NavLink>
-        
-        <NavLink 
-          to="/services/roof-cleaning" 
-          isOverVideo={isOverVideo} 
-          className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
-        >
-          {t('Roof Cleaning')}
+          Why Us
         </NavLink>
       </div>
 
