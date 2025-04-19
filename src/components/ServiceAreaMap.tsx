@@ -32,6 +32,7 @@ const ServiceAreaMap = () => {
         type: 'geojson',
         data: {
           type: 'Feature',
+          properties: {},  // Added the required properties field
           geometry: {
             type: 'Polygon',
             coordinates: [[
