@@ -28,14 +28,6 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
         <NavLink to="/why-us" isOverVideo={isOverVideo} className="text-xl text-white">
           {t('Why Us')}
         </NavLink>
-
-        <NavLink to="/contact" isOverVideo={isOverVideo} className="text-xl text-white">
-          {t('Contact')}
-        </NavLink>
-
-        <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl text-white">
-          {t('Areas We Service')}
-        </NavLink>
       </div>
 
       <div className="flex items-center gap-6 flex-1 justify-end">
