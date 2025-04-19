@@ -1,9 +1,9 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import FooterContactForm from './FooterContactForm';
+import ServiceAreaMap from './ServiceAreaMap';
 
 const Footer = () => {
   const location = useLocation();
@@ -21,12 +21,9 @@ const Footer = () => {
   };
 
   return (
-    <footer 
-      className="bg-black text-white pt-16 pb-8"
-    >
+    <footer className="bg-black text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div className="col-span-1">
             <div className="mb-4">
               <Link to="/">
@@ -53,7 +50,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Our Services */}
           <div className="col-span-1">
             <h4 className="text-xl font-semibold mb-6">Our Services</h4>
             <ul className="space-y-3">
@@ -85,7 +81,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Information */}
           <div className="col-span-1">
             <h4 className="text-xl font-semibold mb-6">Contact Information</h4>
             <ul className="space-y-4">
@@ -112,10 +107,15 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Form */}
           <div className="col-span-1">
             <FooterContactForm />
           </div>
+        </div>
+
+        {/* Service Area Map */}
+        <div className="mb-12">
+          <h4 className="text-xl font-semibold mb-6">Our Service Area</h4>
+          <ServiceAreaMap />
         </div>
         
         <hr className="border-gray-800 my-8" />
