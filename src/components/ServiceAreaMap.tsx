@@ -26,7 +26,7 @@ const ServiceAreaMap = () => {
       'top-right'
     );
 
-    // Add service area polygon
+    // Add GeoJSON source for service area
     map.current.on('load', () => {
       map.current?.addSource('service-area', {
         type: 'geojson',
@@ -36,11 +36,11 @@ const ServiceAreaMap = () => {
           geometry: {
             type: 'Polygon',
             coordinates: [[
-              [-123.0234, 49.3289], // Vancouver area
-              [-122.5634, 49.3289],
-              [-122.5634, 48.9989],
-              [-123.0234, 48.9989],
-              [-123.0234, 49.3289]
+              [-123.4, 49.4],  // Expanded to cover more of Metro Vancouver
+              [-122.4, 49.4],
+              [-122.4, 49.0],
+              [-123.4, 49.0],
+              [-123.4, 49.4]
             ]]
           }
         }

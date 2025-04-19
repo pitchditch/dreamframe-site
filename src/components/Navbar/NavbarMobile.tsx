@@ -28,7 +28,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 className="flex items-center justify-between py-2 text-black hover:text-bc-red transition-colors cursor-pointer"
                 onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
               >
-                <span>{t('Services')}</span>
+                <span>{t('Residential & Commercial Services')}</span>
                 {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               

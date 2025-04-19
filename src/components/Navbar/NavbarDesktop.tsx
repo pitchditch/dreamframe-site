@@ -29,21 +29,21 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
               <NavigationMenuTrigger 
                 className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
               >
-                Residential
+                {t('Residential')}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="grid gap-3 p-4 w-[400px]">
                   <NavLink to="/services/window-cleaning" isOverVideo={isOverVideo}>
-                    Window Cleaning
+                    {t('Window Cleaning')}
                   </NavLink>
                   <NavLink to="/services/pressure-washing" isOverVideo={isOverVideo}>
-                    Pressure Washing
+                    {t('Pressure Washing')}
                   </NavLink>
                   <NavLink to="/services/gutter-cleaning" isOverVideo={isOverVideo}>
-                    Gutter Cleaning
+                    {t('Gutter Cleaning')}
                   </NavLink>
                   <NavLink to="/services/roof-cleaning" isOverVideo={isOverVideo}>
-                    Roof Cleaning
+                    {t('Roof Cleaning')}
                   </NavLink>
                 </div>
               </NavigationMenuContent>
@@ -53,15 +53,15 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
               <NavigationMenuTrigger 
                 className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
               >
-                Commercial
+                {t('Commercial')}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="grid gap-3 p-4 w-[400px]">
                   <NavLink to="/services/commercial-window-cleaning" isOverVideo={isOverVideo}>
-                    Commercial Window Cleaning
+                    {t('Commercial Window Cleaning')}
                   </NavLink>
                   <NavLink to="/services/commercial-pressure-washing" isOverVideo={isOverVideo}>
-                    Commercial Pressure Washing
+                    {t('Commercial Pressure Washing')}
                   </NavLink>
                 </div>
               </NavigationMenuContent>
@@ -74,7 +74,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           isOverVideo={isOverVideo} 
           className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
         >
-          Why Us
+          {t('Why Us')}
         </NavLink>
       </div>
 
