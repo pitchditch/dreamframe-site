@@ -1,6 +1,5 @@
 
 import { NavLink } from './NavLink';
-import { ServicesDropdown } from './ServicesDropdown';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
 import { Phone } from 'lucide-react';
@@ -17,24 +16,32 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
   return (
     <nav className="hidden md:flex items-center justify-between w-full">
       <div className="flex-1" />
-      <div className="flex items-center gap-32 justify-start flex-1 ml-12">
-        <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl">
+      <div className="flex items-center gap-8 justify-start flex-1 ml-12">
+        <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl text-white">
           {t('Residential')}
         </NavLink>
         
-        <NavLink to="/services/commercial" isOverVideo={isOverVideo} className="text-xl">
+        <NavLink to="/services/commercial" isOverVideo={isOverVideo} className="text-xl text-white">
           {t('Commercial')}
         </NavLink>
 
-        <NavLink to="/why-us" isOverVideo={isOverVideo} className="text-xl">
+        <NavLink to="/why-us" isOverVideo={isOverVideo} className="text-xl text-white">
           {t('Why Us')}
+        </NavLink>
+
+        <NavLink to="/contact" isOverVideo={isOverVideo} className="text-xl text-white">
+          {t('Contact')}
+        </NavLink>
+
+        <NavLink to="/services" isOverVideo={isOverVideo} className="text-xl text-white">
+          {t('Areas We Service')}
         </NavLink>
       </div>
 
       <div className="flex items-center gap-6 flex-1 justify-end">
         <a 
           href="tel:7788087620" 
-          className={`flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-black'} hover:text-bc-red transition-colors whitespace-nowrap text-2xl md:text-3xl`}
+          className="flex items-center gap-2 text-white hover:text-bc-red transition-colors whitespace-nowrap text-2xl md:text-3xl"
         >
           <Phone className="w-6 h-6" />
           778-808-7620
