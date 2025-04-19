@@ -1,3 +1,4 @@
+
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
@@ -16,8 +17,8 @@ interface LayoutProps {
 
 const Layout = ({ 
   children, 
-  title = "BC Pressure Washing - #1 Pressure Washing & Window Cleaning Services", 
-  description = "Professional pressure washing, window cleaning, roof cleaning and gutter cleaning services in Surrey, White Rock and Metro Vancouver.",
+  title = "BC Pressure Washing | #1 Pressure Washing in Surrey & White Rock", 
+  description = "Trusted pressure washing, window & roof cleaning in Surrey & White Rock. ⭐ 5-Star Rated | ✅ Free Quotes | 🏠 Same-Day Service. Book now & save!",
   image = "/open.png"
 }: LayoutProps) => {
   const fullTitle = `${title} | BC Pressure Washing`;
@@ -27,12 +28,14 @@ const Layout = ({
       <Helmet>
         <title>{fullTitle}</title>
         <meta name="description" content={description} />
+        <link rel="canonical" href="https://www.bcpressurewashing.ca" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
+        <meta property="og:url" content="https://www.bcpressurewashing.ca" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
