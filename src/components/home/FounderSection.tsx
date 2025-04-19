@@ -43,7 +43,7 @@ const FounderSection = () => {
                   <Wrench className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="text-xl font-bold mb-2">State-of-the-Art Equipment</h3>
-                    <p className="text-gray-700">From industrial pressure washers to specialized cleaning solutions, we use the best tools for superior results. <Link to="/equipment" className="text-bc-red hover:underline">Learn More →</Link></p>
+                    <p className="text-gray-700">From industrial pressure washers to specialized cleaning solutions, we use the best tools for superior results.</p>
                   </div>
                 </div>
 
@@ -69,20 +69,16 @@ const FounderSection = () => {
           <div className="md:col-span-6">
             <div className="space-y-8">
               <div>
-                <h4 className="text-xl font-bold mb-4">Quality Equipment</h4>
-                <img 
-                  src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png"
-                  alt="Professional Grade Equipment" 
-                  className="w-full rounded-lg shadow-lg mb-6"
-                />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-4">Company Vehicle</h4>
+                <h4 className="text-xl font-bold mb-4">Our Service Vehicle</h4>
                 <img 
                   src="/lovable-uploads/4054bbd7-3ebd-48d0-845c-3ec712ac612e.png"
                   alt="BC Pressure Washing Company Vehicle" 
                   className="w-full rounded-lg shadow-lg"
                 />
+                <p className="mt-4 text-gray-700">
+                  You've probably seen our distinctive red vehicle parked at White Rock Beach. 
+                  As a locally owned business with deep roots in the community, we're proud to serve the area where we grew up.
+                </p>
               </div>
             </div>
           </div>
