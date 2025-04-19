@@ -25,6 +25,7 @@ const Footer = () => {
     <footer className="bg-black text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Logo and social media links */}
           <div className="col-span-1">
             <div className="mb-4">
               <Link to="/">
@@ -51,6 +52,7 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Our Services links */}
           <div className="col-span-1">
             <h4 className="text-xl font-semibold mb-6">Our Services</h4>
             <ul className="space-y-3">
@@ -82,6 +84,7 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Contact Information */}
           <div className="col-span-1">
             <h4 className="text-xl font-semibold mb-6">Contact Information</h4>
             <ul className="space-y-4">
@@ -108,13 +111,15 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Footer Contact Form */}
           <div className="col-span-1">
             <FooterContactForm />
           </div>
         </div>
 
-        {/* FAQ Section */}
+        {/* FAQ Section - Make it more visible */}
         <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-center text-white">Have Questions?</h2>
           <FAQSection />
         </div>
 
@@ -126,6 +131,7 @@ const Footer = () => {
         
         <hr className="border-gray-800 my-8" />
         
+        {/* Copyright footer */}
         <div className="text-center text-gray-400 text-sm">
           <p>&copy; {new Date().getFullYear()} BC Pressure Washing. All rights reserved.</p>
           {/* Structured address for SEO */}
