@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +41,8 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta http-equiv="Clear-Site-Data" content="cache" />
+  
+  <!-- LocalBusiness Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -69,77 +72,12 @@
   </script>
 </head>
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <!-- Add timestamp to script urls to force reload -->
-    <script type="module" src="/src/main.tsx?v=${Date.now()}"></script>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-  </body>
+<body>
+  <div id="root"></div>
+  <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  <!-- Add timestamp to script urls to force reload -->
+  <script type="module" src="/src/main.tsx?v=${Date.now()}"></script>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+</body>
 </html>
-<!-- LocalBusiness Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "BC Pressure Washing",
-  ...
-}
-</script>
-
-<!-- Service Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Pressure Washing",
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "BC Pressure Washing",
-    "url": "https://www.bcpressurewashing.ca"
-  },
-  "areaServed": {
-    "@type": "Place",
-    "name": "White Rock, Surrey, Abbotsford, Mission, Maple Ridge, Chilliwack, Burnaby, Delta, Vancouver, North Vancouver"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Exterior Cleaning Services",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Window Cleaning",
-          "description": "Interior and exterior residential and commercial window cleaning services."
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Gutter Cleaning",
-          "description": "Full gutter debris removal, flushing, and downspout check."
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Roof Cleaning",
-          "description": "Moss removal and soft washing for asphalt and tile roofs."
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Driveway Cleaning",
-          "description": "High-pressure washing for concrete, asphalt, and pavers."
-        }
-      }
-    ]
-  }
-}
-</script>

@@ -64,10 +64,10 @@ const Navbar = () => {
         'bg-white text-black'
       }`}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 flex items-center">
         <Logo isOverVideo={isTransparent} />
 
-        <div className="flex items-center justify-between flex-1 max-w-5xl ml-8">
+        <div className="flex items-center justify-between flex-1 ml-8">
           <NavbarDesktop 
             isOverVideo={isTransparent}
             isServicesMenuOpen={isServicesMenuOpen}
