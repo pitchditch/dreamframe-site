@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
+import FAQSection from './FAQSection';
 
 const Footer = () => {
   const location = useLocation();
@@ -110,6 +111,11 @@ const Footer = () => {
           <div className="col-span-1">
             <FooterContactForm />
           </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mb-12">
+          <FAQSection />
         </div>
 
         {/* Service Area Map */}
