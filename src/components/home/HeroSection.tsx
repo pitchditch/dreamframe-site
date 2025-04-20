@@ -20,10 +20,10 @@ const HeroSection = () => {
   };
   
   return (
-    <section className="hero-section relative h-screen flex items-center w-full overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
+    <section className="hero-section relative min-h-screen flex items-center w-full overflow-hidden">
+      <div className="absolute inset-0">
         <iframe 
-          className="absolute inset-0 w-full h-full scale-[1.5]"
+          className="absolute inset-0 w-full h-full md:scale-[1.5]"
           src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0"
           title="Background Video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
