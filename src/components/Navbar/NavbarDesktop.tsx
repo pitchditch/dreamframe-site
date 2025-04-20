@@ -2,7 +2,7 @@
 import { NavLink } from './NavLink';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
-import { Phone } from 'lucide-react';
+import { Phone, Store, Building, HardHat, User2 } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,12 +17,21 @@ interface NavbarDesktopProps {
   setIsServicesMenuOpen: (isOpen: boolean) => void;
 }
 
-export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarDesktopProps) => {
+export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
   
   return (
     <nav className="hidden md:flex items-center justify-between w-full">
       <div className="flex items-center gap-8">
+        <NavLink 
+          to="/why-us" 
+          isOverVideo={isOverVideo}
+          className={`text-xl flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+        >
+          <User2 className="w-5 h-5" />
+          {t('Why Us')}
+        </NavLink>
+
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -32,18 +41,30 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
                 {t('Residential')}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <div className="grid gap-3 p-4 w-[400px]">
-                  <NavLink to="/services/window-cleaning" isOverVideo={isOverVideo}>
-                    {t('Window Cleaning')}
+                <div className="grid gap-3 p-6 w-[400px] bg-white">
+                  <NavLink to="/services/window-cleaning" isOverVideo={false}>
+                    <div className="flex items-center gap-2">
+                      <Store className="w-5 h-5 text-bc-red" />
+                      <span>{t('Window Cleaning')}</span>
+                    </div>
                   </NavLink>
-                  <NavLink to="/services/pressure-washing" isOverVideo={isOverVideo}>
-                    {t('Pressure Washing')}
+                  <NavLink to="/services/pressure-washing" isOverVideo={false}>
+                    <div className="flex items-center gap-2">
+                      <Building className="w-5 h-5 text-bc-red" />
+                      <span>{t('House Washing')}</span>
+                    </div>
                   </NavLink>
-                  <NavLink to="/services/gutter-cleaning" isOverVideo={isOverVideo}>
-                    {t('Gutter Cleaning')}
+                  <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
+                    <div className="flex items-center gap-2">
+                      <HardHat className="w-5 h-5 text-bc-red" />
+                      <span>{t('Gutter Cleaning')}</span>
+                    </div>
                   </NavLink>
-                  <NavLink to="/services/roof-cleaning" isOverVideo={isOverVideo}>
-                    {t('Roof Cleaning')}
+                  <NavLink to="/services/roof-cleaning" isOverVideo={false}>
+                    <div className="flex items-center gap-2">
+                      <Store className="w-5 h-5 text-bc-red" />
+                      <span>{t('Roof Cleaning')}</span>
+                    </div>
                   </NavLink>
                 </div>
               </NavigationMenuContent>
@@ -56,43 +77,51 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
                 {t('Commercial')}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <div className="grid gap-3 p-4 w-[400px]">
-                  <NavLink to="/services/commercial-window-cleaning" isOverVideo={isOverVideo}>
-                    {t('Commercial Window Cleaning')}
+                <div className="grid gap-3 p-6 w-[400px] bg-white">
+                  <NavLink to="/services/commercial-window-cleaning" isOverVideo={false}>
+                    <div className="flex items-center gap-2">
+                      <Store className="w-5 h-5 text-bc-red" />
+                      <span>{t('Commercial Window Cleaning')}</span>
+                    </div>
                   </NavLink>
-                  <NavLink to="/services/commercial-pressure-washing" isOverVideo={isOverVideo}>
-                    {t('Commercial Pressure Washing')}
+                  <NavLink to="/services/commercial-pressure-washing" isOverVideo={false}>
+                    <div className="flex items-center gap-2">
+                      <Building className="w-5 h-5 text-bc-red" />
+                      <span>{t('Commercial Pressure Washing')}</span>
+                    </div>
                   </NavLink>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-
-        <NavLink 
-          to="/why-us" 
-          isOverVideo={isOverVideo} 
-          className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
-        >
-          {t('Why Us')}
-        </NavLink>
       </div>
 
-      <div className="flex items-center gap-12 flex-1 justify-end">
+      <div className="flex items-center gap-6">
+        <NavLink 
+          to="/contact" 
+          isOverVideo={isOverVideo}
+          className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+        >
+          {t('Contact')}
+        </NavLink>
+
         <a 
           href="tel:7788087620" 
           className={`flex items-center gap-2 ${
             isOverVideo ? 'text-white' : 'text-gray-800'
-          } hover:text-bc-red transition-colors whitespace-nowrap font-mono text-2xl md:text-3xl font-bold`}
+          } hover:text-bc-red transition-colors`}
         >
-          <Phone className="w-6 h-6" />
-          778-808-7620
+          <Phone className="w-5 h-5" />
+          <span className="font-mono text-lg">778-808-7620</span>
         </a>
+
         <PriceCalculatorOverlay 
-          buttonText="Contact Us" 
-          className="bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded-lg font-medium" 
+          buttonText={t("Get a Free Quote")} 
+          className="bg-bc-red hover:bg-red-700 text-white py-2 px-6 rounded-lg font-medium transition-all" 
         />
       </div>
     </nav>
   );
 };
+
