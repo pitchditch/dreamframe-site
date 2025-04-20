@@ -1,11 +1,10 @@
-
 import { useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import FounderSection from '../components/home/FounderSection';
-import ServicesSection from '../components/home/ServicesSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import ServicesSection from '../components/home/ServicesSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 
