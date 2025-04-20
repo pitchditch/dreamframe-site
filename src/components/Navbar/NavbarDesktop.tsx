@@ -112,7 +112,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             isOverVideo ? 'text-white' : 'text-gray-800'
           } hover:text-bc-red transition-colors`}
         >
-          <Phone className="w-7 h-7" />
+          <Phone className="w-8 h-8 mt-0.5" />
           <span className="font-mono text-2xl font-semibold">778-808-7620</span>
         </a>
 
