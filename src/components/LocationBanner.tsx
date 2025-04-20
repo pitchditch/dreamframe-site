@@ -55,10 +55,10 @@ const LocationBanner = () => {
   }, []);
 
   return (
-    <section className="bg-black text-white py-8 location-banner">
+    <section className="bg-navy text-white py-8 location-banner">
       <div className="container mx-auto px-4">
         <div className="flex flex-col text-center">
-          <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-6">
+          <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-6 text-white">
             <MapPin className="h-6 w-6 md:h-7 md:w-7 text-bc-red mr-2" />
             Areas We Service
           </h3>
@@ -77,7 +77,7 @@ const LocationBanner = () => {
                 </Link>
               </div>
             ))}
-            {/* Duplicate first few items for seamless loop */}
+            {/* Duplicate cities for seamless loop */}
             {cities.slice(0, 5).map((city, index) => (
               <div key={`repeat-${index}`} className="inline-block min-w-max px-6">
                 <Link 

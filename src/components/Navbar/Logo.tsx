@@ -8,11 +8,11 @@ interface LogoProps {
 export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center">
-      <div className="relative h-20 md:h-24">
+      <div className="relative h-16 md:h-20">
         <img 
-          src="/lovable-uploads/588d9053-9fab-45b5-97d8-e6251d87873a.png"
+          src="/lovable-uploads/eab83af5-0478-45a1-be34-6a506f875c71.png"
           alt="BC Pressure Washing Logo" 
-          className="h-full w-auto"
+          className="h-full w-auto object-contain"
         />
       </div>
     </Link>

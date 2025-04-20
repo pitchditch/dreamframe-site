@@ -107,41 +107,18 @@ const ChatAssistant = () => {
   };
 
   return (
-    <>
+    <div className="relative">
       {showTooltip && (
         <div className="fixed bottom-24 right-8 bg-white rounded-lg shadow-lg p-4 z-50 animate-fade-in">
-          <p className="text-sm">Got questions? Let's chat! 👋</p>
-        </div>
-      )}
-      {/* Transparent Chat Suggestions */}
-      {showSuggestions && (
-        <div 
-          className="fixed bottom-24 right-8 bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-lg p-4 z-40 max-w-xs animate-fade-in"
-          onMouseLeave={() => setShowSuggestions(false)}
-        >
-          <p className="text-sm font-medium text-gray-700 mb-2">Need help? Ask me:</p>
-          <div className="space-y-2">
-            {suggestionsData.slice(0, 3).map((suggestion, idx) => (
-              <button 
-                key={idx} 
-                onClick={() => handleSuggestionClick(suggestion.question)}
-                className="text-sm w-full text-left px-3 py-2 rounded bg-white hover:bg-gray-50 border border-gray-200 transition-all hover:shadow-md"
-              >
-                {suggestion.question}
-              </button>
-            ))}
-          </div>
+          <p className="text-sm text-gray-800">Got questions? Let's chat! 👋</p>
         </div>
       )}
       
-      {/* Floating Chat Button - Made Larger with Overlapping Question Mark */}
+      {/* Chat Button - Always visible in the corner */}
       <Button 
-        onClick={() => {
-          setIsOpen(true);
-          setShowSuggestions(false);
-        }} 
+        onClick={() => setIsOpen(true)} 
         className="fixed bottom-6 right-6 h-16 w-16 md:h-20 md:w-20 rounded-full shadow-lg p-0 overflow-visible bg-white hover:bg-gray-100 z-50 chat-button group"
-        onMouseEnter={() => setShowSuggestions(true)}
+        onMouseEnter={() => !isOpen && setShowSuggestions(true)}
       >
         <Avatar className="h-full w-full border-3 border-bc-red relative">
           <AvatarImage src="/lovable-uploads/f69ce980-a64c-43c2-9d3b-7a93c47e127b.png" alt="Jayden" className="object-cover" />
@@ -241,7 +218,7 @@ const ChatAssistant = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
 
