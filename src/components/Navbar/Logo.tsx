@@ -8,7 +8,7 @@ interface LogoProps {
 export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center">
-      <div className="relative h-16 md:h-20">
+      <div className="relative h-20 md:h-24">
         <img 
           src="/lovable-uploads/588d9053-9fab-45b5-97d8-e6251d87873a.png"
           alt="BC Pressure Washing Logo" 

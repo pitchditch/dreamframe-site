@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 const LocationBanner = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -56,7 +55,7 @@ const LocationBanner = () => {
   }, []);
 
   return (
-    <section className="bg-gray-900 text-white py-8 location-banner">
+    <section className="bg-black text-white py-8 location-banner">
       <div className="container mx-auto px-4">
         <div className="flex flex-col text-center">
           <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-6">
