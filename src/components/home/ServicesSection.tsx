@@ -8,11 +8,11 @@ const ServicesSection = () => {
   const { t } = useTranslation();
   
   return (
-    <section className="section-padding bg-bc-gray">
+    <section className="section-padding bg-navy py-section">
       <div className="container mx-auto px-4">
-        <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Our Professional Services")}</div>
-        <h2 className="section-title animate-on-scroll">{t("Premium Cleaning Solutions for Every Surface")}</h2>
-        <p className="section-subtitle animate-on-scroll max-w-3xl mx-auto">
+        <div className="badge-pill mx-auto w-fit animate-on-scroll bg-bc-red/10 text-white">{t("Our Professional Services")}</div>
+        <h2 className="section-title animate-on-scroll text-white">{t("Premium Cleaning Solutions for Every Surface")}</h2>
+        <p className="section-subtitle animate-on-scroll max-w-3xl mx-auto text-white/80">
           {t("We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.")}
         </p>
 
@@ -61,7 +61,7 @@ const ServicesSection = () => {
 
         <div className="mt-12 text-center animate-on-scroll">
           <Link to="/services">
-            <button className="btn-primary">
+            <button className="bg-bc-red hover:bg-bc-red/90 text-white px-8 py-3 rounded-lg transition-all duration-300 flex items-center justify-center mx-auto">
               {t("View All Services")} <ArrowRight className="ml-2 inline-block" size={16} />
             </button>
           </Link>
