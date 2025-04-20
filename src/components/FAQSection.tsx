@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
@@ -60,7 +61,7 @@ const FAQSection = () => {
                 <AccordionItem value="free-estimates" className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
                   <AccordionTrigger className="px-4 py-3 text-white hover:text-white/80">Do you offer free estimates?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-3 pt-0 text-white/80">
-                    Absolutely. You can get an instant online estimate through our calculator, or we’ll provide a custom quote for more complex jobs.
+                    Absolutely. You can get an instant online estimate through our calculator, or we'll provide a custom quote for more complex jobs.
                   </AccordionContent>
                 </AccordionItem>
               </>
@@ -132,7 +133,7 @@ const FAQSection = () => {
                 <AccordionItem value="how-to-book" className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
                   <AccordionTrigger className="px-4 py-3 text-white hover:text-white/80">How do I book a service?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-3 pt-0 text-white/80">
-                    You can book directly through our website or give us a call. Pick your service, your date, and we’ll handle the rest.
+                    You can book directly through our website or give us a call. Pick your service, your date, and we'll handle the rest.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="need-to-be-home" className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
@@ -149,7 +150,12 @@ const FAQSection = () => {
         <div className="mt-12 text-center">
           <p className="text-white/80 text-lg mb-4">Still have questions? We're here to help!</p>
           <button 
-            onClick={() => document.querySelector('.chat-button')?.click()}
+            onClick={() => {
+              const chatButton = document.querySelector('.chat-button');
+              if (chatButton instanceof HTMLElement) {
+                chatButton.click();
+              }
+            }}
             className="bg-bc-red hover:bg-bc-red/90 text-white px-6 py-3 rounded-lg transition-all duration-300"
           >
             Ask Us Anything 👋
