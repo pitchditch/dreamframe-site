@@ -1,29 +1,21 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import { useIsMobile } from '@/hooks/use-mobile';
 import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
 import FAQSection from './FAQSection';
 
 const Footer = () => {
-  const location = useLocation();
-  const isMobile = useIsMobile();
-  
-  // Determine which background to show based on the current route
-  const getFooterBgImage = () => {
-    if (location.pathname.includes('/services/window-cleaning')) {
-      return "/lovable-uploads/fa16ee2d-1381-4719-80d7-0bec536ba4d8.png";
-    } else if (location.pathname.includes('/services/post-construction')) {
-      return "/lovable-uploads/a047b138-d031-4811-9b48-b46dc707a449.png";
-    } else {
-      return "/lovable-uploads/d924d396-955b-42cd-b850-83ba524d524e.png";
-    }
-  };
-
   return (
-    <footer className="bg-black text-white pt-16 pb-8">
-      <div className="container mx-auto px-4">
+    <footer className="bg-black text-white">
+      <div className="container mx-auto px-4 pt-16">
+        <FAQSection />
+        
+        <div className="mt-16 mb-12">
+          <h4 className="text-xl font-semibold mb-6 text-white">Areas We Serve</h4>
+          <ServiceAreaMap />
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Logo and social media links */}
           <div className="col-span-1">
@@ -54,7 +46,7 @@ const Footer = () => {
 
           {/* Our Services links */}
           <div className="col-span-1">
-            <h4 className="text-xl font-semibold mb-6">Our Services</h4>
+            <h4 className="text-xl font-semibold mb-6 text-white">Our Services</h4>
             <ul className="space-y-3">
               <li>
                 <Link to="/services/window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
@@ -86,7 +78,7 @@ const Footer = () => {
 
           {/* Contact Information */}
           <div className="col-span-1">
-            <h4 className="text-xl font-semibold mb-6">Contact Information</h4>
+            <h4 className="text-xl font-semibold mb-6 text-white">Contact Information</h4>
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
@@ -116,37 +108,15 @@ const Footer = () => {
             <FooterContactForm />
           </div>
         </div>
-
-        {/* FAQ Section - Make it more visible */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-center text-white">Have Questions?</h2>
-          <FAQSection />
-        </div>
-
-        {/* Service Area Map */}
-        <div className="mb-12">
-          <h4 className="text-xl font-semibold mb-6">Our Service Area</h4>
-          <ServiceAreaMap />
-        </div>
-        
-        <hr className="border-gray-800 my-8" />
-        
-        {/* Copyright footer */}
-        <div className="text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} BC Pressure Washing. All rights reserved.</p>
-          {/* Structured address for SEO */}
-          <div itemScope itemType="http://schema.org/LocalBusiness" className="sr-only">
-            <span itemProp="name">BC Pressure Washing</span>
-            <div itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
-              <span itemProp="streetAddress">15501 Marine Dr</span>
-              <span itemProp="addressLocality">White Rock</span>,
-              <span itemProp="addressRegion">BC</span>
-              <span itemProp="postalCode">V4B 1C9</span>
-            </div>
-            <span itemProp="telephone">778 808 7620</span>
-            <a href="https://bcpressurewashing.ca" itemProp="url">bcpressurewashing.ca</a>
-          </div>
-        </div>
+      </div>
+      
+      {/* Full-width image below footer */}
+      <div className="w-full h-[300px] relative overflow-hidden">
+        <img 
+          src="/lovable-uploads/a9642252-b006-4c8c-89d4-d439e04f9891.png"
+          alt="White Rock Marine Drive"
+          className="w-full h-full object-cover"
+        />
       </div>
     </footer>
   );

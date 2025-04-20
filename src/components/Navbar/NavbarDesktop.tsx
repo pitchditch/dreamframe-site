@@ -27,7 +27,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red bg-transparent`}
               >
                 {t('Residential')}
               </NavigationMenuTrigger>
@@ -51,7 +51,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red bg-transparent`}
               >
                 {t('Commercial')}
               </NavigationMenuTrigger>
@@ -83,7 +83,7 @@ export const NavbarDesktop = ({ isOverVideo, isServicesMenuOpen, setIsServicesMe
           href="tel:7788087620" 
           className={`flex items-center gap-2 ${
             isOverVideo ? 'text-white' : 'text-gray-800'
-          } hover:text-bc-red transition-colors whitespace-nowrap text-2xl md:text-3xl`}
+          } hover:text-bc-red transition-colors whitespace-nowrap font-mono text-2xl md:text-3xl font-bold`}
         >
           <Phone className="w-6 h-6" />
           778-808-7620

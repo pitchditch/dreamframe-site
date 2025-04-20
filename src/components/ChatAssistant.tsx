@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -8,6 +7,8 @@ import { Input } from './ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const ChatAssistant = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showQuestionMark, setShowQuestionMark] = useState(true);
@@ -16,6 +17,25 @@ const ChatAssistant = () => {
   ]);
   const [newMessage, setNewMessage] = useState('');
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const faqSection = document.querySelector('#faq-section');
+      if (faqSection) {
+        const rect = faqSection.getBoundingClientRect();
+        setIsVisible(rect.top < window.innerHeight && rect.bottom >= 0);
+        if (rect.top < window.innerHeight && !showTooltip) {
+          setShowTooltip(true);
+          setTimeout(() => setShowTooltip(false), 3000);
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!isVisible) return null;
 
   // Hide question mark when suggestions are shown or chat is open
   useEffect(() => {
@@ -88,6 +108,11 @@ const ChatAssistant = () => {
 
   return (
     <>
+      {showTooltip && (
+        <div className="fixed bottom-24 right-8 bg-white rounded-lg shadow-lg p-4 z-50 animate-fade-in">
+          <p className="text-sm">Got questions? Let's chat! 👋</p>
+        </div>
+      )}
       {/* Transparent Chat Suggestions */}
       {showSuggestions && (
         <div 
