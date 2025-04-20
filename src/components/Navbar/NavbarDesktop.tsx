@@ -1,4 +1,3 @@
-
 import { NavLink } from './NavLink';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
@@ -112,8 +111,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             isOverVideo ? 'text-white' : 'text-gray-800'
           } hover:text-bc-red transition-colors`}
         >
-          <Phone className="w-5 h-5" />
-          <span className="font-mono text-lg">778-808-7620</span>
+          <Phone className="w-6 h-6" />
+          <span className="font-mono text-xl">778-808-7620</span>
         </a>
 
         <PriceCalculatorOverlay 
@@ -124,4 +123,3 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
     </nav>
   );
 };
-
