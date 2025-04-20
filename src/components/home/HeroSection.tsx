@@ -13,13 +13,9 @@ const HeroSection = () => {
     if (zipCode) {
       sessionStorage.setItem('userZipCode', zipCode);
     }
-    const specialOffersButton = document.querySelector('.special-offers-button');
-    if (specialOffersButton) {
-      specialOffersButton.dispatchEvent(new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window
-      }));
+    const calculatorButton = document.querySelector('.special-offers-button') as HTMLButtonElement;
+    if (calculatorButton) {
+      calculatorButton.click();
     }
   };
   
@@ -65,14 +61,6 @@ const HeroSection = () => {
               <ArrowRight className="ml-2 w-5 h-5" />
             </button>
           </form>
-
-          <a 
-            href="tel:7788087620"
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium mb-8 transition-all"
-          >
-            <Phone className="w-5 h-5" />
-            <span>Text Jayden Now — For Fast Responses!</span>
-          </a>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
             <div className="flex flex-col items-center">
