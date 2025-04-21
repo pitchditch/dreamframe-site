@@ -28,7 +28,7 @@ const whyUs = [
   },
   {
     title: 'Licensed & Insured',
-    description: 'Peace of mind comes standard — we're fully covered.',
+    description: 'Peace of mind comes standard — we\'re fully covered.',
   },
 ];
 
@@ -190,11 +190,6 @@ const WindowCleaning = () => {
           <Link to="/calculator">Check Prices &amp; Availability</Link>
         </Button>
       </section>
-
-      {/* FOOTER */}
-      <footer className="footer py-10 text-center bg-gray-800 text-white">
-        <p>&copy; 2025 BC Pressure Washing. All rights reserved.</p>
-      </footer>
     </Layout>
   );
 };
