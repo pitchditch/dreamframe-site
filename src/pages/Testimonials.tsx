@@ -244,6 +244,13 @@ const Testimonials = () => {
           className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{ backgroundImage: `url('/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png')` }}
         />
+        {/* Licensed & Insured badge, top-right on hero */}
+        <img 
+          src="/lovable-uploads/a1f01b41-c73a-4644-8580-6399a42951bf.png"
+          alt="Licensed & Insured"
+          className="absolute top-8 right-8 w-32 h-32 md:w-40 md:h-40 object-contain z-20 drop-shadow-lg"
+          style={{ pointerEvents: 'none' }}
+        />
         <div className="relative container mx-auto px-4 py-24 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">What Our Customers Say</h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">

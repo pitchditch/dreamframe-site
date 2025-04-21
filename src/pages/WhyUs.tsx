@@ -1,8 +1,8 @@
-
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import { MapPin, Award, Star, ThumbsUp } from "lucide-react";
 import TestimonialsSection from "../components/home/TestimonialsSection";
+import ChatAssistant from '@/components/ChatAssistant';
 
 const WhyUs = () => {
   return (
@@ -11,9 +11,15 @@ const WhyUs = () => {
         <title>Why Choose Us | BC Pressure Washing</title>
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
-
       {/* Hero Section */}
-      <section className="bg-gray-900 text-white py-16 md:py-24">
+      <section className="bg-gray-900 text-white py-16 md:py-24 relative">
+        {/* Badge image fixed on hero (top right, only md+) */}
+        <img 
+          src="/lovable-uploads/a1f01b41-c73a-4644-8580-6399a42951bf.png"
+          alt="Licensed & Insured"
+          className="hidden md:block absolute top-8 right-8 w-32 h-32 md:w-40 md:h-40 object-contain z-20 drop-shadow-lg"
+          style={{ pointerEvents: 'none' }}
+        />
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Why Choose BC Pressure Washing?</h1>
@@ -21,6 +27,14 @@ const WhyUs = () => {
               We deliver exceptional exterior cleaning solutions with a focus on quality, reliability, and customer satisfaction.
             </p>
           </div>
+        </div>
+        {/* Desktop chatbot floating at right-bottom */}
+        <div className="hidden md:block fixed right-8 bottom-8 z-50">
+          <ChatAssistant />
+        </div>
+        {/* Mobile: show chatbot bottom right */}
+        <div className="md:hidden fixed right-5 bottom-5 z-50 flex flex-row gap-4">
+          <ChatAssistant />
         </div>
       </section>
 

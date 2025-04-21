@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Phone, Store, Building, User2, HardHat } from 'lucide-react';
+import { ChevronDown, ChevronUp, Store, Building, User2, HardHat } from 'lucide-react';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
+import { Phone } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -80,22 +81,13 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 buttonText={t("Get a Free Quote")} 
                 className="w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium text-center transition-all" 
               />
-              <a
-                href="tel:7788087620"
-                className="flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-lg px-5 py-3 shadow-md w-full transition-all"
-                style={{ minHeight: '44px' }}
-              >
-                <Phone className="w-5 h-5 mr-2" />
-                Call Jayden Now
-              </a>
               <LanguageSelector />
             </div>
           </nav>
         </div>
       </div>
-
-      {/* Floating Call Button for Mobile */}
-      <div className="fixed bottom-6 right-6 md:hidden z-50 flex flex-row gap-4 justify-end">
+      <div className="fixed bottom-6 right-6 left-0 md:hidden z-50 flex flex-row gap-4 justify-end px-4">
+        <div className="flex-grow"></div>
         <PriceCalculatorOverlay 
           buttonText={t("Free Quote")}
           className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all"

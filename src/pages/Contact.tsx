@@ -54,15 +54,17 @@ const Contact = () => {
 
   return (
     <Layout>
+      {/* Helmet and banner */}
       <Helmet>
         <title>Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock</title>
         <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
       </Helmet>
       
       <div className="relative bg-black text-white">
+        {/* Shirt image as large background overlay */}
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-50"
-          style={{ backgroundImage: "url('/lovable-uploads/fb43637a-3ca5-4495-997e-7cdb8fcaf83f.png')" }}
+          className="absolute inset-0 bg-no-repeat bg-cover opacity-30"
+          style={{ backgroundImage: "url('/lovable-uploads/ba7defcf-8655-419d-a9c7-46784925dea9.png')" }}
         />
         <div className="banner-overlay"></div>
         <div className="relative container mx-auto px-4 py-24 text-center z-10">
@@ -71,6 +73,14 @@ const Contact = () => {
             Our team is ready to answer your questions and provide a free, no-obligation quote for your service needs.
           </p>
         </div>
+      </div>
+      {/* Chat bot visible floating right */}
+      <div className="hidden md:block fixed right-8 bottom-8 z-50">
+        <ChatAssistant />
+      </div>
+      <div className="md:hidden fixed right-5 bottom-5 z-50 flex flex-row gap-4">
+        {/* Only chat and free quote, call is handled differently as per mobile logic */}
+        <ChatAssistant />
       </div>
       
       <section className="py-16">

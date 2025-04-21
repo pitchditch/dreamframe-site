@@ -9,13 +9,15 @@ interface TestimonialCardProps {
   beforeAfterImage?: string;
 }
 
+const DEFAULT_IMG = "/lovable-uploads/ba7defcf-8655-419d-a9c7-46784925dea9.png";
+
 const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }: TestimonialCardProps) => {
   return (
     <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-      {beforeAfterImage && (
+      {(beforeAfterImage || DEFAULT_IMG) && (
         <div className="mb-6 overflow-hidden rounded-md">
           <img 
-            src={beforeAfterImage} 
+            src={beforeAfterImage || DEFAULT_IMG} 
             alt="Before and after transformation" 
             className="w-full h-auto object-cover"
           />
