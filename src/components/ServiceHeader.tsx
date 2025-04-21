@@ -1,8 +1,7 @@
-
 import { ReactNode, useEffect } from 'react';
 
 interface ServiceHeaderProps {
-  title: string;
+  title: ReactNode;
   description: string;
   icon?: ReactNode;
   imagePath?: string;
@@ -71,4 +70,3 @@ const ServiceHeader = ({
 };
 
 export default ServiceHeader;
-
