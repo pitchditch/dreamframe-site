@@ -62,16 +62,26 @@ const PressureWashing = () => {
       </Helmet>
 
       {/* 1. HERO SECTION */}
-      <header className="relative bg-black min-h-[450px] flex items-center justify-center">
+      <header className="relative bg-black min-h-[450px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10" />
-        <iframe
-          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
-          src="https://www.youtube.com/embed/uxFSTD4SpS0?autoplay=1&mute=1&loop=1&playlist=uxFSTD4SpS0&controls=0&showinfo=0&rel=0"
-          title="Pressure Washing Surface Cleaner Video"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          style={{ border: 'none', minHeight: "450px", objectFit: "cover", transform: "scale(1.2)", transformOrigin: "center" }}
-        />
+        <div className="absolute inset-0 w-full h-full z-0 select-none pointer-events-none overflow-hidden">
+          <iframe
+            className="w-full h-full object-cover"
+            src="https://www.youtube.com/embed/sjAe3XfY8Ts?autoplay=1&mute=1&loop=1&playlist=sjAe3XfY8Ts&controls=0&showinfo=0&rel=0"
+            title="Pressure Washing Surface Cleaner Video"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            style={{
+              border: 'none',
+              width: '100vw',
+              height: '100vh',
+              objectFit: "cover",
+              minHeight: "450px",
+              transform: "scale(1.25)",
+              transformOrigin: "center"
+            }}
+          />
+        </div>
         <div className="relative z-20 text-center px-6 py-16 md:py-28 w-full flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Professional Pressure Washing in Surrey &amp; White Rock</h1>
           <p className="text-lg md:text-2xl text-white font-medium mb-6 max-w-2xl mx-auto">
