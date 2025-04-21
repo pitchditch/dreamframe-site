@@ -1,10 +1,10 @@
-
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import { useToast } from '@/hooks/use-toast';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
+import ChatAssistant from '@/components/ChatAssistant';
 
 const Contact = () => {
   const { toast } = useToast();
