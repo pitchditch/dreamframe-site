@@ -1,72 +1,134 @@
 
-import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/button';
-import ServiceAreaMap from '@/components/ServiceAreaMap';
+import Layout from '../../components/Layout';
+import ServiceHeader from '../../components/ServiceHeader';
+import ServiceBenefits from '../../components/ServiceBenefits';
+import ServiceProcess from '../../components/ServiceProcess';
+import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
+import CallToAction from '../../components/CallToAction';
+import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 const RoofCleaning = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const benefits = [
+    {
+      title: "Extended Roof Lifespan",
+      description: "Remove moss, algae, and lichen that can deteriorate shingles and roofing materials, adding years to your roof's life."
+    },
+    {
+      title: "Prevent Costly Damage",
+      description: "Regular cleaning prevents organic growth from lifting shingles and creating leaks that can lead to expensive repairs."
+    },
+    {
+      title: "Improved Energy Efficiency",
+      description: "A clean roof reflects heat better, potentially reducing cooling costs during hot summer months."
+    },
+    {
+      title: "Enhanced Curb Appeal",
+      description: "Remove unsightly black streaks and stains, instantly improving your home's appearance and potential resale value."
+    },
+    {
+      title: "Protect Your Warranty",
+      description: "Many roofing manufacturers require regular cleaning to maintain warranty coverage for your roofing materials."
+    },
+    {
+      title: "Healthier Home Environment",
+      description: "Eliminate mold and algae that can spread to other areas of your home and potentially cause health issues."
+    }
+  ];
+
+  const processes = [
+    {
+      title: "Roof Inspection",
+      description: "We thoroughly inspect your roof to identify problem areas and determine the appropriate cleaning method.",
+      icon: <Search size={32} />
+    },
+    {
+      title: "Safe, Low-Pressure Cleaning",
+      description: "Using specialized equipment and eco-friendly solutions, we safely remove algae, moss, and stains without damaging your roof.",
+      icon: <Droplets size={32} />
+    },
+    {
+      title: "Preventative Treatment",
+      description: "We apply treatments to inhibit future growth of moss, algae, and lichen, keeping your roof cleaner for longer.",
+      icon: <Shield size={32} />
+    }
+  ];
 
   return (
-    <Layout image="/roof-cleaning.jpg">
+    <Layout>
       <Helmet>
-        <title>Roof Soft Washing Surrey & White Rock | Safe & Effective Moss Removal</title>
-        <meta name="description" content="Safe and effective roof cleaning with soft wash system in Surrey & White Rock. Remove moss, algae, and grime without damaging your shingles. Fully insured." />
-        <meta name="keywords" content="roof cleaning Surrey, soft wash roof White Rock, moss removal, safe roof washing, roof maintenance" />
+        <title>Professional Roof Cleaning Services | BC Pressure Washing White Rock</title>
+        <meta name="description" content="Expert roof cleaning services in White Rock, Surrey & Metro Vancouver. Safe moss and algae removal, extending roof lifespan. Free estimates!" />
+        <meta name="keywords" content="roof cleaning White Rock, moss removal BC, roof maintenance Surrey, professional roof cleaning services" />
       </Helmet>
+      
+      <ServiceHeader
+        title="Roof Cleaning"
+        description="Safe and effective roof cleaning solutions to protect your investment and enhance your home's appearance."
+        icon={<Home size={48} />}
+        imagePath="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
+      />
 
-      <section className="py-16 px-4 max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-center">Roof Soft Washing in Surrey & White Rock</h1>
-        <p className="text-lg mb-6 text-center max-w-3xl mx-auto">
-          Don’t let moss, algae, or grime damage your roof or shorten its lifespan. Our soft wash roof cleaning method uses low-pressure and eco-safe solutions to gently remove buildup without harming your shingles.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-10 mt-10">
-          <div>
-            <h2 className="text-2xl font-semibold mb-3">What We Remove:</h2>
-            <ul className="list-disc list-inside space-y-2">
-              <li>Moss and algae growth</li>
-              <li>Black streaks and organic staining</li>
-              <li>Dirt, debris, and roof grime</li>
-              <li>Gutter edge mold (optional add-on)</li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-3">Why Soft Wash?</h2>
-            <ul className="list-disc list-inside space-y-2">
-              <li>Low pressure protects roof shingles</li>
-              <li>Eco-friendly sodium hypochlorite solution</li>
-              <li>Extends the life of your roof</li>
-              <li>No damage, guaranteed</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-12 text-center">
-          <h2 className="text-2xl font-semibold mb-4">Why Choose BC Pressure Washing?</h2>
-          <p className="mb-6 max-w-2xl mx-auto">
-            We're fully insured, locally trusted, and every roof is personally checked by Jayden Fisher after the job is done. Serving Surrey, White Rock, and surrounding communities.
-          </p>
-          <Button size="lg" className="text-lg px-8 py-4">Request a Roof Cleaning Estimate</Button>
-        </div>
-      </section>
-
-      <section className="w-full py-12 flex flex-col items-center bg-white">
-        <div className="w-full max-w-4xl mx-auto relative">
-          <div className="absolute top-3 left-0 w-full flex justify-center z-10 pointer-events-none">
-            <div className="bg-bc-red text-white rounded-lg px-6 py-3 text-lg font-semibold shadow-lg shadow-bc-red/10 border-2 border-yellow-400 max-w-lg mx-auto">
-              Proudly serving Surrey, White Rock & Nearby Communities
+      <section className="container mx-auto px-4 py-16">
+        <div className="flex flex-col md:flex-row gap-12 items-center">
+          <div className="md:w-1/2">
+            <h2 className="text-3xl font-bold mb-6">Protect Your Largest Investment</h2>
+            <p className="text-gray-600 mb-6">
+              Your roof is one of the most significant investments in your home, providing essential protection from the elements. Over time, Pacific Northwest weather conditions cause organic growth like moss, algae, and lichen to establish themselves on your roof, particularly in shaded areas.
+            </p>
+            <p className="text-gray-600 mb-6">
+              This growth not only creates unsightly black streaks and discoloration but can cause serious damage by lifting shingles, retaining moisture, and accelerating deterioration of roofing materials. Our professional roof cleaning service safely removes these harmful organisms and helps prevent their return.
+            </p>
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center">
+                <Shield className="text-bc-red mr-2" size={24} />
+                <span className="font-medium">Fully Insured</span>
+              </div>
+              <div className="flex items-center">
+                <Clock className="text-bc-red mr-2" size={24} />
+                <span className="font-medium">Prompt Service</span>
+              </div>
+              <div className="flex items-center">
+                <ThumbsUp className="text-bc-red mr-2" size={24} />
+                <span className="font-medium">100% Satisfaction</span>
+              </div>
             </div>
           </div>
-          <div className="pt-14 pb-2">
-            <ServiceAreaMap />
+          <div className="md:w-1/2">
+            <img 
+              src="/lovable-uploads/4b5d343d-9019-4709-9661-a5341edd7db7.png" 
+              alt="Roof cleaning service" 
+              className="rounded-lg shadow-lg w-full h-auto"
+            />
           </div>
         </div>
       </section>
+
+      <RoofCleaningGallery />
+
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="section-title">Benefits of Professional Roof Cleaning</h2>
+          <p className="section-subtitle">
+            Regular roof maintenance provides substantial benefits for your home's longevity and appearance
+          </p>
+          <ServiceBenefits benefits={benefits} />
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="section-title">Our Roof Cleaning Process</h2>
+        <p className="section-subtitle">
+          We use a careful, methodical approach to safely clean and protect your roof
+        </p>
+        <ServiceProcess processes={processes} />
+      </section>
+
+      <CallToAction 
+        backgroundImage="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
+        title="Ready to Transform Your Roof?"
+        subtitle="Contact us today for a free roof cleaning quote and consultation."
+      />
     </Layout>
   );
 };
