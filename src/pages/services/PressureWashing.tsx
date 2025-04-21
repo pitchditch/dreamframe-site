@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../components/Layout';
@@ -45,7 +44,7 @@ const PressureWashing = () => {
           loop 
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-70"
-          poster="/lovable-uploads/df1d5443-a527-44af-b261-a7bfde6064f7.png"
+          poster="/lovable-uploads/2e6b8af4-e2b3-424a-bdfb-3ba6a8d188f4.png"
         >
           <source src="https://youtu.be/PKw0OS7iDmY" type="video/mp4" />
         </video>
@@ -54,7 +53,7 @@ const PressureWashing = () => {
             Professional Pressure Washing in Surrey & White Rock
           </h1>
           <p className="text-lg md:text-2xl text-white font-medium mb-8 max-w-3xl mx-auto">
-            Eco-conscious cleaning using surface cleaners & safe chemical solutions. Your home or business deserves the best.
+            Eco-conscious cleaning using surface cleaners &amp; safe chemical solutions. Your home or business deserves the best.
           </p>
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
             <a href="#booking-section">Get Your Free Quote Today <ArrowRight className="ml-2" size={18} /></a>
@@ -67,47 +66,34 @@ const PressureWashing = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Expert Pressure Washing for Every Surface</h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {/* Driveways */}
             <div className="flex flex-col items-center text-center">
               <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" alt="Driveway pressure washing" className="w-24 h-24 object-cover rounded-full" />
+                <img src="/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png" alt="Driveway pressure washing" className="w-24 h-24 object-cover rounded-full" />
               </div>
               <h3 className="font-semibold text-lg mb-1">Driveways</h3>
             </div>
-            
+            {/* House Exteriors */}
             <div className="flex flex-col items-center text-center">
               <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/df1d5443-a527-44af-b261-a7bfde6064f7.png" alt="Sidewalk pressure washing" className="w-24 h-24 object-cover rounded-full" />
-              </div>
-              <h3 className="font-semibold text-lg mb-1">Sidewalks</h3>
-            </div>
-            
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/116727c7-867b-4c6c-b291-da7848be87ac.png" alt="Patio pressure washing" className="w-24 h-24 object-cover rounded-full" />
-              </div>
-              <h3 className="font-semibold text-lg mb-1">Patios</h3>
-            </div>
-            
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="Deck pressure washing" className="w-24 h-24 object-cover rounded-full" />
-              </div>
-              <h3 className="font-semibold text-lg mb-1">Decks</h3>
-            </div>
-            
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="House exterior pressure washing" className="w-24 h-24 object-cover rounded-full" />
+                <img src="/lovable-uploads/417b8f9b-59c5-4d97-b333-e204b4d67c51.png" alt="House exterior pressure washing" className="w-24 h-24 object-cover rounded-full" />
               </div>
               <h3 className="font-semibold text-lg mb-1">House Exteriors</h3>
             </div>
-            
+            {/* Patios & Decks (combined) */}
             <div className="flex flex-col items-center text-center">
               <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/df1d5443-a527-44af-b261-a7bfde6064f7.png" alt="Commercial storefront pressure washing" className="w-24 h-24 object-cover rounded-full" />
+                <img src="/lovable-uploads/ed9fa980-3e80-4398-9d6d-b2c95be9982d.png" alt="Patio and deck pressure washing" className="w-24 h-24 object-cover rounded-full" />
               </div>
-              <h3 className="font-semibold text-lg mb-1">Commercial Storefronts</h3>
+              <h3 className="font-semibold text-lg mb-1">Patios & Decks</h3>
+            </div>
+            {/* Fences */}
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-gray-100 rounded-full p-6 mb-4">
+                <img src="/lovable-uploads/f46ac2d7-7e8b-4a54-95ae-63db67082c3e.png" alt="Fence pressure washing" className="w-24 h-24 object-cover rounded-full" />
+              </div>
+              <h3 className="font-semibold text-lg mb-1">Fences</h3>
             </div>
           </div>
           
@@ -120,7 +106,7 @@ const PressureWashing = () => {
       {/* 3. OUR PROCESS */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">A Deep Clean That's Safe, Effective & Guaranteed</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">A Deep Clean That's Safe, Effective &amp; Guaranteed</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -147,18 +133,20 @@ const PressureWashing = () => {
               <div className="bg-bc-red bg-opacity-10 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                 <span className="text-bc-red font-bold text-2xl">3</span>
               </div>
-              <h3 className="text-xl font-bold text-center mb-3">Final Rinse & Post-Treatment</h3>
+              <h3 className="text-xl font-bold text-center mb-3">Final Rinse &amp; Post-Treatment</h3>
               <p className="text-gray-600 text-center">
                 We rinse with clean water and perform a walkthrough to guarantee satisfaction.
               </p>
             </div>
           </div>
           
+          {/* Quick video bonus, borderless */}
           <div className="mt-16 max-w-3xl mx-auto">
             <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
               <iframe 
                 src="https://www.youtube.com/embed/PKw0OS7iDmY?autoplay=1&mute=1&loop=1&playlist=PKw0OS7iDmY" 
-                className="w-full h-64 md:h-80" 
+                className="w-full h-64 md:h-80 border-0" 
+                style={{ border: "none" }}
                 title="Surface cleaner in action"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -169,70 +157,21 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 4. BEFORE & AFTER GALLERY */}
+      {/* 4. FEATURED PROJECT (was: BEFORE & AFTER GALLERY) */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Before & After Gallery</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Featured Project: South Abbotsford Church</h2>
           <p className="text-center text-lg text-gray-600 mb-10 max-w-3xl mx-auto">
-            Real results from local homes and businesses in Surrey and White Rock.
+            See what a real transformation looks like – commercial-grade cleaning with a visible before/after difference. 
           </p>
-          
-          <Carousel className="max-w-5xl mx-auto">
-            <CarouselContent>
-              <CarouselItem>
-                <Card>
-                  <CardContent className="p-0">
-                    <div className="relative">
-                      <img 
-                        src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" 
-                        alt="Before and after driveway cleaning" 
-                        className="w-full h-auto rounded-t-lg"
-                      />
-                      <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
-                        Driveway Transformation
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-              
-              <CarouselItem>
-                <Card>
-                  <CardContent className="p-0">
-                    <div className="relative">
-                      <img 
-                        src="/lovable-uploads/df1d5443-a527-44af-b261-a7bfde6064f7.png" 
-                        alt="Before and after patio cleaning" 
-                        className="w-full h-auto rounded-t-lg"
-                      />
-                      <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
-                        Patio Cleaning
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-              
-              <CarouselItem>
-                <Card>
-                  <CardContent className="p-0">
-                    <div className="relative">
-                      <img 
-                        src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
-                        alt="Before and after house siding cleaning" 
-                        className="w-full h-auto rounded-t-lg"
-                      />
-                      <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
-                        House Siding
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious className="left-2" />
-            <CarouselNext className="right-2" />
-          </Carousel>
+          <div className="flex justify-center">
+            <img 
+              src="/lovable-uploads/2e6b8af4-e2b3-424a-bdfb-3ba6a8d188f4.png" 
+              alt="Featured Project: South Abbotsford Church" 
+              className="rounded-xl shadow-2xl max-w-3xl w-full"
+              style={{ border: "none" }}
+            />
+          </div>
         </div>
       </section>
 
@@ -388,14 +327,14 @@ const PressureWashing = () => {
           <p className="mb-4">
             Serving Surrey, White Rock, South Surrey, Langley, and Greater Vancouver
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white">
+          <div className="flex flex-wrap justify-center gap-8 mt-0 mb-0 pb-0">
+            <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-8 py-4 rounded-lg min-w-[210px] max-w-none">
               <Link to="/services/window-cleaning">Window Cleaning</Link>
             </Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white">
+            <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-8 py-4 rounded-lg min-w-[210px] max-w-none">
               <Link to="/services/roof-cleaning">Roof Cleaning</Link>
             </Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white">
+            <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-8 py-4 rounded-lg min-w-[210px] max-w-none">
               <Link to="/services/gutter-cleaning">Gutter Cleaning</Link>
             </Badge>
           </div>

@@ -45,11 +45,12 @@ const WindowCleaningShowcaseSection = () => (
         <div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/PKw0OS7iDmY?autoplay=1&mute=1&loop=1&playlist=PKw0OS7iDmY"
+              src="https://youtu.be/xeUNIHhOxb8"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Exterior Window Cleaning - Water Fed Pole"
-              className="w-full h-64 md:h-80"
+              className="w-full h-64 md:h-80 border-0"
+              style={{ border: "none" }}
             />
           </div>
           <h3 className="text-xl font-semibold mt-4">Exterior Window Cleaning</h3>
@@ -61,11 +62,12 @@ const WindowCleaningShowcaseSection = () => (
         <div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/xeUNIHhOxb8?autoplay=1&mute=1&loop=1&playlist=xeUNIHhOxb8"
+              src="https://youtu.be/PKw0OS7iDmY"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Interior Window Cleaning - Squeegee"
-              className="w-full h-64 md:h-80"
+              className="w-full h-64 md:h-80 border-0"
+              style={{ border: "none" }}
             />
           </div>
           <h3 className="text-xl font-semibold mt-4">Interior Window Cleaning</h3>
