@@ -32,7 +32,6 @@ const whyUs = [
   },
 ];
 
-// Inline videos section using the YouTube links provided
 const WindowCleaningShowcaseSection = () => (
   <section className="py-16 bg-gray-50 animate-on-scroll">
     <div className="max-w-6xl mx-auto px-4 text-center">
@@ -85,7 +84,6 @@ const WindowCleaning = () => {
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
       image="/lovable-uploads/30f2c843-a162-44bc-a697-d9d9b7c9faef.png"
     >
-
       {/* HERO SECTION */}
       <header className="hero-section bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center relative">
         <img
@@ -185,4 +183,3 @@ const WindowCleaning = () => {
 };
 
 export default WindowCleaning;
-
