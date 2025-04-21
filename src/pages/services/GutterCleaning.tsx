@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -44,13 +45,13 @@ const GutterCleaning = () => {
   const handleVideoClick = () => {
     window.open("https://www.youtube.com/watch?v=VzcQ2S5axEE", "_blank");
   };
-  
+
   return <Layout>
       <ServiceHeader 
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/760a47b6-0ed1-4cac-bcb0-b915374332a7.png"
+        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -120,7 +121,7 @@ const GutterCleaning = () => {
       </section>
 
       <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Before & After Results</h2>
+        <h2 className="section-title">Before &amp; After Results</h2>
         <p className="section-subtitle mb-12">
           See the difference our professional gutter cleaning services can make
         </p>
@@ -140,8 +141,9 @@ const GutterCleaning = () => {
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
             <img src="/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
+          {/* REPLACE 6TH IMAGE WITH FIRST USER UPLOAD */}
           <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
+            <img src="/lovable-uploads/b466bba5-9b40-4277-8bf8-fa3e846e7545.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
           </div>
         </div>
       </section>
@@ -153,7 +155,7 @@ const GutterCleaning = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-content">
-            <h3 className="text-2xl font-bold mb-4">Gutter Guards & Protectors</h3>
+            <h3 className="text-2xl font-bold mb-4">Gutter Guards &amp; Protectors</h3>
             <p className="text-gray-600 mb-6">
               We offer high-quality gutter protection systems that prevent leaves, twigs, and debris from entering your gutters while still allowing water to flow through. These systems can dramatically reduce the frequency of gutter cleanings and protect your home from water damage.
             </p>
@@ -164,15 +166,28 @@ const GutterCleaning = () => {
               <li>Extends the lifespan of your gutters</li>
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
+            {/* Embed the requested YouTube Shorts video */}
+            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{paddingBottom:"56.25%"}}>
+              <iframe
+                src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
+                title="Gutter protection video"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full rounded-xl"
+              ></iframe>
+            </div>
           </div>
-          <div className="image-content">
+          <div className="image-content flex flex-col gap-6">
             <Tabs defaultValue="product" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="product">Product</TabsTrigger>
                 <TabsTrigger value="installation">Installation</TabsTrigger>
               </TabsList>
               <TabsContent value="product" className="mt-6">
-                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down" />
+                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+                {/* Also show the old 6th before/after image here as requested */}
+                <img alt="Gutter cleaning collage" src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
               <TabsContent value="installation" className="mt-6">
                 <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
@@ -181,9 +196,7 @@ const GutterCleaning = () => {
           </div>
         </div>
       </section>
-
       <CallToAction />
     </Layout>;
 };
-
 export default GutterCleaning;

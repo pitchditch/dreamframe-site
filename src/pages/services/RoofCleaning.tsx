@@ -7,22 +7,11 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
 import CallToAction from '../../components/CallToAction';
-import { Home, Shield, Clock, ThumbsUp, Check, MapPin, Star } from 'lucide-react';
+import { Shield, Check, ThumbsUp, Star, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
-import { testimonials } from '@/data/testimonials';
-import TestimonialCard from '@/components/TestimonialCard';
 
 const RoofCleaning = () => {
-  // Filter testimonials that mention roof, moss, or cleaning
-  const roofTestimonials = testimonials
-    .filter(t => t.quote && (
-      t.quote.toLowerCase().includes('roof') || 
-      t.quote.toLowerCase().includes('moss') || 
-      t.quote.toLowerCase().includes('clean')
-    ))
-    .slice(0, 3);
-
   const benefits = [
     {
       title: "Prevents Premature Roof Aging",
@@ -57,16 +46,20 @@ const RoofCleaning = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Roof Cleaning in Surrey & White Rock | Safe Soft Wash Experts</title>
+        <title>Roof Cleaning in Surrey &amp; White Rock | Safe Soft Wash Experts</title>
         <meta name="description" content="Professional roof cleaning using low-pressure soft wash. Prevent moss, algae, and roof damage. Trusted in Surrey, White Rock, and Greater Vancouver." />
         <meta name="keywords" content="roof cleaning Surrey, soft wash White Rock, moss removal, roof maintenance, algae removal" />
       </Helmet>
       
       {/* HERO SECTION */}
       <ServiceHeader
-        title="Gentle on Shingles. Tough on Moss."
+        title={
+          <span className="text-white drop-shadow-lg" style={{ textShadow: "0 4px 24px #000, 0 1px #222" }}>
+            Gentle on Shingles. Tough on Moss.
+          </span>
+        }
         description="Safe, effective roof cleaning with soft wash technology – no damage, all results."
-        imagePath="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
+        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
         darkOverlay={true}
       />
 
@@ -76,7 +69,7 @@ const RoofCleaning = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="flex flex-col items-center">
               <Shield className="mb-2 text-bc-red h-8 w-8" />
-              <p className="font-medium">Fully Insured & Locally Trusted</p>
+              <p className="font-medium">Fully Insured &amp; Locally Trusted</p>
             </div>
             <div className="flex flex-col items-center">
               <Check className="mb-2 text-bc-red h-8 w-8" />
@@ -84,11 +77,11 @@ const RoofCleaning = () => {
             </div>
             <div className="flex flex-col items-center">
               <ThumbsUp className="mb-2 text-bc-red h-8 w-8" />
-              <p className="font-medium">All Jobs Checked by Owner</p>
+              <p className="font-medium">All Jobs Checked by Owner, Jayden Fisher</p>
             </div>
             <div className="flex flex-col items-center">
               <Star className="mb-2 text-bc-red h-8 w-8" />
-              <p className="font-medium">Free Estimates & Transparent Service</p>
+              <p className="font-medium">Free Estimates &amp; Transparent Service</p>
             </div>
           </div>
         </div>
@@ -98,7 +91,6 @@ const RoofCleaning = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-10 text-center">Our Soft Wash Roof Cleaning System</h2>
-          
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex items-center mb-4">
@@ -109,7 +101,6 @@ const RoofCleaning = () => {
               </div>
               <p className="text-gray-700">Our biodegradable sodium hypochlorite blend is applied with specialty low-pressure equipment to ensure no damage to your roofing materials.</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex items-center mb-4">
                 <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
@@ -119,7 +110,6 @@ const RoofCleaning = () => {
               </div>
               <p className="text-gray-700">Our solution effectively removes moss, algae, lichen, and black streaks by breaking down their cellular structure at the source.</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex items-center mb-4">
                 <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
@@ -129,7 +119,6 @@ const RoofCleaning = () => {
               </div>
               <p className="text-gray-700">Unlike traditional pressure washing, our soft wash method preserves the integrity of shingles, tiles, and other roofing materials.</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex items-center mb-4">
                 <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
@@ -140,7 +129,6 @@ const RoofCleaning = () => {
               <p className="text-gray-700">Our chemical treatment continues working after application, providing results that last up to 4x longer than high-pressure methods.</p>
             </div>
           </div>
-          
           <div className="bg-blue-50 p-6 rounded-lg mt-10 max-w-3xl mx-auto text-center">
             <p className="text-lg font-medium">
               "We use the same type of solution trusted by roofing manufacturers to maintain your warranty."
@@ -164,26 +152,22 @@ const RoofCleaning = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Need More Than Just a Roof Wash?</h2>
-          
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             <Link to="/services/gutter-cleaning" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-semibold mb-3">Gutter Cleaning</h3>
               <p className="text-gray-700 mb-4">Complete gutter cleaning and leaf guard installation services.</p>
               <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
             </Link>
-            
             <Link to="/services/pressure-washing" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-semibold mb-3">House Washing</h3>
               <p className="text-gray-700 mb-4">Soft wash house cleaning for siding, stucco, and more.</p>
               <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
             </Link>
-            
             <Link to="/services/pressure-washing" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-semibold mb-3">Driveway Cleaning</h3>
               <p className="text-gray-700 mb-4">Professional concrete and paver cleaning services.</p>
               <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
             </Link>
-            
             <Link to="/services/window-cleaning" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-semibold mb-3">Window Cleaning</h3>
               <p className="text-gray-700 mb-4">Crystal-clear results for residential and commercial properties.</p>
@@ -192,48 +176,35 @@ const RoofCleaning = () => {
           </div>
         </div>
       </section>
-      
-      {/* TESTIMONIAL SECTION */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
-          
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {roofTestimonials.map((testimonial, index) => (
-              <TestimonialCard
-                key={index}
-                quote={testimonial.quote}
-                name={testimonial.name}
-                location={testimonial.location}
-                rating={testimonial.rating || 5}
-                beforeAfterImage={testimonial.beforeAfterImage}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* SERVICE AREA BANNER */}
-      <section className="py-10 bg-gray-800 text-white">
+      {/* SERVICE AREA BANNER WITH MAP */}
+      <section className="py-10 bg-gray-800 text-white mt-0">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-xl font-semibold mb-8 flex justify-center items-center">
-            <MapPin className="mr-2 text-bc-red" /> 
-            We clean roofs across Surrey, White Rock, South Surrey, and surrounding areas.
-          </h3>
-          
-          <div className="max-w-6xl mx-auto">
-            <ServiceAreaMap />
+          <div className="flex flex-col items-center w-full">
+            <div className="flex items-center mb-4 justify-center w-full">
+              <MapPin className="mr-2 text-bc-red" />
+              <span className="text-xl font-semibold">
+                We clean roofs across Surrey, White Rock, South Surrey, and surrounding areas.
+              </span>
+            </div>
+            <div className="w-full flex flex-col items-center">
+              <div className="w-full max-w-4xl">
+                <ServiceAreaMap />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FINAL CTA */}
       <CallToAction 
-        backgroundImage="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
+        backgroundImage="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
         title="Ready for a Clean Roof Without the Damage?"
         subtitle="Jayden personally checks every job. Your roof is in good hands."
-        buttonText="Request Your Free Quote"
-        buttonLink="/calculator"
+        primaryButtonText="Request Your Free Quote"
+        secondaryButtonText="Contact Us"
+        primaryButtonLink="/calculator"
+        secondaryButtonLink="/contact"
       />
     </Layout>
   );
