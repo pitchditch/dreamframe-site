@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -32,6 +31,7 @@ const whyUs = [
   },
 ];
 
+// Showcase section using YouTube iframes for each method
 const WindowCleaningShowcaseSection = () => (
   <section className="py-16 bg-gray-50 animate-on-scroll">
     <div className="max-w-6xl mx-auto px-4 text-center">
@@ -40,7 +40,7 @@ const WindowCleaningShowcaseSection = () => (
         We use a pure water-fed pole system for spotless exterior windows and traditional squeegee methods for crystal-clear interiors.
       </p>
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Outside Windows - Water Fed Pole */}
+        {/* Exterior Windows - Water Fed Pole */}
         <div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
@@ -56,7 +56,7 @@ const WindowCleaningShowcaseSection = () => (
             Water-fed pole with purified water leaves no streaks or spots – ideal for high windows and eco-friendly too.
           </p>
         </div>
-        {/* Inside Windows - Squeegee */}
+        {/* Interior Windows - Squeegee */}
         <div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
