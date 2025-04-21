@@ -3,14 +3,15 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorForm from './PriceCalculator/PriceCalculatorForm';
-import { Gift } from 'lucide-react';
+import { Gift, Phone } from 'lucide-react';
 
 interface PriceCalculatorOverlayProps {
   buttonText?: string;
-  variant?: 'default' | 'outline' | 'bc-red'; // Added 'outline' as valid variant
+  variant?: 'default' | 'outline' | 'bc-red';
   className?: string;
   icon?: boolean;
-  onComplete?: () => void; // Added onComplete prop
+  onComplete?: () => void;
+  showCallJaydenNow?: boolean;
 }
 
 const PriceCalculatorOverlay = ({ 
@@ -18,7 +19,8 @@ const PriceCalculatorOverlay = ({
   variant = 'default',
   className = "",
   icon = false,
-  onComplete
+  onComplete,
+  showCallJaydenNow = false,
 }: PriceCalculatorOverlayProps) => {
   const [open, setOpen] = useState(false);
   
@@ -32,29 +34,34 @@ const PriceCalculatorOverlay = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {variant === 'bc-red' ? (
-          <Button 
-            className={`bg-bc-red hover:bg-red-700 text-white special-offers-button ${className}`}
-          >
-            {icon && <Gift className="mr-2 h-4 w-4" />}
-            {buttonText}
-          </Button>
-        ) : variant === 'outline' ? (
-          <Button 
-            variant="outline"
-            className={`special-offers-button ${className}`}
-          >
-            {icon && <Gift className="mr-2 h-4 w-4" />}
-            {buttonText}
-          </Button>
-        ) : (
-          <Button 
-            className={`special-offers-button ${className}`}
-          >
-            {icon && <Gift className="mr-2 h-4 w-4" />}
-            {buttonText}
-          </Button>
-        )}
+        <div className="flex flex-col">
+          {variant === 'bc-red' ? (
+            <Button className={`bg-bc-red hover:bg-red-700 text-white special-offers-button ${className}`}>
+              {icon && <Gift className="mr-2 h-4 w-4" />}
+              {buttonText}
+            </Button>
+          ) : variant === 'outline' ? (
+            <Button variant="outline" className={`special-offers-button ${className}`}>
+              {icon && <Gift className="mr-2 h-4 w-4" />}
+              {buttonText}
+            </Button>
+          ) : (
+            <Button className={`special-offers-button ${className}`}>
+              {icon && <Gift className="mr-2 h-4 w-4" />}
+              {buttonText}
+            </Button>
+          )}
+          {showCallJaydenNow && (
+            <a
+              href="tel:7788087620"
+              className="mt-2 flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-lg px-5 py-2 shadow w-full transition-all"
+              style={{ minHeight: '44px' }}
+            >
+              <Phone className="w-5 h-5 mr-2" />
+              Call Jayden Now
+            </a>
+          )}
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] p-0">
         <DialogHeader className="p-6 bg-gray-50 border-b">

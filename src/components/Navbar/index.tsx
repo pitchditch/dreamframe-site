@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -70,8 +69,6 @@ const Navbar = () => {
         <div className="flex items-center justify-between flex-1 ml-8">
           <NavbarDesktop 
             isOverVideo={isTransparent}
-            isServicesMenuOpen={isServicesMenuOpen}
-            setIsServicesMenuOpen={setIsServicesMenuOpen}
           />
           
           <MobileMenuButton 

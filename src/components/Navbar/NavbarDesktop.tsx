@@ -14,13 +14,17 @@ import {
 export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
   const { t } = useTranslation();
 
+  // Color classes based on background
+  const textColor = isOverVideo ? 'text-white' : 'text-gray-800';
+  const hoverColor = 'hover:text-bc-red';
+
   return (
     <nav className="hidden md:flex items-center justify-between w-full">
       <div className="flex items-center gap-8">
         <NavLink
           to="/why-us"
           isOverVideo={isOverVideo}
-          className={`text-xl flex items-center gap-2 ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+          className={`text-xl flex items-center gap-2 ${textColor} ${hoverColor}`}
         >
           <User2 className="w-5 h-5" />
           {t('Why Us')}
@@ -30,7 +34,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger
-                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red bg-transparent`}
+                className={`text-xl ${textColor} ${hoverColor} bg-transparent`}
               >
                 {t('Residential')}
               </NavigationMenuTrigger>
@@ -66,7 +70,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger
-                className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red bg-transparent`}
+                className={`text-xl ${textColor} ${hoverColor} bg-transparent`}
               >
                 {t('Commercial')}
               </NavigationMenuTrigger>
@@ -96,16 +100,14 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
           <NavLink
             to="/contact"
             isOverVideo={isOverVideo}
-            className={`text-xl ${isOverVideo ? 'text-white' : 'text-gray-800'} hover:text-bc-red`}
+            className={`text-xl ${textColor} ${hoverColor}`}
           >
             {t('Contact')}
           </NavLink>
 
           <a
             href="tel:7788087620"
-            className={`flex items-center gap-3 ${
-              isOverVideo ? 'text-white' : 'text-gray-800'
-            } hover:text-bc-red transition-colors`}
+            className={`flex items-center gap-3 ${textColor} ${hoverColor} transition-colors`}
           >
             <Phone className="w-8 h-8" />
             <span className="font-mono text-2xl font-semibold">778-808-7620</span>
@@ -114,6 +116,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
           <PriceCalculatorOverlay
             buttonText={t("Get a Free Quote")}
             className="bg-bc-red hover:bg-red-700 text-white py-2 px-6 rounded-lg font-medium transition-all"
+            showCallJaydenNow // Custom prop for call button
           />
         </div>
         <a
