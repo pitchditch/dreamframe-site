@@ -71,7 +71,7 @@ const FounderSection = () => {
               <div>
                 <h4 className="text-xl font-bold mb-4">Our Service Vehicle</h4>
                 <img 
-                  src="/lovable-uploads/4054bbd7-3ebd-48d0-845c-3ec712ac612e.png"
+                  src="/lovable-uploads/f278b778-163e-4ee9-843a-0f3bb67f82f9.png"
                   alt="BC Pressure Washing Company Vehicle" 
                   className="w-full rounded-lg shadow-lg"
                 />

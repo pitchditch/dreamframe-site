@@ -6,25 +6,27 @@ interface LogoProps {
 }
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
+  // Always use original logo for navbar, as before
   return (
     <Link to="/" className="flex items-center">
       <div
-        className="relative h-36 md:h-56 flex items-center"
+        className="relative h-24 md:h-32 flex items-center"
         style={{
-          minWidth: '210px',
-          maxWidth: '410px',
+          minWidth: '180px',
+          maxWidth: '320px',
         }}
       >
         <img
           src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png"
           alt="BC Pressure Washing Logo"
-          className="h-full w-auto object-contain drop-shadow-2xl"
+          className="h-full w-auto object-contain"
           style={{
-            maxWidth: '410px',
-            minHeight: '90px',
+            maxWidth: '320px',
+            minHeight: '70px',
           }}
         />
       </div>
     </Link>
   );
 };
+

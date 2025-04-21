@@ -1,12 +1,12 @@
+
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import { ArrowRight, Shield, Star, Check } from 'lucide-react';
+import { ArrowRight, Shield, Star, Check, Phone } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const DESKTOP_VIDEO = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0";
 const MOBILE_VIDEO = "https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&loop=1&playlist=sAjdWDNtFQw&controls=0&showinfo=0&rel=0";
-const MOBILE_SHORTS = "https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&loop=1&playlist=sAjdWDNtFQw&controls=0&showinfo=0&rel=0";
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -27,14 +27,14 @@ const HeroSection = () => {
   return (
     <section className="hero-section relative min-h-screen flex items-center w-full overflow-hidden">
       <div className="absolute inset-0">
-        {/* Switch video based on device */}
+        {/* Responsive: Mobile video fills full width, height 100vh; Desktop: same but slightly zoomed for parallax */}
         {isMobile ? (
           <iframe 
             className="absolute inset-0 w-full h-full"
-            src={MOBILE_SHORTS}
-            title="Background Mobile Short Video"
+            src={MOBILE_VIDEO}
+            title="Background Mobile Video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ border: 'none', minHeight: 0, height: '100%', maxHeight: 'none', objectFit: 'cover' }}
+            style={{ border: 'none', height: '100vh', maxWidth: '100vw', objectFit: 'cover' }}
           />
         ) : (
           <iframe 
@@ -57,7 +57,13 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto text-white">
             Professional window cleaning, pressure washing, and gutter care. Locally owned and personally operated by Jayden in Surrey, White Rock & beyond.
           </p>
-          
+          {/* Add phone number in hero */}
+          <div className="flex justify-end items-center mb-4 gap-2">
+            <Phone className="w-6 h-6 text-yellow-400" />
+            <a href="tel:7788087620" className="text-yellow-300 text-2xl md:text-3xl font-extrabold hover:underline">
+              778-808-7620
+            </a>
+          </div>
           <form onSubmit={handleZipCodeSubmit} className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end mb-8">
             <div className="relative">
               <input 

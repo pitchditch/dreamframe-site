@@ -104,30 +104,14 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
           >
             {t('Contact')}
           </NavLink>
-
-          <a
-            href="tel:7788087620"
-            className={`flex items-center gap-3 ${textColor} ${hoverColor} transition-colors`}
-          >
-            <Phone className="w-8 h-8" />
-            <span className="font-mono text-2xl font-semibold">778-808-7620</span>
-          </a>
-
           <PriceCalculatorOverlay
             buttonText={t("Get a Free Quote")}
             className="bg-bc-red hover:bg-red-700 text-white py-2 px-6 rounded-lg font-medium transition-all"
-            showCallJaydenNow // Custom prop for call button
+            showCallJaydenNow // Custom prop for call button (only this one remains)
           />
         </div>
-        <a
-          href="tel:7788087620"
-          className={`mt-1 flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-lg px-5 py-2 shadow-md transition-all w-fit`}
-          style={{ minHeight: '44px' }}
-        >
-          <Phone className="w-5 h-5 mr-1" />
-          Call Jayden Now
-        </a>
       </div>
     </nav>
   );
 };
+

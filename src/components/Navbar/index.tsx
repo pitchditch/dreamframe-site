@@ -8,44 +8,21 @@ import { MobileMenuButton } from './MobileMenuButton';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(true);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [isScrollingFast, setIsScrollingFast] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
 
+  // Always keep navbar transparent, just manage text color via isOverVideo.
   useEffect(() => {
+    // "isOverVideo" is true if on "/" and not scrolled.
     const isHomePage = location.pathname === '/';
-    setIsOverVideo(isHomePage && !isScrolled);
-    setIsInitialized(true);
-
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const scrollSpeed = Math.abs(currentScrollY - lastScrollY);
-      setLastScrollY(currentScrollY);
-      
-      if (scrollSpeed > 15) {
-        setIsScrollingFast(true);
-        setTimeout(() => setIsScrollingFast(false), 500);
-      }
-      
-      if (currentScrollY > 60) {
-        setIsScrolled(true);
-        setIsOverVideo(false);
-      } else {
-        setIsScrolled(false);
-        if (isHomePage) {
-          setIsOverVideo(true);
-        }
-      }
+      setIsOverVideo(isHomePage && currentScrollY < 60);
     };
-
     window.addEventListener('scroll', handleScroll);
     handleScroll();
-    
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname, lastScrollY]);
+  }, [location.pathname]);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -53,33 +30,17 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const isTransparent = isOverVideo || isScrollingFast;
 
   return (
-    <header 
-      className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-        !isInitialized ? 'bg-transparent' : 
-        isTransparent ? 'bg-transparent' : 
-        'bg-white text-black'
-      }`}
-    >
+    <header className="sticky top-0 w-full z-50 transition-all duration-300 bg-transparent">
       <div className="container mx-auto px-4 flex items-center">
-        <Logo isOverVideo={isTransparent} />
-
+        <Logo isOverVideo={isOverVideo} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop 
-            isOverVideo={isTransparent}
-          />
-          
-          <MobileMenuButton 
-            isOverVideo={isTransparent}
-            isMenuOpen={isMenuOpen}
-            toggleMenu={toggleMenu}
-          />
+          <NavbarDesktop isOverVideo={isOverVideo} />
+          <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
-
-      <NavbarMobile 
+      <NavbarMobile
         isMenuOpen={isMenuOpen}
         isServicesMenuOpen={isServicesMenuOpen}
         setIsServicesMenuOpen={setIsServicesMenuOpen}

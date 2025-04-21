@@ -14,20 +14,14 @@ const ReferralButton = () => {
     const handleScroll = () => {
       // Get the hero section height (approximately 80vh)
       const heroSectionHeight = window.innerHeight * 0.8;
-      
-      // Hide the button when scrolled past the hero section
       if (window.scrollY > heroSectionHeight) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-    
-    // Initial check
     handleScroll();
-    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -41,7 +35,7 @@ const ReferralButton = () => {
           className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-5 py-2 flex items-center gap-2 fixed bottom-24 left-6 z-30 shadow-lg md:left-10 transition-all duration-300 hover:scale-105"
         >
           <Gift size={20} />
-          <span>{t("Special Offers")}</span>
+          <span>{t("Referral Program")}</span>
         </Button>
       )}
 
