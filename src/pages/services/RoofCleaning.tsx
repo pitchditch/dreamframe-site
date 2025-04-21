@@ -1,133 +1,239 @@
 
+import { useEffect } from 'react';
 import Layout from '../../components/Layout';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
-import ServiceProcess from '../../components/ServiceProcess';
 import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
 import CallToAction from '../../components/CallToAction';
-import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
-import { Helmet } from 'react-helmet';
+import { Home, Shield, Clock, ThumbsUp, Check, MapPin, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+import { testimonials } from '@/data/testimonials';
+import TestimonialCard from '@/components/TestimonialCard';
 
 const RoofCleaning = () => {
+  // Filter testimonials that mention roof, moss, or cleaning
+  const roofTestimonials = testimonials
+    .filter(t => t.quote && (
+      t.quote.toLowerCase().includes('roof') || 
+      t.quote.toLowerCase().includes('moss') || 
+      t.quote.toLowerCase().includes('clean')
+    ))
+    .slice(0, 3);
+
   const benefits = [
     {
-      title: "Extended Roof Lifespan",
-      description: "Remove moss, algae, and lichen that can deteriorate shingles and roofing materials, adding years to your roof's life."
+      title: "Prevents Premature Roof Aging",
+      description: "Regular cleaning removes moss and algae that trap moisture and deteriorate shingles, extending your roof's lifespan."
     },
     {
-      title: "Prevent Costly Damage",
-      description: "Regular cleaning prevents organic growth from lifting shingles and creating leaks that can lead to expensive repairs."
+      title: "Enhances Curb Appeal",
+      description: "Transform your home's appearance by eliminating unsightly black streaks and organic growth."
     },
     {
-      title: "Improved Energy Efficiency",
-      description: "A clean roof reflects heat better, potentially reducing cooling costs during hot summer months."
+      title: "Reduces Energy Costs",
+      description: "Black algae absorbs heat, making your home warmer. Removing it can help lower cooling costs."
     },
     {
-      title: "Enhanced Curb Appeal",
-      description: "Remove unsightly black streaks and stains, instantly improving your home's appearance and potential resale value."
+      title: "Prevents Water Damage",
+      description: "Moss can lift shingles and create paths for water to enter your home, causing expensive repairs."
     },
     {
-      title: "Protect Your Warranty",
-      description: "Many roofing manufacturers require regular cleaning to maintain warranty coverage for your roofing materials."
+      title: "Maintains Warranty Coverage",
+      description: "Many manufacturers require regular roof maintenance to keep warranty protection valid."
     },
     {
-      title: "Healthier Home Environment",
-      description: "Eliminate mold and algae that can spread to other areas of your home and potentially cause health issues."
+      title: "Eliminates Health Hazards",
+      description: "Removes mold, mildew and algae that can affect indoor air quality and trigger allergies."
     }
   ];
 
-  const processes = [
-    {
-      title: "Roof Inspection",
-      description: "We thoroughly inspect your roof to identify problem areas and determine the appropriate cleaning method.",
-      icon: <Search size={32} />
-    },
-    {
-      title: "Safe, Low-Pressure Cleaning",
-      description: "Using specialized equipment and eco-friendly solutions, we safely remove algae, moss, and stains without damaging your roof.",
-      icon: <Droplets size={32} />
-    },
-    {
-      title: "Preventative Treatment",
-      description: "We apply treatments to inhibit future growth of moss, algae, and lichen, keeping your roof cleaner for longer.",
-      icon: <Shield size={32} />
-    }
-  ];
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Layout>
       <Helmet>
-        <title>Professional Roof Cleaning Services | BC Pressure Washing White Rock</title>
-        <meta name="description" content="Expert roof cleaning services in White Rock, Surrey & Metro Vancouver. Safe moss and algae removal, extending roof lifespan. Free estimates!" />
-        <meta name="keywords" content="roof cleaning White Rock, moss removal BC, roof maintenance Surrey, professional roof cleaning services" />
+        <title>Roof Cleaning in Surrey & White Rock | Safe Soft Wash Experts</title>
+        <meta name="description" content="Professional roof cleaning using low-pressure soft wash. Prevent moss, algae, and roof damage. Trusted in Surrey, White Rock, and Greater Vancouver." />
+        <meta name="keywords" content="roof cleaning Surrey, soft wash White Rock, moss removal, roof maintenance, algae removal" />
       </Helmet>
       
+      {/* HERO SECTION */}
       <ServiceHeader
-        title="Roof Cleaning"
-        description="Safe and effective roof cleaning solutions to protect your investment and enhance your home's appearance."
-        icon={<Home size={48} />}
+        title="Gentle on Shingles. Tough on Moss."
+        description="Safe, effective roof cleaning with soft wash technology – no damage, all results."
         imagePath="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
+        darkOverlay={true}
       />
 
-      <section className="container mx-auto px-4 py-16">
-        <div className="flex flex-col md:flex-row gap-12 items-center">
-          <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold mb-6">Protect Your Largest Investment</h2>
-            <p className="text-gray-600 mb-6">
-              Your roof is one of the most significant investments in your home, providing essential protection from the elements. Over time, Pacific Northwest weather conditions cause organic growth like moss, algae, and lichen to establish themselves on your roof, particularly in shaded areas.
-            </p>
-            <p className="text-gray-600 mb-6">
-              This growth not only creates unsightly black streaks and discoloration but can cause serious damage by lifting shingles, retaining moisture, and accelerating deterioration of roofing materials. Our professional roof cleaning service safely removes these harmful organisms and helps prevent their return.
-            </p>
-            <div className="flex items-center space-x-8">
-              <div className="flex items-center">
-                <Shield className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">Fully Insured</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">Prompt Service</span>
-              </div>
-              <div className="flex items-center">
-                <ThumbsUp className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">100% Satisfaction</span>
-              </div>
+      {/* TRUST SECTION */}
+      <section className="py-8 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="flex flex-col items-center">
+              <Shield className="mb-2 text-bc-red h-8 w-8" />
+              <p className="font-medium">Fully Insured & Locally Trusted</p>
             </div>
-          </div>
-          <div className="md:w-1/2">
-            <img 
-              src="/lovable-uploads/4b5d343d-9019-4709-9661-a5341edd7db7.png" 
-              alt="Roof cleaning service" 
-              className="rounded-lg shadow-lg w-full h-auto"
-            />
+            <div className="flex flex-col items-center">
+              <Check className="mb-2 text-bc-red h-8 w-8" />
+              <p className="font-medium">Safe for All Roofing Materials</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <ThumbsUp className="mb-2 text-bc-red h-8 w-8" />
+              <p className="font-medium">All Jobs Checked by Owner</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Star className="mb-2 text-bc-red h-8 w-8" />
+              <p className="font-medium">Free Estimates & Transparent Service</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <RoofCleaningGallery />
-
-      <section className="bg-gray-50 py-16">
+      {/* HOW WE CLEAN ROOFS SECTION */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="section-title">Benefits of Professional Roof Cleaning</h2>
-          <p className="section-subtitle">
-            Regular roof maintenance provides substantial benefits for your home's longevity and appearance
-          </p>
+          <h2 className="text-3xl font-bold mb-10 text-center">Our Soft Wash Roof Cleaning System</h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow">
+              <div className="flex items-center mb-4">
+                <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                  <span className="text-bc-red font-bold">1</span>
+                </div>
+                <h3 className="text-xl font-semibold">Low-Pressure Application</h3>
+              </div>
+              <p className="text-gray-700">Our biodegradable sodium hypochlorite blend is applied with specialty low-pressure equipment to ensure no damage to your roofing materials.</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow">
+              <div className="flex items-center mb-4">
+                <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                  <span className="text-bc-red font-bold">2</span>
+                </div>
+                <h3 className="text-xl font-semibold">Eliminates Organic Growth</h3>
+              </div>
+              <p className="text-gray-700">Our solution effectively removes moss, algae, lichen, and black streaks by breaking down their cellular structure at the source.</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow">
+              <div className="flex items-center mb-4">
+                <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                  <span className="text-bc-red font-bold">3</span>
+                </div>
+                <h3 className="text-xl font-semibold">No Pressure Damage</h3>
+              </div>
+              <p className="text-gray-700">Unlike traditional pressure washing, our soft wash method preserves the integrity of shingles, tiles, and other roofing materials.</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow">
+              <div className="flex items-center mb-4">
+                <div className="bg-bc-red bg-opacity-10 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                  <span className="text-bc-red font-bold">4</span>
+                </div>
+                <h3 className="text-xl font-semibold">Long-Lasting Results</h3>
+              </div>
+              <p className="text-gray-700">Our chemical treatment continues working after application, providing results that last up to 4x longer than high-pressure methods.</p>
+            </div>
+          </div>
+          
+          <div className="bg-blue-50 p-6 rounded-lg mt-10 max-w-3xl mx-auto text-center">
+            <p className="text-lg font-medium">
+              "We use the same type of solution trusted by roofing manufacturers to maintain your warranty."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY ROOF CLEANING MATTERS */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Regular Roof Cleaning is Critical</h2>
           <ServiceBenefits benefits={benefits} />
         </div>
       </section>
+      
+      {/* BEFORE & AFTER GALLERY */}
+      <RoofCleaningGallery />
 
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Our Roof Cleaning Process</h2>
-        <p className="section-subtitle">
-          We use a careful, methodical approach to safely clean and protect your roof
-        </p>
-        <ServiceProcess processes={processes} />
+      {/* OPTIONAL ADD-ONS SECTION */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Need More Than Just a Roof Wash?</h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <Link to="/services/gutter-cleaning" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-3">Gutter Cleaning</h3>
+              <p className="text-gray-700 mb-4">Complete gutter cleaning and leaf guard installation services.</p>
+              <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
+            </Link>
+            
+            <Link to="/services/pressure-washing" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-3">House Washing</h3>
+              <p className="text-gray-700 mb-4">Soft wash house cleaning for siding, stucco, and more.</p>
+              <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
+            </Link>
+            
+            <Link to="/services/pressure-washing" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-3">Driveway Cleaning</h3>
+              <p className="text-gray-700 mb-4">Professional concrete and paver cleaning services.</p>
+              <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
+            </Link>
+            
+            <Link to="/services/window-cleaning" className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-3">Window Cleaning</h3>
+              <p className="text-gray-700 mb-4">Crystal-clear results for residential and commercial properties.</p>
+              <Button variant="outline" size="sm" className="mt-2">Learn More</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      
+      {/* TESTIMONIAL SECTION */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {roofTestimonials.map((testimonial, index) => (
+              <TestimonialCard
+                key={index}
+                quote={testimonial.quote}
+                name={testimonial.name}
+                location={testimonial.location}
+                rating={testimonial.rating || 5}
+                beforeAfterImage={testimonial.beforeAfterImage}
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
+      {/* SERVICE AREA BANNER */}
+      <section className="py-10 bg-gray-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="text-xl font-semibold mb-8 flex justify-center items-center">
+            <MapPin className="mr-2 text-bc-red" /> 
+            We clean roofs across Surrey, White Rock, South Surrey, and surrounding areas.
+          </h3>
+          
+          <div className="max-w-6xl mx-auto">
+            <ServiceAreaMap />
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
       <CallToAction 
         backgroundImage="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
-        title="Ready to Transform Your Roof?"
-        subtitle="Contact us today for a free roof cleaning quote and consultation."
+        title="Ready for a Clean Roof Without the Damage?"
+        subtitle="Jayden personally checks every job. Your roof is in good hands."
+        buttonText="Request Your Free Quote"
+        buttonLink="/calculator"
       />
     </Layout>
   );
