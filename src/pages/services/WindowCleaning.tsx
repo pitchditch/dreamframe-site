@@ -1,13 +1,10 @@
 
 import Layout from '../../components/Layout';
-import ServiceHeader from '../../components/ServiceHeader';
-import { Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { testimonials } from '@/data/testimonials';
 import TestimonialCard from '@/components/TestimonialCard';
 
-// Pick testimonial for window cleaning if available (with fallback)
 const windowTestimonial = testimonials.find(
   (t) => t.quote && (t.quote.toLowerCase().includes("window") || t.quote.toLowerCase().includes("windows"))
 ) || {
@@ -35,6 +32,52 @@ const whyUs = [
   },
 ];
 
+// Inline videos section using the YouTube links provided
+const WindowCleaningShowcaseSection = () => (
+  <section className="py-16 bg-gray-50 animate-on-scroll">
+    <div className="max-w-6xl mx-auto px-4 text-center">
+      <h2 className="text-3xl font-bold mb-4">See Our Window Cleaning in Action</h2>
+      <p className="text-lg text-gray-600 mb-10">
+        We use a pure water-fed pole system for spotless exterior windows and traditional squeegee methods for crystal-clear interiors.
+      </p>
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Outside Windows - Water Fed Pole */}
+        <div>
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/UNwx5XzYsEk?autoplay=1&mute=1&loop=1&playlist=UNwx5XzYsEk"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Exterior Window Cleaning - Water Fed Pole"
+              className="w-full h-64 md:h-80"
+            />
+          </div>
+          <h3 className="text-xl font-semibold mt-4">Exterior Window Cleaning</h3>
+          <p className="text-gray-500">
+            Water-fed pole with purified water leaves no streaks or spots – ideal for high windows and eco-friendly too.
+          </p>
+        </div>
+        {/* Inside Windows - Squeegee */}
+        <div>
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/C3KCbTyYocM?autoplay=1&mute=1&loop=1&playlist=C3KCbTyYocM"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Interior Window Cleaning - Squeegee"
+              className="w-full h-64 md:h-80"
+            />
+          </div>
+          <h3 className="text-xl font-semibold mt-4">Interior Window Cleaning</h3>
+          <p className="text-gray-500">
+            Professional hand squeegee technique for a flawless finish – with care and attention inside your home.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const WindowCleaning = () => {
   return (
     <Layout
@@ -42,25 +85,28 @@ const WindowCleaning = () => {
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
       image="/lovable-uploads/30f2c843-a162-44bc-a697-d9d9b7c9faef.png"
     >
+
       {/* HERO SECTION */}
-      <div className="relative bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center">
+      <header className="hero-section bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center relative">
         <img
           src="/lovable-uploads/30f2c843-a162-44bc-a697-d9d9b7c9faef.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover opacity-70"
         />
-        <div className="relative z-10 text-center px-6 py-24 md:py-32">
+        <div className="relative z-10 text-center px-6 py-20 md:py-32">
           <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Crystal Clear Windows, Guaranteed</h1>
-          <p className="text-lg md:text-2xl text-white font-medium mb-6">Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free.</p>
+          <p className="text-lg md:text-2xl text-white font-medium mb-6">
+            Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free.
+          </p>
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
             <Link to="/calculator">Get a Free Quote</Link>
           </Button>
         </div>
-      </div>
+      </header>
 
       {/* WHY CHOOSE US */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Why Choose Us for Window Cleaning?</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center">Why Choose Us for Window Cleaning?</h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {whyUs.map((item) => (
             <li key={item.title} className="bg-white rounded-lg shadow p-6 text-left">
@@ -71,9 +117,9 @@ const WindowCleaning = () => {
         </ul>
       </section>
 
-      {/* ADVANCED WATER FED POLE TECH (you can replace imgs with real if provided) */}
+      {/* ADVANCED WATER FED POLE TECH */}
       <section className="py-16 bg-white px-4 max-w-5xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Advanced Water Fed Pole Technology</h2>
+        <h2 className="text-3xl font-bold text-center mb-6">Advanced Water Fed Pole Technology</h2>
         <p className="text-lg text-center mb-8 max-w-3xl mx-auto">
           We use cutting-edge water fed pole systems with multi-stage water purification to leave your exterior windows completely spot and streak-free — no soap, no residue. Our system filters out minerals, sediments, and impurities, delivering ultra-pure water that dries crystal clear. 
           It also allows us to clean high windows safely from the ground — no ladders, no damage.
@@ -97,9 +143,12 @@ const WindowCleaning = () => {
         </div>
       </section>
 
+      {/* SHOWCASE - SEE OUR WINDOW CLEANING IN ACTION */}
+      <WindowCleaningShowcaseSection />
+
       {/* WHAT OUR CLIENTS SAY */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
+        <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
         <div className="mx-auto mb-8" style={{ maxWidth: 500 }}>
           <TestimonialCard
             quote={windowTestimonial.quote}
@@ -118,15 +167,17 @@ const WindowCleaning = () => {
 
       {/* CTA SECTION */}
       <section className="py-16 bg-blue-100 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold">Ready for Sparkling Windows?</h2>
-        <p className="text-lg mt-2 mb-6">Book now and see the difference professional window cleaning makes.</p>
+        <h2 className="text-3xl font-bold">Ready for Sparkling Windows?</h2>
+        <p className="text-lg mt-2 mb-6">
+          Book now and see the difference professional window cleaning makes.
+        </p>
         <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
           <Link to="/calculator">Check Prices &amp; Availability</Link>
         </Button>
       </section>
 
       {/* FOOTER */}
-      <footer className="footer py-8 text-center bg-gray-800 text-white">
+      <footer className="footer py-10 text-center bg-gray-800 text-white">
         <p>&copy; 2025 BC Pressure Washing. All rights reserved.</p>
       </footer>
     </Layout>
