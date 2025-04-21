@@ -1,117 +1,83 @@
-import { useEffect, useRef } from 'react';
+
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
-import HeroSection from '../components/home/HeroSection';
-import FounderSection from '../components/home/FounderSection';
+import FeatureRow from '../components/home/FeatureRow';
 import TestimonialsSection from '../components/home/TestimonialsSection';
-import ServicesSection from '../components/home/ServicesSection';
-import ReferralButton from '../components/ReferralButton';
-import { useTranslation } from '@/hooks/use-translation';
+import ServiceAreaMap from '../components/ServiceAreaMap';
+import FloatingChatBot from '../components/FloatingChatBot';
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
-  const { setLanguage } = useTranslation();
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
+  // Only show chat bot floating button for desktop
   useEffect(() => {
-    // Ensure English is the default language on initial load
-    setLanguage('en');
-    
-    // Mark body to have video header (for navbar transparency)
-    document.body.classList.add('has-video-header');
-
-    // Animation for elements when they enter viewport
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    animatedElements.forEach(el => observer.observe(el));
-
-    // Scroll effect for the hero section
-    const handleScroll = () => {
-      if (overlayRef.current) {
-        const scrollPosition = window.scrollY;
-        if (scrollPosition < window.innerHeight) {
-          const opacity = Math.min(0.9, scrollPosition / window.innerHeight * 1.5);
-          overlayRef.current.style.opacity = opacity.toString();
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      // Clean up
-      document.body.classList.remove('has-video-header');
-      animatedElements.forEach(el => observer.unobserve(el));
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [setLanguage]);
+    // No-op: The floating chat is static in this layout,
+    // could implement open/close logic here.
+  }, []);
 
   return (
-    <Layout image="/open.png">
+    <Layout>
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
-        <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
         <meta property="og:image" content="/open.png" />
-        <style>{`
-          .hero-section {
-            height: 100vh;
-            position: relative;
-          }
-          .text-shadow-lg {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-          }
-          .content-overlay {
-            position: relative;
-            z-index: 10;
-          }
-          .parallax-hero {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-          }
-          .scroll-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: #fff;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.1s ease;
-          }
-        `}</style>
       </Helmet>
-      
-      <div className="parallax-hero">
-        <HeroSection />
-        <div ref={overlayRef} className="scroll-overlay"></div>
-      </div>
-      
-      <div className="content-overlay pt-[100vh]">
-        <FounderSection />
-        <TestimonialsSection />
-        <ServicesSection />
-      </div>
-      
-      <ReferralButton />
+
+      <section className="min-h-[30vh] flex items-center justify-center py-8 bg-white">
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold shadow"
+          onClick={() => navigate("/calculator")}
+        >
+          Check Prices &amp; Availability
+        </button>
+      </section>
+
+      {/* Commitment headline */}
+      <section className="bg-white py-10">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+            Locally Owned & Personally Committed
+          </h2>
+          <p className="text-gray-600 max-w-xl mx-auto mb-6">
+            Every job is personally handled or overseen by Jayden, the founder — no shortcuts, no subpar results.
+          </p>
+          <FeatureRow />
+        </div>
+      </section>
+
+      <TestimonialsSection />
+
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Our Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {[
+              { title: "Pressure Washing", link: "/services/pressure-washing" },
+              { title: "Window Cleaning", link: "/services/window-cleaning" },
+              { title: "Gutter Cleaning", link: "/services/gutter-cleaning" },
+              { title: "Roof Cleaning", link: "/services/roof-cleaning" },
+            ].map((svc) => (
+              <a
+                key={svc.title}
+                href={svc.link}
+                className="text-charcoal border border-gray-200 rounded-lg p-6 flex flex-col items-center hover:bg-gray-50 shadow-sm hover:shadow transition"
+              >
+                <span className="font-semibold text-lg mb-2">{svc.title}</span>
+                <span className="text-blue-600 font-medium">Learn More &#8594;</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ServiceAreaMap />
+
+      {/* Floating Chatbot (desktop) */}
+      {!isMobile && <FloatingChatBot onClick={() => { window.location.href = "/contact" }} />}
     </Layout>
   );
 };
