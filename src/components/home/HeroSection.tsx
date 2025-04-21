@@ -2,12 +2,17 @@
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import { ArrowRight, Shield, Star, Check, Phone } from 'lucide-react';
+import { ArrowRight, Shield, Star, Check } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+
+const DESKTOP_VIDEO = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0";
+const MOBILE_VIDEO = "https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&loop=1&playlist=sAjdWDNtFQw&controls=0&showinfo=0&rel=0";
 
 const HeroSection = () => {
   const { t } = useTranslation();
   const [zipCode, setZipCode] = useState('');
-  
+  const isMobile = useIsMobile();
+
   const handleZipCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (zipCode) {
@@ -18,17 +23,28 @@ const HeroSection = () => {
       calculatorButton.click();
     }
   };
-  
+
   return (
     <section className="hero-section relative min-h-screen flex items-center w-full overflow-hidden">
       <div className="absolute inset-0">
-        <iframe 
-          className="absolute inset-0 w-full h-full md:scale-[1.5]"
-          src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0"
-          title="Background Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          style={{ border: 'none' }}
-        ></iframe>
+        {/* Switch video based on device */}
+        {isMobile ? (
+          <iframe 
+            className="absolute inset-0 w-full h-full"
+            src={MOBILE_VIDEO}
+            title="Background Mobile Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            style={{ border: 'none', minHeight: '375px', maxHeight: 'none', objectFit: 'cover' }}
+          />
+        ) : (
+          <iframe 
+            className="absolute inset-0 w-full h-full md:scale-[1.5]"
+            src={DESKTOP_VIDEO}
+            title="Background Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            style={{ border: 'none' }}
+          />
+        )}
       </div>
       
       <div className="hero-overlay absolute inset-0 bg-black/60"></div>
