@@ -18,8 +18,8 @@ const ServiceAreaMap = () => {
           </p>
         </div>
         
-        <div className="bg-navy/80 p-6 rounded-xl shadow-2xl overflow-hidden border border-white/10">
-          <div className="h-[400px] w-full rounded-lg overflow-hidden relative">
+        <div className="bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-6 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 relative">
+          <div className="h-[420px] w-full rounded-xl overflow-hidden relative">
             <iframe
               src={`https://www.google.com/maps/d/embed?mid=${mapId}`}
               width="100%"
@@ -27,16 +27,26 @@ const ServiceAreaMap = () => {
               title="BC Pressure Washing Service Area"
               style={{
                 border: 0,
-                filter: "contrast(1.08) saturate(1.1) brightness(0.96) drop-shadow(2px 2px 12px #15181e)",
+                filter: "saturate(1.18) brightness(0.96) drop-shadow(2px 2px 12px #15181e)",
                 background: "#202d3a"
               }}
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
-            {/* Overlay for better text readability (optional) */}
-            <div className="absolute bottom-2 left-2 bg-black/70 px-4 py-2 rounded text-white text-base font-semibold shadow-lg" style={{ pointerEvents: 'none', textShadow: '0 1px 8px #000', letterSpacing: '0.5px' }}>
-              Service Area: Surrey, White Rock, Langley, Metro Vancouver
+            {/* Overlay for better text readability */}
+            <div
+              className="absolute bottom-3 left-3 md:bottom-5 md:left-5 z-10 px-5 py-3 rounded-2xl font-bold text-lg flex flex-col gap-1 shadow-2xl"
+              style={{
+                background: 'rgba(22,22,22,0.92)',
+                color: '#FFD600',
+                textShadow: '0 1px 14px #000, 0 2px 16px #000'
+              }}
+            >
+              <span>🗺️ <span className="text-white">Service Area:</span> <span className="font-extrabold text-yellow-400 pl-1">Surrey, White Rock, Langley<br className="block md:hidden" /> & Metro Vancouver</span></span>
+              <span className="text-white/80 text-xs mt-1">
+                Map pins show areas we actively serve. Ask if you’re unsure!
+              </span>
             </div>
           </div>
         </div>

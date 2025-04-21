@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
@@ -7,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const DESKTOP_VIDEO = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0";
 const MOBILE_VIDEO = "https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&loop=1&playlist=sAjdWDNtFQw&controls=0&showinfo=0&rel=0";
+const MOBILE_SHORTS = "https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&loop=1&playlist=sAjdWDNtFQw&controls=0&showinfo=0&rel=0";
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -31,10 +31,10 @@ const HeroSection = () => {
         {isMobile ? (
           <iframe 
             className="absolute inset-0 w-full h-full"
-            src={MOBILE_VIDEO}
-            title="Background Mobile Video"
+            src={MOBILE_SHORTS}
+            title="Background Mobile Short Video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ border: 'none', minHeight: '375px', maxHeight: 'none', objectFit: 'cover' }}
+            style={{ border: 'none', minHeight: 0, height: '100%', maxHeight: 'none', objectFit: 'cover' }}
           />
         ) : (
           <iframe 
