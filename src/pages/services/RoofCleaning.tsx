@@ -1,11 +1,10 @@
 
 import Layout from '../../components/Layout';
-import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
 import CallToAction from '../../components/CallToAction';
-import { Home, Shield, Clock, ThumbsUp, Search, Droplets, Sparkles } from 'lucide-react';
+import { Shield, Clock, ThumbsUp, Search, Droplets } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 const RoofCleaning = () => {
@@ -61,14 +60,26 @@ const RoofCleaning = () => {
         <meta name="description" content="Expert roof cleaning services in White Rock, Surrey & Metro Vancouver. Safe moss and algae removal, extending roof lifespan. Free estimates!" />
         <meta name="keywords" content="roof cleaning White Rock, moss removal BC, roof maintenance Surrey, professional roof cleaning services" />
       </Helmet>
-      
-      <ServiceHeader
-        title="Roof Cleaning"
-        description="Safe and effective roof cleaning solutions to protect your investment and enhance your home's appearance."
-        icon={<Home size={48} />}
-        imagePath="/lovable-uploads/213a6c8e-3ff9-45fd-8a16-20b91f45d9aa.png"
-      />
 
+      {/* HERO VIDEO SECTION */}
+      <header className="relative bg-black min-h-[450px] flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/60 z-10" />
+        <iframe
+          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
+          src="https://www.youtube.com/embed/sjAe3XfY8Ts?autoplay=1&mute=1&loop=1&playlist=sjAe3XfY8Ts&controls=0&showinfo=0&rel=0"
+          title="Roof Cleaning Video"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          style={{ border: 'none', minHeight: "450px", objectFit: "cover", transform: "scale(1.2)", transformOrigin: "center" }}
+        />
+        <div className="relative z-20 text-center px-6 py-16 md:py-28 w-full flex flex-col items-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Professional Roof Cleaning in Surrey &amp; White Rock</h1>
+          <p className="text-lg md:text-2xl text-white font-medium mb-6 max-w-2xl mx-auto">
+            Safe and effective roof cleaning to extend roof lifespan, protect your warranty, and instantly boost curb appeal.
+          </p>
+        </div>
+      </header>
+      
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
           <div className="md:w-1/2">
@@ -134,3 +145,4 @@ const RoofCleaning = () => {
 };
 
 export default RoofCleaning;
+
