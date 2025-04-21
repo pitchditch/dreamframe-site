@@ -28,7 +28,7 @@ const whyUs = [
   },
   {
     title: 'Licensed & Insured',
-    description: 'Peace of mind comes standard — we\'re fully covered.',
+    description: "Peace of mind comes standard — we\'re fully covered.",
   },
 ];
 
@@ -45,7 +45,7 @@ const WindowCleaningShowcaseSection = () => (
         <div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/UNwx5XzYsEk?autoplay=1&mute=1&loop=1&playlist=UNwx5XzYsEk"
+              src="https://www.youtube.com/embed/PKw0OS7iDmY?autoplay=1&mute=1&loop=1&playlist=PKw0OS7iDmY"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Exterior Window Cleaning - Water Fed Pole"
@@ -61,7 +61,7 @@ const WindowCleaningShowcaseSection = () => (
         <div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/C3KCbTyYocM?autoplay=1&mute=1&loop=1&playlist=C3KCbTyYocM"
+              src="https://www.youtube.com/embed/xeUNIHhOxb8?autoplay=1&mute=1&loop=1&playlist=xeUNIHhOxb8"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Interior Window Cleaning - Squeegee"
@@ -126,7 +126,7 @@ const WindowCleaning = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/UNwx5XzYsEk?autoplay=1&mute=1&loop=1&playlist=UNwx5XzYsEk"
+              src="https://www.youtube.com/embed/PKw0OS7iDmY?autoplay=1&mute=1&loop=1&playlist=PKw0OS7iDmY"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Water Fed Pole System - Exterior Window Cleaning"
@@ -135,7 +135,7 @@ const WindowCleaning = () => {
           </div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/C3KCbTyYocM?autoplay=1&mute=1&loop=1&playlist=C3KCbTyYocM"
+              src="https://www.youtube.com/embed/xeUNIHhOxb8?autoplay=1&mute=1&loop=1&playlist=xeUNIHhOxb8"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Squeegee Technique - Interior Window Cleaning"
@@ -150,10 +150,10 @@ const WindowCleaning = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
           <div className="flex justify-center gap-6 flex-wrap">
-            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-16" />
-            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-16" />
-            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-16" />
-            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-16" />
+            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-28 w-auto" />
+            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-28 w-auto" />
+            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-28 w-auto" />
+            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-28 w-auto" />
           </div>
         </div>
       </section>
