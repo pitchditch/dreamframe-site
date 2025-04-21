@@ -133,10 +133,10 @@ const WindowCleaning = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
           <div className="flex justify-center gap-6 flex-wrap">
-            <img src="/lovable-uploads/a9642252-b006-4c8c-89d4-d439e04f9891.png" alt="Licensed & Insured Badge" className="h-16" />
-            <img src="/lovable-uploads/ff4fb258-bc33-4114-83e8-05d0d9f02770.png" alt="Satisfaction Guarantee Badge" className="h-16" />
-            <img src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" alt="Locally Owned Badge" className="h-16" />
-            <img src="/lovable-uploads/dfaebca8-43d4-42ef-89ea-15ebe31be9c7.png" alt="Eco Friendly Badge" className="h-16" />
+            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-16" />
+            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-16" />
+            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-16" />
+            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-16" />
           </div>
         </div>
       </section>
