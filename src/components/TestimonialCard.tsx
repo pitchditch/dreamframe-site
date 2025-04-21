@@ -7,37 +7,27 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   beforeAfterImage?: string;
-  badge?: boolean;
 }
 
-const DEFAULT_IMG = "/lovable-uploads/fb14922e-1128-4357-a370-288f9e7ce777.png";
-const BADGE_IMG = "/lovable-uploads/0dc60043-05c1-4bfe-9891-c766cdec0bca.png";
+const DEFAULT_IMG = "/lovable-uploads/ba7defcf-8655-419d-a9c7-46784925dea9.png";
 
-const TestimonialCard = ({
-  quote,
-  name,
-  location,
-  rating = 5,
-  beforeAfterImage,
-  badge = false,
-}: TestimonialCardProps) => {
+const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }: TestimonialCardProps) => {
   return (
-    <div className="testimonial-card bg-white p-6 rounded-lg shadow-md relative min-h-[370px] flex flex-col">
-      <div className="mb-6 overflow-hidden rounded-md relative">
-        <img 
-          src={beforeAfterImage || DEFAULT_IMG} 
-          alt="Before and after transformation" 
-          className="w-full h-40 object-cover object-top"
-        />
-        {badge && (
-          <img src={BADGE_IMG} alt="Badge" className="absolute top-2 right-2 w-10 h-10 rounded-full border-2 border-bc-red shadow" />
-        )}
-      </div>
+    <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
+      {(beforeAfterImage || DEFAULT_IMG) && (
+        <div className="mb-6 overflow-hidden rounded-md">
+          <img 
+            src={beforeAfterImage || DEFAULT_IMG} 
+            alt="Before and after transformation" 
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      )}
       <div className="flex mb-4">
         <div className="text-4xl font-serif text-red-200 mr-2">❝</div>
       </div>
-      <p className="italic text-gray-600 mb-4 flex-1">{quote}</p>
-      <div className="flex items-center justify-between mt-auto">
+      <p className="italic text-gray-600 mb-6">{quote}</p>
+      <div className="flex items-center justify-between">
         <div>
           <h4 className="font-medium">{name}</h4>
           <p className="text-sm text-gray-500">{location}</p>

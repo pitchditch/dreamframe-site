@@ -1,53 +1,75 @@
 
 import { useTranslation } from '@/hooks/use-translation';
 import TestimonialCard from '../TestimonialCard';
-
-const testimonials = [
-  {
-    quote:
-      "BC Pressure Washing did an amazing job on our driveway. The team was on time, polite, and the results exceeded our expectations!",
-    name: "Jane S.",
-    location: "Surrey, BC",
-    // No image, show default avatar
-    beforeAfterImage: undefined,
-    badge: false,
-  },
-  {
-    quote:
-      "They removed years of grime from our gutters—everything looks brand new. Would highly recommend!",
-    name: "Michael R.",
-    location: "White Rock, BC",
-    // Show badge on this one
-    beforeAfterImage: undefined,
-    badge: true,
-  },
-  {
-    quote:
-      "Prompt, affordable and very professional. The difference was visible instantly.",
-    name: "Alicia D.",
-    location: "Langley, BC",
-    // Provide custom image example for variety
-    beforeAfterImage: "/lovable-uploads/a1f01b41-c73a-4644-8580-6399a42951bf.png",
-    badge: false,
-  },
-];
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from "../ui/carousel";
+import { useEffect, useState } from 'react';
+import { testimonials } from '@/data/testimonials';
 
 const TestimonialsSection = () => {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
+  const [api, setApi] = useState<any>();
 
+  useEffect(() => {
+    if (!api) return;
+
+    // Set up automatic scrolling
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, isMobile ? 5000 : 8000);
+
+    return () => clearInterval(interval);
+  }, [api, isMobile]);
+  
   return (
-    <section className="bg-gray-100 py-12">
+    <section className="section-padding bg-bc-gray overflow-hidden -mt-24 pt-32 relative z-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
-          {t("What Our Clients Say")}
-        </h2>
-        <p className="text-center text-gray-500 mb-10">
-          {t("Before & After Transformations + Customer Testimonials")}
+        <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Testimonials")}</div>
+        <h2 className="section-title animate-on-scroll">{t("What Our Clients Say")}</h2>
+        <p className="section-subtitle animate-on-scroll">
+          {t("Don't just take our word for it. Hear what our satisfied customers have to say about our services.")}
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, i) => (
-            <TestimonialCard key={i} {...testimonial} />
-          ))}
+
+        <div className="mt-12 w-full">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            setApi={setApi}
+            className="w-full"
+          >
+            <CarouselContent>
+              {testimonials.slice(0, 6).map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <TestimonialCard
+                    quote={testimonial.quote}
+                    name={testimonial.name}
+                    location={testimonial.location}
+                    rating={testimonial.rating}
+                    beforeAfterImage={testimonial.beforeAfterImage}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Button asChild variant="outline" size="lg" className="bg-bc-red text-white hover:bg-bc-red/90">
+            <Link to="/why-us">See More Testimonials</Link>
+          </Button>
         </div>
       </div>
     </section>
