@@ -76,11 +76,19 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               {t('Contact')}
             </Link>
             
-            <div className="pt-4 flex flex-col gap-4">
+            <div className="pt-4 flex flex-col gap-3">
               <PriceCalculatorOverlay 
                 buttonText={t("Get a Free Quote")} 
                 className="w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium text-center transition-all" 
               />
+              <a
+                href="tel:7788087620"
+                className="flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-lg px-5 py-3 shadow-md w-full transition-all"
+                style={{ minHeight: '44px' }}
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                Call Jayden Now
+              </a>
               <LanguageSelector />
             </div>
           </nav>
@@ -103,4 +111,3 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
     </>
   );
 };
-

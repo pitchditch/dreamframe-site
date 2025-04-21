@@ -9,16 +9,21 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center">
       <div
-        className="relative h-32 md:h-48" // Increased both mobile/desktop heights for bigger logo
-        style={{ minWidth: '160px', maxWidth: '360px' }}
+        className="relative h-36 md:h-56"
+        style={{
+          minWidth: '210px',
+          maxWidth: '410px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
       >
-        <img 
-          src={isOverVideo ? "/lovable-uploads/5e03eec6-7937-4b27-a84d-0fc9bc66ed91.png" : "/lovable-uploads/5e03eec6-7937-4b27-a84d-0fc9bc66ed91.png"}
-          alt="BC Pressure Washing Logo" 
+        <img
+          src="/lovable-uploads/18bd9fc6-ffb1-4c17-8c5e-0a8a15939ae4.png"
+          alt="BC Pressure Washing Logo"
           className="h-full w-auto object-contain drop-shadow-2xl"
           style={{
-            maxWidth: '360px',
-            minHeight: '80px',
+            maxWidth: '410px',
+            minHeight: '90px',
           }}
         />
       </div>
