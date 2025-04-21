@@ -1,9 +1,10 @@
+
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
 import { ChevronDown, ChevronUp, Store, Building, User2, HardHat } from 'lucide-react';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
-import { Phone } from 'lucide-react';
+// Removed import { Phone } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -86,19 +87,14 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
           </nav>
         </div>
       </div>
-      <div className="fixed bottom-6 right-6 left-0 md:hidden z-50 flex flex-row gap-4 justify-end px-4">
-        <div className="flex-grow"></div>
+      {/* Bottom-right floating Free Quote button for mobile only */}
+      <div className="fixed bottom-6 right-6 md:hidden z-50 flex flex-row gap-4 justify-end px-4">
         <PriceCalculatorOverlay 
           buttonText={t("Free Quote")}
           className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all"
         />
-        <a 
-          href="tel:7788087620"
-          className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-        >
-          <Phone className="h-6 w-6" />
-        </a>
       </div>
     </>
   );
 };
+

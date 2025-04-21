@@ -27,15 +27,17 @@ const HeroSection = () => {
   return (
     <section className="hero-section relative min-h-screen flex items-center w-full overflow-hidden">
       <div className="absolute inset-0">
-        {/* Responsive: Mobile video fills full width, height 100vh; Desktop: same but slightly zoomed for parallax */}
+        {/* Mobile video fills full width and height with object-fit: cover, no black bars */}
         {isMobile ? (
-          <iframe 
-            className="absolute inset-0 w-full h-full"
-            src={MOBILE_VIDEO}
-            title="Background Mobile Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ border: 'none', height: '100vh', maxWidth: '100vw', objectFit: 'cover' }}
-          />
+          <div className="w-full h-[100vh]">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src={MOBILE_VIDEO}
+              title="Background Mobile Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              style={{ border: 'none', width: '100vw', height: '100vh', objectFit: 'cover' }}
+            />
+          </div>
         ) : (
           <iframe 
             className="absolute inset-0 w-full h-full md:scale-[1.5]"
@@ -57,13 +59,7 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto text-white">
             Professional window cleaning, pressure washing, and gutter care. Locally owned and personally operated by Jayden in Surrey, White Rock & beyond.
           </p>
-          {/* Add phone number in hero */}
-          <div className="flex justify-end items-center mb-4 gap-2">
-            <Phone className="w-6 h-6 text-yellow-400" />
-            <a href="tel:7788087620" className="text-yellow-300 text-2xl md:text-3xl font-extrabold hover:underline">
-              778-808-7620
-            </a>
-          </div>
+          {/* Remove phone number in hero */}
           <form onSubmit={handleZipCodeSubmit} className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end mb-8">
             <div className="relative">
               <input 
