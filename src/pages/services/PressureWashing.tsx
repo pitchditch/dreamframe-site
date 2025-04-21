@@ -1,33 +1,59 @@
+
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Check, Star } from 'lucide-react';
-import { useTranslation } from '@/hooks/use-translation';
+import { Check, MapPin } from 'lucide-react';
 import TestimonialCard from '@/components/TestimonialCard';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "@/components/ui/carousel";
-import { Card, CardContent } from '@/components/ui/card';
 import { testimonials } from '@/data/testimonials';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
 
-// Find pressure washing related testimonials
-const pressureWashingTestimonials = testimonials.filter(
+// USER IMAGES (replace with uploaded assets)
+const HOUSE_EXTERIORS_IMG = "/lovable-uploads/photo-1487252665478-49b61b47f302.jpg";
+const DRIVEWAYS_IMG = "/lovable-uploads/photo-1465379944081-7f47de8d74ac.jpg";
+const PATIOS_DECKS_IMG = "/lovable-uploads/photo-1485833077593-4278bba3f11f.jpg";
+const FENCES_IMG = "/lovable-uploads/photo-1500375592092-40eb2168fd21.jpg";
+const FEATURED_PROJECT_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
+
+// Owner operated image (headshot)
+const OWNER_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
+
+// BADGES (icon is just visual, images come from lovable uploads)
+const whyUsBadges = [
+  {
+    title: 'Owner-Operated',
+    description: 'Every job is checked by Jayden Fisher for personal quality assurance.',
+    image: OWNER_IMG
+  },
+  {
+    title: 'Fully Insured',
+    description: 'Peace of mind — we’re fully protected so your property is too.',
+    image: "/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png"
+  },
+  {
+    title: 'Eco-Friendly Cleaning Agents',
+    description: '100% safe for pets, plants, and our local environment.',
+    image: "/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png"
+  },
+  {
+    title: '100% Satisfaction Guarantee',
+    description: 'If you’re not thrilled, we’ll re-clean for free — period.',
+    image: "/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png"
+  }
+];
+
+// Only show 2–4 reviews, preferably about professionalism/effectiveness
+const pwTestimonials = testimonials.filter(
   (t) => t.quote && (
-    t.quote.toLowerCase().includes("pressure") || 
-    t.quote.toLowerCase().includes("wash") ||
-    t.quote.toLowerCase().includes("clean")
+    t.quote.toLowerCase().includes("pressure") ||
+    t.quote.toLowerCase().includes("professional") ||
+    t.quote.toLowerCase().includes("effect") ||
+    t.quote.toLowerCase().includes("friendly")
   )
-).slice(0, 3);
+).slice(0, 4);
 
 const PressureWashing = () => {
-  const { t } = useTranslation();
-  
   return (
     <Layout>
       <Helmet>
@@ -35,69 +61,64 @@ const PressureWashing = () => {
         <meta name="description" content="Eco-conscious pressure washing using surface cleaners & safe chemical solutions. House washing, driveway cleaning, and commercial services. Get a free quote!" />
         <meta name="keywords" content="pressure washing Surrey, house washing White Rock, driveway cleaning Surrey, eco-friendly pressure washing, commercial pressure washing" />
       </Helmet>
-      
+
       {/* 1. HERO SECTION */}
-      <header className="relative bg-black min-h-[500px] flex items-center justify-center">
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-70"
-          poster="/lovable-uploads/2e6b8af4-e2b3-424a-bdfb-3ba6a8d188f4.png"
-        >
-          <source src="https://youtu.be/PKw0OS7iDmY" type="video/mp4" />
-        </video>
-        <div className="relative z-10 text-center px-6 py-20 md:py-32 max-w-5xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4">
-            Professional Pressure Washing in Surrey & White Rock
-          </h1>
-          <p className="text-lg md:text-2xl text-white font-medium mb-8 max-w-3xl mx-auto">
+      <header className="relative bg-black min-h-[450px] flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/60 z-10" />
+        <iframe
+          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
+          src="https://www.youtube.com/embed/uxFSTD4SpS0?autoplay=1&mute=1&loop=1&playlist=uxFSTD4SpS0&controls=0&showinfo=0&rel=0"
+          title="Pressure Washing Surface Cleaner Video"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          style={{ border: 'none', minHeight: "450px" }}
+        />
+        <div className="relative z-20 text-center px-6 py-16 md:py-28 w-full flex flex-col items-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Professional Pressure Washing in Surrey &amp; White Rock</h1>
+          <p className="text-lg md:text-2xl text-white font-medium mb-6 max-w-2xl mx-auto">
             Eco-conscious cleaning using surface cleaners &amp; safe chemical solutions. Your home or business deserves the best.
           </p>
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
-            <a href="#booking-section">Get Your Free Quote Today <ArrowRight className="ml-2" size={18} /></a>
+            <a href="#booking-section">Get Your Free Quote Today &rarr;</a>
           </Button>
         </div>
       </header>
 
       {/* 2. WHAT WE CLEAN */}
-      <section className="py-16 bg-white">
+      <section className="py-14 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Expert Pressure Washing for Every Surface</h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {/* Driveways */}
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png" alt="Driveway pressure washing" className="w-24 h-24 object-cover rounded-full" />
-              </div>
-              <h3 className="font-semibold text-lg mb-1">Driveways</h3>
-            </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Expert Pressure Washing for Every Surface</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6">
             {/* House Exteriors */}
             <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/417b8f9b-59c5-4d97-b333-e204b4d67c51.png" alt="House exterior pressure washing" className="w-24 h-24 object-cover rounded-full" />
+              <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
+                <img src={HOUSE_EXTERIORS_IMG} alt="House Exteriors" className="object-cover w-full h-full" />
               </div>
-              <h3 className="font-semibold text-lg mb-1">House Exteriors</h3>
+              <h3 className="font-semibold text-lg">House Exteriors</h3>
             </div>
-            {/* Patios & Decks (combined) */}
+            {/* Driveways */}
             <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/ed9fa980-3e80-4398-9d6d-b2c95be9982d.png" alt="Patio and deck pressure washing" className="w-24 h-24 object-cover rounded-full" />
+              <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
+                <img src={DRIVEWAYS_IMG} alt="Driveways" className="object-cover w-full h-full" />
               </div>
-              <h3 className="font-semibold text-lg mb-1">Patios & Decks</h3>
+              <h3 className="font-semibold text-lg">Driveways</h3>
+            </div>
+            {/* Patios & Decks */}
+            <div className="flex flex-col items-center text-center">
+              <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
+                <img src={PATIOS_DECKS_IMG} alt="Patios and Decks" className="object-cover w-full h-full" />
+              </div>
+              <h3 className="font-semibold text-lg">Patios &amp; Decks</h3>
             </div>
             {/* Fences */}
             <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-100 rounded-full p-6 mb-4">
-                <img src="/lovable-uploads/f46ac2d7-7e8b-4a54-95ae-63db67082c3e.png" alt="Fence pressure washing" className="w-24 h-24 object-cover rounded-full" />
+              <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
+                <img src={FENCES_IMG} alt="Fences" className="object-cover w-full h-full" />
               </div>
-              <h3 className="font-semibold text-lg mb-1">Fences</h3>
+              <h3 className="font-semibold text-lg">Fences</h3>
             </div>
           </div>
-          
-          <p className="text-center mt-10 text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-center mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
             No damage – just deep, effective cleaning tailored for each surface type.
           </p>
         </div>
@@ -107,7 +128,6 @@ const PressureWashing = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">A Deep Clean That's Safe, Effective &amp; Guaranteed</h2>
-          
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="bg-bc-red bg-opacity-10 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
@@ -118,7 +138,6 @@ const PressureWashing = () => {
                 We apply a biodegradable sodium hypochlorite solution to kill algae, mold, and embedded grime.
               </p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="bg-bc-red bg-opacity-10 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                 <span className="text-bc-red font-bold text-2xl">2</span>
@@ -128,7 +147,6 @@ const PressureWashing = () => {
                 Using commercial-grade surface cleaners for streak-free, even results.
               </p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="bg-bc-red bg-opacity-10 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                 <span className="text-bc-red font-bold text-2xl">3</span>
@@ -139,35 +157,20 @@ const PressureWashing = () => {
               </p>
             </div>
           </div>
-          
-          {/* Quick video bonus, borderless */}
-          <div className="mt-16 max-w-3xl mx-auto">
-            <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
-              <iframe 
-                src="https://www.youtube.com/embed/PKw0OS7iDmY?autoplay=1&mute=1&loop=1&playlist=PKw0OS7iDmY" 
-                className="w-full h-64 md:h-80 border-0" 
-                style={{ border: "none" }}
-                title="Surface cleaner in action"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <p className="text-center text-gray-500 mt-2">Watch our surface cleaner in action</p>
-          </div>
         </div>
       </section>
 
-      {/* 4. FEATURED PROJECT (was: BEFORE & AFTER GALLERY) */}
+      {/* 4. FEATURED PROJECT (Image instead of before/after slider, use user's first image) */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Featured Project: South Abbotsford Church</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Featured Project: Local Transformation</h2>
           <p className="text-center text-lg text-gray-600 mb-10 max-w-3xl mx-auto">
-            See what a real transformation looks like – commercial-grade cleaning with a visible before/after difference. 
+            See the dramatic difference we've created for homes right here in the Surrey &amp; White Rock area.
           </p>
           <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/2e6b8af4-e2b3-424a-bdfb-3ba6a8d188f4.png" 
-              alt="Featured Project: South Abbotsford Church" 
+              src={FEATURED_PROJECT_IMG}
+              alt="Featured Local Project"
               className="rounded-xl shadow-2xl max-w-3xl w-full"
               style={{ border: "none" }}
             />
@@ -181,73 +184,51 @@ const PressureWashing = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
             Why Surrey Homeowners Trust Us Over Shack Shine or Men in Kilts
           </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <div className="mb-4 text-bc-red">
-                <img 
-                  src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
-                  alt="Jayden Fisher" 
-                  className="w-24 h-24 object-cover rounded-full mx-auto" 
-                />
+          <div className="flex flex-wrap justify-center gap-10 items-stretch mb-4">
+            {whyUsBadges.map((badge, idx) => (
+              <div
+                className="flex flex-col items-center text-center bg-white rounded-2xl shadow-lg px-8 py-8 mx-3 grow gap-3 min-w-[280px] max-w-lg"
+                style={{ flexBasis: "340px" }}
+                key={badge.title}
+              >
+                <div
+                  className="mb-4"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: idx === 0 ? 130 : 110,
+                    height: idx === 0 ? 130 : 110,
+                    borderRadius: "100%",
+                    background: idx === 0 ? "#eee" : "rgba(252, 49, 48, 0.09)",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={badge.image}
+                    alt={badge.title}
+                    className={`object-cover ${idx === 0 ? "w-[110px] h-[110px]" : "h-[90px] w-[90px]"}`}
+                    style={{
+                      borderRadius: "100%",
+                      background: idx === 0 ? "#fff" : "",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-1">{badge.title}</h3>
+                <p className="text-gray-700 text-base">{badge.description}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Owner-Operated</h3>
-              <p className="text-gray-600">Every job is checked by Jayden Fisher</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <div className="mb-4 text-bc-red">
-                <Check size={40} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Fully Insured</h3>
-              <p className="text-gray-600">Complete peace of mind with full coverage</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <div className="mb-4 text-bc-red">
-                <img 
-                  src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" 
-                  alt="Eco-friendly" 
-                  className="h-14" 
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Agents</h3>
-              <p className="text-gray-600">Safe for your family, pets, and the environment</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <div className="mb-4 text-bc-red">
-                <img 
-                  src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" 
-                  alt="100% satisfaction" 
-                  className="h-14" 
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Competitive Pricing</h3>
-              <p className="text-gray-600">Excellent value without compromising quality</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <div className="mb-4 text-bc-red">
-                <img 
-                  src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" 
-                  alt="Local service" 
-                  className="h-14" 
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Fast, Friendly Local Service</h3>
-              <p className="text-gray-600">Quick response times from people who live in your community</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 6. TESTIMONIALS */}
+      {/* 6. CUSTOMER TESTIMONIALS */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Customer Testimonials</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {pressureWashingTestimonials.map((testimonial, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {pwTestimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={index}
                 quote={testimonial.quote}
@@ -265,7 +246,6 @@ const PressureWashing = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-3">Is pressure washing safe for all surfaces?</h3>
@@ -273,28 +253,19 @@ const PressureWashing = () => {
                 Not all surfaces should be treated the same way. We use different techniques and pressures for different materials. Our technicians are trained to assess each surface and use the appropriate method to ensure effective cleaning without damage. For delicate surfaces, we use soft washing techniques with lower pressure.
               </p>
             </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-3">What's the benefit of using a surface cleaner vs. a wand?</h3>
-              <p className="text-gray-600">
-                Surface cleaners provide a more even, consistent clean without leaving "zebra stripes" or uneven patterns that often occur with wands. They distribute water pressure evenly across a wider area, clean faster, use less water, and minimize the risk of surface damage. This results in a more professional finish and is why we use commercial-grade surface cleaners for most flat surfaces.
-              </p>
-            </div>
-            
+            {/* SKIPPED the "surface cleaner vs. wand" question based on user request */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-3">Is sodium hypochlorite safe for pets and plants?</h3>
               <p className="text-gray-600">
                 When properly diluted and applied by professionals, sodium hypochlorite is safe. We take precautions like pre-wetting plants and ensuring pets are kept away during application. The solution breaks down quickly after use, and our thorough rinsing process ensures no harmful residue remains. We can also adjust our cleaning methods if you have specific environmental concerns.
               </p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-3">How long will it stay clean?</h3>
               <p className="text-gray-600">
                 Results typically last 1-2 years depending on environmental factors like shade, moisture, and surrounding vegetation. North-facing surfaces or areas under trees may require more frequent cleaning. We offer maintenance programs to keep your property looking its best year-round with scheduled cleaning visits.
               </p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-3">Do you offer bundled pricing for house + driveway?</h3>
               <p className="text-gray-600">
@@ -315,31 +286,35 @@ const PressureWashing = () => {
             size="lg" 
             className="bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
           >
-            <Link to="/calculator">Get My Free Quote <ArrowRight className="ml-2" size={18} /></Link>
+            <Link to="/calculator">Get My Free Quote &rarr;</Link>
           </Button>
           <p className="mt-6 text-lg">Fast response. No pressure. Just clean.</p>
         </div>
       </section>
 
-      {/* 9. LOCAL SEO FOOTER */}
-      <section className="py-8 bg-gray-900 text-white">
+      {/* 9. LOCAL SEO FOOTER & AREAS SERVED - Only one, combined with map */}
+      <footer className="bg-gray-900 text-white pt-12 pb-2">
         <div className="container mx-auto px-4 text-center">
-          <p className="mb-4">
-            Serving Surrey, White Rock, South Surrey, Langley, and Greater Vancouver
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 mt-0 mb-0 pb-0">
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-8 py-4 rounded-lg min-w-[210px] max-w-none">
-              <Link to="/services/window-cleaning">Window Cleaning</Link>
-            </Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-8 py-4 rounded-lg min-w-[210px] max-w-none">
-              <Link to="/services/roof-cleaning">Roof Cleaning</Link>
-            </Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-8 py-4 rounded-lg min-w-[210px] max-w-none">
-              <Link to="/services/gutter-cleaning">Gutter Cleaning</Link>
-            </Badge>
-          </div>
+          <h3 className="text-2xl font-bold mb-1 flex justify-center items-center gap-2">
+            <MapPin className="text-bc-red" /> Areas We Serve: Surrey, White Rock, South Surrey, Langley, and Greater Vancouver
+          </h3>
         </div>
-      </section>
+        <div className="flex justify-center my-6 pb-0">
+          {/* Embed Service Area Map directly */}
+          <ServiceAreaMap />
+        </div>
+        <div className="flex flex-wrap justify-center gap-8 mt-8 pb-2">
+          <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-12 py-4 rounded-lg min-w-[280px] max-w-none">
+            <Link to="/services/window-cleaning">Window Cleaning</Link>
+          </Badge>
+          <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-12 py-4 rounded-lg min-w-[280px] max-w-none">
+            <Link to="/services/roof-cleaning">Roof Cleaning</Link>
+          </Badge>
+          <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-12 py-4 rounded-lg min-w-[280px] max-w-none">
+            <Link to="/services/gutter-cleaning">Gutter Cleaning</Link>
+          </Badge>
+        </div>
+      </footer>
     </Layout>
   );
 };
