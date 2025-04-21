@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
@@ -96,7 +95,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
       </div>
 
       {/* Floating Call Button for Mobile */}
-      <div className="fixed bottom-6 right-6 md:hidden z-50 flex flex-col gap-4">
+      <div className="fixed bottom-6 right-6 md:hidden z-50 flex flex-row gap-4 justify-end">
         <PriceCalculatorOverlay 
           buttonText={t("Free Quote")}
           className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all"

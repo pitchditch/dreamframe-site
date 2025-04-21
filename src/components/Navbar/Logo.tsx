@@ -6,7 +6,7 @@ interface LogoProps {
 }
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
-  // Always use original logo for navbar, as before
+  // Use new logo image everywhere for navbar (ignore isOverVideo)
   return (
     <Link to="/" className="flex items-center">
       <div
@@ -17,8 +17,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
         }}
       >
         <img
-          src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png"
-          alt="BC Pressure Washing Logo"
+          src="/lovable-uploads/6cea99ac-8a33-4733-aecc-6a92b14a0d7a.png"
+          alt="BC Pressure Washing Property Maintenance logo"
           className="h-full w-auto object-contain"
           style={{
             maxWidth: '320px',
@@ -29,4 +29,3 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     </Link>
   );
 };
-

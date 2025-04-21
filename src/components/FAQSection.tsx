@@ -1,6 +1,6 @@
-
 import { useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ChatAssistant from './ChatAssistant';
 
 const FAQSection = () => {
   const [activeCategory, setActiveCategory] = useState('general');
@@ -14,7 +14,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-section bg-navy">
+    <section className="py-section bg-navy relative">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center text-white">Frequently Asked Questions</h2>
         
@@ -161,6 +161,10 @@ const FAQSection = () => {
             Ask Us Anything 👋
           </button>
         </div>
+      </div>
+      {/* Add chatbot floating at right beside FAQ only on desktop */}
+      <div className="hidden md:block absolute top-12 right-12 z-50">
+        <ChatAssistant />
       </div>
     </section>
   );
