@@ -1,194 +1,123 @@
 
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
-import ServiceBenefits from '../../components/ServiceBenefits';
-import ServiceProcess from '../../components/ServiceProcess';
-import CallToAction from '../../components/CallToAction';
-import { Droplets, ShieldCheck, Sun, Sparkles, RotateCw, Shield, Clock, ThumbsUp, Building } from 'lucide-react';
+import { Sun } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Helmet } from 'react-helmet';
+import { testimonials } from '@/data/testimonials';
+import TestimonialCard from '@/components/TestimonialCard';
+
+const beforeAfter = [
+  {
+    label: 'Before window cleaning',
+    img: '/lovable-uploads/302cbdcc-ad2e-496b-bb73-502eb77f353a.png'
+  },
+  {
+    label: 'After window cleaning',
+    img: '/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png'
+  }
+];
+
+const whyUs = [
+  {
+    title: '100% Satisfaction Guarantee',
+    description: "If you're not happy, we'll re-clean it for free — no stress."
+  },
+  {
+    title: 'Streak-Free Finish',
+    description: 'We use purified water and professional squeegees for flawless results.'
+  },
+  {
+    title: 'Inside & Outside Cleaning',
+    description: 'We clean both sides of your windows with care and precision.'
+  },
+  {
+    title: 'Licensed & Insured',
+    description: 'Peace of mind comes standard — we’re fully covered.'
+  }
+];
 
 const WindowCleaning = () => {
-  const isMobile = useIsMobile();
-  
-  const benefits = [
-    {
-      title: "Improved Curb Appeal",
-      description: "Clean, sparkling windows dramatically enhance your home's appearance and make a great first impression."
-    },
-    {
-      title: "Increased Natural Light",
-      description: "Remove dirt, grime, and streaks that block sunlight, allowing more natural light to brighten your interior spaces."
-    },
-    {
-      title: "Extended Window Lifespan",
-      description: "Regular cleaning prevents the buildup of corrosive substances that can damage glass and window frames over time."
-    },
-    {
-      title: "Energy Efficiency",
-      description: "Clean windows allow more solar heat to enter in winter, potentially reducing heating costs and improving efficiency."
-    },
-    {
-      title: "Healthier Indoor Environment",
-      description: "Remove dust, allergens, and pollutants that accumulate on window surfaces, contributing to better indoor air quality."
-    },
-    {
-      title: "Professional Results",
-      description: "Our streak-free cleaning techniques deliver superior results compared to DIY methods, saving you time and frustration."
-    }
-  ];
-
-  const processes = [
-    {
-      title: "Pre-Cleaning Assessment",
-      description: "We inspect your windows to identify any specific issues or areas that require special attention.",
-      icon: <ShieldCheck size={32} />
-    },
-    {
-      title: "Frame & Sill Cleaning",
-      description: "We clean window frames, tracks, and sills to remove dust, dirt, and debris before addressing the glass.",
-      icon: <Sparkles size={32} />
-    },
-    {
-      title: "Professional Glass Cleaning",
-      description: "Using professional-grade solutions and techniques, we clean both interior and exterior glass to a streak-free shine.",
-      icon: <Sun size={32} />
-    }
-  ];
+  // Example testimonial for this service
+  const windowTestimonial = testimonials.find(
+    (t) =>
+      t.quote &&
+      (t.quote.toLowerCase().includes("window") || t.quote.toLowerCase().includes("windows"))
+  ) || {
+    quote: "I'm so happy with how my windows turned out! The crew was really friendly, and they took care not to make a mess inside.",
+    name: "Jennifer Davis",
+    location: "Burnaby"
+  };
 
   return (
-    <Layout>
-      <Helmet>
-        <title>Professional Window Cleaning Services in White Rock, BC | BC Pressure Washing</title>
-        <meta name="description" content="Expert window cleaning services in White Rock & Surrey. Crystal clear, streak-free results for homes and businesses. Free estimates!" />
-        <meta name="keywords" content="window cleaning White Rock, residential window cleaning White Rock, commercial window cleaning Surrey, streak-free window cleaning, professional window cleaner near me" />
-      </Helmet>
-      
+    <Layout
+      title="Crystal Clear Windows, Guaranteed | Window Cleaning BC"
+      description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
+      image="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
+    >
       <ServiceHeader
-        title="Window Cleaning"
-        description="Professional window cleaning services that deliver crystal clear, streak-free results for your home or business."
+        title="Crystal Clear Windows, Guaranteed"
+        description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free."
         icon={<Sun size={48} />}
-        imagePath="/lovable-uploads/302cbdcc-ad2e-496b-bb73-502eb77f353a.png"
+        imagePath="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
       />
+      <section className="container mx-auto px-4 mb-12 text-center">
+        <Button asChild variant="bc-red" size="lg" className="w-full max-w-sm text-lg font-semibold mx-auto">
+          <Link to="/calculator">Get a Free Quote</Link>
+        </Button>
+      </section>
 
-      <section className="container mx-auto px-4 py-16">
-        <div className="flex flex-col md:flex-row gap-12 items-center">
-          <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold mb-6">Crystal Clear Windows, Every Time</h2>
-            <p className="text-gray-600 mb-6">
-              Windows are the eyes of your home, allowing natural light to flood your interior spaces while providing views of the outside world. Over time, windows collect dirt, dust, water spots, and other contaminants that diminish their clarity and appearance.
-            </p>
-            <p className="text-gray-600 mb-6">
-              Our professional window cleaning service removes all buildup, leaving your windows spotless and streak-free. We use premium, environmentally friendly cleaning solutions and professional tools to achieve results that simply aren't possible with DIY methods.
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center">
-                <Shield className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">Fully Insured</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">Prompt Service</span>
-              </div>
-              <div className="flex items-center">
-                <ThumbsUp className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">100% Satisfaction</span>
-              </div>
+      <section className="container mx-auto px-4 mb-12">
+        <h2 className="text-2xl font-bold mb-4 text-center">Why Choose Us for Window Cleaning?</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {whyUs.map((item, idx) => (
+            <div key={idx} className="bg-white rounded-lg p-6 shadow hover:shadow-lg transition-all">
+              <h3 className="font-semibold text-bc-red mb-2">{item.title}</h3>
+              <p className="text-gray-600 text-sm">{item.description}</p>
             </div>
-          </div>
-          <div className="md:w-1/2">
-            <img 
-              src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" 
-              alt="Window cleaning service" 
-              className="rounded-lg shadow-lg w-full h-auto object-cover"
-            />
-          </div>
+          ))}
         </div>
       </section>
 
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="section-title">Benefits of Professional Window Cleaning</h2>
-          <p className="section-subtitle">
-            Clean windows do more than just improve your view - they offer numerous benefits for your home
-          </p>
-          <ServiceBenefits benefits={benefits} />
-        </div>
-      </section>
-
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Our Window Cleaning Process</h2>
-        <p className="section-subtitle">
-          We follow a meticulous process to ensure spotless, streak-free windows every time
-        </p>
-        <ServiceProcess processes={processes} />
-      </section>
-
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="md:w-1/2">
-              <div className="badge-pill w-fit mb-4">Commercial Services</div>
-              <h2 className="text-3xl font-bold mb-6">Commercial Window Cleaning</h2>
-              <p className="text-gray-600 mb-6">
-                For multi-story buildings and commercial properties, our specialized equipment and trained technicians provide safe and efficient window cleaning services without the need for ladders.
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start">
-                  <span className="text-bc-red font-bold mr-2">✓</span>
-                  <span>No ladders necessary - we use water-fed pole systems</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-bc-red font-bold mr-2">✓</span>
-                  <span>No water spots or streaks - pure water cleaning technology</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-bc-red font-bold mr-2">✓</span>
-                  <span>Reaches windows up to 5 stories high safely</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-bc-red font-bold mr-2">✓</span>
-                  <span>Minimal disruption to your business operations</span>
-                </li>
-              </ul>
-              <Link to="/services/commercial-window-cleaning">
-                <button className="btn-primary">
-                  Learn More About Commercial Services
-                </button>
-              </Link>
-            </div>
-            <div className="md:w-1/2">
-              <img 
-                src="/lovable-uploads/0562cfd9-348f-4daf-82ee-dfc2feef6c68.png" 
-                alt="Commercial storefront window cleaning" 
-                className="rounded-lg shadow-lg w-full h-auto object-cover"
+      <section className="container mx-auto px-4 mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-center">Before &amp; After</h2>
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
+          {beforeAfter.map((b, idx) => (
+            <div key={b.label} className="flex flex-col items-center w-full">
+              <img
+                src={b.img}
+                alt={b.label}
+                className="rounded-lg shadow-md w-full object-cover aspect-video mb-2"
               />
+              <span className="font-medium text-gray-700">{b.label}</span>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-3xl font-bold mb-8">Ready for Crystal Clear Windows?</h2>
-        <div className="max-w-md mx-auto">
-          <PriceCalculatorOverlay 
-            buttonText="Get Your Free Quote" 
-            variant="bc-red"
-            className="w-full py-4 px-8 text-xl font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
+      <section className="container mx-auto px-4 mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-center">What Our Clients Say</h2>
+        <div className="max-w-xl mx-auto">
+          <TestimonialCard
+            quote={windowTestimonial.quote}
+            name={windowTestimonial.name}
+            location={windowTestimonial.location}
+            rating={windowTestimonial.rating || 5}
+            beforeAfterImage={windowTestimonial.beforeAfterImage}
           />
         </div>
       </section>
-
-      <CallToAction 
-        backgroundImage="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
-        title="Ready to Transform Your Windows?"
-        subtitle="Contact us today for a free window cleaning quote and consultation."
-      />
+      
+      <section className="container mx-auto px-4 mb-20 text-center">
+        <h2 className="text-2xl font-bold mb-4">Ready for Sparkling Windows?</h2>
+        <p className="mb-6 text-gray-600">Book now and see the difference professional window cleaning makes.</p>
+        <Button asChild variant="bc-red" size="lg" className="w-full max-w-sm text-lg font-semibold mx-auto">
+          <Link to="/calculator">Check Prices &amp; Availability</Link>
+        </Button>
+      </section>
     </Layout>
   );
 };
 
 export default WindowCleaning;
+
