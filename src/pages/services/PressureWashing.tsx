@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../components/Layout';
@@ -10,10 +9,10 @@ import { testimonials } from '@/data/testimonials';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 // USER IMAGES (replace with uploaded assets)
-const HOUSE_EXTERIORS_IMG = "/lovable-uploads/photo-1487252665478-49b61b47f302.jpg";
-const DRIVEWAYS_IMG = "/lovable-uploads/photo-1465379944081-7f47de8d74ac.jpg";
-const PATIOS_DECKS_IMG = "/lovable-uploads/photo-1485833077593-4278bba3f11f.jpg";
-const FENCES_IMG = "/lovable-uploads/photo-1500375592092-40eb2168fd21.jpg";
+const HOUSE_EXTERIORS_IMG = "/lovable-uploads/photo-1465379944081-7f47de8d74ac.jpg";
+const DRIVEWAYS_IMG = "/lovable-uploads/photo-1485833077593-4278bba3f11f.jpg";
+const PATIOS_DECKS_IMG = "/lovable-uploads/photo-1500375592092-40eb2168fd21.jpg";
+const FENCES_IMG = "/lovable-uploads/photo-1487252665478-49b61b47f302.jpg";
 const FEATURED_PROJECT_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
 
 // Owner operated image (headshot)
@@ -71,7 +70,7 @@ const PressureWashing = () => {
           title="Pressure Washing Surface Cleaner Video"
           allow="autoplay; encrypted-media"
           allowFullScreen
-          style={{ border: 'none', minHeight: "450px" }}
+          style={{ border: 'none', minHeight: "450px", objectFit: "cover", transform: "scale(1.2)", transformOrigin: "center" }}
         />
         <div className="relative z-20 text-center px-6 py-16 md:py-28 w-full flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Professional Pressure Washing in Surrey &amp; White Rock</h1>

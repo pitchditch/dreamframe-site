@@ -49,8 +49,13 @@ const WindowCleaningShowcaseSection = () => (
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Exterior Window Cleaning - Water Fed Pole"
-              className="w-full h-64 md:h-80 border-0"
-              style={{ border: "none" }}
+              className="w-full h-full"
+              style={{
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.2)",
+                transformOrigin: "center",
+              }}
             />
           </div>
           <h3 className="text-xl font-semibold mt-4">Exterior Window Cleaning</h3>
@@ -66,8 +71,13 @@ const WindowCleaningShowcaseSection = () => (
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Interior Window Cleaning - Squeegee"
-              className="w-full h-64 md:h-80 border-0"
-              style={{ border: "none" }}
+              className="w-full h-full"
+              style={{
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.2)",
+                transformOrigin: "center",
+              }}
             />
           </div>
           <h3 className="text-xl font-semibold mt-4">Interior Window Cleaning</h3>
@@ -132,7 +142,13 @@ const WindowCleaning = () => {
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Water Fed Pole System - Exterior Window Cleaning"
-              className="w-full h-64 md:h-80"
+              className="w-full h-full"
+              style={{
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.15)",
+                transformOrigin: "center",
+              }}
             />
           </div>
           <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
@@ -141,7 +157,13 @@ const WindowCleaning = () => {
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Squeegee Technique - Interior Window Cleaning"
-              className="w-full h-64 md:h-80"
+              className="w-full h-full"
+              style={{
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.15)",
+                transformOrigin: "center",
+              }}
             />
           </div>
         </div>
@@ -197,3 +219,4 @@ const WindowCleaning = () => {
 };
 
 export default WindowCleaning;
+
