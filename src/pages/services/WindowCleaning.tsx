@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -27,7 +28,7 @@ const whyUs = [
   },
   {
     title: 'Licensed & Insured',
-    description: 'Peace of mind comes standard — we’re fully covered.',
+    description: 'Peace of mind comes standard — we're fully covered.',
   },
 ];
 
@@ -123,8 +124,24 @@ const WindowCleaning = () => {
           It also allows us to clean high windows safely from the ground — no ladders, no damage.
         </p>
         <div className="grid md:grid-cols-2 gap-6">
-          <img src="/lovable-uploads/302cbdcc-ad2e-496b-bb73-502eb77f353a.png" alt="Water fed pole cleaning upper floor window" className="rounded-lg shadow w-full object-cover" />
-          <img src="/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png" alt="Pure water system for window cleaning" className="rounded-lg shadow w-full object-cover" />
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/UNwx5XzYsEk?autoplay=1&mute=1&loop=1&playlist=UNwx5XzYsEk"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Water Fed Pole System - Exterior Window Cleaning"
+              className="w-full h-64 md:h-80"
+            />
+          </div>
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/C3KCbTyYocM?autoplay=1&mute=1&loop=1&playlist=C3KCbTyYocM"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Squeegee Technique - Interior Window Cleaning"
+              className="w-full h-64 md:h-80"
+            />
+          </div>
         </div>
       </section>
 
