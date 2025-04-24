@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -10,6 +9,7 @@ import {
   CarouselNext
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { testimonialsWithImages } from '@/data/testimonials';
 
 interface RoofCleaningTestimonial {
   id: number;
@@ -22,68 +22,20 @@ interface RoofCleaningTestimonial {
   beforeAfterImage?: string;
 }
 
-const roofCleaningTestimonials: RoofCleaningTestimonial[] = [
-  {
-    id: 1,
-    image: "/lovable-uploads/d7fad83e-0097-44d1-8343-f62f754321ba.png",
-    customerName: "Michael T.",
-    location: "Langley, BC",
-    rating: 5,
-    review: "The transformation is incredible! My roof looks brand new and the team was professional and efficient.",
-    testimonialId: 8,
-    beforeAfterImage: "/lovable-uploads/d7fad83e-0097-44d1-8343-f62f754321ba.png"
-  },
-  {
-    id: 2,
-    image: "/lovable-uploads/9d9ccd18-e160-4e9f-b928-bd8314763a7a.png",
-    customerName: "Sarah L.",
-    location: "Surrey, BC",
-    rating: 5,
-    review: "Amazing job removing all the moss and algae. My roof hasn't looked this good in years!",
-    testimonialId: 12,
-    beforeAfterImage: "/lovable-uploads/9d9ccd18-e160-4e9f-b928-bd8314763a7a.png"
-  },
-  {
-    id: 3,
-    image: "/lovable-uploads/788b3744-e48b-4db6-ae93-e540cf78b4e3.png",
-    customerName: "Robert J.",
-    location: "Richmond, BC",
-    rating: 5,
-    review: "Professional service from start to finish. The difference in my roof is night and day.",
-    testimonialId: 16,
-    beforeAfterImage: "/lovable-uploads/788b3744-e48b-4db6-ae93-e540cf78b4e3.png"
-  },
-  {
-    id: 4,
-    image: "/lovable-uploads/67b32856-04c4-4832-9c20-9a0e56c5c2b8.png",
-    customerName: "Jennifer K.",
-    location: "North Vancouver, BC",
-    rating: 5,
-    review: "My roof was in terrible condition with moss everywhere. Now it looks brand new! Highly recommend.",
-    testimonialId: 20,
-    beforeAfterImage: "/lovable-uploads/67b32856-04c4-4832-9c20-9a0e56c5c2b8.png"
-  },
-  {
-    id: 5,
-    image: "/lovable-uploads/e6fbc792-e8b4-40f8-8a66-042b53317347.png",
-    customerName: "David C.",
-    location: "White Rock, BC",
-    rating: 5,
-    review: "Great service and attention to detail. The roof cleaning made a tremendous difference.",
-    testimonialId: 4,
-    beforeAfterImage: "/lovable-uploads/e6fbc792-e8b4-40f8-8a66-042b53317347.png"
-  },
-  {
-    id: 6,
-    image: "/lovable-uploads/9014afd5-a256-4431-b468-23ed5ae21b22.png",
-    customerName: "Emily W.",
-    location: "Burnaby, BC",
-    rating: 5,
-    review: "The roof cleaning service was excellent. My home looks so much better now!",
-    testimonialId: 8,
-    beforeAfterImage: "/lovable-uploads/9014afd5-a256-4431-b468-23ed5ae21b22.png"
-  }
-];
+// Filter roof cleaning testimonials from our main testimonials data
+const roofCleaningTestimonials = testimonialsWithImages
+  .filter(t => t.service === 'roof-cleaning')
+  .slice(0, 6)
+  .map(t => ({
+    id: t.id,
+    image: t.beforeAfterImage || '',
+    customerName: t.name,
+    location: t.location,
+    rating: t.rating,
+    review: t.quote,
+    testimonialId: t.id,
+    beforeAfterImage: t.beforeAfterImage
+  }));
 
 const RoofCleaningGallery = () => {
   const [api, setApi] = useState<any>(null);

@@ -222,5 +222,8 @@ const allTestimonials: Testimonial[] = [
   }
 ];
 
-// Filter testimonials to only include those with images
-export const testimonials = allTestimonials.filter(testimonial => testimonial.beforeAfterImage);
+// Export all testimonials instead of filtering
+export const testimonials = allTestimonials;
+
+// Also export a filtered version for components that specifically need testimonials with images
+export const testimonialsWithImages = allTestimonials.filter(testimonial => testimonial.beforeAfterImage);

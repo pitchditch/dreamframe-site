@@ -19,6 +19,13 @@ const TestimonialsSection = () => {
   const isMobile = useIsMobile();
   const [api, setApi] = useState<any>();
 
+  // Show testimonials with images first, then others
+  const sortedTestimonials = [...testimonials].sort((a, b) => {
+    if (a.beforeAfterImage && !b.beforeAfterImage) return -1;
+    if (!a.beforeAfterImage && b.beforeAfterImage) return 1;
+    return 0;
+  });
+
   useEffect(() => {
     if (!api) return;
 
@@ -49,7 +56,7 @@ const TestimonialsSection = () => {
             className="w-full"
           >
             <CarouselContent>
-              {testimonials.slice(0, 6).map((testimonial, index) => (
+              {sortedTestimonials.slice(0, 12).map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <TestimonialCard
                     quote={testimonial.quote}
