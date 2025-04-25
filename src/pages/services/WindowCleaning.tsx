@@ -50,7 +50,10 @@ const WindowCleaningShowcaseSection = () => (
               title="Exterior Window Cleaning - Water Fed Pole"
               className="w-full h-full"
               style={{
-                border: "none"
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.15)",
+                transformOrigin: "center",
               }}
             />
           </div>
@@ -69,7 +72,10 @@ const WindowCleaningShowcaseSection = () => (
               title="Interior Window Cleaning - Squeegee"
               className="w-full h-full"
               style={{
-                border: "none"
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.15)",
+                transformOrigin: "center",
               }}
             />
           </div>
