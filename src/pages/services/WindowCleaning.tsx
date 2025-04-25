@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -43,20 +42,15 @@ const WindowCleaningShowcaseSection = () => (
       <div className="grid md:grid-cols-2 gap-8">
         {/* Exterior Windows - Water Fed Pole */}
         <div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden relative bg-black">
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
               src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=1&mute=1&loop=1&playlist=03njfGLUDUQ"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Exterior Window Cleaning - Water Fed Pole"
-              className="absolute inset-0 w-full h-full"
+              className="w-full h-full"
               style={{
-                border: "none",
-                objectFit: "cover",
-                width: "100%",
-                height: "100%",
-                transform: "scale(1.25)",
-                transformOrigin: "center"
+                border: "none"
               }}
             />
           </div>
@@ -67,20 +61,15 @@ const WindowCleaningShowcaseSection = () => (
         </div>
         {/* Interior Windows - Squeegee */}
         <div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden relative bg-black">
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
               src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=1&mute=1&loop=1&playlist=bbHnt4UNPcU"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Interior Window Cleaning - Squeegee"
-              className="absolute inset-0 w-full h-full"
+              className="w-full h-full"
               style={{
-                border: "none",
-                objectFit: "cover",
-                width: "100%",
-                height: "100%",
-                transform: "scale(1.25)",
-                transformOrigin: "center"
+                border: "none"
               }}
             />
           </div>
@@ -223,4 +212,3 @@ const WindowCleaning = () => {
 };
 
 export default WindowCleaning;
-
