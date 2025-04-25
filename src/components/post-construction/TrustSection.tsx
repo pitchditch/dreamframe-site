@@ -10,28 +10,13 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from "../ui/carousel";
+import { testimonials } from '@/data/testimonials';
 
 const TrustSection: React.FC = () => {
-  const testimonials = [
-    {
-      quote: "BC Pressure Washing did an excellent job cleaning all our windows after construction. They removed all the paint splatter and construction debris, leaving the windows spotless. Highly recommend!",
-      name: "John Wilson",
-      location: "Local Builder",
-      rating: 5
-    },
-    {
-      quote: "We were amazed at how they transformed our windows after our home renovation. All the construction tape, stickers and paint were completely removed. Great service!",
-      name: "Sarah Thompson",
-      location: "Homeowner in Surrey",
-      rating: 5
-    },
-    {
-      quote: "As a contractor, I rely on BC Pressure Washing for all my post-construction window cleaning needs. They're thorough, professional and always on time.",
-      name: "Mike Reynolds",
-      location: "Contractor in Langley",
-      rating: 5
-    }
-  ];
+  // Filter testimonials related to window cleaning for post-construction
+  const windowCleaningTestimonials = testimonials
+    .filter(t => t.service === 'window-cleaning')
+    .slice(0, 3);
 
   return (
     <section className="container mx-auto px-4 py-16">
@@ -63,7 +48,7 @@ const TrustSection: React.FC = () => {
         <div className="max-w-3xl mx-auto">
           <Carousel className="w-full">
             <CarouselContent>
-              {testimonials.map((testimonial, index) => (
+              {windowCleaningTestimonials.map((testimonial, index) => (
                 <CarouselItem key={index}>
                   <div className="p-1">
                     <TestimonialCard
@@ -71,6 +56,7 @@ const TrustSection: React.FC = () => {
                       name={testimonial.name}
                       location={testimonial.location}
                       rating={testimonial.rating}
+                      beforeAfterImage={testimonial.beforeAfterImage}
                     />
                   </div>
                 </CarouselItem>

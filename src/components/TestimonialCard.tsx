@@ -19,8 +19,11 @@ const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }
           <img 
             src={beforeAfterImage} 
             alt="Before and after transformation" 
-            className="w-full h-auto object-cover"
+            className="w-full h-48 object-cover"
           />
+          <div className="absolute top-2 right-2 bg-bc-red text-white text-xs py-1 px-2 rounded">
+            Before/After
+          </div>
         </div>
       )}
       <div className="flex mb-4">

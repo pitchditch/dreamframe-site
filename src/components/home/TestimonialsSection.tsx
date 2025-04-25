@@ -13,25 +13,49 @@ import {
 } from "../ui/carousel";
 import { useEffect, useState } from 'react';
 import { testimonials } from '@/data/testimonials';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Home, DropletIcon, Wind, Landmark } from 'lucide-react';
 
 const TestimonialsSection = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const [api, setApi] = useState<any>();
+  const [activeCategory, setActiveCategory] = useState('all');
 
-  // Show testimonials with images first, then others
-  const sortedTestimonials = [...testimonials].sort((a, b) => {
-    if (a.beforeAfterImage && !b.beforeAfterImage) return -1;
-    if (!a.beforeAfterImage && b.beforeAfterImage) return 1;
-    return 0;
-  });
+  // Group testimonials by service
+  const testimonialsByService = {
+    'all': testimonials,
+    'pressure-washing': testimonials.filter(t => t.service === 'pressure-washing'),
+    'window-cleaning': testimonials.filter(t => t.service === 'window-cleaning'),
+    'gutter-cleaning': testimonials.filter(t => t.service === 'gutter-cleaning'),
+    'roof-cleaning': testimonials.filter(t => t.service === 'roof-cleaning')
+  };
+
+  // Get testimonials with images first for the selected category
+  const getFilteredTestimonials = (category: string) => {
+    const categoryTestimonials = testimonialsByService[category as keyof typeof testimonialsByService];
+    
+    // Sort to show testimonials with images first
+    return [...categoryTestimonials].sort((a, b) => {
+      if (a.beforeAfterImage && !b.beforeAfterImage) return -1;
+      if (!a.beforeAfterImage && b.beforeAfterImage) return 1;
+      return 0;
+    });
+  };
+
+  // Get the active testimonials based on selected category
+  const activeTestimonials = getFilteredTestimonials(activeCategory);
 
   useEffect(() => {
     if (!api) return;
 
     // Set up automatic scrolling
     const interval = setInterval(() => {
-      api.scrollNext();
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0);
+      }
     }, isMobile ? 5000 : 8000);
 
     return () => clearInterval(interval);
@@ -46,7 +70,53 @@ const TestimonialsSection = () => {
           {t("Don't just take our word for it. Hear what our satisfied customers have to say about our services.")}
         </p>
 
-        <div className="mt-12 w-full">
+        {/* Service Filter Tabs */}
+        <div className="mt-8">
+          <Tabs 
+            defaultValue="all"
+            className="w-full max-w-4xl mx-auto"
+            onValueChange={setActiveCategory}
+          >
+            <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-2 bg-transparent mb-8">
+              <TabsTrigger 
+                value="all" 
+                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
+              >
+                All Reviews
+              </TabsTrigger>
+              <TabsTrigger 
+                value="gutter-cleaning" 
+                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
+              >
+                <Wind className="w-4 h-4 mr-2" />
+                Gutter Cleaning
+              </TabsTrigger>
+              <TabsTrigger 
+                value="window-cleaning" 
+                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
+              >
+                <DropletIcon className="w-4 h-4 mr-2" />
+                Window Cleaning
+              </TabsTrigger>
+              <TabsTrigger 
+                value="pressure-washing" 
+                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
+              >
+                <Home className="w-4 h-4 mr-2" />
+                Pressure Washing
+              </TabsTrigger>
+              <TabsTrigger 
+                value="roof-cleaning" 
+                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
+              >
+                <Landmark className="w-4 h-4 mr-2" />
+                Roof Cleaning
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
+        <div className="mt-8 w-full">
           <Carousel
             opts={{
               align: "start",
@@ -56,7 +126,7 @@ const TestimonialsSection = () => {
             className="w-full"
           >
             <CarouselContent>
-              {sortedTestimonials.slice(0, 12).map((testimonial, index) => (
+              {activeTestimonials.slice(0, 12).map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <TestimonialCard
                     quote={testimonial.quote}
@@ -75,7 +145,7 @@ const TestimonialsSection = () => {
 
         <div className="mt-12 text-center">
           <Button asChild variant="outline" size="lg" className="bg-bc-red text-white hover:bg-bc-red/90">
-            <Link to="/why-us">See More Testimonials</Link>
+            <Link to="/testimonials">See More Testimonials</Link>
           </Button>
         </div>
       </div>
