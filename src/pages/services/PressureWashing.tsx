@@ -169,19 +169,18 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 4. FEATURED PROJECT (Image instead of before/after slider, use user's first image) */}
+      {/* 4. FEATURED PROJECT (replace old image with new church project) */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Featured Project: Local Transformation</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Featured Project: South Abbotsford Church</h2>
           <p className="text-center text-lg text-gray-600 mb-10 max-w-3xl mx-auto">
-            See the dramatic difference we've created for homes right here in the Surrey &amp; White Rock area.
+            See how we transformed this commercial property with our professional pressure washing services.
           </p>
           <div className="flex justify-center">
             <img 
-              src={FEATURED_PROJECT_IMG}
-              alt="Featured Local Project"
-              className="rounded-xl shadow-2xl max-w-3xl w-full"
-              style={{ border: "none" }}
+              src="/lovable-uploads/bd7fedd3-f7c3-44f0-9588-8a16b56326be.png"
+              alt="Featured Project - South Abbotsford Church"
+              className="rounded-xl shadow-2xl max-w-4xl w-full"
             />
           </div>
         </div>
@@ -327,5 +326,61 @@ const PressureWashing = () => {
     </Layout>
   );
 };
+
+// Update WindowCleaningShowcaseSection component to reduce video width
+const WindowCleaningShowcaseSection = () => (
+  <section className="py-16 bg-gray-50">
+    <div className="container mx-auto px-4 text-center">
+      <h2 className="text-3xl font-bold mb-4">See Our Window Cleaning in Action</h2>
+      <p className="text-lg text-gray-600 mb-10">
+        We use a pure water-fed pole system for spotless exterior windows and traditional squeegee methods for crystal-clear interiors.
+      </p>
+      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div>
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=1&mute=1&loop=1&playlist=03njfGLUDUQ"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Exterior Window Cleaning - Water Fed Pole"
+              className="w-full h-full"
+              style={{
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.15)",
+                transformOrigin: "center",
+              }}
+            />
+          </div>
+          <h3 className="text-xl font-semibold mt-4">Exterior Window Cleaning</h3>
+          <p className="text-gray-500">
+            Water-fed pole with purified water leaves no streaks or spots – ideal for high windows and eco-friendly too.
+          </p>
+        </div>
+        <div>
+          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=1&mute=1&loop=1&playlist=bbHnt4UNPcU"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Interior Window Cleaning - Squeegee"
+              className="w-full h-full"
+              style={{
+                border: "none",
+                objectFit: "cover",
+                transform: "scale(1.15)",
+                transformOrigin: "center",
+              }}
+            />
+          </div>
+          <h3 className="text-xl font-semibold mt-4">Interior Window Cleaning</h3>
+          <p className="text-gray-500">
+            Professional hand squeegee technique for a flawless finish – with care and attention inside your home.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
 export default PressureWashing;

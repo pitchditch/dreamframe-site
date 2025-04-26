@@ -76,36 +76,11 @@ const RoofCleaning = () => {
             </div>
             <div className="flex flex-col items-center">
               <ThumbsUp className="mb-2 text-bc-red h-8 w-8" />
-              <p className="font-medium">All Jobs Checked by Owner, Jayden Fisher</p>
+              <p className="font-medium">Premium Quality Service</p>
             </div>
             <div className="flex flex-col items-center">
               <Star className="mb-2 text-bc-red h-8 w-8" />
               <p className="font-medium">Free Estimates &amp; Transparent Service</p>
-            </div>
-          </div>
-          
-          {/* Owner Section with enhanced design */}
-          <div className="mt-16 relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 -top-24 z-20">
-              <div className="relative w-48 h-48">
-                <div className="absolute inset-0 bg-gradient-to-br from-bc-red/20 to-transparent rounded-full blur-xl"></div>
-                <img 
-                  src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
-                  alt="Jayden Fisher - Founder" 
-                  className="w-full h-full object-cover rounded-full border-4 border-bc-red shadow-lg relative z-10"
-                />
-              </div>
-            </div>
-            
-            <div className="bg-gradient-to-b from-gray-50 to-white pt-32 pb-12 px-8 rounded-2xl shadow-lg max-w-4xl mx-auto relative">
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-72 h-72 bg-gradient-to-b from-bc-red/5 to-transparent rounded-full blur-xl"></div>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-center mb-6 text-gray-800">Owner-Operated for Quality You Can Trust</h3>
-                <div className="w-24 h-1 bg-bc-red mx-auto mb-6"></div>
-                <p className="text-gray-700 text-center max-w-2xl mx-auto text-lg">
-                  Every job is personally handled or overseen by Jayden, the founder — no shortcuts, no subpar results. As a locally owned business with deep roots in the community, we take pride in delivering exceptional service to our neighbors.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -222,9 +197,9 @@ const RoofCleaning = () => {
 
       {/* FINAL CTA */}
       <CallToAction 
-        backgroundImage="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+        backgroundImage="/lovable-uploads/8db03111-81c6-47d5-80b5-a1b597f5a4b1.png"
         title="Ready for a Clean Roof Without the Damage?"
-        subtitle="Jayden personally checks every job. Your roof is in good hands."
+        subtitle="Professional roof cleaning with guaranteed results."
         primaryButtonText="Request Your Free Quote"
         secondaryButtonText="Contact Us"
         primaryButtonLink="/calculator"
