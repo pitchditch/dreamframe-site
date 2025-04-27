@@ -9,7 +9,8 @@ const RoofCleaningHero = () => {
       const scrollPosition = window.scrollY;
       const heroSection = document.querySelector('.hero-section');
       if (heroSection) {
-        heroSection.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+        const element = heroSection as HTMLElement;
+        element.style.transform = `translateY(${scrollPosition * 0.5}px)`;
       }
     };
 
