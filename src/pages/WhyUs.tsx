@@ -22,7 +22,7 @@ const WhyUs = () => {
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/626a88cb-e1fb-4b71-bd6d-87e6af2ea15f.png')",
+            backgroundImage: "url('/lovable-uploads/6068ea75-d3bc-4895-a1c8-9404365843b0.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat"
@@ -138,7 +138,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Local Business Section */}
+      {/* Rest of sections */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">

@@ -9,11 +9,12 @@ import { testimonials } from '@/data/testimonials';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 // USER IMAGES (replace with uploaded assets)
-const HOUSE_EXTERIORS_IMG = "/lovable-uploads/711862e6-3d2e-4510-8a93-7a6ca0968ec8.png";
-const DRIVEWAYS_IMG = "/lovable-uploads/bb52ac0d-71da-4c95-bd96-a9a5674d786a.png";
-const PATIOS_DECKS_IMG = "/lovable-uploads/95690760-6960-4c61-bf22-5b66e2eab0cf.png";
-const FENCES_IMG = "/lovable-uploads/670bfa2b-b7a0-49e5-8da0-7eee14534fc4.png";
+const HOUSE_EXTERIORS_IMG = "/lovable-uploads/1fb29b3f-e2ed-44b9-8ae8-b04efbf4fcce.png";
+const DRIVEWAYS_IMG = "/lovable-uploads/5c38ab2e-3c2b-4fd1-9c94-b4715ce79479.png";
+const PATIOS_DECKS_IMG = "/lovable-uploads/82d69edb-6210-433b-a762-4610f454fc2c.png";
+const FENCES_IMG = "/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png";
 const FEATURED_PROJECT_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
+const PROPERTY_BACK_TO_LIFE_IMG = "/lovable-uploads/c0370288-8f0e-4e72-a406-f0140ba8ddd5.png";
 
 // Owner operated image (headshot)
 const OWNER_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
@@ -27,7 +28,7 @@ const whyUsBadges = [
   },
   {
     title: 'Fully Insured',
-    description: 'Peace of mind — we’re fully protected so your property is too.',
+    description: 'Peace of mind — we\'re fully protected so your property is too.',
     image: "/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png"
   },
   {
@@ -37,7 +38,7 @@ const whyUsBadges = [
   },
   {
     title: '100% Satisfaction Guarantee',
-    description: 'If you’re not thrilled, we’ll re-clean for free — period.',
+    description: 'If you\'re not thrilled, we\'ll re-clean for free — period.',
     image: "/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png"
   }
 ];
@@ -61,7 +62,7 @@ const PressureWashing = () => {
         <meta name="keywords" content="pressure washing Surrey, house washing White Rock, driveway cleaning Surrey, eco-friendly pressure washing, commercial pressure washing" />
       </Helmet>
 
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION - Fixed video display and prevent cutoff */}
       <header className="relative bg-black min-h-[450px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div className="absolute inset-0 w-full h-full z-0">
@@ -75,7 +76,8 @@ const PressureWashing = () => {
               border: 'none',
               width: '100%',
               height: '100%',
-              objectFit: "cover"
+              objectFit: "cover",
+              pointerEvents: "none"
             }}
           />
         </div>
@@ -90,7 +92,7 @@ const PressureWashing = () => {
         </div>
       </header>
 
-      {/* 2. WHAT WE CLEAN */}
+      {/* 2. WHAT WE CLEAN - Updated with new images */}
       <section className="py-14 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Expert Pressure Washing for Every Surface</h2>
@@ -159,7 +161,7 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 4. FEATURED PROJECT (replace old image with new church project) */}
+      {/* 4. FEATURED PROJECT */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Featured Project: South Abbotsford Church</h2>
@@ -221,12 +223,12 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 6. CUSTOMER TESTIMONIALS */}
+      {/* 6. CUSTOMER TESTIMONIALS - Made cards bigger */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Customer Testimonials</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {pwTestimonials.map((testimonial, index) => (
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {pwTestimonials.slice(0, 2).map((testimonial, index) => (
               <TestimonialCard
                 key={index}
                 quote={testimonial.quote}
@@ -273,17 +275,17 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 8. CALL TO ACTION */}
+      {/* 8. CALL TO ACTION - Updated with better contrast for text */}
       <section className="relative min-h-[400px]">
         <div className="absolute inset-0">
           <img
-            src="/lovable-uploads/3fd5954c-6554-42f2-8036-c459f4258728.png"
+            src={PROPERTY_BACK_TO_LIFE_IMG}
             alt="Let's bring your property back to life"
-            className="w-full h-full object-cover brightness-75"
+            className="w-full h-full object-cover brightness-50"
           />
         </div>
         <div className="relative z-10 container mx-auto px-4 py-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Let's Bring Your Property Back to Life</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">Let's Bring Your Property Back to Life</h2>
           <Button 
             asChild
             variant="default" 
@@ -295,7 +297,7 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* Remove Areas We Service section */}
+      {/* Removed Areas We Service section */}
     </Layout>
   );
 };

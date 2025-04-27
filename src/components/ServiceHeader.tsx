@@ -49,9 +49,10 @@ const ServiceHeader = ({
         </>
       ) : (
         <>
-          <div 
-            className="absolute inset-0 bg-cover bg-center w-full h-full"
-            style={{ backgroundImage: `url(${imagePath})` }}
+          <img 
+            src={imagePath}
+            alt={typeof title === 'string' ? title : 'Service header image'}
+            className="absolute inset-0 w-full h-full object-cover"
           />
           <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />
           <div className="relative h-full container mx-auto px-4 flex items-center justify-center z-10">

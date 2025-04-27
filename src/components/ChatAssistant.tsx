@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { MessageCircle, X } from 'lucide-react';
@@ -6,10 +7,11 @@ const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="fixed bottom-6 right-6 z-50">
       <Button
         onClick={() => setIsOpen(!isOpen)}
         className={`chat-button rounded-full p-3 ${isOpen ? 'bg-bc-red hover:bg-bc-red/90' : 'bg-navy hover:bg-navy/90'}`}
+        size="lg"
       >
         {isOpen ? (
           <X className="h-6 w-6 text-white" />

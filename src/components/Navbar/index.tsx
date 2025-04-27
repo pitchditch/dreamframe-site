@@ -10,35 +10,54 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
+  // Pages with dark backgrounds that need white text
+  const darkOverlayPages = [
+    '/', 
+    '/why-us', 
+    '/services/gutter-cleaning', 
+    '/services/roof-cleaning',
+    '/services/window-cleaning',
+    '/services/pressure-washing',
+    '/services/post-construction-window-cleaning'
+  ];
+
   useEffect(() => {
-    const darkOverlayPages = ['/', '/why-us', '/services/gutter-cleaning', '/services/roof-cleaning'];
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsOverVideo(darkOverlayPages.includes(location.pathname) && currentScrollY < 60);
+      const shouldBeOverVideo = darkOverlayPages.includes(location.pathname) && currentScrollY < 60;
+      setIsOverVideo(shouldBeOverVideo);
+      setIsScrolled(currentScrollY > 10);
     };
+    
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); // Initial check
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
+    
+    // Reset isOverVideo state when route changes
+    const isOnDarkPage = darkOverlayPages.includes(location.pathname);
+    setIsOverVideo(isOnDarkPage);
   }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isOverVideo ? 'bg-transparent' : 'bg-white shadow-md'
+      isScrolled ? 'bg-white shadow-md' : isOverVideo ? 'bg-transparent' : 'bg-white shadow-md'
     }`}>
-      <div className="container mx-auto px-4 flex items-center">
-        <Logo isOverVideo={isOverVideo} />
+      <div className="container mx-auto px-4 flex items-center h-16 md:h-20">
+        <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverVideo={isOverVideo} />
-          <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
+          <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile

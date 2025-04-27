@@ -30,12 +30,12 @@ const ImageCarousel = () => {
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="section-title">{t("Our Pressure Washing Services")}</h2>
-        <p className="section-subtitle">
+        <h2 className="text-3xl font-bold text-center mb-6">{t("Our Pressure Washing Services")}</h2>
+        <p className="text-lg text-center text-gray-600 mb-10">
           {t("Professional pressure washing solutions for your home and commercial property")}
         </p>
         
-        <div className="mt-12 w-full">
+        <div className="mt-8 w-full">
           <Carousel className="w-full" setApi={setApi}>
             <CarouselContent>
               <CarouselItem>

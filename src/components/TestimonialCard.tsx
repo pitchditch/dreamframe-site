@@ -13,7 +13,7 @@ const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }
   return (
     <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col">
       {beforeAfterImage && (
-        <div className="mb-6 overflow-hidden rounded-md relative w-full aspect-square">
+        <div className="mb-6 overflow-hidden rounded-md relative w-full aspect-[4/3]">
           <img 
             src={beforeAfterImage} 
             alt="Before and after transformation" 
