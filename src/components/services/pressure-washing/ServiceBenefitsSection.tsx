@@ -36,11 +36,11 @@ const ServiceBenefitsSection = () => {
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="section-title">{t("Benefits of Professional House Washing")}</h2>
-        <p className="section-subtitle">
-          {t("Regular exterior cleaning provides numerous advantages for your home's appearance and longevity")}
-        </p>
-        <ServiceBenefits benefits={benefits} />
+        <ServiceBenefits 
+          title={t("Benefits of Professional House Washing")}
+          subtitle={t("Regular exterior cleaning provides numerous advantages for your home's appearance and longevity")}
+          benefits={benefits} 
+        />
       </div>
     </section>
   );
