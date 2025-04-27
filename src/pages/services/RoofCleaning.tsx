@@ -1,5 +1,4 @@
-
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -10,6 +9,8 @@ import ServiceHeader from '@/components/ServiceHeader';
 import ServiceBenefits from '@/components/ServiceBenefits';
 import ChatAssistant from '@/components/ChatAssistant';
 import { Badge } from '@/components/ui/badge';
+import LocationBanner from '@/components/LocationBanner';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 // Image imports
 const MOSS_REMOVAL_IMG = "/lovable-uploads/41660181-42c5-445c-83e3-23681140d569.png";
@@ -62,7 +63,7 @@ const RoofCleaning = () => {
         <meta name="description" content="Professional roof cleaning and moss removal services in Surrey, White Rock, and South Surrey. Extend the life of your roof while improving curb appeal." />
       </Helmet>
 
-      {/* HERO SECTION - Full width YouTube video with title overlay */}
+      {/* HERO SECTION */}
       <div className="w-full h-screen relative bg-black overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <iframe 
@@ -99,51 +100,27 @@ const RoofCleaning = () => {
       </div>
 
       {/* BENEFITS SECTION */}
-      <ServiceBenefits
-        title="Why Clean Your Roof?"
-        subtitle="More than just curb appeal - protect your investment"
-        benefits={benefits}
-      />
+      <div className="relative z-10 -mt-32 pt-32 bg-white">
+        <ServiceBenefits
+          title="Why Clean Your Roof?"
+          subtitle="More than just curb appeal - protect your investment"
+          benefits={benefits}
+        />
+      </div>
 
-      {/* BEFORE & AFTER SECTION */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Before & After Transformation</h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              See the dramatic difference our professional roof cleaning service makes. We remove unsightly moss, algae, and black streaks to restore your roof's appearance.
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <img 
-              src={BEFORE_AFTER_IMG} 
-              alt="Roof Cleaning Before and After Comparison" 
-              className="w-full rounded-lg shadow-xl"
-            />
-            <div className="mt-6 flex justify-between gap-4 text-center">
-              <div className="flex-1">
-                <p className="font-bold text-xl text-gray-800">Before</p>
-                <p className="text-gray-600">Moss growth and black streaks</p>
-              </div>
-              <div className="flex-1">
-                <p className="font-bold text-xl text-gray-800">After</p>
-                <p className="text-gray-600">Clean and restored</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* GALLERY/TESTIMONIALS SECTION */}
-      <RoofCleaningGallery />
-      
-      {/* PROCESS SECTION - How we clean roofs */}
-      <section className="py-16 bg-white">
+      {/* PROCESS SECTION */}
+      <section className="py-16 bg-white relative z-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Roof Cleaning Process</h2>
           
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            <div>
+              <img 
+                src="/lovable-uploads/89f521bb-edb4-4193-a254-c88e4968fa9f.png"
+                alt="Professional Roof Cleaning Process" 
+                className="w-full rounded-lg shadow-lg"
+              />
+            </div>
             <div>
               <div className="bg-gray-50 p-4 rounded-lg mb-6">
                 <h3 className="font-bold text-2xl mb-4 text-bc-red">1. Assessment & Protection</h3>
@@ -166,18 +143,27 @@ const RoofCleaning = () => {
                 </p>
               </div>
             </div>
-            
-            <div>
-              <img 
-                src={HOUSE_WITH_ROOF_IMG} 
-                alt="Professional Roof Cleaning Process" 
-                className="w-full rounded-lg shadow-lg"
-              />
-            </div>
           </div>
         </div>
       </section>
-      
+
+      {/* LOCATION BANNER */}
+      <div className="relative z-30 bg-white">
+        <LocationBanner />
+      </div>
+
+      {/* SERVICE AREA MAP */}
+      <section className="py-12 bg-gray-50 relative z-40">
+        <div className="container mx-auto px-4">
+          <ServiceAreaMap />
+        </div>
+      </section>
+
+      {/* GALLERY/TESTIMONIALS SECTION */}
+      <div className="relative z-50 bg-white">
+        <RoofCleaningGallery />
+      </div>
+
       {/* WHAT WE REMOVE SECTION */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -291,7 +277,7 @@ const RoofCleaning = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Chatbot */}
       <div className="fixed bottom-6 right-6 z-50">
         <ChatAssistant />
