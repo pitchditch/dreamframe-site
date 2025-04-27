@@ -7,6 +7,7 @@ import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
 import LocationBanner from "../components/LocationBanner";
+import { Button } from "@/components/ui/button";
 
 const WhyUs = () => {
   return (
@@ -16,12 +17,12 @@ const WhyUs = () => {
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
       
-      {/* Hero Section */}
+      {/* Hero Section - Updated with new image */}
       <section className="relative h-screen w-full overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/b88610b8-1287-41ab-a674-176a50021812.png')",
+            backgroundImage: "url('/lovable-uploads/626a88cb-e1fb-4b71-bd6d-87e6af2ea15f.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat"
@@ -81,7 +82,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Satisfaction Guarantee Section */}
+      {/* Satisfaction Guarantee Section - Updated with Google Review button */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -112,7 +113,17 @@ const WhyUs = () => {
                   </div>
                 </div>
               </div>
+              <div className="mt-8">
+                <Button
+                  className="bg-bc-red hover:bg-bc-red/90 text-white font-semibold py-4 px-6 rounded-lg w-full md:w-auto flex items-center justify-center gap-2"
+                  onClick={() => window.open('https://g.page/r/CUJj9wYVinVUEBM/review', '_blank')}
+                >
+                  <Star className="w-5 h-5" />
+                  Leave us a Review on Google
+                </Button>
+              </div>
             </div>
+            
             <div className="relative">
               <img 
                 src="/lovable-uploads/97ab1ee0-b864-4d9e-b37b-9a526229a18f.png"

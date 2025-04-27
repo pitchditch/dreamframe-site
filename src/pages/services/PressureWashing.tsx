@@ -9,10 +9,10 @@ import { testimonials } from '@/data/testimonials';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 // USER IMAGES (replace with uploaded assets)
-const HOUSE_EXTERIORS_IMG = "/lovable-uploads/photo-1465379944081-7f47de8d74ac.jpg";
-const DRIVEWAYS_IMG = "/lovable-uploads/photo-1485833077593-4278bba3f11f.jpg";
-const PATIOS_DECKS_IMG = "/lovable-uploads/photo-1500375592092-40eb2168fd21.jpg";
-const FENCES_IMG = "/lovable-uploads/photo-1487252665478-49b61b47f302.jpg";
+const HOUSE_EXTERIORS_IMG = "/lovable-uploads/711862e6-3d2e-4510-8a93-7a6ca0968ec8.png";
+const DRIVEWAYS_IMG = "/lovable-uploads/bb52ac0d-71da-4c95-bd96-a9a5674d786a.png";
+const PATIOS_DECKS_IMG = "/lovable-uploads/95690760-6960-4c61-bf22-5b66e2eab0cf.png";
+const FENCES_IMG = "/lovable-uploads/670bfa2b-b7a0-49e5-8da0-7eee14534fc4.png";
 const FEATURED_PROJECT_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
 
 // Owner operated image (headshot)
@@ -64,21 +64,18 @@ const PressureWashing = () => {
       {/* 1. HERO SECTION */}
       <header className="relative bg-black min-h-[450px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10" />
-        <div className="absolute inset-0 w-full h-full z-0 select-none pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 w-full h-full z-0">
           <iframe
-            className="w-full h-full object-cover"
+            className="w-full h-full"
             src="https://www.youtube.com/embed/lYnXijewxCM?autoplay=1&mute=1&loop=1&playlist=lYnXijewxCM&controls=0&showinfo=0&rel=0"
             title="Pressure Washing Surface Cleaner Video"
             allow="autoplay; encrypted-media"
             allowFullScreen
             style={{
               border: 'none',
-              width: '100vw',
-              height: '100vh',
-              objectFit: "cover",
-              minHeight: "450px",
-              transform: "scale(1.25)",
-              transformOrigin: "center"
+              width: '100%',
+              height: '100%',
+              objectFit: "cover"
             }}
           />
         </div>
@@ -98,28 +95,24 @@ const PressureWashing = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Expert Pressure Washing for Every Surface</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6">
-            {/* House Exteriors */}
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
                 <img src={HOUSE_EXTERIORS_IMG} alt="House Exteriors" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">House Exteriors</h3>
             </div>
-            {/* Driveways */}
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
                 <img src={DRIVEWAYS_IMG} alt="Driveways" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">Driveways</h3>
             </div>
-            {/* Patios & Decks */}
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
                 <img src={PATIOS_DECKS_IMG} alt="Patios and Decks" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">Patios &amp; Decks</h3>
             </div>
-            {/* Fences */}
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
                 <img src={FENCES_IMG} alt="Fences" className="object-cover w-full h-full" />
@@ -127,9 +120,6 @@ const PressureWashing = () => {
               <h3 className="font-semibold text-lg">Fences</h3>
             </div>
           </div>
-          <p className="text-center mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-            No damage – just deep, effective cleaning tailored for each surface type.
-          </p>
         </div>
       </section>
 
@@ -261,7 +251,6 @@ const PressureWashing = () => {
                 Not all surfaces should be treated the same way. We use different techniques and pressures for different materials. Our technicians are trained to assess each surface and use the appropriate method to ensure effective cleaning without damage. For delicate surfaces, we use soft washing techniques with lower pressure.
               </p>
             </div>
-            {/* SKIPPED the "surface cleaner vs. wand" question based on user request */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-3">Is sodium hypochlorite safe for pets and plants?</h3>
               <p className="text-gray-600">
@@ -285,9 +274,16 @@ const PressureWashing = () => {
       </section>
 
       {/* 8. CALL TO ACTION */}
-      <section id="booking-section" className="py-16 bg-bc-red text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Let's Bring Your Property Back to Life</h2>
+      <section className="relative min-h-[400px]">
+        <div className="absolute inset-0">
+          <img
+            src="/lovable-uploads/3fd5954c-6554-42f2-8036-c459f4258728.png"
+            alt="Let's bring your property back to life"
+            className="w-full h-full object-cover brightness-75"
+          />
+        </div>
+        <div className="relative z-10 container mx-auto px-4 py-16 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Let's Bring Your Property Back to Life</h2>
           <Button 
             asChild
             variant="default" 
@@ -296,91 +292,12 @@ const PressureWashing = () => {
           >
             <Link to="/calculator">Get My Free Quote &rarr;</Link>
           </Button>
-          <p className="mt-6 text-lg">Fast response. No pressure. Just clean.</p>
         </div>
       </section>
 
-      {/* 9. LOCAL SEO FOOTER & AREAS SERVED - Only one, combined with map */}
-      <footer className="bg-gray-900 text-white pt-12 pb-2">
-        <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl font-bold mb-1 flex justify-center items-center gap-2">
-            <MapPin className="text-bc-red" /> Areas We Serve: Surrey, White Rock, South Surrey, Langley, and Greater Vancouver
-          </h3>
-        </div>
-        <div className="flex justify-center my-6 pb-0">
-          {/* Embed Service Area Map directly */}
-          <ServiceAreaMap />
-        </div>
-        <div className="flex flex-wrap justify-center gap-8 mt-8 pb-2">
-          <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-12 py-4 rounded-lg min-w-[280px] max-w-none">
-            <Link to="/services/window-cleaning">Window Cleaning</Link>
-          </Badge>
-          <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-12 py-4 rounded-lg min-w-[280px] max-w-none">
-            <Link to="/services/roof-cleaning">Roof Cleaning</Link>
-          </Badge>
-          <Badge className="bg-gray-700 hover:bg-gray-600 text-white text-lg px-12 py-4 rounded-lg min-w-[280px] max-w-none">
-            <Link to="/services/gutter-cleaning">Gutter Cleaning</Link>
-          </Badge>
-        </div>
-      </footer>
+      {/* Remove Areas We Service section */}
     </Layout>
   );
 };
-
-// Update WindowCleaningShowcaseSection component to reduce video width
-const WindowCleaningShowcaseSection = () => (
-  <section className="py-16 bg-gray-50">
-    <div className="container mx-auto px-4 text-center">
-      <h2 className="text-3xl font-bold mb-4">See Our Window Cleaning in Action</h2>
-      <p className="text-lg text-gray-600 mb-10">
-        We use a pure water-fed pole system for spotless exterior windows and traditional squeegee methods for crystal-clear interiors.
-      </p>
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=1&mute=1&loop=1&playlist=03njfGLUDUQ"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title="Exterior Window Cleaning - Water Fed Pole"
-              className="w-full h-full"
-              style={{
-                border: "none",
-                objectFit: "cover",
-                transform: "scale(1.15)",
-                transformOrigin: "center",
-              }}
-            />
-          </div>
-          <h3 className="text-xl font-semibold mt-4">Exterior Window Cleaning</h3>
-          <p className="text-gray-500">
-            Water-fed pole with purified water leaves no streaks or spots – ideal for high windows and eco-friendly too.
-          </p>
-        </div>
-        <div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=1&mute=1&loop=1&playlist=bbHnt4UNPcU"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title="Interior Window Cleaning - Squeegee"
-              className="w-full h-full"
-              style={{
-                border: "none",
-                objectFit: "cover",
-                transform: "scale(1.15)",
-                transformOrigin: "center",
-              }}
-            />
-          </div>
-          <h3 className="text-xl font-semibold mt-4">Interior Window Cleaning</h3>
-          <p className="text-gray-500">
-            Professional hand squeegee technique for a flawless finish – with care and attention inside your home.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-);
 
 export default PressureWashing;

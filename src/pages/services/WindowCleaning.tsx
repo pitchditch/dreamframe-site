@@ -204,17 +204,18 @@ const WindowCleaning = () => {
       </section>
 
       {/* CTA SECTION - Updated with new image */}
-      <section className="py-16 relative">
+      <section className="relative h-[600px]">
         <div className="absolute inset-0 w-full h-full">
           <img
             src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
             alt="All in one window cleaning service"
-            className="w-full h-full object-cover brightness-[0.85]"
+            className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
-          <p className="text-xl text-white mb-8 drop-shadow">
+        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
+          <h2 className="text-4xl font-bold mb-6 text-white">Ready for Sparkling Windows?</h2>
+          <p className="text-xl text-white mb-8">
             Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
           </p>
           <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
