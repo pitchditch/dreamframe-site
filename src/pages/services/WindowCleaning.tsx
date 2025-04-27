@@ -203,15 +203,24 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* CTA SECTION */}
-      <section className="py-16 bg-blue-100 text-center">
-        <h2 className="text-3xl font-bold">Ready for Sparkling Windows?</h2>
-        <p className="text-lg mt-2 mb-6">
-          Book now and see the difference professional window cleaning makes.
-        </p>
-        <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
-          <Link to="/calculator">Check Prices &amp; Availability</Link>
-        </Button>
+      {/* CTA SECTION - Updated with new image */}
+      <section className="py-16 relative">
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
+            alt="All in one window cleaning service"
+            className="w-full h-full object-cover brightness-[0.85]"
+          />
+        </div>
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
+          <p className="text-xl text-white mb-8 drop-shadow">
+            Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
+          </p>
+          <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+            <Link to="/calculator">Book Now</Link>
+          </Button>
+        </div>
       </section>
     </Layout>
   );
