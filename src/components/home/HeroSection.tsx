@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
@@ -25,7 +26,7 @@ const HeroSection = () => {
 
   return (
     <section className="hero-section relative min-h-screen flex items-center w-full overflow-hidden">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 w-full h-full">
         {/* Mobile video fills full width and height with object-fit: cover, no black bars */}
         {isMobile ? (
           <div className="w-full h-[100vh]">
