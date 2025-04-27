@@ -144,7 +144,7 @@ const TestimonialsSection = () => {
 
         <div className="mt-12 text-center">
           <Button asChild variant="outline" size="lg" className="bg-bc-red text-white hover:bg-bc-red/90">
-            <Link to="/testimonials">See More Testimonials</Link>
+            <Link to="/testimonials" className="no-underline">See More Testimonials</Link>
           </Button>
         </div>
       </div>

@@ -99,25 +99,25 @@ const PressureWashing = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6">
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
-                <img src={HOUSE_EXTERIORS_IMG} alt="House Exteriors" className="object-cover w-full h-full" />
+                <img src="/lovable-uploads/4b31a7a4-ec16-4996-a49e-ee4b41fe0713.png" alt="House Exteriors" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">House Exteriors</h3>
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
-                <img src={DRIVEWAYS_IMG} alt="Driveways" className="object-cover w-full h-full" />
+                <img src="/lovable-uploads/c5717ab7-6ffd-477f-9518-01adaa2fc3b2.png" alt="Driveways" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">Driveways</h3>
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
-                <img src={PATIOS_DECKS_IMG} alt="Patios and Decks" className="object-cover w-full h-full" />
+                <img src="/lovable-uploads/08fdbd08-5cb0-48a2-8a3b-3292e2c59d16.png" alt="Patios and Decks" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">Patios &amp; Decks</h3>
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="rounded-2xl shadow-lg mb-4 overflow-hidden w-32 h-32">
-                <img src={FENCES_IMG} alt="Fences" className="object-cover w-full h-full" />
+                <img src="/lovable-uploads/7ab353eb-4733-4841-a5dd-c656ebd963db.png" alt="Fences" className="object-cover w-full h-full" />
               </div>
               <h3 className="font-semibold text-lg">Fences</h3>
             </div>
@@ -275,11 +275,11 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 8. CALL TO ACTION - Updated with better contrast for text */}
+      {/* 8. CALL TO ACTION - Updated with new image */}
       <section className="relative min-h-[400px]">
         <div className="absolute inset-0">
           <img
-            src={PROPERTY_BACK_TO_LIFE_IMG}
+            src="/lovable-uploads/6792b6a1-2ada-44bf-8ccd-b2665245e13d.png"
             alt="Let's bring your property back to life"
             className="w-full h-full object-cover brightness-50"
           />
