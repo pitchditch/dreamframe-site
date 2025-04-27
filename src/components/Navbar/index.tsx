@@ -13,10 +13,10 @@ const Navbar = () => {
 
   // Always keep navbar transparent, just manage text color via isOverVideo.
   useEffect(() => {
-    const isHomePage = location.pathname === '/' || location.pathname === '/why-us';
+    const isPageWithVideo = location.pathname === '/' || location.pathname === '/why-us' || location.pathname === '/services/roof-cleaning';
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsOverVideo(isHomePage && currentScrollY < 60);
+      setIsOverVideo(isPageWithVideo && currentScrollY < 60);
     };
     window.addEventListener('scroll', handleScroll);
     handleScroll();

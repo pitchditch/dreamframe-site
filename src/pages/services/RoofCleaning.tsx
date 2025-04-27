@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
@@ -76,8 +77,8 @@ const RoofCleaning = () => {
         <div className="relative h-screen">
           <iframe 
             className="absolute inset-0 w-full h-full"
-            src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0"
-            title="Background Video"
+            src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
+            title="Roof Cleaning Process"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             style={{ border: 'none' }}
           />

@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { testimonialsWithImages } from '@/data/testimonials';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface RoofCleaningTestimonial {
   id: number;
@@ -42,7 +44,8 @@ const RoofCleaningGallery = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const autoplayTimeoutRef = useRef<number | null>(null);
-
+  const isMobile = useIsMobile();
+  
   // Handle autoplay functionality
   const startAutoplay = () => {
     if (autoplayTimeoutRef.current) {
@@ -57,7 +60,7 @@ const RoofCleaningGallery = () => {
           api.scrollTo(0);
         }
       }
-    }, 5000); // 5 seconds per slide
+    }, isMobile ? 3000 : 5000); // 3 seconds on mobile, 5 seconds on desktop
   };
 
   // Track current slide
@@ -79,7 +82,7 @@ const RoofCleaningGallery = () => {
         window.clearTimeout(autoplayTimeoutRef.current);
       }
     };
-  }, [api, isPaused]);
+  }, [api, isPaused, isMobile]);
 
   return (
     <section className="py-16 bg-gray-50">
@@ -105,15 +108,15 @@ const RoofCleaningGallery = () => {
           >
             <CarouselContent>
               {roofCleaningTestimonials.map((testimonial) => (
-                <CarouselItem key={testimonial.id} className="md:basis-1/1">
-                  <Card className="border-none shadow-lg">
-                    <CardContent className="p-0">
-                      <div className="relative">
+                <CarouselItem key={testimonial.id} className={`${isMobile ? 'md:basis-1/1' : 'md:basis-1/3'} p-2`}>
+                  <Card className="border-none shadow-lg h-full">
+                    <CardContent className="p-0 h-full">
+                      <div className="relative h-full flex flex-col">
                         <div className="relative">
                           <img 
                             src={testimonial.image} 
                             alt={`Roof cleaning - ${testimonial.customerName}`}
-                            className="w-full h-auto rounded-t-lg object-cover aspect-[1/1]"
+                            className="w-full h-64 object-cover"
                           />
                           {testimonial.beforeAfterImage && (
                             <div className="absolute top-2 right-2 bg-bc-red text-white text-xs py-1 px-2 rounded">
@@ -122,7 +125,7 @@ const RoofCleaningGallery = () => {
                           )}
                         </div>
                         
-                        <div className="bg-white p-6 rounded-b-lg shadow-md">
+                        <div className="bg-white p-6 rounded-b-lg shadow-md flex-grow">
                           <div className="flex items-center justify-between mb-3">
                             <h3 className="font-bold text-lg">{testimonial.customerName}</h3>
                             <div className="flex">
