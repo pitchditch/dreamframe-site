@@ -29,13 +29,19 @@ const HeroSection = () => {
       <div className="absolute inset-0 w-full h-full">
         {/* Mobile video fills full width and height with object-fit: cover, no black bars */}
         {isMobile ? (
-          <div className="w-full h-[100vh]">
+          <div className="w-full h-full">
             <iframe
               className="absolute inset-0 w-full h-full"
               src={MOBILE_VIDEO}
               title="Background Mobile Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              style={{ border: 'none', width: '100vw', height: '100vh', objectFit: 'cover' }}
+              style={{ 
+                border: 'none', 
+                width: '100vw', 
+                height: '100vh',
+                objectFit: 'cover',
+                transform: 'scale(1.5)'
+              }}
             />
           </div>
         ) : (
