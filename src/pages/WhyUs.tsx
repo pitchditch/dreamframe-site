@@ -18,7 +18,7 @@ const WhyUs = () => {
       <section className="bg-gray-900 text-white relative min-h-[600px] flex items-center">
         <div className="absolute inset-0">
           <img 
-            src="/lovable-uploads/34ea2ce0-0df6-4aa2-ac77-d284c4154a9f.png"
+            src="/lovable-uploads/098e918c-11ab-464e-ba8b-ef8e215463c3.png"
             alt="BC Pressure Washing Service"
             className="w-full h-full object-cover"
           />
