@@ -97,11 +97,11 @@ const WindowCleaning = () => {
       image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
     >
       {/* HERO SECTION */}
-      <header className="hero-section bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center relative">
+      <header className="hero-section min-h-[100vh] flex items-center justify-center relative">
         <img
           src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
           alt="Professional window cleaning service"
-          className="absolute inset-0 w-full h-full object-cover opacity-70"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="relative z-10 text-center px-6 py-20 md:py-32">
           <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Crystal Clear Windows, Guaranteed</h1>
@@ -115,7 +115,7 @@ const WindowCleaning = () => {
       </header>
 
       {/* WHY CHOOSE US */}
-      <section className="py-16 px-4 max-w-5xl mx-auto">
+      <section className="py-16 px-4 max-w-5xl mx-auto bg-[#f9f9f9]">
         <h2 className="text-3xl font-bold mb-6 text-center">Why Choose Us for Window Cleaning?</h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {whyUs.map((item) => (
@@ -128,7 +128,7 @@ const WindowCleaning = () => {
       </section>
 
       {/* ADVANCED WATER FED POLE TECH */}
-      <section className="py-16 bg-white px-4 max-w-5xl mx-auto">
+      <section className="py-16 bg-[#f9f9f9] px-4">
         <h2 className="text-3xl font-bold text-center mb-6">Advanced Water Fed Pole Technology</h2>
         <p className="text-lg text-center mb-8 max-w-3xl mx-auto">
           We use cutting-edge water fed pole systems with multi-stage water purification to leave your exterior windows completely spot and streak-free — no soap, no residue. Our system filters out minerals, sediments, and impurities, delivering ultra-pure water that dries crystal clear. 
@@ -171,18 +171,15 @@ const WindowCleaning = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
           <div className="flex justify-center gap-6 flex-wrap">
-            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-36 w-auto" />
-            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-36 w-auto" />
-            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-36 w-auto" />
-            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-36 w-auto" />
+            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-48 w-auto" />
+            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-48 w-auto" />
+            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-48 w-auto" />
+            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-48 w-auto" />
           </div>
         </div>
       </section>
 
-      {/* SHOWCASE - SEE OUR WINDOW CLEANING IN ACTION */}
-      <WindowCleaningShowcaseSection />
-
-      {/* WHAT OUR CLIENTS SAY */}
+      {/* WHAT OUR CLIENTS SAY - Moved up, removed margin */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
         <div className="mx-auto mb-8" style={{ maxWidth: 700 }}>
@@ -201,14 +198,13 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* CTA SECTION - Updated with new image */}
-      <section className="relative h-[600px] w-full">
+      {/* CTA SECTION - Full size with adjusted overlay */}
+      <section className="relative h-screen w-full">
         <img
           src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
           alt="All in one window cleaning service"
-          className="absolute inset-0 w-full h-full object-cover brightness-50"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
           <h2 className="text-4xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
           <p className="text-xl text-white mb-8 drop-shadow-lg">
