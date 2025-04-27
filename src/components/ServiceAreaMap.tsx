@@ -7,12 +7,12 @@ const ServiceAreaMap = () => {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="relative bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-2 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 w-full md:w-[800px] mx-auto">
+      <div className="relative bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-2 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 w-full mx-auto">
         <div className="absolute top-4 left-4 z-10 bg-yellow-400/90 text-black px-4 py-2 rounded-lg font-semibold shadow-lg">
           <MapPin className="inline-block mr-2 h-5 w-5" />
           Based in White Rock, Serving Metro Vancouver
         </div>
-        <div className="h-[320px] w-full rounded-xl overflow-hidden relative">
+        <div className="h-[450px] w-full rounded-xl overflow-hidden relative">
           <iframe
             src={`https://www.google.com/maps/d/embed?mid=${mapId}`}
             width="100%"
