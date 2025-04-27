@@ -240,3 +240,12 @@
     margin-right: auto;
   }
 }
+
+/* Add these new styles for parallax effect */
+@layer utilities {
+  /* Parallax scroll effect */
+  .parallax {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}

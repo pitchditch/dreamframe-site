@@ -11,12 +11,14 @@ const Navbar = () => {
   const [isOverVideo, setIsOverVideo] = useState(true);
   const location = useLocation();
 
-  // Always keep navbar transparent, just manage text color via isOverVideo.
+  // Update transparent navbar logic to include WhyUs page
   useEffect(() => {
-    const isPageWithVideo = location.pathname === '/' || location.pathname === '/why-us' || location.pathname === '/services/roof-cleaning';
+    const isTransparentPage = location.pathname === '/' || 
+                             location.pathname === '/why-us' || 
+                             location.pathname === '/services/roof-cleaning';
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsOverVideo(isPageWithVideo && currentScrollY < 60);
+      setIsOverVideo(isTransparentPage && currentScrollY < 60);
     };
     window.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -31,6 +33,7 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
+    
     <header className="sticky top-0 w-full z-50 transition-all duration-300 bg-transparent">
       <div className="container mx-auto px-4 flex items-center">
         <Logo isOverVideo={isOverVideo} />

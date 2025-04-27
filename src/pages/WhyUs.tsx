@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import { MapPin, Award, Star, ThumbsUp } from "lucide-react";
@@ -15,20 +14,26 @@ const WhyUs = () => {
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
       
-      {/* Hero Section with full viewport height */}
-      <section className="bg-gray-900 text-white relative h-screen flex items-center">
-        <div className="absolute inset-0">
-          <img 
-            src="/lovable-uploads/098e918c-11ab-464e-ba8b-ef8e215463c3.png"
-            alt="BC Pressure Washing Service"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
+      {/* Hero Section with parallax effect */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: "url('/lovable-uploads/8569bbf6-72be-4892-a1f0-e0b70b045bfd.png')",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            transform: "translateZ(0)",
+            willChange: "transform",
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
         </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-shadow">Why Choose BC Pressure Washing?</h1>
-            <p className="text-xl text-gray-200 mb-8 text-shadow">
+        <div className="relative h-full flex items-center justify-center px-4 z-10">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 text-shadow">
+              Why Choose BC Pressure Washing?
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 text-shadow">
               We deliver exceptional exterior cleaning solutions with a focus on quality, reliability, and customer satisfaction.
             </p>
           </div>
