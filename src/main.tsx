@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { StrictMode } from 'react'
 import { register, unregister } from './serviceWorker'
+import { HelmetProvider } from 'react-helmet-async'
 
 // Ensure the service worker is properly unregistered before loading new content
 const clearServiceWorkerCache = async () => {
@@ -57,7 +58,9 @@ const initializeApp = async () => {
     const root = createRoot(container!);
     root.render(
       <StrictMode>
-        <App key={(window as any).appVersion.toString()} />
+        <HelmetProvider>
+          <App key={(window as any).appVersion.toString()} />
+        </HelmetProvider>
       </StrictMode>
     );
     console.log("App rendered successfully");
