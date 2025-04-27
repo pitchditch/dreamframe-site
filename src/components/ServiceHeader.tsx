@@ -1,4 +1,3 @@
-
 import { ReactNode, useEffect } from 'react';
 
 interface ServiceHeaderProps {
@@ -28,34 +27,29 @@ const ServiceHeader = ({
   }, [videoUrl]);
 
   return (
-    <div className="relative bg-black text-white h-[90vh]">
+    <div className="relative w-full h-screen">
       {videoUrl ? (
         <>
-          <div className="relative w-full h-[80vw] md:h-[560px]">
-            <video
-              src={videoUrl}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                objectFit: 'cover'
-              }}
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-              <div className="text-center p-4 max-w-xl mx-auto z-10">
-                {icon && <div className="inline-block text-bc-red mb-2">{icon}</div>}
-                <h1 className="text-3xl md:text-5xl font-bold mb-4">{title}</h1>
-                <p className="text-lg md:text-xl text-gray-200">{description}</p>
-              </div>
+          <video
+            src={videoUrl}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="text-center p-4 max-w-xl mx-auto z-10">
+              {icon && <div className="inline-block text-bc-red mb-2">{icon}</div>}
+              <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>
+              <p className="text-lg md:text-xl text-gray-200">{description}</p>
             </div>
           </div>
         </>
       ) : (
         <>
           <div 
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center w-full h-full"
             style={{ backgroundImage: `url(${imagePath})` }}
           />
           <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />

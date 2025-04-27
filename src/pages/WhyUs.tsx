@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
-import { MapPin, Award, Star, ThumbsUp } from "lucide-react";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import ChatAssistant from '@/components/ChatAssistant';
+import EquipmentSection from "../components/EquipmentSection";
+import { MapPin, Award, Star, ThumbsUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 
@@ -19,7 +20,7 @@ const WhyUs = () => {
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/a275202a-8051-468a-9b7a-0c6eded611e4.png')",
+            backgroundImage: "url('/lovable-uploads/b88610b8-1287-41ab-a674-176a50021812.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             transform: "translateZ(0)",
@@ -103,6 +104,9 @@ const WhyUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Equipment Section */}
+      <EquipmentSection />
 
       {/* Benefits Grid */}
       <section className="py-16 bg-white">

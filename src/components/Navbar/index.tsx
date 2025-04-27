@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -8,18 +9,14 @@ import { MobileMenuButton } from './MobileMenuButton';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
-  const [isOverVideo, setIsOverVideo] = useState(true);
+  const [isOverDark, setIsOverDark] = useState(true);
   const location = useLocation();
 
-  // Update transparent navbar logic to include dark overlay pages
   useEffect(() => {
-    const isTransparentPage = location.pathname === '/' || 
-                           location.pathname === '/why-us' || 
-                           location.pathname === '/services/roof-cleaning' ||
-                           location.pathname === '/services/gutter-cleaning';
+    const darkOverlayPages = ['/', '/why-us', '/services/gutter-cleaning', '/services/roof-cleaning'];
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsOverVideo(isTransparentPage && currentScrollY < 60);
+      setIsOverDark(darkOverlayPages.includes(location.pathname) && currentScrollY < 60);
     };
     window.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -34,14 +31,14 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className={`sticky top-0 w-full z-50 transition-all duration-300 ${
-      isOverVideo ? 'bg-transparent' : 'bg-white shadow-md'
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isOverDark ? 'bg-transparent' : 'bg-white shadow-md'
     }`}>
       <div className="container mx-auto px-4 flex items-center">
-        <Logo isOverVideo={isOverVideo} />
+        <Logo isOverDark={isOverDark} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverVideo={isOverVideo} />
-          <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <NavbarDesktop isOverDark={isOverDark} />
+          <MobileMenuButton isOverDark={isOverDark} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
