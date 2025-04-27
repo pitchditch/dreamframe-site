@@ -33,8 +33,9 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    
-    <header className="sticky top-0 w-full z-50 transition-all duration-300 bg-transparent">
+    <header className={`sticky top-0 w-full z-50 transition-all duration-300 ${
+      isOverVideo ? 'bg-transparent' : 'bg-white shadow-md'
+    }`}>
       <div className="container mx-auto px-4 flex items-center">
         <Logo isOverVideo={isOverVideo} />
         <div className="flex items-center justify-between flex-1 ml-8">

@@ -19,7 +19,7 @@ const WhyUs = () => {
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/8569bbf6-72be-4892-a1f0-e0b70b045bfd.png')",
+            backgroundImage: "url('/lovable-uploads/a275202a-8051-468a-9b7a-0c6eded611e4.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             transform: "translateZ(0)",
