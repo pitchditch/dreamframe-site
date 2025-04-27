@@ -9,14 +9,14 @@ import { MobileMenuButton } from './MobileMenuButton';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
-  const [isOverDark, setIsOverDark] = useState(true);
+  const [isOverVideo, setIsOverVideo] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     const darkOverlayPages = ['/', '/why-us', '/services/gutter-cleaning', '/services/roof-cleaning'];
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsOverDark(darkOverlayPages.includes(location.pathname) && currentScrollY < 60);
+      setIsOverVideo(darkOverlayPages.includes(location.pathname) && currentScrollY < 60);
     };
     window.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -32,13 +32,13 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isOverDark ? 'bg-transparent' : 'bg-white shadow-md'
+      isOverVideo ? 'bg-transparent' : 'bg-white shadow-md'
     }`}>
       <div className="container mx-auto px-4 flex items-center">
-        <Logo isOverDark={isOverDark} />
+        <Logo isOverVideo={isOverVideo} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverDark={isOverDark} />
-          <MobileMenuButton isOverDark={isOverDark} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <NavbarDesktop isOverVideo={isOverVideo} />
+          <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
