@@ -1,10 +1,22 @@
 
-import React from 'react';
-import ServiceHeader from '@/components/ServiceHeader';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const RoofCleaningHero = () => {
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const heroSection = document.querySelector('.hero-section');
+      if (heroSection) {
+        heroSection.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="w-full h-screen relative bg-black overflow-hidden">
       <div className="absolute inset-0 w-full h-full z-0">

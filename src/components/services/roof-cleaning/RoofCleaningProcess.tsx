@@ -10,7 +10,7 @@ const RoofCleaningProcess = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
           <div>
             <img 
-              src="/lovable-uploads/89f521bb-edb4-4193-a254-c88e4968fa9f.png"
+              src="/lovable-uploads/84fe2633-71d7-44b6-9b9b-31ee0cf7ae27.png"
               alt="Professional Roof Cleaning Process" 
               className="w-full rounded-lg shadow-lg"
             />
