@@ -54,17 +54,15 @@ const Contact = () => {
 
   return (
     <Layout>
-      {/* Helmet and banner */}
       <Helmet>
         <title>Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock</title>
         <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
       </Helmet>
       
       <div className="relative bg-black text-white">
-        {/* Shirt image as large background overlay */}
         <div 
-          className="absolute inset-0 bg-no-repeat bg-cover opacity-30"
-          style={{ backgroundImage: "url('/lovable-uploads/ba7defcf-8655-419d-a9c7-46784925dea9.png')" }}
+          className="absolute inset-0 bg-no-repeat bg-cover opacity-50"
+          style={{ backgroundImage: "url('/lovable-uploads/6738e734-49a8-4b65-b729-00b81bde1d76.png')" }}
         />
         <div className="banner-overlay"></div>
         <div className="relative container mx-auto px-4 py-24 text-center z-10">

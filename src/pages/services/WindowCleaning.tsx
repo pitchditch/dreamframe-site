@@ -94,12 +94,12 @@ const WindowCleaning = () => {
     <Layout
       title="Crystal Clear Windows, Guaranteed | Window Cleaning BC"
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
-      image="/lovable-uploads/30f2c843-a162-44bc-a697-d9d9b7c9faef.png"
+      image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
     >
       {/* HERO SECTION */}
       <header className="hero-section bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center relative">
         <img
-          src="/lovable-uploads/30f2c843-a162-44bc-a697-d9d9b7c9faef.png"
+          src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover opacity-70"
         />
@@ -135,33 +135,31 @@ const WindowCleaning = () => {
           It also allows us to clean high windows safely from the ground — no ladders, no damage.
         </p>
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+          <div className="relative aspect-video w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
               src="https://www.youtube.com/embed/PKw0OS7iDmY?autoplay=1&mute=1&loop=1&playlist=PKw0OS7iDmY"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Water Fed Pole System - Exterior Window Cleaning"
-              className="w-full h-full"
+              className="absolute inset-0 w-full h-full"
               style={{
                 border: "none",
                 objectFit: "cover",
-                transform: "scale(1.15)",
-                transformOrigin: "center",
+                transform: "scale(1.5)",
               }}
             />
           </div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
+          <div className="relative aspect-video w-full rounded-2xl shadow-lg overflow-hidden">
             <iframe
               src="https://www.youtube.com/embed/xeUNIHhOxb8?autoplay=1&mute=1&loop=1&playlist=xeUNIHhOxb8"
               allow="autoplay; encrypted-media"
               allowFullScreen
               title="Squeegee Technique - Interior Window Cleaning"
-              className="w-full h-full"
+              className="absolute inset-0 w-full h-full"
               style={{
                 border: "none",
                 objectFit: "cover",
-                transform: "scale(1.15)",
-                transformOrigin: "center",
+                transform: "scale(1.5)",
               }}
             />
           </div>
@@ -173,10 +171,10 @@ const WindowCleaning = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
           <div className="flex justify-center gap-6 flex-wrap">
-            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-28 w-auto" />
-            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-28 w-auto" />
-            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-28 w-auto" />
-            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-28 w-auto" />
+            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-36 w-auto" />
+            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-36 w-auto" />
+            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-36 w-auto" />
+            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-36 w-auto" />
           </div>
         </div>
       </section>

@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import TestimonialsSection from "../components/home/TestimonialsSection";
@@ -21,7 +20,7 @@ const WhyUs = () => {
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/6068ea75-d3bc-4895-a1c8-9404365843b0.png')",
+            backgroundImage: "url('/lovable-uploads/d8f773ec-a3c5-45cb-b550-418040d4abdb.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat"
@@ -168,8 +167,8 @@ const WhyUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/fb43637a-3ca5-4495-997e-7cdb8fcaf83f.png"
-                alt="Pressure Washing Equipment"
+                src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png"
+                alt="Industrial Grade Pressure Washer"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washers</h3>
@@ -177,16 +176,16 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/254da245-ca71-40fe-b92b-267d40458f73.png"
-                alt="Window Cleaning Equipment"
+                src="/lovable-uploads/7b15e617-d426-409a-9e50-d8e5e2f9d6e1.png"
+                alt="Professional Surface Cleaner"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">Professional Window Cleaning Tools</h3>
-              <p className="text-gray-600">We use pure water technology and professional-grade squeegees to leave your windows spotless and streak-free every time.</p>
+              <h3 className="text-xl font-semibold mb-2">Professional Surface Cleaner</h3>
+              <p className="text-gray-600">Our surface cleaner ensures perfect, streak-free results on driveways and large flat surfaces, saving time while delivering superior results.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+                src="/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.png"
                 alt="Eco-Friendly Cleaning Solutions"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
