@@ -1,4 +1,3 @@
-
 import { Star } from 'lucide-react';
 
 interface TestimonialCardProps {
@@ -9,13 +8,11 @@ interface TestimonialCardProps {
   beforeAfterImage?: string;
 }
 
-const DEFAULT_IMG = "/lovable-uploads/ba7defcf-8655-419d-a9c7-46784925dea9.png";
-
 const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }: TestimonialCardProps) => {
   return (
     <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col">
       {beforeAfterImage && (
-        <div className="mb-6 overflow-hidden rounded-md relative aspect-[4/3]">
+        <div className="mb-6 overflow-hidden rounded-md relative aspect-video">
           <img 
             src={beforeAfterImage} 
             alt="Before and after transformation" 

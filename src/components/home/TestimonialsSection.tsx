@@ -1,9 +1,7 @@
-
-import { useTranslation } from '@/hooks/use-translation';
-import TestimonialCard from '../TestimonialCard';
+import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
+import TestimonialCard from '../TestimonialCard';
+import { testimonials } from '@/data/testimonials';
 import { 
   Carousel, 
   CarouselContent, 
@@ -11,16 +9,17 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from "../ui/carousel";
-import { useEffect, useState } from 'react';
-import { testimonials } from '@/data/testimonials';
+import { useTranslation } from '@/hooks/use-translation';
+import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Home, DropletIcon, Wind, Landmark } from 'lucide-react';
 
 const TestimonialsSection = () => {
-  const { t } = useTranslation();
-  const isMobile = useIsMobile();
   const [api, setApi] = useState<any>();
   const [activeCategory, setActiveCategory] = useState('all');
+  const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   // Group testimonials by service
   const testimonialsByService = {
@@ -49,18 +48,18 @@ const TestimonialsSection = () => {
   useEffect(() => {
     if (!api) return;
 
-    // Set up automatic scrolling
+    // Set up automatic scrolling with different timing for mobile
     const interval = setInterval(() => {
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
         api.scrollTo(0);
       }
-    }, isMobile ? 5000 : 8000);
+    }, isMobile ? 3000 : 5000); // Faster on mobile
 
     return () => clearInterval(interval);
   }, [api, isMobile]);
-  
+
   return (
     <section className="section-padding bg-bc-gray overflow-hidden -mt-24 pt-32 relative z-10">
       <div className="container mx-auto px-4">
