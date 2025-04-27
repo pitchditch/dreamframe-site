@@ -23,6 +23,11 @@ const WhySection: React.FC = () => {
       icon: <Info className="h-6 w-6 text-blue-500" />,
       title: "Expert Technicians",
       description: "Specifically trained in post-construction cleaning"
+    },
+    {
+      icon: <Droplet className="h-6 w-6 text-blue-400" />,
+      title: "Pure Water Technology",
+      description: "Advanced equipment for spotless results"
     }
   ];
 
