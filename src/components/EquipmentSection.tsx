@@ -18,7 +18,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/c2c6dc82-6951-4d4c-aebc-58bddca9f70f.png"
+                src="/lovable-uploads/62d45663-858d-4425-aeea-85faab98f7ce.png"
                 alt="Industrial Grade Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -49,11 +49,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
           
-          {/* Window Cleaning Equipment */}
+          {/* Surface Cleaner Equipment */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/a0f3300d-6822-4b70-96bf-82c9a50852f7.png"
+                src="/lovable-uploads/86caf5d0-dfff-45dd-89e6-b01834f794ce.png"
                 alt="Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -78,55 +78,11 @@ const EquipmentSection = () => {
                 </li>
                 <li className="flex items-center">
                   <BadgeCheck className="text-blue-500 mr-2" size={20} />
-                  <span>Faster cleaning with better results</span>
+                  <span>Water fed pole system</span>
                 </li>
               </ul>
             </CardContent>
           </Card>
-        </div>
-        
-        {/* Cleaning Solutions Section */}
-        <div className="mt-16 max-w-6xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="md:flex">
-              <div className="md:w-1/2 bg-gradient-to-br from-green-50 to-green-100 p-8 flex items-center justify-center">
-                <img 
-                  src="/lovable-uploads/ffe09a0f-7f13-4020-a1e6-1dafad4e9125.png"
-                  alt="SH Cleaning Solution"
-                  className="w-full h-auto object-contain max-w-md"
-                />
-              </div>
-              <div className="md:w-2/3 p-8">
-                <h3 className="text-2xl font-bold mb-4">Professional-Grade Solutions</h3>
-                <p className="text-gray-600 mb-6">
-                  We use commercial-grade sodium hypochlorite (SH) and other professional cleaning solutions to achieve the best results while being safe for your property.
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <BadgeCheck className="text-green-600 mt-1 mr-2" size={20} />
-                    <div>
-                      <p className="font-semibold">Safe & Effective</p>
-                      <p className="text-gray-600 text-sm">Professional-grade solutions that get results</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <BadgeCheck className="text-green-600 mt-1 mr-2" size={20} />
-                    <div>
-                      <p className="font-semibold">Expert Application</p>
-                      <p className="text-gray-600 text-sm">Proper dilution and application techniques</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <BadgeCheck className="text-green-600 mt-1 mr-2" size={20} />
-                    <div>
-                      <p className="font-semibold">Property Safe</p>
-                      <p className="text-gray-600 text-sm">Won't damage surfaces or landscaping</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

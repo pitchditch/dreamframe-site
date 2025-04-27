@@ -62,9 +62,9 @@ const Contact = () => {
       <div className="relative bg-black text-white">
         <div 
           className="absolute inset-0 bg-no-repeat bg-cover opacity-50"
-          style={{ backgroundImage: "url('/lovable-uploads/6738e734-49a8-4b65-b729-00b81bde1d76.png')" }}
+          style={{ backgroundImage: "url('/lovable-uploads/e3572546-188a-436e-9792-691e65733bbc.png')" }}
         />
-        <div className="banner-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
         <div className="relative container mx-auto px-4 py-24 text-center z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
