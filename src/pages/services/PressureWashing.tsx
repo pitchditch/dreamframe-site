@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { testimonials } from '@/data/testimonials';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 
-// USER IMAGES (replace with uploaded assets)
+// USER IMAGES (keep original paths)
 const HOUSE_EXTERIORS_IMG = "/lovable-uploads/1fb29b3f-e2ed-44b9-8ae8-b04efbf4fcce.png";
 const DRIVEWAYS_IMG = "/lovable-uploads/5c38ab2e-3c2b-4fd1-9c94-b4715ce79479.png";
 const PATIOS_DECKS_IMG = "/lovable-uploads/82d69edb-6210-433b-a762-4610f454fc2c.png";
@@ -62,8 +62,8 @@ const PressureWashing = () => {
         <meta name="keywords" content="pressure washing Surrey, house washing White Rock, driveway cleaning Surrey, eco-friendly pressure washing, commercial pressure washing" />
       </Helmet>
 
-      {/* 1. HERO SECTION - Fixed video display and prevent cutoff */}
-      <header className="relative bg-black min-h-[450px] flex items-center justify-center overflow-hidden">
+      {/* 1. HERO SECTION - Fixed video display */}
+      <header className="relative bg-black h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div className="absolute inset-0 w-full h-full z-0">
           <iframe
