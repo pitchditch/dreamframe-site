@@ -1,8 +1,8 @@
+
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import LocationBanner from './LocationBanner';
 import ChatAssistant from './ChatAssistant';
 import ReferralButton from './ReferralButton';
 
@@ -46,7 +46,6 @@ const Layout = ({
       <main className="flex-grow w-full">
         {children}
       </main>
-      <LocationBanner />
       <Footer />
       <ChatAssistant />
     </div>
