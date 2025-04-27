@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
@@ -59,6 +58,21 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl mb-8 animate-on-scroll text-shadow-lg max-w-2xl ml-auto text-white">
             Professional window cleaning, pressure washing, and gutter care. Locally owned and personally operated by Jayden in Surrey, White Rock & beyond.
           </p>
+
+          <div className="mt-4 mb-8">
+            <div className="inline-flex items-center bg-black/30 px-4 py-2 rounded-full">
+              <img 
+                src="/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png"
+                alt="Jayden Fisher"
+                className="w-12 h-12 rounded-full mr-3 border-2 border-white"
+              />
+              <div className="text-left">
+                <h3 className="font-semibold text-lg">Jayden Fisher</h3>
+                <p className="text-sm text-gray-200">Owner & Lead Technician</p>
+              </div>
+            </div>
+          </div>
+
           {/* Remove phone number in hero */}
           <form onSubmit={handleZipCodeSubmit} className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end mb-8">
             <div className="relative">
