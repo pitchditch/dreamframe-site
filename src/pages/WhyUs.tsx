@@ -3,9 +3,10 @@ import Layout from "../components/Layout";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import ChatAssistant from '@/components/ChatAssistant';
 import EquipmentSection from "../components/EquipmentSection";
-import { MapPin, Award, Star, ThumbsUp } from "lucide-react";
+import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import LocationBanner from "../components/LocationBanner";
 
 const WhyUs = () => {
   return (
@@ -15,7 +16,7 @@ const WhyUs = () => {
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
       
-      {/* Hero Section with parallax effect */}
+      {/* Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
@@ -23,8 +24,7 @@ const WhyUs = () => {
             backgroundImage: "url('/lovable-uploads/b88610b8-1287-41ab-a674-176a50021812.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
-            transform: "translateZ(0)",
-            willChange: "transform",
+            backgroundRepeat: "no-repeat"
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
@@ -76,6 +76,52 @@ const WhyUs = () => {
                 className="w-32 h-32 mb-4"
               />
               <h3 className="text-lg font-semibold">Eco-Friendly Solutions</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Satisfaction Guarantee Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Our Satisfaction Guarantee</h2>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <Camera className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Before & After Documentation</h3>
+                    <p className="text-gray-700">We capture detailed before and after photos of every job, showing you the dramatic transformation of your property.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <Shield className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">100% Satisfaction Promise</h3>
+                    <p className="text-gray-700">If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <Star className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Customer Reviews</h3>
+                    <p className="text-gray-700">We value your feedback and encourage you to share your experience. Your reviews help us maintain our high standards.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/97ab1ee0-b864-4d9e-b37b-9a526229a18f.png"
+                alt="Before and After Transformation"
+                className="rounded-lg shadow-xl w-full"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-bc-red text-white px-4 py-2 rounded-lg font-semibold">
+                Real Results
+              </div>
             </div>
           </div>
         </div>
@@ -219,6 +265,31 @@ const WhyUs = () => {
           </div>
         </div>
       </section>
+
+      <LocationBanner />
+      
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Our Services */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Our Services</h2>
+            <ul>
+              <li>Pressure Washing</li>
+              <li>Window Cleaning</li>
+              <li>Gutter Cleaning</li>
+            </ul>
+          </div>
+          
+          {/* Contact Information */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
+            <p>
+              Contact us for a free estimate today!
+            </p>
+          </div>
+        </div>
+      </div>
+      
       {/* Desktop chatbot floating at right-bottom */}
       <div className="hidden md:block fixed right-8 bottom-8 z-50">
         <ChatAssistant />

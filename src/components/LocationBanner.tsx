@@ -55,17 +55,17 @@ const LocationBanner = () => {
   }, []);
 
   return (
-    <section className="bg-navy text-white py-8 location-banner">
+    <section className="w-full bg-navy text-white py-12 border-t border-white/10">
       <div className="container mx-auto px-4">
         <div className="flex flex-col text-center">
-          <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-6 text-white">
+          <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-8 text-white">
             <MapPin className="h-6 w-6 md:h-7 md:w-7 text-bc-red mr-2" />
             Areas We Service
           </h3>
           
           <div 
             ref={carouselRef}
-            className="flex overflow-x-hidden whitespace-nowrap gap-8 py-2"
+            className="flex overflow-x-hidden whitespace-nowrap gap-8 py-4"
           >
             {cities.map((city, index) => (
               <div key={index} className="inline-block min-w-max px-6">

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from './ui/card';
 import { BadgeCheck, Gauge, Droplets, Shield } from 'lucide-react';
@@ -87,14 +86,14 @@ const EquipmentSection = () => {
         </div>
         
         {/* Cleaning Solutions Section */}
-        <div className="mt-16 max-w-5xl mx-auto">
+        <div className="mt-16 max-w-6xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="md:flex">
-              <div className="md:w-1/3 bg-gradient-to-br from-green-50 to-green-100 p-8 flex items-center justify-center">
+              <div className="md:w-1/2 bg-gradient-to-br from-green-50 to-green-100 p-8 flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/ffe09a0f-7f13-4020-a1e6-1dafad4e9125.png"
                   alt="SH Cleaning Solution"
-                  className="w-32 h-32 object-contain"
+                  className="w-full h-auto object-contain max-w-md"
                 />
               </div>
               <div className="md:w-2/3 p-8">
