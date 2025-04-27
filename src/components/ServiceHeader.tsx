@@ -28,7 +28,7 @@ const ServiceHeader = ({
   }, [videoUrl]);
 
   return (
-    <div className="relative bg-black text-white mb-10">
+    <div className="relative bg-black text-white h-[90vh]">
       {videoUrl ? (
         <>
           <div className="relative w-full h-[80vw] md:h-[560px]">
@@ -55,14 +55,16 @@ const ServiceHeader = ({
       ) : (
         <>
           <div 
-            className="absolute inset-0 bg-cover bg-center opacity-40"
+            className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${imagePath})` }}
           />
           <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />
-          <div className="relative container mx-auto px-4 py-16 md:py-24 text-center z-10">
-            {icon && <div className="inline-block text-bc-red mb-4">{icon}</div>}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-shadow">{title}</h1>
-            <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200 text-shadow-sm">{description}</p>
+          <div className="relative h-full container mx-auto px-4 flex items-center justify-center z-10">
+            <div className="text-center max-w-4xl">
+              {icon && <div className="inline-block text-bc-red mb-4">{icon}</div>}
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">{title}</h1>
+              <p className="text-lg md:text-xl text-white text-shadow-sm">{description}</p>
+            </div>
           </div>
         </>
       )}

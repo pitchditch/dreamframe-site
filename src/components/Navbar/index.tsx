@@ -11,11 +11,12 @@ const Navbar = () => {
   const [isOverVideo, setIsOverVideo] = useState(true);
   const location = useLocation();
 
-  // Update transparent navbar logic to include WhyUs page
+  // Update transparent navbar logic to include dark overlay pages
   useEffect(() => {
     const isTransparentPage = location.pathname === '/' || 
-                             location.pathname === '/why-us' || 
-                             location.pathname === '/services/roof-cleaning';
+                           location.pathname === '/why-us' || 
+                           location.pathname === '/services/roof-cleaning' ||
+                           location.pathname === '/services/gutter-cleaning';
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsOverVideo(isTransparentPage && currentScrollY < 60);

@@ -1,9 +1,9 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
+import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -52,6 +52,7 @@ const GutterCleaning = () => {
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
         imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+        darkOverlay={true}
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -102,50 +103,12 @@ const GutterCleaning = () => {
         </div>
       </section>
 
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="section-title">Benefits of Professional Gutter Cleaning</h2>
-          <p className="section-subtitle">
-            Regular gutter maintenance provides numerous benefits for your home and property
-          </p>
-          <ServiceBenefits benefits={benefits} />
-        </div>
-      </section>
-
       <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Our Gutter Cleaning Process</h2>
-        <p className="section-subtitle">
-          We follow a thorough process to ensure your gutters are completely clean and functional
-        </p>
-        <ServiceProcess processes={processes} />
-      </section>
-
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Before &amp; After Results</h2>
+        <h2 className="section-title">Recent Projects & Reviews</h2>
         <p className="section-subtitle mb-12">
-          See the difference our professional gutter cleaning services can make
+          See what our satisfied customers are saying about our gutter cleaning services
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
-          </div>
-          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/a5671627-3791-4cbe-8df1-e571b18508d5.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
-          </div>
-          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
-          </div>
-          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/8e7a598a-83f9-4c2b-bfaa-21091b96ffcf.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
-          </div>
-          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
-          </div>
-          {/* REPLACE 6TH IMAGE WITH FIRST USER UPLOAD */}
-          <div className="before-after-card rounded-lg overflow-hidden shadow-lg">
-            <img src="/lovable-uploads/b466bba5-9b40-4277-8bf8-fa3e846e7545.png" alt="Before and after gutter cleaning" className="w-full h-auto" />
-          </div>
-        </div>
+        <TestimonialsSection />
       </section>
 
       <section className="container mx-auto px-4 py-16">
@@ -166,7 +129,6 @@ const GutterCleaning = () => {
               <li>Extends the lifespan of your gutters</li>
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
-            {/* Embed the requested YouTube Shorts video */}
             <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{paddingBottom:"56.25%"}}>
               <iframe
                 src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
@@ -186,7 +148,6 @@ const GutterCleaning = () => {
               </TabsList>
               <TabsContent value="product" className="mt-6">
                 <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
-                {/* Also show the old 6th before/after image here as requested */}
                 <img alt="Gutter cleaning collage" src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
               <TabsContent value="installation" className="mt-6">
@@ -199,4 +160,5 @@ const GutterCleaning = () => {
       <CallToAction />
     </Layout>;
 };
+
 export default GutterCleaning;
