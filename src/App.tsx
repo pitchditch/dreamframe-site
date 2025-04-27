@@ -18,6 +18,7 @@ import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import Equipment from './pages/Equipment';
 import ZipUploader from './pages/ZipUploader';
+import WhyUs from './pages/WhyUs';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/zip-uploader" element={<ZipUploader />} />
+        <Route path="/why-us" element={<WhyUs />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

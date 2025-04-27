@@ -1,8 +1,7 @@
+
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import TestimonialsSection from "../components/home/TestimonialsSection";
-import ChatAssistant from '@/components/ChatAssistant';
-import EquipmentSection from "../components/EquipmentSection";
 import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
@@ -163,7 +162,45 @@ const WhyUs = () => {
       </section>
 
       {/* Equipment Section */}
-      <EquipmentSection />
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/fb43637a-3ca5-4495-997e-7cdb8fcaf83f.png"
+                alt="Pressure Washing Equipment"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washers</h3>
+              <p className="text-gray-600">Our commercial-grade pressure washers deliver the perfect pressure for each surface, preventing damage while ensuring thorough cleaning.</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/254da245-ca71-40fe-b92b-267d40458f73.png"
+                alt="Window Cleaning Equipment"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Professional Window Cleaning Tools</h3>
+              <p className="text-gray-600">We use pure water technology and professional-grade squeegees to leave your windows spotless and streak-free every time.</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+                alt="Eco-Friendly Cleaning Solutions"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Solutions</h3>
+              <p className="text-gray-600">Our environmentally responsible cleaning solutions effectively remove dirt and grime without harming plants, animals, or water systems.</p>
+            </div>
+          </div>
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline" className="bg-bc-red text-white hover:bg-bc-red/90">
+              <Link to="/equipment">View Our Full Equipment List</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* Benefits Grid */}
       <section className="py-16 bg-white">
@@ -278,37 +315,6 @@ const WhyUs = () => {
       </section>
 
       <LocationBanner />
-      
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Our Services */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Our Services</h2>
-            <ul>
-              <li>Pressure Washing</li>
-              <li>Window Cleaning</li>
-              <li>Gutter Cleaning</li>
-            </ul>
-          </div>
-          
-          {/* Contact Information */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-            <p>
-              Contact us for a free estimate today!
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Desktop chatbot floating at right-bottom */}
-      <div className="hidden md:block fixed right-8 bottom-8 z-50">
-        <ChatAssistant />
-      </div>
-      {/* Mobile: show chatbot bottom right */}
-      <div className="md:hidden fixed right-5 bottom-5 z-50 flex flex-row gap-4">
-        <ChatAssistant />
-      </div>
     </Layout>
   );
 };
