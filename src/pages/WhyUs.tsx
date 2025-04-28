@@ -1,14 +1,22 @@
-
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
 import Layout from "../components/Layout";
-import TestimonialsSection from "../components/home/TestimonialsSection";
-import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
-import ServiceAreaMap from "../components/ServiceAreaMap";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
 
 const WhyUs = () => {
+  const [zipCode, setZipCode] = useState('');
+
+  const handleZipSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (zipCode) {
+      sessionStorage.setItem('userZipCode', zipCode);
+      window.location.href = '/calculator';
+    }
+  };
+
   return (
     <Layout>
       <Helmet>
@@ -16,10 +24,10 @@ const WhyUs = () => {
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
       
-      {/* Updated Hero Section with new image */}
+      {/* Updated Hero Section with new image and postal code input */}
       <section className="relative h-screen w-full overflow-hidden hero-section">
         <img 
-          src="/lovable-uploads/a0183718-96c9-42ac-a572-bb3346c0485b.png"
+          src="/lovable-uploads/91a0791c-9a57-45d1-bfae-2bced2dcc76f.png"
           alt="Why Choose BC Pressure Washing"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -32,6 +40,19 @@ const WhyUs = () => {
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 text-shadow">
               We deliver exceptional exterior cleaning solutions with a focus on quality, reliability, and customer satisfaction.
             </p>
+            <form onSubmit={handleZipSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
+              <Input
+                type="text"
+                placeholder="Enter Your Postal Code"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+                className="w-full sm:w-64 text-lg h-12 bg-white"
+                maxLength={7}
+              />
+              <Button type="submit" variant="default" size="lg" className="w-full sm:w-auto bg-bc-red hover:bg-red-700">
+                Get Free Quote
+              </Button>
+            </form>
           </div>
         </div>
       </section>

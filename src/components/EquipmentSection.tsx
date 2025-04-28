@@ -19,7 +19,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/62d45663-858d-4425-aeea-85faab98f7ce.png"
+                src="/lovable-uploads/cb5e0a20-cde0-412b-9abf-95c92f11af58.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/86caf5d0-dfff-45dd-89e6-b01834f794ce.png"
+                src="/lovable-uploads/4896a991-eba3-4b97-a98e-f7f0281b920d.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -55,7 +55,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/604db6d0-a003-4cc3-9c5b-ab05f338dfd7.png"
+                src="/lovable-uploads/00eefca1-1983-42f5-9f28-0fbeab08cbbe.png"
                 alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />
@@ -66,11 +66,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Cleaning Solutions */}
+          {/* Eco-Friendly Products */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/07a45eb6-7c96-4c2c-b240-3ad00c6179d3.png"
+                src="/lovable-uploads/22fb6854-96e4-433e-ae0e-a4c74ec317ef.png"
                 alt="Eco-Friendly Cleaning Solutions" 
                 className="w-full h-full object-contain p-4"
               />

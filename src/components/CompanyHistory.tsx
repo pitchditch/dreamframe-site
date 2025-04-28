@@ -1,64 +1,24 @@
-
 import React from 'react';
-import { Calendar, Award, Home, Hammer } from 'lucide-react';
 
 const CompanyHistory = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center">Our Story</h2>
-          
-          <div className="relative border-l-2 border-bc-red pl-8 pb-8">
-            {/* Start */}
-            <div className="mb-12 relative">
-              <div className="absolute -left-10 bg-bc-red text-white rounded-full p-2">
-                <Calendar size={20} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Founded in 2021</h3>
-              <p className="text-gray-600">
-                BC Pressure Washing started as a door-to-door service, founded with a passion for 
-                delivering spotless results and excellent customer service in the White Rock and Surrey areas.
-              </p>
-            </div>
-            
-            {/* Education */}
-            <div className="mb-12 relative">
-              <div className="absolute -left-10 bg-bc-red text-white rounded-full p-2">
-                <Award size={20} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Semiahmoo Alumni</h3>
-              <p className="text-gray-600">
-                Proud graduate of Semiahmoo Secondary School, with deep roots in the White Rock community 
-                and a commitment to serving local neighborhoods with quality cleaning services.
-              </p>
-            </div>
-            
-            {/* Construction Background */}
-            <div className="mb-12 relative">
-              <div className="absolute -left-10 bg-bc-red text-white rounded-full p-2">
-                <Hammer size={20} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Construction Industry Experience</h3>
-              <p className="text-gray-600">
-                Gained valuable experience working for Willowbrook Roofing LTD, my father's roofing company, 
-                from a young age. This background in construction provides unique insights into property maintenance 
-                and the importance of proper cleaning techniques.
-              </p>
-            </div>
-            
-            {/* Today */}
-            <div className="relative">
-              <div className="absolute -left-10 bg-bc-red text-white rounded-full p-2">
-                <Home size={20} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Growing Company</h3>
-              <p className="text-gray-600">
-                Today, BC Pressure Washing has grown into a trusted name for residential and commercial 
-                cleaning services throughout Metro Vancouver, maintaining the same dedication to quality 
-                and customer satisfaction that we started with.
-              </p>
-            </div>
+        <h2 className="text-3xl font-bold text-center mb-12">Meet Your Owner/Lead Technician</h2>
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <img
+            src="/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png"
+            alt="Jayden Fisher - Owner/Lead Technician"
+            className="rounded-full w-32 h-32 object-cover" // Reduced from w-48 h-48
+          />
+          <div>
+            <h3 className="text-2xl font-semibold mb-4">Jayden Fisher</h3>
+            <p className="text-gray-700">
+              Jayden Fisher is the owner and lead technician at BC Pressure Washing. With years of experience in the industry, Jayden is passionate about providing top-quality exterior cleaning services to homeowners and businesses in Surrey, White Rock, and the surrounding areas.
+            </p>
+            <p className="text-gray-700">
+              As a local resident, Jayden takes pride in serving his community and is committed to delivering exceptional results with a focus on customer satisfaction.
+            </p>
           </div>
         </div>
       </div>

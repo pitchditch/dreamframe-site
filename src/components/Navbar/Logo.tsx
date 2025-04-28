@@ -17,9 +17,9 @@ export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center">
       <img
-        src={isScrolled ? "/lovable-uploads/671f3038-2112-4a56-8ad8-a1c0941ff53a.png" : (isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/671f3038-2112-4a56-8ad8-a1c0941ff53a.png")}
+        src={isScrolled ? "/lovable-uploads/91a0791c-9a57-45d1-bfae-2bced2dcc76f.png" : (isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/91a0791c-9a57-45d1-bfae-2bced2dcc76f.png")}
         alt="BC Pressure Washing Logo"
-        className="h-20 w-auto object-contain"
+        className="h-24 w-auto object-contain" // Increased height from h-20 to h-24
       />
     </Link>
   );
