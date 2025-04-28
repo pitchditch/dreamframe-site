@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -40,8 +41,6 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
-    
-    // Reset isOverVideo state when route changes
     const isOnDarkPage = darkOverlayPages.includes(location.pathname);
     setIsOverVideo(isOnDarkPage);
   }, [location.pathname]);
@@ -49,9 +48,15 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/80 backdrop-blur-sm shadow-md' : ''
-    }`}>
+    <header 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white shadow-md' 
+          : isOverVideo 
+            ? 'bg-transparent' 
+            : 'bg-white'
+      }`}
+    >
       <div className="container mx-auto px-4 flex items-center h-24">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">

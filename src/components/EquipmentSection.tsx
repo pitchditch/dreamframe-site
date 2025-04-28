@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from './ui/card';
 import { BadgeCheck, Gauge, Droplets, Shield } from 'lucide-react';
@@ -13,13 +14,13 @@ const EquipmentSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          {/* Pressure Washing Equipment */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Pressure Washer */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/62d45663-858d-4425-aeea-85faab98f7ce.png"
-                alt="Industrial Grade Pressure Washer" 
+                src="/lovable-uploads/fe6e78ea-8ec4-40bc-a4b7-a4a743725de5.png"
+                alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
               <div className="absolute top-0 right-0 bg-bc-red text-white py-2 px-4 rounded-bl-lg font-semibold">
@@ -29,58 +30,54 @@ const EquipmentSection = () => {
                 </div>
               </div>
             </div>
-            
             <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Industrial-Grade Pressure Washing</h3>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <BadgeCheck className="text-bc-red mr-2" size={20} />
-                  <span>Professional LIFAN 4500 PSI unit</span>
-                </li>
-                <li className="flex items-center">
-                  <BadgeCheck className="text-bc-red mr-2" size={20} />
-                  <span>Surface cleaner attachment</span>
-                </li>
-                <li className="flex items-center">
-                  <BadgeCheck className="text-bc-red mr-2" size={20} />
-                  <span>Hot water capability for enhanced cleaning</span>
-                </li>
-              </ul>
+              <h3 className="text-xl font-bold mb-2">Industrial-Grade Pressure Washer</h3>
+              <p className="text-gray-600">Professional LIFAN 4500 PSI unit for superior cleaning power.</p>
             </CardContent>
           </Card>
-          
-          {/* Surface Cleaner Equipment */}
+
+          {/* Water Fed Pole System */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/86caf5d0-dfff-45dd-89e6-b01834f794ce.png"
-                alt="Surface Cleaner" 
+                src="/lovable-uploads/46101843-8ac5-4b97-a2d1-0947f9636f86.png"
+                alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />
-              <div className="absolute top-0 right-0 bg-blue-500 text-white py-2 px-4 rounded-bl-lg font-semibold">
-                <div className="flex items-center">
-                  <Droplets className="mr-1" size={18} />
-                  <span>Pro-Grade</span>
-                </div>
-              </div>
             </div>
-            
             <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Advanced Surface Cleaning</h3>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <BadgeCheck className="text-blue-500 mr-2" size={20} />
-                  <span>Even pressure distribution</span>
-                </li>
-                <li className="flex items-center">
-                  <BadgeCheck className="text-blue-500 mr-2" size={20} />
-                  <span>Perfect for driveways & patios</span>
-                </li>
-                <li className="flex items-center">
-                  <BadgeCheck className="text-blue-500 mr-2" size={20} />
-                  <span>Water fed pole system</span>
-                </li>
-              </ul>
+              <h3 className="text-xl font-bold mb-2">Water Fed Pole System</h3>
+              <p className="text-gray-600">Advanced pure water technology for streak-free window cleaning up to 60 feet.</p>
+            </CardContent>
+          </Card>
+
+          {/* Surface Cleaner */}
+          <Card className="overflow-hidden border-0 shadow-lg">
+            <div className="relative h-64">
+              <img 
+                src="/lovable-uploads/bcd3ea85-8d8c-432c-89b2-5f51691d0bf1.png"
+                alt="Professional Surface Cleaner" 
+                className="w-full h-full object-contain p-4"
+              />
+            </div>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-2">Surface Cleaner</h3>
+              <p className="text-gray-600">Even pressure distribution for perfect results on flat surfaces.</p>
+            </CardContent>
+          </Card>
+
+          {/* Cleaning Solutions */}
+          <Card className="overflow-hidden border-0 shadow-lg">
+            <div className="relative h-64">
+              <img 
+                src="/lovable-uploads/bd05c263-9467-4b74-9f4b-df21a22c96ec.png"
+                alt="Sodium Hypochlorite Solution" 
+                className="w-full h-full object-contain p-4"
+              />
+            </div>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-2">Professional Cleaning Solutions</h3>
+              <p className="text-gray-600">Sodium hypochlorite for effective siding and driveway cleaning.</p>
             </CardContent>
           </Card>
         </div>
