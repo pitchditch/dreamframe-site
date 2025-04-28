@@ -167,36 +167,31 @@ const WhyUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png"
+                src="/lovable-uploads/b7ed6b79-fa3d-4676-b794-f77eb4562c62.png"
                 alt="Industrial Grade Pressure Washer"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                className="w-full h-48 object-contain rounded-lg mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washers</h3>
-              <p className="text-gray-600">Our commercial-grade pressure washers deliver the perfect pressure for each surface, preventing damage while ensuring thorough cleaning.</p>
+              <p className="text-gray-600">Our Lifan Hydro Pro 4500 PSI pressure washer delivers the perfect pressure for each surface.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/593e10d0-9bf7-48bd-b3f7-5f274e7c50ba.png"
+                src="/lovable-uploads/23e501d2-4df4-40dc-baae-2ec17e263a7e.png"
                 alt="Professional Surface Cleaner"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                className="w-full h-48 object-contain rounded-lg mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">Professional Surface Cleaner</h3>
-              <p className="text-gray-600">Our surface cleaner ensures perfect, streak-free results on driveways and large flat surfaces, saving time while delivering superior results.</p>
+              <p className="text-gray-600">Our surface cleaner ensures perfect, streak-free results on large flat surfaces.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png"
-                alt="Eco-Friendly Cleaning Solutions"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                src="/lovable-uploads/9671230e-ee0b-4928-af8b-7f70b4b1f635.png"
+                alt="Water Fed Pole System"
+                className="w-full h-48 object-contain rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Solutions</h3>
-              <p className="text-gray-600">Our environmentally responsible cleaning solutions effectively remove dirt and grime without harming plants, animals, or water systems.</p>
+              <h3 className="text-xl font-semibold mb-2">Water Fed Pole System</h3>
+              <p className="text-gray-600">Our professional water fed pole system allows us to safely clean windows up to 60 feet high.</p>
             </div>
-          </div>
-          <div className="mt-8 text-center">
-            <Button asChild variant="outline" className="bg-bc-red text-white hover:bg-bc-red/90">
-              <Link to="/equipment">View Our Full Equipment List</Link>
-            </Button>
           </div>
         </div>
       </section>
