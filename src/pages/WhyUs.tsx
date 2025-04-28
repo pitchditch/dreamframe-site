@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import Layout from "../components/Layout";
@@ -186,7 +187,7 @@ const WhyUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/fc2201df-4a6c-4643-94f1-45d2ef36f407.png"
+                src="/lovable-uploads/7a4334e8-e64a-4438-a0db-0319a25f8d0f.png"
                 alt="Professional Pressure Washer"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
@@ -195,7 +196,7 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/0a2c675b-c5a7-45d4-9c19-c39aa35dc1ab.png"
+                src="/lovable-uploads/6c45cc15-89d9-4846-9040-98eb1f18e24f.png"
                 alt="Surface Cleaner"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
@@ -204,7 +205,7 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/29d21ccd-b0c0-4f29-bc30-5cd60ee028d6.png"
+                src="/lovable-uploads/dc85910b-5a9d-4d47-a400-aa93946bf62e.png"
                 alt="Eco-Friendly Solutions"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
@@ -213,7 +214,7 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/19fe5024-10bc-4e6b-8f83-f7e2e783f1c2.png"
+                src="/lovable-uploads/c5717ab7-6ffd-477f-9518-01adaa2fc3b2.png"
                 alt="Water Fed Pole System"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
