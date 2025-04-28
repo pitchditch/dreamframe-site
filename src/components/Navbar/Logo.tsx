@@ -19,7 +19,7 @@ export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
       <img
         src={isScrolled ? "/lovable-uploads/f41b065c-ac9d-4456-a73a-9cd6e30232da.png" : (isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/f41b065c-ac9d-4456-a73a-9cd6e30232da.png")}
         alt="BC Pressure Washing Logo"
-        className="h-32 w-auto object-contain" // Increased size from h-28 to h-32
+        className="h-32 w-auto object-contain"
       />
     </Link>
   );

@@ -8,7 +8,6 @@ import {
   CarouselPrevious,
   CarouselNext
 } from "@/components/ui/carousel";
-import useEmblaCarousel from 'embla-carousel-react';
 
 const slides = [
   {
@@ -50,14 +49,14 @@ const ServiceSlideshow = () => {
     onSelect();
     api.on("select", onSelect);
     
-    // Setup autoplay
+    // Setup continuous autoplay with no pause
     const autoplay = setInterval(() => {
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
         api.scrollTo(0);
       }
-    }, 3000);
+    }, 2000); // Faster rotation speed of 2 seconds
 
     return () => {
       clearInterval(autoplay);
