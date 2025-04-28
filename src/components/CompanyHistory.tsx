@@ -10,7 +10,7 @@ const CompanyHistory = () => {
           <img
             src="/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png"
             alt="Jayden Fisher - Owner & Lead Technician"
-            className="rounded-full w-24 h-24 object-cover"
+            className="rounded-full w-20 h-20 object-cover" /* Reduced size from 24 to 20 */
           />
           <div>
             <h3 className="text-2xl font-semibold mb-4">Jayden Fisher</h3>

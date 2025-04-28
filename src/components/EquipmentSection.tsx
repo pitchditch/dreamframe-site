@@ -19,7 +19,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/cb5e0a20-cde0-412b-9abf-95c92f11af58.png"
+                src="/lovable-uploads/6c45cc15-89d9-4846-9040-98eb1f18e24f.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/4896a991-eba3-4b97-a98e-f7f0281b920d.png"
+                src="/lovable-uploads/9095e754-713b-44fc-8397-a4d559f31076.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -51,26 +51,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Water Fed Pole System */}
-          <Card className="overflow-hidden border-0 shadow-lg">
-            <div className="relative h-64">
-              <img 
-                src="/lovable-uploads/00eefca1-1983-42f5-9f28-0fbeab08cbbe.png"
-                alt="Professional Water Fed Pole System" 
-                className="w-full h-full object-contain p-4"
-              />
-            </div>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Water Fed Pole System</h3>
-              <p className="text-gray-600">Advanced pure water technology for streak-free window cleaning up to 60 feet.</p>
-            </CardContent>
-          </Card>
-
           {/* Eco-Friendly Products */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/22fb6854-96e4-433e-ae0e-a4c74ec317ef.png"
+                src="/lovable-uploads/8c3641b4-e2e7-4925-8fd3-3dc1ba685231.png"
                 alt="Eco-Friendly Cleaning Solutions" 
                 className="w-full h-full object-contain p-4"
               />
@@ -78,6 +63,21 @@ const EquipmentSection = () => {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold mb-2">Eco-Friendly Cleaning Solutions</h3>
               <p className="text-gray-600">Professional cleaning solutions that are effective yet environmentally responsible.</p>
+            </CardContent>
+          </Card>
+
+          {/* Water Fed Pole System */}
+          <Card className="overflow-hidden border-0 shadow-lg">
+            <div className="relative h-64">
+              <img 
+                src="/lovable-uploads/e49acfd1-b154-48bd-afc5-48d1e03131d1.png"
+                alt="Professional Water Fed Pole System" 
+                className="w-full h-full object-contain p-4"
+              />
+            </div>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-2">Water Fed Pole System</h3>
+              <p className="text-gray-600">Advanced pure water technology for streak-free window cleaning up to 60 feet.</p>
             </CardContent>
           </Card>
         </div>

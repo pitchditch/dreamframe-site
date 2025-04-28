@@ -13,7 +13,7 @@ const Equipment = () => {
           {/* Pressure Washer */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/62d45663-858d-4425-aeea-85faab98f7ce.png"
+              src="/lovable-uploads/6c45cc15-89d9-4846-9040-98eb1f18e24f.png"
               alt="Industrial Grade Pressure Washer"
               className="rounded-lg shadow-lg w-full"
             />
@@ -24,7 +24,7 @@ const Equipment = () => {
           {/* Surface Cleaner */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/86caf5d0-dfff-45dd-89e6-b01834f794ce.png"
+              src="/lovable-uploads/9095e754-713b-44fc-8397-a4d559f31076.png"
               alt="Professional Surface Cleaner"
               className="rounded-lg shadow-lg w-full"
             />
@@ -35,7 +35,7 @@ const Equipment = () => {
           {/* Water Fed Pole System */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/604db6d0-a003-4cc3-9c5b-ab05f338dfd7.png"
+              src="/lovable-uploads/e49acfd1-b154-48bd-afc5-48d1e03131d1.png"
               alt="Water Fed Pole System"
               className="rounded-lg shadow-lg w-full"
             />
