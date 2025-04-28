@@ -6,14 +6,10 @@ import { useTranslation } from '@/hooks/use-translation';
 
 interface ServicesDropdownProps {
   isOpen: boolean;
-  isOverVideo?: boolean;
-  isScrolled?: boolean;
 }
 
 export const ServicesDropdown = ({ 
-  isOpen,
-  isOverVideo,
-  isScrolled
+  isOpen
 }: ServicesDropdownProps) => {
   const location = useLocation();
   const { t, language } = useTranslation();

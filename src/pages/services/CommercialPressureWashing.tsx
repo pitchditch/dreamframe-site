@@ -1,3 +1,4 @@
+
 import Layout from "../../components/Layout";
 import { Helmet } from "react-helmet-async";
 import ServiceHeader from "@/components/ServiceHeader";
@@ -80,14 +81,13 @@ const CommercialPressureWashing = () => {
       <TestimonialsSection />
 
       {/* 20% Off CTA */}
-      <section className="relative w-full overflow-hidden py-24">
+      <section className="relative w-full overflow-hidden py-16">
         <div className="absolute inset-0">
           <img
             src="/lovable-uploads/5d44ee99-a0e7-42c6-9ae8-ab7da11f82cb.png"
             alt="Special Offer"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/60" />
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Limited Time Offer: 20% OFF Commercial Pressure Washing</h2>
