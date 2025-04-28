@@ -6,7 +6,6 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import GutterSticks from '@/components/services/gutter-cleaning/GutterSticks';
 
 const GutterCleaning = () => {
@@ -118,7 +117,19 @@ const GutterCleaning = () => {
         <p className="section-subtitle mb-12">
           Ask about our gutter protection systems to keep debris out while letting water flow
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        
+        <div className="relative h-0 pb-[56.25%] mt-4 mb-8 rounded-xl overflow-hidden">
+          <iframe
+            src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
+            title="Gutter protection video"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full rounded-xl"
+          ></iframe>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
           <div className="text-content">
             <h3 className="text-2xl font-bold mb-4">Gutter Guards &amp; Protectors</h3>
             <p className="text-gray-600 mb-6">
@@ -131,50 +142,27 @@ const GutterCleaning = () => {
               <li>Extends the lifespan of your gutters</li>
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
-            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{paddingBottom:"56.25%"}}>
-              <iframe
-                src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
-                title="Gutter protection video"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                className="absolute top-0 left-0 w-full h-full rounded-xl"
-              ></iframe>
+          </div>
+          <div className="image-content">
+            <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Not Recommended: Screen Netting
+              </h4>
+              <div className="flex items-center">
+                <img src="/lovable-uploads/2f72c577-5ed7-45fe-8eee-b85a9562e5d9.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                <p className="text-sm text-gray-800">
+                  We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
+                </p>
+              </div>
             </div>
           </div>
-          <div className="image-content flex flex-col gap-6">
-            <Tabs defaultValue="product" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="product">Product</TabsTrigger>
-                <TabsTrigger value="installation">Installation</TabsTrigger>
-              </TabsList>
-              <TabsContent value="product" className="mt-6">
-                <div className="space-y-6">
-                  <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                      </svg>
-                      Not Recommended: Screen Netting
-                    </h4>
-                    <div className="flex items-center">
-                      <img src="/lovable-uploads/2f72c577-5ed7-45fe-8eee-b85a9562e5d9.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
-                      <p className="text-sm text-gray-800">
-                        We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="installation" className="mt-6">
-                <img src="/lovable-uploads/11e668d3-e97a-4103-a781-f7139551fe2d.png" alt="Leaf Guard installation" className="rounded-lg shadow-lg w-full h-auto" />
-              </TabsContent>
-            </Tabs>
-            
-            <GutterSticks />
-          </div>
         </div>
+        
+        <GutterSticks />
       </section>
       <CallToAction />
     </Layout>;

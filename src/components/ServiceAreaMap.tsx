@@ -1,13 +1,24 @@
 
 import React from 'react';
 import { MapPin } from 'lucide-react';
+import LocationBanner from './LocationBanner';
 
 const ServiceAreaMap = () => {
   const mapId = "1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30";
 
   return (
-    <section className="bg-gradient-to-b from-gray-900 to-black pt-8 pb-16">      
-      <div className="container mx-auto px-4 mt-8">
+    <section className="bg-gradient-to-b from-gray-900 to-black py-8">      
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <MapPin className="inline-block mr-2 h-6 w-6 text-bc-red" />
+            Areas We Service
+          </h2>
+          <p className="text-lg text-gray-300">
+            Based in White Rock, serving Metro Vancouver and surrounding areas
+          </p>
+        </div>
+        
         <div className="relative bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-2 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 w-full mx-auto">
           <div className="absolute top-4 left-4 z-10 bg-yellow-400/90 text-black px-4 py-2 rounded-lg font-semibold shadow-lg">
             <MapPin className="inline-block mr-2 h-5 w-5" />
@@ -31,6 +42,8 @@ const ServiceAreaMap = () => {
           </div>
         </div>
       </div>
+      
+      <LocationBanner />
     </section>
   );
 };

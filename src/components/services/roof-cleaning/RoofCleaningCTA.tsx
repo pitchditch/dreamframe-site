@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const RoofCleaningCTA = () => {
   return (
-    <section className="relative h-[80vh] w-full">
+    <section className="relative h-[100vh] w-full">
       <img
         src="/lovable-uploads/84fe2633-71d7-44b6-9b9b-31ee0cf7ae27.png"
         alt="Clean, Beautiful Roof"
