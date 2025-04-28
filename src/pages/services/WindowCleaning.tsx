@@ -203,11 +203,11 @@ const WindowCleaning = () => {
         <img
           src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
           alt="All in one window cleaning service"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_50%]"
         />
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
           <h2 className="text-4xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
-          <p className="text-xl text-white mb-8 drop-shadow-lg">
+          <p className="text-xl text-white mb-8 drop-shadow-lg max-w-2xl">
             Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
           </p>
           <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
