@@ -22,7 +22,8 @@ const Navbar = () => {
     '/services/window-cleaning',
     '/services/pressure-washing',
     '/services/post-construction-window-cleaning',
-    '/services/commercial-pressure-washing'
+    '/services/commercial-pressure-washing',
+    '/services/commercial-window-cleaning'
   ];
 
   useEffect(() => {

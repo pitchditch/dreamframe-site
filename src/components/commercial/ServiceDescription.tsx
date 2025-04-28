@@ -30,8 +30,8 @@ const ServiceDescription = () => {
         </div>
         <div className="md:w-1/2">
           <img 
-            src="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png" 
-            alt="Commercial window cleaning service" 
+            src="/lovable-uploads/40094f62-8278-4c5c-8d34-9b01a159f13b.png" 
+            alt="Commercial window cleaning service showing window, frame and screen cleaning" 
             className="rounded-lg shadow-lg w-full h-auto"
           />
         </div>
