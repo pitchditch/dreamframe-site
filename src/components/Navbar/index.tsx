@@ -26,10 +26,13 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const shouldBeOverVideo = darkOverlayPages.includes(location.pathname) && currentScrollY < 60;
-      setIsOverVideo(shouldBeOverVideo);
-      setIsScrolled(currentScrollY > 10);
+      const heroSection = document.querySelector('.hero-section');
+      if (heroSection) {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+        const shouldBeOverVideo = heroBottom > 0;
+        setIsOverVideo(shouldBeOverVideo);
+        setIsScrolled(!shouldBeOverVideo);
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -49,7 +52,7 @@ const Navbar = () => {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 h-28 ${
         isScrolled 
           ? 'bg-white shadow-md' 
           : isOverVideo 
@@ -57,7 +60,7 @@ const Navbar = () => {
             : 'bg-white'
       }`}
     >
-      <div className="container mx-auto px-4 flex items-center h-24">
+      <div className="container mx-auto px-4 flex items-center h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
           <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CircleCheck, Star, Shield, Wrench } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -13,7 +12,23 @@ const FounderSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-6xl mx-auto">
-          <div className="md:col-span-6">
+          <div className="md:col-span-5 order-2 md:order-1">
+            <div className="relative">
+              <div className="absolute -left-4 -top-4 w-full h-full bg-gradient-to-br from-bc-red/20 to-transparent rounded-full blur-xl"></div>
+              <img 
+                src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+                alt="Jayden Fisher - Founder" 
+                className="w-full h-auto rounded-2xl border-4 border-bc-red shadow-lg relative z-10"
+              />
+              <div className="mt-4 text-center">
+                <h3 className="text-2xl font-bold text-gray-800">Jayden Fisher</h3>
+                <p className="text-gray-600">Founder & Owner</p>
+              </div>
+              <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-gradient-to-br from-bc-red/20 to-transparent rounded-full blur-lg z-5"></div>
+            </div>
+          </div>
+          
+          <div className="md:col-span-7 order-1 md:order-2">
             <div className="space-y-6 bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl shadow-sm border border-gray-100">
               <p className="text-gray-700 text-lg">
                 Every job is personally handled or overseen by Jayden, the founder — no shortcuts, no subpar results.
@@ -65,26 +80,6 @@ const FounderSection = () => {
                   <div className="absolute -right-4 -bottom-2 w-8 h-8 rounded-full bg-bc-red/20 z-5"></div>
                   <div className="absolute -left-2 top-4 w-4 h-4 rounded-full bg-bc-red/30 z-5"></div>
                 </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="md:col-span-6">
-            <div className="space-y-8 relative">
-              {/* Decorative vertical line */}
-              <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-bc-red/20 to-transparent rounded-full"></div>
-              
-              <div className="pl-6">
-                <h4 className="text-xl font-bold mb-4">Our Service Vehicle</h4>
-                <img 
-                  src="/lovable-uploads/f278b778-163e-4ee9-843a-0f3bb67f82f9.png"
-                  alt="BC Pressure Washing Company Vehicle" 
-                  className="w-full rounded-lg shadow-lg"
-                />
-                <p className="mt-4 text-gray-700">
-                  You've probably seen our distinctive red vehicle parked at White Rock Beach. 
-                  As a locally owned business with deep roots in the community, we're proud to serve the area where we grew up.
-                </p>
               </div>
             </div>
           </div>

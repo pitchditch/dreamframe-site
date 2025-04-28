@@ -18,7 +18,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
       <img
         src={isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/9542fa0e-7710-4d02-aa7c-08df9d78725b.png"}
         alt="BC Pressure Washing Logo"
-        className="h-16 w-auto object-contain"
+        className="h-20 w-auto object-contain"
       />
     </Link>
   );

@@ -1,10 +1,30 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { MessageCircle, X } from 'lucide-react';
 
+const questions = [
+  "Have any questions?",
+  "Looking for a quote?",
+  "Need help with your property?",
+  "Want to know our service areas?",
+  "Interested in our satisfaction guarantee?",
+];
+
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuestion((prev) => {
+        const currentIndex = questions.indexOf(prev);
+        return questions[(currentIndex + 1) % questions.length];
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="fixed bottom-6 right-6 z-[1000]">
@@ -25,15 +45,14 @@ const ChatAssistant = () => {
           <div className="flex items-center gap-3 mb-4">
             <img
               src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png"
-              alt="BC Pressure Washing Assistant"
+              alt="Jayden Fisher - BC Pressure Washing"
               className="w-12 h-12 rounded-full object-cover"
             />
             <div>
-              <h4 className="font-semibold">Have any questions?</h4>
-              <p className="text-sm text-gray-600">I'm here to help!</p>
+              <h4 className="font-semibold">Jayden Fisher</h4>
+              <p className="text-sm text-gray-600 animate-fade-in">{currentQuestion}</p>
             </div>
           </div>
-          {/* Add chat functionality here later */}
           <div className="text-center text-sm text-gray-600">
             Click the button below to start a conversation
           </div>
