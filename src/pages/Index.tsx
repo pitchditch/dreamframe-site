@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
