@@ -53,7 +53,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+        imagePath="/lovable-uploads/405eb3a3-e086-47fe-ada2-4dd5d9cf51bf.png"
         darkOverlay={true}
       />
 
@@ -159,7 +159,7 @@ const GutterCleaning = () => {
                       Not Recommended: Screen Netting
                     </h4>
                     <div className="flex items-center">
-                      <img src="/lovable-uploads/e0d98531-4b14-477d-a0f0-58c0004afa2a.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                      <img src="/lovable-uploads/2f72c577-5ed7-45fe-8eee-b85a9562e5d9.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
                       <p className="text-sm text-gray-800">
                         We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
                       </p>
@@ -168,7 +168,7 @@ const GutterCleaning = () => {
                 </div>
               </TabsContent>
               <TabsContent value="installation" className="mt-6">
-                <img src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" alt="Leaf Guard installation" className="rounded-lg shadow-lg w-full h-auto" />
+                <img src="/lovable-uploads/11e668d3-e97a-4103-a781-f7139551fe2d.png" alt="Leaf Guard installation" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
             </Tabs>
             

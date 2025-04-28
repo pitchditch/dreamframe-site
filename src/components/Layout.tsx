@@ -1,10 +1,9 @@
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ChatAssistant from './ChatAssistant';
-import ReferralButton from './ReferralButton';
 
 interface LayoutProps {
   children: ReactNode;
@@ -20,6 +19,14 @@ const Layout = ({
   image = "/open.png"
 }: LayoutProps) => {
   const canonicalUrl = "https://www.bcpressurewashing.ca";
+
+  // Mark the first child with hero-section class if it doesn't already have it
+  useEffect(() => {
+    const firstChild = document.querySelector('main > div:first-child, main > section:first-child');
+    if (firstChild && !firstChild.classList.contains('hero-section')) {
+      firstChild.classList.add('hero-section');
+    }
+  }, []);
   
   return (
     <div className="flex flex-col min-h-screen w-full">

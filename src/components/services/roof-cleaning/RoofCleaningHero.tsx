@@ -1,55 +1,25 @@
 
-import React, { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Droplets } from 'lucide-react';
 
 const RoofCleaningHero = () => {
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const heroSection = document.querySelector('.hero-section');
-      if (heroSection) {
-        const element = heroSection as HTMLElement;
-        element.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="w-full h-screen relative bg-black overflow-hidden">
-      <div className="absolute inset-0 w-full h-full z-0">
-        <iframe 
-          className="absolute inset-0 w-full h-full"
-          src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
-          title="Roof Cleaning Process"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          style={{ 
-            border: 'none',
-            width: '100vw',
-            height: '100vh',
-            objectFit: 'cover'
-          }}
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
-          <div className="text-center px-6">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
-              Professional Roof Cleaning & Moss Removal
-            </h1>
-            <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto drop-shadow-md">
-              Safe, effective roof cleaning that extends the life of your roof while improving your home's appearance.
-            </p>
-            <Button 
-              variant="bc-red" 
-              size="lg" 
-              className="text-lg font-medium px-8 py-6"
-              asChild
-            >
-              <Link to="/calculator">Get Your Free Quote</Link>
-            </Button>
-          </div>
+    <div className="relative w-full h-screen hero-section">
+      <img 
+        src="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png" 
+        alt="Roof cleaning service" 
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
+      <div className="relative h-full container mx-auto px-4 flex items-center justify-center z-10">
+        <div className="text-center max-w-4xl">
+          <Droplets className="inline-block text-bc-red mb-4" size={48} />
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">
+            Professional Roof Cleaning & Moss Removal
+          </h1>
+          <p className="text-lg md:text-xl text-white text-shadow-sm">
+            Extend the life of your roof and improve your home's curb appeal with our safe and effective roof cleaning services.
+          </p>
         </div>
       </div>
     </div>

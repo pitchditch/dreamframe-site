@@ -13,32 +13,29 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Pages with dark backgrounds that need white text
+  // All pages will have dark overlays that need white text
   const darkOverlayPages = [
-    '/', 
-    '/why-us', 
-    '/services/gutter-cleaning', 
+    '/',
+    '/why-us',
+    '/services/gutter-cleaning',
     '/services/roof-cleaning',
     '/services/window-cleaning',
     '/services/pressure-washing',
     '/services/post-construction-window-cleaning',
     '/services/commercial-pressure-washing',
-    '/services/commercial-window-cleaning'
+    '/services/commercial-window-cleaning',
+    '/contact',
+    '/about',
+    '/testimonials',
+    '/services'
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      // Check if we're past the hero section
-      const founderSection = document.querySelector('.founder-section');
+      // For any page with a hero section
       const heroSection = document.querySelector('.hero-section');
       
-      if (founderSection && location.pathname === '/') {
-        // For homepage, change at founder section
-        const founderTop = founderSection.getBoundingClientRect().top;
-        setIsScrolled(founderTop <= 0);
-        setIsOverVideo(founderTop > 0);
-      } else if (heroSection) {
-        // For other pages, change after hero section
+      if (heroSection) {
         const heroBottom = heroSection.getBoundingClientRect().bottom;
         setIsScrolled(heroBottom <= 0);
         setIsOverVideo(heroBottom > 0);
