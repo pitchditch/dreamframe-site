@@ -13,7 +13,7 @@ const Equipment = () => {
           {/* Pressure Washer */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/f5c6ce4b-e1b2-46e5-9ec5-b81814790cad.png"
+              src="/lovable-uploads/25d2bc7b-7066-4992-841c-05b45e83a962.png"
               alt="Industrial Grade Pressure Washer"
               className="rounded-lg shadow-lg w-full"
             />
@@ -24,7 +24,7 @@ const Equipment = () => {
           {/* Surface Cleaner */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/7a4334e8-e64a-4438-a0db-0319a25f8d0f.png"
+              src="/lovable-uploads/6ca7fa89-7f1e-4e4b-ba3c-f506f87d105a.png"
               alt="Professional Surface Cleaner"
               className="rounded-lg shadow-lg w-full"
             />
@@ -35,23 +35,23 @@ const Equipment = () => {
           {/* Eco-Friendly Products */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/9f6fe7fc-3ef5-4d9c-8329-8e0419654b96.png"
+              src="/lovable-uploads/77908f5a-4387-4ea9-80ad-a762ee2b5b1f.png"
               alt="Eco-Friendly Cleaning Products"
               className="rounded-lg shadow-lg w-full"
             />
-            <h2 className="text-2xl font-bold">Water Fed Pole System</h2>
-            <p className="text-gray-700">Our professional water fed pole system allows us to safely clean windows up to 60 feet high while keeping both feet firmly on the ground.</p>
+            <h2 className="text-2xl font-bold">Eco-Friendly Products</h2>
+            <p className="text-gray-700">We use environmentally responsible cleaning solutions that are both effective and safe for the environment.</p>
           </div>
 
           {/* Water Fed Pole System */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/d6ce37d5-6670-433d-b3f4-bd75cfd820bb.png"
-              alt="BC Pressure Washing Company Vehicle"
+              src="/lovable-uploads/58002838-ad0d-499b-ba03-6bdc267c5c54.png"
+              alt="Water Fed Pole System"
               className="rounded-lg shadow-lg w-full"
             />
-            <h2 className="text-2xl font-bold">Our Local Service Vehicle</h2>
-            <p className="text-gray-700">You've probably seen our distinctive red vehicle parked at White Rock Beach. As a locally owned business with deep roots in the community, we're proud to serve the area where we grew up.</p>
+            <h2 className="text-2xl font-bold">Water Fed Pole System</h2>
+            <p className="text-gray-700">Our professional water fed pole system allows us to safely clean windows up to 60 feet high while keeping both feet firmly on the ground.</p>
           </div>
         </div>
       </div>
