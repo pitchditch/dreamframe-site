@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
@@ -20,6 +19,7 @@ import NotFound from './pages/NotFound';
 import Equipment from './pages/Equipment';
 import ZipUploader from './pages/ZipUploader';
 import WhyUs from './pages/WhyUs';
+import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/zip-uploader" element={<ZipUploader />} />
         <Route path="/why-us" element={<WhyUs />} />
+        <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

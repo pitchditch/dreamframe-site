@@ -30,7 +30,7 @@ const ChatAssistant = () => {
     <div className="fixed bottom-6 right-6 z-[1000]">
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className={`chat-button rounded-full p-3 shadow-lg ${isOpen ? 'bg-bc-red hover:bg-bc-red/90' : 'bg-navy hover:bg-navy/90'}`}
+        className={`rounded-full p-3 shadow-lg ${isOpen ? 'bg-bc-red hover:bg-bc-red/90' : 'bg-navy hover:bg-navy/90'}`}
         size="lg"
       >
         {isOpen ? (

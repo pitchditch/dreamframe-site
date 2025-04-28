@@ -19,7 +19,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
   const hoverColor = 'hover:text-bc-red';
 
   return (
-    <nav className="hidden md:flex items-center justify-between w-full">
+    <nav className="hidden md:flex items-center justify-between w-full h-full">
       <div className="flex items-center gap-8">
         <NavLink
           to="/why-us"
@@ -42,25 +42,41 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                 <div className="grid gap-3 p-6 w-[400px] bg-white">
                   <NavLink to="/services/window-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <Store className="w-5 h-5 text-bc-red" />
+                      <img
+                        src="/lovable-uploads/01aab84d-8a55-47aa-8f19-5dab431fc1d7.png"
+                        alt="Window Cleaning Icon"
+                        className="w-5 h-5"
+                      />
                       <span>{t('Window Cleaning')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <Building className="w-5 h-5 text-bc-red" />
+                      <img
+                        src="/lovable-uploads/26b3b813-2a2e-4137-9420-be7fac51ffbb.png"
+                        alt="House Washing Icon"
+                        className="w-5 h-5"
+                      />
                       <span>{t('House Washing')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <HardHat className="w-5 h-5 text-bc-red" />
+                      <img
+                        src="/lovable-uploads/1b4e918a-f926-4618-b953-b91c2d5cbdfb.png"
+                        alt="Gutter Cleaning Icon"
+                        className="w-5 h-5"
+                      />
                       <span>{t('Gutter Cleaning')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/roof-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <Store className="w-5 h-5 text-bc-red" />
+                      <img
+                        src="/lovable-uploads/29fa0b8a-6c18-4d5a-9253-e5e7fc0254a2.png"
+                        alt="Roof Cleaning Icon"
+                        className="w-5 h-5"
+                      />
                       <span>{t('Roof Cleaning')}</span>
                     </div>
                   </NavLink>
@@ -114,4 +130,3 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
     </nav>
   );
 };
-
