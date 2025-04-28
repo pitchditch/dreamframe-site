@@ -45,7 +45,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                       <img
                         src="/lovable-uploads/01aab84d-8a55-47aa-8f19-5dab431fc1d7.png"
                         alt="Window Cleaning Icon"
-                        className="w-5 h-5"
+                        className="w-8 h-8"
                       />
                       <span>{t('Window Cleaning')}</span>
                     </div>
@@ -55,7 +55,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                       <img
                         src="/lovable-uploads/26b3b813-2a2e-4137-9420-be7fac51ffbb.png"
                         alt="House Washing Icon"
-                        className="w-5 h-5"
+                        className="w-8 h-8"
                       />
                       <span>{t('House Washing')}</span>
                     </div>
@@ -65,7 +65,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                       <img
                         src="/lovable-uploads/1b4e918a-f926-4618-b953-b91c2d5cbdfb.png"
                         alt="Gutter Cleaning Icon"
-                        className="w-5 h-5"
+                        className="w-8 h-8"
                       />
                       <span>{t('Gutter Cleaning')}</span>
                     </div>
@@ -75,7 +75,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                       <img
                         src="/lovable-uploads/29fa0b8a-6c18-4d5a-9253-e5e7fc0254a2.png"
                         alt="Roof Cleaning Icon"
-                        className="w-5 h-5"
+                        className="w-8 h-8"
                       />
                       <span>{t('Roof Cleaning')}</span>
                     </div>

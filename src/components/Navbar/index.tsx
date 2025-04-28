@@ -52,12 +52,10 @@ const Navbar = () => {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 h-28 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 h-32 ${
         isScrolled 
           ? 'bg-white shadow-md' 
-          : isOverVideo 
-            ? 'bg-transparent' 
-            : 'bg-white'
+          : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-4 flex items-center h-full">

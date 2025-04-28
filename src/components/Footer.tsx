@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
@@ -12,12 +13,13 @@ const Footer = () => {
       <div className="container mx-auto px-4 pt-16">
         <FAQSection />
         
-        <div className="mt-16 mb-12">
-          <h4 className="text-xl font-semibold mb-6 text-white">Service Area</h4>
-          <ServiceAreaMap />
+        <div className="mt-16">
+          <h4 className="text-xl font-semibold mb-6 text-white">Service Areas</h4>
+          <LocationBanner />
+          <div className="mt-8">
+            <ServiceAreaMap />
+          </div>
         </div>
-
-        <LocationBanner />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 mt-16">
           {/* Logo and social media links */}
