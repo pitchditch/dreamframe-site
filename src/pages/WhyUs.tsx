@@ -160,14 +160,14 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Equipment Section */}
+      {/* Equipment Section - Updated with new images */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png"
+                src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png"
                 alt="Industrial Grade Pressure Washer"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
@@ -176,7 +176,7 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/7b15e617-d426-409a-9e50-d8e5e2f9d6e1.png"
+                src="/lovable-uploads/593e10d0-9bf7-48bd-b3f7-5f274e7c50ba.png"
                 alt="Professional Surface Cleaner"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
@@ -185,7 +185,7 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.png"
+                src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png"
                 alt="Eco-Friendly Cleaning Solutions"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />

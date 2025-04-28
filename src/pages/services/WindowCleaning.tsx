@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -31,64 +32,6 @@ const whyUs = [
   },
 ];
 
-// Showcase section using YouTube iframes for each method
-const WindowCleaningShowcaseSection = () => (
-  <section className="py-16 bg-gray-50 animate-on-scroll">
-    <div className="max-w-6xl mx-auto px-4 text-center">
-      <h2 className="text-3xl font-bold mb-4">See Our Window Cleaning in Action</h2>
-      <p className="text-lg text-gray-600 mb-10">
-        We use a pure water-fed pole system for spotless exterior windows and traditional squeegee methods for crystal-clear interiors.
-      </p>
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Exterior Windows - Water Fed Pole */}
-        <div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=1&mute=1&loop=1&playlist=03njfGLUDUQ"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title="Exterior Window Cleaning - Water Fed Pole"
-              className="w-full h-full"
-              style={{
-                border: "none",
-                objectFit: "cover",
-                transform: "scale(1.15)",
-                transformOrigin: "center",
-              }}
-            />
-          </div>
-          <h3 className="text-xl font-semibold mt-4">Exterior Window Cleaning</h3>
-          <p className="text-gray-500">
-            Water-fed pole with purified water leaves no streaks or spots – ideal for high windows and eco-friendly too.
-          </p>
-        </div>
-        {/* Interior Windows - Squeegee */}
-        <div>
-          <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl shadow-lg overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=1&mute=1&loop=1&playlist=bbHnt4UNPcU"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title="Interior Window Cleaning - Squeegee"
-              className="w-full h-full"
-              style={{
-                border: "none",
-                objectFit: "cover",
-                transform: "scale(1.15)",
-                transformOrigin: "center",
-              }}
-            />
-          </div>
-          <h3 className="text-xl font-semibold mt-4">Interior Window Cleaning</h3>
-          <p className="text-gray-500">
-            Professional hand squeegee technique for a flawless finish – with care and attention inside your home.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 const WindowCleaning = () => {
   return (
     <Layout
@@ -96,16 +39,17 @@ const WindowCleaning = () => {
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
       image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
     >
-      {/* HERO SECTION */}
+      {/* HERO SECTION - Fixed for better text visibility */}
       <header className="hero-section min-h-[100vh] flex items-center justify-center relative">
         <img
           src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         <div className="relative z-10 text-center px-6 py-20 md:py-32">
           <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Crystal Clear Windows, Guaranteed</h1>
-          <p className="text-lg md:text-2xl text-white font-medium mb-6">
+          <p className="text-lg md:text-2xl text-white font-medium mb-6 drop-shadow-lg">
             Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free.
           </p>
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
@@ -198,8 +142,9 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* CTA SECTION - Full size with adjusted overlay */}
+      {/* CTA SECTION - Fixed with better text visibility */}
       <section className="relative h-screen w-full">
+        <div className="absolute inset-0 bg-black/60"></div>
         <img
           src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
           alt="All in one window cleaning service"
