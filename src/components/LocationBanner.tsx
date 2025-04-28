@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -20,16 +20,31 @@ const LocationBanner = () => {
     containScroll: "trimSnaps"
   }, [
     Autoplay({ 
-      delay: 2000,
+      delay: 1000,  // Reduced delay for faster rotation
       stopOnInteraction: false, 
       playOnInit: true 
     })
   ]);
 
+  useEffect(() => {
+    // Ensure continuous auto-play
+    const interval = setInterval(() => {
+      const emblaApi = document.querySelector('[data-embla-api]');
+      if (emblaApi) {
+        const api = (emblaApi as any).__emblaApi;
+        if (api && typeof api.scrollNext === 'function') {
+          api.scrollNext();
+        }
+      }
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="w-full py-6">
       <div className="container mx-auto px-4">        
-        <div className="overflow-hidden" ref={emblaRef}>
+        <div className="overflow-hidden" ref={emblaRef} data-embla-api="true">
           <div className="flex" style={{ backfaceVisibility: 'hidden' }}>
             {cities.map((city, index) => (
               <div key={index} className="flex-none mx-4">

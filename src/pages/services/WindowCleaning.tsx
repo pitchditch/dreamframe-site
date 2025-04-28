@@ -36,25 +36,16 @@ const WindowCleaning = () => {
   return (
     <Layout title="Crystal Clear Windows, Guaranteed | Window Cleaning BC"
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
-      image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png">
+      image="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png">
       
-      {/* Updated Hero Section */}
-      <header className="hero-section relative min-h-screen flex items-center justify-center">
+      {/* Updated Hero Section - Full size image */}
+      <header className="relative h-screen w-full">
         <img
-          src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
+          src="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="relative z-10 text-center px-6 py-20 md:py-32 max-w-4xl">
-          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">
-            Crystal Clear Windows, Guaranteed
-          </h1>
-          <p className="text-lg md:text-2xl text-white font-medium mb-6 drop-shadow-lg">
-            Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free.
-          </p>
-        </div>
-        <div className="absolute bottom-12 left-0 right-0 flex justify-center">
+        <div className="absolute bottom-20 left-0 right-0 flex justify-center">
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
             <Link to="/calculator">Check Prices & Availability</Link>
           </Button>
@@ -126,10 +117,10 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* WHAT OUR CLIENTS SAY - Moved up, removed margin */}
+      {/* WHAT OUR CLIENTS SAY - Moved up, increased testimonial size */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
-        <div className="mx-auto mb-8" style={{ maxWidth: 700 }}>
+        <div className="mx-auto mb-8" style={{ maxWidth: 800 }}>
           <TestimonialCard
             quote={windowTestimonial.quote}
             name={windowTestimonial.name}
@@ -145,25 +136,32 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* CTA SECTION - Fixed with better text visibility */}
-      <section className="relative h-screen w-full">
-        <div className="absolute inset-0 bg-black/60"></div>
-        <img
-          src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
-          alt="All in one window cleaning service"
-          className="absolute inset-0 w-full h-full object-cover object-[50%_50%]"
-        />
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
-          <h2 className="text-4xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
-          <p className="text-xl text-white mb-8 drop-shadow-lg max-w-2xl">
-            Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
-          </p>
-          <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
-            <Link to="/calculator">Book Now</Link>
-          </Button>
-        </div>
-      </section>
+      {/* CTA SECTION */}
+      <RoofCleaningCTA />
     </Layout>
+  );
+};
+
+// Refactor RoofCleaningCTA for use in WindowCleaning page
+const RoofCleaningCTA = () => {
+  return (
+    <section className="relative h-screen w-full">
+      <img
+        src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
+        alt="All in one window cleaning service"
+        className="absolute inset-0 w-full h-full object-cover object-[50%_50%]"
+      />
+      <div className="absolute inset-0 bg-black/60"></div>
+      <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
+        <h2 className="text-4xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
+        <p className="text-xl text-white mb-8 drop-shadow-lg max-w-2xl">
+          Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
+        </p>
+        <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+          <Link to="/calculator">Book Now</Link>
+        </Button>
+      </div>
+    </section>
   );
 };
 

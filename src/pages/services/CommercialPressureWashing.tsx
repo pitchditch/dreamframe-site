@@ -27,7 +27,7 @@ const CommercialPressureWashing = () => {
       <ServiceHeader
         title="Commercial Pressure Washing"
         description="Professional exterior cleaning solutions for your commercial property"
-        imagePath="/lovable-uploads/5d44ee99-a0e7-42c6-9ae8-ab7da11f82cb.png"
+        imagePath="/lovable-uploads/7c9aa4f6-5ecb-475f-93fa-9f6827c78a3e.png"
         darkOverlay={true}
       />
 
@@ -116,11 +116,11 @@ const CommercialPressureWashing = () => {
       <section className="relative w-full overflow-hidden py-16">
         <div className="absolute inset-0">
           <img
-            src="/lovable-uploads/40094f62-8278-4c5c-8d34-9b01a159f13b.png"
+            src="/lovable-uploads/66a2a287-96be-4eb8-bcdf-3f90d99f30e0.png"
             alt="Special Offer"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Limited Time Offer: 20% OFF Commercial Pressure Washing</h2>

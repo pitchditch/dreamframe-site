@@ -17,14 +17,14 @@ const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }
           <img 
             src={beforeAfterImage} 
             alt="Before and after transformation" 
-            className="w-full h-[300px] object-contain rounded-md"
+            className="w-full h-auto max-h-[400px] object-contain rounded-md"
           />
         </div>
       )}
       <div className="flex mb-4">
         <div className="text-4xl font-serif text-red-200 mr-2">❝</div>
       </div>
-      <p className="italic text-gray-600 mb-6 flex-grow">{quote}</p>
+      <p className="italic text-gray-600 mb-6 flex-grow text-lg">{quote}</p>
       <div className="flex items-center justify-between mt-auto">
         <div>
           <h4 className="font-medium">{name}</h4>

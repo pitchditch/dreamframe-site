@@ -8,9 +8,9 @@ const CompanyHistory = () => {
         <h2 className="text-3xl font-bold text-center mb-12">Owner & Lead Technician</h2>
         <div className="flex flex-col md:flex-row items-center gap-8">
           <img
-            src="/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png"
+            src="/lovable-uploads/7bdca265-04f1-4e31-b06e-c5b5dbb5f141.png"
             alt="Jayden Fisher - Owner & Lead Technician"
-            className="rounded-full w-16 h-16 object-cover" /* Reduced size from 20 to 16 */
+            className="rounded-full w-12 h-12 object-cover" /* Further reduced size */
           />
           <div>
             <h3 className="text-2xl font-semibold mb-4">Jayden Fisher</h3>

@@ -43,6 +43,7 @@ const ServiceAreaMap = () => {
         </div>
       </div>
       
+      {/* Directly add location banner without any gap or separate section */}
       <LocationBanner />
     </section>
   );

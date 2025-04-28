@@ -18,7 +18,7 @@ const FounderSection = () => {
               <img 
                 src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
                 alt="Jayden Fisher - Founder" 
-                className="w-full h-auto rounded-2xl border-4 border-bc-red shadow-lg relative z-10"
+                className="w-full max-w-[200px] h-auto rounded-2xl border-4 border-bc-red shadow-lg relative z-10 mx-auto"
               />
               <div className="mt-4 text-center">
                 <h3 className="text-2xl font-bold text-gray-800">Jayden Fisher</h3>
