@@ -16,11 +16,11 @@ const WhyUs = () => {
       </Helmet>
       
       {/* Updated Hero Section with new image */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-screen w-full overflow-hidden hero-section">
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/745ab1d7-37cb-4203-b28f-aef824378383.png')",
+            backgroundImage: "url('/lovable-uploads/d2a05c53-e519-43eb-a837-d026ae7c42fc.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat"
@@ -136,7 +136,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Rest of sections */}
+      {/* Your Local Cleaning Expert Section - Enhanced background for car image */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -149,18 +149,18 @@ const WhyUs = () => {
                 When you choose BC Pressure Washing, you're supporting a local business that understands the unique needs of properties in our area.
               </p>
             </div>
-            <div className="relative">
+            <div className="relative rounded-lg overflow-hidden shadow-xl">
               <img 
                 src="/lovable-uploads/3146f82b-e494-43b8-91c3-4bf5921f2e3a.png"
                 alt="BC Pressure Washing Service Vehicle"
-                className="rounded-lg shadow-xl w-full"
+                className="w-full h-auto rounded-lg"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Equipment Section - Updated with new images */}
+      {/* Equipment Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>

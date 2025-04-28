@@ -26,12 +26,20 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Check if we're past the hero section
+      const founderSection = document.querySelector('.founder-section');
       const heroSection = document.querySelector('.hero-section');
-      if (heroSection) {
+      
+      if (founderSection && location.pathname === '/') {
+        // For homepage, change at founder section
+        const founderTop = founderSection.getBoundingClientRect().top;
+        setIsScrolled(founderTop <= 0);
+        setIsOverVideo(founderTop > 0);
+      } else if (heroSection) {
+        // For other pages, change after hero section
         const heroBottom = heroSection.getBoundingClientRect().bottom;
-        const shouldBeOverVideo = heroBottom > 0;
-        setIsOverVideo(shouldBeOverVideo);
-        setIsScrolled(!shouldBeOverVideo);
+        setIsScrolled(heroBottom <= 0);
+        setIsOverVideo(heroBottom > 0);
       }
     };
     
@@ -61,7 +69,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex items-center h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
+          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} isScrolled={isScrolled} />
           <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>

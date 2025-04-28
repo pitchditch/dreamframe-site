@@ -16,7 +16,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center">
       <img
-        src={isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/9542fa0e-7710-4d02-aa7c-08df9d78725b.png"}
+        src={isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/671f3038-2112-4a56-8ad8-a1c0941ff53a.png"}
         alt="BC Pressure Washing Logo"
         className="h-20 w-auto object-contain"
       />

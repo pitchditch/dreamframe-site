@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from './ui/card';
-import { BadgeCheck, Gauge, Droplets, Shield } from 'lucide-react';
+import { Gauge, Droplets } from 'lucide-react';
 
 const EquipmentSection = () => {
   return (
@@ -14,12 +14,12 @@ const EquipmentSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Updated Pressure Washer */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          {/* Pressure Washer */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png"
+                src="/lovable-uploads/3aabda1c-e9b6-4584-b546-401ce141f480.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -36,7 +36,22 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Updated Water Fed Pole System */}
+          {/* Surface Cleaner */}
+          <Card className="overflow-hidden border-0 shadow-lg">
+            <div className="relative h-64">
+              <img 
+                src="/lovable-uploads/dc85910b-5a9d-4d47-a400-aa93946bf62e.png"
+                alt="Professional Surface Cleaner" 
+                className="w-full h-full object-contain p-4"
+              />
+            </div>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-2">Surface Cleaner</h3>
+              <p className="text-gray-600">Even pressure distribution for perfect results on flat surfaces.</p>
+            </CardContent>
+          </Card>
+
+          {/* Water Fed Pole System */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
@@ -51,33 +66,18 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Updated Surface Cleaner */}
+          {/* Cleaning Solutions */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/593e10d0-9bf7-48bd-b3f7-5f274e7c50ba.png"
-                alt="Professional Surface Cleaner" 
-                className="w-full h-full object-contain p-4"
-              />
-            </div>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Surface Cleaner</h3>
-              <p className="text-gray-600">Even pressure distribution for perfect results on flat surfaces.</p>
-            </CardContent>
-          </Card>
-
-          {/* Updated Cleaning Solutions */}
-          <Card className="overflow-hidden border-0 shadow-lg">
-            <div className="relative h-64">
-              <img 
-                src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png"
+                src="/lovable-uploads/07a45eb6-7c96-4c2c-b240-3ad00c6179d3.png"
                 alt="Sodium Hypochlorite Solution" 
                 className="w-full h-full object-contain p-4"
               />
             </div>
             <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Professional Cleaning Solutions</h3>
-              <p className="text-gray-600">Sodium hypochlorite for effective siding and driveway cleaning.</p>
+              <h3 className="text-xl font-bold mb-2">Eco-Friendly Cleaning Solutions</h3>
+              <p className="text-gray-600">Professional cleaning solutions that are effective yet environmentally responsible.</p>
             </CardContent>
           </Card>
         </div>

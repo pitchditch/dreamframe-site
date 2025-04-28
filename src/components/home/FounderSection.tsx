@@ -1,10 +1,10 @@
+
 import React from 'react';
 import { CircleCheck, Star, Shield, Wrench } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const FounderSection = () => {
   return (
-    <section className="py-32 bg-white relative">
+    <section className="py-32 bg-white relative founder-section">
       <div className="container mx-auto px-4">
         <div className="text-right mb-24">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Owner-Operated for Quality You Can Trust</h2>
@@ -65,20 +65,6 @@ const FounderSection = () => {
                     <h3 className="text-xl font-bold mb-2">Friendly, Local, and Transparent</h3>
                     <p className="text-gray-700">No upsells. No pressure. Just honest, dependable service from a neighbor who cares.</p>
                   </div>
-                </div>
-              </div>
-              
-              {/* Founder portrait moved lower in the page */}
-              <div className="mt-12 flex justify-center">
-                <div className="relative w-64 h-64">
-                  <div className="absolute inset-0 bg-gradient-to-br from-bc-red/20 to-transparent rounded-full blur-xl"></div>
-                  <img 
-                    src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
-                    alt="Jayden Fisher - Founder" 
-                    className="w-full h-full object-cover rounded-full border-4 border-bc-red shadow-lg relative z-10"
-                  />
-                  <div className="absolute -right-4 -bottom-2 w-8 h-8 rounded-full bg-bc-red/20 z-5"></div>
-                  <div className="absolute -left-2 top-4 w-4 h-4 rounded-full bg-bc-red/30 z-5"></div>
                 </div>
               </div>
             </div>

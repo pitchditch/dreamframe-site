@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
-export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
+export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolean, isScrolled: boolean }) => {
   const { t } = useTranslation();
 
   // Color classes based on background
