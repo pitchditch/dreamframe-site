@@ -1,15 +1,12 @@
 
 import React from 'react';
 import { MapPin } from 'lucide-react';
-import LocationBanner from './LocationBanner';
 
 const ServiceAreaMap = () => {
   const mapId = "1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30";
 
   return (
-    <section className="bg-gradient-to-b from-gray-900 to-black pt-0 pb-16">
-      <LocationBanner />
-      
+    <section className="bg-gradient-to-b from-gray-900 to-black pt-8 pb-16">      
       <div className="container mx-auto px-4 mt-8">
         <div className="relative bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-2 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 w-full mx-auto">
           <div className="absolute top-4 left-4 z-10 bg-yellow-400/90 text-black px-4 py-2 rounded-lg font-semibold shadow-lg">

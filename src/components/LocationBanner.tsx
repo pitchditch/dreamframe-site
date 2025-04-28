@@ -2,11 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 
@@ -22,10 +17,11 @@ const LocationBanner = () => {
   const [emblaRef] = useEmblaCarousel({ 
     loop: true,
     align: "start", 
-    skipSnaps: true,
-    dragFree: true
+    skipSnaps: false,
+    dragFree: true,
+    containScroll: "trimSnaps"
   }, [
-    Autoplay({ delay: 2000, stopOnInteraction: false })
+    Autoplay({ delay: 2000, stopOnInteraction: false, playOnInit: true })
   ]);
 
   return (
