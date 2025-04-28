@@ -21,11 +21,15 @@ const LocationBanner = () => {
     dragFree: true,
     containScroll: "trimSnaps"
   }, [
-    Autoplay({ delay: 2000, stopOnInteraction: false, playOnInit: true })
+    Autoplay({ 
+      delay: window.innerWidth < 768 ? 1500 : 2500, // Faster on mobile
+      stopOnInteraction: false, 
+      playOnInit: true 
+    })
   ]);
 
   return (
-    <section className="w-full bg-gradient-to-b from-navy to-gray-900 text-white py-8">
+    <section className="w-full bg-gradient-to-b from-gray-900 to-navy py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col text-center">
           <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-6 text-white">
