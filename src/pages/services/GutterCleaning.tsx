@@ -109,10 +109,12 @@ const GutterCleaning = () => {
       <GutterProtectionSection />
 
       {/* Process Section */}
-      <ServiceProcess 
-        title="Our Gutter Cleaning Process"
-        steps={processSteps}
-      />
+      <section className="py-16 bg-gray-50">
+        <ServiceProcess 
+          title="Our Gutter Cleaning Process"
+          steps={processSteps}
+        />
+      </section>
 
       {/* Service Area Map */}
       <ServiceAreaMap />
