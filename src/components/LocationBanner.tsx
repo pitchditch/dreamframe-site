@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
@@ -16,14 +15,15 @@ const LocationBanner = () => {
 
   const [emblaRef] = useEmblaCarousel({ 
     loop: true,
-    align: "center",
-    containScroll: false,
-    dragFree: true
+    align: "start", 
+    skipSnaps: false,
+    dragFree: true,
+    containScroll: "trimSnaps"
   }, [
     Autoplay({ 
-      delay: window.innerWidth < 768 ? 1500 : 2500,
-      stopOnInteraction: false,
-      playOnInit: true
+      delay: window.innerWidth < 768 ? 1000 : 2000, // Faster on mobile (1 second vs 2 seconds)
+      stopOnInteraction: false, 
+      playOnInit: true 
     })
   ]);
 
@@ -39,7 +39,7 @@ const LocationBanner = () => {
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex" style={{ backfaceVisibility: 'hidden' }}>
               {cities.map((city, index) => (
-                <div key={index} className="flex-none mx-6 md:mx-8">
+                <div key={index} className="flex-none mx-4">
                   <Link 
                     to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`}
                     className="whitespace-nowrap text-xl font-medium text-white hover:text-bc-red transition-colors"
