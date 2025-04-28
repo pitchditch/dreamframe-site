@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import Layout from "../components/Layout";
@@ -184,33 +183,42 @@ const WhyUs = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
                 src="/lovable-uploads/fc2201df-4a6c-4643-94f1-45d2ef36f407.png"
-                alt="Industrial Grade Pressure Washer"
+                alt="Professional Pressure Washer"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washers</h3>
-              <p className="text-gray-600">Our Lifan Hydro Pro 4500 PSI pressure washer delivers the perfect pressure for each surface.</p>
+              <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washer</h3>
+              <p className="text-gray-600">Our Lifan Hydro Pro pressure washer delivers perfect pressure for each surface.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
                 src="/lovable-uploads/0a2c675b-c5a7-45d4-9c19-c39aa35dc1ab.png"
-                alt="Professional Surface Cleaner"
+                alt="Surface Cleaner"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">Professional Surface Cleaner</h3>
-              <p className="text-gray-600">Our surface cleaner ensures perfect, streak-free results on large flat surfaces.</p>
+              <h3 className="text-xl font-semibold mb-2">Surface Cleaner</h3>
+              <p className="text-gray-600">Professional surface cleaner for streak-free results on large areas.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
                 src="/lovable-uploads/29d21ccd-b0c0-4f29-bc30-5cd60ee028d6.png"
-                alt="Eco-Friendly Products"
+                alt="Eco-Friendly Solutions"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">Eco-Friendly Products</h3>
-              <p className="text-gray-600">We use environmentally responsible cleaning solutions that are effective yet safe for your family and pets.</p>
+              <p className="text-gray-600">Safe and effective cleaning solutions for your property.</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/19fe5024-10bc-4e6b-8f83-f7e2e783f1c2.png"
+                alt="Water Fed Pole System"
+                className="w-full h-48 object-contain rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Water Fed Pole System</h3>
+              <p className="text-gray-600">Professional pure water cleaning system for windows and high areas.</p>
             </div>
           </div>
         </div>

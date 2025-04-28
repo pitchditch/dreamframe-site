@@ -62,7 +62,7 @@ const Contact = () => {
       <div className="relative bg-black text-white">
         <div 
           className="absolute inset-0 bg-no-repeat bg-cover opacity-50"
-          style={{ backgroundImage: "url('/lovable-uploads/e3572546-188a-436e-9792-691e65733bbc.png')" }}
+          style={{ backgroundImage: "url('/lovable-uploads/19fe5024-10bc-4e6b-8f83-f7e2e783f1c2.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
         <div className="relative container mx-auto px-4 py-24 text-center z-10">

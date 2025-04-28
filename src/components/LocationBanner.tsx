@@ -2,9 +2,13 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 const LocationBanner = () => {
-  const carouselRef = useRef<HTMLDivElement>(null);
   const cities = [
     "White Rock", "Surrey", "South Surrey", "Langley", "Delta", 
     "Tsawwassen", "Ladner", "Richmond", "Vancouver", "North Vancouver", 
@@ -12,47 +16,6 @@ const LocationBanner = () => {
     "Port Coquitlam", "Port Moody", "Pitt Meadows", "Maple Ridge", 
     "Mission", "Abbotsford"
   ];
-
-  useEffect(() => {
-    const scrollContent = carouselRef.current;
-    let animationId: number;
-    let isHovering = false;
-
-    const scroll = () => {
-      if (scrollContent && !isHovering) {
-        scrollContent.scrollLeft += 1;
-        
-        // Reset to beginning when we reach the end
-        if (scrollContent.scrollLeft >= (scrollContent.scrollWidth - scrollContent.clientWidth)) {
-          scrollContent.scrollLeft = 0;
-        }
-      }
-      animationId = requestAnimationFrame(scroll);
-    };
-
-    animationId = requestAnimationFrame(scroll);
-    
-    const handleMouseEnter = () => {
-      isHovering = true;
-    };
-    
-    const handleMouseLeave = () => {
-      isHovering = false;
-    };
-    
-    if (scrollContent) {
-      scrollContent.addEventListener('mouseenter', handleMouseEnter);
-      scrollContent.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      if (scrollContent) {
-        scrollContent.removeEventListener('mouseenter', handleMouseEnter);
-        scrollContent.removeEventListener('mouseleave', handleMouseLeave);
-      }
-    };
-  }, []);
 
   return (
     <section className="w-full bg-gradient-to-b from-navy to-gray-900 text-white py-12">
@@ -63,32 +26,28 @@ const LocationBanner = () => {
             Areas We Service
           </h3>
           
-          <div 
-            ref={carouselRef}
-            className="flex overflow-x-hidden whitespace-nowrap gap-8 py-4 pb-6"
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              skipSnaps: true,
+              containScroll: "trimSnaps"
+            }}
+            className="w-full"
           >
-            {cities.map((city, index) => (
-              <div key={index} className="inline-block min-w-max px-6">
-                <Link 
-                  to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`} 
-                  className="text-xl font-medium text-white hover:text-bc-red transition-colors"
-                >
-                  {city}, BC
-                </Link>
-              </div>
-            ))}
-            {/* Duplicate cities for seamless loop */}
-            {cities.slice(0, 5).map((city, index) => (
-              <div key={`repeat-${index}`} className="inline-block min-w-max px-6">
-                <Link 
-                  to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`} 
-                  className="text-xl font-medium text-white hover:text-bc-red transition-colors"
-                >
-                  {city}, BC
-                </Link>
-              </div>
-            ))}
-          </div>
+            <CarouselContent className="py-4">
+              {cities.map((city, index) => (
+                <CarouselItem key={index} className="basis-auto">
+                  <Link 
+                    to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-6 text-xl font-medium text-white hover:text-bc-red transition-colors"
+                  >
+                    {city}, BC
+                  </Link>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
       </div>
     </section>
