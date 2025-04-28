@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -402,6 +401,21 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
               we’ll confirm before booking.
             </div>
           </div>
+          
+          <div className="flex flex-col md:flex-row items-center gap-6 mb-6 bg-blue-50 p-4 rounded-lg">
+            <img 
+              src="/lovable-uploads/d7372ff1-b3e7-4d2c-86b8-2df515e84acc.png" 
+              alt="Jayden from BC Pressure Washing" 
+              className="w-28 h-28 rounded-full border-4 border-white shadow-md"
+            />
+            <div>
+              <h4 className="text-lg font-semibold">Jayden will help you with your quote!</h4>
+              <p className="text-sm text-gray-600">
+                As the owner of BC Pressure Washing, I personally review every quote request to ensure you get the best service at the best price. I'll contact you shortly with your custom quote.
+              </p>
+            </div>
+          </div>
+          
           <div className="flex flex-col gap-2 mt-6">
             <Button
               className="w-full"
@@ -422,7 +436,7 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
             </a>
           </div>
           <div className="text-sm text-gray-500 mt-5">
-            You’ll hear back from Jayden or the team shortly.<br />
+            You'll hear back from Jayden or the team shortly.<br />
             Want to talk to someone now? Call us at <span className="underline">(604) 778-808-7620</span>.<br />
             No spam, no pressure—just a clear and honest quote.
           </div>
@@ -432,7 +446,7 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
       {step > 4 && (
         <div className="text-center py-10">
           <h3 className="text-2xl font-bold mb-4 text-green-700">Thank you!</h3>
-          <p className="mb-2 text-gray-600">We’ve received your request. Jayden or a team member will contact you soon.</p>
+          <p className="mb-2 text-gray-600">We've received your request. Jayden or a team member will contact you soon.</p>
           <a href="tel:7788087620" className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3">
             Call Jayden Now
           </a>

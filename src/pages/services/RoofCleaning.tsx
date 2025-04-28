@@ -1,16 +1,16 @@
+
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
 import RoofCleaningGallery from '../../components/services/RoofCleaningGallery';
-import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ChatAssistant from '@/components/ChatAssistant';
-import { Badge } from '@/components/ui/badge';
 import RoofCleaningHero from '@/components/services/roof-cleaning/RoofCleaningHero';
 import RoofCleaningProcess from '@/components/services/roof-cleaning/RoofCleaningProcess';
 import RoofCleaningBenefits from '@/components/services/roof-cleaning/RoofCleaningBenefits';
 import RoofCleaningFAQ from '@/components/services/roof-cleaning/RoofCleaningFAQ';
 import RoofCleaningCTA from '@/components/services/roof-cleaning/RoofCleaningCTA';
+import RoofCleaningProduct from '@/components/services/roof-cleaning/RoofCleaningProduct';
 
 const RoofCleaning = () => {
   useEffect(() => {
@@ -30,6 +30,7 @@ const RoofCleaning = () => {
 
       <RoofCleaningHero />
       <RoofCleaningBenefits />
+      <RoofCleaningProduct />
       <RoofCleaningProcess />
       <ServiceAreaMap />
       <RoofCleaningGallery />

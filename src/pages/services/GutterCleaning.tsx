@@ -7,6 +7,7 @@ import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import GutterSticks from '@/components/services/gutter-cleaning/GutterSticks';
 
 const GutterCleaning = () => {
   const benefits = [{
@@ -148,13 +149,30 @@ const GutterCleaning = () => {
                 <TabsTrigger value="installation">Installation</TabsTrigger>
               </TabsList>
               <TabsContent value="product" className="mt-6">
-                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
-                <img alt="Gutter cleaning collage" src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" className="rounded-lg shadow-lg w-full h-auto" />
+                <div className="space-y-6">
+                  <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      Not Recommended: Screen Netting
+                    </h4>
+                    <div className="flex items-center">
+                      <img src="/lovable-uploads/e0d98531-4b14-477d-a0f0-58c0004afa2a.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                      <p className="text-sm text-gray-800">
+                        We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </TabsContent>
               <TabsContent value="installation" className="mt-6">
-                <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
+                <img src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" alt="Leaf Guard installation" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
             </Tabs>
+            
+            <GutterSticks />
           </div>
         </div>
       </section>
