@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import Layout from "../components/Layout";
@@ -5,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
+import ServiceAreaMap from "../components/ServiceAreaMap";
+import TestimonialsSection from "../components/home/TestimonialsSection";
 
 const WhyUs = () => {
   const [zipCode, setZipCode] = useState('');
