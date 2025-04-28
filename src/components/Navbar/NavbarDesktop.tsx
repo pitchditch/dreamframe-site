@@ -4,6 +4,7 @@ import { Phone } from 'lucide-react';
 import { NavigationMenu } from '../ui/navigation-menu';
 import NavLink from './NavLink';
 import ServicesDropdown from './ServicesDropdown';
+import { useState } from 'react';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
@@ -11,6 +12,8 @@ interface NavbarDesktopProps {
 }
 
 export const NavbarDesktop = ({ isOverVideo, isScrolled }: NavbarDesktopProps) => {
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  
   return (
     <div className="hidden lg:flex items-center justify-between flex-1">
       <NavigationMenu className="max-w-none w-full justify-end">
@@ -23,7 +26,24 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: NavbarDesktopProps) =
             Home
           </NavLink>
           
-          <ServicesDropdown isOverVideo={isOverVideo} isScrolled={isScrolled} />
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsServicesDropdownOpen(true)}
+            onMouseLeave={() => setIsServicesDropdownOpen(false)}
+          >
+            <NavLink 
+              to="/services" 
+              isOverVideo={isOverVideo} 
+              isScrolled={isScrolled}
+            >
+              Services
+            </NavLink>
+            <ServicesDropdown 
+              isOpen={isServicesDropdownOpen} 
+              isOverVideo={isOverVideo} 
+              isScrolled={isScrolled} 
+            />
+          </div>
           
           <NavLink 
             to="/equipment" 

@@ -4,11 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 interface NavLinkProps {
   to: string;
   isOverVideo: boolean;
+  isScrolled: boolean;
   children: React.ReactNode;
   className?: string;
 }
 
-export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkProps) => {
+export const NavLink = ({ to, isOverVideo, isScrolled, children, className = '' }: NavLinkProps) => {
   const location = useLocation();
   const isActive = location.pathname === to;
 
@@ -28,4 +29,3 @@ export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkPr
 
 // Add a default export that simply re-exports the named export
 export default NavLink;
-
