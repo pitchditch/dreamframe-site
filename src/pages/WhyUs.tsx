@@ -1,10 +1,11 @@
+
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
-import LocationBanner from "../components/LocationBanner";
+import ServiceAreaMap from "../components/ServiceAreaMap";
 import { Button } from "@/components/ui/button";
 
 const WhyUs = () => {
@@ -17,17 +18,12 @@ const WhyUs = () => {
       
       {/* Updated Hero Section with new image */}
       <section className="relative h-screen w-full overflow-hidden hero-section">
-        <div 
-          className="absolute inset-0 w-full h-full"
-          style={{
-            backgroundImage: "url('/lovable-uploads/d2a05c53-e519-43eb-a837-d026ae7c42fc.png')",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat"
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
-        </div>
+        <img 
+          src="/lovable-uploads/a0183718-96c9-42ac-a572-bb3346c0485b.png"
+          alt="Why Choose BC Pressure Washing"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
         <div className="relative h-full flex items-center justify-center px-4 z-10">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 text-shadow">
@@ -149,7 +145,7 @@ const WhyUs = () => {
                 When you choose BC Pressure Washing, you're supporting a local business that understands the unique needs of properties in our area.
               </p>
             </div>
-            <div className="relative rounded-lg overflow-hidden shadow-xl">
+            <div className="relative rounded-lg overflow-hidden shadow-xl bg-white p-3">
               <img 
                 src="/lovable-uploads/3146f82b-e494-43b8-91c3-4bf5921f2e3a.png"
                 alt="BC Pressure Washing Service Vehicle"
@@ -167,7 +163,7 @@ const WhyUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/b7ed6b79-fa3d-4676-b794-f77eb4562c62.png"
+                src="/lovable-uploads/fc2201df-4a6c-4643-94f1-45d2ef36f407.png"
                 alt="Industrial Grade Pressure Washer"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
@@ -176,7 +172,7 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/23e501d2-4df4-40dc-baae-2ec17e263a7e.png"
+                src="/lovable-uploads/0a2c675b-c5a7-45d4-9c19-c39aa35dc1ab.png"
                 alt="Professional Surface Cleaner"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
@@ -185,12 +181,12 @@ const WhyUs = () => {
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/9671230e-ee0b-4928-af8b-7f70b4b1f635.png"
-                alt="Water Fed Pole System"
+                src="/lovable-uploads/29d21ccd-b0c0-4f29-bc30-5cd60ee028d6.png"
+                alt="Eco-Friendly Products"
                 className="w-full h-48 object-contain rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">Water Fed Pole System</h3>
-              <p className="text-gray-600">Our professional water fed pole system allows us to safely clean windows up to 60 feet high.</p>
+              <h3 className="text-xl font-semibold mb-2">Eco-Friendly Products</h3>
+              <p className="text-gray-600">We use environmentally responsible cleaning solutions that are effective yet safe for your family and pets.</p>
             </div>
           </div>
         </div>
@@ -308,7 +304,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      <LocationBanner />
+      <ServiceAreaMap />
     </Layout>
   );
 };

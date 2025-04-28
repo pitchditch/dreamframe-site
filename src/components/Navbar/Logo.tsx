@@ -3,20 +3,21 @@ import { Link, useLocation } from 'react-router-dom';
 
 interface LogoProps {
   isOverVideo: boolean;
+  isScrolled: boolean;
 }
 
-export const Logo = ({ isOverVideo }: LogoProps) => {
+export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
   const location = useLocation();
   const isWindowCleaningPage = location.pathname === '/services/window-cleaning';
 
-  if (isWindowCleaningPage && isOverVideo) {
+  if (isWindowCleaningPage && isOverVideo && !isScrolled) {
     return null;
   }
 
   return (
     <Link to="/" className="flex items-center">
       <img
-        src={isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/671f3038-2112-4a56-8ad8-a1c0941ff53a.png"}
+        src={isScrolled ? "/lovable-uploads/5d44ee99-a0e7-42c6-9ae8-ab7da11f82cb.png" : (isOverVideo ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" : "/lovable-uploads/671f3038-2112-4a56-8ad8-a1c0941ff53a.png")}
         alt="BC Pressure Washing Logo"
         className="h-20 w-auto object-contain"
       />

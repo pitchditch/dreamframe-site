@@ -21,7 +21,8 @@ const Navbar = () => {
     '/services/roof-cleaning',
     '/services/window-cleaning',
     '/services/pressure-washing',
-    '/services/post-construction-window-cleaning'
+    '/services/post-construction-window-cleaning',
+    '/services/commercial-pressure-washing'
   ];
 
   useEffect(() => {
@@ -67,9 +68,9 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center h-full">
-        <Logo isOverVideo={isOverVideo && !isScrolled} />
+        <Logo isOverVideo={isOverVideo} isScrolled={isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} isScrolled={isScrolled} />
+          <NavbarDesktop isOverVideo={isOverVideo} isScrolled={isScrolled} />
           <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>

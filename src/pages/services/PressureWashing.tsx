@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../components/Layout';
@@ -276,28 +277,30 @@ const PressureWashing = () => {
       </section>
 
       {/* 8. CALL TO ACTION - Updated with full width image */}
-      <section className="relative min-h-[400px]">
-        <div className="absolute inset-0">
+      <section className="relative min-h-[400px] w-full">
+        <div className="absolute inset-0 w-full h-full">
           <img
             src={PROPERTY_BACK_TO_LIFE_IMG}
             alt="Let's bring your property back to life"
             className="w-full h-full object-cover brightness-50"
           />
         </div>
-        <div className="relative z-10 container mx-auto px-4 py-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">Let's Bring Your Property Back to Life</h2>
-          <Button 
-            asChild
-            variant="default" 
-            size="lg" 
-            className="bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
-          >
-            <Link to="/calculator">Get My Free Quote &rarr;</Link>
-          </Button>
+        <div className="relative z-10 container mx-auto px-4 py-16 text-center h-full flex items-center justify-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">Let's Bring Your Property Back to Life</h2>
+            <Button 
+              asChild
+              variant="default" 
+              size="lg" 
+              className="bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
+            >
+              <Link to="/calculator">Get My Free Quote &rarr;</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Removed Areas We Service section */}
+      <ServiceAreaMap />
     </Layout>
   );
 };

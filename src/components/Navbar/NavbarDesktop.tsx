@@ -15,7 +15,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
   const { t } = useTranslation();
 
   // Color classes based on background
-  const textColor = isOverVideo ? 'text-white' : 'text-gray-800';
+  const textColor = isScrolled ? 'text-gray-800' : (isOverVideo ? 'text-white' : 'text-gray-800');
   const hoverColor = 'hover:text-bc-red';
 
   return (
@@ -23,7 +23,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
       <div className="flex items-center gap-8">
         <NavLink
           to="/why-us"
-          isOverVideo={isOverVideo}
+          isOverVideo={isOverVideo && !isScrolled}
           className={`text-xl flex items-center gap-2 ${textColor} ${hoverColor}`}
         >
           <User2 className="w-5 h-5" />
@@ -43,9 +43,9 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/window-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/01aab84d-8a55-47aa-8f19-5dab431fc1d7.png"
+                        src="/lovable-uploads/29d21ccd-b0c0-4f29-bc30-5cd60ee028d6.png"
                         alt="Window Cleaning Icon"
-                        className="w-8 h-8"
+                        className="w-12 h-12"
                       />
                       <span>{t('Window Cleaning')}</span>
                     </div>
@@ -53,9 +53,9 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/26b3b813-2a2e-4137-9420-be7fac51ffbb.png"
+                        src="/lovable-uploads/0a2c675b-c5a7-45d4-9c19-c39aa35dc1ab.png"
                         alt="House Washing Icon"
-                        className="w-8 h-8"
+                        className="w-12 h-12"
                       />
                       <span>{t('House Washing')}</span>
                     </div>
@@ -63,9 +63,9 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/1b4e918a-f926-4618-b953-b91c2d5cbdfb.png"
+                        src="/lovable-uploads/2ef683f4-6d18-42c5-b492-a548de62e076.png"
                         alt="Gutter Cleaning Icon"
-                        className="w-8 h-8"
+                        className="w-12 h-12"
                       />
                       <span>{t('Gutter Cleaning')}</span>
                     </div>
@@ -73,9 +73,9 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/roof-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/29fa0b8a-6c18-4d5a-9253-e5e7fc0254a2.png"
+                        src="/lovable-uploads/fc2201df-4a6c-4643-94f1-45d2ef36f407.png"
                         alt="Roof Cleaning Icon"
-                        className="w-8 h-8"
+                        className="w-12 h-12"
                       />
                       <span>{t('Roof Cleaning')}</span>
                     </div>
@@ -115,7 +115,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
         <div className="flex items-center gap-6">
           <NavLink
             to="/contact"
-            isOverVideo={isOverVideo}
+            isOverVideo={isOverVideo && !isScrolled}
             className={`text-xl ${textColor} ${hoverColor}`}
           >
             {t('Contact')}
@@ -123,7 +123,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
           <PriceCalculatorOverlay
             buttonText={t("Get a Free Quote")}
             className="bg-bc-red hover:bg-red-700 text-white py-2 px-6 rounded-lg font-medium transition-all"
-            showCallJaydenNow // Custom prop for call button (only this one remains)
+            showCallJaydenNow
           />
         </div>
       </div>
