@@ -13,7 +13,7 @@ const Equipment = () => {
           {/* Pressure Washer */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/6c45cc15-89d9-4846-9040-98eb1f18e24f.png"
+              src="/lovable-uploads/f5c6ce4b-e1b2-46e5-9ec5-b81814790cad.png"
               alt="Industrial Grade Pressure Washer"
               className="rounded-lg shadow-lg w-full"
             />
@@ -24,7 +24,7 @@ const Equipment = () => {
           {/* Surface Cleaner */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/9095e754-713b-44fc-8397-a4d559f31076.png"
+              src="/lovable-uploads/7a4334e8-e64a-4438-a0db-0319a25f8d0f.png"
               alt="Professional Surface Cleaner"
               className="rounded-lg shadow-lg w-full"
             />
@@ -32,21 +32,21 @@ const Equipment = () => {
             <p className="text-gray-700">Our surface cleaner ensures perfect, streak-free results on driveways and large flat surfaces, saving time while delivering superior results.</p>
           </div>
 
-          {/* Water Fed Pole System */}
+          {/* Eco-Friendly Products */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/e49acfd1-b154-48bd-afc5-48d1e03131d1.png"
-              alt="Water Fed Pole System"
+              src="/lovable-uploads/9f6fe7fc-3ef5-4d9c-8329-8e0419654b96.png"
+              alt="Eco-Friendly Cleaning Products"
               className="rounded-lg shadow-lg w-full"
             />
             <h2 className="text-2xl font-bold">Water Fed Pole System</h2>
             <p className="text-gray-700">Our professional water fed pole system allows us to safely clean windows up to 60 feet high while keeping both feet firmly on the ground.</p>
           </div>
 
-          {/* Company Vehicle */}
+          {/* Water Fed Pole System */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/4054bbd7-3ebd-48d0-845c-3ec712ac612e.png"
+              src="/lovable-uploads/d6ce37d5-6670-433d-b3f4-bd75cfd820bb.png"
               alt="BC Pressure Washing Company Vehicle"
               className="rounded-lg shadow-lg w-full"
             />

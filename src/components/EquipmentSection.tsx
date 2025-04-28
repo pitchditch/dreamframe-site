@@ -19,7 +19,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/6c45cc15-89d9-4846-9040-98eb1f18e24f.png"
+                src="/lovable-uploads/f5c6ce4b-e1b2-46e5-9ec5-b81814790cad.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/9095e754-713b-44fc-8397-a4d559f31076.png"
+                src="/lovable-uploads/7a4334e8-e64a-4438-a0db-0319a25f8d0f.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -55,7 +55,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/8c3641b4-e2e7-4925-8fd3-3dc1ba685231.png"
+                src="/lovable-uploads/9f6fe7fc-3ef5-4d9c-8329-8e0419654b96.png"
                 alt="Eco-Friendly Cleaning Solutions" 
                 className="w-full h-full object-contain p-4"
               />
@@ -70,7 +70,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/e49acfd1-b154-48bd-afc5-48d1e03131d1.png"
+                src="/lovable-uploads/d6ce37d5-6670-433d-b3f4-bd75cfd820bb.png"
                 alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />
