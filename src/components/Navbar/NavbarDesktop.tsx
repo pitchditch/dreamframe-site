@@ -1,4 +1,3 @@
-
 import { NavLink } from './NavLink';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
@@ -43,7 +42,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/window-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/29d21ccd-b0c0-4f29-bc30-5cd60ee028d6.png"
+                        src="/lovable-uploads/19d23048-4be9-4eef-a3ae-901b89faa383.png"
                         alt="Window Cleaning Icon"
                         className="w-12 h-12"
                       />
@@ -53,7 +52,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/0a2c675b-c5a7-45d4-9c19-c39aa35dc1ab.png"
+                        src="/lovable-uploads/f16396f9-3a25-472a-8f58-41919f075a10.png"
                         alt="House Washing Icon"
                         className="w-12 h-12"
                       />
@@ -63,7 +62,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/2ef683f4-6d18-42c5-b492-a548de62e076.png"
+                        src="/lovable-uploads/953c104f-bc67-45a7-93de-e8b02338f9b5.png"
                         alt="Gutter Cleaning Icon"
                         className="w-12 h-12"
                       />
@@ -73,7 +72,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/roof-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/fc2201df-4a6c-4643-94f1-45d2ef36f407.png"
+                        src="/lovable-uploads/50485707-e2d8-47e9-a314-cbc9750051cc.png"
                         alt="Roof Cleaning Icon"
                         className="w-12 h-12"
                       />
