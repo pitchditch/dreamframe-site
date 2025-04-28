@@ -15,9 +15,11 @@ const HeroSection = () => {
 
   const handleZipCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Store zipCode in sessionStorage for the calculator
     if (zipCode) {
       sessionStorage.setItem('userZipCode', zipCode);
     }
+    // Find and click the calculator button
     const calculatorButton = document.querySelector('.special-offers-button') as HTMLButtonElement;
     if (calculatorButton) {
       calculatorButton.click();
