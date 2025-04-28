@@ -15,11 +15,11 @@ const EquipmentSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {/* Pressure Washer - FIRST IMAGE */}
+          {/* Pressure Washer */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/84b9c25e-8785-4fda-ae62-ef2797855669.png"
+                src="/lovable-uploads/6c45cc15-89d9-4846-9040-98eb1f18e24f.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -36,11 +36,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Surface Cleaner - SECOND IMAGE */}
+          {/* Surface Cleaner */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/d39ff824-1c2e-41a9-b42a-4d77b4800175.png"
+                src="/lovable-uploads/9095e754-713b-44fc-8397-a4d559f31076.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -51,11 +51,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Eco-Friendly Products - THIRD IMAGE */}
+          {/* Eco-Friendly Products */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/bac1d3b7-67cb-40df-ab20-9dbc57d49a70.png"
+                src="/lovable-uploads/8c3641b4-e2e7-4925-8fd3-3dc1ba685231.png"
                 alt="Eco-Friendly Cleaning Solutions" 
                 className="w-full h-full object-contain p-4"
               />
@@ -66,11 +66,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Water Fed Pole System - FOURTH IMAGE */}
+          {/* Water Fed Pole System */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/92654bd6-d14f-4a7f-b19b-370d04b6b7ec.png"
+                src="/lovable-uploads/e49acfd1-b154-48bd-afc5-48d1e03131d1.png"
                 alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />
