@@ -15,11 +15,11 @@ const EquipmentSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Pressure Washer */}
+          {/* Updated Pressure Washer */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/fe6e78ea-8ec4-40bc-a4b7-a4a743725de5.png"
+                src="/lovable-uploads/6872122e-3a31-458b-a3c2-cfd44defcd67.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -36,11 +36,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Water Fed Pole System */}
+          {/* Updated Water Fed Pole System */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/46101843-8ac5-4b97-a2d1-0947f9636f86.png"
+                src="/lovable-uploads/edcb7d53-5333-4117-94a0-3bb1f9f5f624.png"
                 alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />
@@ -51,11 +51,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Surface Cleaner */}
+          {/* Updated Surface Cleaner */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/bcd3ea85-8d8c-432c-89b2-5f51691d0bf1.png"
+                src="/lovable-uploads/593e10d0-9bf7-48bd-b3f7-5f274e7c50ba.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -66,11 +66,11 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Cleaning Solutions */}
+          {/* Updated Cleaning Solutions */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/bd05c263-9467-4b74-9f4b-df21a22c96ec.png"
+                src="/lovable-uploads/3093e0ae-f262-4f3d-b079-3050df7ab446.png"
                 alt="Sodium Hypochlorite Solution" 
                 className="w-full h-full object-contain p-4"
               />

@@ -15,7 +15,7 @@ const WhyUs = () => {
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
       
-      {/* Updated Hero Section */}
+      {/* Updated Hero Section with new image */}
       <section className="relative h-screen w-full overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
