@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
@@ -11,6 +12,7 @@ import RoofCleaningProcess from '@/components/services/roof-cleaning/RoofCleanin
 import RoofCleaningBenefits from '@/components/services/roof-cleaning/RoofCleaningBenefits';
 import RoofCleaningFAQ from '@/components/services/roof-cleaning/RoofCleaningFAQ';
 import RoofCleaningCTA from '@/components/services/roof-cleaning/RoofCleaningCTA';
+import RoofCleaningProduct from '@/components/services/roof-cleaning/RoofCleaningProduct';
 
 const RoofCleaning = () => {
   useEffect(() => {
@@ -31,6 +33,7 @@ const RoofCleaning = () => {
       <RoofCleaningHero />
       <RoofCleaningBenefits />
       <RoofCleaningProcess />
+      <RoofCleaningProduct />
       <ServiceAreaMap />
       <RoofCleaningGallery />
       <RoofCleaningFAQ />
