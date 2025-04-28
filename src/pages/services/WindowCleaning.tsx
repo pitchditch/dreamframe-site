@@ -34,26 +34,29 @@ const whyUs = [
 
 const WindowCleaning = () => {
   return (
-    <Layout
-      title="Crystal Clear Windows, Guaranteed | Window Cleaning BC"
+    <Layout title="Crystal Clear Windows, Guaranteed | Window Cleaning BC"
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
-      image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
-    >
-      {/* HERO SECTION - Fixed for better text visibility */}
-      <header className="hero-section min-h-[100vh] flex items-center justify-center relative">
+      image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png">
+      
+      {/* Updated Hero Section */}
+      <header className="hero-section relative min-h-screen flex items-center justify-center">
         <img
           src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="relative z-10 text-center px-6 py-20 md:py-32">
-          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">Crystal Clear Windows, Guaranteed</h1>
+        <div className="relative z-10 text-center px-6 py-20 md:py-32 max-w-4xl">
+          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">
+            Crystal Clear Windows, Guaranteed
+          </h1>
           <p className="text-lg md:text-2xl text-white font-medium mb-6 drop-shadow-lg">
             Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free.
           </p>
+        </div>
+        <div className="absolute bottom-12 left-0 right-0 flex justify-center">
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
-            <Link to="/calculator">Get a Free Quote</Link>
+            <Link to="/calculator">Check Prices & Availability</Link>
           </Button>
         </div>
       </header>

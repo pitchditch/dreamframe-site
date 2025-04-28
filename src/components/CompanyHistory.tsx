@@ -10,16 +10,27 @@ const CompanyHistory = () => {
           <img
             src="/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png"
             alt="Jayden Fisher - Owner & Lead Technician"
-            className="rounded-full w-20 h-20 object-cover" /* Reduced size from 24 to 20 */
+            className="rounded-full w-16 h-16 object-cover" /* Reduced size from 20 to 16 */
           />
           <div>
             <h3 className="text-2xl font-semibold mb-4">Jayden Fisher</h3>
-            <p className="text-gray-700">
-              Jayden Fisher is the owner and lead technician at BC Pressure Washing. With years of experience in the industry, Jayden is passionate about providing top-quality exterior cleaning services to homeowners and businesses in Surrey, White Rock, and the surrounding areas.
-            </p>
-            <p className="text-gray-700">
-              As a local resident, Jayden takes pride in serving his community and is committed to delivering exceptional results with a focus on customer satisfaction.
-            </p>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <p className="text-gray-700 mb-4">
+                  As the owner and lead technician at BC Pressure Washing, I personally handle or oversee every job to ensure the highest quality results for our clients in Surrey, White Rock, and throughout Metro Vancouver.
+                </p>
+                <p className="text-gray-700">
+                  You've probably seen my red company car cruising along Marine Drive at White Rock Beach. That's me, bringing professional exterior cleaning services right to your doorstep!
+                </p>
+              </div>
+              <div className="relative">
+                <img
+                  src="/lovable-uploads/e4887401-808a-4e4c-8a43-62451346a8a0.png"
+                  alt="BC Pressure Washing Company Car"
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

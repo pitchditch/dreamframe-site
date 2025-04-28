@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
@@ -22,7 +21,7 @@ const LocationBanner = () => {
     containScroll: "trimSnaps"
   }, [
     Autoplay({ 
-      delay: window.innerWidth < 768 ? 1500 : 2500, // Faster on mobile
+      delay: window.innerWidth < 768 ? 1000 : 2000, // Faster on mobile (1 second vs 2 seconds)
       stopOnInteraction: false, 
       playOnInit: true 
     })

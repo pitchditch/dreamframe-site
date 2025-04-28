@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -18,6 +17,10 @@ export const ServicesDropdown = ({
   const location = useLocation();
   const { t, language } = useTranslation();
   
+  const getLanguageClass = () => {
+    return language === 'en' ? '' : 'text-sm';
+  };
+
   return (
     <div className="relative">
       {isOpen && (
