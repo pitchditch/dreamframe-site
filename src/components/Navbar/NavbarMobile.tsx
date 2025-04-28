@@ -2,8 +2,9 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Building, User2, HardHat, Store } from 'lucide-react';
+import { ChevronDown, ChevronUp, Store, Building, User2, HardHat } from 'lucide-react';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
+// Removed import { Phone } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -27,7 +28,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               <User2 className="w-5 h-5" />
               <span>{t('Why Us')}</span>
             </Link>
-          
+            
             <div>
               <div 
                 className="flex items-center justify-between py-2 text-black hover:text-bc-red transition-colors cursor-pointer"
@@ -43,19 +44,19 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 <div className="flex flex-col space-y-4 border-l-2 border-gray-200 pl-4">
                   <div className="text-xs font-semibold text-gray-500 uppercase mt-2">{t('Residential')}</div>
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/19d23048-4be9-4eef-a3ae-901b89faa383.png" className="w-5 h-5" alt="Window Cleaning" />
+                    <Store className="w-5 h-5" />
                     <span>{t('Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/f16396f9-3a25-472a-8f58-41919f075a10.png" className="w-5 h-5" alt="House Washing" />
+                    <Building className="w-5 h-5" />
                     <span>{t('House Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/953c104f-bc67-45a7-93de-e8b02338f9b5.png" className="w-5 h-5" alt="Gutter Cleaning" />
+                    <HardHat className="w-5 h-5" />
                     <span>{t('Gutter Cleaning')}</span>
                   </Link>
                   <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/50485707-e2d8-47e9-a314-cbc9750051cc.png" className="w-5 h-5" alt="Roof Cleaning" />
+                    <Store className="w-5 h-5" />
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
                   
@@ -96,3 +97,4 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
     </>
   );
 };
+
