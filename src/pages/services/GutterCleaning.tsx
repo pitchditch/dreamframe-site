@@ -52,7 +52,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/57d4c76c-91d1-476e-afe5-108334eb65c9.png"
+        imagePath="/lovable-uploads/da4165f8-0ca7-445f-9d20-fe323f193dfb.png"
         darkOverlay={true}
       />
 
@@ -118,14 +118,15 @@ const GutterCleaning = () => {
           Ask about our gutter protection systems to keep debris out while letting water flow
         </p>
         
-        <div className="relative h-0 pb-[56.25%] mt-4 mb-8 rounded-xl overflow-hidden">
+        <div className="relative h-0 pb-[40%] max-w-3xl mx-auto mt-4 mb-8">
           <iframe
             src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
             title="Gutter protection video"
             frameBorder="0"
             allow="autoplay; encrypted-media"
             allowFullScreen
-            className="absolute top-0 left-0 w-full h-full rounded-xl"
+            className="absolute top-0 left-0 w-full h-full rounded-xl shadow-lg"
+            style={{ border: 'none' }}
           ></iframe>
         </div>
         
@@ -153,7 +154,7 @@ const GutterCleaning = () => {
                 Not Recommended: Screen Netting
               </h4>
               <div className="flex items-center">
-                <img src="/lovable-uploads/1003f2dd-9026-4322-b455-d9fbbeefcff8.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                <img src="/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
                 <p className="text-sm text-gray-800">
                   We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
                 </p>

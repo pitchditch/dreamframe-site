@@ -36,7 +36,7 @@ const LocationBanner = () => {
           api.scrollNext();
         }
       }
-    }, 400); // Even faster rotation speed
+    }, 300); // Even faster rotation speed
     
     return () => clearInterval(interval);
   }, []);

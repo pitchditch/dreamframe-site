@@ -49,14 +49,14 @@ const TestimonialsSection = () => {
   useEffect(() => {
     if (!api) return;
 
-    // Set up automatic scrolling with different timing for mobile
+    // Set up automatic scrolling with continuous motion
     const interval = setInterval(() => {
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
         api.scrollTo(0);
       }
-    }, isMobile ? 3000 : 5000); // Faster on mobile
+    }, isMobile ? 2000 : 4000); // Slower for desktop to give time to read testimonials
 
     return () => clearInterval(interval);
   }, [api, isMobile]);
