@@ -15,17 +15,19 @@ export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
     return null;
   }
 
-  // Use white logo when over hero section, otherwise use black logo
-  const logoSrc = isScrolled || !isOverVideo
-    ? "/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" 
-    : "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png";
+  // Use white logo when over video and not scrolled, otherwise use black logo
+  const logoSrc = isScrolled 
+    ? "/lovable-uploads/f41b065c-ac9d-4456-a73a-9cd6e30232da.png" 
+    : (isOverVideo 
+        ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" 
+        : "/lovable-uploads/f41b065c-ac9d-4456-a73a-9cd6e30232da.png");
 
   return (
     <Link to="/" className="flex items-center">
       <img
         src={logoSrc}
         alt="BC Pressure Washing Logo"
-        className="h-52 w-auto object-contain" // Increased height further
+        className="h-40 w-auto object-contain" // Increased height from h-32 to h-40
       />
     </Link>
   );

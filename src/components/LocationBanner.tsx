@@ -27,7 +27,7 @@ const LocationBanner = () => {
   ]);
 
   useEffect(() => {
-    // Continuous rotation with no pauses at a slower pace
+    // Continuous rotation with no pauses
     const interval = setInterval(() => {
       const emblaApi = document.querySelector('[data-embla-api]');
       if (emblaApi) {
@@ -36,7 +36,7 @@ const LocationBanner = () => {
           api.scrollNext();
         }
       }
-    }, 1000); // Slower rotation speed (1 second instead of 300ms)
+    }, 400); // Even faster rotation speed
     
     return () => clearInterval(interval);
   }, []);

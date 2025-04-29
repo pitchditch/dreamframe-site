@@ -14,7 +14,7 @@ const GutterSticks = () => {
           <img 
             src="/lovable-uploads/6c46b1c6-d454-4f21-9a94-93b485c538e7.png" 
             alt="Gutter Stick installation demonstration" 
-            className="rounded-lg shadow-lg w-full h-auto object-contain"
+            className="rounded-lg shadow-lg w-full h-auto object-cover"
           />
         </div>
         <div>

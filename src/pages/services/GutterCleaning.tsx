@@ -52,7 +52,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/da4165f8-0ca7-445f-9d20-fe323f193dfb.png"
+        imagePath="/lovable-uploads/57d4c76c-91d1-476e-afe5-108334eb65c9.png"
         darkOverlay={true}
       />
 
@@ -118,7 +118,7 @@ const GutterCleaning = () => {
           Ask about our gutter protection systems to keep debris out while letting water flow
         </p>
         
-        <div className="relative h-0 pb-[35%] max-w-2xl mx-auto mt-4 mb-8">
+        <div className="relative h-0 pb-[56.25%] mt-4 mb-8 rounded-xl overflow-hidden">
           <iframe
             src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
             title="Gutter protection video"
@@ -126,7 +126,6 @@ const GutterCleaning = () => {
             allow="autoplay; encrypted-media"
             allowFullScreen
             className="absolute top-0 left-0 w-full h-full rounded-xl"
-            style={{ border: 'none' }}
           ></iframe>
         </div>
         
@@ -145,7 +144,7 @@ const GutterCleaning = () => {
             </ul>
           </div>
           <div className="image-content">
-            <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-contain mb-4" />
+            <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,7 +153,7 @@ const GutterCleaning = () => {
                 Not Recommended: Screen Netting
               </h4>
               <div className="flex items-center">
-                <img src="/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                <img src="/lovable-uploads/1003f2dd-9026-4322-b455-d9fbbeefcff8.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
                 <p className="text-sm text-gray-800">
                   We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
                 </p>
