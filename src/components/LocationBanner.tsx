@@ -28,7 +28,7 @@ const LocationBanner = () => {
   ]);
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full py-6 bg-gray-800">
       <div className="container mx-auto px-4">        
         <div className="overflow-hidden" ref={emblaRef} data-embla-api="true">
           <div className="flex" style={{ backfaceVisibility: 'hidden' }}>

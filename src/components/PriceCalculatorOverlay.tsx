@@ -98,7 +98,7 @@ const PriceCalculatorOverlay: React.FC<Props> = ({
                       className="w-32 h-32 rounded-full object-cover mb-2 border-2 border-bc-red"
                     />
                     <span className="font-semibold text-lg">Jayden Fisher</span>
-                    <span className="text-gray-600">Owner & Lead Technician</span>
+                    <div className="text-gray-600">Owner & Lead Technician</div>
                   </div>
                   <PriceCalculatorForm onComplete={handleComplete} />
                 </div>
@@ -140,7 +140,7 @@ const PriceCalculatorOverlay: React.FC<Props> = ({
                   className="w-32 h-32 rounded-full object-cover mb-2 border-2 border-bc-red"
                 />
                 <span className="font-semibold text-lg">Jayden Fisher</span>
-                <span className="text-gray-600">Owner & Lead Technician</span>
+                <div className="text-gray-600">Owner & Lead Technician</div>
               </div>
               <PriceCalculatorForm onComplete={handleComplete} />
             </div>

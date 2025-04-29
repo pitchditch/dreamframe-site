@@ -13,7 +13,7 @@ const WhyUs = () => {
       <ServiceHeader 
         title="Why Choose BC Pressure Washing?"
         description="Discover what sets our service apart and why we've become the most trusted exterior cleaning company in Surrey & White Rock."
-        imagePath="/lovable-uploads/77f10df6-6f51-4587-8315-7bb702183f0a.png"
+        imagePath="/lovable-uploads/a7795068-4c6d-43c9-8787-b16c31b3ebfe.png"
         darkOverlay={true}
       />
       

@@ -31,29 +31,25 @@ const formSchema = z.object({
   propertyType: z.string().min(1, {
     message: "Please select a property type.",
   }),
-  service: z.string().min(1, {
-    message: "Please select a service.",
+  services: z.array(z.string()).min(1, {
+    message: "Please select at least one service.",
   }),
   serviceOption: z.string().optional(),
-  size: z.object({
-    width: z.string().optional(),
-    height: z.string().optional(),
-    stories: z.string().optional(),
-    sqft: z.string().optional(),
-    windows: z.string().optional(),
-  }).optional(),
+  size: z.string().min(1, {
+    message: "Please select a size option.",
+  }),
   addons: z.array(z.string()).optional(),
   address: z.object({
     street: z.string().min(1, { message: "Street address is required." }),
     city: z.string().min(1, { message: "City is required." }),
     postalCode: z.string().min(6, { message: "Valid postal code required." }),
-  }).optional(),
+  }),
   contact: z.object({
     fullName: z.string().min(1, { message: "Full name is required." }),
     email: z.string().email({ message: "Valid email is required." }),
     phone: z.string().min(10, { message: "Valid phone number is required." }),
     preferredContact: z.string().default("email"),
-  }).optional(),
+  }),
   notes: z.string().optional(),
   date: z.string().optional(),
 });
@@ -62,21 +58,15 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete })
   const [step, setStep] = useState(1);
   const { toast } = useToast();
   const totalSteps = 7;
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({});
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       propertyType: "",
-      service: "",
+      services: [],
       serviceOption: "",
-      size: {
-        width: "",
-        height: "",
-        stories: "",
-        sqft: "",
-        windows: "",
-      },
+      size: "",
       addons: [],
       address: {
         street: "",
