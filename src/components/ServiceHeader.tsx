@@ -25,25 +25,6 @@ const ServiceHeader = ({
         document.body.classList.remove('has-video-header');
       };
     }
-
-    // Add similar behavior as home page for navbar transition
-    const handleScroll = () => {
-      const navbar = document.querySelector('.navbar');
-      if (navbar) {
-        if (window.scrollY > 50) {
-          navbar.classList.add('navbar-scrolled', 'bg-white', 'text-gray-900');
-          navbar.classList.remove('bg-transparent', 'text-white');
-        } else {
-          navbar.classList.remove('navbar-scrolled', 'bg-white', 'text-gray-900');
-          navbar.classList.add('bg-transparent', 'text-white');
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, [videoUrl]);
 
   return (

@@ -22,10 +22,32 @@ const Layout = ({
 
   // Mark the first child with hero-section class if it doesn't already have it
   useEffect(() => {
+    // Mark the first child as hero-section for navbar transparency
     const firstChild = document.querySelector('main > div:first-child, main > section:first-child');
     if (firstChild && !firstChild.classList.contains('hero-section')) {
       firstChild.classList.add('hero-section');
     }
+    
+    // Add style for navbar transparency
+    const style = document.createElement('style');
+    style.textContent = `
+      .hero-section {
+        min-height: 100vh;
+      }
+      
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      }
+      
+      .text-shadow-sm {
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
   }, []);
   
   return (

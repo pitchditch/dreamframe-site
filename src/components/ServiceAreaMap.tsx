@@ -7,7 +7,7 @@ const ServiceAreaMap = () => {
   const mapId = "1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30";
 
   return (
-    <section className="bg-gradient-to-b from-gray-900 to-black py-8">      
+    <section className="bg-gradient-to-b from-gray-800 to-gray-900 py-12">      
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">

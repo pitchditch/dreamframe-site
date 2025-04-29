@@ -52,7 +52,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/405eb3a3-e086-47fe-ada2-4dd5d9cf51bf.png"
+        imagePath="/lovable-uploads/57d4c76c-91d1-476e-afe5-108334eb65c9.png"
         darkOverlay={true}
       />
 

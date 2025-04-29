@@ -27,7 +27,7 @@ const LocationBanner = () => {
   ]);
 
   useEffect(() => {
-    // Ensure continuous auto-play
+    // Ensure continuous auto-play with no pauses
     const interval = setInterval(() => {
       const emblaApi = document.querySelector('[data-embla-api]');
       if (emblaApi) {
@@ -36,7 +36,7 @@ const LocationBanner = () => {
           api.scrollNext();
         }
       }
-    }, 1000);
+    }, 800);
     
     return () => clearInterval(interval);
   }, []);

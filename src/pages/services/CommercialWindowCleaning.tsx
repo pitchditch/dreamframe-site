@@ -63,7 +63,7 @@ const CommercialWindowCleaning = () => {
         title="Commercial Window Cleaning"
         description="Professional window cleaning services for office buildings, retail stores, and multi-story commercial properties."
         icon={<Building size={48} />}
-        imagePath="/lovable-uploads/1098ec4c-d871-4d0a-94ee-571ef6c50c9b.png"
+        imagePath="/lovable-uploads/85a695a0-7160-4a9a-8d56-56e75cf3f4cb.png"
       />
 
       <ServiceDescription />
