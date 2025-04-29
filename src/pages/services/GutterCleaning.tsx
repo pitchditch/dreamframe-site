@@ -153,7 +153,7 @@ const GutterCleaning = () => {
                 Not Recommended: Screen Netting
               </h4>
               <div className="flex items-center">
-                <img src="/lovable-uploads/2f72c577-5ed7-45fe-8eee-b85a9562e5d9.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                <img src="/lovable-uploads/1003f2dd-9026-4322-b455-d9fbbeefcff8.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
                 <p className="text-sm text-gray-800">
                   We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
                 </p>

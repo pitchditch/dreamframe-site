@@ -16,6 +16,7 @@ const Navbar = () => {
   // All pages will have dark overlays that need white text
   const darkOverlayPages = [
     '/',
+    '/home',
     '/why-us',
     '/services/gutter-cleaning',
     '/services/roof-cleaning',
