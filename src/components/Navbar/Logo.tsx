@@ -7,14 +7,6 @@ interface LogoProps {
 }
 
 export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
-  const location = useLocation();
-  const isWindowCleaningPage = location.pathname === '/services/window-cleaning';
-
-  // Hide logo when over video and not scrolled on window cleaning page
-  if (isWindowCleaningPage && isOverVideo && !isScrolled) {
-    return null;
-  }
-
   // Use white logo when over video and not scrolled, otherwise use black logo
   const logoSrc = isScrolled 
     ? "/lovable-uploads/f41b065c-ac9d-4456-a73a-9cd6e30232da.png" 
@@ -27,7 +19,7 @@ export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
       <img
         src={logoSrc}
         alt="BC Pressure Washing Logo"
-        className="h-40 w-auto object-contain" // Increased height from h-32 to h-40
+        className="h-40 w-auto object-contain" 
       />
     </Link>
   );

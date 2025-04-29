@@ -20,14 +20,14 @@ const LocationBanner = () => {
     containScroll: "trimSnaps"
   }, [
     Autoplay({ 
-      delay: 0,  // Set to 0 for no delay between slides
+      delay: 2000,  // Increased delay between slides for better readability
       stopOnInteraction: false, 
       playOnInit: true 
     })
   ]);
 
   useEffect(() => {
-    // Continuous rotation with no pauses
+    // Slower rotation speed
     const interval = setInterval(() => {
       const emblaApi = document.querySelector('[data-embla-api]');
       if (emblaApi) {
@@ -36,7 +36,7 @@ const LocationBanner = () => {
           api.scrollNext();
         }
       }
-    }, 400); // Even faster rotation speed
+    }, 3000); // Slowed down rotation speed for better readability
     
     return () => clearInterval(interval);
   }, []);

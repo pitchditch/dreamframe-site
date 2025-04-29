@@ -1,6 +1,6 @@
 
 import { Star } from 'lucide-react';
-import { cn } from "@/lib/utils"; // Import the cn utility for className merging
+import { cn } from "@/lib/utils";
 
 interface TestimonialCardProps {
   quote: string;
@@ -8,7 +8,7 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   beforeAfterImage?: string;
-  className?: string; // Added className prop to the interface
+  className?: string;
 }
 
 const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, className }: TestimonialCardProps) => {

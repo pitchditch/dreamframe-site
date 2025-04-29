@@ -17,6 +17,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
   // Color classes based on background
   const textColor = isScrolled ? 'text-gray-800' : (isOverVideo ? 'text-white' : 'text-gray-800');
   const hoverColor = 'hover:text-bc-red';
+  const triggerColor = isScrolled ? 'bg-white' : (isOverVideo ? 'bg-transparent' : 'bg-white');
 
   return (
     <nav className="hidden md:flex items-center justify-between w-full h-full">
@@ -34,7 +35,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger
-                className={`text-xl ${textColor} ${hoverColor} bg-transparent`}
+                className={`text-xl ${textColor} ${hoverColor} ${triggerColor}`}
               >
                 {t('Residential')}
               </NavigationMenuTrigger>
@@ -86,7 +87,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
 
             <NavigationMenuItem>
               <NavigationMenuTrigger
-                className={`text-xl ${textColor} ${hoverColor} bg-transparent`}
+                className={`text-xl ${textColor} ${hoverColor} ${triggerColor}`}
               >
                 {t('Commercial')}
               </NavigationMenuTrigger>
