@@ -129,7 +129,7 @@ const WindowCleaning = () => {
             location={windowTestimonial.location}
             rating={"rating" in windowTestimonial ? windowTestimonial.rating : 5}
             beforeAfterImage={"beforeAfterImage" in windowTestimonial ? windowTestimonial.beforeAfterImage : undefined}
-            className="scale-110 transform" /* Added scale to increase size */
+            className="scale-110 transform" // Using the className prop properly now
           />
         </div>
         <div className="text-center">

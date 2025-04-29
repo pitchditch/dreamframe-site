@@ -1,5 +1,6 @@
 
 import { Star } from 'lucide-react';
+import { cn } from "@/lib/utils"; // Import the cn utility for className merging
 
 interface TestimonialCardProps {
   quote: string;
@@ -7,11 +8,12 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   beforeAfterImage?: string;
+  className?: string; // Added className prop to the interface
 }
 
-const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }: TestimonialCardProps) => {
+const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, className }: TestimonialCardProps) => {
   return (
-    <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col">
+    <div className={cn("testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col", className)}>
       {beforeAfterImage && (
         <div className="mb-6 relative w-full">
           <img 
