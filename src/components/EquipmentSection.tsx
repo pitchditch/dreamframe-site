@@ -19,7 +19,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/a7053775-688b-45dd-b736-e6a2c7390c65.png"
+                src="/lovable-uploads/850d8c99-083b-40e0-a043-887a7e874540.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/b63889e6-ff5f-4b50-a318-9250142cf011.png"
+                src="/lovable-uploads/a1971ae6-b697-4b81-8fea-7c8babb65b2f.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -55,7 +55,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/d00506c4-a14c-45e7-afee-1563e0003ef3.png"
+                src="/lovable-uploads/2ec71038-8508-4fd3-827e-fd3ab4f508e7.png"
                 alt="Sodium Hypochlorite" 
                 className="w-full h-full object-contain p-4"
               />
@@ -70,7 +70,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/48b4e22a-2819-496f-85a1-9b082d06f29f.png"
+                src="/lovable-uploads/9e1805d3-dba9-47e3-b84c-6811def911f2.png"
                 alt="Eco-Friendly Cleaning Solutions" 
                 className="w-full h-full object-contain p-4"
               />
@@ -85,7 +85,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/a7384dd7-0b0a-4875-9d2a-674d3e133d21.png"
+                src="/lovable-uploads/47b281d6-52f3-4d4b-a0ff-903ccdc5ca76.png"
                 alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />

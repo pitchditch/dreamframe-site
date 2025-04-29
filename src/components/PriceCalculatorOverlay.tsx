@@ -7,21 +7,34 @@ import PriceCalculatorIntro from './PriceCalculator/PriceCalculatorIntro';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Props {
-  open: boolean;
-  onClose: () => void;
+  open?: boolean;
+  onClose?: () => void;
   showCalculator?: boolean;
+  buttonText?: string;
+  className?: string;
+  showCallJaydenNow?: boolean;
+  children?: React.ReactNode;
 }
 
 const PriceCalculatorOverlay: React.FC<Props> = ({ 
-  open, 
-  onClose, 
-  showCalculator = false 
+  open: externalOpen, 
+  onClose: externalOnClose, 
+  showCalculator = false,
+  buttonText,
+  className,
+  showCallJaydenNow,
+  children
 }) => {
+  const [open, setOpen] = useState(externalOpen || false);
   const [step, setStep] = useState(showCalculator ? 'calculator' : 'intro');
   const isMobile = useIsMobile();
   
   const handleClose = () => {
-    onClose();
+    if (externalOnClose) {
+      externalOnClose();
+    } else {
+      setOpen(false);
+    }
     // Reset to intro after closing, but with a delay to avoid animation issues
     setTimeout(() => {
       setStep('intro');
@@ -38,9 +51,67 @@ const PriceCalculatorOverlay: React.FC<Props> = ({
       handleClose();
     }, 1500);
   };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
   
+  // If open is controlled externally, use that value
+  const isOpen = externalOpen !== undefined ? externalOpen : open;
+  
+  if (buttonText) {
+    return (
+      <>
+        <button 
+          onClick={handleOpen}
+          className={`special-offers-button ${className || ''}`}
+        >
+          {buttonText}
+        </button>
+        <Dialog open={isOpen} onOpenChange={(isOpen) => {
+          if (!isOpen) handleClose();
+          else handleOpen();
+        }}>
+          <DialogContent
+            className={`p-0 overflow-hidden max-w-3xl w-[95vw] ${
+              step === 'calculator' ? 'max-h-[90vh] overflow-y-auto' : ''
+            }`}
+          >
+            <button
+              onClick={handleClose}
+              className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 z-10"
+            >
+              <X className="h-6 w-6" />
+              <span className="sr-only">Close</span>
+            </button>
+
+            <div className="h-full w-full">
+              {step === 'intro' ? (
+                <PriceCalculatorIntro onContinue={handleContinue} />
+              ) : (
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold mb-4">Get Your Free Estimate</h2>
+                  <img 
+                    src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+                    alt="Jayden Fisher - Owner" 
+                    className="w-32 h-32 rounded-full object-cover mx-auto mb-4 border-2 border-bc-red"
+                  />
+                  <p className="text-center mb-6">
+                    <span className="font-semibold">Jayden Fisher</span><br/>
+                    Owner & Lead Technician
+                  </p>
+                  <PriceCalculatorForm onComplete={handleComplete} />
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  }
+
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => {
+    <Dialog open={isOpen} onOpenChange={(isOpen) => {
       if (!isOpen) handleClose();
     }}>
       <DialogContent

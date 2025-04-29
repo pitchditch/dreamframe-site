@@ -1,339 +1,151 @@
-import React, { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Checkbox } from "@/components/ui/checkbox"
-import { toast } from "@/components/ui/use-toast"
-import { useToast } from "@/components/ui/use-toast"
-import { Phone } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useToast } from '@/hooks/use-toast';
+import ProgressSteps from './ProgressSteps';
+import StepPropertyType from './steps/StepPropertyType';
+import StepService from './steps/StepService';
+import StepSize from './steps/StepSize';
+import StepAddons from './steps/StepAddons';
+import StepAddress from './steps/StepAddress';
+import StepContact from './steps/StepContact';
+import StepReview from './steps/StepReview';
 
 interface PriceCalculatorFormProps {
   onComplete?: () => void;
 }
 
 const formSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First Name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  phone: z.string().min(10, {
-    message: "Phone number must be at least 10 digits.",
-  }),
-  serviceType: z.string().min(1, {
-    message: "Please select a service type.",
-  }),
   propertyType: z.string().min(1, {
     message: "Please select a property type.",
   }),
-  stories: z.string().optional(),
-  windowQuantity: z.string().optional(),
-  gutterLength: z.string().optional(),
-  squareFootage: z.string().optional(),
-  message: z.string().optional(),
-  terms: z.boolean().refine((value) => value === true, {
-    message: 'You must accept the terms and conditions.',
+  service: z.string().min(1, {
+    message: "Please select a service.",
   }),
+  serviceOption: z.string().optional(),
+  size: z.object({
+    width: z.string().optional(),
+    height: z.string().optional(),
+    stories: z.string().optional(),
+    sqft: z.string().optional(),
+    windows: z.string().optional(),
+  }).optional(),
+  addons: z.array(z.string()).optional(),
+  address: z.object({
+    street: z.string().min(1, { message: "Street address is required." }),
+    city: z.string().min(1, { message: "City is required." }),
+    postalCode: z.string().min(6, { message: "Valid postal code required." }),
+  }).optional(),
+  contact: z.object({
+    fullName: z.string().min(1, { message: "Full name is required." }),
+    email: z.string().email({ message: "Valid email is required." }),
+    phone: z.string().min(10, { message: "Valid phone number is required." }),
+    preferredContact: z.string().default("email"),
+  }).optional(),
+  notes: z.string().optional(),
+  date: z.string().optional(),
 });
 
-const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast()
+const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete }) => {
+  const [step, setStep] = useState(1);
+  const { toast } = useToast();
+  const totalSteps = 7;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      serviceType: "",
       propertyType: "",
-      stories: "",
-      windowQuantity: "",
-      gutterLength: "",
-      squareFootage: "",
-      message: "",
-      terms: false,
+      service: "",
+      serviceOption: "",
+      size: {
+        width: "",
+        height: "",
+        stories: "",
+        sqft: "",
+        windows: "",
+      },
+      addons: [],
+      address: {
+        street: "",
+        city: "",
+        postalCode: "",
+      },
+      contact: {
+        fullName: "",
+        email: "",
+        phone: "",
+        preferredContact: "email",
+      },
+      notes: "",
+      date: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsSubmitting(true);
-    try {
-      const response = await fetch('/api/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+  const handleNext = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+    }
+  };
 
-      if (response.ok) {
-        toast({
-          title: "Success!",
-          description: "Your submission was successful.",
-        })
-        form.reset();
-        if (onComplete) onComplete();
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your submission.",
-        })
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Failed to submit the form.",
-      })
-    } finally {
-      setIsSubmitting(false);
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+    
+    // Show success toast
+    toast({
+      title: "Quote request submitted!",
+      description: "We'll be in touch with you shortly.",
+    });
+
+    // Call onComplete callback if provided
+    if (onComplete) {
+      onComplete();
+    }
+  }
+
+  const renderStepContent = () => {
+    switch (step) {
+      case 1:
+        return <StepPropertyType form={form} onNext={handleNext} />;
+      case 2:
+        return <StepService form={form} onNext={handleNext} onBack={handleBack} />;
+      case 3:
+        return <StepSize form={form} onNext={handleNext} onBack={handleBack} />;
+      case 4:
+        return <StepAddons form={form} onNext={handleNext} onBack={handleBack} />;
+      case 5:
+        return <StepAddress form={form} onNext={handleNext} onBack={handleBack} />;
+      case 6:
+        return <StepContact form={form} onNext={handleNext} onBack={handleBack} />;
+      case 7:
+        return <StepReview form={form} onBack={handleBack} onSubmit={onSubmit} />;
+      default:
+        return <StepPropertyType form={form} onNext={handleNext} />;
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="johndoe@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <Input placeholder="778-888-8888" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="serviceType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Service Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a service" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Window Cleaning">Window Cleaning</SelectItem>
-                    <SelectItem value="Pressure Washing">Pressure Washing</SelectItem>
-                    <SelectItem value="Gutter Cleaning">Gutter Cleaning</SelectItem>
-                    <SelectItem value="Roof Cleaning">Roof Cleaning</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="propertyType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Property Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a property type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Residential">Residential</SelectItem>
-                    <SelectItem value="Commercial">Commercial</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Additional Details (Optional)</AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="stories"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Number of Stories</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g., 2" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="windowQuantity"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Number of Windows</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g., 15" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="gutterLength"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Gutter Length (feet)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g., 100" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="squareFootage"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Square Footage</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g., 1500" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Additional Information</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us more about your needs..."
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Do you have any specific concerns or requests?
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="terms"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Accept terms and conditions
-                </FormLabel>
-                <FormDescription>
-                  Please read our terms and conditions <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">here</a>.
-                </FormDescription>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isSubmitting} className="w-full">
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </Button>
-        <a
-          href="tel:7788087620"
-          className="mt-2 flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-lg px-5 py-2 shadow w-full transition-all"
-          style={{ minHeight: '44px' }}
-        >
-          <Phone className="w-5 h-5 mr-2" />
-          Call Jayden Now
-        </a>
+      <form className="space-y-6">
+        <ProgressSteps currentStep={step} totalSteps={totalSteps} />
+        {renderStepContent()}
       </form>
     </Form>
   );

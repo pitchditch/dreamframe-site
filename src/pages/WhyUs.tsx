@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Layout from '../components/Layout';
 import ServiceHeader from '../components/ServiceHeader';
@@ -12,7 +13,7 @@ const WhyUs = () => {
       <ServiceHeader 
         title="Why Choose BC Pressure Washing?"
         description="Discover what sets our service apart and why we've become the most trusted exterior cleaning company in Surrey & White Rock."
-        imagePath="/lovable-uploads/7702aa68-f8b9-46e3-87b2-87b3272ca8f2.png"
+        imagePath="/lovable-uploads/77f10df6-6f51-4587-8315-7bb702183f0a.png"
         darkOverlay={true}
       />
       
