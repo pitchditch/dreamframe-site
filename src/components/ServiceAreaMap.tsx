@@ -43,7 +43,6 @@ const ServiceAreaMap = () => {
         </div>
       </div>
       
-      {/* Location Banner - Showing cities in a scrolling banner */}
       <LocationBanner />
     </section>
   );

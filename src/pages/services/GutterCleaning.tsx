@@ -118,14 +118,14 @@ const GutterCleaning = () => {
           Ask about our gutter protection systems to keep debris out while letting water flow
         </p>
         
-        <div className="relative h-0 pb-[25%] max-w-xl mx-auto mt-4 mb-8">
+        <div className="relative h-0 pb-[35%] max-w-2xl mx-auto mt-4 mb-8">
           <iframe
             src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
             title="Gutter protection video"
             frameBorder="0"
             allow="autoplay; encrypted-media"
             allowFullScreen
-            className="absolute top-0 left-0 w-full h-full rounded-xl shadow-none"
+            className="absolute top-0 left-0 w-full h-full rounded-xl"
             style={{ border: 'none' }}
           ></iframe>
         </div>
@@ -145,11 +145,7 @@ const GutterCleaning = () => {
             </ul>
           </div>
           <div className="image-content">
-            <img 
-              alt="Leaf Guard product" 
-              src="/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" 
-              className="rounded-lg shadow-lg w-full h-auto object-contain mb-4"
-            />
+            <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-contain mb-4" />
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,7 +154,7 @@ const GutterCleaning = () => {
                 Not Recommended: Screen Netting
               </h4>
               <div className="flex items-center">
-                <img src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+                <img src="/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
                 <p className="text-sm text-gray-800">
                   We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
                 </p>
