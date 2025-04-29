@@ -404,9 +404,9 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
           
           <div className="flex flex-col md:flex-row items-center gap-6 mb-6 bg-blue-50 p-4 rounded-lg">
             <img 
-              src="/lovable-uploads/d7372ff1-b3e7-4d2c-86b8-2df515e84acc.png" 
+              src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
               alt="Jayden from BC Pressure Washing" 
-              className="w-28 h-28 rounded-full border-4 border-white shadow-md"
+              className="w-28 h-28 rounded-full border-4 border-white shadow-md object-cover"
             />
             <div>
               <h4 className="text-lg font-semibold">Jayden will help you with your quote!</h4>

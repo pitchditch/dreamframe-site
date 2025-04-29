@@ -14,7 +14,6 @@ const FounderSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-6xl mx-auto">
           <div className="md:col-span-5 order-2 md:order-1">
             <div className="relative">
-              <div className="absolute -left-4 -top-4 w-full h-full bg-gradient-to-br from-bc-red/20 to-transparent rounded-full blur-xl"></div>
               <img 
                 src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
                 alt="Jayden Fisher - Founder" 
@@ -24,7 +23,6 @@ const FounderSection = () => {
                 <h3 className="text-2xl font-bold text-gray-800">Jayden Fisher</h3>
                 <p className="text-gray-600">Founder & Owner</p>
               </div>
-              <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-gradient-to-br from-bc-red/20 to-transparent rounded-full blur-lg z-5"></div>
             </div>
           </div>
           
