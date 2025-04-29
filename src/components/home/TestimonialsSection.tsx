@@ -49,14 +49,14 @@ const TestimonialsSection = () => {
   useEffect(() => {
     if (!api) return;
 
-    // Set up automatic scrolling with continuous motion but slower
+    // Set up automatic scrolling with continuous motion
     const interval = setInterval(() => {
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
         api.scrollTo(0);
       }
-    }, isMobile ? 6000 : 8000); // Much slower for better readability (6sec mobile, 8sec desktop)
+    }, isMobile ? 2000 : 4000); // Slower for desktop to give time to read testimonials
 
     return () => clearInterval(interval);
   }, [api, isMobile]);
@@ -134,7 +134,6 @@ const TestimonialsSection = () => {
                     location={testimonial.location}
                     rating={testimonial.rating}
                     beforeAfterImage={testimonial.beforeAfterImage}
-                    className="border-transparent"
                   />
                 </CarouselItem>
               ))}

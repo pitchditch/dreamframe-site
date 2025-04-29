@@ -12,7 +12,7 @@ import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import { MapPin, ArrowRight, Sun } from 'lucide-react';
 
-const Home = () => {
+const Index = () => {
   const { setLanguage } = useTranslation();
 
   useEffect(() => {
@@ -92,4 +92,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Index;
