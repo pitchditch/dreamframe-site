@@ -27,8 +27,7 @@ const Navbar = () => {
     '/contact',
     '/about',
     '/testimonials',
-    '/services',
-    '/home'
+    '/services'
   ];
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const Navbar = () => {
       
       if (heroSection) {
         const heroBottom = heroSection.getBoundingClientRect().bottom;
-        setIsScrolled(window.scrollY > 50); // Simplified scrolled logic
+        setIsScrolled(heroBottom <= 0);
         setIsOverVideo(heroBottom > 0);
       }
     };
