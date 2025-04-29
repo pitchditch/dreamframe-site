@@ -14,12 +14,12 @@ const EquipmentSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {/* Pressure Washer */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/850d8c99-083b-40e0-a043-887a7e874540.png"
+                src="/lovable-uploads/7821a5dc-e710-49a3-afc1-9034c9cdd5f9.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/a1971ae6-b697-4b81-8fea-7c8babb65b2f.png"
+                src="/lovable-uploads/e6147c23-3c2b-459a-954c-e3da4d7a2b8c.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -63,21 +63,6 @@ const EquipmentSection = () => {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold mb-2">Sodium Hypochlorite</h3>
               <p className="text-gray-600">Professional-grade sanitizing solution for effective cleaning of mold and mildew.</p>
-            </CardContent>
-          </Card>
-
-          {/* Eco-Friendly Products */}
-          <Card className="overflow-hidden border-0 shadow-lg">
-            <div className="relative h-64">
-              <img 
-                src="/lovable-uploads/9e1805d3-dba9-47e3-b84c-6811def911f2.png"
-                alt="Eco-Friendly Cleaning Solutions" 
-                className="w-full h-full object-contain p-4"
-              />
-            </div>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Eco-Friendly Cleaning Solutions</h3>
-              <p className="text-gray-600">Professional cleaning solutions that are effective yet environmentally responsible.</p>
             </CardContent>
           </Card>
 

@@ -12,16 +12,15 @@ const HeroSection = () => {
   const { t } = useTranslation();
   const [zipCode, setZipCode] = useState('');
   const isMobile = useIsMobile();
+  const [calculatorOpen, setCalculatorOpen] = useState(false);
 
   const handleZipCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (zipCode) {
       sessionStorage.setItem('userZipCode', zipCode);
     }
-    const calculatorButton = document.querySelector('.special-offers-button') as HTMLButtonElement;
-    if (calculatorButton) {
-      calculatorButton.click();
-    }
+    // Open the calculator overlay
+    setCalculatorOpen(true);
   };
 
   return (
@@ -106,6 +105,13 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Calculator overlay controlled by the form submission */}
+      <PriceCalculatorOverlay 
+        open={calculatorOpen} 
+        onClose={() => setCalculatorOpen(false)}
+        showCalculator={true}
+      />
     </section>
   );
 };

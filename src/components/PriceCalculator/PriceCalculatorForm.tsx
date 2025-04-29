@@ -62,6 +62,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete })
   const [step, setStep] = useState(1);
   const { toast } = useToast();
   const totalSteps = 7;
+  const [formData, setFormData] = useState({});
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -93,6 +94,13 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete })
     },
   });
 
+  const updateFormData = (data: any) => {
+    setFormData({
+      ...formData,
+      ...data
+    });
+  };
+
   const handleNext = () => {
     if (step < totalSteps) {
       setStep(step + 1);
@@ -123,21 +131,21 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete })
   const renderStepContent = () => {
     switch (step) {
       case 1:
-        return <StepPropertyType form={form} onNext={handleNext} />;
+        return <StepPropertyType form={form} onNext={handleNext} onBack={() => {}} formData={formData} updateFormData={updateFormData} />;
       case 2:
-        return <StepService form={form} onNext={handleNext} onBack={handleBack} />;
+        return <StepService form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 3:
-        return <StepSize form={form} onNext={handleNext} onBack={handleBack} />;
+        return <StepSize form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 4:
-        return <StepAddons form={form} onNext={handleNext} onBack={handleBack} />;
+        return <StepAddons form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 5:
-        return <StepAddress form={form} onNext={handleNext} onBack={handleBack} />;
+        return <StepAddress form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 6:
-        return <StepContact form={form} onNext={handleNext} onBack={handleBack} />;
+        return <StepContact form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 7:
-        return <StepReview form={form} onBack={handleBack} onSubmit={onSubmit} />;
+        return <StepReview form={form} onBack={handleBack} onSubmit={onSubmit} formData={formData} updateFormData={updateFormData} />;
       default:
-        return <StepPropertyType form={form} onNext={handleNext} />;
+        return <StepPropertyType form={form} onNext={handleNext} onBack={() => {}} formData={formData} updateFormData={updateFormData} />;
     }
   };
 

@@ -25,6 +25,15 @@ const Calculator = () => {
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
+        <div className="flex flex-col items-center mb-6">
+          <img 
+            src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+            alt="Jayden Fisher - Owner" 
+            className="w-32 h-32 rounded-full object-cover mb-2 border-2 border-bc-red"
+          />
+          <span className="font-semibold text-lg">Jayden Fisher</span>
+          <span className="text-gray-600">Owner & Lead Technician</span>
+        </div>
         <PriceCalculatorForm />
       </div>
     </Layout>

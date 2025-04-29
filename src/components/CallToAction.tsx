@@ -14,7 +14,7 @@ interface Props {
   background?: string;
   className?: string;
   buttonText?: string;
-  variant?: string;
+  variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "bc-red";
 }
 
 const CallToAction: React.FC<Props> = ({ 

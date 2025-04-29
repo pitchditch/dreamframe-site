@@ -91,15 +91,15 @@ const PriceCalculatorOverlay: React.FC<Props> = ({
               ) : (
                 <div className="p-6">
                   <h2 className="text-2xl font-bold mb-4">Get Your Free Estimate</h2>
-                  <img 
-                    src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
-                    alt="Jayden Fisher - Owner" 
-                    className="w-32 h-32 rounded-full object-cover mx-auto mb-4 border-2 border-bc-red"
-                  />
-                  <p className="text-center mb-6">
-                    <span className="font-semibold">Jayden Fisher</span><br/>
-                    Owner & Lead Technician
-                  </p>
+                  <div className="flex flex-col items-center mb-6">
+                    <img 
+                      src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+                      alt="Jayden Fisher - Owner" 
+                      className="w-32 h-32 rounded-full object-cover mb-2 border-2 border-bc-red"
+                    />
+                    <span className="font-semibold text-lg">Jayden Fisher</span>
+                    <span className="text-gray-600">Owner & Lead Technician</span>
+                  </div>
                   <PriceCalculatorForm onComplete={handleComplete} />
                 </div>
               )}
@@ -133,15 +133,15 @@ const PriceCalculatorOverlay: React.FC<Props> = ({
           ) : (
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-4">Get Your Free Estimate</h2>
-              <img 
-                src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
-                alt="Jayden Fisher - Owner" 
-                className="w-32 h-32 rounded-full object-cover mx-auto mb-4 border-2 border-bc-red"
-              />
-              <p className="text-center mb-6">
-                <span className="font-semibold">Jayden Fisher</span><br/>
-                Owner & Lead Technician
-              </p>
+              <div className="flex flex-col items-center mb-6">
+                <img 
+                  src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+                  alt="Jayden Fisher - Owner" 
+                  className="w-32 h-32 rounded-full object-cover mb-2 border-2 border-bc-red"
+                />
+                <span className="font-semibold text-lg">Jayden Fisher</span>
+                <span className="text-gray-600">Owner & Lead Technician</span>
+              </div>
               <PriceCalculatorForm onComplete={handleComplete} />
             </div>
           )}
