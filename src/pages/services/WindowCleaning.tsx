@@ -38,14 +38,15 @@ const WindowCleaning = () => {
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
       image="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png">
       
-      {/* Updated Hero Section - Full size image */}
+      {/* Updated Hero Section - Full size image with button positioned lower */}
       <header className="relative h-screen w-full">
         <img
           src="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute bottom-20 left-0 right-0 flex justify-center">
+        <div className="absolute bottom-12 left-0 right-0 flex justify-center">
+          {/* Moved button lower (from bottom-20 to bottom-12) */}
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
             <Link to="/calculator">Check Prices & Availability</Link>
           </Button>
@@ -117,16 +118,18 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* WHAT OUR CLIENTS SAY - Moved up, increased testimonial size */}
+      {/* WHAT OUR CLIENTS SAY - Made testimonial larger */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
-        <div className="mx-auto mb-8" style={{ maxWidth: 800 }}>
+        <div className="mx-auto mb-8" style={{ maxWidth: '100%' }}>
+          {/* Increased size by removing maxWidth restriction */}
           <TestimonialCard
             quote={windowTestimonial.quote}
             name={windowTestimonial.name}
             location={windowTestimonial.location}
             rating={"rating" in windowTestimonial ? windowTestimonial.rating : 5}
             beforeAfterImage={"beforeAfterImage" in windowTestimonial ? windowTestimonial.beforeAfterImage : undefined}
+            className="scale-110 transform" /* Added scale to increase size */
           />
         </div>
         <div className="text-center">

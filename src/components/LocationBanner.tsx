@@ -20,7 +20,7 @@ const LocationBanner = () => {
     containScroll: "trimSnaps"
   }, [
     Autoplay({ 
-      delay: 1000,  // Reduced delay for faster rotation
+      delay: 500,  // Reduced delay for faster rotation
       stopOnInteraction: false, 
       playOnInit: true 
     })
@@ -36,7 +36,7 @@ const LocationBanner = () => {
           api.scrollNext();
         }
       }
-    }, 2000);
+    }, 1000);
     
     return () => clearInterval(interval);
   }, []);

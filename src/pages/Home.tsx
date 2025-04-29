@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -6,6 +7,7 @@ import ServicesSection from '../components/home/ServicesSection';
 import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import PackagesSection from '../components/home/PackagesSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import ServiceAreaMap from '../components/ServiceAreaMap';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import { MapPin, ArrowRight, Sun } from 'lucide-react';
@@ -60,6 +62,7 @@ const Index = () => {
       <TestimonialsSection />
       <ServicesSection />
       <PackagesSection />
+      <ServiceAreaMap />
       
       {/* Full Width Contact Section */}
       <section className="relative py-20">

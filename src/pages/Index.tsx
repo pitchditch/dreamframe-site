@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -5,6 +6,7 @@ import HeroSection from '../components/home/HeroSection';
 import FounderSection from '../components/home/FounderSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ServicesSection from '../components/home/ServicesSection';
+import ServiceAreaMap from '../components/ServiceAreaMap';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -109,6 +111,7 @@ const Index = () => {
         <FounderSection />
         <TestimonialsSection />
         <ServicesSection />
+        <ServiceAreaMap />
       </div>
       
       <ReferralButton />
