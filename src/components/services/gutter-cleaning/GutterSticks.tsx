@@ -12,7 +12,7 @@ const GutterSticks = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <img 
-            src="/lovable-uploads/6c46b1c6-d454-4f21-9a94-93b485c538e7.png" 
+            src="/lovable-uploads/df44cbd0-f0a2-495b-8632-833814ce9a89.png" 
             alt="Gutter Stick installation demonstration" 
             className="rounded-lg shadow-lg w-full h-auto object-cover"
           />
@@ -44,6 +44,14 @@ const GutterSticks = () => {
             <p className="text-right text-sm text-gray-600 mt-2">- John D., White Rock</p>
           </div>
         </div>
+      </div>
+      
+      <div className="mt-8">
+        <img 
+          src="/lovable-uploads/e33fb045-7de3-48ca-a64e-1566e18b03aa.png" 
+          alt="Gutter Stick in action showing water flow" 
+          className="rounded-lg shadow-lg w-full h-auto object-cover"
+        />
       </div>
     </div>
   );

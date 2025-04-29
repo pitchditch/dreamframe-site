@@ -131,7 +131,7 @@ const GutterCleaning = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
           <div className="text-content">
-            <h3 className="text-2xl font-bold mb-4">Gutter Guards &amp; Protectors</h3>
+            <h3 className="text-2xl font-bold mb-4">Leaf Guard Gutter Protection</h3>
             <p className="text-gray-600 mb-6">
               We offer high-quality gutter protection systems that prevent leaves, twigs, and debris from entering your gutters while still allowing water to flow through. These systems can dramatically reduce the frequency of gutter cleanings and protect your home from water damage.
             </p>
@@ -144,21 +144,22 @@ const GutterCleaning = () => {
             </ul>
           </div>
           <div className="image-content">
-            <img alt="Leaf Guard product" src="/lovable-uploads/150832ba-cb66-4001-9d55-af0fcd9b6fe2.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                Not Recommended: Screen Netting
-              </h4>
-              <div className="flex items-center">
-                <img src="/lovable-uploads/1003f2dd-9026-4322-b455-d9fbbeefcff8.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
-                <p className="text-sm text-gray-800">
-                  We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
-                </p>
-              </div>
-            </div>
+            <img alt="Leaf Guard product" src="/lovable-uploads/c138f9fc-804b-4e64-b860-15c16a30f0c4.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+          </div>
+        </div>
+        
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-12">
+          <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            Not Recommended: Screen Netting
+          </h4>
+          <div className="flex items-center">
+            <img src="/lovable-uploads/0ae57ebc-0ffe-45a7-b3ad-fff695f92e06.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
+            <p className="text-sm text-gray-800">
+              We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
+            </p>
           </div>
         </div>
         

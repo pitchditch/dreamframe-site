@@ -6,25 +6,25 @@ import { useTranslation } from '@/hooks/use-translation';
 const services = [
   {
     title: "House Washing",
-    icon: "/lovable-uploads/dd816e92-c307-427b-876b-7660f0fd21ac.png",
+    icon: "/lovable-uploads/dc712c9c-26b9-4985-bea2-c3b0502aaa04.png",
     description: "Restore your home's exterior to its original beauty",
     link: "/services/pressure-washing"
   },
   {
     title: "Window Cleaning",
-    icon: "/lovable-uploads/e8c7869e-c964-4cce-abc9-39b7beb5f321.png",
+    icon: "/lovable-uploads/37be9e1d-95e2-4d6e-9875-b9a02c4445b2.png",
     description: "Crystal clear views from every window",
     link: "/services/window-cleaning"
   },
   {
     title: "Roof Cleaning",
-    icon: "/lovable-uploads/73544240-3f5f-4345-b744-1d8c2f45f8cf.png",
+    icon: "/lovable-uploads/9928673b-e130-401a-9801-c2b5731a6c98.png",
     description: "Remove moss, algae, and protect your investment",
     link: "/services/roof-cleaning"
   },
   {
     title: "Gutter Cleaning",
-    icon: "/lovable-uploads/b2f45089-a8a1-40c1-b5e6-096ef277b16e.png",
+    icon: "/lovable-uploads/a7053775-688b-45dd-b736-e6a2c7390c65.png",
     description: "Prevent water damage and maintain proper drainage",
     link: "/services/gutter-cleaning"
   }
@@ -45,7 +45,7 @@ const ServicesSection = () => {
                   <img 
                     src={service.icon} 
                     alt={service.title} 
-                    className="h-24 w-24 object-contain transition-transform duration-300 hover:scale-110" /* Added scale effect on hover */
+                    className="h-24 w-24 object-contain transition-transform duration-300 hover:scale-110"
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-center mb-2">{service.title}</h3>

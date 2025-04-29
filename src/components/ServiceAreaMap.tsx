@@ -31,7 +31,7 @@ const ServiceAreaMap = () => {
               height="100%"
               title="BC Pressure Washing Service Area"
               style={{
-                border: 0,
+                border: 'none', 
                 filter: "saturate(1.18) brightness(0.96) drop-shadow(2px 2px 12px #15181e)",
                 background: "#202d3a"
               }}

@@ -14,12 +14,12 @@ const EquipmentSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
           {/* Pressure Washer */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/62495749-666c-4de3-8ea2-a75f2a6d5f65.png"
+                src="/lovable-uploads/a7053775-688b-45dd-b736-e6a2c7390c65.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/62fd1ba0-0d42-45c3-aaab-13388b68ecbc.png"
+                src="/lovable-uploads/b63889e6-ff5f-4b50-a318-9250142cf011.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -48,6 +48,21 @@ const EquipmentSection = () => {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold mb-2">Surface Cleaner</h3>
               <p className="text-gray-600">Even pressure distribution for perfect results on flat surfaces.</p>
+            </CardContent>
+          </Card>
+
+          {/* Sodium Hypochlorite */}
+          <Card className="overflow-hidden border-0 shadow-lg">
+            <div className="relative h-64">
+              <img 
+                src="/lovable-uploads/d00506c4-a14c-45e7-afee-1563e0003ef3.png"
+                alt="Sodium Hypochlorite" 
+                className="w-full h-full object-contain p-4"
+              />
+            </div>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-2">Sodium Hypochlorite</h3>
+              <p className="text-gray-600">Professional-grade sanitizing solution for effective cleaning of mold and mildew.</p>
             </CardContent>
           </Card>
 

@@ -1,459 +1,321 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import PriceCalculatorIntro from './PriceCalculatorIntro';
+import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import ProgressSteps from './ProgressSteps';
 
-const PROPERTY_SIZES = [
-  { id: 'small', label: '0–1800 sq. ft.' },
-  { id: 'medium', label: '1800–2800 sq. ft.' },
-  { id: 'large', label: '2800–3500 sq. ft.' },
-  { id: 'xlarge', label: 'Over 3500 sq. ft. (On-site quote required)' },
-];
-
-const PRICING = {
-  small: {
-    'Window Cleaning (Outside)': 300,
-    'Window Cleaning (Inside)': 300,
-    'Both Window Sides': 547.2,
-    'House Washing': 414.3,
-    'House Wash + Windows': 664.2,
-    'Driveway Washing': 300,
-    'Driveway + House Washing': 635.4,
-    'Deck Washing': 300,
-    'Gutter Cleaning (Inside)': 300,
-    'Gutter Cleaning (Outside)': 154,
-    'Gutter Cleaning (Both)': 454,
-    'Roof Cleaning': null,
-  },
-  medium: {
-    'Window Cleaning (Outside)': 357.3,
-    'Window Cleaning (Inside)': 411.3,
-    'Both Window Sides': 768.6,
-    'House Washing': 627.3,
-    'House Wash + Windows': 984.6,
-    'Driveway Washing': 314.1,
-    'Driveway + House Washing': 941.1,
-    'Deck Washing': 300,
-    'Gutter Cleaning (Inside)': 386.1,
-    'Gutter Cleaning (Outside)': 300,
-    'Gutter Cleaning (Both)': 682.2,
-    'Roof Cleaning': null,
-  },
-  large: {
-    'Window Cleaning (Outside)': 431.1,
-    'Window Cleaning (Inside)': 521.1,
-    'Both Window Sides': 952.2,
-    'House Washing': 888.3,
-    'House Wash + Windows': 1319.4,
-    'Driveway Washing': 384.3,
-    'Driveway + House Washing': 1272.6,
-    'Deck Washing': 300,
-    'Gutter Cleaning (Inside)': 465.3,
-    'Gutter Cleaning (Outside)': 357.3,
-    'Gutter Cleaning (Both)': 822.6,
-    'Roof Cleaning': null,
-  },
-  xlarge: {
-    'Roof Cleaning': null,
-  },
-};
-
-const SERVICE_KEYS = Object.keys(PRICING.small);
-
-const PROMOS = [
-  {
-    title: "Bundle & Save – $200 OFF",
-    description: "Book 3 or more services and get an instant $200 discount on your total. Mix and match from: Window Cleaning (Inside/Outside), House Washing, Driveway Cleaning, Gutter Cleaning, Deck Washing. No code needed — discount is automatic.",
-    color: "bg-yellow-400 text-black",
-  },
-  {
-    title: "Referral Program – Refer & Earn",
-    description: "Refer a friend and get $50 off your next service when they book. They just need to mention your name during booking.",
-    color: "bg-blue-100 text-blue-900",
-  },
-];
-
-function getPricing(size: string, service: string): number | null {
-  // Only handle "Roof Cleaning" as on-site estimate
-  if (service === 'Roof Cleaning') {
-    return null;
-  }
-  if (size === 'xlarge') {
-    return null;
-  }
-  const map = PRICING[size as keyof typeof PRICING];
-  return (map && map[service as keyof typeof map]) || null;
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
 }
 
-function formatCurrency(n: number | null) {
-  if (!n && n !== 0) return "On-site quote required";
-  return `$${n.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+const servicesData: Service[] = [
+  { id: 'windowCleaning', name: 'Window Cleaning', description: 'Clean windows for a clear view.', price: 100 },
+  { id: 'pressureWashing', name: 'Pressure Washing', description: 'Power wash surfaces to remove dirt.', price: 150 },
+  { id: 'gutterCleaning', name: 'Gutter Cleaning', description: 'Clear gutters to prevent water damage.', price: 80 },
+  { id: 'roofCleaning', name: 'Roof Cleaning', description: 'Remove moss and algae from your roof.', price: 200 },
+];
+
+interface StepProps {
+  onNext: () => void;
 }
 
-const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
-  const [step, setStep] = useState(0);
+interface StepServiceProps extends StepProps {
+  selectedService: string;
+  setSelectedService: (service: string) => void;
+}
 
-  // Step data
-  const [size, setSize] = useState<string>('');
-  const [services, setServices] = useState<string[]>([]);
-  const [address, setAddress] = useState('');
-  const [contact, setContact] = useState({ name: '', phone: '', email: '', referredBy: '', notes: '' });
-  const [submitting, setSubmitting] = useState(false);
-
-  // Bundle discount
-  const eligibleBundleDiscount = services.filter(s => s !== 'Roof Cleaning').length >= 3;
-  let estimateSummary: Record<string, number | null> = {};
-  let estTotal = 0;
-  if (step === 4 && size !== 'xlarge') {
-    for (const s of services) {
-      const p = getPricing(size, s);
-      estimateSummary[s] = p;
-      if (typeof p === 'number') estTotal += p;
-    }
-    if (eligibleBundleDiscount) {
-      estTotal -= 200;
-      estimateSummary['Bundle Discount'] = -200;
-    }
-  }
-
-  // Service options for dynamic selection logic
-  const availableServices = [
-    'Window Cleaning (Outside)',
-    'Window Cleaning (Inside)',
-    'Both Window Sides',
-    'House Washing',
-    'House Wash + Windows',
-    'Driveway Washing',
-    'Driveway + House Washing',
-    'Deck Washing',
-    'Gutter Cleaning (Inside)',
-    'Gutter Cleaning (Outside)',
-    'Gutter Cleaning (Both)',
-    'Roof Cleaning',
-  ];
-
-  // Handle exclusive combinations (e.g., Both Windows disables Window Inside/Outside)
-  const serviceDisabled = (name: string): boolean => {
-    if (services.includes('Both Window Sides')) {
-      if (name === 'Window Cleaning (Outside)' || name === 'Window Cleaning (Inside)') return true;
-    }
-    if (services.includes('House Wash + Windows')) {
-      if (name === 'House Washing' || name === 'Both Window Sides') return true;
-    }
-    if (services.includes('Driveway + House Washing')) {
-      if (name === 'Driveway Washing' || name === 'House Washing') return true;
-    }
-    if (services.includes('Gutter Cleaning (Both)')) {
-      if (name === 'Gutter Cleaning (Inside)' || name === 'Gutter Cleaning (Outside)') return true;
-    }
-    if (name === 'Roof Cleaning' && size !== 'xlarge' && size !== '') {
-      // Allow selection but price will state "On-site quote required"
-      return false;
-    }
-    if (size === 'xlarge' && name !== 'Roof Cleaning') return true;
-    return false;
-  };
-
-  function handleServiceChange(service: string) {
-    if (serviceDisabled(service)) return;
-    // Uncheck mutually exclusive services
-    const updated = services.includes(service)
-      ? services.filter((s) => s !== service)
-      : [
-          ...services.filter((s) => {
-            if (service === 'Both Window Sides' && (s === 'Window Cleaning (Outside)' || s === 'Window Cleaning (Inside)')) return false;
-            if ((service === 'Window Cleaning (Outside)' || service === 'Window Cleaning (Inside)') && s === 'Both Window Sides') return false;
-            if (service === 'House Wash + Windows' && (s === 'House Washing' || s === 'Both Window Sides')) return false;
-            if ((service === 'House Washing' || service === 'Both Window Sides') && s === 'House Wash + Windows') return false;
-            if (service === 'Driveway + House Washing' && (s === 'Driveway Washing' || s === 'House Washing')) return false;
-            if ((service === 'Driveway Washing' || service === 'House Washing') && s === 'Driveway + House Washing') return false;
-            if (service === 'Gutter Cleaning (Both)' && (s === 'Gutter Cleaning (Inside)' || s === 'Gutter Cleaning (Outside)')) return false;
-            if ((service === 'Gutter Cleaning (Inside)' || s === 'Gutter Cleaning (Outside)') && s === 'Gutter Cleaning (Both)') return false;
-            return true;
-          }),
-          service,
-        ];
-    setServices(updated);
-  }
-  
-  // -- Render steps
+const StepService: React.FC<StepServiceProps> = ({ selectedService, setSelectedService, onNext }) => {
   return (
-    <div className="max-w-2xl mx-auto w-full">
-      <PriceCalculatorIntro />
-
-      {/* Banners */}
-      <div className="flex flex-col gap-4 mb-8">
-        {PROMOS.map((promo, idx) => (
-          <div
-            key={idx}
-            className={`rounded-lg px-4 py-3 shadow-sm font-semibold ${promo.color}`}
-            style={{ fontSize: idx === 0 ? "1.10rem" : undefined }}
-          >
-            <span className="font-bold">{promo.title}</span>
-            <span className="block text-sm font-medium">{promo.description}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Stepper indicator */}
-      <div className="flex items-center justify-center mb-6 gap-2 text-xs">
-        {[...Array(5)].map((_, n) => (
-          <div
-            key={n}
-            className={`h-2 w-8 rounded-full transition-all duration-300 ${step === n ? 'bg-bc-red' : 'bg-gray-300'}`}
-          />
-        ))}
-      </div>
-
-      {/* Step 1: Size */}
-      {step === 0 && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Step 1: What Size Is Your Home?</h3>
-          <p className="mb-6 text-gray-600">
-            Prices are starting estimates. For homes over 3500 sq. ft., we'll provide an on-site quote.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {PROPERTY_SIZES.map((sz) => (
-              <Card
-                key={sz.id}
-                className={`p-4 cursor-pointer flex items-center justify-between hover:border-blue-500 transition-all ${size === sz.id ? 'border-2 border-blue-500 bg-blue-50' : ''}`}
-                onClick={() => setSize(sz.id)}
-              >
-                <span className="font-semibold">{sz.label}</span>
-                {size === sz.id && (
-                  <svg className="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                )}
-              </Card>
-            ))}
-          </div>
-          <div className="flex justify-end mt-6">
-            <Button onClick={() => setStep(1)} disabled={!size}>
-              Next
-            </Button>
-          </div>
-          <div className="mt-2 text-xs text-gray-500">
-            <strong>“Starting at” Pricing:</strong> The prices shown are starting at rates based on typical home sizes. Once you provide your address, we will calculate a more accurate quote for you. For larger or complex jobs, we may visit in person.
-          </div>
-        </div>
-      )}
-
-      {/* Step 2: Services */}
-      {step === 1 && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Step 2: Choose Your Services</h3>
-          <p className="mb-4 text-gray-600">
-            Choose all that apply. Prices update based on your home size.
-          </p>
-          <div className="grid grid-cols-1 gap-3 mb-4">
-            {availableServices.map((service, idx) => (
-              <label
-                key={service}
-                className={`flex items-center gap-3 p-4 rounded-lg border cursor-pointer transition-all select-none 
-                  ${serviceDisabled(service) ? 'opacity-40 bg-gray-100 pointer-events-none' :
-                    services.includes(service) ? 'border-blue-500 bg-blue-50' : 'hover:border-blue-300'}`
-                }
-              >
-                <input
-                  type="checkbox"
-                  checked={services.includes(service)}
-                  disabled={serviceDisabled(service)}
-                  className="form-checkbox accent-blue-600"
-                  onChange={() => handleServiceChange(service)}
-                  style={{ width: 20, height: 20 }}
-                />
-                <span className="font-medium">{service}</span>
-                <span className="ml-auto font-semibold text-blue-700 text-sm">
-                  {service === 'Roof Cleaning' || size === 'xlarge'
-                    ? 'On-site quote required'
-                    : `Starting at ${formatCurrency(getPricing(size, service))}`}
-                </span>
-              </label>
-            ))}
-          </div>
-          <div className="flex justify-between mt-6">
-            <Button variant="outline" onClick={() => setStep(0)}>
-              Back
-            </Button>
-            <Button onClick={() => setStep(2)} disabled={services.length === 0}>
-              Next
-            </Button>
-          </div>
-          <div className="mt-3 text-xs text-gray-500">
-            <p>
-              <strong>How We Create Your Custom Quote:</strong>
-            </p>
-            <ul className="list-disc list-inside pl-2">
-              <li>
-                <strong>Google Maps Estimate:</strong> For standard homes, we'll generate your estimate using Google Maps and your provided address.
-              </li>
-              <li>
-                <strong>On-Site Estimate:</strong> For roof cleaning or homes over 3500 sq. ft., we’ll provide an on-site quote for best accuracy.
-              </li>
-            </ul>
-          </div>
-        </div>
-      )}
-
-      {/* Step 3: Address */}
-      {step === 2 && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Step 3: Address for Estimate</h3>
-          <p className="mb-4 text-gray-600">Enter your address so we can use Google Maps to give you an accurate quote.</p>
-          <input
-            type="text"
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            className="w-full border p-3 rounded-lg mb-6"
-            placeholder="1234 Main St, City, Province"
-            autoFocus
-          />
-          <div className="flex justify-between">
-            <Button variant="outline" onClick={() => setStep(1)}>
-              Back
-            </Button>
-            <Button onClick={() => setStep(3)} disabled={!address.trim()}>
-              Next
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 4: Contact Info */}
-      {step === 3 && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Step 4: Contact Info</h3>
-          <p className="mb-4 text-gray-600">We'll use this info to contact you with your custom quote. No spam—ever!</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Select a Service</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {servicesData.map(service => (
+          <label key={service.id} className="flex items-center p-4 border rounded-md cursor-pointer hover:shadow-md transition-shadow">
             <input
-              type="text"
-              className="border p-3 rounded-lg"
-              placeholder="Name"
-              value={contact.name}
-              onChange={e => setContact(v => ({ ...v, name: e.target.value }))}
-              required
-            />
-            <input
-              type="tel"
-              className="border p-3 rounded-lg"
-              placeholder="Phone"
-              value={contact.phone}
-              onChange={e => setContact(v => ({ ...v, phone: e.target.value }))}
-              required
-            />
-            <input
-              type="email"
-              className="border p-3 rounded-lg"
-              placeholder="Email"
-              value={contact.email}
-              onChange={e => setContact(v => ({ ...v, email: e.target.value }))}
-              required
-            />
-            <input
-              type="text"
-              className="border p-3 rounded-lg"
-              placeholder="Referral Name (optional)"
-              value={contact.referredBy}
-              onChange={e => setContact(v => ({ ...v, referredBy: e.target.value }))}
-            />
-          </div>
-          <textarea
-            className="border w-full min-h-[60px] max-h-32 p-3 rounded-lg"
-            placeholder="Any other info you'd like to share? (optional)"
-            value={contact.notes}
-            onChange={e => setContact(v => ({ ...v, notes: e.target.value }))}
-          />
-          <div className="flex justify-between mt-6">
-            <Button variant="outline" onClick={() => setStep(2)}>Back</Button>
-            <Button
-              onClick={() => setStep(4)}
-              disabled={!contact.name || !contact.phone || !contact.email}
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 5: Estimate Summary */}
-      {step === 4 && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Step 5: Estimate Summary</h3>
-          <p className="mb-4 text-gray-600">
-            Here’s your custom quote summary. We’ll confirm final pricing based on your home layout and needs.
-          </p>
-          <div className="bg-gray-50 px-4 py-4 rounded-lg mb-4">
-            {Object.entries(estimateSummary).map(([name, val]) => (
-              <div className="flex justify-between py-1 border-b last:border-none" key={name}>
-                <span className="font-medium">{name}</span>
-                <span className={`font-bold ${val && val < 0 ? 'text-green-700' : 'text-bc-red'}`}>
-                  {typeof val === 'number' && val < 0 ? `- $${Math.abs(val)}` : formatCurrency(val)}
-                </span>
-              </div>
-            ))}
-            <div className="flex justify-between pt-3 mt-3 border-t text-lg font-bold">
-              <span>Final Total Estimate</span>
-              <span className="text-bc-red">{formatCurrency(estTotal)}</span>
-            </div>
-            <div className="mt-2 text-xs text-gray-500 leading-relaxed">
-              All prices are starting estimates. Your quote may vary based on home layout and condition—<br />
-              we’ll confirm before booking.
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row items-center gap-6 mb-6 bg-blue-50 p-4 rounded-lg">
-            <img 
-              src="/lovable-uploads/d7372ff1-b3e7-4d2c-86b8-2df515e84acc.png" 
-              alt="Jayden from BC Pressure Washing" 
-              className="w-28 h-28 rounded-full border-4 border-white shadow-md"
+              type="radio"
+              name="service"
+              value={service.id}
+              checked={selectedService === service.id}
+              onChange={(e) => setSelectedService(e.target.value)}
+              className="mr-2"
             />
             <div>
-              <h4 className="text-lg font-semibold">Jayden will help you with your quote!</h4>
-              <p className="text-sm text-gray-600">
-                As the owner of BC Pressure Washing, I personally review every quote request to ensure you get the best service at the best price. I'll contact you shortly with your custom quote.
-              </p>
+              <h3 className="font-semibold">{service.name}</h3>
+              <p className="text-sm text-gray-500">{service.description}</p>
             </div>
-          </div>
-          
-          <div className="flex flex-col gap-2 mt-6">
-            <Button
-              className="w-full"
-              onClick={async () => {
-                setSubmitting(true);
-                setTimeout(() => {
-                  setSubmitting(false);
-                  if (onComplete) onComplete();
-                  setStep(5);
-                }, 1200);
-              }}
-              disabled={submitting}
-            >
-              {submitting ? "Submitting..." : "Get My Custom Quote"}
-            </Button>
-            <a href="tel:7788087620" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg text-center font-semibold shadow">
-              Call Jayden Now
-            </a>
-          </div>
-          <div className="text-sm text-gray-500 mt-5">
-            You'll hear back from Jayden or the team shortly.<br />
-            Want to talk to someone now? Call us at <span className="underline">(604) 778-808-7620</span>.<br />
-            No spam, no pressure—just a clear and honest quote.
-          </div>
-        </div>
-      )}
-
-      {step > 4 && (
-        <div className="text-center py-10">
-          <h3 className="text-2xl font-bold mb-4 text-green-700">Thank you!</h3>
-          <p className="mb-2 text-gray-600">We've received your request. Jayden or a team member will contact you soon.</p>
-          <a href="tel:7788087620" className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3">
-            Call Jayden Now
-          </a>
-        </div>
-      )}
+          </label>
+        ))}
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button onClick={onNext} disabled={!selectedService}>Next</Button>
+      </div>
     </div>
   );
 };
 
-export default PriceCalculatorForm;
+interface StepDetailsProps extends StepProps {
+  address: string;
+  setAddress: (address: string) => void;
+  propertyType: string;
+  setPropertyType: (type: string) => void;
+}
+
+const StepDetails: React.FC<StepDetailsProps> = ({ address, setAddress, propertyType, setPropertyType, onNext }) => {
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Property Details</h2>
+      <div className="mb-4">
+        <Label htmlFor="address">Address</Label>
+        <Input
+          type="text"
+          id="address"
+          placeholder="123 Main St"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <Label htmlFor="propertyType">Property Type</Label>
+        <Select value={propertyType} onValueChange={setPropertyType}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select a type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="house">House</SelectItem>
+            <SelectItem value="apartment">Apartment</SelectItem>
+            <SelectItem value="townhouse">Townhouse</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button onClick={onNext} disabled={!address || !propertyType}>Next</Button>
+      </div>
+    </div>
+  );
+};
+
+interface StepOptionsProps extends StepProps {
+  additionalOptions: string[];
+  setAdditionalOptions: (options: string[]) => void;
+}
+
+const StepOptions: React.FC<StepOptionsProps> = ({ additionalOptions, setAdditionalOptions, onNext }) => {
+  const options = [
+    'Gutter Guards',
+    'Window Screens',
+    'Skylight Cleaning',
+  ];
+
+  const toggleOption = (option: string) => {
+    if (additionalOptions.includes(option)) {
+      setAdditionalOptions(additionalOptions.filter(opt => opt !== option));
+    } else {
+      setAdditionalOptions([...additionalOptions, option]);
+    }
+  };
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Additional Options</h2>
+      {options.map(option => (
+        <div key={option} className="flex items-center mb-2">
+          <Checkbox
+            id={option}
+            checked={additionalOptions.includes(option)}
+            onCheckedChange={() => toggleOption(option)}
+          />
+          <Label htmlFor={option} className="ml-2">{option}</Label>
+        </div>
+      ))}
+      <div className="mt-6 flex justify-end">
+        <Button onClick={onNext}>Next</Button>
+      </div>
+    </div>
+  );
+};
+
+interface StepContactProps extends StepProps {
+  name: string;
+  setName: (name: string) => void;
+  email: string;
+  setEmail: (email: string) => void;
+  phone: string;
+  setPhone: (phone: string) => void;
+}
+
+const StepContact: React.FC<StepContactProps> = ({ name, setName, email, setEmail, phone, setPhone, onNext }) => {
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
+      <div className="mb-4">
+        <Label htmlFor="name">Name</Label>
+        <Input
+          type="text"
+          id="name"
+          placeholder="John Doe"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          type="email"
+          id="email"
+          placeholder="john.doe@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <Label htmlFor="phone">Phone</Label>
+        <Input
+          type="tel"
+          id="phone"
+          placeholder="123-456-7890"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button onClick={onNext} disabled={!name || !email || !phone}>Submit</Button>
+      </div>
+    </div>
+  );
+};
+
+export default function PriceCalculatorForm() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedService, setSelectedService] = useState('');
+  const [address, setAddress] = useState('');
+  const [propertyType, setPropertyType] = useState('');
+  const [additionalOptions, setAdditionalOptions] = useState<string[]>([]);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const totalSteps = 4;
+
+  const handleNextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const calculatePrice = () => {
+    let basePrice = servicesData.find(service => service.id === selectedService)?.price || 0;
+    let optionsPrice = additionalOptions.length * 50;
+    return basePrice + optionsPrice;
+  };
+
+  const totalPrice = calculatePrice();
+
+  return (
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="flex flex-col md:flex-row gap-8 items-start">
+        <div className="w-full md:w-2/3">
+          <ProgressSteps currentStep={currentStep} totalSteps={totalSteps} />
+          
+          <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
+            {/* Step 1: Service Selection */}
+            {currentStep === 1 && (
+              <StepService 
+                selectedService={selectedService} 
+                setSelectedService={setSelectedService}
+                onNext={handleNextStep}
+              />
+            )}
+            
+            {/* Step 2: Property Details */}
+            {currentStep === 2 && (
+              <StepDetails
+                address={address}
+                setAddress={setAddress}
+                propertyType={propertyType}
+                setPropertyType={setPropertyType}
+                onNext={handleNextStep}
+              />
+            )}
+            
+            {/* Step 3: Additional Options */}
+            {currentStep === 3 && (
+              <StepOptions
+                additionalOptions={additionalOptions}
+                setAdditionalOptions={setAdditionalOptions}
+                onNext={handleNextStep}
+              />
+            )}
+            
+            {/* Step 4: Contact Information */}
+            {currentStep === 4 && (
+              <StepContact
+                name={name}
+                setName={setName}
+                email={email}
+                setEmail={setEmail}
+                phone={phone}
+                setPhone={setPhone}
+                onNext={() => alert('Form submitted!')}
+              />
+            )}
+          </div>
+        </div>
+        
+        <div className="w-full md:w-1/3 sticky top-24">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-bold mb-4 text-center">Your Estimate</h3>
+            
+            <div className="mb-6 text-center">
+              <img 
+                src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
+                alt="Jayden Fisher - Owner & Lead Technician" 
+                className="w-32 h-32 rounded-full border-4 border-bc-red mx-auto mb-2 object-cover"
+              />
+              <h4 className="font-semibold">Jayden Fisher</h4>
+              <p className="text-sm text-gray-600">Owner & Lead Technician</p>
+            </div>
+            
+            <div className="mb-4">
+              <p className="flex justify-between items-center">
+                <span>Service:</span>
+                <span>{servicesData.find(service => service.id === selectedService)?.name || 'Not Selected'}</span>
+              </p>
+              <p className="flex justify-between items-center">
+                <span>Options:</span>
+                <span>{additionalOptions.length > 0 ? additionalOptions.join(', ') : 'None'}</span>
+              </p>
+            </div>
+            
+            <div className="border-t pt-4">
+              <p className="flex justify-between font-bold">
+                <span>Total:</span>
+                <span>${totalPrice}</span>
+              </p>
+            </div>
+            
+            <div className="mt-6">
+              <p className="text-sm text-gray-600 mb-2">
+                Every job is personally handled or overseen by me, the owner. I guarantee your satisfaction!
+              </p>
+              <a 
+                href="tel:7788087620"
+                className="block w-full py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg text-center"
+              >
+                Or Call: 778-808-7620
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
