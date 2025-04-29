@@ -38,7 +38,8 @@ const Navbar = () => {
       
       if (heroSection) {
         const heroBottom = heroSection.getBoundingClientRect().bottom;
-        setIsScrolled(heroBottom <= 0);
+        const hasScrolled = window.scrollY > 50;
+        setIsScrolled(hasScrolled);
         setIsOverVideo(heroBottom > 0);
       }
     };
