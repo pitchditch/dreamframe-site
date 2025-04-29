@@ -19,7 +19,7 @@ const ServiceAreaMap = () => {
           </p>
         </div>
         
-        <div className="relative bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-2 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 w-full mx-auto mb-6">
+        <div className="relative bg-gradient-to-tr from-blue-950/90 to-bc-red/40 p-2 rounded-xl shadow-2xl overflow-hidden border-2 border-yellow-400 w-full mx-auto mb-0">
           <div className="absolute top-4 left-4 z-10 bg-yellow-400/90 text-black px-4 py-2 rounded-lg font-semibold shadow-lg">
             <MapPin className="inline-block mr-2 h-5 w-5" />
             Based in White Rock, Serving Metro Vancouver

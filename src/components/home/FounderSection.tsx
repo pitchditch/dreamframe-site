@@ -21,7 +21,7 @@ const FounderSection = () => {
               />
               <div className="mt-4 text-center">
                 <h3 className="text-2xl font-bold text-gray-800">Jayden Fisher</h3>
-                <p className="text-gray-600">Owner/Lead Technician</p>
+                <p className="text-gray-600">Founder & Owner</p>
               </div>
             </div>
           </div>

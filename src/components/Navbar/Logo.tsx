@@ -8,22 +8,25 @@ interface LogoProps {
 
 export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
   const location = useLocation();
-  
-  // Use white logo when over hero section and not scrolled, otherwise use black logo
-  // The black logo should be used when scrolled OR not over video
+  const isWindowCleaningPage = location.pathname === '/services/window-cleaning';
+
+  // Hide logo when over video and not scrolled on window cleaning page
+  if (isWindowCleaningPage && isOverVideo && !isScrolled) {
+    return null;
+  }
+
+  // Use white logo when over hero section, otherwise use black logo
   const logoSrc = isScrolled || !isOverVideo
-    ? "/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" // Black logo
-    : "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png"; // White logo
+    ? "/lovable-uploads/e41bc027-fa90-4145-85ee-8a7c0c79f44b.png" 
+    : "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png";
 
   return (
     <Link to="/" className="flex items-center">
       <img
         src={logoSrc}
         alt="BC Pressure Washing Logo"
-        className="h-48 w-auto object-contain" 
+        className="h-52 w-auto object-contain" // Increased height further
       />
     </Link>
   );
 };
-
-export default Logo;

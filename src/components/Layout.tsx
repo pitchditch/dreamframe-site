@@ -42,8 +42,18 @@ const Layout = ({
       .text-shadow-sm {
         text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
       }
+      
+      /* Force the navbar logo to update properly */
+      .nav-logo-transition {
+        transition: all 0.3s ease;
+      }
     `;
     document.head.appendChild(style);
+    
+    // Force recalculation of navbar scroll position on page load
+    setTimeout(() => {
+      window.dispatchEvent(new Event('scroll'));
+    }, 100);
     
     return () => {
       document.head.removeChild(style);
