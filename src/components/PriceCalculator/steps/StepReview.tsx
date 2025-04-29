@@ -10,22 +10,33 @@ import { Check, X, Percent } from 'lucide-react';
 interface StepReviewProps {
   form: UseFormReturn<any>;
   onBack: () => void;
+  formData: any;
+  updateFormData: (data: any) => void;
+  onSubmit: (values: any) => void;
   selectedPackage?: any;
   isSpringSale?: boolean;
 }
 
-const StepReview = ({ form, onBack, selectedPackage, isSpringSale = false }: StepReviewProps) => {
+const StepReview = ({ 
+  form, 
+  onBack, 
+  formData, 
+  updateFormData, 
+  onSubmit, 
+  selectedPackage, 
+  isSpringSale = true 
+}: StepReviewProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formValues = form.getValues();
   
   // Find the selected services
-  const selectedServices = formValues.services.map((serviceId: string) => {
+  const selectedServices = formValues.services?.map((serviceId: string) => {
     const service = services.find(s => s.id === serviceId);
     return {
       name: service?.title || serviceId,
       id: serviceId
     };
-  });
+  }) || [];
   
   // Calculate base price based on selected services and property size
   const basePrice = selectedServices.reduce((total, service) => {
@@ -63,10 +74,7 @@ const StepReview = ({ form, onBack, selectedPackage, isSpringSale = false }: Ste
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await form.handleSubmit((data) => {
-        console.log('Form submitted with data:', data);
-        // Submission is handled by the parent component
-      })();
+      onSubmit(formData);
     } finally {
       setIsSubmitting(false);
     }

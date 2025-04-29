@@ -17,6 +17,8 @@ interface StepAddonsProps {
   form: UseFormReturn<any>;
   onNext: () => void;
   onBack: () => void;
+  formData: any;
+  updateFormData: (data: any) => void;
 }
 
 const addonData = {
@@ -42,16 +44,24 @@ const addonData = {
   ]
 };
 
-const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
-  const selectedServices = form.getValues().services || [];
-  const formValues = form.getValues();
-  const addons = formValues.addons || [];
+const StepAddons = ({ form, onNext, onBack, formData, updateFormData }: StepAddonsProps) => {
+  const selectedServices = formData.services || form.getValues().services || [];
+  const addons = formData.addons || [];
   
   // Only show add-ons for the services that were selected
   const relevantAddons = selectedServices.reduce((acc: any[], service: string) => {
     const serviceAddons = addonData[service] || [];
     return [...acc, ...serviceAddons];
   }, []);
+
+  const handleAddonChange = (addonId: string, checked: boolean) => {
+    const currentAddons = [...(formData.addons || [])];
+    const newAddons = checked
+      ? [...currentAddons, addonId]
+      : currentAddons.filter(id => id !== addonId);
+    
+    updateFormData({ ...formData, addons: newAddons });
+  };
 
   return (
     <div className="space-y-6">
@@ -87,8 +97,10 @@ const StepAddons = ({ form, onNext, onBack }: StepAddonsProps) => {
                               const currentValue = [...(field.value || [])];
                               if (checked) {
                                 field.onChange([...currentValue, addon.id]);
+                                handleAddonChange(addon.id, true);
                               } else {
                                 field.onChange(currentValue.filter((value) => value !== addon.id));
+                                handleAddonChange(addon.id, false);
                               }
                             }}
                           />

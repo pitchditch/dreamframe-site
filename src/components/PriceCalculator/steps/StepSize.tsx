@@ -15,9 +15,11 @@ interface StepSizeProps {
   form: UseFormReturn<any>;
   onNext: () => void;
   onBack: () => void;
+  formData: any;
+  updateFormData: (data: any) => void;
 }
 
-const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
+const StepSize = ({ form, onNext, onBack, formData, updateFormData }: StepSizeProps) => {
   const sizes = [
     {
       id: 'small',
@@ -41,6 +43,10 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
     },
   ];
 
+  const handleSizeChange = (value: string) => {
+    updateFormData({ ...formData, size: value });
+  };
+
   return (
     <div className="space-y-6">
       <div className="text-left">
@@ -55,7 +61,10 @@ const StepSize = ({ form, onNext, onBack }: StepSizeProps) => {
           <FormItem className="space-y-4">
             <FormControl>
               <RadioGroup
-                onValueChange={field.onChange}
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  handleSizeChange(value);
+                }}
                 defaultValue={field.value}
                 className="space-y-2"
               >

@@ -9,9 +9,12 @@ import { services } from './services/serviceData';
 interface StepServiceProps {
   form: UseFormReturn<any>;
   onNext: () => void;
+  onBack: () => void;
+  formData: any;
+  updateFormData: (data: any) => void;
 }
 
-const StepService = ({ form, onNext }: StepServiceProps) => {
+const StepService = ({ form, onNext, onBack, formData, updateFormData }: StepServiceProps) => {
   // Get initial services from form, defaulting to empty array
   const initialServices = form.getValues('services') || [];
   const [selectedServices, setSelectedServices] = useState<string[]>(initialServices);
@@ -27,6 +30,7 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
     
     // Update form value
     form.setValue('services', newSelection, { shouldValidate: true });
+    updateFormData({ ...formData, services: newSelection });
   };
 
   return (
@@ -61,7 +65,14 @@ const StepService = ({ form, onNext }: StepServiceProps) => {
         })}
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <Button 
+          type="button" 
+          onClick={onBack} 
+          variant="outline"
+        >
+          Back
+        </Button>
         <Button 
           type="button" 
           onClick={onNext} 

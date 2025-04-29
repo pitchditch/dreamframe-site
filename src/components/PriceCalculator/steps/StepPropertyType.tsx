@@ -15,9 +15,11 @@ interface StepPropertyTypeProps {
   form: UseFormReturn<any>;
   onNext: () => void;
   onBack: () => void;
+  formData: any;
+  updateFormData: (data: any) => void;
 }
 
-const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
+const StepPropertyType = ({ form, onNext, onBack, formData, updateFormData }: StepPropertyTypeProps) => {
   const propertyTypes = [
     {
       id: 'residential',
@@ -47,7 +49,10 @@ const StepPropertyType = ({ form, onNext, onBack }: StepPropertyTypeProps) => {
           <FormItem className="space-y-4">
             <FormControl>
               <RadioGroup
-                onValueChange={field.onChange}
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  updateFormData({ ...formData, propertyType: value });
+                }}
                 defaultValue={field.value}
                 className="grid gap-4"
               >

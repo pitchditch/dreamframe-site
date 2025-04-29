@@ -131,7 +131,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete })
   const renderStepContent = () => {
     switch (step) {
       case 1:
-        return <StepPropertyType form={form} onNext={handleNext} onBack={() => {}} formData={formData} updateFormData={updateFormData} />;
+        return <StepPropertyType form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 2:
         return <StepService form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
       case 3:
@@ -145,7 +145,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete })
       case 7:
         return <StepReview form={form} onBack={handleBack} onSubmit={onSubmit} formData={formData} updateFormData={updateFormData} />;
       default:
-        return <StepPropertyType form={form} onNext={handleNext} onBack={() => {}} formData={formData} updateFormData={updateFormData} />;
+        return <StepPropertyType form={form} onNext={handleNext} onBack={handleBack} formData={formData} updateFormData={updateFormData} />;
     }
   };
 
