@@ -13,7 +13,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, className }: TestimonialCardProps) => {
   return (
-    <div className={cn("testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col border-transparent", className)}>
+    <div className={cn("testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col border-0", className)}>
       {beforeAfterImage && (
         <div className="mb-6 relative w-full">
           <img 

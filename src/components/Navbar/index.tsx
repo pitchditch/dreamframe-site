@@ -52,8 +52,13 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
-    const isOnDarkPage = darkOverlayPages.includes(location.pathname);
-    setIsOverVideo(isOnDarkPage);
+    setIsOverVideo(true); // Start with white logo on page change
+    setIsScrolled(false); // Reset scroll state on page change
+    
+    // Force recalculation after page load
+    setTimeout(() => {
+      window.dispatchEvent(new Event('scroll'));
+    }, 100);
   }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
