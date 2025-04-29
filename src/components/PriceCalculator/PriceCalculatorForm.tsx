@@ -1,321 +1,342 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { toast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast"
+import { Phone } from 'lucide-react';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import ProgressSteps from './ProgressSteps';
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
-interface Service {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
+interface PriceCalculatorFormProps {
+  onComplete?: () => void;
 }
 
-const servicesData: Service[] = [
-  { id: 'windowCleaning', name: 'Window Cleaning', description: 'Clean windows for a clear view.', price: 100 },
-  { id: 'pressureWashing', name: 'Pressure Washing', description: 'Power wash surfaces to remove dirt.', price: 150 },
-  { id: 'gutterCleaning', name: 'Gutter Cleaning', description: 'Clear gutters to prevent water damage.', price: 80 },
-  { id: 'roofCleaning', name: 'Roof Cleaning', description: 'Remove moss and algae from your roof.', price: 200 },
-];
+const formSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "First Name must be at least 2 characters.",
+  }),
+  lastName: z.string().min(2, {
+    message: "Last Name must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  phone: z.string().min(10, {
+    message: "Phone number must be at least 10 digits.",
+  }),
+  serviceType: z.string().min(1, {
+    message: "Please select a service type.",
+  }),
+  propertyType: z.string().min(1, {
+    message: "Please select a property type.",
+  }),
+  stories: z.string().optional(),
+  windowQuantity: z.string().optional(),
+  gutterLength: z.string().optional(),
+  squareFootage: z.string().optional(),
+  message: z.string().optional(),
+  terms: z.boolean().refine((value) => value === true, {
+    message: 'You must accept the terms and conditions.',
+  }),
+});
 
-interface StepProps {
-  onNext: () => void;
-}
+const PriceCalculatorForm = ({ onComplete }: PriceCalculatorFormProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast()
 
-interface StepServiceProps extends StepProps {
-  selectedService: string;
-  setSelectedService: (service: string) => void;
-}
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      serviceType: "",
+      propertyType: "",
+      stories: "",
+      windowQuantity: "",
+      gutterLength: "",
+      squareFootage: "",
+      message: "",
+      terms: false,
+    },
+  });
 
-const StepService: React.FC<StepServiceProps> = ({ selectedService, setSelectedService, onNext }) => {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Select a Service</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {servicesData.map(service => (
-          <label key={service.id} className="flex items-center p-4 border rounded-md cursor-pointer hover:shadow-md transition-shadow">
-            <input
-              type="radio"
-              name="service"
-              value={service.id}
-              checked={selectedService === service.id}
-              onChange={(e) => setSelectedService(e.target.value)}
-              className="mr-2"
-            />
-            <div>
-              <h3 className="font-semibold">{service.name}</h3>
-              <p className="text-sm text-gray-500">{service.description}</p>
-            </div>
-          </label>
-        ))}
-      </div>
-      <div className="mt-6 flex justify-end">
-        <Button onClick={onNext} disabled={!selectedService}>Next</Button>
-      </div>
-    </div>
-  );
-};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-interface StepDetailsProps extends StepProps {
-  address: string;
-  setAddress: (address: string) => void;
-  propertyType: string;
-  setPropertyType: (type: string) => void;
-}
-
-const StepDetails: React.FC<StepDetailsProps> = ({ address, setAddress, propertyType, setPropertyType, onNext }) => {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Property Details</h2>
-      <div className="mb-4">
-        <Label htmlFor="address">Address</Label>
-        <Input
-          type="text"
-          id="address"
-          placeholder="123 Main St"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <Label htmlFor="propertyType">Property Type</Label>
-        <Select value={propertyType} onValueChange={setPropertyType}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="house">House</SelectItem>
-            <SelectItem value="apartment">Apartment</SelectItem>
-            <SelectItem value="townhouse">Townhouse</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="mt-6 flex justify-end">
-        <Button onClick={onNext} disabled={!address || !propertyType}>Next</Button>
-      </div>
-    </div>
-  );
-};
-
-interface StepOptionsProps extends StepProps {
-  additionalOptions: string[];
-  setAdditionalOptions: (options: string[]) => void;
-}
-
-const StepOptions: React.FC<StepOptionsProps> = ({ additionalOptions, setAdditionalOptions, onNext }) => {
-  const options = [
-    'Gutter Guards',
-    'Window Screens',
-    'Skylight Cleaning',
-  ];
-
-  const toggleOption = (option: string) => {
-    if (additionalOptions.includes(option)) {
-      setAdditionalOptions(additionalOptions.filter(opt => opt !== option));
-    } else {
-      setAdditionalOptions([...additionalOptions, option]);
+      if (response.ok) {
+        toast({
+          title: "Success!",
+          description: "Your submission was successful.",
+        })
+        form.reset();
+        if (onComplete) onComplete();
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your submission.",
+        })
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Failed to submit the form.",
+      })
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Additional Options</h2>
-      {options.map(option => (
-        <div key={option} className="flex items-center mb-2">
-          <Checkbox
-            id={option}
-            checked={additionalOptions.includes(option)}
-            onCheckedChange={() => toggleOption(option)}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <Label htmlFor={option} className="ml-2">{option}</Label>
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-      ))}
-      <div className="mt-6 flex justify-end">
-        <Button onClick={onNext}>Next</Button>
-      </div>
-    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="johndoe@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="778-888-8888" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="serviceType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Service Type</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a service" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Window Cleaning">Window Cleaning</SelectItem>
+                    <SelectItem value="Pressure Washing">Pressure Washing</SelectItem>
+                    <SelectItem value="Gutter Cleaning">Gutter Cleaning</SelectItem>
+                    <SelectItem value="Roof Cleaning">Roof Cleaning</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="propertyType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Property Type</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a property type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Residential">Residential</SelectItem>
+                    <SelectItem value="Commercial">Commercial</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Additional Details (Optional)</AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="stories"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Number of Stories</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., 2" type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="windowQuantity"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Number of Windows</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., 15" type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="gutterLength"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Gutter Length (feet)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., 100" type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="squareFootage"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Square Footage</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., 1500" type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Additional Information</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Tell us more about your needs..."
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Do you have any specific concerns or requests?
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="terms"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Accept terms and conditions
+                </FormLabel>
+                <FormDescription>
+                  Please read our terms and conditions <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">here</a>.
+                </FormDescription>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={isSubmitting} className="w-full">
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </Button>
+        <a
+          href="tel:7788087620"
+          className="mt-2 flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold rounded-lg px-5 py-2 shadow w-full transition-all"
+          style={{ minHeight: '44px' }}
+        >
+          <Phone className="w-5 h-5 mr-2" />
+          Call Jayden Now
+        </a>
+      </form>
+    </Form>
   );
 };
 
-interface StepContactProps extends StepProps {
-  name: string;
-  setName: (name: string) => void;
-  email: string;
-  setEmail: (email: string) => void;
-  phone: string;
-  setPhone: (phone: string) => void;
-}
-
-const StepContact: React.FC<StepContactProps> = ({ name, setName, email, setEmail, phone, setPhone, onNext }) => {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
-      <div className="mb-4">
-        <Label htmlFor="name">Name</Label>
-        <Input
-          type="text"
-          id="name"
-          placeholder="John Doe"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          type="email"
-          id="email"
-          placeholder="john.doe@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <Label htmlFor="phone">Phone</Label>
-        <Input
-          type="tel"
-          id="phone"
-          placeholder="123-456-7890"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </div>
-      <div className="mt-6 flex justify-end">
-        <Button onClick={onNext} disabled={!name || !email || !phone}>Submit</Button>
-      </div>
-    </div>
-  );
-};
-
-export default function PriceCalculatorForm() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [selectedService, setSelectedService] = useState('');
-  const [address, setAddress] = useState('');
-  const [propertyType, setPropertyType] = useState('');
-  const [additionalOptions, setAdditionalOptions] = useState<string[]>([]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-
-  const totalSteps = 4;
-
-  const handleNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const calculatePrice = () => {
-    let basePrice = servicesData.find(service => service.id === selectedService)?.price || 0;
-    let optionsPrice = additionalOptions.length * 50;
-    return basePrice + optionsPrice;
-  };
-
-  const totalPrice = calculatePrice();
-
-  return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="flex flex-col md:flex-row gap-8 items-start">
-        <div className="w-full md:w-2/3">
-          <ProgressSteps currentStep={currentStep} totalSteps={totalSteps} />
-          
-          <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
-            {/* Step 1: Service Selection */}
-            {currentStep === 1 && (
-              <StepService 
-                selectedService={selectedService} 
-                setSelectedService={setSelectedService}
-                onNext={handleNextStep}
-              />
-            )}
-            
-            {/* Step 2: Property Details */}
-            {currentStep === 2 && (
-              <StepDetails
-                address={address}
-                setAddress={setAddress}
-                propertyType={propertyType}
-                setPropertyType={setPropertyType}
-                onNext={handleNextStep}
-              />
-            )}
-            
-            {/* Step 3: Additional Options */}
-            {currentStep === 3 && (
-              <StepOptions
-                additionalOptions={additionalOptions}
-                setAdditionalOptions={setAdditionalOptions}
-                onNext={handleNextStep}
-              />
-            )}
-            
-            {/* Step 4: Contact Information */}
-            {currentStep === 4 && (
-              <StepContact
-                name={name}
-                setName={setName}
-                email={email}
-                setEmail={setEmail}
-                phone={phone}
-                setPhone={setPhone}
-                onNext={() => alert('Form submitted!')}
-              />
-            )}
-          </div>
-        </div>
-        
-        <div className="w-full md:w-1/3 sticky top-24">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-xl font-bold mb-4 text-center">Your Estimate</h3>
-            
-            <div className="mb-6 text-center">
-              <img 
-                src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png" 
-                alt="Jayden Fisher - Owner & Lead Technician" 
-                className="w-32 h-32 rounded-full border-4 border-bc-red mx-auto mb-2 object-cover"
-              />
-              <h4 className="font-semibold">Jayden Fisher</h4>
-              <p className="text-sm text-gray-600">Owner & Lead Technician</p>
-            </div>
-            
-            <div className="mb-4">
-              <p className="flex justify-between items-center">
-                <span>Service:</span>
-                <span>{servicesData.find(service => service.id === selectedService)?.name || 'Not Selected'}</span>
-              </p>
-              <p className="flex justify-between items-center">
-                <span>Options:</span>
-                <span>{additionalOptions.length > 0 ? additionalOptions.join(', ') : 'None'}</span>
-              </p>
-            </div>
-            
-            <div className="border-t pt-4">
-              <p className="flex justify-between font-bold">
-                <span>Total:</span>
-                <span>${totalPrice}</span>
-              </p>
-            </div>
-            
-            <div className="mt-6">
-              <p className="text-sm text-gray-600 mb-2">
-                Every job is personally handled or overseen by me, the owner. I guarantee your satisfaction!
-              </p>
-              <a 
-                href="tel:7788087620"
-                className="block w-full py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg text-center"
-              >
-                Or Call: 778-808-7620
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+export default PriceCalculatorForm;
