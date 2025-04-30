@@ -52,7 +52,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+        imagePath="/lovable-uploads/2682ab04-b546-443d-b6dd-7fcea5484204.png"
         darkOverlay={true}
       />
 
@@ -155,6 +155,27 @@ const GutterCleaning = () => {
                 <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
               </TabsContent>
             </Tabs>
+            
+            {/* Add Gutter Sticks */}
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-3">Gutter Sticks - Simple & Affordable Protection</h3>
+              <div className="flex flex-col md:flex-row gap-4">
+                <img 
+                  src="/lovable-uploads/e295cc37-ee0e-4c5c-8283-ed8dbb134ebb.png" 
+                  alt="Gutter Sticks Protection"
+                  className="w-full md:w-1/3 rounded-lg"
+                />
+                <div>
+                  <p className="text-gray-700 mb-3">
+                    An affordable and effective solution to prevent clogged downspouts while allowing water to flow freely through your gutters.
+                  </p>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3">
+                    <p className="text-sm font-bold">Only $70 per drain installation</p>
+                    <p className="text-xs text-gray-600">Ask about adding Gutter Sticks to your next cleaning service</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

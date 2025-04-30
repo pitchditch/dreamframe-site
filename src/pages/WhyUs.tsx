@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import TestimonialsSection from "../components/home/TestimonialsSection";
@@ -20,7 +21,7 @@ const WhyUs = () => {
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/lovable-uploads/d8f773ec-a3c5-45cb-b550-418040d4abdb.png')",
+            backgroundImage: "url('/lovable-uploads/01aaa2af-dbf2-482b-bfde-8e33ffcc2fe0.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat"
@@ -136,7 +137,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Rest of sections */}
+      {/* Local Business Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -160,43 +161,85 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Equipment Section */}
+      {/* Equipment Section - Updated with new equipment images */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png"
-                alt="Industrial Grade Pressure Washer"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                src="/lovable-uploads/da3610ec-9bc2-4f90-97f4-42dcc50b4031.png"
+                alt="Professional Water Fed Pole System"
+                className="w-full h-48 object-contain rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washers</h3>
-              <p className="text-gray-600">Our commercial-grade pressure washers deliver the perfect pressure for each surface, preventing damage while ensuring thorough cleaning.</p>
+              <h3 className="text-xl font-semibold mb-2">Water Fed Pole System</h3>
+              <p className="text-gray-600">Our professional water fed pole system delivers sparkling clean windows without streaks or spots, even on multi-story buildings.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/7b15e617-d426-409a-9e50-d8e5e2f9d6e1.png"
+                src="/lovable-uploads/14476791-d668-49f3-a789-7df623e0e440.png"
                 alt="Professional Surface Cleaner"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                className="w-full h-48 object-contain rounded-lg mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">Professional Surface Cleaner</h3>
               <p className="text-gray-600">Our surface cleaner ensures perfect, streak-free results on driveways and large flat surfaces, saving time while delivering superior results.</p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-md">
               <img 
-                src="/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.png"
-                alt="Eco-Friendly Cleaning Solutions"
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                src="/lovable-uploads/2682ab04-b546-443d-b6dd-7fcea5484204.png"
+                alt="Industrial Grade Pressure Washer"
+                className="w-full h-48 object-contain rounded-lg mb-4"
               />
-              <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Solutions</h3>
-              <p className="text-gray-600">Our environmentally responsible cleaning solutions effectively remove dirt and grime without harming plants, animals, or water systems.</p>
+              <h3 className="text-xl font-semibold mb-2">Industrial Grade Pressure Washer</h3>
+              <p className="text-gray-600">Our commercial-grade pressure washers deliver the perfect pressure for each surface, preventing damage while ensuring thorough cleaning.</p>
             </div>
+          </div>
+          <div className="mt-10 bg-gray-50 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+            <img 
+              src="/lovable-uploads/ef6f4ba6-c84e-480f-8ad1-fd172381ca69.png"
+              alt="Premium Cleaning Solutions"
+              className="w-full h-48 object-contain rounded-lg mb-4"
+            />
+            <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Solutions</h3>
+            <p className="text-gray-600">We use premium, biodegradable cleaning solutions that are tough on dirt but gentle on your property and the environment.</p>
           </div>
           <div className="mt-8 text-center">
             <Button asChild variant="outline" className="bg-bc-red text-white hover:bg-bc-red/90">
               <Link to="/equipment">View Our Full Equipment List</Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: Gutter Stick Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Gutter Protection Solutions</h2>
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/e295cc37-ee0e-4c5c-8283-ed8dbb134ebb.png"
+                alt="Gutter Sticks Protection"
+                className="rounded-lg shadow-xl w-full"
+              />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Gutter Sticks - Affordable Gutter Protection</h3>
+              <p className="text-gray-700 mb-4">
+                Want to keep your gutters flowing freely without the high cost of full gutter guards? Our Gutter Sticks are an affordable, effective solution that prevents clogged downspouts.
+              </p>
+              <ul className="space-y-2 mb-6 list-disc pl-5 text-gray-700">
+                <li>Prevents downspout clogs while allowing water to flow</li>
+                <li>Simple installation in minutes</li>
+                <li>Durable construction that lasts for years</li>
+                <li>Much more affordable than full gutter guards</li>
+                <li>Can be installed during any gutter cleaning service</li>
+              </ul>
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <p className="font-semibold">Special Offer: $70 per drain</p>
+                <p className="text-sm text-gray-600">Add Gutter Sticks to your next cleaning service for ultimate protection against clogged downspouts.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

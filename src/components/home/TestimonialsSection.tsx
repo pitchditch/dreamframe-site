@@ -134,6 +134,8 @@ const TestimonialsSection = () => {
                     location={testimonial.location}
                     rating={testimonial.rating}
                     beforeAfterImage={testimonial.beforeAfterImage}
+                    profileImage={testimonial.profileImage}
+                    gender={testimonial.gender}
                   />
                 </CarouselItem>
               ))}

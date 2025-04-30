@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -96,10 +97,10 @@ const WindowCleaning = () => {
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
       image="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
     >
-      {/* HERO SECTION */}
+      {/* HERO SECTION - Updated with new image */}
       <header className="hero-section bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center relative">
         <img
-          src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
+          src="/lovable-uploads/32fb0749-00dc-46da-9e56-4baf0214c4b5.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover opacity-70"
         />
@@ -170,7 +171,7 @@ const WindowCleaning = () => {
       <section className="py-12 bg-gray-50 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
-          <div className="flex justify-center gap-6 flex-wrap">
+          <div className="flex justify-center gap-12 flex-wrap">
             <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-36 w-auto" />
             <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-36 w-auto" />
             <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-36 w-auto" />
@@ -192,6 +193,7 @@ const WindowCleaning = () => {
             location={windowTestimonial.location}
             rating={"rating" in windowTestimonial ? windowTestimonial.rating : 5}
             beforeAfterImage={"beforeAfterImage" in windowTestimonial ? windowTestimonial.beforeAfterImage : undefined}
+            profileImage={"profileImage" in windowTestimonial ? windowTestimonial.profileImage : undefined}
           />
         </div>
         <div className="text-center">
@@ -204,7 +206,7 @@ const WindowCleaning = () => {
       {/* CTA SECTION - Updated with new image */}
       <section className="relative h-[600px] w-full">
         <img
-          src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
+          src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
           alt="All in one window cleaning service"
           className="absolute inset-0 w-full h-full object-cover brightness-50"
         />

@@ -1,5 +1,6 @@
 
 import { Star } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface TestimonialCardProps {
   quote: string;
@@ -7,9 +8,22 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   beforeAfterImage?: string;
+  profileImage?: string;
+  gender?: 'male' | 'female';
 }
 
-const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }: TestimonialCardProps) => {
+const TestimonialCard = ({ 
+  quote, 
+  name, 
+  location, 
+  rating = 5, 
+  beforeAfterImage,
+  profileImage,
+  gender 
+}: TestimonialCardProps) => {
+  // Get first letter of name for avatar fallback
+  const initials = name?.charAt(0) || "?";
+
   return (
     <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col">
       {beforeAfterImage && (
@@ -29,9 +43,18 @@ const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }
       </div>
       <p className="italic text-gray-600 mb-6 flex-grow">{quote}</p>
       <div className="flex items-center justify-between mt-auto">
-        <div>
-          <h4 className="font-medium">{name}</h4>
-          <p className="text-sm text-gray-500">{location}</p>
+        <div className="flex items-center gap-3">
+          <Avatar className="h-12 w-12 border-2 border-gray-200">
+            {profileImage ? (
+              <AvatarImage src={profileImage} alt={name} />
+            ) : (
+              <AvatarFallback className="bg-bc-red text-white">{initials}</AvatarFallback>
+            )}
+          </Avatar>
+          <div>
+            <h4 className="font-medium">{name}</h4>
+            <p className="text-sm text-gray-500">{location}</p>
+          </div>
         </div>
         <div className="flex">
           {[...Array(5)].map((_, i) => (

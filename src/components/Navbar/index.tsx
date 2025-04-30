@@ -21,7 +21,8 @@ const Navbar = () => {
     '/services/roof-cleaning',
     '/services/window-cleaning',
     '/services/pressure-washing',
-    '/services/post-construction-window-cleaning'
+    '/services/post-construction-window-cleaning',
+    '/services/commercial-pressure-washing'
   ];
 
   useEffect(() => {

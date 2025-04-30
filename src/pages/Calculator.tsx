@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Percent } from 'lucide-react';
 
 const Calculator = () => {
@@ -13,7 +13,7 @@ const Calculator = () => {
         <meta name="description" content="Get an instant quote for window cleaning, pressure washing, and gutter cleaning services in White Rock, Surrey and Metro Vancouver." />
         <meta name="keywords" content="pressure washing quote, window cleaning estimate, gutter cleaning cost, White Rock, Surrey, BC" />
       </Helmet>
-      <div className="container mx-auto py-12">
+      <div className="container mx-auto py-12 mt-20">
         <div className="text-center mb-8">
           <div className="inline-block bg-yellow-400 text-black px-4 py-2 rounded-full font-bold mb-4 animate-pulse">
             <Percent className="inline-block h-4 w-4 mr-1" />
