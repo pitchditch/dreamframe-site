@@ -22,7 +22,9 @@ const Navbar = () => {
     '/services/window-cleaning',
     '/services/pressure-washing',
     '/services/post-construction-window-cleaning',
-    '/services/commercial-pressure-washing'
+    '/services/commercial-pressure-washing',
+    '/services/commercial-window-cleaning',
+    '/contact'
   ];
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const Navbar = () => {
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled ? 'bg-white shadow-md mt-0' : isOverVideo ? 'bg-transparent mt-4' : 'bg-white shadow-md mt-0'
     }`}>
-      <div className="container mx-auto px-4 flex items-center h-16 md:h-20">
+      <div className="container mx-auto px-4 flex items-center h-20 md:h-24">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
           <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />

@@ -16,7 +16,6 @@ const MOSS_REMOVAL_IMG = "/lovable-uploads/41660181-42c5-445c-83e3-23681140d569.
 const BLACK_STAINS_IMG = "/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png";
 const HOUSE_WITH_ROOF_IMG = "/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png";
 const BEFORE_AFTER_IMG = "/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png";
-const HERO_IMG = "/lovable-uploads/cf8d9662-3846-4e1a-8919-9cbaec254941.png";
 
 const benefits = [
   {
@@ -135,8 +134,13 @@ const RoofCleaning = () => {
         </div>
       </section>
 
-      {/* GALLERY/TESTIMONIALS SECTION */}
-      <RoofCleaningGallery />
+      {/* GALLERY/TESTIMONIALS SECTION - Made full width for testimonials */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">What Our Customers Say</h2>
+          <RoofCleaningGallery />
+        </div>
+      </section>
       
       {/* PROCESS SECTION - How we clean roofs */}
       <section className="py-16 bg-white">

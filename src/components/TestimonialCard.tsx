@@ -28,9 +28,9 @@ const TestimonialCard = ({
   let defaultProfileImage = '';
   if (!profileImage && gender) {
     if (gender === 'male') {
-      defaultProfileImage = "/lovable-uploads/f284e442-541c-4c2c-a78a-99d19cc2f2b6.png";  // Default male image
+      defaultProfileImage = "/lovable-uploads/b9161650-0b76-465b-ae2b-8326c1060e6b.png";  // Default male image
     } else {
-      defaultProfileImage = "/lovable-uploads/9b9e093d-592e-4494-b114-0347f4e7fa02.png";  // Default female image
+      defaultProfileImage = "/lovable-uploads/29d0cf32-dd10-4ff2-8e50-80d7d0d791fc.png";  // Default female image
     }
   }
   

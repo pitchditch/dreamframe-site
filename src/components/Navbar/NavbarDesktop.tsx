@@ -2,7 +2,7 @@
 import { NavLink } from './NavLink';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
-import { Phone, User2 } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,7 +25,6 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
           to="/why-us"
           isOverVideo={isOverVideo}
           className={`text-xl flex items-center gap-2 ${textColor} ${hoverColor}`}
-          icon={<User2 className="w-5 h-5" />}
         >
           {t('Why Us')}
         </NavLink>
@@ -42,25 +41,25 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                 <div className="grid gap-3 p-6 w-[400px] bg-white">
                   <NavLink to="/services/window-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/5b73077f-b551-44dc-9605-1b642b923e9c.png" alt="Window Cleaning Icon" className="w-5 h-5 text-bc-red" />
+                      <img src="/lovable-uploads/5ea2936a-5799-455c-a51b-a2302cc92455.png" alt="Window Cleaning Icon" className="w-5 h-5" />
                       <span>{t('Window Cleaning')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/3fd5954c-6554-42f2-8036-c459f4258728.png" alt="House Washing Icon" className="w-5 h-5 text-bc-red" />
+                      <img src="/lovable-uploads/37963757-f18f-4371-8606-2bdcd23c6130.png" alt="House Washing Icon" className="w-5 h-5" />
                       <span>{t('House Washing')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/79b11aec-2ca6-4d2a-8cb8-a4c8c4cba7f3.png" alt="Gutter Cleaning Icon" className="w-5 h-5 text-bc-red" />
+                      <img src="/lovable-uploads/6a32e36d-c1e6-4577-bf73-9cfaffcda0eb.png" alt="Gutter Cleaning Icon" className="w-5 h-5" />
                       <span>{t('Gutter Cleaning')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/roof-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/cb1c7081-e0a4-46fa-97c9-c9c56bc7610c.png" alt="Roof Cleaning Icon" className="w-5 h-5 text-bc-red" />
+                      <img src="/lovable-uploads/833ff556-53ac-4a1e-b533-c0824c3bee97.png" alt="Roof Cleaning Icon" className="w-5 h-5" />
                       <span>{t('Roof Cleaning')}</span>
                     </div>
                   </NavLink>
@@ -78,13 +77,13 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                 <div className="grid gap-3 p-6 w-[400px] bg-white">
                   <NavLink to="/services/commercial-window-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/5b73077f-b551-44dc-9605-1b642b923e9c.png" alt="Window Cleaning Icon" className="w-5 h-5 text-bc-red" />
+                      <img src="/lovable-uploads/5ea2936a-5799-455c-a51b-a2302cc92455.png" alt="Window Cleaning Icon" className="w-5 h-5" />
                       <span>{t('Commercial Window Cleaning')}</span>
                     </div>
                   </NavLink>
                   <NavLink to="/services/commercial-pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/3fd5954c-6554-42f2-8036-c459f4258728.png" alt="House Washing Icon" className="w-5 h-5 text-bc-red" />
+                      <img src="/lovable-uploads/37963757-f18f-4371-8606-2bdcd23c6130.png" alt="House Washing Icon" className="w-5 h-5" />
                       <span>{t('Commercial Pressure Washing')}</span>
                     </div>
                   </NavLink>

@@ -100,7 +100,7 @@ const WindowCleaning = () => {
       {/* HERO SECTION - Updated with new image */}
       <header className="hero-section bg-black min-h-[340px] md:min-h-[460px] flex items-center justify-center relative">
         <img
-          src="/lovable-uploads/32fb0749-00dc-46da-9e56-4baf0214c4b5.png"
+          src="/lovable-uploads/451463ca-738a-4480-94b2-a13b067d2018.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover opacity-70"
         />
@@ -169,9 +169,9 @@ const WindowCleaning = () => {
 
       {/* TRUST BADGES */}
       <section className="py-12 bg-gray-50 text-center">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
-          <div className="flex justify-center gap-12 flex-wrap">
+          <div className="flex justify-center flex-wrap gap-10 md:gap-16">
             <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-36 w-auto" />
             <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-36 w-auto" />
             <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-36 w-auto" />
@@ -206,7 +206,7 @@ const WindowCleaning = () => {
       {/* CTA SECTION - Updated with new image */}
       <section className="relative h-[600px] w-full">
         <img
-          src="/lovable-uploads/14011187-b590-4785-a340-a09f142387a3.png"
+          src="/lovable-uploads/a14209c6-c5bd-48f1-bfde-035698dd282b.png"
           alt="All in one window cleaning service"
           className="absolute inset-0 w-full h-full object-cover brightness-50"
         />
