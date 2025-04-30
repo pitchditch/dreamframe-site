@@ -1,9 +1,8 @@
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
-import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Store, Building, User2, HardHat } from 'lucide-react';
-import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -11,88 +10,155 @@ interface NavbarMobileProps {
   setIsServicesMenuOpen: (isOpen: boolean) => void;
 }
 
-export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
+export const NavbarMobile = ({ 
+  isMenuOpen, 
+  isServicesMenuOpen, 
+  setIsServicesMenuOpen 
+}: NavbarMobileProps) => {
   const { t } = useTranslation();
+  const [isCommercialMenuOpen, setIsCommercialMenuOpen] = useState(false);
+
+  const toggleServicesMenu = () => setIsServicesMenuOpen(!isServicesMenuOpen);
+  const toggleCommercialMenu = () => setIsCommercialMenuOpen(!isCommercialMenuOpen);
 
   return (
-    <>
-      <div 
-        className={`md:hidden transition-all duration-300 overflow-hidden bg-white ${
-          isMenuOpen ? 'max-h-[800px] shadow-lg' : 'max-h-0'
-        }`}
-      >
-        <div className="container mx-auto px-4 py-4">
-          <nav className="flex flex-col space-y-4">
-            <Link to="/why-us" className="flex items-center gap-2 py-2 text-black hover:text-bc-red transition-colors">
-              <User2 className="w-5 h-5" />
-              <span>{t('Why Us')}</span>
+    <div
+      className={`md:hidden fixed top-32 left-0 right-0 bg-white z-50 shadow-lg transition-transform duration-300 transform ${
+        isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
+      <nav className="container mx-auto px-4 py-4">
+        <ul className="flex flex-col space-y-3">
+          <li>
+            <Link 
+              to="/why-us" 
+              className="flex items-center py-3 px-4 hover:bg-gray-100 rounded-lg"
+            >
+              {t('Why Us')}
             </Link>
+          </li>
+          
+          <li>
+            <button
+              type="button"
+              className="w-full flex items-center justify-between py-3 px-4 hover:bg-gray-100 rounded-lg"
+              onClick={toggleServicesMenu}
+            >
+              <span>{t('Residential Services')}</span>
+              {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
             
-            <div>
-              <div 
-                className="flex items-between justify-between py-2 text-black hover:text-bc-red transition-colors cursor-pointer"
-                onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
-              >
-                <span>{t('Services')}</span>
-                {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-              
-              <div className={`overflow-hidden transition-all duration-300 pl-4 ${
-                isServicesMenuOpen ? 'max-h-[500px] py-2' : 'max-h-0'
-              }`}>
-                <div className="flex flex-col space-y-4 border-l-2 border-gray-200 pl-4">
-                  <div className="text-xs font-semibold text-gray-500 uppercase mt-2">{t('Residential')}</div>
-                  <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/793fb1e6-0b4c-47c1-943e-c9d030105d51.png" alt="Window Cleaning Icon" className="w-6 h-6" />
-                    <span>{t('Window Cleaning')}</span>
+            {isServicesMenuOpen && (
+              <ul className="pl-4 mt-2 space-y-2">
+                <li>
+                  <Link 
+                    to="/services/window-cleaning" 
+                    className="flex items-center py-2 px-4 hover:bg-gray-100 rounded-lg"
+                  >
+                    <img
+                      src="/lovable-uploads/31217c0f-9d2d-449d-b4d1-b1a75487da35.png"
+                      alt="Window Cleaning Icon"
+                      className="w-8 h-8 mr-3"
+                    />
+                    {t('Window Cleaning')}
                   </Link>
-                  <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/77f10df6-6f51-4587-8315-7bb702183f0a.png" alt="House Washing Icon" className="w-6 h-6" />
-                    <span>{t('House Washing')}</span>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/pressure-washing" 
+                    className="flex items-center py-2 px-4 hover:bg-gray-100 rounded-lg"
+                  >
+                    <img
+                      src="/lovable-uploads/c9a98dc4-52bc-424c-83d5-05456902d442.png"
+                      alt="House Washing Icon"
+                      className="w-8 h-8 mr-3"
+                    />
+                    {t('House Washing')}
                   </Link>
-                  <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/72e900ed-395f-4bce-ac6d-497e2b58eaf9.png" alt="Gutter Cleaning Icon" className="w-6 h-6" />
-                    <span>{t('Gutter Cleaning')}</span>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/gutter-cleaning" 
+                    className="flex items-center py-2 px-4 hover:bg-gray-100 rounded-lg"
+                  >
+                    <img
+                      src="/lovable-uploads/5d4a1166-dcf6-4ed8-8032-1790c7085c29.png"
+                      alt="Gutter Cleaning Icon"
+                      className="w-8 h-8 mr-3"
+                    />
+                    {t('Gutter Cleaning')}
                   </Link>
-                  <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <img src="/lovable-uploads/da1ceab7-b248-4f75-9a08-09f4ed6a1bf7.png" alt="Roof Cleaning Icon" className="w-6 h-6" />
-                    <span>{t('Roof Cleaning')}</span>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/roof-cleaning" 
+                    className="flex items-center py-2 px-4 hover:bg-gray-100 rounded-lg"
+                  >
+                    <img
+                      src="/lovable-uploads/0e0f9d23-dc80-43e4-9599-eb9fc29013d0.png"
+                      alt="Roof Cleaning Icon"
+                      className="w-8 h-8 mr-3"
+                    />
+                    {t('Roof Cleaning')}
                   </Link>
-                  
-                  <div className="text-xs font-semibold text-gray-500 uppercase mt-4">{t('Commercial')}</div>
-                  <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Store className="w-5 h-5" />
-                    <span>{t('Commercial Window Cleaning')}</span>
-                  </Link>
-                  <Link to="/services/commercial-pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Building className="w-5 h-5" />
-                    <span>{t('Commercial Pressure Washing')}</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          <li>
+            <button
+              type="button"
+              className="w-full flex items-center justify-between py-3 px-4 hover:bg-gray-100 rounded-lg"
+              onClick={toggleCommercialMenu}
+            >
+              <span>{t('Commercial Services')}</span>
+              {isCommercialMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
             
-            <Link to="/contact" className="py-2 text-black hover:text-bc-red transition-colors">
+            {isCommercialMenuOpen && (
+              <ul className="pl-4 mt-2 space-y-2">
+                <li>
+                  <Link 
+                    to="/services/commercial-window-cleaning" 
+                    className="flex items-center py-2 px-4 hover:bg-gray-100 rounded-lg"
+                  >
+                    {t('Commercial Window Cleaning')}
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/commercial-pressure-washing" 
+                    className="flex items-center py-2 px-4 hover:bg-gray-100 rounded-lg"
+                  >
+                    {t('Commercial Pressure Washing')}
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+                   
+          <li>
+            <Link 
+              to="/contact" 
+              className="flex items-center py-3 px-4 hover:bg-gray-100 rounded-lg"
+            >
               {t('Contact')}
             </Link>
-            
-            <div className="pt-4 flex flex-col gap-3">
-              <PriceCalculatorOverlay 
-                buttonText={t("Get a Free Quote")} 
-                className="w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium text-center transition-all" 
-              />
-              <LanguageSelector />
-            </div>
-          </nav>
-        </div>
-      </div>
-      {/* Bottom-right floating Free Quote button for mobile only */}
-      <div className="fixed bottom-6 right-6 md:hidden z-50 flex flex-row gap-4 justify-end px-4">
-        <PriceCalculatorOverlay 
-          buttonText={t("Free Quote")}
-          className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all"
-        />
-      </div>
-    </>
+          </li>
+          
+          <li>
+            <Link 
+              to="/calculator" 
+              className="flex items-center justify-center py-3 px-4 bg-bc-red text-white font-medium rounded-lg hover:bg-red-700"
+            >
+              {t('Get a Free Quote')}
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
 };
+
+export default NavbarMobile;

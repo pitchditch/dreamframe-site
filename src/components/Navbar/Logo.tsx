@@ -9,10 +9,10 @@ interface LogoProps {
 export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
   // Use white logo when over video and not scrolled, otherwise use black logo
   const logoSrc = isScrolled 
-    ? "/lovable-uploads/20f8128e-13a1-4d4e-8b25-a6a9bd50a2d9.png" 
+    ? "/lovable-uploads/de410af0-fb0a-4e0f-8443-e62fb8ab5095.png" 
     : (isOverVideo 
-        ? "/lovable-uploads/26e99db5-291b-4771-84dc-f47439bbdd65.png" 
-        : "/lovable-uploads/20f8128e-13a1-4d4e-8b25-a6a9bd50a2d9.png");
+        ? "/lovable-uploads/c9a98dc4-52bc-424c-83d5-05456902d442.png" 
+        : "/lovable-uploads/de410af0-fb0a-4e0f-8443-e62fb8ab5095.png");
 
   return (
     <Link to="/" className="flex items-center">

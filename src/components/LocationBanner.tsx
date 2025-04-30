@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -13,19 +13,25 @@ const LocationBanner = () => {
     "Mission", "Abbotsford"
   ];
 
-  const [emblaRef] = useEmblaCarousel({ 
-    loop: true,
-    align: "start",
-    dragFree: true,
-    containScroll: "trimSnaps"
-  }, [
-    Autoplay({ 
-      delay: 3000,  // 3 seconds delay between slides for slower rotation
-      stopOnInteraction: false, 
-      playOnInit: true,
-      rootNode: (emblaRoot) => emblaRoot.parentElement
-    })
-  ]);
+  const autoplayOptions = {
+    delay: 2000,
+    stopOnInteraction: false,
+    playOnInit: true,
+    rootNode: (emblaRoot: any) => emblaRoot.parentElement
+  };
+
+  // Create the plugin with autoplay enabled
+  const autoplayPlugin = Autoplay(autoplayOptions);
+
+  const [emblaRef] = useEmblaCarousel(
+    { 
+      loop: true,
+      align: "start",
+      dragFree: true,
+      containScroll: "trimSnaps"
+    }, 
+    [autoplayPlugin]
+  );
 
   return (
     <div className="w-full py-6 bg-gray-800">

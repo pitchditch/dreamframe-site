@@ -38,15 +38,14 @@ const WindowCleaning = () => {
       description="Professional window cleaning with a 100% satisfaction guarantee — or we re-clean for free. Book your free quote today."
       image="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png">
       
-      {/* Updated Hero Section - Full size image with button positioned lower */}
+      {/* Updated Hero Section - With new hero image */}
       <header className="relative h-screen w-full">
         <img
-          src="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png"
+          src="/lovable-uploads/fc1513eb-e5d4-4ac2-ab52-70b930041127.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute bottom-12 left-0 right-0 flex justify-center">
-          {/* Moved button lower (from bottom-20 to bottom-12) */}
           <Button asChild variant="bc-red" size="lg" className="shadow-xl text-lg font-semibold rounded-md">
             <Link to="/calculator">Check Prices & Availability</Link>
           </Button>
@@ -105,31 +104,30 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* TRUST BADGES */}
+      {/* TRUST BADGES - Spread out */}
       <section className="py-12 bg-gray-50 text-center">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
-          <div className="flex justify-center gap-6 flex-wrap">
-            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-48 w-auto" />
-            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-48 w-auto" />
-            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-48 w-auto" />
-            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-48 w-auto" />
+          <div className="flex justify-center flex-wrap">
+            <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-48 w-auto mx-8 mb-4" />
+            <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-48 w-auto mx-8 mb-4" />
+            <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-48 w-auto mx-8 mb-4" />
+            <img src="/lovable-uploads/732df9a1-30af-4d3c-9e7f-569e3c4e30d3.png" alt="Locally Owned & Operated Badge" className="h-48 w-auto mx-8 mb-4" />
           </div>
         </div>
       </section>
 
-      {/* WHAT OUR CLIENTS SAY - Made testimonial larger */}
+      {/* WHAT OUR CLIENTS SAY */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
         <div className="mx-auto mb-8" style={{ maxWidth: '100%' }}>
-          {/* Increased size by removing maxWidth restriction */}
           <TestimonialCard
             quote={windowTestimonial.quote}
             name={windowTestimonial.name}
             location={windowTestimonial.location}
             rating={"rating" in windowTestimonial ? windowTestimonial.rating : 5}
             beforeAfterImage={"beforeAfterImage" in windowTestimonial ? windowTestimonial.beforeAfterImage : undefined}
-            className="scale-110 transform" // Using the className prop properly now
+            className="scale-110 transform"
           />
         </div>
         <div className="text-center">
@@ -139,32 +137,25 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* CTA SECTION */}
-      <RoofCleaningCTA />
+      {/* CTA SECTION - Using original image from hero */}
+      <section className="relative h-screen w-full">
+        <img
+          src="/lovable-uploads/9185f920-c6ac-4208-b4ce-34c34612c549.png"
+          alt="All in one window cleaning service"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_50%]"
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
+          <h2 className="text-4xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
+          <p className="text-xl text-white mb-8 drop-shadow-lg max-w-2xl">
+            Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
+          </p>
+          <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+            <Link to="/calculator">Book Now</Link>
+          </Button>
+        </div>
+      </section>
     </Layout>
-  );
-};
-
-// Refactor RoofCleaningCTA for use in WindowCleaning page
-const RoofCleaningCTA = () => {
-  return (
-    <section className="relative h-screen w-full">
-      <img
-        src="/lovable-uploads/13c3d877-d7e9-4e18-8266-eb45347c292c.png"
-        alt="All in one window cleaning service"
-        className="absolute inset-0 w-full h-full object-cover object-[50%_50%]"
-      />
-      <div className="absolute inset-0 bg-black/60"></div>
-      <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
-        <h2 className="text-4xl font-bold mb-6 text-white drop-shadow-lg">Ready for Sparkling Windows?</h2>
-        <p className="text-xl text-white mb-8 drop-shadow-lg max-w-2xl">
-          Experience our all-in-one cleaning service - Window, Frame & Sill, and Screen Cleaning
-        </p>
-        <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
-          <Link to="/calculator">Book Now</Link>
-        </Button>
-      </div>
-    </section>
   );
 };
 

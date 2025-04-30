@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 pt-16">
         <FAQSection />
         
-        {/* We've removed the duplicate ServiceAreaMap here */}
+        {/* Service Areas */}
         <div className="mt-16">
           <h4 className="text-xl font-semibold mb-6 text-white">Service Areas</h4>
           <LocationBanner />
