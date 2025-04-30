@@ -9,7 +9,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   // Use white logo for hero sections, black logo elsewhere
   const logoSrc = isOverVideo 
     ? "/lovable-uploads/6cea99ac-8a33-4733-aecc-6a92b14a0d7a.png" 
-    : "/lovable-uploads/a4898f2f-f181-4d38-bc4a-5ab83eac1507.png";
+    : "/lovable-uploads/26768530-26cf-4090-a943-3cd737d8dd89.png";
   
   return (
     <Link to="/" className="flex items-center">

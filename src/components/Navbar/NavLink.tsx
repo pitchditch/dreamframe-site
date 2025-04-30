@@ -1,14 +1,16 @@
 
 import { Link, useLocation } from 'react-router-dom';
+import { ReactNode } from 'react';
 
 interface NavLinkProps {
   to: string;
   isOverVideo: boolean;
   children: React.ReactNode;
   className?: string;
+  icon?: ReactNode;
 }
 
-export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkProps) => {
+export const NavLink = ({ to, isOverVideo, children, className = '', icon }: NavLinkProps) => {
   const location = useLocation();
   const isActive = location.pathname === to;
 
@@ -21,7 +23,10 @@ export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkPr
         : `text-black hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
       } after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-bc-red after:left-0 after:bottom-0 after:transition-all hover:after:w-full ${className}`}
     >
-      {children}
+      <div className="flex items-center gap-2">
+        {icon && icon}
+        {children}
+      </div>
     </Link>
   );
 };

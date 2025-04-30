@@ -16,7 +16,7 @@ const WhyUs = () => {
         <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
       </Helmet>
       
-      {/* Hero Section - Updated with new image */}
+      {/* Hero Section - Updated with correct image */}
       <section className="relative h-screen w-full overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
@@ -81,7 +81,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Satisfaction Guarantee Section - Updated with Google Review button */}
+      {/* Satisfaction Guarantee Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -161,7 +161,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Equipment Section - Updated with new equipment images */}
+      {/* Equipment Section - Updated with correct equipment images */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>
@@ -211,7 +211,7 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* NEW: Gutter Stick Section */}
+      {/* Gutter Stick Section - Updated with correct image */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Gutter Protection Solutions</h2>

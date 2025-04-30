@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from './ui/card';
 import { BadgeCheck, Gauge, Droplets, Shield } from 'lucide-react';
@@ -18,7 +19,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/c2c6dc82-6951-4d4c-aebc-58bddca9f70f.png"
+                src="/lovable-uploads/2682ab04-b546-443d-b6dd-7fcea5484204.png"
                 alt="Industrial Grade Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -53,7 +54,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/a0f3300d-6822-4b70-96bf-82c9a50852f7.png"
+                src="/lovable-uploads/14476791-d668-49f3-a789-7df623e0e440.png"
                 alt="Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -91,7 +92,7 @@ const EquipmentSection = () => {
             <div className="md:flex">
               <div className="md:w-1/2 bg-gradient-to-br from-green-50 to-green-100 p-8 flex items-center justify-center">
                 <img 
-                  src="/lovable-uploads/ffe09a0f-7f13-4020-a1e6-1dafad4e9125.png"
+                  src="/lovable-uploads/ef6f4ba6-c84e-480f-8ad1-fd172381ca69.png"
                   alt="SH Cleaning Solution"
                   className="w-full h-auto object-contain max-w-md"
                 />

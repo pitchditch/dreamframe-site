@@ -23,6 +23,18 @@ const TestimonialCard = ({
 }: TestimonialCardProps) => {
   // Get first letter of name for avatar fallback
   const initials = name?.charAt(0) || "?";
+  
+  // Default profile image based on gender if no specific image provided
+  let defaultProfileImage = '';
+  if (!profileImage && gender) {
+    if (gender === 'male') {
+      defaultProfileImage = "/lovable-uploads/f284e442-541c-4c2c-a78a-99d19cc2f2b6.png";  // Default male image
+    } else {
+      defaultProfileImage = "/lovable-uploads/9b9e093d-592e-4494-b114-0347f4e7fa02.png";  // Default female image
+    }
+  }
+  
+  const finalProfileImage = profileImage || defaultProfileImage;
 
   return (
     <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col">
@@ -45,8 +57,8 @@ const TestimonialCard = ({
       <div className="flex items-center justify-between mt-auto">
         <div className="flex items-center gap-3">
           <Avatar className="h-12 w-12 border-2 border-gray-200">
-            {profileImage ? (
-              <AvatarImage src={profileImage} alt={name} />
+            {finalProfileImage ? (
+              <AvatarImage src={finalProfileImage} alt={name} />
             ) : (
               <AvatarFallback className="bg-bc-red text-white">{initials}</AvatarFallback>
             )}
