@@ -50,14 +50,14 @@ const ServiceSlideshow = () => {
     onSelect();
     api.on("select", onSelect);
     
-    // Setup faster continuous autoplay
+    // Setup autoplay
     const autoplay = setInterval(() => {
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
         api.scrollTo(0);
       }
-    }, 1500); // Reduced delay for faster rotation
+    }, 3000);
 
     return () => {
       clearInterval(autoplay);

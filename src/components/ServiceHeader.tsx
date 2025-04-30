@@ -28,7 +28,7 @@ const ServiceHeader = ({
   }, [videoUrl]);
 
   return (
-    <div className="relative w-full h-screen hero-section">
+    <div className="relative w-full h-screen">
       {videoUrl ? (
         <>
           <video

@@ -1,6 +1,5 @@
 
 import { Star } from 'lucide-react';
-import { cn } from "@/lib/utils";
 
 interface TestimonialCardProps {
   quote: string;
@@ -8,39 +7,31 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   beforeAfterImage?: string;
-  profilePic?: string;
-  className?: string;
 }
 
-const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, profilePic, className }: TestimonialCardProps) => {
+const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage }: TestimonialCardProps) => {
   return (
-    <div className={cn("testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col", className)}>
+    <div className="testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col">
       {beforeAfterImage && (
-        <div className="mb-6 relative w-full">
+        <div className="mb-6 overflow-hidden rounded-md relative w-full aspect-[4/3]">
           <img 
             src={beforeAfterImage} 
             alt="Before and after transformation" 
-            className="w-full h-auto max-h-[400px] object-contain rounded-md"
+            className="absolute inset-0 w-full h-full object-cover"
           />
+          <div className="absolute top-2 right-2 bg-bc-red text-white text-xs py-1 px-2 rounded">
+            Before/After
+          </div>
         </div>
       )}
       <div className="flex mb-4">
         <div className="text-4xl font-serif text-red-200 mr-2">❝</div>
       </div>
-      <p className="italic text-gray-600 mb-6 flex-grow text-lg">{quote}</p>
+      <p className="italic text-gray-600 mb-6 flex-grow">{quote}</p>
       <div className="flex items-center justify-between mt-auto">
-        <div className="flex items-center">
-          {profilePic && (
-            <img 
-              src={profilePic} 
-              alt={name} 
-              className="w-12 h-12 rounded-full object-cover mr-3 border border-gray-200"
-            />
-          )}
-          <div>
-            <h4 className="font-medium">{name}</h4>
-            <p className="text-sm text-gray-500">{location}</p>
-          </div>
+        <div>
+          <h4 className="font-medium">{name}</h4>
+          <p className="text-sm text-gray-500">{location}</p>
         </div>
         <div className="flex">
           {[...Array(5)].map((_, i) => (

@@ -1,10 +1,10 @@
 
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
+import { MapPin } from 'lucide-react';
 
 const LocationBanner = () => {
+  const carouselRef = useRef<HTMLDivElement>(null);
   const cities = [
     "White Rock", "Surrey", "South Surrey", "Langley", "Delta", 
     "Tsawwassen", "Ladner", "Richmond", "Vancouver", "North Vancouver", 
@@ -13,36 +13,76 @@ const LocationBanner = () => {
     "Mission", "Abbotsford"
   ];
 
-  const autoplayOptions = {
-    delay: 2000,
-    stopOnInteraction: false,
-    playOnInit: true,
-    rootNode: (emblaRoot: any) => emblaRoot.parentElement
-  };
+  useEffect(() => {
+    const scrollContent = carouselRef.current;
+    let animationId: number;
+    let isHovering = false;
 
-  // Create the plugin with autoplay enabled
-  const autoplayPlugin = Autoplay(autoplayOptions);
+    const scroll = () => {
+      if (scrollContent && !isHovering) {
+        scrollContent.scrollLeft += 1;
+        
+        // Reset to beginning when we reach the end
+        if (scrollContent.scrollLeft >= (scrollContent.scrollWidth - scrollContent.clientWidth)) {
+          scrollContent.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
 
-  const [emblaRef] = useEmblaCarousel(
-    { 
-      loop: true,
-      align: "start",
-      dragFree: true,
-      containScroll: "trimSnaps"
-    }, 
-    [autoplayPlugin]
-  );
+    animationId = requestAnimationFrame(scroll);
+    
+    const handleMouseEnter = () => {
+      isHovering = true;
+    };
+    
+    const handleMouseLeave = () => {
+      isHovering = false;
+    };
+    
+    if (scrollContent) {
+      scrollContent.addEventListener('mouseenter', handleMouseEnter);
+      scrollContent.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      if (scrollContent) {
+        scrollContent.removeEventListener('mouseenter', handleMouseEnter);
+        scrollContent.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
 
   return (
-    <div className="w-full py-6 bg-gray-800">
-      <div className="container mx-auto px-4">        
-        <div className="overflow-hidden" ref={emblaRef} data-embla-api="true">
-          <div className="flex" style={{ backfaceVisibility: 'hidden' }}>
+    <section className="w-full bg-navy text-white py-12 border-t border-white/10">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col text-center">
+          <h3 className="text-2xl md:text-3xl font-bold flex items-center justify-center mb-8 text-white">
+            <MapPin className="h-6 w-6 md:h-7 md:w-7 text-bc-red mr-2" />
+            Areas We Service
+          </h3>
+          
+          <div 
+            ref={carouselRef}
+            className="flex overflow-x-hidden whitespace-nowrap gap-8 py-4"
+          >
             {cities.map((city, index) => (
-              <div key={index} className="flex-none mx-4">
+              <div key={index} className="inline-block min-w-max px-6">
                 <Link 
-                  to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="whitespace-nowrap text-xl font-medium text-white hover:text-bc-red transition-colors"
+                  to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`} 
+                  className="text-xl font-medium text-white hover:text-bc-red transition-colors"
+                >
+                  {city}, BC
+                </Link>
+              </div>
+            ))}
+            {/* Duplicate cities for seamless loop */}
+            {cities.slice(0, 5).map((city, index) => (
+              <div key={`repeat-${index}`} className="inline-block min-w-max px-6">
+                <Link 
+                  to={`/locations/${city.toLowerCase().replace(/\s+/g, '-')}`} 
+                  className="text-xl font-medium text-white hover:text-bc-red transition-colors"
                 >
                   {city}, BC
                 </Link>
@@ -51,7 +91,7 @@ const LocationBanner = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

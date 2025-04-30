@@ -1,276 +1,319 @@
-
-import React from 'react';
-import Layout from '../components/Layout';
-import ServiceHeader from '../components/ServiceHeader';
-import { Shield, Award, Clock, ThumbsUp, Zap, Droplets } from 'lucide-react';
-import TestimonialsSection from '../components/home/TestimonialsSection';
-import EquipmentSection from '../components/EquipmentSection';
-import CallToAction from '../components/CallToAction';
-import { Button } from '@/components/ui/button';
+import { Helmet } from "react-helmet-async";
+import Layout from "../components/Layout";
+import TestimonialsSection from "../components/home/TestimonialsSection";
+import { MapPin, Award, Star, ThumbsUp, Camera, Shield } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
+import LocationBanner from "../components/LocationBanner";
+import { Button } from "@/components/ui/button";
 
 const WhyUs = () => {
   return (
     <Layout>
-      <ServiceHeader 
-        title="Why Choose BC Pressure Washing?"
-        description="Discover what sets our service apart and why we've become the most trusted exterior cleaning company in Surrey & White Rock."
-        imagePath="/lovable-uploads/55d5e426-c21d-4c24-8cf1-0cc45bd0b603.png"
-        darkOverlay={true}
-      />
+      <Helmet>
+        <title>Why Choose Us | BC Pressure Washing</title>
+        <meta name="description" content="Discover why BC Pressure Washing is the top choice for exterior cleaning services in Surrey, White Rock, and Metro Vancouver." />
+      </Helmet>
       
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6">The BC Pressure Washing Difference</h2>
-            <p className="text-lg text-gray-700">
-              When you choose BC Pressure Washing, you're not just hiring a service provider – you're partnering with a local business that truly cares about delivering exceptional results for your home or business.
+      {/* Hero Section - Updated with new image */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: "url('/lovable-uploads/d8f773ec-a3c5-45cb-b550-418040d4abdb.png')",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat"
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
+        </div>
+        <div className="relative h-full flex items-center justify-center px-4 z-10">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 text-shadow">
+              Why Choose BC Pressure Washing?
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 text-shadow">
+              We deliver exceptional exterior cleaning solutions with a focus on quality, reliability, and customer satisfaction.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex items-center mb-4">
-                <Shield className="text-bc-red w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold">Owner-Operated</h3>
-              </div>
-              <p className="text-gray-700">
-                Unlike franchise operations, our owner Jayden personally oversees every job to ensure the highest quality standards are met.
-              </p>
+        </div>
+      </section>
+
+      {/* Trust Badges Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="flex flex-col items-center text-center">
+              <img 
+                src="/lovable-uploads/970e3c9b-99cf-4d26-b9f1-825193b4cc3e.png"
+                alt="Satisfaction Guaranteed"
+                className="w-32 h-32 mb-4"
+              />
+              <h3 className="text-lg font-semibold">100% Satisfaction Guaranteed</h3>
             </div>
-            
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex items-center mb-4">
-                <Award className="text-bc-red w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold">5-Star Rated</h3>
-              </div>
-              <p className="text-gray-700">
-                We maintain a perfect 5-star rating across Google, Facebook, and HomeStars because customer satisfaction is our top priority.
-              </p>
+            <div className="flex flex-col items-center text-center">
+              <img 
+                src="/lovable-uploads/2407d3c7-6540-4457-af2e-671f7d6fe788.png"
+                alt="Fully Insured & Licensed"
+                className="w-32 h-32 mb-4"
+              />
+              <h3 className="text-lg font-semibold">Fully Insured & Licensed</h3>
             </div>
-            
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex items-center mb-4">
-                <Clock className="text-bc-red w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold">Prompt & Reliable</h3>
-              </div>
-              <p className="text-gray-700">
-                We respect your time with punctual arrivals, clear communication, and efficient service completion without sacrificing quality.
-              </p>
+            <div className="flex flex-col items-center text-center">
+              <img 
+                src="/lovable-uploads/279e64d9-3d06-4cc5-8750-e55fa3b27862.png"
+                alt="Locally Owned & Operated"
+                className="w-32 h-32 mb-4"
+              />
+              <h3 className="text-lg font-semibold">Locally Owned & Operated</h3>
             </div>
-            
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex items-center mb-4">
-                <ThumbsUp className="text-bc-red w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold">Satisfaction Guaranteed</h3>
-              </div>
-              <p className="text-gray-700">
-                If you're not 100% satisfied with our work, we'll return and make it right at no additional cost to you.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex items-center mb-4">
-                <Zap className="text-bc-red w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold">Advanced Equipment</h3>
-              </div>
-              <p className="text-gray-700">
-                We invest in professional-grade equipment and eco-friendly cleaning solutions for superior results every time.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex items-center mb-4">
-                <Droplets className="text-bc-red w-8 h-8 mr-3" />
-                <h3 className="text-xl font-bold">Eco-Friendly Approach</h3>
-              </div>
-              <p className="text-gray-700">
-                Our cleaning methods and products are effective while being environmentally responsible and safe for your family and pets.
-              </p>
+            <div className="flex flex-col items-center text-center">
+              <img 
+                src="/lovable-uploads/4a7fc035-4cd5-416d-89bf-b9ee39d95909.png"
+                alt="Eco-Friendly Solutions"
+                className="w-32 h-32 mb-4"
+              />
+              <h3 className="text-lg font-semibold">Eco-Friendly Solutions</h3>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Gutter Sticks Section */}
+
+      {/* Satisfaction Guarantee Section - Updated with Google Review button */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Our Satisfaction Guarantee</h2>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <Camera className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Before & After Documentation</h3>
+                    <p className="text-gray-700">We capture detailed before and after photos of every job, showing you the dramatic transformation of your property.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <Shield className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">100% Satisfaction Promise</h3>
+                    <p className="text-gray-700">If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <Star className="w-6 h-6 text-bc-red flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Customer Reviews</h3>
+                    <p className="text-gray-700">We value your feedback and encourage you to share your experience. Your reviews help us maintain our high standards.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8">
+                <Button
+                  className="bg-bc-red hover:bg-bc-red/90 text-white font-semibold py-4 px-6 rounded-lg w-full md:w-auto flex items-center justify-center gap-2"
+                  onClick={() => window.open('https://g.page/r/CUJj9wYVinVUEBM/review', '_blank')}
+                >
+                  <Star className="w-5 h-5" />
+                  Leave us a Review on Google
+                </Button>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/97ab1ee0-b864-4d9e-b37b-9a526229a18f.png"
+                alt="Before and After Transformation"
+                className="rounded-lg shadow-xl w-full"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-bc-red text-white px-4 py-2 rounded-lg font-semibold">
+                Real Results
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Rest of sections */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Your Local Cleaning Expert</h2>
+              <p className="text-lg text-gray-700 mb-6">
+                As a proud local business, we're deeply connected to our community. You've probably seen our red service vehicle along Marine Drive or throughout White Rock and Surrey. We're not just another cleaning company – we're your neighbors, committed to keeping our community beautiful.
+              </p>
+              <p className="text-lg text-gray-700">
+                When you choose BC Pressure Washing, you're supporting a local business that understands the unique needs of properties in our area.
+              </p>
+            </div>
+            <div className="relative">
               <img 
-                src="/lovable-uploads/0e0f9d23-dc80-43e4-9599-eb9fc29013d0.png" 
-                alt="Gutter stick installation" 
-                className="rounded-lg shadow-lg max-w-full"
+                src="/lovable-uploads/3146f82b-e494-43b8-91c3-4bf5921f2e3a.png"
+                alt="BC Pressure Washing Service Vehicle"
+                className="rounded-lg shadow-xl w-full"
               />
             </div>
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl font-bold mb-6">Gutter Protection System</h2>
-              <p className="text-lg text-gray-700 mb-6">
-                Say goodbye to clogged gutters and expensive repairs. Our gutter stick protection system is an affordable way to prevent leaves and debris from blocking your downspouts while still allowing water to flow freely.
-              </p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <div className="bg-bc-red rounded-full p-1 text-white mr-3 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">Prevents clogged downspouts</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-bc-red rounded-full p-1 text-white mr-3 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">Easy to install - just $70 per drain</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-bc-red rounded-full p-1 text-white mr-3 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">Safer and more effective than mesh screens</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-bc-red rounded-full p-1 text-white mr-3 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">Reduces maintenance costs and extends gutter life</span>
-                </li>
-              </ul>
-              <Button asChild variant="bc-red" className="w-full sm:w-auto px-8 py-3 text-white font-medium">
-                <Link to="/contact">Ask About Installation</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
-      
-      {/* Professional Equipment Section */}
+
+      {/* Equipment Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6">Professional Equipment</h2>
-            <p className="text-lg text-gray-700">
-              We invest in the best equipment to deliver superior results for your property. Our professional-grade tools and cleaning solutions ensure efficient and effective cleaning every time.
-            </p>
+          <h2 className="text-3xl font-bold mb-12 text-center">Professional Equipment</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png"
+                alt="Industrial Grade Pressure Washer"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">State-of-the-Art Pressure Washers</h3>
+              <p className="text-gray-600">Our commercial-grade pressure washers deliver the perfect pressure for each surface, preventing damage while ensuring thorough cleaning.</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/7b15e617-d426-409a-9e50-d8e5e2f9d6e1.png"
+                alt="Professional Surface Cleaner"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Professional Surface Cleaner</h3>
+              <p className="text-gray-600">Our surface cleaner ensures perfect, streak-free results on driveways and large flat surfaces, saving time while delivering superior results.</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <img 
+                src="/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.png"
+                alt="Eco-Friendly Cleaning Solutions"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Solutions</h3>
+              <p className="text-gray-600">Our environmentally responsible cleaning solutions effectively remove dirt and grime without harming plants, animals, or water systems.</p>
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex justify-center mb-4">
-                <img 
-                  src="/lovable-uploads/55d5e426-c21d-4c24-8cf1-0cc45bd0b603.png" 
-                  alt="Water Fed Pole System" 
-                  className="h-48 w-auto object-contain"
-                />
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline" className="bg-bc-red text-white hover:bg-bc-red/90">
+              <Link to="/equipment">View Our Full Equipment List</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Grid */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Benefit 1 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-blue-600 text-white p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                <Award size={24} />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-2">Water Fed Pole System</h3>
-              <p className="text-gray-600 text-center">
-                Pure water technology for streak-free window cleaning up to 60 feet high.
+              <h3 className="text-xl font-bold mb-3">Superior Quality</h3>
+              <p className="text-gray-600">
+                We use professional-grade equipment and eco-friendly cleaning solutions to deliver superior results every time.
               </p>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex justify-center mb-4">
-                <img 
-                  src="/lovable-uploads/fc1513eb-e5d4-4ac2-ab52-70b930041127.png" 
-                  alt="Surface Cleaner" 
-                  className="h-48 w-auto object-contain"
-                />
+            {/* Benefit 2 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-blue-600 text-white p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                <Star size={24} />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-2">Surface Cleaner</h3>
-              <p className="text-gray-600 text-center">
-                Even cleaning pattern for driveways, patios and large surface areas.
+              <h3 className="text-xl font-bold mb-3">Experienced Team</h3>
+              <p className="text-gray-600">
+                Our highly trained technicians have years of experience in all aspects of exterior cleaning.
               </p>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex justify-center mb-4">
-                <img 
-                  src="/lovable-uploads/3e86d1b1-3e04-46f3-885d-2a41fc4eb192.png" 
-                  alt="Pressure Washer" 
-                  className="h-48 w-auto object-contain"
-                />
+            {/* Benefit 3 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-blue-600 text-white p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                <ThumbsUp size={24} />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-2">Pressure Washer</h3>
-              <p className="text-gray-600 text-center">
-                Commercial-grade equipment for efficient and powerful cleaning.
+              <h3 className="text-xl font-bold mb-3">Customer Satisfaction</h3>
+              <p className="text-gray-600">
+                We're not satisfied until you are. Our team is committed to delivering results that exceed your expectations.
               </p>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="flex justify-center mb-4">
-                <img 
-                  src="/lovable-uploads/3e86d1b1-3e04-46f3-885d-2a41fc4eb192.png" 
-                  alt="Premium Cleaning Solutions" 
-                  className="h-48 w-auto object-contain"
-                />
+            {/* Benefit 4 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-blue-600 text-white p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                <MapPin size={24} />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-2">Eco-Friendly Products</h3>
-              <p className="text-gray-600 text-center">
-                Safe for your family, pets, and plants while still providing exceptional cleaning power.
+              <h3 className="text-xl font-bold mb-3">Local Expertise</h3>
+              <p className="text-gray-600">
+                As a local business, we understand the unique needs of properties in Surrey, White Rock, and Metro Vancouver.
+              </p>
+            </div>
+            
+            {/* Benefit 5 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-blue-600 text-white p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                <Award size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Fully Insured</h3>
+              <p className="text-gray-600">
+                We carry comprehensive insurance coverage for your peace of mind and protection.
+              </p>
+            </div>
+            
+            {/* Benefit 6 */}
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-blue-600 text-white p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+                <Star size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-3">100% Satisfaction Guarantee</h3>
+              <p className="text-gray-600">
+                If you're not completely satisfied with our work, we'll return and make it right at no additional cost.
               </p>
             </div>
           </div>
         </div>
       </section>
       
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+      
+      {/* Our Approach */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6">Our Commitment to Excellence</h2>
-            <p className="text-lg text-gray-700">
-              At BC Pressure Washing, we believe that attention to detail and genuine care for our customers' properties sets us apart from other service providers.
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Approach</h2>
+            <p className="text-gray-600">
+              We believe in providing honest, reliable service with transparent pricing and exceptional results.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-bc-red">Fully Insured & Bonded</h3>
-              <p className="text-gray-700 mb-4">
-                We carry comprehensive insurance coverage to protect your property and provide you with peace of mind. Our team is professionally trained and follows strict safety protocols.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Comprehensive Assessment</h3>
+              <p className="text-gray-600 mb-6">
+                Before starting any project, we thoroughly assess your property's specific needs and challenges. This allows us to provide an accurate quote and develop an effective cleaning plan.
               </p>
-              <ul className="list-disc list-inside text-gray-700 space-y-2">
-                <li>$5 million liability insurance</li>
-                <li>WCB coverage for all employees</li>
-                <li>Bonded for your protection</li>
-              </ul>
+              <h3 className="text-2xl font-bold mb-4">Customized Solutions</h3>
+              <p className="text-gray-600">
+                We understand that every property is unique. Our team tailors our cleaning methods to address your specific concerns while protecting your property's surfaces.
+              </p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-bc-red">Transparent Pricing</h3>
-              <p className="text-gray-700 mb-4">
-                We provide clear, upfront pricing with no hidden fees or surprise charges. Our quotes are detailed and comprehensive, so you know exactly what you're paying for.
+            <div>
+              <h3 className="text-2xl font-bold mb-4">State-of-the-Art Equipment</h3>
+              <p className="text-gray-600 mb-6">
+                We invest in the latest cleaning technology to deliver superior results efficiently and safely. Our equipment allows us to tackle even the toughest cleaning challenges.
               </p>
-              <ul className="list-disc list-inside text-gray-700 space-y-2">
-                <li>Free, no-obligation estimates</li>
-                <li>Competitive rates with no hidden fees</li>
-                <li>Value-based pricing for exceptional service</li>
-              </ul>
+              <h3 className="text-2xl font-bold mb-4">Environmental Responsibility</h3>
+              <p className="text-gray-600">
+                We use eco-friendly cleaning solutions whenever possible and employ water conservation techniques to minimize environmental impact.
+              </p>
             </div>
           </div>
         </div>
       </section>
-      
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6">What Our Customers Say</h2>
-            <p className="text-lg text-gray-700">
-              Don't just take our word for it. Here's what our satisfied customers have to say about our services.
-            </p>
-          </div>
-          
-          <TestimonialsSection />
-        </div>
-      </section>
-      
-      <CallToAction />
+
+      <LocationBanner />
     </Layout>
   );
 };

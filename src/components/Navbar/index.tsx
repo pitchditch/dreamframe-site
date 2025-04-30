@@ -13,34 +13,23 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // All pages will have dark overlays that need white text
+  // Pages with dark backgrounds that need white text
   const darkOverlayPages = [
-    '/',
-    '/home',
-    '/why-us',
-    '/services/gutter-cleaning',
+    '/', 
+    '/why-us', 
+    '/services/gutter-cleaning', 
     '/services/roof-cleaning',
     '/services/window-cleaning',
     '/services/pressure-washing',
-    '/services/post-construction-window-cleaning',
-    '/services/commercial-pressure-washing',
-    '/services/commercial-window-cleaning',
-    '/contact',
-    '/about',
-    '/testimonials',
-    '/services'
+    '/services/post-construction-window-cleaning'
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      // For any page with a hero section
-      const heroSection = document.querySelector('.hero-section');
-      
-      if (heroSection) {
-        const heroBottom = heroSection.getBoundingClientRect().bottom;
-        setIsScrolled(window.scrollY > 100);
-        setIsOverVideo(heroBottom > 0);
-      }
+      const currentScrollY = window.scrollY;
+      const shouldBeOverVideo = darkOverlayPages.includes(location.pathname) && currentScrollY < 60;
+      setIsOverVideo(shouldBeOverVideo);
+      setIsScrolled(currentScrollY > 10);
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -52,6 +41,8 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
+    
+    // Reset isOverVideo state when route changes
     const isOnDarkPage = darkOverlayPages.includes(location.pathname);
     setIsOverVideo(isOnDarkPage);
   }, [location.pathname]);
@@ -59,17 +50,13 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 h-32 ${
-        isScrolled 
-          ? 'bg-white shadow-md' 
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4 flex items-center h-full">
-        <Logo isOverVideo={isOverVideo} isScrolled={isScrolled} />
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white shadow-md mt-0' : isOverVideo ? 'bg-transparent mt-4' : 'bg-white shadow-md mt-0'
+    }`}>
+      <div className="container mx-auto px-4 flex items-center h-16 md:h-20">
+        <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverVideo={isOverVideo} isScrolled={isScrolled} />
+          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
           <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>

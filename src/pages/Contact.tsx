@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Mail, MapPin, Clock, Send, Check } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
 import ChatAssistant from '@/components/ChatAssistant';
 
@@ -60,14 +59,13 @@ const Contact = () => {
         <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
       </Helmet>
       
-      <div className="relative bg-black text-white h-screen">
-        <img 
-          src="/lovable-uploads/19fe5024-10bc-4e6b-8f83-f7e2e783f1c2.png"
-          alt="Contact BC Pressure Washing"
-          className="absolute inset-0 w-full h-full object-cover"
+      <div className="relative bg-black text-white">
+        <div 
+          className="absolute inset-0 bg-no-repeat bg-cover opacity-50"
+          style={{ backgroundImage: "url('/lovable-uploads/6738e734-49a8-4b65-b729-00b81bde1d76.png')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
-        <div className="relative container mx-auto px-4 py-24 text-center z-10 h-full flex flex-col items-center justify-center">
+        <div className="banner-overlay"></div>
+        <div className="relative container mx-auto px-4 py-24 text-center z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
             Our team is ready to answer your questions and provide a free, no-obligation quote for your service needs.
@@ -192,23 +190,6 @@ const Contact = () => {
                   </button>
                 </div>
               </form>
-
-              <div className="mt-8 flex items-center p-4 bg-gray-50 rounded-lg">
-                <div className="mr-4">
-                  <img 
-                    src="/lovable-uploads/7bdca265-04f1-4e31-b06e-c5b5dbb5f141.png" 
-                    alt="Jayden Fisher" 
-                    className="w-16 h-16 rounded-full object-cover border-2 border-bc-red"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center">
-                    <Check className="w-5 h-5 text-green-500 mr-2" />
-                    <p className="font-semibold text-gray-700">Personally checked by me</p>
-                  </div>
-                  <p className="text-gray-600 text-sm">Every inquiry is reviewed by Jayden, the owner</p>
-                </div>
-              </div>
             </div>
             
             <div className="bg-gray-50 p-8 rounded-lg h-fit">

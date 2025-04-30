@@ -6,7 +6,7 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
-import GutterSticks from '@/components/services/gutter-cleaning/GutterSticks';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const GutterCleaning = () => {
   const benefits = [{
@@ -52,7 +52,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/1aca42ba-9763-4344-8276-492eefcfd81a.png"
+        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
         darkOverlay={true}
       />
 
@@ -117,21 +117,9 @@ const GutterCleaning = () => {
         <p className="section-subtitle mb-12">
           Ask about our gutter protection systems to keep debris out while letting water flow
         </p>
-        
-        <div className="relative h-0 pb-[56.25%] mt-4 mb-8 rounded-xl overflow-hidden">
-          <iframe
-            src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
-            title="Gutter protection video"
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            className="absolute top-0 left-0 w-full h-full rounded-xl"
-          ></iframe>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-content">
-            <h3 className="text-2xl font-bold mb-4">Leaf Guard Gutter Protection</h3>
+            <h3 className="text-2xl font-bold mb-4">Gutter Guards &amp; Protectors</h3>
             <p className="text-gray-600 mb-6">
               We offer high-quality gutter protection systems that prevent leaves, twigs, and debris from entering your gutters while still allowing water to flow through. These systems can dramatically reduce the frequency of gutter cleanings and protect your home from water damage.
             </p>
@@ -142,28 +130,33 @@ const GutterCleaning = () => {
               <li>Extends the lifespan of your gutters</li>
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
+            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{paddingBottom:"56.25%"}}>
+              <iframe
+                src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
+                title="Gutter protection video"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full rounded-xl"
+              ></iframe>
+            </div>
           </div>
-          <div className="image-content">
-            <img alt="Leaf Guard product" src="/lovable-uploads/9a06a16e-f3cd-4be3-8482-4b46fce3adca.png" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+          <div className="image-content flex flex-col gap-6">
+            <Tabs defaultValue="product" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="product">Product</TabsTrigger>
+                <TabsTrigger value="installation">Installation</TabsTrigger>
+              </TabsList>
+              <TabsContent value="product" className="mt-6">
+                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+                <img alt="Gutter cleaning collage" src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" className="rounded-lg shadow-lg w-full h-auto" />
+              </TabsContent>
+              <TabsContent value="installation" className="mt-6">
+                <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
-        
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-12">
-          <h4 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            Not Recommended: Screen Netting
-          </h4>
-          <div className="flex items-center">
-            <img src="/lovable-uploads/b6e1b56e-31c1-4910-a4ec-b2631099b62c.png" alt="Screen netting problems" className="w-1/3 h-auto rounded-lg mr-4" />
-            <p className="text-sm text-gray-800">
-              We don't install screen netting as it often causes more problems than it solves. Debris gets trapped on top, water overflows, and screens collapse into gutters requiring more frequent cleaning.
-            </p>
-          </div>
-        </div>
-        
-        <GutterSticks />
       </section>
       <CallToAction />
     </Layout>;

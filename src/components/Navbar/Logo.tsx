@@ -1,26 +1,31 @@
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface LogoProps {
   isOverVideo: boolean;
-  isScrolled: boolean;
 }
 
-export const Logo = ({ isOverVideo, isScrolled }: LogoProps) => {
-  // Use white logo when over video and not scrolled, otherwise use black logo
-  const logoSrc = isScrolled 
-    ? "/lovable-uploads/de410af0-fb0a-4e0f-8443-e62fb8ab5095.png" 
-    : (isOverVideo 
-        ? "/lovable-uploads/c9a98dc4-52bc-424c-83d5-05456902d442.png" 
-        : "/lovable-uploads/de410af0-fb0a-4e0f-8443-e62fb8ab5095.png");
-
+export const Logo = ({ isOverVideo }: LogoProps) => {
+  // Use new logo image everywhere for navbar (ignore isOverVideo)
   return (
     <Link to="/" className="flex items-center">
-      <img
-        src={logoSrc}
-        alt="BC Pressure Washing Logo"
-        className="h-40 w-auto object-contain" 
-      />
+      <div
+        className="relative h-24 md:h-32 flex items-center"
+        style={{
+          minWidth: '180px',
+          maxWidth: '320px',
+        }}
+      >
+        <img
+          src="/lovable-uploads/6cea99ac-8a33-4733-aecc-6a92b14a0d7a.png"
+          alt="BC Pressure Washing Property Maintenance logo"
+          className="h-full w-auto object-contain"
+          style={{
+            maxWidth: '320px',
+            minHeight: '70px',
+          }}
+        />
+      </div>
     </Link>
   );
 };

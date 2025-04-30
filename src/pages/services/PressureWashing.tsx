@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../components/Layout';
@@ -15,7 +14,7 @@ const DRIVEWAYS_IMG = "/lovable-uploads/5c38ab2e-3c2b-4fd1-9c94-b4715ce79479.png
 const PATIOS_DECKS_IMG = "/lovable-uploads/82d69edb-6210-433b-a762-4610f454fc2c.png";
 const FENCES_IMG = "/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png";
 const FEATURED_PROJECT_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
-const PROPERTY_BACK_TO_LIFE_IMG = "/lovable-uploads/d2a05c53-e519-43eb-a837-d026ae7c42fc.png";
+const PROPERTY_BACK_TO_LIFE_IMG = "/lovable-uploads/c0370288-8f0e-4e72-a406-f0140ba8ddd5.png";
 
 // Owner operated image (headshot)
 const OWNER_IMG = "/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png";
@@ -276,31 +275,29 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 8. CALL TO ACTION - Updated with full width image */}
-      <section className="relative min-h-[400px] w-full">
-        <div className="absolute inset-0 w-full h-full">
+      {/* 8. CALL TO ACTION - Updated with new image */}
+      <section className="relative min-h-[400px]">
+        <div className="absolute inset-0">
           <img
-            src={PROPERTY_BACK_TO_LIFE_IMG}
+            src="/lovable-uploads/6792b6a1-2ada-44bf-8ccd-b2665245e13d.png"
             alt="Let's bring your property back to life"
             className="w-full h-full object-cover brightness-50"
           />
         </div>
-        <div className="relative z-10 container mx-auto px-4 py-16 text-center h-full flex items-center justify-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">Let's Bring Your Property Back to Life</h2>
-            <Button 
-              asChild
-              variant="default" 
-              size="lg" 
-              className="bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
-            >
-              <Link to="/calculator">Get My Free Quote &rarr;</Link>
-            </Button>
-          </div>
+        <div className="relative z-10 container mx-auto px-4 py-16 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">Let's Bring Your Property Back to Life</h2>
+          <Button 
+            asChild
+            variant="default" 
+            size="lg" 
+            className="bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
+          >
+            <Link to="/calculator">Get My Free Quote &rarr;</Link>
+          </Button>
         </div>
       </section>
 
-      <ServiceAreaMap />
+      {/* Removed Areas We Service section */}
     </Layout>
   );
 };

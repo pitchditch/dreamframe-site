@@ -19,21 +19,9 @@ interface StepContactProps {
   form: UseFormReturn<any>;
   onNext: () => void;
   onBack: () => void;
-  formData: any;
-  updateFormData: (data: any) => void;
 }
 
-const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepContactProps) => {
-  const handleInputChange = (field: string, value: any) => {
-    updateFormData({ 
-      ...formData, 
-      contact: { 
-        ...(formData.contact || {}), 
-        [field]: value 
-      } 
-    });
-  };
-
+const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -49,14 +37,7 @@ const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepCon
             <FormItem>
               <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="John Doe" 
-                  {...field} 
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange('fullName', e.target.value);
-                  }}
-                />
+                <Input placeholder="John Doe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -70,14 +51,7 @@ const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepCon
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="your@email.com" 
-                  {...field} 
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange('email', e.target.value);
-                  }}
-                />
+                <Input placeholder="your@email.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,14 +65,7 @@ const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepCon
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="(123) 456-7890" 
-                  {...field} 
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange('phone', e.target.value);
-                  }}
-                />
+                <Input placeholder="(123) 456-7890" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -131,10 +98,7 @@ const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepCon
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    onSelect={(date) => {
-                      field.onChange(date);
-                      updateFormData({ ...formData, date: date });
-                    }}
+                    onSelect={field.onChange}
                     initialFocus
                     disabled={(date) => date < new Date()}
                   />
@@ -156,10 +120,6 @@ const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepCon
                   placeholder="123 Marine Dr, White Rock, BC" 
                   defaultValue="Marine Dr, White Rock, BC"
                   {...field} 
-                  onChange={(e) => {
-                    field.onChange(e);
-                    updateFormData({ ...formData, serviceAddress: e.target.value });
-                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -177,10 +137,6 @@ const StepContact = ({ form, onNext, onBack, formData, updateFormData }: StepCon
                 <Textarea
                   placeholder="Any special instructions or requirements..."
                   {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    updateFormData({ ...formData, notes: e.target.value });
-                  }}
                 />
               </FormControl>
               <FormMessage />

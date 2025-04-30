@@ -13,7 +13,7 @@ const Equipment = () => {
           {/* Pressure Washer */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/62495749-666c-4de3-8ea2-a75f2a6d5f65.png"
+              src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png"
               alt="Industrial Grade Pressure Washer"
               className="rounded-lg shadow-lg w-full"
             />
@@ -24,7 +24,7 @@ const Equipment = () => {
           {/* Surface Cleaner */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/62fd1ba0-0d42-45c3-aaab-13388b68ecbc.png"
+              src="/lovable-uploads/7b15e617-d426-409a-9e50-d8e5e2f9d6e1.png"
               alt="Professional Surface Cleaner"
               className="rounded-lg shadow-lg w-full"
             />
@@ -32,26 +32,26 @@ const Equipment = () => {
             <p className="text-gray-700">Our surface cleaner ensures perfect, streak-free results on driveways and large flat surfaces, saving time while delivering superior results.</p>
           </div>
 
-          {/* Eco-Friendly Products */}
+          {/* Roof Wash Solution */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/48b4e22a-2819-496f-85a1-9b082d06f29f.png"
-              alt="Eco-Friendly Cleaning Products"
+              src="/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.png"
+              alt="Premium Roof Wash Solution"
               className="rounded-lg shadow-lg w-full"
             />
-            <h2 className="text-2xl font-bold">Eco-Friendly Products</h2>
-            <p className="text-gray-700">We use environmentally responsible cleaning solutions that are both effective and safe for the environment.</p>
+            <h2 className="text-2xl font-bold">Premium Roof Wash Solution</h2>
+            <p className="text-gray-700">We use eco-friendly, professional-grade cleaning solutions that guarantee years of protection against moss growth for your siding, roof, and driveway.</p>
           </div>
 
-          {/* Water Fed Pole System */}
+          {/* Company Vehicle */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/a7384dd7-0b0a-4875-9d2a-674d3e133d21.png"
-              alt="Water Fed Pole System"
+              src="/lovable-uploads/4054bbd7-3ebd-48d0-845c-3ec712ac612e.png"
+              alt="BC Pressure Washing Company Vehicle"
               className="rounded-lg shadow-lg w-full"
             />
-            <h2 className="text-2xl font-bold">Water Fed Pole System</h2>
-            <p className="text-gray-700">Our professional water fed pole system allows us to safely clean windows up to 60 feet high while keeping both feet firmly on the ground.</p>
+            <h2 className="text-2xl font-bold">Our Local Service Vehicle</h2>
+            <p className="text-gray-700">You've probably seen our distinctive red vehicle parked at White Rock Beach. As a locally owned business with deep roots in the community, we're proud to serve the area where we grew up.</p>
           </div>
         </div>
       </div>

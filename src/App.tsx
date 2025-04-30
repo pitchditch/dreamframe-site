@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
@@ -11,7 +12,6 @@ import WindowCleaning from './pages/services/WindowCleaning';
 import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
 import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
-import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning';
 import Testimonials from './pages/Testimonials';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
@@ -19,7 +19,6 @@ import NotFound from './pages/NotFound';
 import Equipment from './pages/Equipment';
 import ZipUploader from './pages/ZipUploader';
 import WhyUs from './pages/WhyUs';
-import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
 
 function App() {
   return (
@@ -36,14 +35,12 @@ function App() {
         <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
         <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
         <Route path="/services/post-construction-cleaning" element={<PostConstructionWindowCleaning />} />
-        <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/zip-uploader" element={<ZipUploader />} />
         <Route path="/why-us" element={<WhyUs />} />
-        <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

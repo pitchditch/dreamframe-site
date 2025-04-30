@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Card, CardContent } from './ui/card';
-import { Gauge, Droplets } from 'lucide-react';
+import { BadgeCheck, Gauge, Droplets, Shield } from 'lucide-react';
 
 const EquipmentSection = () => {
   return (
@@ -14,13 +13,13 @@ const EquipmentSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {/* Pressure Washer */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+          {/* Pressure Washing Equipment */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/436745ca-c3aa-4d5f-973e-c6b8f22a4747.png"
-                alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
+                src="/lovable-uploads/c2c6dc82-6951-4d4c-aebc-58bddca9f70f.png"
+                alt="Industrial Grade Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
               <div className="absolute top-0 right-0 bg-bc-red text-white py-2 px-4 rounded-bl-lg font-semibold">
@@ -30,56 +29,104 @@ const EquipmentSection = () => {
                 </div>
               </div>
             </div>
+            
             <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Industrial-Grade Pressure Washer</h3>
-              <p className="text-gray-600">Professional LIFAN 4500 PSI unit for superior cleaning power.</p>
+              <h3 className="text-xl font-bold mb-2">Industrial-Grade Pressure Washing</h3>
+              <ul className="space-y-2">
+                <li className="flex items-center">
+                  <BadgeCheck className="text-bc-red mr-2" size={20} />
+                  <span>Professional LIFAN 4500 PSI unit</span>
+                </li>
+                <li className="flex items-center">
+                  <BadgeCheck className="text-bc-red mr-2" size={20} />
+                  <span>Surface cleaner attachment</span>
+                </li>
+                <li className="flex items-center">
+                  <BadgeCheck className="text-bc-red mr-2" size={20} />
+                  <span>Hot water capability for enhanced cleaning</span>
+                </li>
+              </ul>
             </CardContent>
           </Card>
-
-          {/* Surface Cleaner */}
+          
+          {/* Window Cleaning Equipment */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/9e7ea980-71ed-4bc3-a1b8-00d8f5a1c444.png"
-                alt="Professional Surface Cleaner" 
+                src="/lovable-uploads/a0f3300d-6822-4b70-96bf-82c9a50852f7.png"
+                alt="Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
+              <div className="absolute top-0 right-0 bg-blue-500 text-white py-2 px-4 rounded-bl-lg font-semibold">
+                <div className="flex items-center">
+                  <Droplets className="mr-1" size={18} />
+                  <span>Pro-Grade</span>
+                </div>
+              </div>
             </div>
+            
             <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Surface Cleaner</h3>
-              <p className="text-gray-600">Even pressure distribution for perfect results on flat surfaces.</p>
+              <h3 className="text-xl font-bold mb-2">Advanced Surface Cleaning</h3>
+              <ul className="space-y-2">
+                <li className="flex items-center">
+                  <BadgeCheck className="text-blue-500 mr-2" size={20} />
+                  <span>Even pressure distribution</span>
+                </li>
+                <li className="flex items-center">
+                  <BadgeCheck className="text-blue-500 mr-2" size={20} />
+                  <span>Perfect for driveways & patios</span>
+                </li>
+                <li className="flex items-center">
+                  <BadgeCheck className="text-blue-500 mr-2" size={20} />
+                  <span>Faster cleaning with better results</span>
+                </li>
+              </ul>
             </CardContent>
           </Card>
-
-          {/* Premium Cleaning Solution */}
-          <Card className="overflow-hidden border-0 shadow-lg">
-            <div className="relative h-64">
-              <img 
-                src="/lovable-uploads/ce22cfde-e318-434c-83bd-cb37f7c9b13f.png"
-                alt="Premium Cleaning Solution" 
-                className="w-full h-full object-contain p-4"
-              />
+        </div>
+        
+        {/* Cleaning Solutions Section */}
+        <div className="mt-16 max-w-6xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-1/2 bg-gradient-to-br from-green-50 to-green-100 p-8 flex items-center justify-center">
+                <img 
+                  src="/lovable-uploads/ffe09a0f-7f13-4020-a1e6-1dafad4e9125.png"
+                  alt="SH Cleaning Solution"
+                  className="w-full h-auto object-contain max-w-md"
+                />
+              </div>
+              <div className="md:w-2/3 p-8">
+                <h3 className="text-2xl font-bold mb-4">Professional-Grade Solutions</h3>
+                <p className="text-gray-600 mb-6">
+                  We use commercial-grade sodium hypochlorite (SH) and other professional cleaning solutions to achieve the best results while being safe for your property.
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <BadgeCheck className="text-green-600 mt-1 mr-2" size={20} />
+                    <div>
+                      <p className="font-semibold">Safe & Effective</p>
+                      <p className="text-gray-600 text-sm">Professional-grade solutions that get results</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <BadgeCheck className="text-green-600 mt-1 mr-2" size={20} />
+                    <div>
+                      <p className="font-semibold">Expert Application</p>
+                      <p className="text-gray-600 text-sm">Proper dilution and application techniques</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <BadgeCheck className="text-green-600 mt-1 mr-2" size={20} />
+                    <div>
+                      <p className="font-semibold">Property Safe</p>
+                      <p className="text-gray-600 text-sm">Won't damage surfaces or landscaping</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Premium Cleaning Solutions</h3>
-              <p className="text-gray-600">Professional-grade sanitizing solution for effective cleaning of mold and mildew.</p>
-            </CardContent>
-          </Card>
-
-          {/* Water Fed Pole System */}
-          <Card className="overflow-hidden border-0 shadow-lg">
-            <div className="relative h-64">
-              <img 
-                src="/lovable-uploads/b202dcd4-825a-4449-9c24-7e462df45793.png"
-                alt="Professional Water Fed Pole System" 
-                className="w-full h-full object-contain p-4"
-              />
-            </div>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Water Fed Pole System</h3>
-              <p className="text-gray-600">Advanced pure water technology for streak-free window cleaning up to 60 feet.</p>
-            </CardContent>
-          </Card>
+          </div>
         </div>
       </div>
     </section>

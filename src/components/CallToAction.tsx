@@ -1,58 +1,51 @@
 
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { useTranslation } from '@/hooks/use-translation';
+import PriceCalculatorOverlay from './PriceCalculatorOverlay';
 
-interface Props {
+interface CallToActionProps {
   title?: string;
   subtitle?: string;
   primaryButtonText?: string;
-  primaryButtonLink?: string;
   secondaryButtonText?: string;
+  primaryButtonLink?: string;
   secondaryButtonLink?: string;
-  background?: string;
-  className?: string;
-  buttonText?: string;
-  variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "bc-red";
+  backgroundImage?: string;
+  hideImage?: boolean;
 }
-
-const CallToAction: React.FC<Props> = ({ 
-  title, 
-  subtitle, 
-  primaryButtonText, 
-  primaryButtonLink = '/contact',
-  secondaryButtonText,
-  secondaryButtonLink,
-  background,
-  className,
-  buttonText, // Support for the legacy prop
-  variant = "default" // Support for the legacy prop
-}) => {
-  const { t } = useTranslation();
-  
-  const defaultTitle = t('Ready to Transform Your Property?');
-  const defaultSubtitle = t('Contact us today for a free, no-obligation quote on our professional cleaning services.');
-  const defaultPrimaryButtonText = buttonText || t('Get a Free Quote');
-  
-  return (
-    <section className={`py-16 ${background || 'bg-gray-100'} ${className || ''}`}>
-      <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-4">{title || defaultTitle}</h2>
-        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">{subtitle || defaultSubtitle}</p>
+const CallToAction = ({
+  title = "Ready to Transform Your Property?",
+  subtitle = "Contact us today to schedule a service or request a free, no-obligation quote.",
+  primaryButtonText = "Check Price & Availability",
+  secondaryButtonText = "Contact Us",
+  primaryButtonLink = "/contact",
+  secondaryButtonLink = "/contact",
+  backgroundImage = "/lovable-uploads/1d7d3c0f-21a5-4ae2-80c7-7f156797449f.png",
+  hideImage = false
+}: CallToActionProps) => {
+  return <section className="relative py-16">
+      {/* Background image with overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
+        <h2 className="text-3xl font-bold mb-4 text-white text-shadow">{title}</h2>
+        <p className="text-gray-300 mb-8">{subtitle}</p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button asChild variant={variant === "default" ? "bc-red" : variant}>
-            <Link to={primaryButtonLink}>{primaryButtonText || defaultPrimaryButtonText}</Link>
-          </Button>
-          {secondaryButtonText && (
-            <Button asChild variant="outline">
-              <Link to={secondaryButtonLink || '#'}>{secondaryButtonText}</Link>
-            </Button>
-          )}
+          <PriceCalculatorOverlay 
+            buttonText={primaryButtonText}
+            variant="bc-red"
+            className="py-3 px-6 text-lg font-medium"
+          />
+          <Link to={secondaryButtonLink}>
+            <button className="btn-secondary w-full sm:w-auto py-3 px-6 text-lg font-medium">{secondaryButtonText}</button>
+          </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CallToAction;
