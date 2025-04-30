@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import TestimonialCard from '../TestimonialCard';
-import { testimonials } from '@/data/testimonials';
+import { Link } from 'react-router-dom';
+import { Button } from '../ui/button';
 import { 
   Carousel, 
   CarouselContent, 
@@ -11,10 +12,62 @@ import {
   CarouselPrevious 
 } from "../ui/carousel";
 import { useTranslation } from '@/hooks/use-translation';
-import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Home, DropletIcon, Wind, Landmark } from 'lucide-react';
+
+// Updated testimonials with profile pictures
+const testimonials = [
+  {
+    quote: "Fantastic job on our windows - they haven't been this clean in years! Jayden was professional, on time, and very thorough. Highly recommend!",
+    name: "Michael S.",
+    location: "White Rock",
+    rating: 5,
+    profilePic: "/lovable-uploads/08608f2b-7fc3-4072-b23d-7e952c0fa11d.png",
+    service: "window-cleaning"
+  },
+  {
+    quote: "BC Pressure Washing did an amazing job on our driveway and siding. The difference is night and day. Very fair pricing too!",
+    name: "Sarah L.",
+    location: "Surrey",
+    rating: 5,
+    profilePic: "/lovable-uploads/d7897310-f61c-46c9-a39f-913b18fcb804.png",
+    service: "pressure-washing",
+    beforeAfterImage: "/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png"
+  },
+  {
+    quote: "Jayden was extremely professional and did an excellent job on our gutters. He even took pictures to show us the before and after. Great service!",
+    name: "Robert T.",
+    location: "Langley",
+    rating: 5,
+    profilePic: "/lovable-uploads/1545a398-5061-4498-a6b5-fb551fedcd98.png",
+    service: "gutter-cleaning"
+  },
+  {
+    quote: "I'm impressed with the roof cleaning service. Our roof looks brand new, and Jayden was very careful with our property. Will use again!",
+    name: "Jennifer P.",
+    location: "White Rock",
+    rating: 5,
+    profilePic: "/lovable-uploads/5798947a-ce45-46db-9624-7b328b13e4f3.png",
+    service: "roof-cleaning"
+  },
+  {
+    quote: "Top-notch service! Our windows have never looked better. Prompt, professional, and attention to detail that's unmatched.",
+    name: "David K.",
+    location: "South Surrey",
+    rating: 5,
+    profilePic: "/lovable-uploads/a0c81c19-f375-42b5-babd-172d2d79e9fc.png",
+    service: "window-cleaning",
+    beforeAfterImage: "/lovable-uploads/69ca0b54-8ba8-406d-95e2-6af087c55541.png"
+  },
+  {
+    quote: "We had our gutters cleaned and roof moss-treated. Great job, reliable service, and no mess left behind. Already recommended to neighbors!",
+    name: "Patricia G.",
+    location: "Delta",
+    rating: 5,
+    profilePic: "/lovable-uploads/d3af8233-d630-4f16-869b-bf58f0d60777.png",
+    service: "roof-cleaning"
+  }
+];
 
 const TestimonialsSection = () => {
   const [api, setApi] = useState<any>();
@@ -134,6 +187,7 @@ const TestimonialsSection = () => {
                     location={testimonial.location}
                     rating={testimonial.rating}
                     beforeAfterImage={testimonial.beforeAfterImage}
+                    profilePic={testimonial.profilePic}
                   />
                 </CarouselItem>
               ))}

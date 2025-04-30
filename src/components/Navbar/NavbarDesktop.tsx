@@ -44,7 +44,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/window-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/793fb1e6-0b4c-47c1-943e-c9d030105d51.png"
+                        src="/lovable-uploads/b58c338b-4145-4088-955a-b24f0e27d6c8.png"
                         alt="Window Cleaning Icon"
                         className="w-12 h-12"
                       />
@@ -54,7 +54,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/77f10df6-6f51-4587-8315-7bb702183f0a.png"
+                        src="/lovable-uploads/b6ffe3d8-1634-4ce5-9b90-7cfbd0786bb8.png"
                         alt="House Washing Icon"
                         className="w-12 h-12"
                       />
@@ -64,7 +64,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/72e900ed-395f-4bce-ac6d-497e2b58eaf9.png"
+                        src="/lovable-uploads/d75b08be-fb18-4e25-9fbd-562b1f80bb0d.png"
                         alt="Gutter Cleaning Icon"
                         className="w-12 h-12"
                       />
@@ -74,7 +74,7 @@ export const NavbarDesktop = ({ isOverVideo, isScrolled }: { isOverVideo: boolea
                   <NavLink to="/services/roof-cleaning" isOverVideo={false}>
                     <div className="flex items-center gap-2">
                       <img
-                        src="/lovable-uploads/da1ceab7-b248-4f75-9a08-09f4ed6a1bf7.png"
+                        src="/lovable-uploads/73e791c5-4310-4021-9253-7885deb7fa30.png"
                         alt="Roof Cleaning Icon"
                         className="w-12 h-12"
                       />

@@ -6,6 +6,7 @@ import { Shield, Award, Clock, ThumbsUp, Zap, Droplets } from 'lucide-react';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import EquipmentSection from '../components/EquipmentSection';
 import CallToAction from '../components/CallToAction';
+import GutterSticksSection from '../components/services/gutter-cleaning/GutterSticksWhyUs';
 
 const WhyUs = () => {
   return (
@@ -13,7 +14,7 @@ const WhyUs = () => {
       <ServiceHeader 
         title="Why Choose BC Pressure Washing?"
         description="Discover what sets our service apart and why we've become the most trusted exterior cleaning company in Surrey & White Rock."
-        imagePath="/lovable-uploads/a7795068-4c6d-43c9-8787-b16c31b3ebfe.png"
+        imagePath="/lovable-uploads/b58a8335-ea16-40f5-b920-5182d2afd511.png"
         darkOverlay={true}
       />
       
@@ -89,6 +90,8 @@ const WhyUs = () => {
           </div>
         </div>
       </section>
+      
+      <GutterSticksSection />
       
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">

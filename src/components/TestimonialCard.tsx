@@ -8,10 +8,11 @@ interface TestimonialCardProps {
   location: string;
   rating?: number;
   beforeAfterImage?: string;
+  profilePic?: string;
   className?: string;
 }
 
-const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, className }: TestimonialCardProps) => {
+const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, profilePic, className }: TestimonialCardProps) => {
   return (
     <div className={cn("testimonial-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all h-full flex flex-col", className)}>
       {beforeAfterImage && (
@@ -28,9 +29,18 @@ const TestimonialCard = ({ quote, name, location, rating = 5, beforeAfterImage, 
       </div>
       <p className="italic text-gray-600 mb-6 flex-grow text-lg">{quote}</p>
       <div className="flex items-center justify-between mt-auto">
-        <div>
-          <h4 className="font-medium">{name}</h4>
-          <p className="text-sm text-gray-500">{location}</p>
+        <div className="flex items-center">
+          {profilePic && (
+            <img 
+              src={profilePic} 
+              alt={name} 
+              className="w-12 h-12 rounded-full object-cover mr-3 border border-gray-200"
+            />
+          )}
+          <div>
+            <h4 className="font-medium">{name}</h4>
+            <p className="text-sm text-gray-500">{location}</p>
+          </div>
         </div>
         <div className="flex">
           {[...Array(5)].map((_, i) => (

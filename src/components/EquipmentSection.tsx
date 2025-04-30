@@ -19,7 +19,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/7821a5dc-e710-49a3-afc1-9034c9cdd5f9.png"
+                src="/lovable-uploads/436745ca-c3aa-4d5f-973e-c6b8f22a4747.png"
                 alt="Lifan Hydro Pro 4500 PSI Pressure Washer" 
                 className="w-full h-full object-contain p-4"
               />
@@ -40,7 +40,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/e6147c23-3c2b-459a-954c-e3da4d7a2b8c.png"
+                src="/lovable-uploads/9e7ea980-71ed-4bc3-a1b8-00d8f5a1c444.png"
                 alt="Professional Surface Cleaner" 
                 className="w-full h-full object-contain p-4"
               />
@@ -51,17 +51,17 @@ const EquipmentSection = () => {
             </CardContent>
           </Card>
 
-          {/* Sodium Hypochlorite */}
+          {/* Premium Cleaning Solution */}
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/2ec71038-8508-4fd3-827e-fd3ab4f508e7.png"
-                alt="Sodium Hypochlorite" 
+                src="/lovable-uploads/ce22cfde-e318-434c-83bd-cb37f7c9b13f.png"
+                alt="Premium Cleaning Solution" 
                 className="w-full h-full object-contain p-4"
               />
             </div>
             <CardContent className="p-6">
-              <h3 className="text-xl font-bold mb-2">Sodium Hypochlorite</h3>
+              <h3 className="text-xl font-bold mb-2">Premium Cleaning Solutions</h3>
               <p className="text-gray-600">Professional-grade sanitizing solution for effective cleaning of mold and mildew.</p>
             </CardContent>
           </Card>
@@ -70,7 +70,7 @@ const EquipmentSection = () => {
           <Card className="overflow-hidden border-0 shadow-lg">
             <div className="relative h-64">
               <img 
-                src="/lovable-uploads/47b281d6-52f3-4d4b-a0ff-903ccdc5ca76.png"
+                src="/lovable-uploads/b202dcd4-825a-4449-9c24-7e462df45793.png"
                 alt="Professional Water Fed Pole System" 
                 className="w-full h-full object-contain p-4"
               />

@@ -6,25 +6,25 @@ import { useTranslation } from '@/hooks/use-translation';
 const services = [
   {
     title: "House Washing",
-    icon: "/lovable-uploads/a7795068-4c6d-43c9-8787-b16c31b3ebfe.png",
+    icon: "/lovable-uploads/b6ffe3d8-1634-4ce5-9b90-7cfbd0786bb8.png",
     description: "Restore your home's exterior to its original beauty",
     link: "/services/pressure-washing"
   },
   {
     title: "Window Cleaning",
-    icon: "/lovable-uploads/fc4e5db6-afaf-4ed5-80f1-49ed92eaae64.png",
+    icon: "/lovable-uploads/b58c338b-4145-4088-955a-b24f0e27d6c8.png",
     description: "Crystal clear views from every window",
     link: "/services/window-cleaning"
   },
   {
     title: "Roof Cleaning",
-    icon: "/lovable-uploads/b277f287-eedc-48c0-af69-cb6760e63e17.png",
+    icon: "/lovable-uploads/73e791c5-4310-4021-9253-7885deb7fa30.png",
     description: "Remove moss, algae, and protect your investment",
     link: "/services/roof-cleaning"
   },
   {
     title: "Gutter Cleaning",
-    icon: "/lovable-uploads/0557429b-a316-4415-bcab-c9cde3ccf278.png",
+    icon: "/lovable-uploads/d75b08be-fb18-4e25-9fbd-562b1f80bb0d.png",
     description: "Prevent water damage and maintain proper drainage",
     link: "/services/gutter-cleaning"
   }
