@@ -19,6 +19,7 @@ interface ServiceArea {
 const ServiceAreasMap = () => {
   const [activeArea, setActiveArea] = useState(0);
   const intervalRef = useRef<number | null>(null);
+  const [api, setApi] = useState<any>(null);
   
   const serviceAreas: ServiceArea[] = [
     {
@@ -50,7 +51,9 @@ const ServiceAreasMap = () => {
   useEffect(() => {
     // Auto rotation of carousel
     intervalRef.current = window.setInterval(() => {
-      setActiveArea((prev) => (prev + 1) % serviceAreas.length);
+      if (api) {
+        api.scrollNext();
+      }
     }, 5000);
 
     return () => {
@@ -58,7 +61,22 @@ const ServiceAreasMap = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [serviceAreas.length]);
+  }, [api, serviceAreas.length]);
+
+  // Update active slide indicator when api changes slide
+  useEffect(() => {
+    if (!api) return;
+
+    const handleSelect = () => {
+      setActiveArea(api.selectedScrollSnap());
+    };
+
+    api.on('select', handleSelect);
+    
+    return () => {
+      api.off('select', handleSelect);
+    };
+  }, [api]);
 
   return (
     <section className="py-16 bg-black text-white">
@@ -76,8 +94,7 @@ const ServiceAreasMap = () => {
                   align: "start",
                   loop: true,
                 }}
-                value={activeArea}
-                onValueChange={(value) => setActiveArea(value)}
+                setApi={setApi}
               >
                 <CarouselContent>
                   {serviceAreas.map((area, index) => (
@@ -102,7 +119,7 @@ const ServiceAreasMap = () => {
                   {serviceAreas.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setActiveArea(index)}
+                      onClick={() => api?.scrollTo(index)}
                       className={`w-3 h-3 rounded-full transition-all ${
                         index === activeArea ? "bg-bc-red" : "bg-gray-600"
                       }`}
