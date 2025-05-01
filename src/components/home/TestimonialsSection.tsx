@@ -5,6 +5,11 @@ import { testimonials } from '@/data/testimonials';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
+// Define an extended testimonial type that includes the profileImage
+interface TestimonialWithProfile extends Testimonial {
+  profileImage?: string;
+}
+
 const profileImages = [
   "/lovable-uploads/b69bdd37-7a37-43f0-a192-58ba9655e94f.png",
   "/lovable-uploads/8c769aeb-d888-49ed-a370-c4d0945e1eb7.png",
@@ -21,7 +26,7 @@ const profileImages = [
 ];
 
 const TestimonialsSection = () => {
-  const [featuredTestimonials, setFeaturedTestimonials] = useState(testimonials.slice(0, 3));
+  const [featuredTestimonials, setFeaturedTestimonials] = useState<TestimonialWithProfile[]>([]);
 
   // Assign profile images to testimonials
   useEffect(() => {
