@@ -12,7 +12,7 @@ const clearServiceWorkerCache = async () => {
     // First, aggressively unregister any existing service workers
     await unregister();
     
-    // Clear caches to ensure fresh content
+    // Clear browser cache for this site
     if ('caches' in window) {
       const cacheNames = await caches.keys();
       await Promise.all(
@@ -20,6 +20,10 @@ const clearServiceWorkerCache = async () => {
       );
       console.log('All caches cleared successfully');
     }
+    
+    // Clear localStorage and sessionStorage
+    localStorage.clear();
+    sessionStorage.clear();
   } catch (error) {
     console.error('Error clearing cache:', error);
   }
@@ -27,6 +31,7 @@ const clearServiceWorkerCache = async () => {
 
 // Initialize the application
 const initializeApp = async () => {
+  // Clear cache and service workers first
   await clearServiceWorkerCache();
   
   // Create a container element if it doesn't exist
@@ -42,7 +47,11 @@ const initializeApp = async () => {
   const container = document.getElementById("root");
 
   // Set a timestamp for version tracking
-  (window as any).appVersion = Date.now();
+  const appVersion = Date.now();
+  (window as any).appVersion = appVersion;
+  
+  // Store the latest version in localStorage
+  localStorage.setItem('bcpressurewashing-version', appVersion.toString());
 
   // Track page view in Google Analytics
   if (typeof window.gtag === 'function') {
@@ -59,14 +68,27 @@ const initializeApp = async () => {
     root.render(
       <StrictMode>
         <HelmetProvider>
-          <App key={(window as any).appVersion.toString()} />
+          <App key={appVersion.toString()} />
         </HelmetProvider>
       </StrictMode>
     );
     console.log("App rendered successfully");
+    console.log("App version:", appVersion);
     
-    // Log the app version for debugging
-    console.log("App version:", (window as any).appVersion);
+    // Add a visible indicator of the current version
+    if (process.env.NODE_ENV === 'development') {
+      const versionIndicator = document.createElement('div');
+      versionIndicator.style.position = 'fixed';
+      versionIndicator.style.bottom = '5px';
+      versionIndicator.style.right = '5px';
+      versionIndicator.style.backgroundColor = 'rgba(0,0,0,0.3)';
+      versionIndicator.style.color = 'white';
+      versionIndicator.style.padding = '3px 6px';
+      versionIndicator.style.borderRadius = '4px';
+      versionIndicator.style.fontSize = '10px';
+      versionIndicator.innerText = `v${appVersion}`;
+      document.body.appendChild(versionIndicator);
+    }
   } catch (error) {
     console.error("Error rendering the app:", error);
     // Display a visible error in the UI
@@ -75,13 +97,13 @@ const initializeApp = async () => {
         <div style="color: red; padding: 20px;">
           <h2>Error rendering the application</h2>
           <p>${error instanceof Error ? error.message : 'Unknown error'}</p>
-          <button onclick="window.location.reload()">Reload page</button>
+          <button onclick="window.location.reload(true)">Force Reload</button>
         </div>
       `;
     }
   }
 
-  // Register the service worker for better caching with improved error handling
+  // Register the service worker with improved configuration
   register({
     onSuccess: () => {
       console.log('Service worker registered successfully');
@@ -94,8 +116,8 @@ const initializeApp = async () => {
         
         // Reload once the new service worker is activated
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          console.log('New service worker activated, reloading page');
-          window.location.reload();
+          console.log('New service worker activated, reloading page with cache bust');
+          window.location.href = window.location.href + '?v=' + Date.now();
         });
       }
     }
@@ -104,23 +126,34 @@ const initializeApp = async () => {
 
 // Add global error handlers
 window.addEventListener('error', (event) => {
+  console.error('Global error caught:', event.message);
+  
+  // For serious errors, try to recover by reloading
   if (event.message && (
     event.message.includes('SSL') || 
     event.message.includes('protocol') || 
-    event.message.includes('network')
+    event.message.includes('network') ||
+    event.message.includes('revert') ||
+    event.message.includes('version')
   )) {
-    console.error('Network or SSL error detected:', event.message);
+    console.error('Critical error detected, attempting recovery');
     
-    // For SSL errors, inform the user and provide a refresh option
+    // Add a recovery UI
     const container = document.getElementById("root");
     if (container) {
       container.innerHTML += `
         <div style="position: fixed; top: 0; left: 0; right: 0; background: #f44336; color: white; padding: 8px; text-align: center; z-index: 9999;">
-          Connection issue detected. <button onclick="window.location.reload()" style="background: white; color: #f44336; border: none; padding: 4px 8px; margin-left: 8px; cursor: pointer; border-radius: 4px;">Refresh</button>
+          Error detected. <button onclick="window.location.reload(true)" style="background: white; color: #f44336; border: none; padding: 4px 8px; margin-left: 8px; cursor: pointer; border-radius: 4px;">Force Refresh</button>
         </div>
       `;
     }
   }
+});
+
+// Handle offline/online events
+window.addEventListener('online', () => {
+  console.log('App is online, reloading for fresh content');
+  window.location.reload();
 });
 
 // Initialize the application
