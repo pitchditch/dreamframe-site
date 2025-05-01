@@ -135,7 +135,7 @@ const initializeApp = async () => {
       const lastLoad = window.sessionStorage.getItem('app-last-load');
       if (lastLoad && lastLoad !== APP_VERSION.toString()) {
         console.log('Detected stale content, forcing reload...');
-        window.location.reload(true);
+        window.location.reload();
       }
     });
   } catch (error) {
@@ -146,7 +146,7 @@ const initializeApp = async () => {
         <div style="color: red; padding: 20px;">
           <h2>Error rendering the application</h2>
           <p>${error instanceof Error ? error.message : 'Unknown error'}</p>
-          <button onclick="window.location.reload(true)">Force Reload</button>
+          <button onclick="window.location.reload()">Force Reload</button>
         </div>
       `;
     }
@@ -185,15 +185,16 @@ window.addEventListener('error', (event) => {
     event.message.includes('version')
   )) {
     console.error('Critical error detected, attempting recovery by reloading');
-    window.location.reload(true);
+    window.location.reload();
   }
 });
 
 // Force reload when coming back online
 window.addEventListener('online', () => {
   console.log('App is online, reloading for fresh content');
-  window.location.reload(true);
+  window.location.reload();
 });
 
 // Initialize the application
 initializeApp();
+
