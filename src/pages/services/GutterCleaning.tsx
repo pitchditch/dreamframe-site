@@ -6,6 +6,7 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const GutterCleaning = () => {
   const benefits = [{
@@ -51,7 +52,7 @@ const GutterCleaning = () => {
         title="Gutter Cleaning" 
         description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
         icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/c8c02384-aa85-48f9-94f6-609578d1ca39.png"
+        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
         darkOverlay={true}
       />
 
@@ -141,32 +142,19 @@ const GutterCleaning = () => {
             </div>
           </div>
           <div className="image-content flex flex-col gap-6">
-            <img 
-              src="/lovable-uploads/61b48172-e11a-487e-b320-e47166cbe27a.png" 
-              alt="Leaf Guard Protection" 
-              className="w-full rounded-lg shadow-lg"
-            />
-            
-            {/* Add Gutter Sticks */}
-            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3">Gutter Sticks - Simple & Affordable Protection</h3>
-              <div className="flex flex-col md:flex-row gap-4">
-                <img 
-                  src="/lovable-uploads/3340dcaf-c78c-4821-a00d-7ac307d220b9.png" 
-                  alt="Gutter Sticks Protection"
-                  className="w-full md:w-1/3 rounded-lg"
-                />
-                <div>
-                  <p className="text-gray-700 mb-3">
-                    An affordable and effective solution to prevent clogged downspouts while allowing water to flow freely through your gutters.
-                  </p>
-                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3">
-                    <p className="text-sm font-bold">Only $70 per drain installation</p>
-                    <p className="text-xs text-gray-600">Ask about adding Gutter Sticks to your next cleaning service</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Tabs defaultValue="product" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="product">Product</TabsTrigger>
+                <TabsTrigger value="installation">Installation</TabsTrigger>
+              </TabsList>
+              <TabsContent value="product" className="mt-6">
+                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
+                <img alt="Gutter cleaning collage" src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" className="rounded-lg shadow-lg w-full h-auto" />
+              </TabsContent>
+              <TabsContent value="installation" className="mt-6">
+                <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </section>

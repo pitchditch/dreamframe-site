@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import { ArrowRight, Shield, Star, Check } from 'lucide-react';
+import { ArrowRight, Shield, Star, Check, Phone } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const DESKTOP_VIDEO = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0";
@@ -80,6 +80,7 @@ const HeroSection = () => {
             </div>
           </div>
 
+          {/* Remove phone number in hero */}
           <form onSubmit={handleZipCodeSubmit} className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end mb-8">
             <div className="relative">
               <input 

@@ -6,22 +6,17 @@ interface LogoProps {
 }
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
-  // Use white logo for hero sections, black logo elsewhere
-  const logoSrc = isOverVideo 
-    ? "/lovable-uploads/6cea99ac-8a33-4733-aecc-6a92b14a0d7a.png" 
-    : "/lovable-uploads/96ea7343-bc1f-4e90-bf79-830e4591c216.png";
-  
   return (
     <Link to="/" className="flex items-center">
       <div
-        className="relative h-24 md:h-32 flex items-center"
+        className="relative h-20 flex items-center"
         style={{
           minWidth: '180px',
           maxWidth: '320px',
         }}
       >
         <img
-          src={logoSrc}
+          src="/lovable-uploads/9e37448c-3cbc-4d0b-ad81-5d95e973c4f5.png"
           alt="BC Pressure Washing Property Maintenance logo"
           className="h-full w-auto object-contain"
           style={{

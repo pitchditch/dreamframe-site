@@ -12,7 +12,6 @@ import WindowCleaning from './pages/services/WindowCleaning';
 import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
 import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
-import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
 import Testimonials from './pages/Testimonials';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
@@ -36,7 +35,6 @@ function App() {
         <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
         <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
         <Route path="/services/post-construction-cleaning" element={<PostConstructionWindowCleaning />} />
-        <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
