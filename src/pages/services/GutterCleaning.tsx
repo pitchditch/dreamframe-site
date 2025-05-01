@@ -6,7 +6,6 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const GutterCleaning = () => {
   const benefits = [{
@@ -49,10 +48,10 @@ const GutterCleaning = () => {
 
   return <Layout>
       <ServiceHeader 
-        title="Gutter Cleaning" 
-        description="Professional gutter cleaning services to protect your home from water damage and maintain your property's value." 
-        icon={<Droplets size={48} />}
-        imagePath="/lovable-uploads/bba21852-c38f-4adc-a87a-cd27a5a26d86.png"
+        title="" 
+        description="" 
+        icon={<Droplets size={48} className="opacity-0" />}
+        imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png"
         darkOverlay={true}
       />
 
@@ -141,20 +140,8 @@ const GutterCleaning = () => {
               ></iframe>
             </div>
           </div>
-          <div className="image-content flex flex-col gap-6">
-            <Tabs defaultValue="product" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="product">Product</TabsTrigger>
-                <TabsTrigger value="installation">Installation</TabsTrigger>
-              </TabsList>
-              <TabsContent value="product" className="mt-6">
-                <img alt="Gutter guard product" src="/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg" className="rounded-lg shadow-lg w-full h-auto object-scale-down mb-4" />
-                <img alt="Gutter cleaning collage" src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" className="rounded-lg shadow-lg w-full h-auto" />
-              </TabsContent>
-              <TabsContent value="installation" className="mt-6">
-                <img src="/lovable-uploads/80ecf163-0140-4688-86f4-213a4bfaa5bd.png" alt="Gutter guard installation" className="rounded-lg shadow-lg w-full h-auto" />
-              </TabsContent>
-            </Tabs>
+          <div className="image-content">
+            <img alt="Leaf Guard" src="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png" className="rounded-lg shadow-lg w-full h-auto" />
           </div>
         </div>
       </section>

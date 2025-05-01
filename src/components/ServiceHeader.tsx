@@ -1,5 +1,7 @@
 
 import { ReactNode, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 interface ServiceHeaderProps {
   title: ReactNode;
@@ -8,6 +10,7 @@ interface ServiceHeaderProps {
   imagePath?: string;
   videoUrl?: string;
   darkOverlay?: boolean;
+  showButton?: boolean;
 }
 
 const ServiceHeader = ({
@@ -16,7 +19,8 @@ const ServiceHeader = ({
   icon,
   imagePath,
   videoUrl,
-  darkOverlay = false
+  darkOverlay = false,
+  showButton = true
 }: ServiceHeaderProps) => {
   useEffect(() => {
     if (videoUrl) {
@@ -41,9 +45,16 @@ const ServiceHeader = ({
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
-              {icon && <div className="inline-block text-bc-red mb-2">{icon}</div>}
-              <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>
-              <p className="text-lg md:text-xl text-gray-200">{description}</p>
+              {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
+              {title && <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>}
+              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {showButton && (
+                <div className="mt-8">
+                  <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+                    <Link to="/calculator">Check Prices & Availability</Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </>
@@ -55,11 +66,16 @@ const ServiceHeader = ({
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />
-          <div className="relative h-full container mx-auto px-4 flex items-center justify-center z-10">
+          <div className="relative h-full container mx-auto px-4 flex items-center justify-end flex-col pb-20 z-10">
             <div className="text-center max-w-4xl">
-              {icon && <div className="inline-block text-bc-red mb-4">{icon}</div>}
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">{title}</h1>
-              <p className="text-lg md:text-xl text-white text-shadow-sm">{description}</p>
+              {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
+              {title && <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">{title}</h1>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">{description}</p>}
+              {showButton && (
+                <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+                  <Link to="/calculator">Check Prices & Availability</Link>
+                </Button>
+              )}
             </div>
           </div>
         </>

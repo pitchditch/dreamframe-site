@@ -1,5 +1,8 @@
 
-import { Shield, Clock, ThumbsUp } from 'lucide-react';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Shield, Clock } from 'lucide-react';
 
 const ServiceDescription = () => {
   return (
@@ -8,12 +11,12 @@ const ServiceDescription = () => {
         <div className="md:w-1/2">
           <h2 className="text-3xl font-bold mb-6">Professional Window Cleaning for Commercial Properties</h2>
           <p className="text-gray-600 mb-6">
-            Clean, streak-free windows make a significant difference in how clients, customers, and employees perceive your business. Our commercial window cleaning service uses advanced pure water technology and specialized equipment to safely clean windows at any height, providing exceptional results without disrupting your business operations.
+            Our commercial window cleaning services are designed to meet the unique needs of businesses, office buildings, retail stores, and multi-story properties. Using specialized equipment and techniques, we deliver spotless, streak-free results that enhance your property's appearance and professionalism.
           </p>
           <p className="text-gray-600 mb-6">
-            Whether you manage a small retail store, a multi-story office building, or a large commercial complex, our professional team has the expertise and equipment to keep your windows spotless year-round. We offer flexible scheduling including after-hours and weekend service to minimize disruption to your business.
+            We understand that clean windows make a significant difference in how customers perceive your business. Our services help you maintain a polished, professional appearance while extending the life of your windows and maximizing natural light in your commercial space.
           </p>
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-8 mb-8">
             <div className="flex items-center">
               <Shield className="text-bc-red mr-2" size={24} />
               <span className="font-medium">Fully Insured</span>
@@ -22,17 +25,16 @@ const ServiceDescription = () => {
               <Clock className="text-bc-red mr-2" size={24} />
               <span className="font-medium">Flexible Scheduling</span>
             </div>
-            <div className="flex items-center">
-              <ThumbsUp className="text-bc-red mr-2" size={24} />
-              <span className="font-medium">100% Satisfaction</span>
-            </div>
           </div>
+          <Button asChild variant="bc-red">
+            <Link to="/calculator">Get a Free Quote</Link>
+          </Button>
         </div>
         <div className="md:w-1/2">
           <img 
-            src="/lovable-uploads/8456f0a6-f534-4cc6-96ec-3c56bec589c2.png" 
-            alt="Commercial window cleaning service" 
-            className="rounded-lg shadow-lg w-full h-auto"
+            src="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png" 
+            alt="Commercial Window Cleaning" 
+            className="rounded-lg shadow-lg w-full"
           />
         </div>
       </div>

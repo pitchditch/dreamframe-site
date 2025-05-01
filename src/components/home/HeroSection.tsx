@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import { ArrowRight, Shield, Star, Check, Phone } from 'lucide-react';
+import { ArrowRight, Shield, Star, Check } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const DESKTOP_VIDEO = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0";
@@ -69,7 +69,7 @@ const HeroSection = () => {
           <div className="mt-4 mb-8">
             <div className="inline-flex items-center bg-black/30 px-4 py-2 rounded-full">
               <img 
-                src="/lovable-uploads/c47d9786-e883-4e04-9e43-be7f182735bb.png"
+                src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png"
                 alt="Jayden Fisher"
                 className="w-12 h-12 rounded-full mr-3 border-2 border-white"
               />
@@ -80,7 +80,6 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Remove phone number in hero */}
           <form onSubmit={handleZipCodeSubmit} className="flex flex-col sm:flex-row gap-4 animate-on-scroll justify-end mb-8">
             <div className="relative">
               <input 

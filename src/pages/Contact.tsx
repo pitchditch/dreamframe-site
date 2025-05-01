@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
@@ -59,19 +60,15 @@ const Contact = () => {
         <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
       </Helmet>
       
-      <div className="relative bg-black text-white">
-        <div 
-          className="absolute inset-0 bg-no-repeat bg-cover opacity-50"
-          style={{ backgroundImage: "url('/lovable-uploads/e3572546-188a-436e-9792-691e65733bbc.png')" }}
+      <div className="relative bg-black text-white h-screen">
+        <img 
+          src="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png"
+          alt="Contact Us Background"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
-        <div className="relative container mx-auto px-4 py-24 text-center z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-          <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
-            Our team is ready to answer your questions and provide a free, no-obligation quote for your service needs.
-          </p>
-        </div>
       </div>
+      
       {/* Chat bot visible floating right */}
       <div className="hidden md:block fixed right-8 bottom-8 z-50">
         <ChatAssistant />
@@ -81,16 +78,16 @@ const Contact = () => {
         <ChatAssistant />
       </div>
       
-      <section className="py-16">
+      <section className="py-16 -mt-32 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold mb-6">Get In Touch</h2>
-              <p className="text-gray-600 mb-8">
+              <h2 className="text-3xl font-bold mb-6 text-white">Get In Touch</h2>
+              <p className="text-gray-200 mb-8">
                 Fill out the form below and we'll get back to you as soon as possible. If you need an immediate response, please call us directly.
               </p>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Your Name *</label>
@@ -240,24 +237,6 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-10">Ready for a Cleaner Property?</h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="tel:7788087620">
-              <button className="btn-primary w-full sm:w-auto">
-                <Phone className="mr-2 inline-block" size={16} />
-                Call Us: 778 808 7620
-              </button>
-            </a>
-            <button className="btn-secondary w-full sm:w-auto" onClick={() => document.getElementById('name')?.focus()}>
-              <Mail className="mr-2 inline-block" size={16} />
-              Send a Message
-            </button>
           </div>
         </div>
       </section>

@@ -4,7 +4,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
 import { Building, CheckCircle, Droplets, SparkleIcon } from 'lucide-react';
 
-// Import our new components
+// Import our components
 import ServiceDescription from '../../components/commercial/ServiceDescription';
 import CleaningBenefits from '../../components/commercial/CleaningBenefits';
 import CleaningProcess from '../../components/commercial/CleaningProcess';
@@ -60,10 +60,11 @@ const CommercialWindowCleaning = () => {
   return (
     <Layout>
       <ServiceHeader
-        title="Commercial Window Cleaning"
-        description="Professional window cleaning services for office buildings, retail stores, and multi-story commercial properties."
-        icon={<Building size={48} />}
-        imagePath="/lovable-uploads/1098ec4c-d871-4d0a-94ee-571ef6c50c9b.png"
+        title=""
+        description=""
+        icon={<Building size={48} className="opacity-0" />}
+        imagePath="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png"
+        darkOverlay={true}
       />
 
       <ServiceDescription />

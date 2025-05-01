@@ -1,16 +1,16 @@
-import { useEffect, useRef } from 'react';
+
+import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import FounderSection from '../components/home/FounderSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ServicesSection from '../components/home/ServicesSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
+import ServiceAreasMap from '@/components/home/ServiceAreasMap';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
-  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Ensure English is the default language on initial load
@@ -38,24 +38,10 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Scroll effect for the hero section
-    const handleScroll = () => {
-      if (overlayRef.current) {
-        const scrollPosition = window.scrollY;
-        if (scrollPosition < window.innerHeight) {
-          const opacity = Math.min(0.9, scrollPosition / window.innerHeight * 1.5);
-          overlayRef.current.style.opacity = opacity.toString();
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
     return () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
-      window.removeEventListener('scroll', handleScroll);
     };
   }, [setLanguage]);
 
@@ -66,50 +52,35 @@ const Index = () => {
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
         <meta property="og:image" content="/open.png" />
-        <style>{`
-          .hero-section {
-            height: 100vh;
-            position: relative;
-          }
-          .text-shadow-lg {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-          }
-          .content-overlay {
-            position: relative;
-            z-index: 10;
-          }
-          .parallax-hero {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-          }
-          .scroll-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: #fff;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.1s ease;
-          }
-        `}</style>
       </Helmet>
       
-      <div className="parallax-hero">
-        <HeroSection />
-        <div ref={overlayRef} className="scroll-overlay"></div>
-      </div>
+      <HeroSection />
+      <ServicesSection />
+      <ServiceAreasMap />
+      <TestimonialsSection />
       
-      <div className="content-overlay pt-[100vh]">
-        <FounderSection />
-        <TestimonialsSection />
-        <ServicesSection />
-      </div>
+      {/* Full Width Contact Section */}
+      <section className="relative py-20">
+        <div className="absolute inset-0">
+          <img 
+            src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png"
+            alt="Bring Property Back To Life" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Let's Bring Your Property Back to Life</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Ready to transform your property? Get in touch for a free, no-obligation quote.
+          </p>
+          <div className="flex justify-center gap-4">
+            <a href="tel:7788087620" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition-all">
+              Call Now: 778-808-7620
+            </a>
+          </div>
+        </div>
+      </section>
       
       <ReferralButton />
     </Layout>

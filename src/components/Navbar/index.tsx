@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -20,7 +21,10 @@ const Navbar = () => {
     '/services/roof-cleaning',
     '/services/window-cleaning',
     '/services/pressure-washing',
-    '/services/post-construction-window-cleaning'
+    '/services/post-construction-window-cleaning',
+    '/services/commercial-window-cleaning',
+    '/services/commercial-pressure-washing',
+    '/contact'
   ];
 
   useEffect(() => {
@@ -50,9 +54,9 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/80 backdrop-blur-sm shadow-md' : ''
+      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-24' : 'h-28'
     }`}>
-      <div className="container mx-auto px-4 flex items-center h-24">
+      <div className="container mx-auto px-4 flex items-center h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
           <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
