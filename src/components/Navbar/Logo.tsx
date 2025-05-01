@@ -11,28 +11,28 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
       <div
         className="relative h-20 flex items-center"
         style={{
-          minWidth: '180px',
-          maxWidth: '320px',
+          minWidth: '240px', // Increased size (3x bigger)
+          maxWidth: '540px', // Increased size (3x bigger)
         }}
       >
         {isOverVideo ? (
           <img
-            src="/lovable-uploads/228f6edc-1fa8-49ea-a238-7834839e9829.png"
+            src="/lovable-uploads/1e4637e9-3c44-48a5-8e0b-42c5bd2bbf2e.png"
             alt="BC Pressure Washing Property Maintenance logo"
             className="h-full w-auto object-contain"
             style={{
-              maxWidth: '320px',
-              minHeight: '70px',
+              maxWidth: '540px', // Increased size (3x bigger)
+              minHeight: '100px', // Increased size
             }}
           />
         ) : (
           <img
-            src="/lovable-uploads/11de9343-a9b0-48b8-b747-d18318f16d86.png"
+            src="/lovable-uploads/b397daa3-36b7-4209-88be-65da124668fa.png"
             alt="BC Pressure Washing Property Maintenance logo"
             className="h-full w-auto object-contain"
             style={{
-              maxWidth: '320px',
-              minHeight: '70px',
+              maxWidth: '540px', // Increased size (3x bigger)
+              minHeight: '100px', // Increased size
             }}
           />
         )}

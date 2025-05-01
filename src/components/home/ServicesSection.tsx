@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import ServiceCard from '../ServiceCard';
-import { ArrowRight, Droplets, Home, DropletIcon, Building } from 'lucide-react';
+import { ArrowRight, Droplets, DropletIcon, Building } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const ServicesSection = () => {
@@ -29,7 +29,7 @@ const ServicesSection = () => {
           </div>
           <div className="animate-on-scroll">
             <ServiceCard
-              icon={<Home size={24} />}
+              icon={<img src="/lovable-uploads/5d129c1e-f5d7-4fa6-a1f1-78e9ba4b05c5.png" alt="House Washing Icon" className="w-6 h-6" />}
               title={t("Gutter Cleaning")}
               description={t("Thorough gutter cleaning to prevent damage and maintain proper drainage, extending the life of your gutter system.")}
               link="/services/gutter-cleaning"

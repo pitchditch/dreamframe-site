@@ -100,7 +100,7 @@ const WindowCleaning = () => {
       {/* HERO SECTION */}
       <header className="hero-section min-h-[100vh] flex items-center justify-center relative">
         <img
-          src="/lovable-uploads/d861c00d-16fc-44e9-9b22-1c7eb64c325a.png"
+          src="/lovable-uploads/fad890cb-e6cd-404d-8e52-d0b342b26938.png"
           alt="Professional window cleaning service"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -163,11 +163,11 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* TRUST BADGES */}
+      {/* TRUST BADGES - Full width with more spacing */}
       <section className="py-12 bg-gray-50 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-4">You're in Good Hands</h2>
-          <div className="flex justify-center gap-6 flex-wrap">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold mb-8">You're in Good Hands</h2>
+          <div className="flex justify-center gap-12 flex-wrap">
             <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Eco-Friendly Cleaning Solutions Badge" className="h-48 w-auto" />
             <img src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" alt="100% Satisfaction Guaranteed Badge" className="h-48 w-auto" />
             <img src="/lovable-uploads/1b3ad446-14a6-40c5-8292-6c774e00109c.png" alt="Fully Insured & Licensed Badge" className="h-48 w-auto" />
@@ -176,16 +176,17 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* WHAT OUR CLIENTS SAY - Moved up, removed margin */}
-      <section className="py-16 px-4 max-w-5xl mx-auto">
+      {/* WHAT OUR CLIENTS SAY - With full size image */}
+      <section className="py-16 px-4 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
-        <div className="mx-auto mb-8" style={{ maxWidth: 700 }}>
+        <div className="mx-auto mb-8 w-full">
           <TestimonialCard
             quote={windowTestimonial.quote}
             name={windowTestimonial.name}
             location={windowTestimonial.location}
             rating={"rating" in windowTestimonial ? windowTestimonial.rating : 5}
             beforeAfterImage={"beforeAfterImage" in windowTestimonial ? windowTestimonial.beforeAfterImage : undefined}
+            profileImage={"/lovable-uploads/b69bdd37-7a37-43f0-a192-58ba9655e94f.png"}
           />
         </div>
         <div className="text-center">

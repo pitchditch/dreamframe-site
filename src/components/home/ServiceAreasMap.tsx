@@ -1,14 +1,11 @@
 
-import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ChevronRight } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 interface ServiceArea {
@@ -18,10 +15,14 @@ interface ServiceArea {
 
 const ServiceAreasMap = () => {
   const [activeArea, setActiveArea] = useState(0);
-  const intervalRef = useRef<number | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [api, setApi] = useState<any>(null);
   
   const serviceAreas: ServiceArea[] = [
+    {
+      name: "Cloverdale",
+      description: "Comprehensive exterior cleaning solutions for homes and businesses in the Cloverdale area."
+    },
     {
       name: "White Rock",
       description: "Premier pressure washing, window cleaning, and roof cleaning services for White Rock's homes and businesses."
@@ -35,10 +36,6 @@ const ServiceAreasMap = () => {
       description: "Professional pressure washing, window cleaning, and gutter maintenance for Langley residences and commercial properties."
     },
     {
-      name: "Cloverdale",
-      description: "Comprehensive exterior cleaning solutions for homes and businesses in the Cloverdale area."
-    },
-    {
       name: "Delta",
       description: "Premium pressure washing and window cleaning services for North Delta, Ladner, and Tsawwassen."
     },
@@ -48,45 +45,25 @@ const ServiceAreasMap = () => {
     }
   ];
 
-  useEffect(() => {
-    // Auto rotation of carousel
-    intervalRef.current = window.setInterval(() => {
-      if (api) {
-        api.scrollNext();
-      }
-    }, 5000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [api, serviceAreas.length]);
-
   // Update active slide indicator when api changes slide
-  useEffect(() => {
-    if (!api) return;
-
-    const handleSelect = () => {
+  const handleSelect = () => {
+    if (api) {
       setActiveArea(api.selectedScrollSnap());
-    };
+    }
+  };
 
+  if (api) {
     api.on('select', handleSelect);
-    
-    return () => {
-      api.off('select', handleSelect);
-    };
-  }, [api]);
+  }
 
   return (
     <section className="py-16 bg-black text-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Areas We Serve</h2>
+        <h2 className="text-4xl font-bold mb-6 text-center">Areas We Serve</h2>
+        <h3 className="text-2xl font-semibold mb-10 text-center">Serving Surrey, White Rock & Beyond</h3>
         
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="service-areas">
-            <h3 className="text-2xl font-bold mb-6">Serving Surrey, White Rock & Beyond</h3>
-            
             <div className="mb-8">
               <Carousel 
                 className="w-full" 
@@ -105,12 +82,18 @@ const ServiceAreasMap = () => {
                           {area.name}
                         </h4>
                         <p className="text-gray-400">{area.description}</p>
-                        <Button asChild variant="link" className="text-bc-red p-0 mt-4 hover:text-red-400">
-                          <Link to="/contact" className="flex items-center">
-                            Check if we service your area
-                            <ChevronRight size={16} className="ml-1" />
-                          </Link>
-                        </Button>
+                        <button 
+                          className="text-bc-red p-0 mt-4 hover:text-red-400 flex items-center"
+                          onClick={() => {
+                            const faqElement = document.getElementById('service-areas-faq');
+                            if (faqElement) {
+                              faqElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                          }}
+                        >
+                          Check if we service your area
+                          <ChevronRight size={16} className="ml-1" />
+                        </button>
                       </div>
                     </CarouselItem>
                   ))}
@@ -149,7 +132,7 @@ const ServiceAreasMap = () => {
           
           <div className="map-container h-96 rounded-lg overflow-hidden shadow-lg">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83327.81947490028!2d-122.90458565331543!3d49.10797320846295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485c376522d29bd%3A0x561be351914c38d9!2sWhite%20Rock%2C%20BC!5e0!3m2!1sen!2sca!4v1652458251111!5m2!1sen!2sca"
+              src="https://www.google.com/maps/d/embed?mid=1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -160,6 +143,23 @@ const ServiceAreasMap = () => {
               className="w-full h-full"
             ></iframe>
           </div>
+        </div>
+        
+        <div id="service-areas-faq" className="mt-16">
+          <h3 className="text-2xl font-bold mb-6">FAQ: What Areas Do You Service?</h3>
+          <p className="text-lg mb-4">
+            We are based in White Rock and service the entire Metro Vancouver region, including White Rock, 
+            Surrey, Langley, Delta, Tsawwassen, Ladner, Richmond, Vancouver, and surrounding areas.
+          </p>
+          <p className="text-lg mb-4">
+            Our service radius extends throughout the Lower Mainland, so whether you're in South Surrey, 
+            Cloverdale, or as far as Coquitlam or Port Moody, we're able to provide our premium exterior 
+            cleaning services to your location.
+          </p>
+          <p className="text-lg">
+            Not sure if we service your specific area? Give us a call at <a href="tel:7788087620" className="text-bc-red hover:underline">778-808-7620</a> or 
+            fill out our <Link to="/calculator" className="text-bc-red hover:underline">quick quote form</Link> to confirm availability for your address.
+          </p>
         </div>
       </div>
     </section>

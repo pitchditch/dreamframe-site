@@ -1,151 +1,70 @@
 
-import React, { useEffect, useState } from 'react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useEffect, useState } from 'react';
 import TestimonialCard from '../TestimonialCard';
 import { testimonials } from '@/data/testimonials';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "../ui/carousel";
-import { useTranslation } from '@/hooks/use-translation';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Home, DropletIcon, Wind, Landmark } from 'lucide-react';
+
+const profileImages = [
+  "/lovable-uploads/b69bdd37-7a37-43f0-a192-58ba9655e94f.png",
+  "/lovable-uploads/8c769aeb-d888-49ed-a370-c4d0945e1eb7.png",
+  "/lovable-uploads/c69aec79-5ead-4023-bb2f-2137e27b7d02.png",
+  "/lovable-uploads/59401248-58ee-4944-b37e-410cc26c471d.png",
+  "/lovable-uploads/f1451ac8-7689-4f79-9c7e-c53342257df3.png",
+  "/lovable-uploads/5f513861-3c9c-4e8c-a0f1-254574396881.png",
+  "/lovable-uploads/84d7a106-6be2-4a23-a9dd-def86b85bd3a.png",
+  "/lovable-uploads/0fe6a9ec-690a-4ac5-a8b6-efab2e58937f.png",
+  "/lovable-uploads/80888870-b48a-405b-ac8e-ad08f4fe5afc.png",
+  "/lovable-uploads/497a46c4-728e-426b-bd23-fc5c5b9869be.png",
+  "/lovable-uploads/16c023d9-6b16-4f03-a3b2-e9f188599e2e.png",
+  "/lovable-uploads/5d129c1e-f5d7-4fa6-a1f1-78e9ba4b05c5.png"
+];
 
 const TestimonialsSection = () => {
-  const [api, setApi] = useState<any>();
-  const [activeCategory, setActiveCategory] = useState('all');
-  const isMobile = useIsMobile();
-  const { t } = useTranslation();
+  const [featuredTestimonials, setFeaturedTestimonials] = useState(testimonials.slice(0, 3));
 
-  // Group testimonials by service
-  const testimonialsByService = {
-    'all': testimonials,
-    'pressure-washing': testimonials.filter(t => t.service === 'pressure-washing'),
-    'window-cleaning': testimonials.filter(t => t.service === 'window-cleaning'),
-    'gutter-cleaning': testimonials.filter(t => t.service === 'gutter-cleaning'),
-    'roof-cleaning': testimonials.filter(t => t.service === 'roof-cleaning')
-  };
-
-  // Get testimonials with images first for the selected category
-  const getFilteredTestimonials = (category: string) => {
-    const categoryTestimonials = testimonialsByService[category as keyof typeof testimonialsByService];
-    
-    // Sort to show testimonials with images first
-    return [...categoryTestimonials].sort((a, b) => {
-      if (a.beforeAfterImage && !b.beforeAfterImage) return -1;
-      if (!a.beforeAfterImage && b.beforeAfterImage) return 1;
-      return 0;
-    });
-  };
-
-  // Get the active testimonials based on selected category
-  const activeTestimonials = getFilteredTestimonials(activeCategory);
-
+  // Assign profile images to testimonials
   useEffect(() => {
-    if (!api) return;
-
-    // Set up automatic scrolling with different timing for mobile
-    const interval = setInterval(() => {
-      if (api.canScrollNext()) {
-        api.scrollNext();
-      } else {
-        api.scrollTo(0);
-      }
-    }, isMobile ? 3000 : 5000); // Faster on mobile
-
-    return () => clearInterval(interval);
-  }, [api, isMobile]);
+    const testimonialsWithImages = testimonials.slice(0, 3).map((testimonial, index) => {
+      const gender = index === 0 || index === 1 ? 'female' : 'male';
+      const imageIndex = gender === 'female' ? index % 6 : 4 + (index % 6);
+      return {
+        ...testimonial,
+        profileImage: profileImages[imageIndex]
+      };
+    });
+    
+    setFeaturedTestimonials(testimonialsWithImages);
+  }, []);
 
   return (
-    <section className="section-padding bg-bc-gray overflow-hidden -mt-24 pt-32 relative z-10">
+    <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="badge-pill mx-auto w-fit animate-on-scroll">{t("Testimonials")}</div>
-        <h2 className="section-title animate-on-scroll">{t("What Our Clients Say")}</h2>
-        <p className="section-subtitle animate-on-scroll">
-          {t("Don't just take our word for it. Hear what our satisfied customers have to say about our services.")}
-        </p>
-
-        {/* Service Filter Tabs */}
-        <div className="mt-8">
-          <Tabs 
-            defaultValue="all"
-            className="w-full max-w-4xl mx-auto"
-            onValueChange={setActiveCategory}
-          >
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-2 bg-transparent mb-8">
-              <TabsTrigger 
-                value="all" 
-                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
-              >
-                All Reviews
-              </TabsTrigger>
-              <TabsTrigger 
-                value="gutter-cleaning" 
-                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
-              >
-                <Wind className="w-4 h-4 mr-2" />
-                Gutter Cleaning
-              </TabsTrigger>
-              <TabsTrigger 
-                value="window-cleaning" 
-                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
-              >
-                <DropletIcon className="w-4 h-4 mr-2" />
-                Window Cleaning
-              </TabsTrigger>
-              <TabsTrigger 
-                value="pressure-washing" 
-                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
-              >
-                <Home className="w-4 h-4 mr-2" />
-                Pressure Washing
-              </TabsTrigger>
-              <TabsTrigger 
-                value="roof-cleaning" 
-                className="data-[state=active]:bg-bc-red data-[state=active]:text-white"
-              >
-                <Landmark className="w-4 h-4 mr-2" />
-                Roof Cleaning
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-4">What Our Customers Say</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Don't just take our word for it. Here's what our customers have to say about our services.
+          </p>
         </div>
 
-        <div className="mt-8 w-full">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            setApi={setApi}
-            className="w-full"
-          >
-            <CarouselContent>
-              {activeTestimonials.slice(0, 12).map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <TestimonialCard
-                    quote={testimonial.quote}
-                    name={testimonial.name}
-                    location={testimonial.location}
-                    rating={testimonial.rating}
-                    beforeAfterImage={testimonial.beforeAfterImage}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+        <div className="grid gap-8 md:grid-cols-3">
+          {featuredTestimonials.map((testimonial, index) => (
+            <div key={index} className="animate-on-scroll" style={{ animationDelay: `${index * 150}ms` }}>
+              <TestimonialCard 
+                quote={testimonial.quote} 
+                name={testimonial.name} 
+                location={testimonial.location} 
+                rating={testimonial.rating}
+                profileImage={testimonial.profileImage}
+                beforeAfterImage={testimonial.beforeAfterImage}
+              />
+            </div>
+          ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <Button asChild variant="outline" size="lg" className="bg-bc-red text-white hover:bg-bc-red/90">
-            <Link to="/testimonials" className="no-underline">See More Testimonials</Link>
+        <div className="text-center mt-12">
+          <Button asChild variant="outline" size="lg">
+            <Link to="/why-us">View More Testimonials</Link>
           </Button>
         </div>
       </div>
