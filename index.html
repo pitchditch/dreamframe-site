@@ -5,11 +5,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/lovable-uploads/6068ea75-d3bc-4895-a1c8-9404365843b0.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Cache busting meta tags -->
+    <!-- Extreme cache busting meta tags -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta name="version" content="<%=Date.now()%>" />
+    <!-- Add random query parameter to prevent caching -->
+    <script>
+      // Add version parameter to all resource URLs
+      document.write('<meta name="cache-bust" content="' + Date.now() + '">');
+      
+      // Force reload if the page is loaded from cache
+      if (performance && performance.navigation.type === 2) {
+        window.location.reload(true);
+      }
+      
+      // Force reload if coming from another page on the same domain
+      if (document.referrer && document.referrer.startsWith(window.location.origin)) {
+        window.location.reload(true);
+      }
+    </script>
     <title>BC Pressure Washing | Professional Exterior Cleaning Services</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,5 +34,26 @@
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Cache-busting script -->
+    <script>
+      // Force refresh if loaded from cache
+      window.addEventListener('load', () => {
+        // Check if this is a cached version
+        const loadTime = Date.now();
+        const lastLoad = sessionStorage.getItem('last-page-load');
+        
+        if (lastLoad && (loadTime - parseInt(lastLoad)) < 300000) {
+          // Less than 5 minutes since last load, might be cached
+          const randomReload = Math.random() < 0.2; // 20% chance to reload anyway
+          if (randomReload) {
+            console.log('Random cache-busting reload');
+            window.location.reload(true);
+          }
+        }
+        
+        // Update last load time
+        sessionStorage.setItem('last-page-load', loadTime.toString());
+      });
+    </script>
   </body>
 </html>
