@@ -1,5 +1,5 @@
 
-interface Testimonial {
+export interface Testimonial {
   id: number;
   service: 'gutter-cleaning' | 'window-cleaning' | 'pressure-washing' | 'roof-cleaning';
   rating: number;
