@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import TestimonialCard from '../TestimonialCard';
-import { testimonials } from '@/data/testimonials';
+import { testimonials, Testimonial } from '@/data/testimonials';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
