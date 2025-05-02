@@ -35,27 +35,20 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full">
-        <video
-          id="hero-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className={`w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-          onLoadedData={() => setVideoLoaded(true)}
-        >
-          <source src="/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.mp4" type="video/mp4" />
-        </video>
+        <div className="w-full h-full">
+          <iframe
+            id="hero-video"
+            className={`w-full h-full pointer-events-none absolute top-0 left-0 transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+            src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&loop=1&controls=0&mute=1&playlist=GJZpuELGJpI&playsinline=1&rel=0&modestbranding=1"
+            title="Pressure Washing Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            onLoad={() => setVideoLoaded(true)}
+          ></iframe>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
       </div>
-      
-      {/* Licensed & Insured badge, top-right */}
-      <img 
-        src="/lovable-uploads/a1f01b41-c73a-4644-8580-6399a42951bf.png"
-        alt="Licensed & Insured"
-        className="absolute top-32 right-8 w-32 h-32 md:w-40 md:h-40 object-contain z-20 drop-shadow-lg"
-        style={{ pointerEvents: 'none' }}
-      />
       
       {/* Hero Content */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white text-center pt-16">

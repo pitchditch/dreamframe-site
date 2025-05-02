@@ -11,6 +11,7 @@ const Navbar = () => {
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isPastHeroSection, setIsPastHeroSection] = useState(false);
   const location = useLocation();
 
   // Pages with dark backgrounds that need white text
@@ -33,6 +34,13 @@ const Navbar = () => {
       const shouldBeOverVideo = darkOverlayPages.includes(location.pathname) && currentScrollY < 60;
       setIsOverVideo(shouldBeOverVideo);
       setIsScrolled(currentScrollY > 10);
+      
+      // Check if we're past the hero section
+      const heroSection = document.querySelector('.hero-section');
+      if (heroSection) {
+        const heroHeight = heroSection.clientHeight;
+        setIsPastHeroSection(currentScrollY > heroHeight - 100); // 100px buffer before reaching the end
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -54,13 +62,13 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-24' : 'h-28'
+      (isScrolled && isPastHeroSection) || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-24' : 'h-28'
     }`}>
       <div className="container mx-auto px-4 flex items-center h-full">
-        <Logo isOverVideo={isOverVideo && !isScrolled} />
+        <Logo isOverVideo={isOverVideo && !isPastHeroSection && !isScrolled} />
         <div className="flex items-center justify-between flex-1 ml-8">
-          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
-          <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <NavbarDesktop isOverVideo={isOverVideo && !isPastHeroSection && !isScrolled} />
+          <MobileMenuButton isOverVideo={isOverVideo && !isPastHeroSection && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
