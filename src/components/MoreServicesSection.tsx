@@ -37,8 +37,12 @@ const MoreServicesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition-shadow">
-              <div className="h-60 w-full overflow-hidden">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+              <div className="h-80 w-full overflow-hidden">
+                <img 
+                  src={service.image} 
+                  alt={service.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
+                />
               </div>
               <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-xl font-bold mb-2">{service.title}</h3>

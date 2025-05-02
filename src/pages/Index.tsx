@@ -12,6 +12,7 @@ import { Shield, Award, ThumbsUp, Clock, Check } from 'lucide-react';
 import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import MoreServicesSection from '@/components/MoreServicesSection';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -62,7 +63,7 @@ const Index = () => {
       <div className="relative z-20 -mt-32 bg-white pt-32 rounded-t-[50px] shadow-lg">
         <PremiumSolutionsSection />
         
-        {/* Owner Operated Section */}
+        {/* Owner Operated Section - moved below Premium Solutions */}
         <section className="py-16 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -113,7 +114,7 @@ const Index = () => {
         
         <TrustedCustomersSection />
         
-        {/* Why Homeowners Trust Us Section */}
+        {/* Why Homeowners Trust Us Section - moved below Trusted Customers */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
@@ -161,28 +162,33 @@ const Index = () => {
         
         <ServicesSection />
         <TestimonialsSection />
+        <MoreServicesSection />
       </div>
       
-      {/* 100% Satisfaction Guarantee Section (improved) */}
+      {/* 100% Satisfaction Guarantee Section (enhanced interactivity) */}
       <section className="py-16 bg-gradient-to-r from-bc-red/90 to-red-700/90 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="container mx-auto px-4 z-10 relative">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-4xl font-bold mb-6 drop-shadow-md">100% Satisfaction Guarantee</h2>
+          <div className="text-center max-w-3xl mx-auto transform transition hover:scale-105 duration-300">
+            <h2 className="text-4xl font-bold mb-6 drop-shadow-md animate-pulse">100% Satisfaction Guarantee</h2>
             <div className="flex items-center justify-center mb-8">
-              <div className="w-24 h-24 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
+              <div className="w-24 h-24 rounded-full bg-white/90 flex items-center justify-center shadow-xl transform hover:rotate-12 transition-all duration-500">
                 <Check className="text-bc-red" size={48} />
               </div>
             </div>
-            <p className="text-xl mb-8 drop-shadow">
+            <p className="text-xl mb-8 drop-shadow hover:text-yellow-200 transition-colors duration-300">
               If you're not completely satisfied with our work, we'll come back and make it right at no additional cost to you.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
-              <a href="tel:7788087620" className="transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 bg-white text-bc-red px-8 py-4 rounded-lg text-lg font-bold shadow-lg">
-                Call Now: 778-808-7620
+              <a 
+                href="tel:7788087620" 
+                className="transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 bg-white text-bc-red px-8 py-4 rounded-lg text-lg font-bold shadow-lg hover:shadow-2xl relative overflow-hidden group"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white to-yellow-100 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                <span className="relative">Call Now: 778-808-7620</span>
               </a>
-              <div className="flex items-center text-lg bg-black/20 p-3 rounded-lg">
-                <ThumbsUp className="mr-2" size={24} />
+              <div className="flex items-center text-lg bg-black/20 p-3 rounded-lg hover:bg-black/30 transition-all duration-300">
+                <ThumbsUp className="mr-2 animate-bounce" size={24} />
                 <span>Trusted by 1000+ Homeowners</span>
               </div>
             </div>
