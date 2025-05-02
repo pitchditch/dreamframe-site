@@ -68,7 +68,7 @@ const HeroSection = () => {
           <Button asChild variant="bc-red" size="lg" className="text-lg">
             <Link to="/calculator">Get an Instant Quote</Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="text-lg border-white text-white hover:bg-white/10">
+          <Button asChild variant="outline" size="lg" className="text-lg border-white text-white bg-white/20 hover:bg-white/30 shadow-lg pulse-animation">
             <a href="tel:7788087620">Speak With Jayden</a>
           </Button>
         </div>

@@ -49,7 +49,8 @@ const Index = () => {
     };
   }, [setLanguage]);
 
-  return <Layout image="/open.png">
+  return (
+    <Layout image="/open.png">
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
@@ -58,10 +59,9 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
-      <PremiumSolutionsSection />
-      <TrustedCustomersSection />
-      <ServicesSection />
-      <TestimonialsSection />
+      <div className="expanded-services">
+        <PremiumSolutionsSection />
+      </div>
       
       {/* Owner Operated Section */}
       <section className="py-16 bg-gray-100">
@@ -112,6 +112,8 @@ const Index = () => {
         </div>
       </section>
       
+      <TrustedCustomersSection />
+      
       {/* Why Homeowners Trust Us Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -158,17 +160,32 @@ const Index = () => {
         </div>
       </section>
       
-      {/* 100% Satisfaction Guarantee Section (shortened) */}
-      <section className="py-12 bg-gray-100">
-        <div className="container mx-auto px-4">
+      <ServicesSection />
+      <TestimonialsSection />
+      
+      {/* 100% Satisfaction Guarantee Section (improved interactive version) */}
+      <section className="py-12 bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-[url('/lovable-uploads/20659a58-a7ae-47cb-970a-a2f17c8e2d93.png')] bg-cover bg-center"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-4">100% Satisfaction Guarantee</h2>
+            <div className="mb-6 flex justify-center">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center animate-pulse">
+                <Shield className="text-bc-red" size={40} />
+              </div>
+            </div>
+            <h2 className="text-3xl font-bold mb-4 text-shadow">100% Satisfaction Guarantee</h2>
+            <div className="h-1 w-24 bg-bc-red mx-auto mb-6"></div>
             <p className="text-lg mb-6">
               If you're not completely satisfied with our work, we'll come back and make it right at no additional cost to you.
             </p>
-            <div className="flex justify-center mt-8">
-              <a href="tel:7788087620" className="bg-bc-red hover:bg-red-700 text-white px-8 py-4 rounded-lg text-lg font-bold transition-all">
+            <div className="flex justify-center mt-8 gap-4 flex-col sm:flex-row">
+              <a href="tel:7788087620" className="bg-bc-red hover:bg-red-700 text-white px-8 py-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105 pulse-animation">
                 Call Now: 778-808-7620
+              </a>
+              <a href="/contact" className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105">
+                Get a Free Quote
               </a>
             </div>
           </div>
@@ -187,7 +204,8 @@ const Index = () => {
       </section>
       
       <ReferralButton />
-    </Layout>;
+    </Layout>
+  );
 };
 
 export default Index;

@@ -1,4 +1,5 @@
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -139,4 +140,48 @@ body {
 
 .delay-500 {
   transition-delay: 500ms;
+}
+
+/* Pulse animation for buttons */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255,255,255,0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+/* Hide scrollbar but allow scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Bigger service icons in navbar */
+.navbar-service-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Expanded services section */
+.expanded-services {
+  margin-top: -30vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Text shadow for better visibility on darker backgrounds */
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }

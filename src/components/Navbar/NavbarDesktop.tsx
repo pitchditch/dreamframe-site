@@ -1,116 +1,164 @@
 
-import { NavLink } from './NavLink';
-import { useTranslation } from '@/hooks/use-translation';
-import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
-import { Phone, User2 } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { CalendarClock, Droplets, Home, Info, MapPin, MessageSquare, PhoneCall, Roofing, Star, Wind } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { useTranslation } from '@/hooks/use-translation';
+import { useLocation } from 'react-router-dom';
 
-export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
+interface NavbarDesktopProps {
+  isOverVideo: boolean;
+}
+
+export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
-
-  // Color classes based on background
+  const location = useLocation();
+  
   const textColor = isOverVideo ? 'text-white' : 'text-gray-800';
-  const hoverColor = 'hover:text-bc-red';
+  const borderColor = isOverVideo ? 'border-white' : 'border-gray-200';
+  const hoverBgColor = isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100';
+  
+  const classNames = {
+    button: `${textColor} ${borderColor} ${hoverBgColor} px-4`,
+    link: `${textColor} ${hoverBgColor} rounded-md px-3 py-2 text-sm font-medium`,
+    activeLink: `${isOverVideo ? 'bg-white/10' : 'bg-gray-100'} rounded-md px-3 py-2 text-sm font-medium`,
+    trigger: `${textColor} ${hoverBgColor} rounded-md px-3 py-2 text-sm font-medium group inline-flex items-center`,
+  };
+
+  const isActive = (path: string) => {
+    // Check if current path starts with provided path (for nested routes)
+    return location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
+  };
 
   return (
-    <nav className="hidden md:flex items-center justify-between w-full">
-      <div className="flex items-center gap-8">
-        <NavLink
-          to="/why-us"
-          isOverVideo={isOverVideo}
-          className={`text-xl flex items-center gap-2 ${textColor} ${hoverColor}`}
-        >
-          <User2 className="w-5 h-5" />
-          {t('Why Us')}
-        </NavLink>
-
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger
-                className={`text-xl ${textColor} ${hoverColor} bg-transparent`}
-              >
-                {t('Residential')}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid gap-3 p-6 w-[400px] bg-white">
-                  <NavLink to="/services/window-cleaning" isOverVideo={false}>
-                    <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/0889ee32-e298-45b5-91f8-825360447c0b.png" alt="Window Cleaning" className="w-5 h-5" />
-                      <span>{t('Window Cleaning')}</span>
+    <NavigationMenu className="hidden lg:block mx-6">
+      <NavigationMenuList className="flex items-center gap-1">
+        {/* Home */}
+        <NavigationMenuItem>
+          <Link to="/" className={isActive('/') ? classNames.activeLink : classNames.link}>
+            {t('Home')}
+          </Link>
+        </NavigationMenuItem>
+        
+        {/* Services Dropdown */}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className={classNames.trigger}>
+            {t('Services')}
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="grid grid-cols-2 gap-3 p-6 w-[600px]">
+              <div className="col-span-2">
+                <h3 className="font-semibold mb-2 text-lg">{t('Residential Services')}</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <Link to="/services/window-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <Droplets className="text-bc-red mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Window Cleaning')}</div>
+                      <div className="text-sm text-gray-500">{t('Crystal clear windows')}</div>
                     </div>
-                  </NavLink>
-                  <NavLink to="/services/pressure-washing" isOverVideo={false}>
-                    <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/570e8bce-fcd4-483d-a7b3-5843188a925d.png" alt="House Washing" className="w-5 h-5" />
-                      <span>{t('House Washing')}</span>
+                  </Link>
+                  <Link to="/services/pressure-washing" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <Home className="text-blue-500 mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Pressure Washing')}</div>
+                      <div className="text-sm text-gray-500">{t('Remove dirt & grime')}</div>
                     </div>
-                  </NavLink>
-                  <NavLink to="/services/gutter-cleaning" isOverVideo={false}>
-                    <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/7b5d444c-eda2-4e31-91fd-29752d396c29.png" alt="Gutter Cleaning" className="w-5 h-5" />
-                      <span>{t('Gutter Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/gutter-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <Wind className="text-green-600 mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Gutter Cleaning')}</div>
+                      <div className="text-sm text-gray-500">{t('Prevent water damage')}</div>
                     </div>
-                  </NavLink>
-                  <NavLink to="/services/roof-cleaning" isOverVideo={false}>
-                    <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/d861c00d-16fc-44e9-9b22-1c7eb64c325a.png" alt="Roof Cleaning" className="w-5 h-5" />
-                      <span>{t('Roof Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/roof-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <Roofing className="text-amber-700 mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Roof Cleaning')}</div>
+                      <div className="text-sm text-gray-500">{t('Remove moss & debris')}</div>
                     </div>
-                  </NavLink>
+                  </Link>
                 </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger
-                className={`text-xl ${textColor} ${hoverColor} bg-transparent`}
-              >
-                {t('Commercial')}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid gap-3 p-6 w-[400px] bg-white">
-                  <NavLink to="/services/commercial-window-cleaning" isOverVideo={false}>
-                    <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/0889ee32-e298-45b5-91f8-825360447c0b.png" alt="Commercial Window Cleaning" className="w-5 h-5" />
-                      <span>{t('Commercial Window Cleaning')}</span>
+              </div>
+              <div className="col-span-2 mt-4">
+                <h3 className="font-semibold mb-2 text-lg">{t('Commercial Services')}</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <Link to="/services/commercial-window-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <Droplets className="text-blue-600 mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Commercial Window Cleaning')}</div>
+                      <div className="text-sm text-gray-500">{t('For businesses & offices')}</div>
                     </div>
-                  </NavLink>
-                  <NavLink to="/services/commercial-pressure-washing" isOverVideo={false}>
-                    <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/570e8bce-fcd4-483d-a7b3-5843188a925d.png" alt="Commercial Pressure Washing" className="w-5 h-5" />
-                      <span>{t('Commercial Pressure Washing')}</span>
+                  </Link>
+                  <Link to="/services/commercial-pressure-washing" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <Home className="text-blue-700 mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Commercial Pressure Washing')}</div>
+                      <div className="text-sm text-gray-500">{t('For storefronts & facilities')}</div>
                     </div>
-                  </NavLink>
+                  </Link>
+                  <Link to="/services/post-construction-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
+                    <CalendarClock className="text-purple-600 mr-3 navbar-service-icon" size={28} />
+                    <div>
+                      <div className="font-medium">{t('Post-Construction Cleaning')}</div>
+                      <div className="text-sm text-gray-500">{t('Final cleaning after construction')}</div>
+                    </div>
+                  </Link>
                 </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-
-      <div className="flex flex-col gap-2 items-end">
-        <div className="flex items-center gap-6">
-          <NavLink
-            to="/contact"
-            isOverVideo={isOverVideo}
-            className={`text-xl ${textColor} ${hoverColor}`}
-          >
-            {t('Contact')}
-          </NavLink>
-          <PriceCalculatorOverlay
-            buttonText={t("Get a Free Quote")}
-            className="bg-bc-red hover:bg-red-700 text-white py-2 px-6 rounded-lg font-medium transition-all"
-            showCallJaydenNow
-          />
-        </div>
-      </div>
-    </nav>
+              </div>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        
+        {/* About */}
+        <NavigationMenuItem>
+          <Link to="/why-us" className={isActive('/why-us') ? classNames.activeLink : classNames.link}>
+            {t('Why Us')}
+          </Link>
+        </NavigationMenuItem>
+        
+        {/* Areas We Serve */}
+        <NavigationMenuItem>
+          <Link to="/contact" className={isActive('/contact') ? classNames.activeLink : classNames.link}>
+            <MapPin className="inline-block mr-1" size={16} />
+            {t('Areas We Serve')}
+          </Link>
+        </NavigationMenuItem>
+        
+        {/* Testimonials */}
+        <NavigationMenuItem>
+          <Link to="/testimonials" className={isActive('/testimonials') ? classNames.activeLink : classNames.link}>
+            <Star className="inline-block mr-1" size={16} />
+            {t('Testimonials')}
+          </Link>
+        </NavigationMenuItem>
+        
+        {/* Contact */}
+        <NavigationMenuItem>
+          <Button asChild variant="outline" className={classNames.button}>
+            <a href="tel:7788087620">
+              <PhoneCall className="mr-2" size={16} />
+              778-808-7620
+            </a>
+          </Button>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+          <Button asChild className="bg-bc-red hover:bg-red-700 text-white">
+            <Link to="/contact">
+              <MessageSquare className="mr-2" size={16} />
+              {t('Get a Quote')}
+            </Link>
+          </Button>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 };

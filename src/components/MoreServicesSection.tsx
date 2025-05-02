@@ -21,7 +21,7 @@ const MoreServicesSection: React.FC = () => {
       link: "/services/pressure-washing"
     },
     {
-      src: "/lovable-uploads/0a2cc308-bda3-4478-9cf0-5efabde14b96.png",
+      src: "/lovable-uploads/20659a58-a7ae-47cb-970a-a2f17c8e2d93.png",
       alt: "Window Cleaning in White Rock",
       link: "/services/window-cleaning"
     },
@@ -63,11 +63,11 @@ const MoreServicesSection: React.FC = () => {
             {serviceImages.map((service, index) => (
               <CarouselItem key={index} className="basis-full">
                 <Link to={service.link} className="block w-full">
-                  <div className="relative w-full h-[70vh] max-h-[700px] overflow-hidden rounded-lg shadow-xl">
+                  <div className="relative w-full h-[80vh] max-h-[800px] overflow-hidden rounded-lg shadow-xl">
                     <img 
                       src={service.src} 
                       alt={service.alt} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-8">
                       <h3 className="text-white text-2xl md:text-3xl font-semibold mb-4">{service.alt}</h3>

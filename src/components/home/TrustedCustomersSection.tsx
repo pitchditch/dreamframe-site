@@ -20,8 +20,8 @@ const TrustedCustomersSection = () => {
   
   const customers: CustomerTestimonial[] = [
     {
-      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png", // Added gutter cleaning hero image
-      name: "Robert",
+      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png", 
+      name: "Michael",
       location: "White Rock",
       service: "Gutter Cleaning",
       date: "May 2025",
@@ -29,7 +29,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/2eaacd17-5dff-4af1-b073-c2ecadfdb6d0.png",
-      name: "Michael",
+      name: "David",
       location: "White Rock",
       service: "Window Cleaning",
       date: "May 2025",
@@ -45,7 +45,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
-      name: "Vikram", // Changed from Raj Patel to Vikram
+      name: "Vikram", 
       location: "South Surrey",
       service: "Roof Cleaning",
       date: "March 2025",
@@ -66,21 +66,13 @@ const TrustedCustomersSection = () => {
       service: "Window Cleaning",
       date: "April 2025",
       quote: "Great experience. Will use them again."
-    },
-    {
-      image: "/lovable-uploads/8c769aeb-d888-49ed-a370-c4d0945e1eb7.png",
-      name: "Sarah",
-      location: "Surrey",
-      service: "Gutter Cleaning",
-      date: "May 2025",
-      quote: "Perfect job on our gutters! Very thorough."
     }
   ];
   
   React.useEffect(() => {
     if (!api) return;
     
-    // Auto-rotate carousel every 3 seconds
+    // Auto-rotate carousel continuously without pausing
     const interval = setInterval(() => {
       api.scrollNext();
     }, 3000);
