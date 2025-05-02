@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
@@ -5,13 +6,35 @@ import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
 import FAQSection from './FAQSection';
 import LocationBanner from './LocationBanner';
+
 const Footer = () => {
+  const footerFaqs = [
+    {
+      question: "What areas do you service?",
+      answer: "We serve White Rock, Surrey, South Surrey, Langley, Delta, Tsawwassen, Ladner, Richmond, Vancouver, North Vancouver, West Vancouver, Burnaby, New Westminster, Coquitlam, Port Coquitlam, Port Moody, Pitt Meadows, Maple Ridge, Mission, and Abbotsford."
+    },
+    {
+      question: "Do you offer free estimates?",
+      answer: "Yes, we provide free, no-obligation estimates for all our services. Contact us to schedule yours today!"
+    },
+    {
+      question: "Are you insured and licensed?",
+      answer: "Yes, BC Pressure Washing is fully insured and licensed, giving you peace of mind when we work on your property."
+    },
+    {
+      question: "How do I schedule a service?",
+      answer: "You can schedule a service by calling us at 778-808-7620, emailing bcpressurewashing.ca@gmail.com, or using our online contact form."
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept cash, e-transfers, credit cards, and checks for your convenience."
+    }
+  ];
+
   return <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
-        <FAQSection />
+        <FAQSection faqs={footerFaqs} />
         
-        
-
         <LocationBanner />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 mt-16">
