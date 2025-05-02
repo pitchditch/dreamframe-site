@@ -1,10 +1,13 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
+import FAQSection from '../../components/FAQSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
+
 const GutterCleaning = () => {
   const benefits = [{
     title: "Prevent Water Damage",
@@ -25,6 +28,7 @@ const GutterCleaning = () => {
     title: "Prevent Basement Flooding",
     description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
   }];
+
   const processes = [{
     title: "Debris Removal",
     description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
@@ -38,9 +42,34 @@ const GutterCleaning = () => {
     description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
     icon: <PieChart size={32} />
   }];
+
   const handleVideoClick = () => {
-    window.open("https://www.youtube.com/watch?v=VzcQ2S5axEE", "_blank");
+    window.open("https://youtu.be/m5wfZZCuFeg?si=zIa4LgX-eu9gBVoI", "_blank");
   };
+
+  const faqs = [
+    {
+      question: "How often should I have my gutters cleaned?",
+      answer: "We recommend having your gutters cleaned at least twice a year - in spring and fall. However, if you have trees overhanging your roof, you might need more frequent cleaning, especially during fall when leaves are dropping."
+    },
+    {
+      question: "How long does a typical gutter cleaning service take?",
+      answer: "For an average-sized home, our professional team can complete a thorough gutter cleaning in 1-2 hours. This timeframe can vary depending on the size of your home, the amount of debris, and the complexity of your gutter system."
+    },
+    {
+      question: "What happens if you find damaged gutters during cleaning?",
+      answer: "If we identify any issues with your gutters during cleaning, we'll document them with photos and provide you with a detailed assessment. We can then discuss repair options and provide a quote for any necessary work."
+    },
+    {
+      question: "Do you install gutter guards?",
+      answer: "Yes, we offer professional installation of high-quality gutter guards. These can significantly reduce how often your gutters need cleaning by preventing debris from entering while still allowing water to flow through."
+    },
+    {
+      question: "Is there any preparation I need to do before you arrive?",
+      answer: "We ask that you ensure clear access to the perimeter of your home. Please remove any obstacles that might impede our work, secure pets, and inform us of any specific areas of concern before we begin."
+    }
+  ];
+
   return <Layout>
       <ServiceHeader title="" description="" icon={<Droplets size={48} className="opacity-0" />} imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png" darkOverlay={true} />
 
@@ -71,7 +100,7 @@ const GutterCleaning = () => {
           </div>
           <div className="md:w-1/2 cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
             <div className="relative pt-[56.25%] w-full">
-              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/VzcQ2S5axEE?mute=1" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/m5wfZZCuFeg?mute=1" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
                   <div className="bg-bc-red text-white rounded-full p-2">
@@ -123,7 +152,15 @@ const GutterCleaning = () => {
           </div>
         </div>
       </section>
+      
+      <FAQSection 
+        title="Frequently Asked Questions About Gutter Cleaning"
+        subtitle="Get answers to common questions about our services"
+        faqs={faqs}
+      />
+      
       <CallToAction />
     </Layout>;
 };
+
 export default GutterCleaning;

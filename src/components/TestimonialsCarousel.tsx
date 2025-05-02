@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from 'react';
 import { testimonials } from '@/data/testimonials';
 import { Button } from '@/components/ui/button';
@@ -23,11 +22,10 @@ const profileImages = [
   "/lovable-uploads/f1451ac8-7689-4f79-9c7e-c53342257df3.png", 
   "/lovable-uploads/5f513861-3c9c-4e8c-a0f1-254574396881.png", 
   "/lovable-uploads/84d7a106-6be2-4a23-a9dd-def86b85bd3a.png", 
-  "/lovable-uploads/0fe6a9ec-690a-4ac5-a8b6-efab2e58937f.png", 
+  null, // Keep one null for Michael Johnson with no profile pic
   "/lovable-uploads/80888870-b48a-405b-ac8e-ad08f4fe5afc.png", 
   "/lovable-uploads/497a46c4-728e-426b-bd23-fc5c5b9869be.png", 
-  "/lovable-uploads/16c023d9-6b16-4f03-a3b2-e9f188599e2e.png", 
-  "/lovable-uploads/5d129c1e-f5d7-4fa6-a1f1-78e9ba4b05c5.png"
+  "/lovable-uploads/16c023d9-6b16-4f03-a3b2-e9f188599e2e.png"
 ];
 
 const TestimonialsCarousel = () => {
@@ -35,22 +33,53 @@ const TestimonialsCarousel = () => {
   const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Assign profile images to testimonials except for Michael Johnson
+  // Update testimonials with corrected names and profile pictures
   useEffect(() => {
-    const testimonialsWithImages = testimonials.map((testimonial, index) => {
-      // Skip adding a profile image for Michael Johnson
-      if (testimonial.name === "Michael Johnson") {
-        return testimonial;
+    const updatedTestimonials = testimonials.map((testimonial) => {
+      // Replace specific names as requested
+      let updatedName = testimonial.name;
+      
+      if (testimonial.name === "Robert Anderson") {
+        updatedName = "Rebecca Anderson";
+      } else if (testimonial.name === "Thomas Clark") {
+        updatedName = "Tina Clark";
+      } else if (testimonial.name === "David Wilson") {
+        updatedName = "Raj Patel";
       }
       
-      const imageIndex = index % profileImages.length;
+      // Keep Michael Johnson with no profile picture
+      if (testimonial.name === "Michael Johnson") {
+        return {
+          ...testimonial,
+          name: updatedName,
+          profileImage: undefined
+        };
+      }
+      
+      // Skip adding profile pictures for deleted profiles
+      if (
+        ["Emily Johnson", "Christopher Lee", "Patricia Chen", 
+        "Daniel Lewis", "Jennifer Davis", "Olivia Robinson"].includes(testimonial.name)
+      ) {
+        return null;
+      }
+      
+      // Add profile images to other testimonials
+      const imageIndex = Math.floor(Math.random() * profileImages.length);
       return {
         ...testimonial,
+        name: updatedName,
         profileImage: profileImages[imageIndex]
       };
-    });
+    }).filter(Boolean) as TestimonialWithProfile[]; // Filter out null values
     
-    setAllTestimonials(testimonialsWithImages);
+    // Remove any duplicates (by name)
+    const uniqueTestimonials = updatedTestimonials.filter(
+      (testimonial, index, self) => 
+        index === self.findIndex(t => t.name === testimonial.name)
+    );
+    
+    setAllTestimonials(uniqueTestimonials);
   }, []);
 
   // Auto-rotate testimonials
@@ -97,7 +126,7 @@ const TestimonialsCarousel = () => {
                     name={testimonial.name}
                     location={testimonial.location}
                     rating={testimonial.rating}
-                    profileImage={testimonial.name !== "Michael Johnson" ? testimonial.profileImage : undefined}
+                    profileImage={testimonial.profileImage}
                     beforeAfterImage={testimonial.beforeAfterImage}
                   />
                 </div>

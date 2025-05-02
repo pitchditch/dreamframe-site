@@ -37,7 +37,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
-      name: "Robert",
+      name: "Raj Patel",
       location: "South Surrey",
       service: "Roof Cleaning",
       date: "March 2025",
@@ -58,6 +58,14 @@ const TrustedCustomersSection = () => {
       service: "Window Cleaning",
       date: "April 2025",
       quote: "Great experience. Will use them again."
+    },
+    {
+      image: "/lovable-uploads/8c769aeb-d888-49ed-a370-c4d0945e1eb7.png",
+      name: "Sarah",
+      location: "Surrey",
+      service: "Gutter Cleaning",
+      date: "May 2025",
+      quote: "Perfect job on our gutters! Very thorough."
     }
   ];
   
