@@ -9,10 +9,10 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center">
       <div
-        className="relative h-24 flex items-center"
+        className="relative h-28 flex items-center"
         style={{
-          minWidth: '400px',
-          maxWidth: '800px',
+          minWidth: '450px',
+          maxWidth: '900px',
         }}
       >
         {isOverVideo ? (
@@ -21,8 +21,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             alt="BC Pressure Washing Property Maintenance logo"
             className="h-full w-auto object-contain"
             style={{
-              maxWidth: '800px',
-              minHeight: '160px',
+              maxWidth: '900px',
+              minHeight: '180px',
             }}
           />
         ) : (
@@ -31,8 +31,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             alt="BC Pressure Washing Property Maintenance logo"
             className="h-full w-auto object-contain"
             style={{
-              maxWidth: '800px',
-              minHeight: '160px',
+              maxWidth: '900px',
+              minHeight: '180px',
             }}
           />
         )}

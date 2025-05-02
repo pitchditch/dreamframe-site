@@ -53,7 +53,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/74fff6dd-0d95-4d31-bb6a-606b14280b3a.png",
-      name: "Lisa & John",
+      name: "John",
       location: "White Rock",
       service: "Window Cleaning",
       date: "May 2025",
@@ -69,10 +69,10 @@ const TrustedCustomersSection = () => {
     }
   ];
   
+  // Auto-rotate carousel continuously without pausing
   React.useEffect(() => {
     if (!api) return;
     
-    // Auto-rotate carousel continuously without pausing
     const interval = setInterval(() => {
       api.scrollNext();
     }, 3000);
@@ -97,7 +97,7 @@ const TrustedCustomersSection = () => {
         
         {/* Carousel View (for all screen sizes) */}
         <div className="relative max-w-md mx-auto">
-          <Carousel className="w-full" setApi={setApi}>
+          <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
             <CarouselContent>
               {customers.map((customer, index) => (
                 <CarouselItem key={index} className="basis-full">

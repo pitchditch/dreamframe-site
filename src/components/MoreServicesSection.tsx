@@ -58,7 +58,7 @@ const MoreServicesSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">Looking for More Services?</h2>
         
-        <Carousel className="w-full" setApi={setApi}>
+        <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
           <CarouselContent>
             {serviceImages.map((service, index) => (
               <CarouselItem key={index} className="basis-full">
@@ -68,6 +68,7 @@ const MoreServicesSection: React.FC = () => {
                       src={service.src} 
                       alt={service.alt} 
                       className="w-full h-full object-cover object-center"
+                      style={{ objectFit: "cover", width: "100%", height: "100%" }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-8">
                       <h3 className="text-white text-2xl md:text-3xl font-semibold mb-4">{service.alt}</h3>
