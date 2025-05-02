@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -46,10 +47,6 @@ const GutterCleaning = () => {
     window.open("https://youtu.be/m5wfZZCuFeg?si=zIa4LgX-eu9gBVoI", "_blank");
   };
 
-  const handleGuardsVideoClick = () => {
-    window.open("https://youtube.com/shorts/OICbIRmx-80?si=koOZ28Sa4GTySp0n", "_blank");
-  };
-
   const faqs = [
     {
       question: "How often should I have my gutters cleaned?",
@@ -81,7 +78,6 @@ const GutterCleaning = () => {
         icon={<Droplets size={48} className="opacity-0" />} 
         imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png" 
         darkOverlay={true} 
-        videoUrl="https://www.youtube.com/embed/m5wfZZCuFeg?autoplay=1&mute=0&controls=0&loop=1&playlist=m5wfZZCuFeg&showinfo=0&rel=0&enablejsapi=1"
       />
 
       <section className="container mx-auto px-4 py-16">
@@ -111,10 +107,10 @@ const GutterCleaning = () => {
           </div>
           <div className="md:w-1/2 cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
             <div className="relative pt-[56.25%] w-full">
-              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/m5wfZZCuFeg" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-              <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                <div className="transform scale-0 hover:scale-100 transition-transform duration-300">
-                  <div className="bg-bc-red text-white rounded-full p-4">
+              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/m5wfZZCuFeg?mute=1" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-bc-red text-white rounded-full p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <polygon points="5 3 19 12 5 21 5 3"></polygon>
                     </svg>
@@ -152,24 +148,17 @@ const GutterCleaning = () => {
               <li>Extends the lifespan of your gutters</li>
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
-            <div className="relative cursor-pointer h-0 pb-[56.25%] mt-4 mb-2 rounded-xl overflow-hidden" onClick={handleGuardsVideoClick}>
+            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{
+              paddingBottom: "56.25%"
+            }}>
               <iframe 
-                src="https://www.youtube.com/embed/OICbIRmx-80" 
+                src="https://www.youtube.com/embed/m5wfZZCuFeg?si=zIa4LgX-eu9gBVoI" 
                 title="Gutter protection video" 
                 frameBorder="0" 
                 allow="autoplay; encrypted-media" 
                 allowFullScreen 
                 className="absolute top-0 left-0 w-full h-full rounded-xl"
               ></iframe>
-              <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                <div className="transform scale-0 hover:scale-100 transition-transform duration-300">
-                  <div className="bg-bc-red text-white rounded-full p-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div className="image-content">
