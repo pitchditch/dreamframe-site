@@ -15,6 +15,15 @@ interface TestimonialWithProfile {
   service?: "gutter-cleaning" | "window-cleaning" | "pressure-washing" | "roof-cleaning";
 }
 
+// Define the profile images array that was missing
+const profileImages = [
+  "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&h=200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200&h=200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&h=200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?q=80&w=200&h=200&auto=format&fit=crop"
+];
+
 const TestimonialsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
@@ -46,9 +55,21 @@ const TestimonialsCarousel = () => {
       // Skip adding profile pictures for deleted profiles
       if (
         ["Emily Johnson", "Christopher Lee", "Patricia Chen", 
-        "Daniel Lewis", "Jennifer Davis", "Olivia Robinson"].includes(testimonial.name)
+        "Daniel Lewis", "Jennifer Davis", "Olivia Robinson",
+        "Emma Rodriguez", "Eric Turner", "Peter Harris",
+        "Lisa Martinez", "Amanda White", "Jason Brown",
+        "Michelle Taylor"].includes(testimonial.name)
       ) {
         return null;
+      }
+
+      // Special case for Sarah Thompson
+      if (testimonial.name === "Sarah Thompson") {
+        return {
+          ...testimonial,
+          name: updatedName,
+          profileImage: undefined
+        };
       }
       
       // Add profile images to other testimonials
