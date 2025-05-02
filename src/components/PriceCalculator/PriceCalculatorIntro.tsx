@@ -1,25 +1,14 @@
-
 import React from "react";
-
 const PriceCalculatorIntro = () => {
-  return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mb-8 p-6 rounded-xl bg-gradient-to-r from-blue-100 via-blue-50 to-white shadow-lg relative">
+  return <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mb-8 p-6 rounded-xl bg-gradient-to-r from-blue-100 via-blue-50 to-white shadow-lg relative">
       {/* Profile section */}
       <div className="absolute right-6 top-6 hidden sm:block">
-        <img
-          src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png"
-          alt="Jayden Fisher – Owner & Operator"
-          className="h-28 w-28 rounded-full border-4 border-blue-200 object-cover shadow-md"
-        />
+        <img alt="Jayden Fisher – Owner & Operator" className="h-28 w-28 rounded-full border-4 border-blue-200 object-cover shadow-md" src="/lovable-uploads/78b42700-b641-45cf-a11e-fb68f4124509.jpg" />
       </div>
       {/* Text block with fallback image for mobile */}
       <div className="flex-1 min-w-0 text-center sm:text-left">
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-2">
-          <img
-            src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png"
-            alt="Jayden Fisher profile"
-            className="h-16 w-16 sm:hidden rounded-full border-2 border-blue-200 object-cover shadow"
-          />
+          <img src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png" alt="Jayden Fisher profile" className="h-16 w-16 sm:hidden rounded-full border-2 border-blue-200 object-cover shadow" />
           <div>
             <span className="font-bold text-lg">Jayden Fisher – Owner & Operator</span>
             <div className="text-blue-700 font-medium text-sm">
@@ -37,8 +26,6 @@ const PriceCalculatorIntro = () => {
           We offer flexible, competitive rates with premium service and attention to detail.
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PriceCalculatorIntro;
