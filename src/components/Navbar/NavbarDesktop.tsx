@@ -21,11 +21,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const location = useLocation();
   
   const textColor = isOverVideo ? 'text-white' : 'text-gray-800';
-  const borderColor = isOverVideo ? 'border-white' : 'border-gray-200';
   const hoverBgColor = isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100';
   
   const classNames = {
-    button: `${textColor} ${borderColor} ${hoverBgColor} px-4`,
+    button: `${textColor} px-4`,
     link: `${textColor} ${hoverBgColor} rounded-md px-3 py-2 text-sm font-medium`,
     activeLink: `${isOverVideo ? 'bg-white/10' : 'bg-gray-100'} rounded-md px-3 py-2 text-sm font-medium`,
     trigger: `${textColor} ${hoverBgColor} rounded-md px-3 py-2 text-sm font-medium group inline-flex items-center`,
@@ -52,32 +51,32 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             {t('Residential Services')}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid grid-cols-2 gap-3 p-6 w-[500px]">
+            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white">
               <Link to="/services/window-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
-                <Droplets className="text-bc-red mr-3 navbar-service-icon" size={32} />
+                <Droplets className="text-blue-500 mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Window Cleaning')}</div>
+                  <div className="font-medium text-gray-900">{t('Window Cleaning')}</div>
                   <div className="text-sm text-gray-500">{t('Crystal clear windows')}</div>
                 </div>
               </Link>
               <Link to="/services/pressure-washing" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
-                <Home className="text-blue-500 mr-3 navbar-service-icon" size={32} />
+                <Home className="text-bc-red mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Pressure Washing')}</div>
+                  <div className="font-medium text-gray-900">{t('Pressure Washing')}</div>
                   <div className="text-sm text-gray-500">{t('Remove dirt & grime')}</div>
                 </div>
               </Link>
               <Link to="/services/gutter-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
                 <Wind className="text-green-600 mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Gutter Cleaning')}</div>
+                  <div className="font-medium text-gray-900">{t('Gutter Cleaning')}</div>
                   <div className="text-sm text-gray-500">{t('Prevent water damage')}</div>
                 </div>
               </Link>
               <Link to="/services/roof-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
                 <Home className="text-amber-700 mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Roof Cleaning')}</div>
+                  <div className="font-medium text-gray-900">{t('Roof Cleaning')}</div>
                   <div className="text-sm text-gray-500">{t('Remove moss & debris')}</div>
                 </div>
               </Link>
@@ -91,25 +90,25 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             {t('Commercial Services')}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid grid-cols-2 gap-3 p-6 w-[500px]">
+            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white">
               <Link to="/services/commercial-window-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
                 <Droplets className="text-blue-600 mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Commercial Window Cleaning')}</div>
+                  <div className="font-medium text-gray-900">{t('Commercial Window Cleaning')}</div>
                   <div className="text-sm text-gray-500">{t('For businesses & offices')}</div>
                 </div>
               </Link>
               <Link to="/services/commercial-pressure-washing" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
                 <Home className="text-blue-700 mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Commercial Pressure Washing')}</div>
+                  <div className="font-medium text-gray-900">{t('Commercial Pressure Washing')}</div>
                   <div className="text-sm text-gray-500">{t('For storefronts & facilities')}</div>
                 </div>
               </Link>
               <Link to="/services/post-construction-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
                 <MessageSquare className="text-purple-600 mr-3 navbar-service-icon" size={32} />
                 <div>
-                  <div className="font-medium">{t('Post-Construction Cleaning')}</div>
+                  <div className="font-medium text-gray-900">{t('Post-Construction Cleaning')}</div>
                   <div className="text-sm text-gray-500">{t('Final cleaning after construction')}</div>
                 </div>
               </Link>

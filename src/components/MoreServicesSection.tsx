@@ -1,93 +1,71 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Droplets, Home, Wind } from 'lucide-react';
 
-interface ServiceImage {
-  src: string;
-  alt: string;
-  link: string;
-}
-
-const MoreServicesSection: React.FC = () => {
-  const [api, setApi] = useState<any>();
-  
-  const serviceImages: ServiceImage[] = [
+const MoreServicesSection = () => {
+  const services = [
     {
-      src: "/lovable-uploads/e76ecfc1-a3a8-44d8-9a4a-5e1bf7c32282.png",
-      alt: "Professional Pressure Washing in Surrey",
-      link: "/services/pressure-washing"
+      title: 'Gutter Cleaning',
+      description: 'Remove debris and ensure proper water flow to prevent costly damage.',
+      icon: <Wind className="h-6 w-6 text-green-500" />,
+      image: '/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png',
+      link: '/services/gutter-cleaning'
     },
     {
-      src: "/lovable-uploads/20659a58-a7ae-47cb-970a-a2f17c8e2d93.png",
-      alt: "Window Cleaning in White Rock",
-      link: "/services/window-cleaning"
+      title: 'Pressure Washing',
+      description: 'Restore the beauty of your property by removing dirt, grime, and stains.',
+      icon: <Home className="h-6 w-6 text-bc-red" />,
+      image: '/lovable-uploads/e76ecfc1-a3a8-44d8-9a4a-5e1bf7c32282.png',
+      link: '/services/pressure-washing'
     },
     {
-      src: "/lovable-uploads/ff0fc949-bae9-4f8b-a408-2322698b8479.png",
-      alt: "Gutter Cleaning in Surrey & White Rock",
-      link: "/services/gutter-cleaning"
-    },
-    {
-      src: "/lovable-uploads/7e1c3bef-96a3-46e7-b312-58ac0d3423de.png",
-      alt: "Roof Cleaning in Metro Vancouver",
-      link: "/services/roof-cleaning"
-    },
-    {
-      src: "/lovable-uploads/7e01805c-6b7d-4cca-b349-1f3a8ca1fa7d.png",
-      alt: "House Washing Services in Surrey",
-      link: "/services/house-washing"
+      title: 'Roof Cleaning',
+      description: 'Remove moss, algae, and debris to extend the life of your roof.',
+      icon: <Home className="h-6 w-6 text-amber-700" />,
+      image: '/lovable-uploads/47504564-617f-4553-85c8-0f9f5d5ec715.png',
+      link: '/services/roof-cleaning'
     }
   ];
 
-  useEffect(() => {
-    if (!api) return;
-
-    // Auto-rotate carousel every 4 seconds
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 4000);
-    
-    return () => clearInterval(interval);
-  }, [api]);
-
   return (
-    <section className="py-16 bg-gray-50 w-full">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-center">Looking for More Services?</h2>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-3">Looking for More Services?</h2>
+          <p className="text-gray-600 max-w-3xl mx-auto">
+            Explore our full range of professional cleaning services designed to enhance and protect your property.
+          </p>
+        </div>
         
-        <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
-          <CarouselContent>
-            {serviceImages.map((service, index) => (
-              <CarouselItem key={index} className="basis-full">
-                <Link to={service.link} className="block w-full">
-                  <div className="relative w-full h-[80vh] max-h-[800px] overflow-hidden rounded-lg shadow-xl">
-                    <img 
-                      src={service.src} 
-                      alt={service.alt} 
-                      className="w-full h-full object-cover object-center"
-                      style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-8">
-                      <h3 className="text-white text-2xl md:text-3xl font-semibold mb-4">{service.alt}</h3>
-                      <Button variant="outline" className="w-fit border-white text-white hover:bg-white/10">
-                        Learn More <ArrowRight className="ml-2" size={18} />
-                      </Button>
-                    </div>
-                  </div>
-                </Link>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <div key={index} className="bg-gray-50 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={service.image} 
+                  alt={service.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center mb-3">
+                  <div className="mr-2 bg-white p-2 rounded-full shadow-sm">{service.icon}</div>
+                  <h3 className="text-xl font-bold">{service.title}</h3>
+                </div>
+                <p className="text-gray-600 mb-4">{service.description}</p>
+                <Button asChild variant="bc-red" className="w-full">
+                  <Link to={service.link}>Learn More</Link>
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
         
-        <div className="flex justify-center mt-8">
-          <Button asChild size="lg" className="text-lg">
-            <Link to="/services">
-              View All Services <ArrowRight className="ml-2" size={18} />
-            </Link>
+        <div className="text-center mt-12">
+          <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white">
+            <Link to="/services">View All Services</Link>
           </Button>
         </div>
       </div>

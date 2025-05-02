@@ -11,6 +11,7 @@ interface ServiceHeaderProps {
   videoUrl?: string;
   darkOverlay?: boolean;
   showButton?: boolean;
+  buttonPosition?: 'center' | 'bottom';
 }
 
 const ServiceHeader = ({
@@ -20,7 +21,8 @@ const ServiceHeader = ({
   imagePath,
   videoUrl,
   darkOverlay = false,
-  showButton = true
+  showButton = true,
+  buttonPosition = 'center'
 }: ServiceHeaderProps) => {
   useEffect(() => {
     if (videoUrl) {
@@ -48,7 +50,7 @@ const ServiceHeader = ({
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>}
               {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
-              {showButton && (
+              {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
                   <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
                     <Link to="/calculator">Check Prices & Availability</Link>
@@ -57,6 +59,13 @@ const ServiceHeader = ({
               )}
             </div>
           </div>
+          {showButton && buttonPosition === 'bottom' && (
+            <div className="absolute bottom-10 w-full flex justify-center z-10">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-6 shadow-lg">
+                <Link to="/calculator">Check Prices & Availability</Link>
+              </Button>
+            </div>
+          )}
         </>
       ) : (
         <>
@@ -65,19 +74,31 @@ const ServiceHeader = ({
             alt={typeof title === 'string' ? title : 'Service header image'}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />
+          
+          {darkOverlay && (
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50" />
+          )}
+          
           <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
             <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">{title}</h1>}
               {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">{description}</p>}
-              {showButton && (
+              {showButton && buttonPosition === 'center' && (
                 <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
                   <Link to="/calculator">Check Prices & Availability</Link>
                 </Button>
               )}
             </div>
           </div>
+          
+          {showButton && buttonPosition === 'bottom' && (
+            <div className="absolute bottom-10 w-full flex justify-center z-10">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-6 shadow-lg">
+                <Link to="/calculator">Check Prices & Availability</Link>
+              </Button>
+            </div>
+          )}
         </>
       )}
     </div>

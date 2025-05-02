@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
@@ -11,13 +12,13 @@ import ChatAssistant from '@/components/ChatAssistant';
 import { Badge } from '@/components/ui/badge';
 import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 
 // Image imports
-const MOSS_REMOVAL_IMG = "/lovable-uploads/41660181-42c5-445c-83e3-23681140d569.png";
-const BLACK_STAINS_IMG = "/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png";
-const HOUSE_WITH_ROOF_IMG = "/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png";
-const BEFORE_AFTER_IMG = "/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png";
-const HERO_IMG = "/lovable-uploads/cf8d9662-3846-4e1a-8919-9cbaec254941.png";
+const HERO_IMG = "/lovable-uploads/8f51f55c-a8ce-472b-b398-1a35211096d3.png";
+const MOSS_REMOVAL_IMG = "/lovable-uploads/4717a554-bfc3-4475-8b10-8a17baff037d.png";
+const BLACK_STAINS_IMG = "/lovable-uploads/b05d1af5-48fb-4bed-a580-f986d22828be.png";
+const CLEAN_BEAUTIFUL_ROOF_IMG = "/lovable-uploads/8f772889-3cc7-4650-a92d-9b7571b7d7fb.png";
 
 const benefits = [
   {
@@ -155,7 +156,11 @@ const RoofCleaning = () => {
       {/* SERVICE AREA MAP */}
       <section className="py-12 bg-gray-50 relative z-40">
         <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Areas We Service</h2>
           <ServiceAreaMap />
+          <div className="mt-8">
+            <ServiceAreasCarousel />
+          </div>
         </div>
       </section>
 
@@ -214,14 +219,21 @@ const RoofCleaning = () => {
           <p className="text-lg mb-8 max-w-2xl mx-auto">
             Our roof cleaning service is safe, effective, and guaranteed to transform your home's appearance.
           </p>
-          <Button 
-            variant="default" 
-            size="lg" 
-            className="bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
-            asChild
-          >
-            <Link to="/calculator">Get Your Free Quote Today</Link>
-          </Button>
+          <div className="relative max-w-2xl mx-auto">
+            <img 
+              src={CLEAN_BEAUTIFUL_ROOF_IMG}
+              alt="Clean beautiful roof after professional cleaning"
+              className="w-full rounded-lg shadow-xl"
+            />
+            <Button 
+              variant="default" 
+              size="lg" 
+              className="mt-8 bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
+              asChild
+            >
+              <Link to="/calculator">Get Your Free Quote Today</Link>
+            </Button>
+          </div>
         </div>
       </section>
 

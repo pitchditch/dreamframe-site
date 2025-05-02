@@ -39,21 +39,45 @@ const WindowCleaning = () => {
         description="Crystal clear, streak-free windows using our advanced pure water technology"
         imagePath="/lovable-uploads/4d638131-832a-4e72-9687-28a275c3cdde.png"
         showButton={true}
+        buttonPosition="bottom"
+        darkOverlay={false}
       />
 
       {/* YouTube Video Showcase */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">See Our Window Cleaning in Action</h2>
-          <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-4xl mx-auto rounded-xl shadow-xl">
-            <iframe 
-              className="absolute top-0 left-0 w-full h-full" 
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=0&controls=1&rel=0" 
-              title="Window Cleaning Process" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-            ></iframe>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Traditional Squeegee Method */}
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-center">Traditional Squeegee Method</h3>
+              <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-xl">
+                <iframe 
+                  className="absolute top-0 left-0 w-full h-full" 
+                  src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=0&controls=1&rel=0" 
+                  title="Window Cleaning with Squeegee" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+            
+            {/* Water-Fed Pole System */}
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-center">Water-Fed Pole System</h3>
+              <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-xl">
+                <iframe 
+                  className="absolute top-0 left-0 w-full h-full" 
+                  src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=0&controls=1&rel=0" 
+                  title="Window Cleaning with Water-Fed Pole" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
           </div>
         </div>
       </section>
