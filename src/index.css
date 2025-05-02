@@ -1,70 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bc-red: #df1f26;
+  --bc-blue: #007bff;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.has-video-header main {
+  position: relative;
+  z-index: 1;
+}
+
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 @layer base {
   :root {
+    --bc-red: #df1f26;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 0 72% 40%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 224.3 76.3% 48%;
   }
 }
 
@@ -72,88 +77,43 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', sans-serif;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    @apply bg-background text-foreground;
   }
 }
 
+/* Custom Utility Classes */
 @layer components {
-  .text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
   }
   
-  .text-shadow-sm {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-  }
-  
-  .text-shadow-white {
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
-  }
-  
-  .text-shadow-dark {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  }
-
-  .badge-pill {
-    @apply inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-red-50 text-bc-red;
-  }
-
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-4 text-center;
-  }
-
-  .section-subtitle {
-    @apply text-lg text-gray-600 mb-10 text-center max-w-3xl mx-auto;
-  }
-
-  .btn-primary {
-    @apply bg-bc-red text-white px-6 py-3 rounded-md font-medium transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50;
-  }
-
-  .btn-secondary {
-    @apply bg-white text-bc-red px-6 py-3 rounded-md font-medium border border-bc-red transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50;
-  }
-
-  .service-card {
-    @apply bg-white p-6 rounded-lg shadow-md transition-all hover:shadow-lg;
-  }
-
-  .testimonial-card {
-    @apply bg-white p-6 rounded-lg shadow-md border border-gray-100;
-  }
-
-  .feature-icon {
-    @apply w-12 h-12 flex items-center justify-center rounded-full bg-red-100 text-bc-red mb-4;
-  }
-
-  .cta-section {
-    @apply bg-black text-white py-16 px-4;
-  }
-
-  .divider {
-    @apply w-16 h-1 bg-bc-red mx-auto my-4;
-  }
-
-  .service-link {
-    @apply text-bc-red font-medium flex items-center gap-1 mt-4 hover:underline transition-all;
-  }
-
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-4;
+  }
+  
+  .section-subtitle {
+    @apply text-lg text-gray-600 text-center max-w-3xl mx-auto mb-10;
+  }
+  
+  .badge-pill {
+    @apply bg-bc-red/10 text-bc-red px-4 py-1 rounded-full text-sm font-medium inline-block mb-4;
+  }
+  
+  .btn-primary {
+    @apply bg-bc-red hover:bg-red-700 text-white px-6 py-3 rounded-md font-medium transition-colors;
   }
 }
 
-/* Animation utilities */
+/* Animation for scroll reveal */
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .animate-on-scroll.animate {
@@ -161,91 +121,22 @@
   transform: translateY(0);
 }
 
-/* Service menu animation */
-.service-menu {
-  transform-origin: top center;
-  transition: all 0.2s ease;
+.delay-100 {
+  transition-delay: 100ms;
 }
 
-/* Other custom styles */
-.hero-section {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: relative;
+.delay-200 {
+  transition-delay: 200ms;
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+.delay-300 {
+  transition-delay: 300ms;
 }
 
-.checkmark-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
+.delay-400 {
+  transition-delay: 400ms;
 }
 
-.checkmark-list li svg {
-  margin-right: 0.5rem;
-  flex-shrink: 0;
-}
-
-/* Transparent navbar over hero image */
-.has-video-header .navbar-transparent {
-  background-color: transparent;
-  box-shadow: none;
-}
-
-/* Mobile landscape mode improvements */
-@media (max-height: 500px) and (orientation: landscape) {
-  .hero-section {
-    height: auto !important;
-    min-height: 100vh;
-    padding: 8rem 0;
-  }
-  
-  .hero-section h1 {
-    font-size: 2.5rem !important;
-  }
-  
-  .section-padding {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-  
-  .nav-fixed {
-    position: absolute !important;
-    background: transparent !important;
-  }
-  
-  .badge-pill {
-    margin-bottom: 0.5rem;
-  }
-  
-  .section-title {
-    margin-bottom: 0.5rem;
-  }
-}
-
-/* Center and limit width of content on ultra-wide screens */
-@media (min-width: 1920px) {
-  .container {
-    max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* Add these new styles for parallax effect */
-@layer utilities {
-  /* Parallax scroll effect */
-  .parallax {
-    transform: translateZ(0);
-    will-change: transform;
-  }
+.delay-500 {
+  transition-delay: 500ms;
 }
