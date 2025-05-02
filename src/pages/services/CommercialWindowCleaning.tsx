@@ -83,7 +83,7 @@ const CommercialWindowCleaning = () => {
         
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <img alt="Professional window cleaning" className="rounded-lg shadow-lg w-full h-auto" src="/lovable-uploads/116eeb05-47f5-49d6-abe4-ebb88696ffd2.png" />
+            <img alt="Professional window cleaning" className="rounded-lg shadow-lg w-full h-auto" src="/lovable-uploads/6fed146a-76ba-45a2-b2e9-e14badedae9e.png" />
           </div>
           <div>
             <h3 className="text-2xl font-bold mb-4">Our Commercial Window Cleaning Includes:</h3>
