@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -6,7 +5,6 @@ import ServiceProcess from '../../components/ServiceProcess';
 import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
-
 const GutterCleaning = () => {
   const benefits = [{
     title: "Prevent Water Damage",
@@ -27,7 +25,6 @@ const GutterCleaning = () => {
     title: "Prevent Basement Flooding",
     description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
   }];
-  
   const processes = [{
     title: "Debris Removal",
     description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
@@ -41,19 +38,11 @@ const GutterCleaning = () => {
     description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
     icon: <PieChart size={32} />
   }];
-  
   const handleVideoClick = () => {
     window.open("https://www.youtube.com/watch?v=VzcQ2S5axEE", "_blank");
   };
-
   return <Layout>
-      <ServiceHeader 
-        title="" 
-        description="" 
-        icon={<Droplets size={48} className="opacity-0" />}
-        imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png"
-        darkOverlay={true}
-      />
+      <ServiceHeader title="" description="" icon={<Droplets size={48} className="opacity-0" />} imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png" darkOverlay={true} />
 
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -82,13 +71,7 @@ const GutterCleaning = () => {
           </div>
           <div className="md:w-1/2 cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
             <div className="relative pt-[56.25%] w-full">
-              <iframe 
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/VzcQ2S5axEE?mute=1"
-                title="Gutter Cleaning"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/VzcQ2S5axEE?mute=1" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
                   <div className="bg-bc-red text-white rounded-full p-2">
@@ -129,24 +112,18 @@ const GutterCleaning = () => {
               <li>Extends the lifespan of your gutters</li>
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
-            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{paddingBottom:"56.25%"}}>
-              <iframe
-                src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0"
-                title="Gutter protection video"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                className="absolute top-0 left-0 w-full h-full rounded-xl"
-              ></iframe>
+            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{
+            paddingBottom: "56.25%"
+          }}>
+              <iframe src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0" title="Gutter protection video" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen className="absolute top-0 left-0 w-full h-full rounded-xl"></iframe>
             </div>
           </div>
           <div className="image-content">
-            <img alt="Leaf Guard" src="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png" className="rounded-lg shadow-lg w-full h-auto" />
+            
           </div>
         </div>
       </section>
       <CallToAction />
     </Layout>;
 };
-
 export default GutterCleaning;
