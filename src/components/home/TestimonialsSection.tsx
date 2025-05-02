@@ -1,24 +1,14 @@
 
 import { useEffect, useState } from 'react';
 import TestimonialCard from '../TestimonialCard';
-import { testimonials } from '@/data/testimonials';
+import { Testimonial, testimonials } from '@/data/testimonials';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-// Define a local testimonial interface if it's not exported from the data file
-interface Testimonial {
-  id: string;
-  name: string;
-  quote?: string;
-  location?: string;
-  rating: number;
-  service?: string;
-  date?: string;
-  beforeAfterImage?: string;
-}
-
 // Define an extended testimonial type that includes the profileImage
-interface TestimonialWithProfile extends Testimonial {
+// Update the id type to number to match the testimonials data structure
+interface TestimonialWithProfile extends Omit<Testimonial, 'id'> {
+  id: number;
   profileImage?: string;
 }
 
