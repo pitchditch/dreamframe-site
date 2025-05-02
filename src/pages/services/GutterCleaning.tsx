@@ -70,8 +70,15 @@ const GutterCleaning = () => {
     }
   ];
 
-  return <Layout>
-      <ServiceHeader title="" description="" icon={<Droplets size={48} className="opacity-0" />} imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png" darkOverlay={true} />
+  return (
+    <Layout>
+      <ServiceHeader 
+        title="" 
+        description="" 
+        icon={<Droplets size={48} className="opacity-0" />} 
+        imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png" 
+        darkOverlay={true} 
+      />
 
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -142,13 +149,20 @@ const GutterCleaning = () => {
               <li>Prevents pests from nesting in your gutters</li>
             </ul>
             <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{
-            paddingBottom: "56.25%"
-          }}>
-              <iframe src="https://www.youtube.com/embed/O0Ig4vVAjxA?rel=0" title="Gutter protection video" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen className="absolute top-0 left-0 w-full h-full rounded-xl"></iframe>
+              paddingBottom: "56.25%"
+            }}>
+              <iframe 
+                src="https://www.youtube.com/embed/m5wfZZCuFeg?si=zIa4LgX-eu9gBVoI" 
+                title="Gutter protection video" 
+                frameBorder="0" 
+                allow="autoplay; encrypted-media" 
+                allowFullScreen 
+                className="absolute top-0 left-0 w-full h-full rounded-xl"
+              ></iframe>
             </div>
           </div>
           <div className="image-content">
-            
+            {/* Content for right side if needed */}
           </div>
         </div>
       </section>
@@ -160,7 +174,8 @@ const GutterCleaning = () => {
       />
       
       <CallToAction />
-    </Layout>;
+    </Layout>
+  );
 };
 
 export default GutterCleaning;
