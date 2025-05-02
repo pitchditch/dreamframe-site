@@ -1,4 +1,6 @@
+
 import Layout from '../../components/Layout';
+import ServiceHeader from '@/components/ServiceHeader';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Building, CheckCircle, Droplets, SparkleIcon } from 'lucide-react';
@@ -6,6 +8,8 @@ import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import FAQSection from '@/components/FAQSection';
 import MoreServicesSection from '@/components/MoreServicesSection';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+
 const CommercialWindowCleaning = () => {
   const benefits = [{
     title: "Enhance Curb Appeal",
@@ -26,6 +30,7 @@ const CommercialWindowCleaning = () => {
     title: "Safety & Liability Protection",
     description: "Avoid the risks and liability concerns associated with employees or untrained staff attempting to clean high windows."
   }];
+
   const processes = [{
     title: "Property Assessment",
     description: "We conduct a thorough evaluation of your property's windows to determine the best cleaning approach and equipment needed.",
@@ -39,7 +44,8 @@ const CommercialWindowCleaning = () => {
     description: "We conduct a detailed quality check, ensuring every window meets our high standards before considering the job complete.",
     icon: <SparkleIcon size={32} className="text-bc-red" />
   }];
-  const faqs = [{
+
+  const commercialFaqs = [{
     question: "How often should commercial windows be cleaned?",
     answer: "For most commercial buildings, we recommend professional window cleaning 2-4 times per year. However, this can vary based on your building's location, surrounding environment, and the image you want to maintain. Retail stores, restaurants, and other customer-facing businesses often benefit from more frequent cleaning."
   }, {
@@ -55,21 +61,20 @@ const CommercialWindowCleaning = () => {
     question: "Can you clean windows during business hours?",
     answer: "Yes, our team is trained to work efficiently with minimal disruption to your business operations. However, we also offer after-hours and weekend appointments if you prefer the cleaning to be done when your business is closed."
   }];
-  return <Layout title="Commercial Window Cleaning Services | BC Pressure Washing" description="Professional window cleaning services for commercial properties in Surrey, White Rock & Metro Vancouver. Keep your business looking its best.">
-      {/* Hero Section */}
-      <section className="relative h-screen w-full">
-        <img src="/lovable-uploads/598eb62a-290d-41ec-8c69-abae60a5a757.png" alt="Commercial Window Cleaning Services" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center">
-          <div className="text-center text-white max-w-4xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Commercial Window Cleaning Services</h1>
-            <p className="text-xl mb-8">Professional window cleaning for businesses of all sizes in the Surrey & White Rock area</p>
-            <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
-              <Link to="/calculator">Check Prices & Availability</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+
+  return (
+    <Layout 
+      title="Commercial Window Cleaning Services | BC Pressure Washing" 
+      description="Professional window cleaning services for commercial properties in Surrey, White Rock & Metro Vancouver. Keep your business looking its best."
+    >
+      {/* Hero Section using ServiceHeader */}
+      <ServiceHeader
+        title="Commercial Window Cleaning Services"
+        description="Professional window cleaning for businesses of all sizes in the Surrey & White Rock area"
+        imagePath="/lovable-uploads/598eb62a-290d-41ec-8c69-abae60a5a757.png"
+        icon={<Building size={36} />}
+        showButton={true}
+      />
 
       {/* Services Description */}
       <section className="py-16 container mx-auto px-4">
@@ -204,23 +209,24 @@ const CommercialWindowCleaning = () => {
       {/* Testimonials Section */}
       <TestimonialsCarousel />
 
-      {/* FAQ Section */}
-      <FAQSection title="Frequently Asked Questions" subtitle="Common questions about our commercial window cleaning services" faqs={faqs} />
+      {/* FAQ Section - Commercial Window Cleaning Specific */}
+      <FAQSection 
+        title="Commercial Window Cleaning FAQs" 
+        subtitle="Answers to common questions about our commercial window cleaning services" 
+        faqs={commercialFaqs} 
+      />
 
-      {/* More Services Section */}
+      {/* More Services Section with larger images */}
       <MoreServicesSection />
       
       {/* Service Areas Map and Carousel */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-          <div className="mb-8">
-            <iframe src="https://www.google.com/maps/d/embed?mid=1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30" width="100%" height="450" style={{
-            border: 0,
-            borderRadius: '0.5rem'
-          }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="BC Pressure Washing Service Area" className="shadow-lg"></iframe>
+          <ServiceAreaMap />
+          <div className="mt-8">
+            <ServiceAreasCarousel />
           </div>
-          <ServiceAreasCarousel />
         </div>
       </section>
 
@@ -241,6 +247,8 @@ const CommercialWindowCleaning = () => {
           </div>
         </div>
       </section>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default CommercialWindowCleaning;

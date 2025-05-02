@@ -11,8 +11,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
       <div
         className="relative h-20 flex items-center"
         style={{
-          minWidth: '300px', // Increased size
-          maxWidth: '600px', // Increased size
+          minWidth: '340px',
+          maxWidth: '640px',
         }}
       >
         {isOverVideo ? (
@@ -21,8 +21,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             alt="BC Pressure Washing Property Maintenance logo"
             className="h-full w-auto object-contain"
             style={{
-              maxWidth: '600px', // Increased size
-              minHeight: '110px', // Increased size
+              maxWidth: '640px',
+              minHeight: '120px',
             }}
           />
         ) : (
@@ -31,8 +31,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             alt="BC Pressure Washing Property Maintenance logo"
             className="h-full w-auto object-contain"
             style={{
-              maxWidth: '600px', // Increased size
-              minHeight: '110px', // Increased size
+              maxWidth: '640px',
+              minHeight: '120px',
             }}
           />
         )}

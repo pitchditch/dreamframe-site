@@ -1,16 +1,20 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import CallToAction from '../../components/CallToAction';
+import ServiceHeader from '@/components/ServiceHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Droplets } from 'lucide-react';
 import MoreServicesSection from '../../components/MoreServicesSection';
-import CitiesCarousel from '@/components/CitiesCarousel';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+
 const WindowCleaning = () => {
-  const faqs = [{
+  const windowCleaningFaqs = [{
     question: "How often should I have my windows professionally cleaned?",
     answer: "We recommend professional window cleaning twice a year for most homes. However, properties in areas with high pollen, near construction, or close to the ocean may benefit from quarterly cleaning to maintain optimal clarity and prevent mineral buildup."
   }, {
@@ -26,20 +30,33 @@ const WindowCleaning = () => {
     question: "How long does window cleaning take?",
     answer: "The time required depends on the number and size of windows, their condition, and accessibility. A typical residential service takes between 2-4 hours. We'll provide a more accurate timeframe when scheduling your appointment."
   }];
-  return <Layout title="Professional Window Cleaning in Surrey & White Rock" description="Expert window cleaning services for crystal clear, streak-free windows. Using pure water technology and professional equipment for stunning results.">
-      {/* Hero Section */}
-      <div className="relative w-full h-screen">
-        <img src="/lovable-uploads/3c677903-190c-483b-8e1d-b3e33c7231f9.png" alt="Professional Window Cleaning in Surrey & White Rock" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 flex items-end justify-center pb-20">
-          <div className="text-center max-w-4xl px-4">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">Professional Window Cleaning</h1>
-            <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">Crystal clear, streak-free windows using our advanced pure water technology</p>
-            <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
-              <Link to="/calculator">Check Prices & Availability</Link>
-            </Button>
+
+  return (
+    <Layout title="Professional Window Cleaning in Surrey & White Rock" description="Expert window cleaning services for crystal clear, streak-free windows. Using pure water technology and professional equipment for stunning results.">
+      {/* Hero Section - Using ServiceHeader */}
+      <ServiceHeader
+        title="Professional Window Cleaning"
+        description="Crystal clear, streak-free windows using our advanced pure water technology"
+        imagePath="/lovable-uploads/4d638131-832a-4e72-9687-28a275c3cdde.png"
+        showButton={true}
+      />
+
+      {/* YouTube Video Showcase */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">See Our Window Cleaning in Action</h2>
+          <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-4xl mx-auto rounded-xl shadow-xl">
+            <iframe 
+              className="absolute top-0 left-0 w-full h-full" 
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=0&controls=1&rel=0" 
+              title="Window Cleaning Process" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Main Content */}
       <section className="py-16">
@@ -138,24 +155,34 @@ const WindowCleaning = () => {
 
       <TestimonialsSection />
 
-      <FAQSection title="Frequently Asked Questions" subtitle="Get answers to common questions about our window cleaning services" faqs={faqs} />
+      {/* FAQ Section - Window Cleaning Specific */}
+      <FAQSection 
+        title="Window Cleaning FAQs" 
+        subtitle="Common questions about our window cleaning services" 
+        faqs={windowCleaningFaqs} 
+      />
       
+      {/* More Services Section with bigger images */}
       <MoreServicesSection />
       
-      <CitiesCarousel />
-      
-      <div className="py-10 bg-gray-100">
+      {/* Service Areas Map and Carousel */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d167326.78631723323!2d-122.96968737170609!3d49.10482983753625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485d910ff12a495%3A0x50135152a7b0560!2sSurrey%2C%20BC!5e0!3m2!1sen!2sca!4v1657051523264!5m2!1sen!2sca" width="800" height="400" style={{
-            border: 0
-          }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Service Area Map" className="rounded-lg shadow-lg"></iframe>
+          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+          <ServiceAreaMap />
+          <div className="mt-8">
+            <ServiceAreasCarousel />
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Call to Action */}
-      <CallToAction title="Ready for Crystal Clear Windows?" subtitle="Contact us today for a free quote on professional window cleaning for your home or business." />
-    </Layout>;
+      <CallToAction 
+        title="Ready for Crystal Clear Windows?" 
+        subtitle="Contact us today for a free quote on professional window cleaning for your home or business." 
+      />
+    </Layout>
+  );
 };
+
 export default WindowCleaning;
