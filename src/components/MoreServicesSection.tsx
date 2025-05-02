@@ -9,7 +9,7 @@ const MoreServicesSection = () => {
     {
       title: "Window Cleaning",
       description: "Professional window cleaning for a crystal-clear view",
-      image: "/lovable-uploads/0a2cc308-bda3-4478-9cf0-5efabde14b96.png",
+      image: "/lovable-uploads/78a787e6-42d7-4f1e-85ef-7c58c848abaa.png",
       link: "/services/window-cleaning"
     },
     {
@@ -21,7 +21,7 @@ const MoreServicesSection = () => {
     {
       title: "Roof Cleaning",
       description: "Remove moss, algae and debris to extend your roof's lifespan",
-      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png",
+      image: "/lovable-uploads/a4936873-69e7-4c50-b7db-d8b1cba1d80a.png",
       link: "/services/roof-cleaning"
     }
   ];
