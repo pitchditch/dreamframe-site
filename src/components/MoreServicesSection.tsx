@@ -9,7 +9,7 @@ const MoreServicesSection = () => {
     {
       title: "Window Cleaning",
       description: "Professional window cleaning for a crystal-clear view",
-      image: "/lovable-uploads/78a787e6-42d7-4f1e-85ef-7c58c848abaa.png",
+      image: "/lovable-uploads/0a2cc308-bda3-4478-9cf0-5efabde14b96.png",
       link: "/services/window-cleaning"
     },
     {
@@ -21,7 +21,7 @@ const MoreServicesSection = () => {
     {
       title: "Roof Cleaning",
       description: "Remove moss, algae and debris to extend your roof's lifespan",
-      image: "/lovable-uploads/a4936873-69e7-4c50-b7db-d8b1cba1d80a.png",
+      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png",
       link: "/services/roof-cleaning"
     }
   ];
@@ -37,12 +37,8 @@ const MoreServicesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition-shadow">
-              <div className="h-80 w-full overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
-                />
+              <div className="h-60 w-full overflow-hidden">
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-xl font-bold mb-2">{service.title}</h3>

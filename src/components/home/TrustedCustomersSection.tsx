@@ -52,6 +52,14 @@ const TrustedCustomersSection = () => {
       quote: "Couldn't be happier with the results!"
     },
     {
+      image: "/lovable-uploads/4c1d610e-379a-49cb-9f37-ef1b48a248f4.png",
+      name: "David",
+      location: "Langley",
+      service: "Window Cleaning",
+      date: "April 2025",
+      quote: "Great experience. Will use them again."
+    },
+    {
       image: "/lovable-uploads/8c769aeb-d888-49ed-a370-c4d0945e1eb7.png",
       name: "Sarah",
       location: "Surrey",
@@ -88,24 +96,24 @@ const TrustedCustomersSection = () => {
         </div>
         
         {/* Carousel View (for all screen sizes) */}
-        <div className="relative max-w-2xl mx-auto">
+        <div className="relative max-w-xl mx-auto">
           <Carousel className="w-full" setApi={setApi}>
             <CarouselContent>
               {customers.map((customer, index) => (
                 <CarouselItem key={index} className="basis-full">
-                  <div className="flex flex-col items-center text-center p-4">
-                    <div className="mb-6 w-full h-[500px] overflow-hidden rounded-lg mx-auto transform hover:scale-105 transition-all duration-300">
+                  <div className="flex flex-col items-center text-center p-2">
+                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
                       <img 
                         src={customer.image} 
                         alt={`${customer.name} from ${customer.location}`} 
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover"
                       />
                     </div>
-                    <h4 className="font-semibold text-xl">{customer.name}</h4>
-                    <p className="text-base text-gray-600">Verified Customer – {customer.location}</p>
-                    <p className="text-base text-bc-red font-medium">{customer.service}, {customer.date}</p>
+                    <h4 className="font-semibold text-lg">{customer.name}</h4>
+                    <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
+                    <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
                     {customer.quote && (
-                      <p className="mt-3 italic text-lg">{customer.quote}</p>
+                      <p className="mt-2 italic text-sm">"{customer.quote}"</p>
                     )}
                   </div>
                 </CarouselItem>
@@ -113,12 +121,12 @@ const TrustedCustomersSection = () => {
             </CarouselContent>
           </Carousel>
           
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-4">
             {customers.map((_, index) => (
               <button
                 key={index}
                 onClick={() => api?.scrollTo(index)}
-                className={`w-3 h-3 mx-1 rounded-full transition-colors ${
+                className={`w-2 h-2 mx-1 rounded-full transition-colors ${
                   api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
