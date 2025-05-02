@@ -1,45 +1,29 @@
-
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Building, CheckCircle, ShieldCheck, Droplets } from 'lucide-react';
-
 const CommercialPressureWashing = () => {
-  const services = [
-    {
-      title: "Building Exteriors",
-      description: "Remove dirt, grime, and pollutants from your commercial building's exterior surfaces, restoring their appearance and preventing premature deterioration.",
-      icon: <Building size={32} className="text-bc-red" />
-    },
-    {
-      title: "Concrete & Pavement",
-      description: "Deep clean parking lots, sidewalks, and other concrete surfaces to remove unsightly stains, gum, oil, and grease buildup.",
-      icon: <Droplets size={32} className="text-bc-red" />
-    },
-    {
-      title: "Dumpster Areas",
-      description: "Eliminate odors and sanitize dumpster areas to maintain a clean and hygienic environment for customers and employees.",
-      icon: <ShieldCheck size={32} className="text-bc-red" />
-    },
-    {
-      title: "Graffiti Removal",
-      description: "Professional removal of graffiti from walls and surfaces, protecting your property's image and value.",
-      icon: <CheckCircle size={32} className="text-bc-red" />
-    }
-  ];
-
-  return (
-    <Layout
-      title="Commercial Pressure Washing Services | BC Pressure Washing"
-      description="Professional pressure washing services for commercial properties in Surrey, White Rock & Metro Vancouver. Keep your business looking its best."
-    >
+  const services = [{
+    title: "Building Exteriors",
+    description: "Remove dirt, grime, and pollutants from your commercial building's exterior surfaces, restoring their appearance and preventing premature deterioration.",
+    icon: <Building size={32} className="text-bc-red" />
+  }, {
+    title: "Concrete & Pavement",
+    description: "Deep clean parking lots, sidewalks, and other concrete surfaces to remove unsightly stains, gum, oil, and grease buildup.",
+    icon: <Droplets size={32} className="text-bc-red" />
+  }, {
+    title: "Dumpster Areas",
+    description: "Eliminate odors and sanitize dumpster areas to maintain a clean and hygienic environment for customers and employees.",
+    icon: <ShieldCheck size={32} className="text-bc-red" />
+  }, {
+    title: "Graffiti Removal",
+    description: "Professional removal of graffiti from walls and surfaces, protecting your property's image and value.",
+    icon: <CheckCircle size={32} className="text-bc-red" />
+  }];
+  return <Layout title="Commercial Pressure Washing Services | BC Pressure Washing" description="Professional pressure washing services for commercial properties in Surrey, White Rock & Metro Vancouver. Keep your business looking its best.">
       {/* Hero Section */}
       <section className="relative h-screen w-full">
-        <img
-          src="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png"
-          alt="Commercial Pressure Washing Services"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png" alt="Commercial Pressure Washing Services" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-end pb-20">
           <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
@@ -59,13 +43,11 @@ const CommercialPressureWashing = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          {services.map((service, index) => <div key={index} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="mb-4">{service.icon}</div>
               <h3 className="text-xl font-bold mb-2">{service.title}</h3>
               <p className="text-gray-600">{service.description}</p>
-            </div>
-          ))}
+            </div>)}
         </div>
       </section>
 
@@ -136,11 +118,7 @@ const CommercialPressureWashing = () => {
             </div>
           </div>
           <div className="md:w-1/2">
-            <img 
-              src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png"
-              alt="Commercial pressure washing maintenance" 
-              className="rounded-lg shadow-lg w-full h-auto object-cover"
-            />
+            <img alt="Commercial pressure washing maintenance" className="rounded-lg shadow-lg w-full h-auto object-cover" src="/lovable-uploads/3ff52f8f-29e2-421b-983b-b72c1ab34b52.png" />
           </div>
         </div>
       </section>
@@ -162,8 +140,6 @@ const CommercialPressureWashing = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default CommercialPressureWashing;
