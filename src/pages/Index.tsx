@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ServicesSection from '../components/home/ServicesSection';
+import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
@@ -56,6 +57,7 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
+      <PremiumSolutionsSection />
       <ServicesSection />
       <TestimonialsSection />
       

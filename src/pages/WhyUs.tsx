@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { Check, Star, Medal, Users, ShieldCheck, Clock } from 'lucide-react';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import LocationBanner from '@/components/LocationBanner';
+
 const WhyUs = () => {
   return <Layout title="Why Choose BC Pressure Washing | Professional Exterior Cleaning Services" description="BC Pressure Washing is your trusted choice for exterior cleaning in Surrey and White Rock. Discover our commitment to quality, service, and satisfaction.">
       {/* Hero Section */}
@@ -27,7 +29,7 @@ const WhyUs = () => {
       <section className="py-16 container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2 flex justify-center">
-            <div className="rounded-full border-4 border-gray-200 shadow-xl overflow-hidden w-64 h-64">
+            <div className="rounded-full border-4 border-gray-200 shadow-xl overflow-hidden w-48 h-48">
               <img src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" alt="Jayden Fisher" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -62,12 +64,12 @@ const WhyUs = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <img src="/lovable-uploads/0fe6a9ec-690a-4ac5-a8b6-efab2e58937f.png" alt="Water Fed Pole System" className="w-32 h-32 object-contain mb-4" />
+              <img src="/lovable-uploads/ba212e6b-db91-44d3-a707-f7daf0ec1976.png" alt="Water Fed Pole System" className="w-32 h-32 object-contain mb-4" />
               <h3 className="text-xl font-semibold mb-2">Water Fed Pole System</h3>
               <p className="text-gray-600">Ultra-pure water technology cleans windows up to 5 stories high without chemicals, leaving a streak-free finish.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-              <img src="/lovable-uploads/80888870-b48a-405b-ac8e-ad08f4fe5afc.png" alt="Professional Pressure Washers" className="w-32 h-32 object-contain mb-4" />
+              <img src="/lovable-uploads/0c2175e3-0c77-4b8a-8670-db9aa6ff6e63.png" alt="Professional Pressure Washers" className="w-32 h-32 object-contain mb-4" />
               <h3 className="text-xl font-semibold mb-2">Professional Pressure Washers</h3>
               <p className="text-gray-600">Commercial-grade pressure washers with adjustable PSI for safe and effective cleaning of any surface.</p>
             </div>
@@ -79,7 +81,7 @@ const WhyUs = () => {
           </div>
           <div className="flex justify-center">
             <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center max-w-md">
-              <img src="/lovable-uploads/497a46c4-728e-426b-bd23-fc5c5b9869be.png" alt="Eco-Friendly Cleaning Solutions" className="w-32 h-32 object-contain mb-4" />
+              <img src="/lovable-uploads/3c677903-190c-483b-8e1d-b3e33c7231f9.png" alt="Eco-Friendly Cleaning Solutions" className="w-32 h-32 object-contain mb-4" />
               <h3 className="text-xl font-semibold mb-2">Eco-Friendly Cleaning Solutions</h3>
               <p className="text-gray-600">Biodegradable, pet-safe, and environmentally responsible cleaning agents that are effective without harming your property or the planet.</p>
             </div>
