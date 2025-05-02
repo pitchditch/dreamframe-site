@@ -5,17 +5,12 @@ import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
 import FAQSection from './FAQSection';
 import LocationBanner from './LocationBanner';
-
 const Footer = () => {
-  return (
-    <footer className="bg-black text-white">
+  return <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
         <FAQSection />
         
-        <div className="mt-16 mb-12">
-          <h4 className="text-xl font-semibold mb-6 text-white">Service Area</h4>
-          <ServiceAreaMap />
-        </div>
+        
 
         <LocationBanner />
         
@@ -24,11 +19,7 @@ const Footer = () => {
           <div className="col-span-1">
             <div className="mb-4">
               <Link to="/">
-                <img 
-                  src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" 
-                  alt="BC Pressure Washing Logo" 
-                  className="h-24 md:h-28 mb-4"
-                />
+                <img src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" alt="BC Pressure Washing Logo" className="h-24 md:h-28 mb-4" />
               </Link>
             </div>
             <p className="text-gray-300 mb-6 text-base">
@@ -115,15 +106,10 @@ const Footer = () => {
       
       {/* Full-width image below footer */}
       <div className="w-full h-auto">
-        <img 
-          src="/lovable-uploads/a9642252-b006-4c8c-89d4-d439e04f9891.png"
-          alt="White Rock Marine Drive"
-          className="w-full object-cover"
-          style={{ maxHeight: "400px" }}
-        />
+        <img src="/lovable-uploads/a9642252-b006-4c8c-89d4-d439e04f9891.png" alt="White Rock Marine Drive" className="w-full object-cover" style={{
+        maxHeight: "400px"
+      }} />
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
