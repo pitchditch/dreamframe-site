@@ -11,7 +11,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
       <div
         className="relative h-28 flex items-center"
         style={{
-          minWidth: '450px',
+          minWidth: '350px',
           maxWidth: '900px',
         }}
       >
@@ -22,7 +22,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             className="h-full w-auto object-contain"
             style={{
               maxWidth: '900px',
-              minHeight: '180px',
+              minHeight: '150px',
             }}
           />
         ) : (
@@ -32,7 +32,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             className="h-full w-auto object-contain"
             style={{
               maxWidth: '900px',
-              minHeight: '180px',
+              minHeight: '150px',
             }}
           />
         )}

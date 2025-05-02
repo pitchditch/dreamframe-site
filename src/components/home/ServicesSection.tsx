@@ -10,7 +10,7 @@ const ServicesSection = () => {
     title: "Window Cleaning",
     description: "Crystal clear windows for residential and commercial properties. We use professional-grade equipment for spotless results.",
     link: "/services/window-cleaning",
-    image: "/lovable-uploads/0a2cc308-bda3-4478-9cf0-5efabde14b96.png"
+    image: "/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png"
   }, {
     icon: <Home className="text-bc-red" size={32} />,
     title: "Pressure Washing",

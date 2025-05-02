@@ -20,14 +20,6 @@ const TrustedCustomersSection = () => {
   
   const customers: CustomerTestimonial[] = [
     {
-      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png", 
-      name: "Michael",
-      location: "White Rock",
-      service: "Gutter Cleaning",
-      date: "May 2025",
-      quote: "Professional service, gutters look great!"
-    },
-    {
       image: "/lovable-uploads/2eaacd17-5dff-4af1-b073-c2ecadfdb6d0.png",
       name: "David",
       location: "White Rock",

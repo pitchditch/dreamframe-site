@@ -25,7 +25,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">{title}</h2>
+          <h2 className="text-3xl font-bold mb-4 text-gray-800">{title}</h2>
           {description && <p className="text-gray-600 max-w-3xl mx-auto mb-6">{description}</p>}
           {subtitle && <p className="text-lg font-medium text-bc-red">{subtitle}</p>}
         </div>
@@ -36,7 +36,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
               {({ open }) => (
                 <>
                   <Disclosure.Button className="flex justify-between w-full px-5 py-4 text-left bg-white rounded-lg shadow hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-bc-red/50">
-                    <span className="text-lg font-medium">{faq.question}</span>
+                    <span className="text-lg font-medium text-gray-800">{faq.question}</span>
                     <ChevronDown 
                       className={`${
                         open ? 'transform rotate-180' : ''

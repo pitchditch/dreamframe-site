@@ -38,7 +38,7 @@ const PremiumSolutionsSection = () => {
     {
       title: "Window Cleaning",
       description: "Crystal-clear, streak-free windows using advanced pure water technology",
-      image: "/lovable-uploads/3c677903-190c-483b-8e1d-b3e33c7231f9.png",
+      image: "/lovable-uploads/73ff1153-6589-4537-996a-1ff5f512cbea.png",
       link: "/services/window-cleaning"
     },
     {

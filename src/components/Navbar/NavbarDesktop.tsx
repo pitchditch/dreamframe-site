@@ -4,11 +4,10 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Droplets, Home, Info, MapPin, MessageSquare, PhoneCall, Star, Wind } from 'lucide-react';
+import { Droplets, Home, Info, MessageSquare, PhoneCall, Wind } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { useTranslation } from '@/hooks/use-translation';
 import { useLocation } from 'react-router-dom';
@@ -39,7 +38,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
   return (
     <NavigationMenu className="hidden lg:block mx-6">
-      <NavigationMenuList className="flex items-center gap-1">
+      <NavigationMenuList className="flex items-center gap-4">
         {/* Why Us */}
         <NavigationMenuItem>
           <Link to="/why-us" className={isActive('/why-us') ? classNames.activeLink : classNames.link}>
