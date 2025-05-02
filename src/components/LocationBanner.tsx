@@ -1,6 +1,5 @@
 
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 
 const LocationBanner = () => {

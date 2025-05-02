@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Droplets, Home, Wind, Warehouse } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
 const ServicesSection = () => {
   const services = [{
     icon: <Droplets className="text-blue-500" size={32} />,
@@ -28,6 +30,42 @@ const ServicesSection = () => {
     link: "/services/commercial-pressure-washing",
     image: "/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png"
   }];
-  return;
+
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold mb-4">Our Professional Services</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            From residential window cleaning to commercial pressure washing, our professional team delivers exceptional results that will make your property shine.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:-translate-y-2">
+              <div className="h-48 overflow-hidden">
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  {service.icon}
+                  <h3 className="text-xl font-semibold ml-3">{service.title}</h3>
+                </div>
+                <p className="text-gray-600 mb-5">{service.description}</p>
+                <Button asChild variant="ghost" className="group flex items-center px-0 hover:bg-transparent">
+                  <Link to={service.link}>
+                    Learn More
+                    <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
+
 export default ServicesSection;

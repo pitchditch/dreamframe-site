@@ -45,7 +45,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
-      name: "Raj Patel",
+      name: "Vikram", // Changed from Raj Patel to Vikram
       location: "South Surrey",
       service: "Roof Cleaning",
       date: "March 2025",
