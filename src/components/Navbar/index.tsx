@@ -55,7 +55,7 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-24' : 'bg-transparent h-28'
+      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-28' : 'bg-transparent h-32'
     }`}>
       <div className="container mx-auto px-4 flex items-center h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />

@@ -2,9 +2,8 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Store, Building, User2, HardHat } from 'lucide-react';
+import { ChevronDown, ChevronUp, Droplets, Home, Wind, CalendarClock } from 'lucide-react';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
-// Removed import { Phone } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -25,7 +24,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
         <div className="container mx-auto px-4 py-4">
           <nav className="flex flex-col space-y-4">
             <Link to="/why-us" className="flex items-center gap-2 py-2 text-black hover:text-bc-red transition-colors">
-              <User2 className="w-5 h-5" />
+              <Home className="w-5 h-5" />
               <span>{t('Why Us')}</span>
             </Link>
             
@@ -44,29 +43,29 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 <div className="flex flex-col space-y-4 border-l-2 border-gray-200 pl-4">
                   <div className="text-xs font-semibold text-gray-500 uppercase mt-2">{t('Residential')}</div>
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Store className="w-5 h-5" />
+                    <Droplets className="w-6 h-6" />
                     <span>{t('Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Building className="w-5 h-5" />
+                    <Home className="w-6 h-6" />
                     <span>{t('House Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <HardHat className="w-5 h-5" />
+                    <Wind className="w-6 h-6" />
                     <span>{t('Gutter Cleaning')}</span>
                   </Link>
                   <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Store className="w-5 h-5" />
+                    <Home className="w-6 h-6" />
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
                   
                   <div className="text-xs font-semibold text-gray-500 uppercase mt-4">{t('Commercial')}</div>
                   <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Store className="w-5 h-5" />
+                    <Droplets className="w-6 h-6" />
                     <span>{t('Commercial Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/commercial-pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors">
-                    <Building className="w-5 h-5" />
+                    <Home className="w-6 h-6" />
                     <span>{t('Commercial Pressure Washing')}</span>
                   </Link>
                 </div>
@@ -97,4 +96,3 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
     </>
   );
 };
-
