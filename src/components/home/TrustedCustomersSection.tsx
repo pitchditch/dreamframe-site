@@ -20,14 +20,6 @@ const TrustedCustomersSection = () => {
   
   const customers: CustomerTestimonial[] = [
     {
-      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png", // Added gutter cleaning hero image
-      name: "Robert",
-      location: "White Rock",
-      service: "Gutter Cleaning",
-      date: "May 2025",
-      quote: "Professional service, gutters look great!"
-    },
-    {
       image: "/lovable-uploads/2eaacd17-5dff-4af1-b073-c2ecadfdb6d0.png",
       name: "Michael",
       location: "White Rock",
@@ -45,7 +37,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
-      name: "Vikram", // Changed from Raj Patel to Vikram
+      name: "Vikram", 
       location: "South Surrey",
       service: "Roof Cleaning",
       date: "March 2025",
@@ -104,13 +96,13 @@ const TrustedCustomersSection = () => {
         </div>
         
         {/* Carousel View (for all screen sizes) */}
-        <div className="relative max-w-md mx-auto">
+        <div className="relative max-w-xl mx-auto">
           <Carousel className="w-full" setApi={setApi}>
             <CarouselContent>
               {customers.map((customer, index) => (
                 <CarouselItem key={index} className="basis-full">
                   <div className="flex flex-col items-center text-center p-2">
-                    <div className="mb-4 w-full h-80 overflow-hidden rounded-lg mx-auto">
+                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
                       <img 
                         src={customer.image} 
                         alt={`${customer.name} from ${customer.location}`} 

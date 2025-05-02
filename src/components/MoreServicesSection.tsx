@@ -1,93 +1,57 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { ArrowRight } from 'lucide-react';
 
-interface ServiceImage {
-  src: string;
-  alt: string;
-  link: string;
-}
-
-const MoreServicesSection: React.FC = () => {
-  const [api, setApi] = useState<any>();
-  
-  const serviceImages: ServiceImage[] = [
+const MoreServicesSection = () => {
+  const services = [
     {
-      src: "/lovable-uploads/e76ecfc1-a3a8-44d8-9a4a-5e1bf7c32282.png",
-      alt: "Professional Pressure Washing in Surrey",
-      link: "/services/pressure-washing"
-    },
-    {
-      src: "/lovable-uploads/0a2cc308-bda3-4478-9cf0-5efabde14b96.png",
-      alt: "Window Cleaning in White Rock",
+      title: "Window Cleaning",
+      description: "Professional window cleaning for a crystal-clear view",
+      image: "/lovable-uploads/0a2cc308-bda3-4478-9cf0-5efabde14b96.png",
       link: "/services/window-cleaning"
     },
     {
-      src: "/lovable-uploads/ff0fc949-bae9-4f8b-a408-2322698b8479.png",
-      alt: "Gutter Cleaning in Surrey & White Rock",
+      title: "Gutter Cleaning",
+      description: "Keep your gutters flowing freely and prevent water damage",
+      image: "/lovable-uploads/ff0fc949-bae9-4f8b-a408-2322698b8479.png",
       link: "/services/gutter-cleaning"
     },
     {
-      src: "/lovable-uploads/7e1c3bef-96a3-46e7-b312-58ac0d3423de.png",
-      alt: "Roof Cleaning in Metro Vancouver",
+      title: "Roof Cleaning",
+      description: "Remove moss, algae and debris to extend your roof's lifespan",
+      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png",
       link: "/services/roof-cleaning"
-    },
-    {
-      src: "/lovable-uploads/7e01805c-6b7d-4cca-b349-1f3a8ca1fa7d.png",
-      alt: "House Washing Services in Surrey",
-      link: "/services/house-washing"
     }
   ];
 
-  useEffect(() => {
-    if (!api) return;
-
-    // Auto-rotate carousel every 4 seconds
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 4000);
-    
-    return () => clearInterval(interval);
-  }, [api]);
-
   return (
-    <section className="py-16 bg-gray-50 w-full">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-center">Looking for More Services?</h2>
+        <h2 className="text-3xl font-bold text-center mb-4">Looking For Other Services?</h2>
+        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Explore our full range of professional exterior cleaning services for your home or business.
+        </p>
         
-        <Carousel className="w-full" setApi={setApi}>
-          <CarouselContent>
-            {serviceImages.map((service, index) => (
-              <CarouselItem key={index} className="basis-full">
-                <Link to={service.link} className="block w-full">
-                  <div className="relative w-full h-[70vh] max-h-[700px] overflow-hidden rounded-lg shadow-xl">
-                    <img 
-                      src={service.src} 
-                      alt={service.alt} 
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-8">
-                      <h3 className="text-white text-2xl md:text-3xl font-semibold mb-4">{service.alt}</h3>
-                      <Button variant="outline" className="w-fit border-white text-white hover:bg-white/10">
-                        Learn More <ArrowRight className="ml-2" size={18} />
-                      </Button>
-                    </div>
-                  </div>
-                </Link>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-        
-        <div className="flex justify-center mt-8">
-          <Button asChild size="lg" className="text-lg">
-            <Link to="/services">
-              View All Services <ArrowRight className="ml-2" size={18} />
-            </Link>
-          </Button>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-xl transition-shadow">
+              <div className="h-60 w-full overflow-hidden">
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                <p className="text-gray-600 mb-6 flex-1">{service.description}</p>
+                <Button asChild variant="ghost" className="group flex items-center mt-auto">
+                  <Link to={service.link}>
+                    Learn More
+                    <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

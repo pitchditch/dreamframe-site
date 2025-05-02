@@ -29,8 +29,6 @@ const femaleProfiles = [
   "/lovable-uploads/d5ea79b9-1682-46ab-bb09-b99bdc77aa80.png",  // Female 3
   "/lovable-uploads/6e5a36e2-9605-46d4-aaf6-7cb45fe59f86.png",  // Female 4
   "/lovable-uploads/0eb823af-344d-45d9-b223-df94e56e386f.png",  // Female 5
-  "/lovable-uploads/a8798a73-d615-4288-8eb7-dfcc1e070d07.png",  // Female 6
-  "/lovable-uploads/9c5e6f5f-cc13-408c-af83-ca211626f285.png",  // Female 7
 ];
 
 const TestimonialsCarousel = () => {
@@ -46,9 +44,6 @@ const TestimonialsCarousel = () => {
       "Michael Johnson": "male",
       "David Wilson": "male",
       "David Miller": "male",
-      "Robert Anderson": "male",
-      "Thomas Clark": "male",
-      "James Peterson": "male",
       "Richard Brooks": "male",
       
       // Female names
@@ -59,16 +54,34 @@ const TestimonialsCarousel = () => {
       "Karen Walker": "female",
       "Stephanie Scott": "female",
       "Michelle Taylor": "female",
-      "Jessica Martin": "female",
-      "Patricia Chen": "female",
-      "Emma Rodriguez": "female",
-      "Olivia Robinson": "female",
-      "Rebecca Anderson": "female",
-      "Tina Clark": "female"
+      "Emma Rodriguez": "female"
     };
+    
+    // Names to exclude from testimonials
+    const excludedNames = [
+      "Rebecca Anderson", 
+      "Tina Clark", 
+      "Olivia Robinson", 
+      "Jessica Martin", 
+      "Patricia Chen", 
+      "James Peterson",
+      "Robert Anderson",
+      "Thomas Clark",
+      "Emily Johnson", 
+      "Christopher Lee", 
+      "Daniel Lewis", 
+      "Peter Harris", 
+      "Eric Turner", 
+      "Jason Brown"
+    ];
     
     // Generate updated testimonials with appropriate profile pictures
     const updatedTestimonials = testimonials.map((testimonial) => {
+      // Exclude specific names
+      if (excludedNames.includes(testimonial.name)) {
+        return null;
+      }
+      
       // Male Indian name for David Wilson
       if (testimonial.name === "David Wilson") {
         return {
@@ -76,32 +89,6 @@ const TestimonialsCarousel = () => {
           name: "Vikram Singh",
           profileImage: maleProfiles[3] // Indian male profile
         };
-      }
-      
-      // Update Robert Anderson to Rebecca Anderson
-      if (testimonial.name === "Robert Anderson") {
-        return {
-          ...testimonial,
-          name: "Rebecca Anderson",
-          profileImage: femaleProfiles[0]
-        };
-      }
-      
-      // Update Thomas Clark to Tina Clark
-      if (testimonial.name === "Thomas Clark") {
-        return {
-          ...testimonial,
-          name: "Tina Clark",
-          profileImage: femaleProfiles[1]
-        };
-      }
-      
-      // Skip adding profile pictures for deleted profiles
-      if (
-        ["Emily Johnson", "Christopher Lee", "Daniel Lewis", 
-        "Peter Harris", "Eric Turner", "Jason Brown"].includes(testimonial.name)
-      ) {
-        return null;
       }
 
       // Assign profile pictures based on gender
