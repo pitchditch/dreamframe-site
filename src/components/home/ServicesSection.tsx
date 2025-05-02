@@ -1,9 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Droplets, Home, Wind, Warehouse } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
 const ServicesSection = () => {
   const services = [{
     icon: <Droplets className="text-blue-500" size={32} />,
@@ -30,52 +28,6 @@ const ServicesSection = () => {
     link: "/services/commercial-pressure-washing",
     image: "/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png"
   }];
-
-  return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="badge-pill">Professional Services</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Exterior Cleaning Services</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            We offer a complete range of exterior cleaning services to keep your property looking its best. From window cleaning to pressure washing, our team delivers superior results.
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
-              <div className="h-48 overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center mb-3">
-                  <div className="mr-3">{service.icon}</div>
-                  <h3 className="text-xl font-bold">{service.title}</h3>
-                </div>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <Button asChild variant="ghost" className="w-full justify-between hover:bg-gray-50">
-                  <Link to={service.link}>
-                    Learn More <ArrowRight size={16} />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <Button asChild variant="bc-red" size="lg">
-            <Link to="/services">View All Services <ArrowRight size={16} className="ml-2" /></Link>
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
+  return;
 };
-
 export default ServicesSection;
