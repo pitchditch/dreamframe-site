@@ -33,9 +33,7 @@ const WhyUs = () => {
           </div>
           <div className="md:w-1/2">
             <h2 className="text-3xl font-bold mb-4">100% Satisfaction Guarantee</h2>
-            <p className="text-gray-600 mb-6">
-              At BC Pressure Washing, we're committed to delivering exceptional results. That's why we back every service with our 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right—at no additional cost to you.
-            </p>
+            
             <p className="text-gray-600 mb-6">
               This promise reflects our confidence in our workmanship and our dedication to your complete satisfaction. We don't consider the job done until you're happy with the results.
             </p>
