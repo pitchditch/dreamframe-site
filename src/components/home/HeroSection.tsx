@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Shield, Star, Home, Phone } from 'lucide-react';
+import { Shield, Star, Home } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const HeroSection = () => {
@@ -35,10 +35,10 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       {/* YouTube Video Background */}
       <div className="absolute inset-0 w-full h-full">
-        <div className="w-full h-full">
+        <div className="relative w-full h-full overflow-hidden">
           <iframe 
             id="hero-video"
-            className={`w-[300%] h-[300%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
             title="Pressure Washing Video"
             frameBorder="0"
