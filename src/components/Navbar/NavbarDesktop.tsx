@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { CalendarClock, Droplets, Home, Info, MapPin, MessageSquare, PhoneCall, Home as HouseIcon, Star, Wind } from 'lucide-react';
+import { CalendarClock, Droplets, Home, Info, MapPin, MessageSquare, PhoneCall, Roofing, Star, Wind } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { useTranslation } from '@/hooks/use-translation';
 import { useLocation } from 'react-router-dom';
@@ -79,7 +79,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     </div>
                   </Link>
                   <Link to="/services/roof-cleaning" className="flex items-center p-3 hover:bg-gray-100 rounded-lg">
-                    <HouseIcon className="text-amber-700 mr-3 navbar-service-icon" size={28} />
+                    <Roofing className="text-amber-700 mr-3 navbar-service-icon" size={28} />
                     <div>
                       <div className="font-medium">{t('Roof Cleaning')}</div>
                       <div className="text-sm text-gray-500">{t('Remove moss & debris')}</div>
