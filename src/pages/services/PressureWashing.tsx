@@ -7,6 +7,9 @@ import TestimonialCard from '@/components/TestimonialCard';
 import { Badge } from '@/components/ui/badge';
 import { testimonials } from '@/data/testimonials';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
+import LocationBanner from '@/components/LocationBanner';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 // USER IMAGES (keep original paths)
 const HOUSE_EXTERIORS_IMG = "/lovable-uploads/1fb29b3f-e2ed-44b9-8ae8-b04efbf4fcce.png";
@@ -40,6 +43,7 @@ const whyUsBadges = [{
 
 // Only show 2–4 reviews, preferably about professionalism/effectiveness
 const pwTestimonials = testimonials.filter(t => t.quote && (t.quote.toLowerCase().includes("pressure") || t.quote.toLowerCase().includes("professional") || t.quote.toLowerCase().includes("effect") || t.quote.toLowerCase().includes("friendly"))).slice(0, 4);
+
 const PressureWashing = () => {
   return <Layout>
       <Helmet>
@@ -186,11 +190,76 @@ const PressureWashing = () => {
         </div>
       </section>
 
-      {/* 6. CUSTOMER TESTIMONIALS - Made cards bigger */}
-      
+      {/* 6. CUSTOMER TESTIMONIALS */}
+      <TestimonialsSection />
 
       {/* 7. FAQ SECTION */}
-      
+      <section id="faq" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Frequently Asked Questions
+          </h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-lg font-semibold">
+                  How often should I get my driveway pressure washed?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  In the Surrey and White Rock area, we recommend pressure washing your driveway once a year to prevent buildup of moss, algae, and stains. Properties with heavy tree coverage or northern exposure may benefit from more frequent cleaning, around every 6-8 months.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-lg font-semibold">
+                  Is pressure washing safe for all surfaces?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Not all surfaces can handle high-pressure washing. We assess each surface and use appropriate pressure levels and techniques. For delicate surfaces, we use soft washing with specialized cleaning solutions instead of high pressure to prevent damage.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-lg font-semibold">
+                  Are your cleaning agents safe for plants and pets?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Absolutely. We use eco-friendly, biodegradable cleaning solutions that are safe for your plants, pets, and the environment. Additionally, we take extra precautions like pre-wetting plants before applying any cleaning agents.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-4">
+                <AccordionTrigger className="text-lg font-semibold">
+                  How long does it take to pressure wash an average driveway?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  For an average two-car driveway, we typically need 1-2 hours. This includes pre-treatment, pressure washing, and final rinse. Larger driveways or those with heavy staining may require additional time.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="text-lg font-semibold">
+                  Do I need to be home during the service?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Not necessarily. As long as we have access to the areas being cleaned and a water source, we can complete the work while you're away. We'll send before and after photos, and you can pay securely online.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Location Banner */}
+      <LocationBanner />
+
+      {/* Service Area Map */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+          <ServiceAreaMap />
+        </div>
+      </section>
 
       {/* 8. CALL TO ACTION - Updated with new image */}
       <section className="relative min-h-[400px]">
@@ -204,8 +273,7 @@ const PressureWashing = () => {
           </Button>
         </div>
       </section>
-
-      {/* Removed Areas We Service section */}
     </Layout>;
 };
+
 export default PressureWashing;

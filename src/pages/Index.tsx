@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -6,12 +7,13 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import ServicesSection from '../components/home/ServicesSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
-import EquipmentSection from '@/components/EquipmentSection';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
+import LocationBanner from '@/components/LocationBanner';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+
 const Index = () => {
-  const {
-    setLanguage
-  } = useTranslation();
+  const { setLanguage } = useTranslation();
+
   useEffect(() => {
     // Ensure English is the default language on initial load
     setLanguage('en');
@@ -25,7 +27,8 @@ const Index = () => {
       rootMargin: '0px',
       threshold: 0.1
     };
-    const observer = new IntersectionObserver(entries => {
+
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate');
@@ -33,14 +36,17 @@ const Index = () => {
         }
       });
     }, observerOptions);
+
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
+
     return () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [setLanguage]);
+
   return <Layout image="/open.png">
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
@@ -67,7 +73,7 @@ const Index = () => {
                   <Shield className="text-bc-red mr-3 mt-1" size={24} />
                   <div>
                     <h3 className="font-bold mb-1">Fully Insured</h3>
-                    <p className="text-sm text-gray-600">Your property is protected with our comprehensive insurance coverage.</p>
+                    <p className="text-sm text-gray-600">WCB & liability insurance protection for your complete peace of mind.</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -93,15 +99,14 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="order-1 md:order-2">
-              <img src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" alt="Jayden Fisher - Owner of BC Pressure Washing" className="rounded-lg shadow-lg w-full h-auto" />
+            <div className="order-1 md:order-2 flex justify-center">
+              <div className="rounded-full border-4 border-white shadow-xl overflow-hidden w-64 h-64">
+                <img src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" alt="Jayden Fisher - Owner of BC Pressure Washing" className="w-full h-full object-cover" />
+              </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Equipment Section */}
-      <EquipmentSection />
       
       {/* Why Homeowners Trust Us Section */}
       <section className="py-16 bg-white">
@@ -166,10 +171,19 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Full Width Contact Section */}
+      {/* Location Banner */}
+      <LocationBanner />
       
+      {/* Service Area Map */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+          <ServiceAreaMap />
+        </div>
+      </section>
       
       <ReferralButton />
     </Layout>;
 };
+
 export default Index;
