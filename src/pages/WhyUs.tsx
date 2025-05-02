@@ -1,4 +1,3 @@
-
 import Layout from '../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -6,7 +5,6 @@ import { Check, Star, Medal, Users, ShieldCheck, Clock } from 'lucide-react';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import LocationBanner from '@/components/LocationBanner';
-
 const WhyUs = () => {
   return <Layout title="Why Choose BC Pressure Washing | Professional Exterior Cleaning Services" description="BC Pressure Washing is your trusted choice for exterior cleaning in Surrey and White Rock. Discover our commitment to quality, service, and satisfaction.">
       {/* Hero Section */}
@@ -30,11 +28,7 @@ const WhyUs = () => {
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2 flex justify-center">
             <div className="rounded-full border-4 border-gray-200 shadow-xl overflow-hidden w-64 h-64">
-              <img 
-                src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" 
-                alt="Jayden Fisher" 
-                className="w-full h-full object-cover"
-              />
+              <img src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" alt="Jayden Fisher" className="w-full h-full object-cover" />
             </div>
           </div>
           <div className="md:w-1/2">
@@ -194,23 +188,7 @@ const WhyUs = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-bc-red text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Experience the BC Pressure Washing Difference?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Contact us today for a free quote and let us show you why we're the preferred choice for exterior cleaning in Surrey and White Rock.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild variant="outline" className="bg-white text-bc-red hover:bg-gray-100">
-              <Link to="/contact">Contact Us</Link>
-            </Button>
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10">
-              <Link to="/calculator">Get a Free Quote</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      
     </Layout>;
 };
-
 export default WhyUs;
