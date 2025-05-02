@@ -48,7 +48,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                   </NavLink>
                   <NavLink to="/services/pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/d5c534e2-91b3-494d-87ca-c141819f0cb5.png" alt="House Washing" className="w-5 h-5" />
+                      <img src="/lovable-uploads/570e8bce-fcd4-483d-a7b3-5843188a925d.png" alt="House Washing" className="w-5 h-5" />
                       <span>{t('House Washing')}</span>
                     </div>
                   </NavLink>
@@ -84,7 +84,7 @@ export const NavbarDesktop = ({ isOverVideo }: { isOverVideo: boolean }) => {
                   </NavLink>
                   <NavLink to="/services/commercial-pressure-washing" isOverVideo={false}>
                     <div className="flex items-center gap-2">
-                      <img src="/lovable-uploads/d5c534e2-91b3-494d-87ca-c141819f0cb5.png" alt="Commercial Pressure Washing" className="w-5 h-5" />
+                      <img src="/lovable-uploads/570e8bce-fcd4-483d-a7b3-5843188a925d.png" alt="Commercial Pressure Washing" className="w-5 h-5" />
                       <span>{t('Commercial Pressure Washing')}</span>
                     </div>
                   </NavLink>
