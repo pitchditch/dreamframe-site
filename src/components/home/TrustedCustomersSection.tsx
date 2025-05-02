@@ -80,68 +80,50 @@ const TrustedCustomersSection = () => {
           <p className="text-gray-600 max-w-3xl mx-auto">
             Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.
           </p>
+          <div className="mt-4">
+            <span className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-medium">
+              Spring Shoot Catalog
+            </span>
+          </div>
         </div>
         
-        <div className="relative">
-          {/* Desktop Grid View */}
-          <div className="hidden md:grid grid-cols-3 lg:grid-cols-5 gap-6">
-            {customers.map((customer, index) => (
-              <div key={index} className="flex flex-col items-center text-center">
-                <div className="mb-4 w-full aspect-square overflow-hidden rounded-lg">
-                  <img 
-                    src={customer.image} 
-                    alt={`${customer.name} from ${customer.location}`} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h4 className="font-semibold text-lg">{customer.name}</h4>
-                <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
-                <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
-                {customer.quote && (
-                  <p className="mt-2 italic text-sm">"{customer.quote}"</p>
-                )}
-              </div>
-            ))}
-          </div>
-          
-          {/* Mobile Carousel View */}
-          <div className="md:hidden">
-            <Carousel className="w-full" setApi={setApi}>
-              <CarouselContent>
-                {customers.map((customer, index) => (
-                  <CarouselItem key={index} className="basis-full">
-                    <div className="flex flex-col items-center text-center p-2">
-                      <div className="mb-4 w-56 h-56 overflow-hidden rounded-lg mx-auto">
-                        <img 
-                          src={customer.image} 
-                          alt={`${customer.name} from ${customer.location}`} 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h4 className="font-semibold text-lg">{customer.name}</h4>
-                      <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
-                      <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
-                      {customer.quote && (
-                        <p className="mt-2 italic text-sm">"{customer.quote}"</p>
-                      )}
+        {/* Carousel View (for all screen sizes) */}
+        <div className="relative max-w-md mx-auto">
+          <Carousel className="w-full" setApi={setApi}>
+            <CarouselContent>
+              {customers.map((customer, index) => (
+                <CarouselItem key={index} className="basis-full">
+                  <div className="flex flex-col items-center text-center p-2">
+                    <div className="mb-4 w-full h-80 overflow-hidden rounded-lg mx-auto">
+                      <img 
+                        src={customer.image} 
+                        alt={`${customer.name} from ${customer.location}`} 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-            
-            <div className="flex justify-center mt-4">
-              {customers.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => api?.scrollTo(index)}
-                  className={`w-2 h-2 mx-1 rounded-full transition-colors ${
-                    api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
+                    <h4 className="font-semibold text-lg">{customer.name}</h4>
+                    <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
+                    <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
+                    {customer.quote && (
+                      <p className="mt-2 italic text-sm">"{customer.quote}"</p>
+                    )}
+                  </div>
+                </CarouselItem>
               ))}
-            </div>
+            </CarouselContent>
+          </Carousel>
+          
+          <div className="flex justify-center mt-4">
+            {customers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={`w-2 h-2 mx-1 rounded-full transition-colors ${
+                  api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>

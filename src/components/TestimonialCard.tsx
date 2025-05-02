@@ -8,7 +8,7 @@ interface TestimonialCardProps {
   location?: string;
   rating?: number;
   beforeAfterImage?: string;
-  profileImage?: string; // Add profile image support
+  profileImage?: string;
 }
 
 const TestimonialCard = ({ 
@@ -63,11 +63,11 @@ const TestimonialCard = ({
         
         {/* Before/After Image */}
         {beforeAfterImage && (
-          <div className="h-64 md:h-auto rounded-lg overflow-hidden">
+          <div className="h-full rounded-lg overflow-hidden">
             <img 
               src={beforeAfterImage} 
               alt="Before and after cleaning" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
         )}

@@ -17,7 +17,6 @@ interface TestimonialWithProfile {
 }
 
 const profileImages = [
-  "/lovable-uploads/b69bdd37-7a37-43f0-a192-58ba9655e94f.png", 
   "/lovable-uploads/8c769aeb-d888-49ed-a370-c4d0945e1eb7.png", 
   "/lovable-uploads/c69aec79-5ead-4023-bb2f-2137e27b7d02.png", 
   "/lovable-uploads/59401248-58ee-4944-b37e-410cc26c471d.png", 
@@ -36,9 +35,14 @@ const TestimonialsCarousel = () => {
   const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Assign profile images to testimonials
+  // Assign profile images to testimonials except for Michael Johnson
   useEffect(() => {
     const testimonialsWithImages = testimonials.map((testimonial, index) => {
+      // Skip adding a profile image for Michael Johnson
+      if (testimonial.name === "Michael Johnson") {
+        return testimonial;
+      }
+      
       const imageIndex = index % profileImages.length;
       return {
         ...testimonial,
@@ -87,13 +91,13 @@ const TestimonialsCarousel = () => {
                 key={testimonial.id} 
                 className="min-w-full snap-center px-4"
               >
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-4xl mx-auto">
                   <TestimonialCard
                     quote={testimonial.quote}
                     name={testimonial.name}
                     location={testimonial.location}
                     rating={testimonial.rating}
-                    profileImage={testimonial.profileImage}
+                    profileImage={testimonial.name !== "Michael Johnson" ? testimonial.profileImage : undefined}
                     beforeAfterImage={testimonial.beforeAfterImage}
                   />
                 </div>

@@ -1,126 +1,92 @@
 
-import { useState } from 'react';
-import { useTranslation } from '@/hooks/use-translation';
-import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import { ArrowRight, Shield, Star, Check, Phone } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const DESKTOP_VIDEO = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0";
-const MOBILE_VIDEO = "https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&loop=1&playlist=sAjdWDNtFQw&controls=0&showinfo=0&rel=0";
+import { Button } from '../ui/button';
+import { Shield } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 const HeroSection = () => {
-  const { t } = useTranslation();
-  const [zipCode, setZipCode] = useState('');
-  const isMobile = useIsMobile();
+  const { t, language } = useTranslation();
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  
+  // Array of video sources
+  const videos = [
+    "/lovable-uploads/5dc551e8-8c04-4092-8262-c5c6f0526745.png",
+    "/lovable-uploads/95690760-6960-4c61-bf22-5b66e2eab0cf.png",
+    "/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png"
+  ];
 
-  const handleZipCodeSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (zipCode) {
-      sessionStorage.setItem('userZipCode', zipCode);
-    }
-    window.location.href = '/calculator';
-  };
+  // Auto-rotate background videos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="hero-section relative min-h-screen flex items-center justify-center w-full overflow-hidden">
+    <section className="hero-section relative h-screen w-full overflow-hidden">
+      {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
-        {/* Mobile video fills full width and height with object-fit: cover, no black bars */}
-        {isMobile ? (
-          <div className="w-full h-full">
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src={MOBILE_VIDEO}
-              title="Background Mobile Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              style={{ 
-                border: 'none', 
-                width: '100vw', 
-                height: '100vh',
-                objectFit: 'cover',
-                transform: 'scale(1.5)'
-              }}
-            />
-          </div>
-        ) : (
-          <iframe 
-            className="absolute inset-0 w-full h-full md:scale-[1.5]"
-            src={DESKTOP_VIDEO}
-            title="Background Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ border: 'none' }}
-          />
-        )}
+        <img
+          src={videos[currentVideoIndex]}
+          alt="BC Pressure Washing Services"
+          className="w-full h-full object-cover transition-opacity duration-1000"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
       </div>
       
-      <div className="hero-overlay absolute inset-0 bg-black/60"></div>
-
-      <div className="container mx-auto px-4 relative z-10 text-white text-center animate-fade-in">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-shadow-lg">
-            Trusted Exterior Cleaning in Surrey & White Rock – Backed by a 5-Star Guarantee
-          </h1>
-          
-          <h2 className="text-xl md:text-2xl mb-8 text-shadow-lg">
-            Professional Window Cleaning, Gutter Cleaning, and Pressure Washing – Fully Insured & Locally Owned
-          </h2>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button 
-              onClick={() => window.location.href = '/calculator'} 
-              className="bg-bc-red hover:bg-red-700 text-white py-4 px-6 text-lg font-bold rounded-lg shadow-lg flex items-center justify-center"
-            >
-              Get a Free Quote in 30 Seconds
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            
-            <Button
-              asChild
-              className="bg-green-600 hover:bg-green-700 text-white py-4 px-6 text-lg font-bold rounded-lg shadow-lg flex items-center justify-center"
-            >
-              <a href="tel:7788087620">
-                <Phone className="mr-2 w-5 h-5" /> Call Jayden Now
-              </a>
-            </Button>
+      {/* Licensed & Insured badge, top-right */}
+      <img 
+        src="/lovable-uploads/a1f01b41-c73a-4644-8580-6399a42951bf.png"
+        alt="Licensed & Insured"
+        className="absolute top-32 right-8 w-32 h-32 md:w-40 md:h-40 object-contain z-20 drop-shadow-lg"
+        style={{ pointerEvents: 'none' }}
+      />
+      
+      {/* Hero Content */}
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white text-center pt-16">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-on-scroll">
+          {t("Professional Exterior Cleaning Services")}
+        </h1>
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-10 animate-on-scroll delay-100">
+          {t("Serving Surrey, White Rock & Metro Vancouver")}
+        </p>
+        <div className="flex flex-wrap justify-center gap-4 mb-10 animate-on-scroll delay-200">
+          <Button asChild variant="bc-red" size="lg" className="text-lg">
+            <Link to="/calculator">Get a Free Quote</Link>
+          </Button>
+          <Button asChild variant="outline" size="lg" className="text-lg border-white text-white hover:bg-white/10">
+            <Link to="/services">See All Services</Link>
+          </Button>
+        </div>
+        
+        {/* Trust badges */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-8 animate-on-scroll delay-300">
+          <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+            <div className="mr-2 text-white">
+              <Shield size={24} />
+            </div>
+            <span className="text-white font-medium">Fully Insured</span>
           </div>
-          
-          {/* Trust section with Jayden's image */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="rounded-full border-4 border-white overflow-hidden w-24 h-24 mb-2">
-              <img 
-                src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png"
-                alt="Jayden Fisher"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="text-center">
-              <h3 className="font-semibold text-lg">Jayden Fisher</h3>
-              <p className="text-gray-200">Owner & Lead Technician</p>
-              <p className="text-sm">✅ "Every Job Is Personally Checked by Me"</p>
-            </div>
+          <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+            <img src="/lovable-uploads/0889ee32-e298-45b5-91f8-825360447c0b.png" alt="5-star rated" className="w-5 h-5 mr-2" />
+            <span className="text-white font-medium">5-Star Rated</span>
           </div>
-
-          {/* Trust Icons Row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-            <div className="flex flex-col items-center">
-              <Star className="w-6 h-6 text-yellow-400 mb-1" />
-              <span className="text-sm font-medium">⭐ 5-Star Rated</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Shield className="w-6 h-6 text-yellow-400 mb-1" />
-              <span className="text-sm font-medium">✅ Fully Insured</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Check className="w-6 h-6 text-yellow-400 mb-1" />
-              <span className="text-sm font-medium">🏠 Locally Owned</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Check className="w-6 h-6 text-yellow-400 mb-1" />
-              <span className="text-sm font-medium">📅 Satisfaction Guaranteed</span>
-            </div>
+          <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+            <img src="/lovable-uploads/0c2175e3-0c77-4b8a-8670-db9aa6ff6e63.png" alt="Since 2019" className="w-5 h-5 mr-2" />
+            <span className="text-white font-medium">Since 2019</span>
           </div>
         </div>
+      </div>
+      
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
+        <span className="text-white text-sm mb-2">Scroll</span>
+        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
       </div>
     </section>
   );
