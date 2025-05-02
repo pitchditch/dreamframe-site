@@ -58,7 +58,7 @@ const MoreServicesSection: React.FC = () => {
   }, [api]);
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-50 w-full">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">Looking for More Services?</h2>
         
@@ -66,12 +66,13 @@ const MoreServicesSection: React.FC = () => {
           <CarouselContent>
             {serviceImages.map((service, index) => (
               <CarouselItem key={index} className="basis-full">
-                <Link to={service.link}>
-                  <div className="relative overflow-hidden">
+                <Link to={service.link} className="block w-full">
+                  <div className="relative w-full">
                     <img 
                       src={service.src} 
                       alt={service.alt}
                       className="w-full h-auto object-cover" 
+                      style={{ maxHeight: "600px" }}
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                       <h3 className="text-white text-xl font-semibold">{service.alt}</h3>

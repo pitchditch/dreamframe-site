@@ -66,8 +66,8 @@ const ServiceHeader = ({
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className={`absolute inset-0 bg-gradient-to-b ${darkOverlay ? 'from-black/80 to-black/60' : 'from-black/70 to-black/50'}`} />
-          <div className="relative h-full container mx-auto px-4 flex items-center justify-end flex-col pb-20 z-10">
-            <div className="text-center max-w-4xl">
+          <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
+            <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">{title}</h1>}
               {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">{description}</p>}

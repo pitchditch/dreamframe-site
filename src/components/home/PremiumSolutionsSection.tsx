@@ -19,19 +19,19 @@ const PremiumSolutionsSection = () => {
     {
       title: "Gutter Cleaning",
       description: "Complete gutter cleaning and maintenance to prevent water damage",
-      image: "/lovable-uploads/c349ee7a-bdd4-43c8-a168-a68aa3b007e3.png",
+      image: "/lovable-uploads/0c2175e3-0c77-4b8a-8670-db9aa6ff6e63.png", // Swapped with house washing
       link: "/services/gutter-cleaning"
     },
     {
       title: "Roof Cleaning",
       description: "Gentle but effective moss and algae removal to protect your roof",
-      image: "/lovable-uploads/7e1c3bef-96a3-46e7-b312-58ac0d3423de.png",
+      image: "/lovable-uploads/4da7d34a-a303-4274-ad91-8aeb980fa657.png", // Using 6th image
       link: "/services/roof-cleaning"
     },
     {
       title: "House Washing",
       description: "Safe soft washing techniques to restore your home's exterior beauty",
-      image: "/lovable-uploads/0c2175e3-0c77-4b8a-8670-db9aa6ff6e63.png",
+      image: "/lovable-uploads/c349ee7a-bdd4-43c8-a168-a68aa3b007e3.png", // Swapped with gutter cleaning
       link: "/services/house-washing"
     }
   ];
@@ -48,7 +48,7 @@ const PremiumSolutionsSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <Card key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow">
+            <div key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow">
               <div className="relative aspect-video overflow-hidden">
                 <img 
                   src={service.image} 
@@ -56,7 +56,7 @@ const PremiumSolutionsSection = () => {
                   className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
                 />
               </div>
-              <CardContent className="p-6">
+              <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
                 <Button asChild variant="outline" className="w-full">
@@ -64,8 +64,8 @@ const PremiumSolutionsSection = () => {
                     Learn More <ArrowRight size={16} className="ml-2" />
                   </Link>
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
         

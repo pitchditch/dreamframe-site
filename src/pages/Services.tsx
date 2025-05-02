@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ServiceCard from '../components/ServiceCard';
@@ -20,7 +21,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 w-full">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8">{t("Residential Services")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,7 +77,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-gray-50 w-full">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8">{t("Commercial Services")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -108,7 +109,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 w-full">
         <div className="container mx-auto px-4">
           <div className="bg-bc-gray p-8 md:p-12 rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

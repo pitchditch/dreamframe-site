@@ -17,7 +17,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, ico
   const { t } = useTranslation();
   
   return (
-    <div className="relative service-card h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-card-hover border border-transparent hover:border-bc-red/20">
+    <div className="relative service-card h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div className="relative h-48 sm:h-56 w-full overflow-hidden">
         {image && (
           <img 

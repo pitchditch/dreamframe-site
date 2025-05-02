@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import TestimonialCard from './TestimonialCard';
 
 interface TestimonialWithProfile {
-  id: number; // Changed to number to match the testimonials data
+  id: number;
   quote: string;
   name: string;
   location?: string;
@@ -69,7 +69,7 @@ const TestimonialsCarousel = () => {
   }, [allTestimonials.length, currentIndex]);
 
   return (
-    <section className="bg-gray-50 py-16">
+    <section className="bg-gray-50 py-16 w-full">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-2">What Our Clients Say</h2>
         <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
@@ -87,7 +87,7 @@ const TestimonialsCarousel = () => {
                 key={testimonial.id} 
                 className="min-w-full snap-center px-4"
               >
-                <div className="max-w-2xl mx-auto">
+                <div className="max-w-3xl mx-auto">
                   <TestimonialCard
                     quote={testimonial.quote}
                     name={testimonial.name}

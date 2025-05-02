@@ -19,7 +19,7 @@ const ServiceAreasCarousel = () => {
         scrollContent.scrollLeft += 1;
 
         // Reset to beginning when we reach the end
-        if (scrollContent.scrollLeft >= scrollContent.scrollWidth - scrollContent.clientWidth) {
+        if (scrollContent.scrollLeft >= scrollContent.scrollWidth / 2) {
           scrollContent.scrollLeft = 0;
         }
       }
@@ -43,7 +43,7 @@ const ServiceAreasCarousel = () => {
             className="flex overflow-x-hidden scrollbar-none whitespace-nowrap"
           >
             {/* Duplicate the service areas to create seamless loop */}
-            {[...serviceAreas, ...serviceAreas].map((area, index) => (
+            {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
               <div key={index} className="inline-flex px-4 py-2 mx-1 rounded-full bg-gray-100 text-gray-700">
                 {area}
               </div>

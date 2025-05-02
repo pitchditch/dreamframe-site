@@ -11,6 +11,7 @@ import { useTranslation } from '@/hooks/use-translation';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -58,6 +59,7 @@ const Index = () => {
       
       <HeroSection />
       <PremiumSolutionsSection />
+      <TrustedCustomersSection />
       <ServicesSection />
       <TestimonialsSection />
       
