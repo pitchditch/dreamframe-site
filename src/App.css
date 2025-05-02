@@ -1,3 +1,4 @@
+
 /* ./src/App.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -61,6 +62,10 @@ a:hover {
   padding: 6rem 0;
   text-align: center;
   color: white;
+  min-height: 100vh; /* Ensure full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-overlay {
@@ -76,6 +81,27 @@ a:hover {
 .hero-content {
   position: relative;
   z-index: 2;
+}
+
+/* YouTube video fix */
+iframe#hero-video {
+  pointer-events: none;
+}
+
+/* Premium Solutions section with scroll effect */
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up-in {
+  animation: fadeUpIn 0.8s ease forwards;
 }
 
 /* Service Card Styles */
