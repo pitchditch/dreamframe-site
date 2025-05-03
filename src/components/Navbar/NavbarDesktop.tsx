@@ -7,7 +7,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Droplets, Home, Info, MessageSquare, PhoneCall, Wind } from 'lucide-react';
+import { Droplets, Home, MessageSquare, PhoneCall, Wind } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { useTranslation } from '@/hooks/use-translation';
 import { useLocation } from 'react-router-dom';
@@ -116,7 +116,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           </NavigationMenuContent>
         </NavigationMenuItem>
         
-        {/* Contact Button */}
+        {/* Get a Quote Button */}
         <NavigationMenuItem>
           <Button asChild className="bg-bc-red hover:bg-red-700 text-white">
             <Link to="/contact">
@@ -128,7 +128,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         
         {/* Phone Button */}
         <NavigationMenuItem>
-          <Button asChild variant="outline" className={classNames.button}>
+          <Button asChild variant="outline" className={`${textColor} border ${isOverVideo ? 'border-white hover:bg-white/20' : 'border-gray-300 hover:bg-gray-100'}`}>
             <a href="tel:7788087620">
               <PhoneCall className="mr-2" size={16} />
               778-808-7620

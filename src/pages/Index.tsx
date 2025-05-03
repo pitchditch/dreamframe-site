@@ -12,6 +12,7 @@ import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import FAQSection from '@/components/FAQSection';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -48,6 +49,29 @@ const Index = () => {
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [setLanguage]);
+
+  const faqItems = [
+    {
+      question: "What areas do you service?",
+      answer: "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas."
+    },
+    {
+      question: "Are you fully insured?",
+      answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
+    },
+    {
+      question: "How often should I have my windows cleaned?",
+      answer: "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference."
+    },
+    {
+      question: "Do you offer any guarantees?",
+      answer: "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost."
+    },
+    {
+      question: "How do you price your services?",
+      answer: "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs."
+    }
+  ];
 
   return (
     <Layout image="/open.png">
@@ -193,6 +217,14 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section with dark background */}
+      <FAQSection 
+        title="Frequently Asked Questions" 
+        subtitle="Everything you need to know about our services"
+        faqs={faqItems}
+        darkMode={true}
+      />
       
       {/* Location Banner */}
       <LocationBanner />

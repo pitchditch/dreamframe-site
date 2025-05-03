@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -8,9 +9,11 @@ import PackagesSection from '../components/home/PackagesSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
-import { MapPin, ArrowRight, Sun } from 'lucide-react';
+import LocationBanner from '@/components/LocationBanner';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+import FAQSection from '@/components/FAQSection';
 
-const Index = () => {
+const Home = () => {
   const { setLanguage } = useTranslation();
 
   useEffect(() => {
@@ -45,6 +48,25 @@ const Index = () => {
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [setLanguage]);
+
+  const faqItems = [
+    {
+      question: "What areas do you service?",
+      answer: "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas."
+    },
+    {
+      question: "Are you fully insured?",
+      answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
+    },
+    {
+      question: "How often should I have my windows cleaned?",
+      answer: "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference."
+    },
+    {
+      question: "Do you offer any guarantees?",
+      answer: "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost."
+    }
+  ];
 
   return (
     <Layout image="/open.png">
@@ -84,9 +106,27 @@ const Index = () => {
         </div>
       </section>
       
+      {/* FAQ Section */}
+      <FAQSection 
+        title="Frequently Asked Questions" 
+        subtitle="Find answers to common questions about our services"
+        faqs={faqItems}
+      />
+      
+      {/* Location Banner */}
+      <LocationBanner />
+      
+      {/* Service Area Map */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+          <ServiceAreaMap />
+        </div>
+      </section>
+      
       <ReferralButton />
     </Layout>
   );
 };
 
-export default Index;
+export default Home;

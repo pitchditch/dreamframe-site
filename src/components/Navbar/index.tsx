@@ -24,14 +24,15 @@ const Navbar = () => {
     '/services/post-construction-window-cleaning',
     '/services/commercial-window-cleaning',
     '/services/commercial-pressure-washing',
+    '/vancouver-window-cleaning',
     '/contact'
   ];
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight; // Get the height of the hero section
-      const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight * 0.8;
+      const heroHeight = window.innerHeight * 0.8; // Get 80% of the hero section height
+      const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight;
       setIsOverVideo(shouldBeTransparent);
       setIsScrolled(currentScrollY > 10);
     };
@@ -55,7 +56,7 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-28' : 'bg-transparent h-32'
+      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-24' : 'bg-transparent h-28'
     }`}>
       <div className="container mx-auto px-4 flex items-center h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />

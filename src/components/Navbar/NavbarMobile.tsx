@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Droplets, Home, Wind, CalendarClock } from 'lucide-react';
+import { ChevronDown, ChevronUp, Droplets, Home, Wind, MessageSquare, PhoneCall } from 'lucide-react';
 import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
 
 interface NavbarMobileProps {
@@ -77,10 +77,13 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             </Link>
             
             <div className="pt-4 flex flex-col gap-3">
-              <PriceCalculatorOverlay 
-                buttonText={t("Get a Free Quote")} 
-                className="w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium text-center transition-all" 
-              />
+              <a href="/contact" className="w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium text-center transition-all">
+                {t("Get a Free Quote")}
+              </a>
+              <a href="tel:7788087620" className="flex items-center justify-center gap-2 w-full border border-gray-300 py-3 px-4 rounded-lg font-medium text-center transition-all">
+                <PhoneCall size={16} />
+                778-808-7620
+              </a>
               <LanguageSelector />
             </div>
           </nav>
@@ -88,10 +91,12 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
       </div>
       {/* Bottom-right floating Free Quote button for mobile only */}
       <div className="fixed bottom-6 right-6 md:hidden z-50 flex flex-row gap-4 justify-end px-4">
-        <PriceCalculatorOverlay 
-          buttonText={t("Free Quote")}
-          className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all"
-        />
+        <a href="tel:7788087620" className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all">
+          <PhoneCall size={24} />
+        </a>
+        <Link to="/contact" className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all">
+          <MessageSquare size={24} />
+        </Link>
       </div>
     </>
   );
