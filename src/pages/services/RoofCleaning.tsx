@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
@@ -19,33 +18,25 @@ const HERO_IMG = "/lovable-uploads/8f51f55c-a8ce-472b-b398-1a35211096d3.png";
 const MOSS_REMOVAL_IMG = "/lovable-uploads/4717a554-bfc3-4475-8b10-8a17baff037d.png";
 const BLACK_STAINS_IMG = "/lovable-uploads/b05d1af5-48fb-4bed-a580-f986d22828be.png";
 const CLEAN_BEAUTIFUL_ROOF_IMG = "/lovable-uploads/8f772889-3cc7-4650-a92d-9b7571b7d7fb.png";
-
-const benefits = [
-  {
-    title: "Extends Roof Lifespan",
-    description: "Prevents moss, algae, and lichen from breaking down your shingles, adding years to your roof.",
-    icon: <Star className="h-6 w-6 text-yellow-500" />,
-  },
-  {
-    title: "Improves Energy Efficiency",
-    description: "Clean roofs reflect heat better, keeping your home cooler in summer and reducing energy bills.",
-    icon: <Star className="h-6 w-6 text-yellow-500" />,
-  },
-  {
-    title: "Enhances Curb Appeal",
-    description: "Instantly transforms your home's appearance and increases property value.",
-    icon: <Star className="h-6 w-6 text-yellow-500" />,
-  },
-  {
-    title: "Prevents Water Damage",
-    description: "Eliminates organisms that trap moisture and can lead to costly roof leaks.",
-    icon: <Star className="h-6 w-6 text-yellow-500" />,
-  },
-];
-
+const benefits = [{
+  title: "Extends Roof Lifespan",
+  description: "Prevents moss, algae, and lichen from breaking down your shingles, adding years to your roof.",
+  icon: <Star className="h-6 w-6 text-yellow-500" />
+}, {
+  title: "Improves Energy Efficiency",
+  description: "Clean roofs reflect heat better, keeping your home cooler in summer and reducing energy bills.",
+  icon: <Star className="h-6 w-6 text-yellow-500" />
+}, {
+  title: "Enhances Curb Appeal",
+  description: "Instantly transforms your home's appearance and increases property value.",
+  icon: <Star className="h-6 w-6 text-yellow-500" />
+}, {
+  title: "Prevents Water Damage",
+  description: "Eliminates organisms that trap moisture and can lead to costly roof leaks.",
+  icon: <Star className="h-6 w-6 text-yellow-500" />
+}];
 const RoofCleaning = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-
   useEffect(() => {
     // Set document title
     document.title = "Roof Cleaning & Moss Removal Services | BC Pressure Washing";
@@ -56,9 +47,7 @@ const RoofCleaning = () => {
       document.body.classList.remove('roof-cleaning-page');
     };
   }, []);
-
-  return (
-    <Layout>
+  return <Layout>
       <Helmet>
         <title>Professional Roof Cleaning & Moss Removal | BC Pressure Washing</title>
         <meta name="description" content="Professional roof cleaning and moss removal services in Surrey, White Rock, and South Surrey. Extend the life of your roof while improving curb appeal." />
@@ -67,18 +56,12 @@ const RoofCleaning = () => {
       {/* HERO SECTION */}
       <div className="w-full h-screen relative bg-black overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
-          <iframe 
-            className="absolute inset-0 w-full h-full"
-            src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
-            title="Roof Cleaning Process"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            style={{ 
-              border: 'none',
-              width: '100vw',
-              height: '100vh',
-              objectFit: 'cover'
-            }}
-          />
+          <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" title="Roof Cleaning Process" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style={{
+          border: 'none',
+          width: '100vw',
+          height: '100vh',
+          objectFit: 'cover'
+        }} />
           <div className="absolute inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
             <div className="text-center px-6">
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
@@ -87,12 +70,7 @@ const RoofCleaning = () => {
               <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto drop-shadow-md">
                 Safe, effective roof cleaning that extends the life of your roof while improving your home's appearance.
               </p>
-              <Button 
-                variant="bc-red" 
-                size="lg" 
-                className="text-lg font-medium px-8 py-6"
-                asChild
-              >
+              <Button variant="bc-red" size="lg" className="text-lg font-medium px-8 py-6" asChild>
                 <Link to="/calculator">Get Your Free Quote</Link>
               </Button>
             </div>
@@ -102,11 +80,7 @@ const RoofCleaning = () => {
 
       {/* BENEFITS SECTION */}
       <div className="relative z-10 -mt-32 pt-32 bg-white">
-        <ServiceBenefits
-          title="Why Clean Your Roof?"
-          subtitle="More than just curb appeal - protect your investment"
-          benefits={benefits}
-        />
+        <ServiceBenefits title="Why Clean Your Roof?" subtitle="More than just curb appeal - protect your investment" benefits={benefits} />
       </div>
 
       {/* PROCESS SECTION */}
@@ -116,11 +90,7 @@ const RoofCleaning = () => {
           
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
             <div>
-              <img 
-                src="/lovable-uploads/89f521bb-edb4-4193-a254-c88e4968fa9f.png"
-                alt="Professional Roof Cleaning Process" 
-                className="w-full rounded-lg shadow-lg"
-              />
+              <img src="/lovable-uploads/89f521bb-edb4-4193-a254-c88e4968fa9f.png" alt="Professional Roof Cleaning Process" className="w-full rounded-lg shadow-lg" />
             </div>
             <div>
               <div className="bg-gray-50 p-4 rounded-lg mb-6">
@@ -178,11 +148,7 @@ const RoofCleaning = () => {
             {/* Moss Removal */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full">
               <div className="h-64 overflow-hidden">
-                <img 
-                  src={MOSS_REMOVAL_IMG} 
-                  alt="Moss on Roof" 
-                  className="w-full h-full object-cover transition-all hover:scale-105"
-                />
+                <img src={MOSS_REMOVAL_IMG} alt="Moss on Roof" className="w-full h-full object-cover transition-all hover:scale-105" />
               </div>
               <div className="p-6 flex-1">
                 <h3 className="text-2xl font-bold mb-3">Moss Growth</h3>
@@ -195,11 +161,7 @@ const RoofCleaning = () => {
             {/* Black Streaks Removal */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full">
               <div className="h-64 overflow-hidden">
-                <img 
-                  src={BLACK_STAINS_IMG} 
-                  alt="Black Streaks on Roof" 
-                  className="w-full h-full object-cover transition-all hover:scale-105"
-                />
+                <img src={BLACK_STAINS_IMG} alt="Black Streaks on Roof" className="w-full h-full object-cover transition-all hover:scale-105" />
               </div>
               <div className="p-6 flex-1">
                 <h3 className="text-2xl font-bold mb-3">Black Streaks & Algae</h3>
@@ -213,29 +175,7 @@ const RoofCleaning = () => {
       </section>
       
       {/* CALL TO ACTION */}
-      <section className="py-16 bg-bc-red text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready for a Clean, Beautiful Roof?</h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
-            Our roof cleaning service is safe, effective, and guaranteed to transform your home's appearance.
-          </p>
-          <div className="relative max-w-2xl mx-auto">
-            <img 
-              src={CLEAN_BEAUTIFUL_ROOF_IMG}
-              alt="Clean beautiful roof after professional cleaning"
-              className="w-full rounded-lg shadow-xl"
-            />
-            <Button 
-              variant="default" 
-              size="lg" 
-              className="mt-8 bg-white text-bc-red hover:bg-gray-100 text-lg font-semibold px-8 py-6"
-              asChild
-            >
-              <Link to="/calculator">Get Your Free Quote Today</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      
 
       {/* FAQ SECTION */}
       <section className="py-16 bg-white">
@@ -275,27 +215,12 @@ const RoofCleaning = () => {
       </section>
 
       {/* SERVICE AREA SECTION */}
-      <section className="py-12 bg-gray-900 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl font-bold mb-6">We Serve All of Surrey, White Rock, South Surrey & Langley</h3>
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">Surrey</Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">White Rock</Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">South Surrey</Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">Langley</Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">Cloverdale</Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">Ocean Park</Badge>
-            <Badge className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 text-sm">Crescent Beach</Badge>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Chatbot */}
       <div className="fixed bottom-6 right-6 z-50">
         <ChatAssistant />
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default RoofCleaning;
