@@ -6,11 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Droplets } from 'lucide-react';
 import MoreServicesSection from '../../components/MoreServicesSection';
-import ServiceAreasCarousel from '../../components/ServiceAreasCarousel';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import FAQSection from '../../components/FAQSection';
-import ServiceAreaMap from '@/components/ServiceAreaMap';
 import WindowCleaningForm from '@/components/forms/WindowCleaningForm';
+import ServiceAreasList from '@/components/ServiceAreasList';
 
 const WindowCleaning = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -234,14 +233,11 @@ const WindowCleaning = () => {
       {/* More Services Section with bigger images */}
       <MoreServicesSection />
       
-      {/* Service Areas Map and Carousel */}
-      <section className="py-16 bg-white">
+      {/* Service Areas Section */}
+      <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-          <ServiceAreaMap />
-          <div className="mt-8">
-            <ServiceAreasCarousel />
-          </div>
+          <ServiceAreasList />
         </div>
       </section>
 

@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -13,6 +12,7 @@ import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FAQSection from '@/components/FAQSection';
+import ServiceAreasList from '@/components/ServiceAreasList';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -226,14 +226,11 @@ const Index = () => {
         darkMode={true}
       />
       
-      {/* Location Banner */}
-      <LocationBanner />
-      
-      {/* Service Area Map */}
-      <section className="py-16 bg-white">
+      {/* Service Areas Section */}
+      <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-          <ServiceAreaMap />
+          <ServiceAreasList />
         </div>
       </section>
       
