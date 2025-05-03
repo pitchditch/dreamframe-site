@@ -1,13 +1,11 @@
-
 import React from 'react';
 import { Shield, Clock, ThumbsUp } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
-
 const ServiceFeatures = () => {
-  const { t } = useTranslation();
-  
-  return (
-    <section className="container mx-auto px-4 py-16">
+  const {
+    t
+  } = useTranslation();
+  return <section className="container mx-auto px-4 py-16">
       <div className="flex flex-col md:flex-row gap-12 items-center">
         <div className="md:w-1/2">
           <h2 className="text-3xl font-bold mb-6">{t("Revitalize Your Home's Exterior")}</h2>
@@ -33,15 +31,9 @@ const ServiceFeatures = () => {
           </div>
         </div>
         <div className="md:w-1/2">
-          <img 
-            src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
-            alt="House Washing in White Rock | Professional Exterior Cleaning by BC Pressure Washing" 
-            className="rounded-lg shadow-lg w-full h-auto"
-          />
+          
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ServiceFeatures;
