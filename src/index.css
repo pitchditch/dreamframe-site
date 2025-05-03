@@ -1,5 +1,4 @@
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,6 +15,11 @@ body {
 .has-video-header main {
   position: relative;
   z-index: 1;
+}
+
+.has-video-header .hero-section {
+  position: relative;
+  z-index: 10;
 }
 
 .will-change-transform {
@@ -178,7 +182,7 @@ body {
 .expanded-services {
   margin-top: -30vh;
   position: relative;
-  z-index: 10;
+  z-index: 20;
 }
 
 /* Text shadow for better visibility on darker backgrounds */

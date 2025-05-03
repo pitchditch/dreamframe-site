@@ -58,8 +58,10 @@ const Index = () => {
         <meta property="og:image" content="/open.png" />
       </Helmet>
       
-      <HeroSection />
-      <div className="expanded-services">
+      <div className="relative">
+        <div className="hero-section">
+          <HeroSection />
+        </div>
         <PremiumSolutionsSection />
       </div>
       

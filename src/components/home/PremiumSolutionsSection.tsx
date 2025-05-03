@@ -15,15 +15,16 @@ const PremiumSolutionsSection = () => {
       
       if (section) {
         // Start the transform when scroll reaches 50% of hero height
-        const startTransform = heroHeight * 0.5;
+        const startTransform = heroHeight * 0.6;
         // Complete the transform at hero height
-        const endTransform = heroHeight * 0.9;
+        const endTransform = heroHeight * 0.85;
         
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 100% below viewport and end at 0%
-        section.style.transform = `translateY(${(1 - progress) * 20}vh)`;
+        // Apply transform - start at 100px below viewport and end at -120px (overlapping the video)
+        const translateY = (1 - progress) * 100 - (progress * 120);
+        section.style.transform = `translateY(${translateY}px)`;
         section.style.opacity = `${Math.min(1, progress * 1.5)}`;
       }
     };
@@ -66,9 +67,9 @@ const PremiumSolutionsSection = () => {
       ref={sectionRef}
       className="py-16 bg-white relative z-20 rounded-t-[40px] shadow-lg transform will-change-transform"
       style={{ 
-        marginTop: '-40px',
+        marginTop: '-100px',
         opacity: 0,
-        transform: 'translateY(20vh)'
+        transform: 'translateY(100px)'
       }}
     >
       <div className="container mx-auto px-4 pt-8">
