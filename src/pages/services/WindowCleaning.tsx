@@ -16,7 +16,7 @@ const WindowCleaning = () => {
 
   useEffect(() => {
     // Set videoLoaded to true after a short delay
-    // This is a workaround since readyState is not available on HTMLIFrameElement
+    // This is a workaround since we can't rely on readyState
     const timer = setTimeout(() => {
       setVideoLoaded(true);
     }, 1000);

@@ -24,6 +24,7 @@ const ServiceHeader = ({
   showButton = true,
   buttonPosition = 'center'
 }: ServiceHeaderProps) => {
+  // Use useEffect to add and remove the has-video-header class
   useEffect(() => {
     if (videoUrl) {
       document.body.classList.add('has-video-header');
