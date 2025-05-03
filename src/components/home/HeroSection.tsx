@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Shield, Star, Home } from 'lucide-react';
+import { Shield, Star, Home, Phone, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const HeroSection = () => {
@@ -47,34 +47,57 @@ const HeroSection = () => {
             onLoad={() => setVideoLoaded(true)}
           ></iframe>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white text-center pt-16">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-on-scroll">
-          Exterior Cleaning You Can Trust
-        </h1>
-        <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-6 animate-on-scroll delay-100">
-          Serving Surrey, White Rock & the Lower Mainland
-        </p>
-        
-        <div className="text-lg md:text-xl mb-10 animate-on-scroll delay-200 max-w-2xl mx-auto">
-          <p>Window Cleaning • Pressure Washing • Gutter Cleaning</p>
-          <p className="mt-2">Fully Insured & 5-Star Rated — Backed by Jayden Fisher's Quality Guarantee</p>
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
+            <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll">
+            <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl mx-auto">
+            Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-3 my-8 animate-on-scroll delay-200">
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Shield className="text-white mr-2" size={20} />
+              <span className="text-white font-medium">Fully Insured</span>
+            </div>
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Star className="text-yellow-400 mr-2" size={20} />
+              <span className="text-white font-medium">5-Star Rated</span>
+            </div>
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Home className="text-white mr-2" size={20} />
+              <span className="text-white font-medium">Locally Owned</span>
+            </div>
+          </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10 animate-on-scroll delay-300">
-          <Button asChild variant="bc-red" size="lg" className="text-lg">
-            <Link to="/calculator">Get an Instant Quote</Link>
+        <div className="flex flex-col sm:flex-row justify-center gap-5 mb-10 animate-on-scroll delay-300 mt-2">
+          <Button asChild variant="bc-red" size="lg" className="text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all ease-in-out duration-200 hover:scale-105 hover:brightness-110">
+            <Link to="/calculator">
+              <MessageSquare className="mr-2" size={18} />
+              Get a Free Quote
+            </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="text-lg border-white text-white bg-white/20 hover:bg-white/30 shadow-lg pulse-animation">
-            <a href="tel:7788087620">Speak With Jayden</a>
+          <Button asChild variant="outline" size="lg" className="text-lg border-2 border-white/80 text-white bg-white/5 hover:bg-white/20 shadow-lg rounded-full hover:shadow-xl transition-all ease-in-out duration-200 hover:scale-105">
+            <a href="tel:7788087620">
+              <Phone className="mr-2" size={18} />
+              Call Jayden: 778-808-7620
+            </a>
           </Button>
         </div>
         
         {/* Personal Touch Section */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 animate-on-scroll delay-400">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-on-scroll delay-400 bg-white/10 backdrop-blur-sm p-4 rounded-xl max-w-md mx-auto border border-white/20">
           <img 
             src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png"
             alt="Jayden Fisher - Owner" 
@@ -82,23 +105,7 @@ const HeroSection = () => {
           />
           <div className="text-center sm:text-left">
             <p className="font-medium">"Every Job is Personally Checked by Me."</p>
-            <p>— Jayden Fisher, Owner</p>
-          </div>
-        </div>
-        
-        {/* Trust Icons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-2 animate-on-scroll delay-500">
-          <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-            <Star className="text-yellow-400 mr-2" size={20} />
-            <span className="text-white font-medium">5-Star Google Rated</span>
-          </div>
-          <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-            <Shield className="text-white mr-2" size={20} />
-            <span className="text-white font-medium">Fully Insured</span>
-          </div>
-          <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-            <Home className="text-white mr-2" size={20} />
-            <span className="text-white font-medium">Locally Owned</span>
+            <p className="text-white/80">— Jayden Fisher, Owner</p>
           </div>
         </div>
       </div>
