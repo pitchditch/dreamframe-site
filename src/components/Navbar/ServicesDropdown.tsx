@@ -67,6 +67,12 @@ export const ServicesDropdown = ({
           >
             {t('Commercial Pressure Washing')}
           </Link>
+          <Link 
+            to="/services/post-construction-cleaning" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Post-Construction Cleaning')}
+          </Link>
         </div>
       )}
     </div>

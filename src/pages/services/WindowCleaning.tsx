@@ -43,43 +43,29 @@ const WindowCleaning = () => {
 
   return (
     <Layout title="Professional Window Cleaning in Surrey & White Rock" description="Expert window cleaning services for crystal clear, streak-free windows. Using pure water technology and professional equipment for stunning results.">
-      {/* Hero Section with Video Background */}
+      {/* Hero Section with New Image */}
       <section className="relative h-screen w-full">
-        {/* Video Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div className={`absolute w-full h-full top-0 left-0 ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
-            <iframe 
-              id="hero-video"
-              className="w-full h-full scale-[1.5]"
-              src="https://www.youtube.com/embed/videoseries?list=PLbVHz4urQBZkJiAWdG8HWoJTdgEysigIO&autoplay=1&mute=1&controls=0&loop=1&playlist=bbHnt4UNPcU,03njfGLUDUQ&showinfo=0&rel=0"
-              title="Window Cleaning Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              loading="eager"
-              onLoad={() => setVideoLoaded(true)}
-            ></iframe>
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+          <img 
+            src="/lovable-uploads/8a7d4e73-fa89-44ab-8814-ecaed5b1d23c.png"
+            alt="Professional window cleaning service"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
         </div>
         
         {/* Hero Content */}
-        <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
+        <div className="relative h-full w-full flex items-center justify-center flex-col z-10">
           <div className="text-center max-w-4xl px-4">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">Professional Window Cleaning</h1>
-            <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">Crystal clear, streak-free windows using our advanced pure water technology</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-shadow">Professional Window Cleaning</h1>
+            <p className="text-lg md:text-xl text-white text-shadow-sm mb-8 max-w-2xl mx-auto">
+              Crystal clear, streak-free windows using our advanced pure water technology
+            </p>
             
-            <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+            <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-7">
               <Link to="/calculator">Check Prices & Availability</Link>
             </Button>
           </div>
-        </div>
-        
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-          <span className="text-white text-sm mb-2">Scroll</span>
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
         </div>
       </section>
 
@@ -148,7 +134,7 @@ const WindowCleaning = () => {
                 </li>
                 <li className="flex items-start">
                   <Check className="text-bc-red mr-2 mt-1" size={20} />
-                  <span>Screen, track, and frame cleaning</span>
+                <span>Screen, track, and frame cleaning</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="text-bc-red mr-2 mt-1" size={20} />
@@ -223,7 +209,7 @@ const WindowCleaning = () => {
 
       <TestimonialsSection />
 
-      {/* FAQ Section - Window Cleaning Specific */}
+      {/* Only include ONE FAQ section */}
       <FAQSection 
         title="Window Cleaning FAQs" 
         subtitle="Common questions about our window cleaning services" 
