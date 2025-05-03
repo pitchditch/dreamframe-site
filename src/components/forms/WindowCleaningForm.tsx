@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -168,10 +169,10 @@ const WindowCleaningForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="small">Small (< 1,500 sq ft)</SelectItem>
+                      <SelectItem value="small">Small (&lt; 1,500 sq ft)</SelectItem>
                       <SelectItem value="medium">Medium (1,500 - 2,500 sq ft)</SelectItem>
                       <SelectItem value="large">Large (2,500 - 3,500 sq ft)</SelectItem>
-                      <SelectItem value="xlarge">Extra Large (> 3,500 sq ft)</SelectItem>
+                      <SelectItem value="xlarge">Extra Large (&gt; 3,500 sq ft)</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -224,7 +225,7 @@ const WindowCleaningForm = () => {
               <FormItem>
                 <FormLabel>Additional Notes</FormLabel>
                 <FormControl>
-                  <Input placeholder="Any specific details or questions..." {...field} />
+                  <Textarea placeholder="Any specific details or questions..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
