@@ -1,20 +1,37 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import CallToAction from '../../components/CallToAction';
-import ServiceHeader from '@/components/ServiceHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Droplets } from 'lucide-react';
 import MoreServicesSection from '../../components/MoreServicesSection';
-import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
-import TestimonialsSection from '@/components/home/TestimonialsSection';
-import FAQSection from '@/components/FAQSection';
+import ServiceAreasCarousel from '../../components/ServiceAreasCarousel';
+import TestimonialsSection from '../../components/home/TestimonialsSection';
+import FAQSection from '../../components/FAQSection';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import WindowCleaningForm from '@/components/forms/WindowCleaningForm';
 
 const WindowCleaning = () => {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  useEffect(() => {
+    const video = document.getElementById('hero-video') as HTMLIFrameElement;
+    if (video) {
+      if (video.readyState >= 3) {
+        setVideoLoaded(true);
+      } else {
+        video.addEventListener('load', () => setVideoLoaded(true));
+      }
+    }
+    
+    return () => {
+      if (video) {
+        video.removeEventListener('load', () => setVideoLoaded(true));
+      }
+    };
+  }, []);
+
   const windowCleaningFaqs = [{
     question: "How often should I have my windows professionally cleaned?",
     answer: "We recommend professional window cleaning twice a year for most homes. However, properties in areas with high pollen, near construction, or close to the ocean may benefit from quarterly cleaning to maintain optimal clarity and prevent mineral buildup."
@@ -34,18 +51,48 @@ const WindowCleaning = () => {
 
   return (
     <Layout title="Professional Window Cleaning in Surrey & White Rock" description="Expert window cleaning services for crystal clear, streak-free windows. Using pure water technology and professional equipment for stunning results.">
-      {/* Hero Section - Using ServiceHeader */}
-      <ServiceHeader
-        title="Professional Window Cleaning"
-        description="Crystal clear, streak-free windows using our advanced pure water technology"
-        imagePath="/lovable-uploads/4d638131-832a-4e72-9687-28a275c3cdde.png"
-        showButton={true}
-        buttonPosition="bottom"
-        darkOverlay={false}
-      />
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen w-full">
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <div className={`absolute w-full h-full top-0 left-0 ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
+            <iframe 
+              id="hero-video"
+              className="w-full h-full scale-[1.5]"
+              src="https://www.youtube.com/embed/videoseries?list=PLbVHz4urQBZkJiAWdG8HWoJTdgEysigIO&autoplay=1&mute=1&controls=0&loop=1&playlist=bbHnt4UNPcU,03njfGLUDUQ&showinfo=0&rel=0"
+              title="Window Cleaning Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="eager"
+              onLoad={() => setVideoLoaded(true)}
+            ></iframe>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+        </div>
+        
+        {/* Hero Content */}
+        <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
+          <div className="text-center max-w-4xl px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">Professional Window Cleaning</h1>
+            <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">Crystal clear, streak-free windows using our advanced pure water technology</p>
+            
+            <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+              <Link to="/calculator">Check Prices & Availability</Link>
+            </Button>
+          </div>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
+          <span className="text-white text-sm mb-2">Scroll</span>
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </div>
+      </section>
 
-      {/* YouTube Video Showcase */}
-      <section className="py-16 bg-gray-50">
+      {/* Main Content with Form */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">See Our Window Cleaning in Action</h2>
           
@@ -83,7 +130,7 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* Main Content with Form */}
+      {/* Rest of the content */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
@@ -130,6 +177,8 @@ const WindowCleaning = () => {
         </div>
       </section>
 
+      {/* Remaining sections */}
+      
       {/* Our Process */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
