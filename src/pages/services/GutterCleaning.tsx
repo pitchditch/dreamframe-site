@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -8,7 +7,6 @@ import TestimonialsSection from '../../components/home/TestimonialsSection';
 import FAQSection from '../../components/FAQSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
-
 const GutterCleaning = () => {
   const benefits = [{
     title: "Prevent Water Damage",
@@ -29,7 +27,6 @@ const GutterCleaning = () => {
     title: "Prevent Basement Flooding",
     description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
   }];
-
   const processes = [{
     title: "Debris Removal",
     description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
@@ -43,47 +40,29 @@ const GutterCleaning = () => {
     description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
     icon: <PieChart size={32} />
   }];
-
-  const faqs = [
-    {
-      question: "How often should I have my gutters cleaned?",
-      answer: "We recommend having your gutters cleaned at least twice a year - in spring and fall. However, if you have trees overhanging your roof, you might need more frequent cleaning, especially during fall when leaves are dropping."
-    },
-    {
-      question: "How long does a typical gutter cleaning service take?",
-      answer: "For an average-sized home, our professional team can complete a thorough gutter cleaning in 1-2 hours. This timeframe can vary depending on the size of your home, the amount of debris, and the complexity of your gutter system."
-    },
-    {
-      question: "What happens if you find damaged gutters during cleaning?",
-      answer: "If we identify any issues with your gutters during cleaning, we'll document them with photos and provide you with a detailed assessment. We can then discuss repair options and provide a quote for any necessary work."
-    },
-    {
-      question: "Do you install gutter guards?",
-      answer: "Yes, we offer professional installation of high-quality gutter guards. These can significantly reduce how often your gutters need cleaning by preventing debris from entering while still allowing water to flow through."
-    },
-    {
-      question: "Is there any preparation I need to do before you arrive?",
-      answer: "We ask that you ensure clear access to the perimeter of your home. Please remove any obstacles that might impede our work, secure pets, and inform us of any specific areas of concern before we begin."
-    }
-  ];
-
-  return (
-    <Layout>
-      <ServiceHeader 
-        title="Professional Gutter Cleaning" 
-        description="Keep your home protected from water damage with our thorough gutter cleaning service" 
-        youtubeId="m5wfZZCuFeg" 
-        darkOverlay={true} 
-      />
+  const faqs = [{
+    question: "How often should I have my gutters cleaned?",
+    answer: "We recommend having your gutters cleaned at least twice a year - in spring and fall. However, if you have trees overhanging your roof, you might need more frequent cleaning, especially during fall when leaves are dropping."
+  }, {
+    question: "How long does a typical gutter cleaning service take?",
+    answer: "For an average-sized home, our professional team can complete a thorough gutter cleaning in 1-2 hours. This timeframe can vary depending on the size of your home, the amount of debris, and the complexity of your gutter system."
+  }, {
+    question: "What happens if you find damaged gutters during cleaning?",
+    answer: "If we identify any issues with your gutters during cleaning, we'll document them with photos and provide you with a detailed assessment. We can then discuss repair options and provide a quote for any necessary work."
+  }, {
+    question: "Do you install gutter guards?",
+    answer: "Yes, we offer professional installation of high-quality gutter guards. These can significantly reduce how often your gutters need cleaning by preventing debris from entering while still allowing water to flow through."
+  }, {
+    question: "Is there any preparation I need to do before you arrive?",
+    answer: "We ask that you ensure clear access to the perimeter of your home. Please remove any obstacles that might impede our work, secure pets, and inform us of any specific areas of concern before we begin."
+  }];
+  return <Layout>
+      <ServiceHeader title="Professional Gutter Cleaning" description="Keep your home protected from water damage with our thorough gutter cleaning service" youtubeId="m5wfZZCuFeg" darkOverlay={true} />
 
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
           <div className="md:w-1/2">
-            <img 
-              src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" 
-              alt="Professional gutter cleaning in action" 
-              className="rounded-lg shadow-xl w-full h-auto"
-            />
+            <img src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" alt="Professional gutter cleaning in action" className="rounded-lg shadow-xl w-full h-auto" />
           </div>
           <div className="md:w-1/2">
             <h2 className="text-3xl font-bold mb-6">Why Gutter Cleaning Is Essential</h2>
@@ -163,22 +142,14 @@ const GutterCleaning = () => {
       </section>
 
       <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">What Our Customers Say</h2>
-        <p className="section-subtitle mb-12">
-          See what our satisfied customers are saying about our gutter cleaning services
-        </p>
+        
+        
         <TestimonialsSection />
       </section>
       
-      <FAQSection 
-        title="Frequently Asked Questions About Gutter Cleaning"
-        subtitle="Get answers to common questions about our services"
-        faqs={faqs}
-      />
+      <FAQSection title="Frequently Asked Questions About Gutter Cleaning" subtitle="Get answers to common questions about our services" faqs={faqs} />
       
       <CallToAction />
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default GutterCleaning;
