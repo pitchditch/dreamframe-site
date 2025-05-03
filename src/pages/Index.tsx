@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -189,7 +190,7 @@ const Index = () => {
       <ServicesSection />
       <TestimonialsSection />
       
-      {/* 100% Satisfaction Guarantee Section (improved interactive version) */}
+      {/* 100% Satisfaction Guarantee Section */}
       <section className="py-12 bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-[url('/lovable-uploads/20659a58-a7ae-47cb-970a-a2f17c8e2d93.png')] bg-cover bg-center"></div>

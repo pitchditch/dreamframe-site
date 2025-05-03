@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -10,7 +11,6 @@ import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
-import FAQSection from '@/components/FAQSection';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
@@ -47,25 +47,6 @@ const Home = () => {
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [setLanguage]);
-
-  const faqItems = [
-    {
-      question: "What areas do you service?",
-      answer: "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas."
-    },
-    {
-      question: "Are you fully insured?",
-      answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
-    },
-    {
-      question: "How often should I have my windows cleaned?",
-      answer: "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference."
-    },
-    {
-      question: "Do you offer any guarantees?",
-      answer: "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost."
-    }
-  ];
 
   return (
     <Layout image="/open.png">
@@ -104,13 +85,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
-      {/* FAQ Section */}
-      <FAQSection 
-        title="Frequently Asked Questions" 
-        subtitle="Find answers to common questions about our services"
-        faqs={faqItems}
-      />
       
       {/* Location Banner */}
       <LocationBanner />

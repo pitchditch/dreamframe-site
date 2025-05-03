@@ -50,8 +50,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           <NavigationMenuTrigger className={classNames.trigger}>
             {t('Residential Services')}
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white rounded-lg shadow-lg">
+          <NavigationMenuContent className="absolute">
+            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white rounded-lg shadow-lg border-0">
               <Link to="/services/window-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
                 <div className="bg-blue-50 p-2 rounded-lg mr-3">
                   <Droplets className="text-blue-500 navbar-service-icon" size={24} />
@@ -97,8 +97,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           <NavigationMenuTrigger className={classNames.trigger}>
             {t('Commercial Services')}
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white rounded-lg shadow-lg">
+          <NavigationMenuContent className="absolute">
+            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white rounded-lg shadow-lg border-0">
               <Link to="/services/commercial-window-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
                 <div className="bg-blue-50 p-2 rounded-lg mr-3">
                   <Droplets className="text-blue-600 navbar-service-icon" size={24} />
