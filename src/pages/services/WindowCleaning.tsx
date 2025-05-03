@@ -16,20 +16,13 @@ const WindowCleaning = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    const video = document.getElementById('hero-video') as HTMLIFrameElement;
-    if (video) {
-      if (video.readyState >= 3) {
-        setVideoLoaded(true);
-      } else {
-        video.addEventListener('load', () => setVideoLoaded(true));
-      }
-    }
+    // Set videoLoaded to true after a short delay
+    // This is a workaround since readyState is not available on HTMLIFrameElement
+    const timer = setTimeout(() => {
+      setVideoLoaded(true);
+    }, 1000);
     
-    return () => {
-      if (video) {
-        video.removeEventListener('load', () => setVideoLoaded(true));
-      }
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   const windowCleaningFaqs = [{
