@@ -10,19 +10,23 @@ const HeroSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   
   useEffect(() => {
-    const video = document.getElementById('hero-video') as HTMLIFrameElement;
+    const video = document.getElementById('hero-video') as HTMLVideoElement;
     
     const handleVideoLoad = () => {
       setVideoLoaded(true);
     };
     
     if (video) {
-      video.addEventListener('load', handleVideoLoad);
+      if (video.readyState >= 3) {
+        setVideoLoaded(true);
+      } else {
+        video.addEventListener('loadeddata', handleVideoLoad);
+      }
     }
     
     return () => {
       if (video) {
-        video.removeEventListener('load', handleVideoLoad);
+        video.removeEventListener('loadeddata', handleVideoLoad);
       }
     };
   }, []);

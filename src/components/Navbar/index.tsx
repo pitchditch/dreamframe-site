@@ -24,23 +24,13 @@ const Navbar = () => {
     '/services/post-construction-window-cleaning',
     '/services/commercial-window-cleaning',
     '/services/commercial-pressure-washing',
-    '/contact',
-    '/vancouver-window-cleaning'
+    '/contact'
   ];
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight; // Get the height of the hero section
-      
-      // Enable parallax effect for content sections
-      const contentSection = document.querySelector('.content-overlap-section');
-      if (contentSection && currentScrollY < heroHeight) {
-        const translateValue = Math.max(0, (currentScrollY / heroHeight) * 200);
-        contentSection.setAttribute('style', `transform: translateY(-${translateValue}px)`);
-      }
-
-      // Determine if navbar should be transparent based on scroll position
       const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight * 0.8;
       setIsOverVideo(shouldBeTransparent);
       setIsScrolled(currentScrollY > 10);
