@@ -114,7 +114,7 @@ const GutterCleaning = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="section-title mb-12">Our Gutter Cleaning Process</h2>
-          <ServiceProcess steps={processes} />
+          <ServiceProcess processes={processes} />
         </div>
       </section>
 
