@@ -32,7 +32,10 @@ const Navbar = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight * 0.8; // Get 80% of the hero section height
+      
+      // Only consider transparent when in the hero section (not scrolled past it)
       const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight;
+      
       setIsOverVideo(shouldBeTransparent);
       setIsScrolled(currentScrollY > 10);
     };

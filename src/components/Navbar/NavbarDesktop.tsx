@@ -1,155 +1,111 @@
 
-import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { Droplets, Home, MessageSquare, Phone, Shield, Wind } from 'lucide-react';
-import { Link } from "react-router-dom";
-import { useTranslation } from '@/hooks/use-translation';
-import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '../ui/navigation-menu';
+import { cn } from '../../lib/utils';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
 }
 
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
-  const { t } = useTranslation();
-  const location = useLocation();
-  
-  const textColor = isOverVideo ? 'text-white' : 'text-gray-800';
-  const hoverBgColor = isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100';
-  
-  const classNames = {
-    button: `${textColor} px-4`,
-    link: `${textColor} ${hoverBgColor} rounded-md px-3 py-2 text-sm font-medium transition-all duration-200`,
-    activeLink: `${isOverVideo ? 'bg-white/10' : 'bg-gray-100'} rounded-md px-3 py-2 text-sm font-medium`,
-    trigger: `${textColor} ${hoverBgColor} rounded-md px-3 py-2 text-sm font-medium group inline-flex items-center transition-all duration-200`,
-  };
-
-  const isActive = (path: string) => {
-    // Check if current path starts with provided path (for nested routes)
-    return location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
-  };
+  const mainNavLinkClassName = `transition-colors font-medium px-3 py-2 rounded-md text-lg ${
+    isOverVideo ? 'text-white hover:bg-white/10' : 'text-gray-800 hover:bg-gray-100'
+  }`;
 
   return (
-    <NavigationMenu className="hidden lg:block mx-6">
-      <NavigationMenuList className="flex items-center gap-4">
-        {/* Why Us */}
-        <NavigationMenuItem>
-          <Link to="/why-us" className={isActive('/why-us') ? classNames.activeLink : classNames.link}>
-            {t('Why Us')}
-          </Link>
-        </NavigationMenuItem>
-        
-        {/* Residential Services Dropdown */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className={classNames.trigger}>
-            {t('Residential Services')}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="absolute">
-            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white rounded-lg shadow-lg border-0">
-              <Link to="/services/window-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-blue-50 p-2 rounded-lg mr-3">
-                  <Droplets className="text-blue-500 navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Window Cleaning')}</div>
-                  <div className="text-sm text-gray-500">{t('Crystal clear windows')}</div>
-                </div>
-              </Link>
-              <Link to="/services/pressure-washing" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-red-50 p-2 rounded-lg mr-3">
-                  <Home className="text-bc-red navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Pressure Washing')}</div>
-                  <div className="text-sm text-gray-500">{t('Remove dirt & grime')}</div>
-                </div>
-              </Link>
-              <Link to="/services/gutter-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-green-50 p-2 rounded-lg mr-3">
-                  <Wind className="text-green-600 navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Gutter Cleaning')}</div>
-                  <div className="text-sm text-gray-500">{t('Prevent water damage')}</div>
-                </div>
-              </Link>
-              <Link to="/services/roof-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-amber-50 p-2 rounded-lg mr-3">
-                  <Home className="text-amber-700 navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Roof Cleaning')}</div>
-                  <div className="text-sm text-gray-500">{t('Remove moss & debris')}</div>
-                </div>
-              </Link>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        
-        {/* Commercial Services Dropdown */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className={classNames.trigger}>
-            {t('Commercial Services')}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="absolute">
-            <div className="grid grid-cols-2 gap-3 p-6 w-[500px] bg-white rounded-lg shadow-lg border-0">
-              <Link to="/services/commercial-window-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-blue-50 p-2 rounded-lg mr-3">
-                  <Droplets className="text-blue-600 navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Commercial Window Cleaning')}</div>
-                  <div className="text-sm text-gray-500">{t('For businesses & offices')}</div>
-                </div>
-              </Link>
-              <Link to="/services/commercial-pressure-washing" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-blue-50 p-2 rounded-lg mr-3">
-                  <Home className="text-blue-700 navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Commercial Pressure Washing')}</div>
-                  <div className="text-sm text-gray-500">{t('For storefronts & facilities')}</div>
-                </div>
-              </Link>
-              <Link to="/services/post-construction-cleaning" className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-all duration-200">
-                <div className="bg-purple-50 p-2 rounded-lg mr-3">
-                  <MessageSquare className="text-purple-600 navbar-service-icon" size={24} />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{t('Post-Construction Cleaning')}</div>
-                  <div className="text-sm text-gray-500">{t('Final cleaning after construction')}</div>
-                </div>
-              </Link>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        
-        {/* Get a Quote Button */}
-        <NavigationMenuItem>
-          <Button asChild className="bg-bc-red hover:bg-red-700 text-white rounded-full transition-all duration-200 shadow hover:shadow-md">
-            <Link to="/contact">
-              <MessageSquare className="mr-2" size={16} />
-              {t('Get a Quote')}
-            </Link>
-          </Button>
-        </NavigationMenuItem>
-        
-        {/* Phone Button */}
-        <NavigationMenuItem>
-          <Button asChild variant="outline" className={`${textColor} border rounded-full transition-all duration-200 shadow hover:shadow-md ${isOverVideo ? 'border-white/70 hover:bg-white/20' : 'border-gray-300 hover:bg-gray-100'}`}>
-            <a href="tel:7788087620">
-              <Phone className="mr-2" size={16} />
-              778-808-7620
-            </a>
-          </Button>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <nav className="hidden lg:flex items-center space-x-2">
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link to="/" className={mainNavLinkClassName}>Home</Link>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Services</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className="w-[600px] bg-white p-4 rounded-lg shadow-lg grid grid-cols-2 gap-3">
+                <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-blue-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Window Cleaning</h4>
+                      <p className="text-sm text-gray-600">Professional cleaning for crystal-clear windows</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-green-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Pressure Washing</h4>
+                      <p className="text-sm text-gray-600">Restore your property's curb appeal</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/gutter-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-yellow-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-yellow-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Gutter Cleaning</h4>
+                      <p className="text-sm text-gray-600">Keep your gutters flowing freely</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/roof-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-red-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Roof Cleaning</h4>
+                      <p className="text-sm text-gray-600">Remove moss and debris from your roof</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <Link to="/calculator" className={mainNavLinkClassName}>Get a Quote</Link>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <Link to="/about" className={mainNavLinkClassName}>About</Link>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <Link to="/contact" className={mainNavLinkClassName}>Contact</Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+
+      <div className="ml-4">
+        <a 
+          href="tel:7788087620" 
+          className={`px-5 py-3 rounded-lg transition-all font-semibold ${
+            isOverVideo 
+              ? 'bg-bc-red hover:bg-red-700 text-white' 
+              : 'bg-bc-red hover:bg-red-700 text-white'
+          }`}
+        >
+          Call: 778-808-7620
+        </a>
+      </div>
+    </nav>
   );
 };

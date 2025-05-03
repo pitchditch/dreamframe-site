@@ -15,6 +15,7 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import PressureWashingForm from '@/components/forms/PressureWashingForm';
 import { Card } from '@/components/ui/card';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 const PressureWashing = () => {
   const faqs = [
@@ -45,13 +46,40 @@ const PressureWashing = () => {
       <ServiceHeader 
         title="Professional Pressure Washing"
         description="Restore the beauty of your exterior surfaces with our specialized pressure washing services."
-        imagePath="/lovable-uploads/e76ecfc1-a3a8-44d8-9a4a-5e1bf7c32282.png"
+        youtubeId="lYnXijewxCM"
       />
       
-      <section className="py-16">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
+                <p className="text-lg text-gray-700 mb-4">
+                  Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
+                </p>
+                <p className="text-lg text-gray-700">
+                  Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
+                </p>
+                <ul className="mt-4 space-y-2 text-gray-700">
+                  <li className="flex items-center">
+                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
+                    Driveways & walkways
+                  </li>
+                  <li className="flex items-center">
+                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
+                    Decks & patios
+                  </li>
+                  <li className="flex items-center">
+                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
+                    Siding & exterior walls
+                  </li>
+                  <li className="flex items-center">
+                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
+                    Fences & gates
+                  </li>
+                </ul>
+              </div>
               <ServiceFeatures />
               <ServiceBenefitsSection />
             </div>
@@ -78,25 +106,12 @@ const PressureWashing = () => {
       
       <MoreServicesSection />
       
-      <CitiesCarousel />
-      
-      <div className="py-10 bg-gray-100">
+      <section className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d167326.78631723323!2d-122.96968737170609!3d49.10482983753625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485d910ff12a495%3A0x50135152a7b0560!2sSurrey%2C%20BC!5e0!3m2!1sen!2sca!4v1657051523264!5m2!1sen!2sca" 
-              width="800" 
-              height="400" 
-              style={{ border: 0 }} 
-              allowFullScreen={true} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Service Area Map"
-              className="rounded-lg shadow-lg"
-            ></iframe>
-          </div>
+          <h2 className="text-3xl font-bold text-center mb-8">Areas We Service</h2>
+          <ServiceAreaMap />
         </div>
-      </div>
+      </section>
       
       <CallToAction 
         title="Ready to Transform Your Property?"

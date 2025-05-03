@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -14,10 +15,10 @@ import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 
 // Image imports
-const HERO_IMG = "/lovable-uploads/8f51f55c-a8ce-472b-b398-1a35211096d3.png";
 const MOSS_REMOVAL_IMG = "/lovable-uploads/4717a554-bfc3-4475-8b10-8a17baff037d.png";
 const BLACK_STAINS_IMG = "/lovable-uploads/b05d1af5-48fb-4bed-a580-f986d22828be.png";
 const CLEAN_BEAUTIFUL_ROOF_IMG = "/lovable-uploads/8f772889-3cc7-4650-a92d-9b7571b7d7fb.png";
+
 const benefits = [{
   title: "Extends Roof Lifespan",
   description: "Prevents moss, algae, and lichen from breaking down your shingles, adding years to your roof.",
@@ -35,8 +36,8 @@ const benefits = [{
   description: "Eliminates organisms that trap moisture and can lead to costly roof leaks.",
   icon: <Star className="h-6 w-6 text-yellow-500" />
 }];
+
 const RoofCleaning = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     // Set document title
     document.title = "Roof Cleaning & Moss Removal Services | BC Pressure Washing";
@@ -47,6 +48,7 @@ const RoofCleaning = () => {
       document.body.classList.remove('roof-cleaning-page');
     };
   }, []);
+  
   return <Layout>
       <Helmet>
         <title>Professional Roof Cleaning & Moss Removal | BC Pressure Washing</title>
@@ -90,7 +92,7 @@ const RoofCleaning = () => {
           
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
             <div>
-              <img src="/lovable-uploads/89f521bb-edb4-4193-a254-c88e4968fa9f.png" alt="Professional Roof Cleaning Process" className="w-full rounded-lg shadow-lg" />
+              <img src="/lovable-uploads/89f521bb-edb4-4193-a254-c88e4968fa9f.png" alt="Professional Roof Cleaning Process" className="w-full h-auto rounded-lg shadow-lg" />
             </div>
             <div>
               <div className="bg-gray-50 p-4 rounded-lg mb-6">
@@ -173,9 +175,6 @@ const RoofCleaning = () => {
           </div>
         </div>
       </section>
-      
-      {/* CALL TO ACTION */}
-      
 
       {/* FAQ SECTION */}
       <section className="py-16 bg-white">
@@ -213,9 +212,6 @@ const RoofCleaning = () => {
           </div>
         </div>
       </section>
-
-      {/* SERVICE AREA SECTION */}
-      
 
       {/* Chatbot */}
       <div className="fixed bottom-6 right-6 z-50">

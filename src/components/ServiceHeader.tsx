@@ -1,3 +1,4 @@
+
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,7 @@ interface ServiceHeaderProps {
   darkOverlay?: boolean;
   showButton?: boolean;
   buttonPosition?: 'center' | 'bottom';
-  youtubeId?: string; // Added for direct YouTube embedding
+  youtubeId?: string; // For direct YouTube embedding
 }
 
 const ServiceHeader = ({
@@ -48,8 +49,9 @@ const ServiceHeader = ({
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>}
