@@ -1,4 +1,3 @@
-
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -12,6 +11,7 @@ interface ServiceHeaderProps {
   darkOverlay?: boolean;
   showButton?: boolean;
   buttonPosition?: 'center' | 'bottom';
+  youtubeId?: string; // Added for direct YouTube embedding
 }
 
 const ServiceHeader = ({
@@ -22,21 +22,56 @@ const ServiceHeader = ({
   videoUrl,
   darkOverlay = false,
   showButton = true,
-  buttonPosition = 'center'
+  buttonPosition = 'center',
+  youtubeId
 }: ServiceHeaderProps) => {
   // Use useEffect to add and remove the has-video-header class
   useEffect(() => {
-    if (videoUrl) {
+    if (videoUrl || youtubeId) {
       document.body.classList.add('has-video-header');
       return () => {
         document.body.classList.remove('has-video-header');
       };
     }
-  }, [videoUrl]);
+  }, [videoUrl, youtubeId]);
 
   return (
     <div className="relative w-full h-screen">
-      {videoUrl ? (
+      {youtubeId ? (
+        <>
+          <div className="absolute inset-0 w-full h-full">
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
+              title="Service Video"
+              className="absolute inset-0 w-full h-full object-cover"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="text-center p-4 max-w-xl mx-auto z-10">
+              {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
+              {title && <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>}
+              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {showButton && buttonPosition === 'center' && (
+                <div className="mt-8">
+                  <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+                    <Link to="/calculator">Check Prices & Availability</Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+          {showButton && buttonPosition === 'bottom' && (
+            <div className="absolute bottom-10 w-full flex justify-center z-10">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-6 shadow-lg">
+                <Link to="/calculator">Check Prices & Availability</Link>
+              </Button>
+            </div>
+          )}
+        </>
+      ) : videoUrl ? (
         <>
           <video
             src={videoUrl}

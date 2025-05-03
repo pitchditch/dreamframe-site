@@ -44,10 +44,6 @@ const GutterCleaning = () => {
     icon: <PieChart size={32} />
   }];
 
-  const handleVideoClick = () => {
-    window.open("https://youtu.be/m5wfZZCuFeg?si=zIa4LgX-eu9gBVoI", "_blank");
-  };
-
   const faqs = [
     {
       question: "How often should I have my gutters cleaned?",
@@ -74,15 +70,21 @@ const GutterCleaning = () => {
   return (
     <Layout>
       <ServiceHeader 
-        title="" 
-        description="" 
-        icon={<Droplets size={48} className="opacity-0" />} 
-        imagePath="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png" 
+        title="Professional Gutter Cleaning" 
+        description="Keep your home protected from water damage with our thorough gutter cleaning service" 
+        youtubeId="m5wfZZCuFeg" 
         darkOverlay={true} 
       />
 
       <section className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row gap-12 items-center">
+          <div className="md:w-1/2">
+            <img 
+              src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" 
+              alt="Professional gutter cleaning in action" 
+              className="rounded-lg shadow-xl w-full h-auto"
+            />
+          </div>
           <div className="md:w-1/2">
             <h2 className="text-3xl font-bold mb-6">Why Gutter Cleaning Is Essential</h2>
             <p className="text-gray-600 mb-6">
@@ -91,7 +93,7 @@ const GutterCleaning = () => {
             <p className="text-gray-600 mb-6">
               Our professional gutter cleaning service removes all debris, ensures proper water flow, and protects your home from costly damage. We recommend gutter cleaning at least twice a year, typically in spring and fall, to prevent clogs and maintain your gutter system.
             </p>
-            <div className="flex items-center space-x-8">
+            <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center">
                 <Shield className="text-bc-red mr-2" size={24} />
                 <span className="font-medium">Fully Insured</span>
@@ -106,106 +108,66 @@ const GutterCleaning = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2">
-            <GutterCleaningForm />
-          </div>
         </div>
       </section>
 
       <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
-          <div className="cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
-            <div className="relative pt-[56.25%] w-full">
-              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/m5wfZZCuFeg?mute=1" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-              <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
-                <div className="opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-bc-red text-white rounded-full p-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </div>
-                </div>
-              </div>
+        <div className="container mx-auto px-4">
+          <h2 className="section-title mb-12">Our Gutter Cleaning Process</h2>
+          <ServiceProcess steps={processes} />
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="section-title mb-2">Benefits of Professional Gutter Cleaning</h2>
+        <p className="section-subtitle mb-12">
+          Protect your home's foundation, roof, and exterior with our expert gutter cleaning service
+        </p>
+        <ServiceBenefits benefits={benefits} />
+      </section>
+
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Get Your Gutters Cleaned Today</h3>
+              <p className="text-gray-600 mb-6">
+                Don't wait until water damage occurs. Our professional team is ready to clean your gutters thoroughly and efficiently. Fill out the form to get a quick quote or schedule your service.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Free estimates with detailed pricing</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Flexible scheduling to fit your needs</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Experienced, professional technicians</span>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div>
-            <h3 className="text-2xl font-bold mb-4">Professional Gutter Cleaning Service</h3>
-            <p className="text-gray-600 mb-6">
-              Our professional team uses specialized equipment and techniques to thoroughly clean your gutters and ensure proper water flow. We remove all debris, flush your gutters, and inspect your entire gutter system for any potential issues.
-            </p>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Complete removal of all leaves, twigs, and debris</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Thorough flushing of gutters and downspouts</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Inspection for damage or potential issues</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Safe disposal of all collected debris</span>
-              </li>
-            </ul>
+            <div>
+              <GutterCleaningForm />
+            </div>
           </div>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Recent Projects & Reviews</h2>
+        <h2 className="section-title">What Our Customers Say</h2>
         <p className="section-subtitle mb-12">
           See what our satisfied customers are saying about our gutter cleaning services
         </p>
         <TestimonialsSection />
-      </section>
-
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title">Gutter Protection Solutions</h2>
-        <p className="section-subtitle mb-12">
-          Ask about our gutter protection systems to keep debris out while letting water flow
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="text-content">
-            <h3 className="text-2xl font-bold mb-4">Gutter Guards &amp; Protectors</h3>
-            <p className="text-gray-600 mb-6">
-              We offer high-quality gutter protection systems that prevent leaves, twigs, and debris from entering your gutters while still allowing water to flow through. These systems can dramatically reduce the frequency of gutter cleanings and protect your home from water damage.
-            </p>
-            <ul className="list-disc list-inside space-y-2 mb-6">
-              <li>Keeps debris out while letting water flow in</li>
-              <li>Reduces the need for frequent gutter cleaning</li>
-              <li>Prevents rust and corrosion of gutter systems</li>
-              <li>Extends the lifespan of your gutters</li>
-              <li>Prevents pests from nesting in your gutters</li>
-            </ul>
-            <div className="relative h-0 pb-[177%] mt-4 mb-2 rounded-xl overflow-hidden" style={{
-              paddingBottom: "56.25%"
-            }}>
-              <iframe 
-                src="https://youtube.com/embed/OICbIRmx-80" 
-                title="Gutter protection video" 
-                frameBorder="0" 
-                allow="autoplay; encrypted-media" 
-                allowFullScreen 
-                className="absolute top-0 left-0 w-full h-full rounded-xl"
-              ></iframe>
-            </div>
-          </div>
-          <div className="image-content">
-            {/* Content for right side if needed */}
-          </div>
-        </div>
       </section>
       
       <FAQSection 
