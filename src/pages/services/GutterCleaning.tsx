@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -9,7 +8,6 @@ import FAQSection from '../../components/FAQSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 import { Card, CardContent } from '@/components/ui/card';
-
 const GutterCleaning = () => {
   const benefits = [{
     title: "Prevent Water Damage",
@@ -30,7 +28,6 @@ const GutterCleaning = () => {
     title: "Prevent Basement Flooding",
     description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
   }];
-  
   const processes = [{
     title: "Debris Removal",
     description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
@@ -44,7 +41,6 @@ const GutterCleaning = () => {
     description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
     icon: <PieChart size={32} />
   }];
-  
   const faqs = [{
     question: "How often should I have my gutters cleaned?",
     answer: "We recommend having your gutters cleaned at least twice a year - in spring and fall. However, if you have trees overhanging your roof, you might need more frequent cleaning, especially during fall when leaves are dropping."
@@ -61,9 +57,7 @@ const GutterCleaning = () => {
     question: "Is there any preparation I need to do before you arrive?",
     answer: "We ask that you ensure clear access to the perimeter of your home. Please remove any obstacles that might impede our work, secure pets, and inform us of any specific areas of concern before we begin."
   }];
-  
-  return (
-    <Layout>
+  return <Layout>
       <ServiceHeader title="Professional Gutter Cleaning" description="Keep your home protected from water damage with our thorough gutter cleaning service" youtubeId="m5wfZZCuFeg" darkOverlay={true} />
 
       <section className="container mx-auto px-4 py-16">
@@ -138,7 +132,7 @@ const GutterCleaning = () => {
             </ul>
           </div>
           <div className="space-y-6">
-            <img src="/lovable-uploads/a7d592c2-ab79-492d-b244-3468d27e1033.png" alt="Gutter face cleaning in action" className="rounded-lg shadow-md w-full h-auto" />
+            
             <img src="/lovable-uploads/1e06febe-e5ba-4258-88bf-f51b8712cb04.png" alt="Before and after gutter face cleaning" className="rounded-lg shadow-md w-full h-auto" />
           </div>
         </div>
@@ -194,22 +188,11 @@ const GutterCleaning = () => {
               </ul>
               
               <div className="mt-6">
-                <img 
-                  src="/lovable-uploads/14f90144-3570-48f9-8889-1b08026790b2.png" 
-                  alt="Leaf guard installation" 
-                  className="rounded-lg shadow-xl w-full h-auto mb-4" 
-                />
+                
               </div>
             </div>
             <div className="rounded-lg overflow-hidden shadow-xl h-96">
-              <iframe
-                src={`https://www.youtube.com/embed/OICbIRmx-80?si=FIGd5zZjfhJ9FlRo`}
-                title="Leaf Guard Video"
-                className="w-full h-full object-cover"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <iframe src={`https://www.youtube.com/embed/OICbIRmx-80?si=FIGd5zZjfhJ9FlRo`} title="Leaf Guard Video" className="w-full h-full object-cover" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </div>
           </div>
         </div>
@@ -219,16 +202,8 @@ const GutterCleaning = () => {
       <section className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="grid grid-cols-1 gap-6">
-            <img 
-              src="/lovable-uploads/8e5ee557-95fc-4103-b9b9-41a3007cc3a6.png" 
-              alt="Gutter Stick installation" 
-              className="rounded-lg shadow-xl w-full h-auto" 
-            />
-            <img 
-              src="/lovable-uploads/a5266091-5d6d-42f0-a4bf-f9bfc489bd62.png" 
-              alt="Gutter Stick in use" 
-              className="rounded-lg shadow-xl w-full h-auto" 
-            />
+            <img src="/lovable-uploads/8e5ee557-95fc-4103-b9b9-41a3007cc3a6.png" alt="Gutter Stick installation" className="rounded-lg shadow-xl w-full h-auto" />
+            <img src="/lovable-uploads/a5266091-5d6d-42f0-a4bf-f9bfc489bd62.png" alt="Gutter Stick in use" className="rounded-lg shadow-xl w-full h-auto" />
           </div>
           <div>
             <h2 className="text-3xl font-bold mb-6">Gutter Sticks: Affordable Leaf Guard Alternative</h2>
@@ -291,11 +266,7 @@ const GutterCleaning = () => {
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <div className="h-72 overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/50c2be43-ecf8-4ef3-af03-61bbdaa26e0a.png" 
-                    alt="Recent gutter cleaning project"
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                  <img src="/lovable-uploads/50c2be43-ecf8-4ef3-af03-61bbdaa26e0a.png" alt="Recent gutter cleaning project" className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2">Residential Gutter Cleaning</h3>
@@ -307,11 +278,7 @@ const GutterCleaning = () => {
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <div className="h-72 overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" 
-                    alt="Commercial gutter cleaning"
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                  <img src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" alt="Commercial gutter cleaning" className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2">Commercial Property Maintenance</h3>
@@ -323,11 +290,7 @@ const GutterCleaning = () => {
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <div className="h-72 overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/1e06febe-e5ba-4258-88bf-f51b8712cb04.png" 
-                    alt="Gutter face cleaning project"
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                  <img src="/lovable-uploads/1e06febe-e5ba-4258-88bf-f51b8712cb04.png" alt="Gutter face cleaning project" className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2">Gutter Face Cleaning</h3>
@@ -382,8 +345,6 @@ const GutterCleaning = () => {
       <FAQSection title="Frequently Asked Questions About Gutter Cleaning" subtitle="Get answers to common questions about our services" faqs={faqs} />
       
       <CallToAction />
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default GutterCleaning;
