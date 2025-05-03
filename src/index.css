@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,6 +9,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
 .has-video-header main {
@@ -20,6 +20,14 @@ body {
 .has-video-header .hero-section {
   position: relative;
   z-index: 10;
+}
+
+/* Smooth scroll effect for content overlap */
+.content-overlap-section {
+  position: relative;
+  z-index: 20;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
 }
 
 .will-change-transform {
@@ -188,4 +196,14 @@ body {
 /* Text shadow for better visibility on darker backgrounds */
 .text-shadow {
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Additional styles for the navbar links */
+.nav-link-white {
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }

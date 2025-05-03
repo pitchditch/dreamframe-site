@@ -18,11 +18,8 @@ const WindowCleaning = () => {
   useEffect(() => {
     const video = document.getElementById('hero-video') as HTMLIFrameElement;
     if (video) {
-      if (video.readyState >= 3) {
-        setVideoLoaded(true);
-      } else {
-        video.addEventListener('load', () => setVideoLoaded(true));
-      }
+      // Use onload event instead of readyState for iframes
+      video.addEventListener('load', () => setVideoLoaded(true));
     }
     
     return () => {
