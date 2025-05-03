@@ -57,6 +57,7 @@ const TrustSection: React.FC = () => {
                       location={testimonial.location}
                       rating={testimonial.rating}
                       beforeAfterImage={testimonial.beforeAfterImage}
+                      profileImage={testimonial.profileImage}
                     />
                   </div>
                 </CarouselItem>

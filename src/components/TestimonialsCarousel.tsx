@@ -12,6 +12,7 @@ interface TestimonialWithProfile {
   location?: string;
   rating: number;
   beforeAfterImage?: string;
+  profileImage?: string;
   service?: "gutter-cleaning" | "window-cleaning" | "pressure-washing" | "roof-cleaning";
 }
 
@@ -20,14 +21,11 @@ const TestimonialsCarousel = () => {
   const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Update testimonials without profile pictures
+  // Initialize testimonials with profile pictures
   useEffect(() => {
     const updatedTestimonials = testimonials
       .filter(Boolean)
-      .map(testimonial => ({
-        ...testimonial,
-        profileImage: undefined // Remove all profile images
-      }));
+      .filter(testimonial => testimonial.profileImage); // Only show testimonials with profile images
     
     setAllTestimonials(updatedTestimonials);
   }, []);
@@ -77,7 +75,7 @@ const TestimonialsCarousel = () => {
                     location={testimonial.location}
                     rating={testimonial.rating}
                     beforeAfterImage={testimonial.beforeAfterImage}
-                    profileImage={undefined} // Explicitly set to undefined
+                    profileImage={testimonial.profileImage}
                   />
                 </div>
               </div>

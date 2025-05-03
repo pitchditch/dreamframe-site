@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Star } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface TestimonialCardProps {
   quote: string;
@@ -35,13 +36,18 @@ const TestimonialCard = ({
           
           {/* Profile */}
           <div className="flex items-center">
-            {profileImage && (
+            {profileImage ? (
               <div className="mr-4">
-                <img 
-                  src={profileImage} 
-                  alt={`${name}'s portrait`} 
-                  className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
-                />
+                <Avatar className="h-16 w-16 border-2 border-gray-200">
+                  <AvatarImage src={profileImage} alt={`${name}'s portrait`} />
+                  <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </div>
+            ) : (
+              <div className="mr-4">
+                <Avatar className="h-16 w-16 bg-bc-red/20 text-bc-red border-2 border-gray-200">
+                  <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+                </Avatar>
               </div>
             )}
             <div>
