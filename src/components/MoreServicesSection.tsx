@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { Droplets, Home, Wind } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 const MoreServicesSection = () => {
   const services = [

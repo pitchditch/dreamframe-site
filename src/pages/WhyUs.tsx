@@ -6,6 +6,7 @@ import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import MoreServicesSection from '@/components/MoreServicesSection';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
+import CompanyHistory from '@/components/CompanyHistory';
 
 const WhyUs = () => {
   const faqs = [
@@ -35,7 +36,14 @@ const WhyUs = () => {
     <Layout title="Why Choose BC Pressure Washing | Surrey & White Rock Pressure Washing" description="Discover what makes BC Pressure Washing the top choice for exterior cleaning in Surrey & White Rock. Owner-operated excellence, professional equipment, and guaranteed results.">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-blue-900 to-bc-red py-24">
-        <div className="container mx-auto px-4 text-center text-white">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/lovable-uploads/b5967047-dddc-47e1-a23c-dd4a5feb9125.png"
+            alt="BC Pressure Washing background"
+            className="w-full h-full object-cover opacity-25"
+          />
+        </div>
+        <div className="container mx-auto px-4 text-center text-white relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Why Choose BC Pressure Washing</h1>
           <p className="text-xl max-w-3xl mx-auto">
             Experience the difference of working with a locally owned, professional exterior cleaning company that truly cares about results.
@@ -95,6 +103,9 @@ const WhyUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Our Story Section (moved from PostConstructionWindowCleaning page) */}
+      <CompanyHistory />
 
       {/* Professional Equipment Section */}
       <section className="py-16 bg-white">

@@ -25,8 +25,8 @@ const FAQSection: React.FC<FAQSectionProps> = ({
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3">{title}</h2>
-          {subtitle && <p className="text-lg text-gray-600">{subtitle}</p>}
+          <h2 className="text-3xl font-bold mb-3 text-gray-900">{title}</h2>
+          {subtitle && <p className="text-lg text-gray-700">{subtitle}</p>}
           {description && <p className="text-gray-600 mt-2">{description}</p>}
         </div>
         
@@ -43,7 +43,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
                       } w-5 h-5 text-gray-500 transition-transform duration-200`}
                     />
                   </Disclosure.Button>
-                  <Disclosure.Panel className="px-6 pb-4 pt-1 text-gray-700">
+                  <Disclosure.Panel className="px-6 pb-4 pt-1 text-gray-700 bg-white">
                     {faq.answer}
                   </Disclosure.Panel>
                 </>

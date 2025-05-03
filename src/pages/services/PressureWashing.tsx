@@ -13,6 +13,8 @@ import MoreServicesSection from '../../components/MoreServicesSection';
 import CitiesCarousel from '@/components/CitiesCarousel';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
+import PressureWashingForm from '@/components/forms/PressureWashingForm';
+import { Card } from '@/components/ui/card';
 
 const PressureWashing = () => {
   const faqs = [
@@ -46,9 +48,19 @@ const PressureWashing = () => {
         imagePath="/lovable-uploads/e76ecfc1-a3a8-44d8-9a4a-5e1bf7c32282.png"
       />
       
-      <ServiceFeatures />
-      
-      <ServiceBenefitsSection />
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <ServiceFeatures />
+              <ServiceBenefitsSection />
+            </div>
+            <div>
+              <PressureWashingForm />
+            </div>
+          </div>
+        </div>
+      </section>
       
       <ServiceProcessSection />
       

@@ -12,6 +12,7 @@ import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import WindowCleaningForm from '@/components/forms/WindowCleaningForm';
 
 const WindowCleaning = () => {
   const windowCleaningFaqs = [{
@@ -82,10 +83,10 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* Main Content */}
+      {/* Main Content with Form */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12">
             <div>
               <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-4">
                 <Droplets size={16} className="mr-1" /> Pure Water Technology
@@ -119,9 +120,11 @@ const WindowCleaning = () => {
                   <span>Hard water stain removal options</span>
                 </li>
               </ul>
-            </div>
-            <div>
               <img alt="Window cleaning with pure water technology" className="rounded-lg shadow-xl w-full" src="/lovable-uploads/ac4de5e1-110f-43da-9a26-3454d0529608.jpg" />
+            </div>
+            
+            <div>
+              <WindowCleaningForm />
             </div>
           </div>
         </div>

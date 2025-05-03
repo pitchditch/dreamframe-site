@@ -17,7 +17,7 @@ const DrivewayCleaning = () => {
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               <img 
-                src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" 
+                src="/lovable-uploads/b5967047-dddc-47e1-a23c-dd4a5feb9125.png" 
                 alt="Driveway Cleaning in South Surrey | Professional Exterior Cleaning by BC Pressure Washing" 
                 className="w-full h-auto"
               />

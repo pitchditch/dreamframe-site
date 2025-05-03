@@ -7,6 +7,7 @@ import CallToAction from '../../components/CallToAction';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import FAQSection from '../../components/FAQSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
+import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 
 const GutterCleaning = () => {
   const benefits = [{
@@ -105,7 +106,15 @@ const GutterCleaning = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2 cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
+          <div className="md:w-1/2">
+            <GutterCleaningForm />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
+          <div className="cursor-pointer relative rounded-lg overflow-hidden shadow-lg" onClick={handleVideoClick}>
             <div className="relative pt-[56.25%] w-full">
               <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/m5wfZZCuFeg?mute=1" title="Gutter Cleaning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               <div className="absolute inset-0 bg-transparent hover:bg-black hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
@@ -118,6 +127,38 @@ const GutterCleaning = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold mb-4">Professional Gutter Cleaning Service</h3>
+            <p className="text-gray-600 mb-6">
+              Our professional team uses specialized equipment and techniques to thoroughly clean your gutters and ensure proper water flow. We remove all debris, flush your gutters, and inspect your entire gutter system for any potential issues.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Complete removal of all leaves, twigs, and debris</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Thorough flushing of gutters and downspouts</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Inspection for damage or potential issues</span>
+              </li>
+              <li className="flex items-start">
+                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Safe disposal of all collected debris</span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>

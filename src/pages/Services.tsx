@@ -62,7 +62,7 @@ const Services = () => {
               title={t("Driveway Cleaning")} 
               description={t("Deep cleaning to remove oil stains, tire marks, and built-up grime from your driveway and walkways.")} 
               link="/services/driveway-cleaning" 
-              image="/lovable-uploads/b7b93840-f196-42eb-ab22-f753520c83f8.png" 
+              image="/lovable-uploads/b5967047-dddc-47e1-a23c-dd4a5feb9125.png" 
               imageAlt="Driveway Cleaning in Abbotsford | Oil Stain Removal by BC Pressure Washing" 
             />
             <ServiceCard 
@@ -94,7 +94,7 @@ const Services = () => {
               title={t("Parking Lot Cleaning")} 
               description={t("Professional parking lot cleaning services that enhance your property's appearance, safety, and longevity.")} 
               link="/services/parking-lot-cleaning" 
-              image="/lovable-uploads/d65a228a-6e40-4bb9-996f-0652cb6065a1.png" 
+              image="/lovable-uploads/0413d26c-fb32-4ac3-ad1c-8e24f7878b90.png" 
               imageAlt="Parking Lot Cleaning in White Rock | Commercial Surface Cleaning by BC Pressure Washing" 
             />
             <ServiceCard 
