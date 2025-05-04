@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import FooterContactForm from './FooterContactForm';
+import ServiceAreaMap from './ServiceAreaMap';
 
 const Footer = () => {
   const location = useLocation();
