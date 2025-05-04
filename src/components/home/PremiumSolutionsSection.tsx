@@ -1,116 +1,114 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../ui/button';
 import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const PremiumSolutionsSection = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
     const handleScroll = () => {
-      const position = window.pageYOffset;
-      setScrollPosition(position);
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight;
+      const section = sectionRef.current;
+      
+      if (section) {
+        // Start the transform much earlier for better overlap
+        const startTransform = heroHeight * 0.5; // Adjust earlier start point
+        // Complete the transform when reaching the end of hero
+        const endTransform = heroHeight * 0.8; // Complete transformation earlier
+        
+        // Calculate the progress between 0 and 1
+        const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
+        
+        // Apply transform - start at 250px below viewport and end at -500px (significantly overlapping the hero)
+        const translateY = (1 - progress) * 250 - (progress * 500);
+        section.style.transform = `translateY(${translateY}px)`;
+        section.style.opacity = `1`; // Keep opacity always at 1 to prevent fade effect
+      }
     };
     
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Calculate overlay based on scroll position - smoother transition
-  const calculateOverlay = () => {
-    const heroHeight = window.innerHeight; // Height of hero section
-    const triggerPoint = heroHeight * 0.8; // Start overlay effect at 80% of hero height
-    
-    if (scrollPosition < triggerPoint) {
-      return 0;
-    } else {
-      // Calculate gradual overlay between triggerPoint and heroHeight
-      const percentage = Math.min((scrollPosition - triggerPoint) / (heroHeight * 0.2), 1);
-      return percentage;
+  
+  const services = [
+    {
+      title: "Window Cleaning",
+      description: "Crystal-clear, streak-free windows using advanced pure water technology",
+      image: "/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png",
+      link: "/services/window-cleaning"
+    },
+    {
+      title: "House Washing",
+      description: "Safe soft washing techniques to restore your home's exterior beauty",
+      image: "/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png",
+      link: "/services/house-washing"
+    },
+    {
+      title: "Gutter Cleaning",
+      description: "Complete gutter cleaning and maintenance to prevent water damage",
+      image: "/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png",
+      link: "/services/gutter-cleaning"
+    },
+    {
+      title: "Roof Cleaning",
+      description: "Gentle but effective moss and algae removal to protect your roof",
+      image: "/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png",
+      link: "/services/roof-cleaning"
     }
-  };
-
-  const overlayOpacity = calculateOverlay();
+  ];
 
   return (
     <section 
-      className="py-16 bg-white relative z-10" 
+      ref={sectionRef}
+      className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg transform will-change-transform"
       style={{ 
-        transform: `translateY(${-100 * overlayOpacity}px)`,
-        marginTop: `${-100 * overlayOpacity}px`,
-        transition: 'transform 0.1s, margin-top 0.1s'
+        marginTop: '-400px',  // Increased negative margin to create more overlap
+        opacity: 1, // No fade effect - start fully visible
+        transform: 'translateY(250px)'
       }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 pt-8">
         <div className="text-center mb-12">
-          <span className="text-bc-red font-semibold">Premium Cleaning Solutions</span>
-          <h2 className="text-4xl font-bold mt-2">Professional Exterior Cleaning Services</h2>
-          <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-            We deliver exceptional results for residential and commercial properties throughout Surrey, White Rock, and the Lower Mainland.
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Premium Cleaning Solutions</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Our professional exterior cleaning services deliver exceptional results using state-of-the-art equipment and eco-friendly products.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Service Cards */}
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <img 
-              src="/lovable-uploads/4f5100f2-42bb-471b-aad7-f0700e9a1cab.png" 
-              alt="Window Cleaning Services" 
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">Window Cleaning</h3>
-              <p className="text-gray-600 mb-4">
-                Crystal clear windows that enhance your property's appearance and let in more natural light.
-              </p>
-              <Button variant="outline" size="sm" asChild className="mt-2">
-                <Link to="/services/window-cleaning" className="flex items-center">
-                  Learn More <ArrowRight size={16} className="ml-2" />
-                </Link>
-              </Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+          {services.map((service, index) => (
+            <div key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow bg-white rounded-lg shadow">
+              <div className="relative p-6 flex flex-col items-center">
+                <div className="w-40 h-40 mb-4">
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                <p className="text-gray-600 mb-4 text-center">{service.description}</p>
+                <Button asChild variant="outline" className="w-full mt-auto">
+                  <Link to={service.link}>
+                    Learn More <ArrowRight size={16} className="ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </div>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <img 
-              src="/lovable-uploads/85f5bd3c-680e-4957-9722-6bc6070f7d51.png" 
-              alt="Pressure Washing Services" 
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">Pressure Washing</h3>
-              <p className="text-gray-600 mb-4">
-                Revitalize your outdoor surfaces by removing dirt, grime, moss, and organic growth.
-              </p>
-              <Button variant="outline" size="sm" asChild className="mt-2">
-                <Link to="/services/pressure-washing" className="flex items-center">
-                  Learn More <ArrowRight size={16} className="ml-2" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <img 
-              src="/lovable-uploads/61c248da-a39d-4414-a395-5a104dbff13b.png" 
-              alt="Gutter Cleaning Services" 
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">Gutter Cleaning</h3>
-              <p className="text-gray-600 mb-4">
-                Protect your property from water damage by keeping gutters clean and functioning properly.
-              </p>
-              <Button variant="outline" size="sm" asChild className="mt-2">
-                <Link to="/services/gutter-cleaning" className="flex items-center">
-                  Learn More <ArrowRight size={16} className="ml-2" />
-                </Link>
-              </Button>
-            </div>
-          </div>
+          ))}
+        </div>
+        
+        <div className="mt-10 text-center">
+          <Button asChild size="lg" variant="bc-red">
+            <Link to="/services">
+              View All Services <ArrowRight className="ml-2" size={18} />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

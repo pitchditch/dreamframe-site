@@ -1,57 +1,76 @@
 
-import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import React from 'react';
 import Layout from '../components/Layout';
-import { trackPageView } from '../utils/analytics';
-import BeforeAfterSlider from '../components/BeforeAfterSlider';
-import CalculatorForm from '../components/CalculatorForm';
+import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
+import { Helmet } from 'react-helmet-async';
+import { Percent } from 'lucide-react';
+import { TestimonialCarousel } from '@/components/TestimonialCarousel';
+import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
 const Calculator = () => {
-  useEffect(() => {
-    trackPageView('/calculator', 'Price Calculator - BC Pressure Washing');
-  }, []);
+  // Check if user was referred from the homepage with a postal code
+  const hasPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
 
   return (
-    <Layout title="Price Calculator | BC Pressure Washing" description="Get an instant quote for your pressure washing and window cleaning services in Surrey, White Rock, and the Lower Mainland.">
+    <Layout>
       <Helmet>
-        <meta name="robots" content="noindex, follow" />
+        <title>Service Price Calculator | BC Pressure Washing</title>
+        <meta name="description" content="Get an instant quote for window cleaning, pressure washing, and gutter cleaning services in White Rock, Surrey and Metro Vancouver." />
+        <meta name="keywords" content="pressure washing quote, window cleaning estimate, gutter cleaning cost, White Rock, Surrey, BC" />
       </Helmet>
-
-      <div className="bg-gray-50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Price Calculator</h1>
-            <p className="text-lg text-gray-600">
-              Get an instant price quote for your window cleaning, gutter cleaning, or pressure washing service.
-            </p>
+      <div className="container mx-auto py-12 mt-24">
+        <div className="text-center mb-12">
+          <div className="inline-block bg-yellow-400 text-black px-4 py-2 rounded-full font-bold mb-4 animate-pulse">
+            <Percent className="inline-block h-4 w-4 mr-1" />
+            SPRING SALE: 20% OFF ALL SERVICES
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-7 order-2 lg:order-1">
-              <CalculatorForm />
+          <h1 className="text-4xl font-bold mb-4">Service Price Calculator</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Quick quote for your exterior cleaning needs in White Rock & Surrey.
+          </p>
+        </div>
+        
+        <div className="relative flex">
+          <div className="w-full lg:w-3/4 pr-0 lg:pr-8">
+            <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
+            
+            {/* 100% Satisfaction Guarantee - Now with house background */}
+            <div className="mt-12 relative overflow-hidden rounded-xl shadow-lg">
+              <div className="absolute inset-0">
+                <img 
+                  src="/lovable-uploads/3508b357-c029-4365-bb7c-e8cd605080a5.png" 
+                  alt="Beautiful clean house exterior" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30"></div>
+              </div>
+              <div className="relative p-10 text-white">
+                <h3 className="text-3xl font-bold mb-4">100% Satisfaction Guarantee</h3>
+                <p className="text-lg mb-6">
+                  We stand behind our work with a full satisfaction guarantee. If you're not completely satisfied with our service, we'll return to address any issues at no additional cost.
+                </p>
+                <div className="flex items-center">
+                  <img
+                    src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
+                    alt="Jayden Fisher - Owner"
+                    className="w-16 h-16 rounded-full border-2 border-white mr-4"
+                  />
+                  <div>
+                    <p className="font-bold">Jayden Fisher</p>
+                    <p>Owner, BC Pressure Washing</p>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div className="lg:col-span-5 order-1 lg:order-2">
-              {/* Full-size before/after slider */}
-              <div className="bg-white p-6 rounded-lg shadow-lg mb-6 w-full">
-                <h3 className="text-xl font-semibold mb-4">See The Difference</h3>
-                <BeforeAfterSlider
-                  beforeImage="/lovable-uploads/760a47b6-0ed1-4cac-bcb0-b915374332a7.png"
-                  afterImage="/lovable-uploads/47d43541-d56d-4183-bb3a-ac2730befaae.png"
-                  height="500px"
-                  width="100%"
-                />
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full">
-                <h3 className="text-xl font-semibold mb-4">Window Cleaning Results</h3>
-                <BeforeAfterSlider
-                  beforeImage="/lovable-uploads/5a861af8-fd16-402e-bb94-198b855dfb45.png"
-                  afterImage="/lovable-uploads/823da2c6-a4b1-4d58-b80c-f059628dbd2b.png"
-                  height="500px"
-                  width="100%"
-                />
-              </div>
+            <div className="mt-12">
+              <QuestionsForm />
+            </div>
+          </div>
+          
+          <div className="hidden lg:block w-1/4 absolute top-0 right-0 bottom-0">
+            <div className="sticky top-32">
+              <TestimonialCarousel />
             </div>
           </div>
         </div>
