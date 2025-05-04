@@ -36,7 +36,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 className="flex items-center justify-between py-3 px-2 text-black hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md"
                 onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
               >
-                <span className="font-medium">{t('Residential Services')}</span>
+                <span className="font-medium">{t('Residential')}</span>
                 {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               
@@ -46,25 +46,25 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 <div className="flex flex-col space-y-4 border-l-2 border-gray-100 pl-4">
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png" alt="Window Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" alt="Window Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png" alt="House Washing Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/1ca3e3f5-36d2-4bfc-859e-00dc34d55da6.png" alt="House Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('House Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/00f3f3d9-15e1-46f2-99c3-535d8e667e35.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Gutter Cleaning')}</span>
                   </Link>
                   <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
@@ -78,7 +78,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 className="flex items-center justify-between py-3 px-2 text-black hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md"
                 onClick={() => setIsCommercialMenuOpen(!isCommercialMenuOpen)}
               >
-                <span className="font-medium">{t('Commercial Services')}</span>
+                <span className="font-medium">{t('Commercial')}</span>
                 {isCommercialMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               

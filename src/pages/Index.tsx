@@ -11,6 +11,7 @@ import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FAQSection from '@/components/FAQSection';
+import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -82,6 +83,9 @@ const Index = () => {
       
       <HeroSection />
       <PremiumSolutionsSection />
+      
+      {/* Window & Screen Cleaning Section */}
+      <ScreenCleaningSection />
       
       {/* Owner Operated Section */}
       <section className="py-16 bg-gray-100">

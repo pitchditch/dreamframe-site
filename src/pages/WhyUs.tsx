@@ -1,15 +1,27 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import EquipmentSection from '../components/EquipmentSection';
+import CompanyHistory from '../components/CompanyHistory';
+
 const WhyUs = () => {
   const {
     t
   } = useTranslation();
   return <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="container mx-auto px-4">
+        <div className="absolute inset-0 opacity-30">
+          <img 
+            src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" 
+            alt="House exterior cleaning" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
             <p className="text-xl text-gray-300 mb-8">
@@ -76,34 +88,11 @@ const WhyUs = () => {
         </div>
       </section>
       
-      {/* Our Story Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
-              <p className="text-gray-600 mb-4">
-                BC Pressure Washing & Property Maintenance began with a simple mission: to provide the highest quality exterior cleaning services to homeowners and businesses throughout the Lower Mainland.
-              </p>
-              <p className="text-gray-600 mb-4">
-                Founded by Jayden Fisher, our company has grown from a one-man operation to a team of dedicated professionals, all committed to delivering excellence in every job we undertake.
-              </p>
-              <p className="text-gray-600 mb-4">
-                What sets us apart is our attention to detail and our commitment to customer satisfaction. We're not just cleaning properties; we're building relationships with our clients based on trust, reliability, and exceptional results.
-              </p>
-              <p className="text-gray-600">
-                Today, we're proud to be one of the most trusted exterior cleaning companies in the Vancouver area, serving both residential and commercial clients with the same level of care and dedication.
-              </p>
-            </div>
-            <div>
-              <img src="/lovable-uploads/bac07608-1eeb-4905-b5db-79aa9ad91672.png" alt="BC Pressure Washing Company History" className="rounded-lg shadow-lg w-full" />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Company History - Our Story */}
+      <CompanyHistory />
       
       {/* Professional Equipment Section */}
-      
+      <EquipmentSection />
       
       {/* Call to Action */}
       <section className="py-16 bg-bc-red text-white text-center">

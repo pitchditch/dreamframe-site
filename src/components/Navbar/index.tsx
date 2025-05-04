@@ -61,10 +61,10 @@ const Navbar = () => {
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-28' : 'bg-transparent h-36'
     }`}>
-      <div className="container mx-auto px-4 flex items-center h-full">
+      <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
-        <div className="flex-1">
-          <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
+        <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
+        <div className="md:hidden">
           <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>

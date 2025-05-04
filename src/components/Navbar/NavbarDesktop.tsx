@@ -12,22 +12,23 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   }`;
 
   return (
-    <nav className="hidden lg:flex items-center w-full justify-between px-4">
-      <div className="flex-1 max-w-[400px]"></div>
-      <NavigationMenu className="flex-1 flex justify-center">
+    <div className="hidden lg:flex items-center justify-between w-full">
+      <div className="w-1/5"></div>
+      
+      <NavigationMenu className="flex justify-center">
         <NavigationMenuList className="space-x-8">
           <NavigationMenuItem>
             <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
           </NavigationMenuItem>
           
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Residential Services</NavigationMenuTrigger>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Residential</NavigationMenuTrigger>
             <NavigationMenuContent>
               <div className="w-[600px] bg-white p-4 rounded-lg shadow-lg grid grid-cols-2 gap-3">
                 <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png" alt="Window Cleaning Icon" className="w-10 h-10 object-contain" />
+                      <img src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" alt="Window Cleaning Icon" className="w-10 h-10 object-cover" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Window Cleaning</h4>
@@ -38,7 +39,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png" alt="House Washing Icon" className="w-10 h-10 object-contain" />
+                      <img src="/lovable-uploads/1ca3e3f5-36d2-4bfc-859e-00dc34d55da6.png" alt="House Washing Icon" className="w-10 h-10 object-cover" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">House Washing</h4>
@@ -49,7 +50,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/gutter-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png" alt="Gutter Cleaning Icon" className="w-10 h-10 object-contain" />
+                      <img src="/lovable-uploads/00f3f3d9-15e1-46f2-99c3-535d8e667e35.png" alt="Gutter Cleaning Icon" className="w-10 h-10 object-cover" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Gutter Cleaning</h4>
@@ -60,7 +61,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/roof-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-10 h-10 object-contain" />
+                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-10 h-10 object-cover" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Roof Cleaning</h4>
@@ -73,7 +74,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           </NavigationMenuItem>
           
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Commercial Services</NavigationMenuTrigger>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Commercial</NavigationMenuTrigger>
             <NavigationMenuContent>
               <div className="w-[500px] bg-white p-4 rounded-lg shadow-lg">
                 <Link to="/services/commercial-window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
@@ -119,7 +120,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex-1 max-w-[400px] flex justify-end">
+      <div className="flex justify-end w-1/5">
         <a 
           href="tel:7788087620" 
           className={`px-5 py-3 rounded-lg transition-all font-semibold whitespace-nowrap ${
@@ -131,6 +132,6 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           Call: 778-808-7620
         </a>
       </div>
-    </nav>
+    </div>
   );
 };

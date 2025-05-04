@@ -25,7 +25,7 @@ export const ServicesDropdown = ({
     <div className="relative">
       {isOpen && (
         <div className="absolute z-20 mt-2 py-2 w-72 bg-white rounded-md shadow-lg">
-          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Residential Services')}</div>
+          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Residential')}</div>
           
           <Link 
             to="/services/window-cleaning" 
@@ -54,7 +54,7 @@ export const ServicesDropdown = ({
           
           <div className="border-t border-gray-100 mx-2 my-2"></div>
           
-          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Commercial Services')}</div>
+          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Commercial')}</div>
           <Link 
             to="/services/commercial-window-cleaning" 
             className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
