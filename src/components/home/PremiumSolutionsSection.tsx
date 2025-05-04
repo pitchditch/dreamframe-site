@@ -15,15 +15,15 @@ const PremiumSolutionsSection = () => {
       
       if (section) {
         // Start the transform when scroll reaches 50% of hero height
-        const startTransform = heroHeight * 0.6;
-        // Complete the transform at hero height
-        const endTransform = heroHeight * 0.9;
+        const startTransform = heroHeight * 0.5;
+        // Complete the transform at 80% of hero height
+        const endTransform = heroHeight * 0.8;
         
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 100px below viewport and end at -180px (overlapping the video more)
-        const translateY = (1 - progress) * 100 - (progress * 180);
+        // Apply transform - start at 120px below viewport and end at -200px (overlapping the video more)
+        const translateY = (1 - progress) * 120 - (progress * 200);
         section.style.transform = `translateY(${translateY}px)`;
         section.style.opacity = `${Math.min(1, progress * 1.5)}`;
       }
@@ -39,25 +39,25 @@ const PremiumSolutionsSection = () => {
     {
       title: "Window Cleaning",
       description: "Crystal-clear, streak-free windows using advanced pure water technology",
-      image: "/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png",
+      image: "/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png",
       link: "/services/window-cleaning"
     },
     {
       title: "House Washing",
       description: "Safe soft washing techniques to restore your home's exterior beauty",
-      image: "/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png",
+      image: "/lovable-uploads/4f5100f2-42bb-471b-aad7-f0700e9a1cab.png",
       link: "/services/house-washing"
     },
     {
       title: "Gutter Cleaning",
       description: "Complete gutter cleaning and maintenance to prevent water damage",
-      image: "/lovable-uploads/0d6ef232-ef53-475d-a323-3faf6f19982b.png",
+      image: "/lovable-uploads/fe37717f-5fc0-4f4d-9b7c-943b7d4c734f.png",
       link: "/services/gutter-cleaning"
     },
     {
       title: "Roof Cleaning",
       description: "Gentle but effective moss and algae removal to protect your roof",
-      image: "/lovable-uploads/b908cb50-e502-4c70-835b-c1deb98ff6fa.png",
+      image: "/lovable-uploads/a8be056c-8537-4e17-9559-6514a98817f0.png",
       link: "/services/roof-cleaning"
     }
   ];
@@ -67,9 +67,9 @@ const PremiumSolutionsSection = () => {
       ref={sectionRef}
       className="py-16 relative z-20 rounded-t-[40px] shadow-lg transform will-change-transform bg-white"
       style={{ 
-        marginTop: '-120px',
+        marginTop: '-160px',
         opacity: 0,
-        transform: 'translateY(100px)'
+        transform: 'translateY(120px)'
       }}
     >
       <div className="container mx-auto px-4 pt-8">

@@ -63,7 +63,7 @@ const Navbar = () => {
     }`}>
       <div className="container mx-auto px-4 flex items-center h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
-        <div className="flex items-center justify-between flex-1 ml-8">
+        <div className="flex-1">
           <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />
           <MobileMenuButton isOverVideo={isOverVideo && !isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>

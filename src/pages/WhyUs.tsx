@@ -1,11 +1,13 @@
+
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
-import { Shield, Star, Clock, Award, Heart, HandHeart, Scale, Leaf, DollarSign } from 'lucide-react';
+import { Shield, Star, Clock, Award, Heart, HandHeart, Scale, Leaf, DollarSign, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import ReferralButton from '@/components/ReferralButton';
 import { Link } from 'react-router-dom';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import CompanyHistory from '@/components/CompanyHistory';
 
 const WhyUs = () => {
   return (
@@ -122,6 +124,63 @@ const WhyUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Professional Equipment Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Professional Equipment</h2>
+          <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">We invest in the best equipment to ensure superior results on every project.</p>
+          
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <img 
+                src="/lovable-uploads/5f513861-3c9c-4e8c-a0f1-254574396881.png" 
+                alt="Professional pressure washing equipment" 
+                className="rounded-lg shadow-md w-full"
+              />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Commercial-Grade Tools</h3>
+              <p className="text-gray-700 mb-6">Our professional equipment allows us to tackle any exterior cleaning job with precision and efficiency. We regularly maintain and upgrade our tools to ensure we deliver the best possible results.</p>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="mt-1 mr-4 bg-bc-red rounded-full p-2 flex-shrink-0">
+                    <Wrench className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">High-Powered Pressure Washers</h4>
+                    <p className="text-gray-600">Industrial-grade equipment with adjustable pressure settings for different surfaces.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="mt-1 mr-4 bg-bc-red rounded-full p-2 flex-shrink-0">
+                    <Wrench className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Pure Water Systems</h4>
+                    <p className="text-gray-600">Advanced filtration technology for spotless, streak-free window cleaning.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="mt-1 mr-4 bg-bc-red rounded-full p-2 flex-shrink-0">
+                    <Wrench className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Specialized Surface Cleaners</h4>
+                    <p className="text-gray-600">Custom tools designed for different materials and cleaning challenges.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <CompanyHistory />
 
       {/* Service Area Map */}
       <section className="py-16 bg-white">

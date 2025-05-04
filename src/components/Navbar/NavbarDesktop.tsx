@@ -12,9 +12,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   }`;
 
   return (
-    <nav className="hidden lg:flex items-center space-x-2">
-      <NavigationMenu>
-        <NavigationMenuList>
+    <nav className="hidden lg:flex items-center w-full justify-between">
+      <div className="flex-1"></div>
+      <NavigationMenu className="flex-1 flex justify-center">
+        <NavigationMenuList className="space-x-2">
           <NavigationMenuItem>
             <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
           </NavigationMenuItem>
@@ -26,7 +27,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-blue-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Window Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png" alt="Window Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Window Cleaning</h4>
@@ -37,7 +38,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-green-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png" alt="House Washing Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/4f5100f2-42bb-471b-aad7-f0700e9a1cab.png" alt="House Washing Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">House Washing</h4>
@@ -48,7 +49,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/gutter-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-yellow-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/0d6ef232-ef53-475d-a323-3faf6f19982b.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/fe37717f-5fc0-4f4d-9b7c-943b7d4c734f.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Gutter Cleaning</h4>
@@ -59,7 +60,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/roof-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-red-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/b908cb50-e502-4c70-835b-c1deb98ff6fa.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/a8be056c-8537-4e17-9559-6514a98817f0.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Roof Cleaning</h4>
@@ -118,7 +119,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="ml-4">
+      <div className="flex-1 flex justify-end">
         <a 
           href="tel:7788087620" 
           className={`px-5 py-3 rounded-lg transition-all font-semibold ${
