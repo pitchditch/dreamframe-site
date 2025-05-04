@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -81,8 +82,9 @@ function getPricing(size: string, service: string): number | null {
   if (size === 'xlarge') {
     return null;
   }
-  const map = PRICING[size as keyof typeof PRICING];
-  return (map && map[service as keyof map]) || null;
+  // Fix: Use type assertion to specify the object type instead of using 'map' as a type
+  const pricingMap = PRICING[size as keyof typeof PRICING];
+  return (pricingMap && pricingMap[service as keyof typeof pricingMap]) || null;
 }
 
 function formatCurrency(n: number | null) {
