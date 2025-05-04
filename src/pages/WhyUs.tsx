@@ -1,12 +1,10 @@
-
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
-
 const WhyUs = () => {
-  const { t } = useTranslation();
-  
-  return (
-    <Layout>
+  const {
+    t
+  } = useTranslation();
+  return <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -95,11 +93,7 @@ const WhyUs = () => {
               </p>
             </div>
             <div>
-              <img 
-                src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" 
-                alt="BC Pressure Washing Company History" 
-                className="rounded-lg shadow-lg w-full"
-              />
+              <img src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" alt="BC Pressure Washing Company History" className="rounded-lg shadow-lg w-full" />
             </div>
           </div>
         </div>
@@ -107,53 +101,7 @@ const WhyUs = () => {
       
       {/* Professional Equipment Section */}
       <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Professional Equipment</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="mb-4">
-                <img 
-                  src="/lovable-uploads/b05d1af5-48fb-4bed-a580-f986d22828be.png" 
-                  alt="Pure Water Window Cleaning System" 
-                  className="w-full h-48 object-cover rounded-md"
-                />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Pure Water Window Cleaning System</h3>
-              <p className="text-gray-600">
-                Our advanced pure water cleaning system allows us to reach windows up to 60 feet high from the ground, achieving streak-free results without harsh chemicals.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="mb-4">
-                <img 
-                  src="/lovable-uploads/b69bdd37-7a37-43f0-a192-58ba9655e94f.png" 
-                  alt="Commercial Grade Pressure Washers" 
-                  className="w-full h-48 object-cover rounded-md"
-                />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Commercial Grade Pressure Washers</h3>
-              <p className="text-gray-600">
-                Our professional-grade pressure washing equipment provides the perfect balance of power and precision for effective cleaning without damaging surfaces.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="mb-4">
-                <img 
-                  src="/lovable-uploads/670bfa2b-b7a0-49e5-8da0-7eee14534fc4.png" 
-                  alt="Eco-Friendly Cleaning Solutions" 
-                  className="w-full h-48 object-cover rounded-md"
-                />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Eco-Friendly Cleaning Solutions</h3>
-              <p className="text-gray-600">
-                We use environmentally responsible cleaning products that effectively remove dirt, grime, and biological growth without harming your landscape or the environment.
-              </p>
-            </div>
-          </div>
-        </div>
+        
       </section>
       
       {/* Call to Action */}
@@ -173,8 +121,6 @@ const WhyUs = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default WhyUs;
