@@ -26,8 +26,7 @@ const Calculator = () => {
           </div>
           <h1 className="text-4xl font-bold mb-4">Service Price Calculator</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements.
-            We serve residential and commercial properties in White Rock and surrounding areas.
+            Quick quote for your exterior cleaning needs in White Rock & Surrey.
           </p>
         </div>
         

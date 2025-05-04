@@ -53,7 +53,7 @@ const Equipment = () => {
             <div className="grid md:grid-cols-2 items-center">
               <div className="p-0">
                 <img 
-                  src="/lovable-uploads/0139cad9-098a-441a-9e26-7c7aad7e481d.png" 
+                  src="/lovable-uploads/c9dabc2c-c2ad-4bde-9f7b-4df8b3a689c0.png" 
                   alt="BC Pressure Washing Service Vehicle" 
                   className="w-full h-full object-cover"
                 />
@@ -115,7 +115,7 @@ const Equipment = () => {
           <div className="grid md:grid-cols-2 items-center">
             <div className="p-0">
               <img 
-                src="/lovable-uploads/a644a02a-f827-4fde-99a2-d9acedf6dd29.png"
+                src="/lovable-uploads/d8cafee6-2600-4290-9874-200435673474.png"
                 alt="Owner's vehicle at White Rock beach"
                 className="w-full h-full object-cover"
               />

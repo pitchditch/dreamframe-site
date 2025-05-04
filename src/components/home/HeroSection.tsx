@@ -131,16 +131,16 @@ const HeroSection = () => {
                 placeholder="Enter Your Postal Code"
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                className="bg-white/20 backdrop-blur-md border-white/30 text-white h-12 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white/80 text-lg"
+                className="bg-white/30 backdrop-blur-md border-white/40 text-white h-14 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white/90 text-lg font-medium"
               />
             </div>
             <Button 
               type="submit" 
               variant="bc-red" 
-              size={isMobile ? "default" : "lg"} 
-              className="h-12 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
+              size="lg" 
+              className="h-14 text-white text-lg font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
             >
-              Check Prices & Availability <MessageSquare className="ml-2" size={18} />
+              Check Prices & Availability <MessageSquare className="ml-2" size={20} />
             </Button>
           </form>
         </div>

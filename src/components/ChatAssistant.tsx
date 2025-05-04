@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { MessageCircle, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,15 +24,19 @@ const ChatAssistant = () => {
       
       if (faqSection) {
         const faqRect = faqSection.getBoundingClientRect();
-        // Show chat assistant when FAQ section is in view
-        if (faqRect.top <= window.innerHeight && faqRect.bottom >= 0) {
+        // Show chat assistant when FAQ section is in view or user scrolls past it
+        if (faqRect.top <= window.innerHeight || window.scrollY > faqRect.top) {
           setIsVisible(true);
         } else {
           setIsVisible(false);
         }
       } else {
-        // If there's no FAQ section, don't show the chat assistant
-        setIsVisible(false);
+        // If there's no FAQ section, show when user scrolls down 70% of the page
+        if (window.scrollY > (document.body.scrollHeight * 0.7)) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
       }
     };
     
@@ -78,8 +83,13 @@ const ChatAssistant = () => {
               <p className="text-sm text-gray-600">{chatMessages[messageIndex]}</p>
             </div>
           </div>
-          <div className="text-center text-sm text-gray-600">
-            Click the button below to start a conversation
+          <div className="text-center mt-4">
+            <Link 
+              to="/contact" 
+              className="w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-md font-medium block transition-all"
+            >
+              Start Chat
+            </Link>
           </div>
         </div>
       )}

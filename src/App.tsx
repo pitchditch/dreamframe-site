@@ -24,6 +24,7 @@ import Equipment from './pages/Equipment';
 import ZipUploader from './pages/ZipUploader';
 import WhyUs from './pages/WhyUs';
 import Review from './pages/Review';
+import ChatAssistant from './components/ChatAssistant';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/review" element={<Review />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ChatAssistant />
       </Router>
     </HelmetProvider>
   );
