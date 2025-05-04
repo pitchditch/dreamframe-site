@@ -1,4 +1,3 @@
-
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight } from 'lucide-react';
@@ -6,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
-
 const WhyUs = () => {
   const {
     t
@@ -14,11 +12,7 @@ const WhyUs = () => {
   return <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
         <div className="absolute inset-0 opacity-30">
-          <img 
-            src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" 
-            alt="House exterior cleaning" 
-            className="w-full h-full object-cover"
-          />
+          <img src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" alt="House exterior cleaning" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10">
@@ -95,26 +89,7 @@ const WhyUs = () => {
       <EquipmentSection />
       
       {/* Call to Action */}
-      <section className="py-16 bg-bc-red text-white text-center">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Experience the Difference?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Contact us today for a free consultation and quote. Let us show you why we're the preferred choice for exterior cleaning in the Vancouver area.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact">
-              <Button className="bg-white text-bc-red font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
-                Get a Free Quote
-              </Button>
-            </Link>
-            <a href="tel:7788087620">
-              <Button variant="outline" className="bg-black bg-opacity-30 text-white font-bold py-3 px-8 rounded-lg hover:bg-opacity-40 transition duration-300">
-                Call: 778 808 7620
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
+      
     </Layout>;
 };
 export default WhyUs;
