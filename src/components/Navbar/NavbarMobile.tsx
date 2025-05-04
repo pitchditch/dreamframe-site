@@ -127,16 +127,18 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
         </div>
       </div>
 
-      {/* Fixed call button in bottom right corner - improved positioning with higher z-index */}
-      <div className="fixed bottom-8 right-6 md:hidden z-50">
-        <a 
-          href="tel:7788087620" 
-          className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all flex items-center justify-center"
-          aria-label="Call us"
-        >
-          <Phone size={24} />
-        </a>
-      </div>
+      {/* Fixed call button in bottom right corner - ensuring it doesn't overlap with the menu */}
+      {!isMenuOpen && (
+        <div className="fixed bottom-8 right-6 md:hidden z-50">
+          <a 
+            href="tel:7788087620" 
+            className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all flex items-center justify-center"
+            aria-label="Call us"
+          >
+            <Phone size={24} />
+          </a>
+        </div>
+      )}
     </>
   );
 };
