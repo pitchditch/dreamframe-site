@@ -1,60 +1,130 @@
 
 import React from 'react';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+} from "@/components/ui/carousel";
 
-const TrustedCustomersSection: React.FC = () => {
+interface CustomerTestimonial {
+  image: string;
+  name: string;
+  location: string;
+  service: string;
+  date: string;
+  quote?: string;
+}
+
+const TrustedCustomersSection = () => {
+  const [api, setApi] = React.useState<any>();
+  
+  const customers: CustomerTestimonial[] = [
+    {
+      image: "/lovable-uploads/2eaacd17-5dff-4af1-b073-c2ecadfdb6d0.png",
+      name: "David",
+      location: "White Rock",
+      service: "Window Cleaning",
+      date: "May 2025",
+      quote: "They nailed it. Windows look crystal clear."
+    },
+    {
+      image: "/lovable-uploads/37b96fc3-a1ad-49b9-b3df-85633bef1d67.png",
+      name: "James",
+      location: "Surrey",
+      service: "Pressure Washing",
+      date: "April 2025",
+      quote: "Professional service from start to finish."
+    },
+    {
+      image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
+      name: "Vikram", 
+      location: "South Surrey",
+      service: "Roof Cleaning",
+      date: "March 2025",
+      quote: "Best decision I made. Roof looks brand new."
+    },
+    {
+      image: "/lovable-uploads/74fff6dd-0d95-4d31-bb6a-606b14280b3a.png",
+      name: "John",
+      location: "White Rock",
+      service: "Window Cleaning",
+      date: "May 2025",
+      quote: "Couldn't be happier with the results!"
+    },
+    {
+      image: "/lovable-uploads/4c1d610e-379a-49cb-9f37-ef1b48a248f4.png",
+      name: "David",
+      location: "Langley",
+      service: "Window Cleaning",
+      date: "April 2025",
+      quote: "Great experience. Will use them again."
+    }
+  ];
+  
+  // Auto-rotate carousel continuously without pausing
+  React.useEffect(() => {
+    if (!api) return;
+    
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Trusted by Real Homeowners</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            See the actual transformations we've achieved for homeowners across Surrey, White Rock and Metro Vancouver.
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">Trusted by Real Homeowners – Verified Customers</h2>
+          <p className="text-gray-600 max-w-3xl mx-auto">
+            Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.
           </p>
-        </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {/* Before/After Gallery - Use higher quality full-sized images */}
-          <div className="overflow-hidden rounded-lg shadow-md group relative">
-            <img 
-              src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png" 
-              alt="Before: Dirty Siding" 
-              className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-500"
-            />
-            <div className="absolute top-0 left-0 bg-bc-red/70 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">Before</div>
-          </div>
-          <div className="overflow-hidden rounded-lg shadow-md group relative">
-            <img 
-              src="/lovable-uploads/0413d26c-fb32-4ac3-ad1c-8e24f7878b90.png" 
-              alt="After: Clean Siding" 
-              className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-500"
-            />
-            <div className="absolute top-0 left-0 bg-green-600/70 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">After</div>
-          </div>
-          <div className="overflow-hidden rounded-lg shadow-md group relative">
-            <img 
-              src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" 
-              alt="Before: Dirty Driveway" 
-              className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-500"
-            />
-            <div className="absolute top-0 left-0 bg-bc-red/70 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">Before</div>
-          </div>
-          <div className="overflow-hidden rounded-lg shadow-md group relative">
-            <img 
-              src="/lovable-uploads/041945aa-f58d-4820-9af6-0202a0b9b726.png" 
-              alt="After: Clean Driveway" 
-              className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-500"
-            />
-            <div className="absolute top-0 left-0 bg-green-600/70 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">After</div>
+          <div className="mt-4">
+            <span className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-medium">
+              Spring Shoot Catalog
+            </span>
           </div>
         </div>
         
-        <div className="text-center mt-10">
-          <a href="/services/pressure-washing" className="inline-flex items-center text-bc-red hover:text-bc-red/80 font-medium">
-            View More Transformations 
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-            </svg>
-          </a>
+        {/* Carousel View (for all screen sizes) */}
+        <div className="relative max-w-xl mx-auto">
+          <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
+            <CarouselContent>
+              {customers.map((customer, index) => (
+                <CarouselItem key={index} className="basis-full">
+                  <div className="flex flex-col items-center text-center p-2">
+                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
+                      <img 
+                        src={customer.image} 
+                        alt={`${customer.name} from ${customer.location}`} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h4 className="font-semibold text-lg">{customer.name}</h4>
+                    <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
+                    <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
+                    {customer.quote && (
+                      <p className="mt-2 italic text-sm">"{customer.quote}"</p>
+                    )}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          
+          <div className="flex justify-center mt-4">
+            {customers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={`w-2 h-2 mx-1 rounded-full transition-colors ${
+                  api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

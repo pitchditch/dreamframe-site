@@ -8,10 +8,10 @@ import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection'
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FAQSection from '@/components/FAQSection';
 import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
-import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -138,7 +138,7 @@ const Index = () => {
       
       <TrustedCustomersSection />
       
-      {/* Why Homeowners Trust Us Section - Now in 4 columns */}
+      {/* Why Homeowners Trust Us Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -219,33 +219,17 @@ const Index = () => {
       <FAQSection 
         title="Frequently Asked Questions" 
         subtitle="Everything you need to know about our services"
-        faqs={[
-          {
-            question: "What areas do you service?",
-            answer: "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas."
-          },
-          {
-            question: "Are you fully insured?",
-            answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
-          },
-          {
-            question: "How often should I have my windows cleaned?",
-            answer: "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference."
-          },
-          {
-            question: "Do you offer any guarantees?",
-            answer: "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost."
-          },
-          {
-            question: "How do you price your services?",
-            answer: "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs."
-          }
-        ]}
+        faqs={faqItems}
         darkMode={true}
       />
       
-      {/* Service Areas Section - Using new carousel component */}
-      <ServiceAreasCarousel />
+      {/* Service Areas Section - Only on homepage */}
+      <section className="py-16 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+          <ServiceAreaMap />
+        </div>
+      </section>
       
       <ReferralButton />
     </Layout>

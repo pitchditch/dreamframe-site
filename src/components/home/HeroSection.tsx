@@ -4,15 +4,10 @@ import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Shield, Star, Home, Phone, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const isMobile = useIsMobile();
-  
-  // Use different YouTube video IDs for mobile and desktop
-  const videoId = isMobile ? "sAjdWDNtFQw" : "GJZpuELGJpI";
   
   useEffect(() => {
     const video = document.getElementById('hero-video') as HTMLVideoElement;
@@ -44,7 +39,7 @@ const HeroSection = () => {
           <iframe 
             id="hero-video"
             className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8`}
+            src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
             title="Pressure Washing Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

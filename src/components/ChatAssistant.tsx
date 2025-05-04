@@ -1,12 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { MessageCircle, HelpCircle, X } from 'lucide-react';
+import { MessageCircle, X } from 'lucide-react';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isHoveringFAQ, setIsHoveringFAQ] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +15,10 @@ const ChatAssistant = () => {
         : null;
       
       if (faqSection) {
-        const faqSectionRect = faqSection.getBoundingClientRect();
-        const faqSectionInView = faqSectionRect.top < window.innerHeight && faqSectionRect.bottom > 0;
+        const faqSectionBottom = faqSection.getBoundingClientRect().bottom;
         
-        // Show chat assistant when FAQ is in view or we've scrolled past it
-        if (faqSectionInView || faqSectionRect.bottom <= 0) {
+        // Show chat assistant only after scrolling past the FAQ section
+        if (faqSectionBottom <= 0) {
           setIsVisible(true);
         } else {
           setIsVisible(false);
@@ -37,43 +35,10 @@ const ChatAssistant = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Monitor FAQ section hover
-  useEffect(() => {
-    const handleFAQHover = () => {
-      const faqItems = document.querySelectorAll('[data-state="closed"]');
-      
-      faqItems.forEach(item => {
-        item.addEventListener('mouseenter', () => setIsHoveringFAQ(true));
-        item.addEventListener('mouseleave', () => setIsHoveringFAQ(false));
-      });
-      
-      return () => {
-        faqItems.forEach(item => {
-          item.removeEventListener('mouseenter', () => setIsHoveringFAQ(true));
-          item.removeEventListener('mouseleave', () => setIsHoveringFAQ(false));
-        });
-      };
-    };
-    
-    // Set up hover detection after a short delay to ensure DOM is ready
-    const timer = setTimeout(handleFAQHover, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   if (!isVisible) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-[1000]">
-      {/* Floating hint when hovering FAQ items */}
-      {isHoveringFAQ && !isOpen && (
-        <div className="absolute right-16 bottom-3 bg-white rounded-lg shadow-lg p-3 mb-2 animate-pulse whitespace-nowrap">
-          <div className="flex items-center gap-2">
-            <HelpCircle className="text-bc-red" size={16} />
-            <span className="text-sm font-medium">Have questions? Click to chat!</span>
-          </div>
-        </div>
-      )}
-
       <Button
         onClick={() => setIsOpen(!isOpen)}
         className={`chat-button rounded-full p-3 shadow-lg ${isOpen ? 'bg-bc-red hover:bg-bc-red/90' : 'bg-navy hover:bg-navy/90'}`}
