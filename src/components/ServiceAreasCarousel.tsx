@@ -29,15 +29,33 @@ const ServiceAreasCarousel = () => {
     };
   }, []);
 
+  // Get background color from parent element or use default
+  const getBackgroundColor = () => {
+    const parentSection = carouselRef.current?.closest('section');
+    if (parentSection) {
+      const style = window.getComputedStyle(parentSection);
+      return style.backgroundColor === 'rgba(0, 0, 0, 0)' ? 'white' : style.backgroundColor;
+    }
+    return 'white';
+  };
+
+  // Get text color based on background
+  const getTextColor = () => {
+    const bgColor = getBackgroundColor();
+    return bgColor.includes('rgb(255, 255, 255)') || bgColor === 'white' ? 'text-black' : 'text-white';
+  };
+
   return (
-    <div className="py-6 bg-white overflow-hidden w-full border-t border-gray-100">
+    <div className="py-6 overflow-hidden w-full border-t border-opacity-10" style={{
+      backgroundColor: 'inherit'
+    }}>
       <div className="relative w-full">
         <div ref={carouselRef} className="flex overflow-x-hidden scrollbar-none whitespace-nowrap w-full">
           {/* Duplicate the service areas to create seamless loop */}
           {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
             <div key={index} className="inline-flex px-4 py-2 mx-1">
               <MapPin size={16} className="text-bc-red mr-2" />
-              <span className="text-black">{area}</span>
+              <span className={getTextColor()}>{area}</span>
             </div>
           ))}
         </div>

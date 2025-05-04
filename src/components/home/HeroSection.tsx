@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -57,11 +58,15 @@ const HeroSection = () => {
   // Ghost writer effect for postal code input
   useEffect(() => {
     if (inputRef.current !== document.activeElement && !postalCode) {
+      const ghostMessages = ["Enter your postal code...", lowerMainlandPostalCodes[ghostIndex]];
+      const currentIndex = Math.floor(ghostIndex / 2) % 2;
+      
       const timer = setTimeout(() => {
         if (isTyping && !isPaused) {
           // Typing forward
-          if (currentGhostChar < lowerMainlandPostalCodes[ghostIndex].length) {
-            setGhostText(lowerMainlandPostalCodes[ghostIndex].substring(0, currentGhostChar + 1));
+          const currentMessage = ghostMessages[currentIndex];
+          if (currentGhostChar < currentMessage.length) {
+            setGhostText(currentMessage.substring(0, currentGhostChar + 1));
             setCurrentGhostChar(prev => prev + 1);
           } else {
             // Pause at the end of typing
@@ -74,12 +79,12 @@ const HeroSection = () => {
         } else if (!isTyping && !isPaused) {
           // Deleting
           if (currentGhostChar > 0) {
-            setGhostText(lowerMainlandPostalCodes[ghostIndex].substring(0, currentGhostChar - 1));
+            setGhostText(ghostMessages[currentIndex].substring(0, currentGhostChar - 1));
             setCurrentGhostChar(prev => prev - 1);
           } else {
-            // Move to next postal code
+            // Move to next message
             setIsTyping(true);
-            setGhostIndex((prev) => (prev + 1) % lowerMainlandPostalCodes.length);
+            setGhostIndex((prev) => (prev + 1));
           }
         }
       }, isTyping ? 150 : 50);
@@ -183,9 +188,9 @@ const HeroSection = () => {
         </div>
         
         {/* Postal Code Input Section - Enhanced visibility */}
-        <div className="max-w-xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
-          <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-grow">
+        <div className="max-w-2xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
+          <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="relative w-full max-w-lg">
               <Input
                 ref={inputRef}
                 type="text"
@@ -194,7 +199,7 @@ const HeroSection = () => {
                 onChange={(e) => setPostalCode(e.target.value)}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                className="bg-white/40 backdrop-blur-md border-white/40 text-white h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white text-xl font-medium"
+                className="bg-white/40 backdrop-blur-md border-white/40 text-white h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white text-xl font-medium w-full"
               />
               {!postalCode && ghostText && (
                 <div className="absolute top-0 left-0 h-full flex items-center pointer-events-none">
@@ -206,7 +211,7 @@ const HeroSection = () => {
               type="submit" 
               variant="bc-red" 
               size="lg" 
-              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 min-w-[250px]"
+              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
             >
               Check Prices & Availability <MessageSquare className="ml-2" size={20} />
             </Button>

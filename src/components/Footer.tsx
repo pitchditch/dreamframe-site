@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
@@ -17,8 +18,10 @@ const Footer = () => {
           {/* Logo and social media links */}
           <div className="col-span-1">
             <div className="mb-4 flex flex-col items-center">
-              {/* Car image added above the logo */}
-              <img alt="BC Pressure Washing Service Car" className="h-20 mb-3" src="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" />
+              {/* Car image added above the logo - moved higher */}
+              <div className="mb-6 -mt-16">
+                <img alt="BC Pressure Washing Service Car" className="h-24" src="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" />
+              </div>
               <Link to="/">
                 <img src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" alt="BC Pressure Washing Logo" className="h-24 md:h-28 mb-4" />
               </Link>
