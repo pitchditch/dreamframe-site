@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -270,14 +269,10 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, i
         ))}
       </div>
 
-      {/* Side testimonial carousel */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left testimonial carousel - only visible on desktop */}
-        <div className="hidden lg:block">
-          <TestimonialCarousel />
-        </div>
-        
-        <div className="lg:col-span-1">
+      {/* Main content with form and testimonials */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* Main form area - takes 4 columns on larger screens */}
+        <div className="lg:col-span-4">
           {/* Stepper indicator */}
           <div className="flex items-center justify-center mb-6 gap-2 text-xs">
             {[...Array(5)].map((_, n) => (
@@ -610,8 +605,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, i
           )}
         </div>
         
-        {/* Right testimonial carousel - only visible on desktop */}
-        <div className="hidden lg:block">
+        {/* Right testimonial carousel - vertical flowing design */}
+        <div className="hidden lg:block lg:col-span-1">
           <TestimonialCarousel />
         </div>
       </div>

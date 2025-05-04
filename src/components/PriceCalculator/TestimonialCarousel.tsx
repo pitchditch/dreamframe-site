@@ -27,34 +27,31 @@ export const TestimonialCarousel = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-center mb-2">Before & After</h3>
-      <div className="flex flex-col gap-6">
-        {/* Current image */}
-        {images[currentIndex] && (
-          <div className="overflow-hidden rounded-lg shadow-md">
-            <img 
-              src={images[currentIndex]} 
-              alt="Before and after cleaning comparison" 
-              className="w-full h-auto"
-            />
-            <div className="bg-gray-800 text-white text-xs px-3 py-1 text-center">
-              See the difference!
+      <div className="flex flex-col gap-6 transition-all">
+        {/* Display 3 images in a vertical flow */}
+        {[0, 1, 2].map((offset) => {
+          const index = (currentIndex + offset) % images.length;
+          return images[index] && (
+            <div 
+              key={index} 
+              className="overflow-hidden rounded-lg shadow-md transition-all duration-700 animate-fade-in"
+              style={{
+                transform: `translateY(${offset * 10}px)`,
+                opacity: 1 - (offset * 0.2)
+              }}
+            >
+              <img 
+                src={images[index]} 
+                alt="Before and after cleaning comparison" 
+                className="w-full h-auto"
+                loading="lazy"
+              />
+              <div className="bg-gray-800 text-white text-xs px-3 py-1 text-center">
+                {offset === 0 ? 'See the difference!' : 'Real results for our customers'}
+              </div>
             </div>
-          </div>
-        )}
-        
-        {/* Show another image if available */}
-        {images[(currentIndex + 1) % images.length] && (
-          <div className="overflow-hidden rounded-lg shadow-md">
-            <img 
-              src={images[(currentIndex + 1) % images.length]} 
-              alt="Before and after cleaning comparison" 
-              className="w-full h-auto"
-            />
-            <div className="bg-gray-800 text-white text-xs px-3 py-1 text-center">
-              Real results for our customers
-            </div>
-          </div>
-        )}
+          );
+        })}
       </div>
       
       {/* Dots indicator */}
