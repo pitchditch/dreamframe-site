@@ -14,16 +14,16 @@ const PremiumSolutionsSection = () => {
       const section = sectionRef.current;
       
       if (section) {
-        // Start the transform when scroll reaches 40% of hero height (earlier overlap)
-        const startTransform = heroHeight * 0.4;
-        // Complete the transform at 70% of hero height (more overlap)
-        const endTransform = heroHeight * 0.7;
+        // Start the transform much earlier for better overlap
+        const startTransform = heroHeight * 0.6;
+        // Complete the transform when reaching the end of hero
+        const endTransform = heroHeight * 0.9;
         
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 120px below viewport and end at -300px (overlapping the hero more)
-        const translateY = (1 - progress) * 120 - (progress * 300);
+        // Apply transform - start at 250px below viewport and end at -400px (significantly overlapping the hero)
+        const translateY = (1 - progress) * 250 - (progress * 400);
         section.style.transform = `translateY(${translateY}px)`;
         section.style.opacity = `${Math.min(1, progress * 1.5)}`;
       }
@@ -67,9 +67,9 @@ const PremiumSolutionsSection = () => {
       ref={sectionRef}
       className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg transform will-change-transform"
       style={{ 
-        marginTop: '-160px',
+        marginTop: '-300px',  // Increased negative margin to create more overlap
         opacity: 0,
-        transform: 'translateY(120px)'
+        transform: 'translateY(250px)'
       }}
     >
       <div className="container mx-auto px-4 pt-8">
@@ -84,7 +84,7 @@ const PremiumSolutionsSection = () => {
           {services.map((service, index) => (
             <div key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow bg-white rounded-lg shadow">
               <div className="relative p-6 flex flex-col items-center">
-                <div className="w-32 h-32 mb-4">
+                <div className="w-40 h-40 mb-4">
                   <img 
                     src={service.image} 
                     alt={service.title} 

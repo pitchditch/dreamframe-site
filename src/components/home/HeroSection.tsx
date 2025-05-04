@@ -122,7 +122,7 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Postal Code Input Section */}
+        {/* Postal Code Input Section - Improved visibility */}
         <div className="max-w-md mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
@@ -131,7 +131,7 @@ const HeroSection = () => {
                 placeholder="Enter Your Postal Code"
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white h-12 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red"
+                className="bg-white/20 backdrop-blur-md border-white/30 text-white h-12 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white/80 text-lg"
               />
             </div>
             <Button 

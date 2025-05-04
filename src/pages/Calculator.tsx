@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import { Helmet } from 'react-helmet-async';
 import { Percent } from 'lucide-react';
-import { TestimonialCarousel } from '@/components/PriceCalculator/TestimonialCarousel';
+import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
 const Calculator = () => {
@@ -26,15 +26,13 @@ const Calculator = () => {
           </div>
           <h1 className="text-4xl font-bold mb-4">Service Price Calculator</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            {hasPostalCode ? 
-              "Thanks for entering your postal code! Now complete the form below to get your custom quote." :
-              "Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements."}
+            Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements.
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3">
+        <div className="relative flex">
+          <div className="w-full lg:w-3/4 pr-0 lg:pr-8">
             <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
             
             <div className="mt-12">
@@ -42,7 +40,7 @@ const Calculator = () => {
             </div>
           </div>
           
-          <div className="lg:col-span-1 hidden lg:block">
+          <div className="hidden lg:block w-1/4 absolute top-0 right-0 bottom-0">
             <div className="sticky top-32">
               <TestimonialCarousel />
             </div>

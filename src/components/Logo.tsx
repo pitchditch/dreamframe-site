@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -8,8 +9,19 @@ interface LogoProps {
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
+  const [scrolled, setScrolled] = useState(false);
   
   const mobileLogoHeight = isMobile ? 'h-12 md:h-32' : 'h-36 md:h-40';
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   return (
     <Link to="/" className="flex items-center mr-auto">

@@ -23,10 +23,10 @@ export const TestimonialCarousel = () => {
       {/* Container with fixed height for vertical scrolling */}
       <div className="h-[500px] overflow-hidden relative">
         <div 
-          className="flex flex-col gap-4 animate-scroll-vertical"
+          className="flex flex-col gap-4"
           style={{ 
             willChange: 'transform',
-            animation: 'scrollVertical 20s linear infinite',
+            animation: 'scrollVertical 60s linear infinite',
           }}
         >
           {/* Display all images in a vertical flow */}
