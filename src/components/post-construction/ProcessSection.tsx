@@ -1,23 +1,10 @@
 
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Shield, Construction, CheckCircle } from 'lucide-react';
 import ServiceProcess from '../ServiceProcess';
 
-interface Process {
-  title: string;
-  description: string;
-  icon: ReactNode;
-}
-
-interface ServiceProcessProps {
-  title: string;
-  description: string;
-  icon: ReactNode;
-  number: number;
-}
-
 const ProcessSection: React.FC = () => {
-  const processes: Process[] = [{
+  const processes = [{
     title: "Initial Assessment",
     description: "We inspect all windows to identify construction residues, adhesives, paint, and other materials that need special attention.",
     icon: <Shield size={32} />
@@ -41,17 +28,7 @@ const ProcessSection: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {processes.map((process, index) => (
-            <ServiceProcess 
-              key={index}
-              title={process.title} 
-              description={process.description} 
-              icon={process.icon} 
-              number={index + 1}
-            />
-          ))}
-        </div>
+        <ServiceProcess processes={processes} />
       </div>
     </section>
   );

@@ -8,6 +8,7 @@ import FAQSection from '../../components/FAQSection';
 import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 import { Card, CardContent } from '@/components/ui/card';
+
 const GutterCleaning = () => {
   const benefits = [{
     title: "Prevent Water Damage",
@@ -28,6 +29,7 @@ const GutterCleaning = () => {
     title: "Prevent Basement Flooding",
     description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
   }];
+  
   const processes = [{
     title: "Debris Removal",
     description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",

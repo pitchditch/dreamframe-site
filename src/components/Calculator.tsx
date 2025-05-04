@@ -30,13 +30,13 @@ const Calculator = () => {
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
-        <style jsx global>{`
-          .before-after-image {
+        <style>
+          {`.before-after-image {
             width: 100% !important;
             max-width: 100% !important;
             height: auto !important;
-          }
-        `}</style>
+          }`}
+        </style>
         <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
       </div>
     </Layout>
