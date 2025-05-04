@@ -33,7 +33,10 @@ const Footer = () => {
 
   return <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
-        <FAQSection faqs={footerFaqs} />
+        <FAQSection 
+          title="Frequently Asked Questions" 
+          faqs={footerFaqs} 
+        />
         
         <LocationBanner />
         

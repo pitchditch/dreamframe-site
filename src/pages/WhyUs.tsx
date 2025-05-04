@@ -1,7 +1,6 @@
-
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
-import { Shield, Star, Clock, Award, Heart, HandHeart, Scale, Leaf, Dollar } from 'lucide-react';
+import { Shield, Star, Clock, Award, Heart, HandHeart, Scale, Leaf, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import ReferralButton from '@/components/ReferralButton';
@@ -143,15 +142,15 @@ const WhyUs = () => {
               <p className="text-lg mb-4">Unlike big franchise operations like Men In Kilts or Shackshine, we don't have corporate overhead or franchise fees to pay. That means better pricing for our customers without sacrificing quality.</p>
               <p className="text-lg mb-6">When you work with BC Pressure Washing, you're working directly with the business owner who has a personal stake in your satisfaction.</p>
               <div className="flex items-center gap-2 mb-3">
-                <Dollar className="text-bc-red h-5 w-5" />
+                <DollarSign className="text-bc-red h-5 w-5" />
                 <span>Lower prices than franchise companies</span>
               </div>
               <div className="flex items-center gap-2 mb-3">
-                <Dollar className="text-bc-red h-5 w-5" />
+                <DollarSign className="text-bc-red h-5 w-5" />
                 <span>No hidden fees or surprise charges</span>
               </div>
               <div className="flex items-center gap-2">
-                <Dollar className="text-bc-red h-5 w-5" />
+                <DollarSign className="text-bc-red h-5 w-5" />
                 <span>Superior value for your investment</span>
               </div>
             </div>
