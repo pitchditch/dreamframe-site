@@ -15,7 +15,7 @@ interface CallToActionProps {
 const CallToAction = ({
   title = "Ready to Transform Your Property?",
   subtitle = "Contact us today to schedule a service or request a free, no-obligation quote.",
-  primaryButtonText = "Check Price & Availability",
+  primaryButtonText = "Check Prices & Availability",
   secondaryButtonText = "Contact Us",
   primaryButtonLink = "/contact",
   secondaryButtonLink = "/contact",

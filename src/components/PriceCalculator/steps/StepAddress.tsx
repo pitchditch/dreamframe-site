@@ -1,110 +1,57 @@
 
-import { useState, useEffect } from 'react';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import React, { useEffect } from 'react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, ArrowLeft, MapPin } from 'lucide-react';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-// Define the StepProps interface locally instead of importing it
-interface StepProps {
-  onNext: () => void;
-  onBack: () => void;
-  formData: any;
-  updateFormData: (data: any) => void;
-  form?: any;
-  selectedPackage?: any;
+interface StepAddressProps {
+  form: any;
 }
 
-const formSchema = z.object({
-  street: z.string().min(3, { message: "Street address is required" }),
-  city: z.string().min(2, { message: "City is required" }),
-  postalCode: z.string().min(5, { message: "Postal code is required" }),
-  email: z.string().email({ message: "Valid email is required" }).optional(),
-});
-
-type AddressFormValues = z.infer<typeof formSchema>;
-
-export default function StepAddress({ onNext, onBack, formData, updateFormData, form: parentForm, selectedPackage }: StepProps) {
-  // Load saved postal code and email if available
-  const [storedPostalCode, setStoredPostalCode] = useState('');
-  const [storedEmail, setStoredEmail] = useState('');
-  
+const StepAddress: React.FC<StepAddressProps> = ({ form }) => {
   useEffect(() => {
-    const userPostalCode = sessionStorage.getItem('userPostalCode') || localStorage.getItem('userPostalCode');
-    const userEmail = sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail');
-    
-    if (userPostalCode) {
-      setStoredPostalCode(userPostalCode);
-      updateFormData({ ...formData, address: { ...formData.address, postalCode: userPostalCode } });
+    // Pre-fill postal code from session storage if available
+    const savedPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
+    if (savedPostalCode) {
+      form.setValue('postalCode', savedPostalCode);
     }
-    
-    if (userEmail) {
-      setStoredEmail(userEmail);
-      updateFormData({ ...formData, contact: { ...formData.contact, email: userEmail } });
-    }
-  }, []);
-  
-  const form = useForm<AddressFormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      street: formData.address?.street || '',
-      city: formData.address?.city || '',
-      postalCode: formData.address?.postalCode || storedPostalCode || '',
-      email: formData.contact?.email || storedEmail || '',
-    },
-  });
-
-  const onSubmit = (values: AddressFormValues) => {
-    // Store the collected information in both session and local storage
-    if (values.postalCode) {
-      sessionStorage.setItem('userPostalCode', values.postalCode);
-      localStorage.setItem('userPostalCode', values.postalCode);
-    }
-    
-    if (values.email) {
-      sessionStorage.setItem('userEmail', values.email);
-      localStorage.setItem('userEmail', values.email);
-    }
-    
-    updateFormData({
-      ...formData,
-      address: {
-        street: values.street,
-        city: values.city,
-        postalCode: values.postalCode,
-      },
-      contact: {
-        ...formData.contact,
-        email: values.email,
-      }
-    });
-    
-    onNext();
-  };
-  
-  // Update form when stored values change
-  useEffect(() => {
-    if (storedPostalCode) {
-      form.setValue('postalCode', storedPostalCode);
-    }
-    
-    if (storedEmail) {
-      form.setValue('email', storedEmail);
-    }
-  }, [storedPostalCode, storedEmail, form]);
+  }, [form]);
 
   return (
-    <div className="w-full">
-      <div className="flex items-center mb-6">
-        <MapPin className="text-red-600 mr-2" />
-        <h3 className="text-xl font-medium">What's your address?</h3>
-      </div>
-
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold mb-6">Property Address</h2>
+      
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="postalCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Postal Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="V4B 1J6" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="White Rock" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        
+        <div className="mt-4">
           <FormField
             control={form.control}
             name="street"
@@ -118,65 +65,14 @@ export default function StepAddress({ onNext, onBack, formData, updateFormData, 
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input placeholder="Vancouver" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="postalCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Postal Code</FormLabel>
-                <FormControl>
-                  <Input placeholder="V1A 1A1" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email (Optional)</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="you@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-                <p className="text-xs text-gray-500 mt-1">So we can send you your quote even if you don't complete the form</p>
-              </FormItem>
-            )}
-          />
-
-          <div className="flex justify-between pt-4">
-            <Button 
-              type="button" 
-              variant="outline"
-              onClick={onBack}
-              className="flex items-center"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back
-            </Button>
-            <Button type="submit" className="flex items-center">
-              Continue <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </form>
+        </div>
       </Form>
+      
+      <div className="mt-6 text-sm text-gray-500">
+        <p>Your address helps us provide an accurate quote for our services in your area.</p>
+      </div>
     </div>
   );
-}
+};
+
+export default StepAddress;

@@ -6,6 +6,9 @@ import { Helmet } from 'react-helmet';
 import { Percent } from 'lucide-react';
 
 const Calculator = () => {
+  // Check if user was referred from the homepage with a postal code
+  const hasPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
+
   return (
     <Layout>
       <Helmet>
@@ -21,11 +24,13 @@ const Calculator = () => {
           </div>
           <h1 className="text-4xl font-bold mb-4">Service Price Calculator</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements.
+            {hasPostalCode ? 
+              "Thanks for entering your postal code! Now complete the form below to get your custom quote." :
+              "Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements."}
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
-        <PriceCalculatorForm />
+        <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
       </div>
     </Layout>
   );

@@ -2,14 +2,16 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Shield, Star, Home, Phone, MessageSquare } from 'lucide-react';
+import { Shield, Star, Home, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Input } from "@/components/ui/input";
+import { trackFormSubmission } from '@/utils/analytics';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [showQuoteGuide, setShowQuoteGuide] = useState(false);
+  const [postalCode, setPostalCode] = useState('');
   const isMobile = useIsMobile();
   
   useEffect(() => {
@@ -27,18 +29,32 @@ const HeroSection = () => {
       }
     }
     
-    // Show the quote guide animation after a delay
-    const timer = setTimeout(() => {
-      setShowQuoteGuide(true);
-    }, 2000);
+    // Check if postal code exists in session storage
+    const savedPostalCode = sessionStorage.getItem('postalCode');
+    if (savedPostalCode) {
+      setPostalCode(savedPostalCode);
+    }
     
     return () => {
       if (video) {
         video.removeEventListener('loadeddata', handleVideoLoad);
       }
-      clearTimeout(timer);
     };
   }, []);
+
+  const handlePostalCodeSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Save postal code to session and local storage
+    sessionStorage.setItem('postalCode', postalCode);
+    localStorage.setItem('postalCode', postalCode);
+    
+    // Track the submission
+    trackFormSubmission('hero_postal_code', { postalCode });
+    
+    // Navigate to calculator page
+    window.location.href = '/calculator';
+  };
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
@@ -105,32 +121,27 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Quote Guide Animation - Adjusted position for mobile */}
-        <div className={`relative ${showQuoteGuide ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-          <div className={`absolute ${isMobile ? '-top-12 right-1' : '-top-16 right-0 md:right-32'} transform translate-y-0 animate-bounce`}>
-            <div className="bg-white text-gray-800 p-3 rounded-xl max-w-[200px] shadow-xl relative">
-              <div className="flex items-center">
-                <MessageSquare className="text-bc-red mr-2" size={18} />
-                <p className="text-sm font-medium">Get Your Free Quote Today!</p>
-              </div>
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 bg-white"></div>
+        {/* Postal Code Input Section */}
+        <div className="max-w-md mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
+          <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-grow">
+              <Input
+                type="text"
+                placeholder="Enter Your Postal Code"
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white h-12 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red"
+              />
             </div>
-          </div>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row justify-center gap-5 mb-10 animate-on-scroll delay-300 mt-2">
-          <Button asChild variant="bc-red" size="lg" className="text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all ease-in-out duration-200 hover:scale-105 hover:brightness-110">
-            <Link to="/calculator">
-              <MessageSquare className="mr-2" size={18} />
-              Get a Free Quote
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="text-lg border-2 border-white/80 text-white bg-white/5 hover:bg-white/20 shadow-lg rounded-full hover:shadow-xl transition-all ease-in-out duration-200 hover:scale-105">
-            <a href="tel:7788087620">
-              <Phone className="mr-2" size={18} />
-              Call Jayden: 778-808-7620
-            </a>
-          </Button>
+            <Button 
+              type="submit" 
+              variant="bc-red" 
+              size={isMobile ? "default" : "lg"} 
+              className="h-12 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
+            >
+              Check Prices & Availability <MessageSquare className="ml-2" size={18} />
+            </Button>
+          </form>
         </div>
         
         {/* Personal Touch Section */}
