@@ -27,7 +27,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
         <div className="container mx-auto px-4 py-4">
           <nav className="flex flex-col space-y-4">
             <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md">
-              <img src="/lovable-uploads/53d080c7-ad32-4a8b-b743-abb557d2c8ef.png" alt="Logo Icon" className="w-5 h-5 object-contain" />
+              <img src="/lovable-uploads/0f3cf5d7-e92d-4732-b333-37048173634a.png" alt="Logo Icon" className="w-5 h-5 object-contain" />
               <span className="font-medium">{t('Why Us')}</span>
             </Link>
             
@@ -131,3 +131,5 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
     </>
   );
 };
+
+export default NavbarMobile;

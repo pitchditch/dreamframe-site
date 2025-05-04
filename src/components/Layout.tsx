@@ -27,7 +27,7 @@ const Layout = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
-        <link rel="icon" href="/lovable-uploads/53d080c7-ad32-4a8b-b743-abb557d2c8ef.png" type="image/png" />
+        <link rel="icon" href="/lovable-uploads/0f3cf5d7-e92d-4732-b333-37048173634a.png" type="image/png" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />

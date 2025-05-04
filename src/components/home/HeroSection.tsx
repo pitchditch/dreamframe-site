@@ -68,7 +68,7 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 md:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
