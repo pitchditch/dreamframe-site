@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -93,8 +92,14 @@ function formatCurrency(n: number | null) {
   return `$${n.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 }
 
-const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
-  const [step, setStep] = useState(0);
+interface PriceCalculatorFormProps {
+  onComplete?: () => void;
+  initialStep?: string;
+}
+
+const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, initialStep }) => {
+  // Initialize step based on initialStep prop if provided
+  const [step, setStep] = useState(initialStep === "address" ? 0 : 0);
 
   // Step data
   const [size, setSize] = useState<string>('');
