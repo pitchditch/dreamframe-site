@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -83,7 +82,7 @@ function getPricing(size: string, service: string): number | null {
     return null;
   }
   const map = PRICING[size as keyof typeof PRICING];
-  return (map && map[service as keyof typeof map]) || null;
+  return (map && map[service as keyof map]) || null;
 }
 
 function formatCurrency(n: number | null) {
@@ -206,10 +205,79 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
         ))}
       </div>
 
-      {/* Step 1: Size */}
+      {/* Step 1: Address (moved from step 3 to step 1) */}
       {step === 0 && (
         <div>
-          <h3 className="text-xl font-bold mb-2">Step 1: What Size Is Your Home?</h3>
+          <h3 className="text-xl font-bold mb-2">Step 1: Where do you need service?</h3>
+          <p className="mb-4 text-gray-600">
+            Enter your address to get a customized quote for your property.
+          </p>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Street Address</label>
+              <input
+                type="text"
+                value={address}
+                onChange={e => setAddress(e.target.value)}
+                className="w-full border p-3 rounded-lg"
+                placeholder="1234 Main St"
+                autoFocus
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">City</label>
+                <input
+                  type="text"
+                  value={contact.name || ''}
+                  onChange={e => setContact({...contact, name: e.target.value})}
+                  className="w-full border p-3 rounded-lg"
+                  placeholder="Vancouver"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Postal Code</label>
+                <input
+                  type="text"
+                  value={contact.phone || ''}
+                  onChange={e => setContact({...contact, phone: e.target.value})}
+                  className="w-full border p-3 rounded-lg"
+                  placeholder="V1A 1A1"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Email (Optional)</label>
+              <input
+                type="email"
+                value={contact.email || ''}
+                onChange={e => {
+                  setContact({...contact, email: e.target.value});
+                  // Store email in session storage
+                  if (e.target.value) {
+                    sessionStorage.setItem('userEmail', e.target.value);
+                  }
+                }}
+                className="w-full border p-3 rounded-lg"
+                placeholder="you@example.com"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                We'll send your quote here, even if you don't complete the form
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-6">
+            <Button onClick={() => setStep(1)} disabled={!address.trim()}>
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Step 2: Size (moved from step 1 to step 2) */}
+      {step === 1 && (
+        <div>
+          <h3 className="text-xl font-bold mb-2">Step 2: What Size Is Your Home?</h3>
           <p className="mb-6 text-gray-600">
             Prices are starting estimates. For homes over 3500 sq. ft., we'll provide an on-site quote.
           </p>
@@ -229,21 +297,24 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
               </Card>
             ))}
           </div>
-          <div className="flex justify-end mt-6">
-            <Button onClick={() => setStep(1)} disabled={!size}>
+          <div className="flex justify-between mt-6">
+            <Button variant="outline" onClick={() => setStep(0)}>
+              Back
+            </Button>
+            <Button onClick={() => setStep(2)} disabled={!size}>
               Next
             </Button>
           </div>
           <div className="mt-2 text-xs text-gray-500">
-            <strong>“Starting at” Pricing:</strong> The prices shown are starting at rates based on typical home sizes. Once you provide your address, we will calculate a more accurate quote for you. For larger or complex jobs, we may visit in person.
+            <strong>"Starting at" Pricing:</strong> The prices shown are starting at rates based on typical home sizes. Once you provide your address, we will calculate a more accurate quote for you. For larger or complex jobs, we may visit in person.
           </div>
         </div>
       )}
 
-      {/* Step 2: Services */}
-      {step === 1 && (
+      {/* Step 3: Services (moved from step 2 to step 3) */}
+      {step === 2 && (
         <div>
-          <h3 className="text-xl font-bold mb-2">Step 2: Choose Your Services</h3>
+          <h3 className="text-xl font-bold mb-2">Step 3: Choose Your Services</h3>
           <p className="mb-4 text-gray-600">
             Choose all that apply. Prices update based on your home size.
           </p>
@@ -274,10 +345,10 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
             ))}
           </div>
           <div className="flex justify-between mt-6">
-            <Button variant="outline" onClick={() => setStep(0)}>
+            <Button variant="outline" onClick={() => setStep(1)}>
               Back
             </Button>
-            <Button onClick={() => setStep(2)} disabled={services.length === 0}>
+            <Button onClick={() => setStep(3)} disabled={services.length === 0}>
               Next
             </Button>
           </div>
@@ -297,35 +368,11 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
         </div>
       )}
 
-      {/* Step 3: Address */}
-      {step === 2 && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Step 3: Address for Estimate</h3>
-          <p className="mb-4 text-gray-600">Enter your address so we can use Google Maps to give you an accurate quote.</p>
-          <input
-            type="text"
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            className="w-full border p-3 rounded-lg mb-6"
-            placeholder="1234 Main St, City, Province"
-            autoFocus
-          />
-          <div className="flex justify-between">
-            <Button variant="outline" onClick={() => setStep(1)}>
-              Back
-            </Button>
-            <Button onClick={() => setStep(3)} disabled={!address.trim()}>
-              Next
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 4: Contact Info */}
+      {/* Step 4: Contact Info (no address field since we moved it to step 1) */}
       {step === 3 && (
         <div>
           <h3 className="text-xl font-bold mb-2">Step 4: Contact Info</h3>
-          <p className="mb-4 text-gray-600">We'll use this info to contact you with your custom quote. No spam—ever!</p>
+          <p className="mb-4 text-gray-600">Please provide your contact details so we can follow up with your quote.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
@@ -341,14 +388,6 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
               placeholder="Phone"
               value={contact.phone}
               onChange={e => setContact(v => ({ ...v, phone: e.target.value }))}
-              required
-            />
-            <input
-              type="email"
-              className="border p-3 rounded-lg"
-              placeholder="Email"
-              value={contact.email}
-              onChange={e => setContact(v => ({ ...v, email: e.target.value }))}
               required
             />
             <input
@@ -369,7 +408,7 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
             <Button variant="outline" onClick={() => setStep(2)}>Back</Button>
             <Button
               onClick={() => setStep(4)}
-              disabled={!contact.name || !contact.phone || !contact.email}
+              disabled={!contact.name || !contact.phone}
             >
               Next
             </Button>
@@ -379,10 +418,10 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
 
       {/* Step 5: Estimate Summary */}
       {step === 4 && (
-        <div>
+        <div className="animate-fade-in">
           <h3 className="text-xl font-bold mb-2">Step 5: Estimate Summary</h3>
           <p className="mb-4 text-gray-600">
-            Here’s your custom quote summary. We’ll confirm final pricing based on your home layout and needs.
+            Here's your custom quote summary. We'll confirm final pricing based on your home layout and needs.
           </p>
           <div className="bg-gray-50 px-4 py-4 rounded-lg mb-4">
             {Object.entries(estimateSummary).map(([name, val]) => (
@@ -399,7 +438,7 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
             </div>
             <div className="mt-2 text-xs text-gray-500 leading-relaxed">
               All prices are starting estimates. Your quote may vary based on home layout and condition—<br />
-              we’ll confirm before booking.
+              we'll confirm before booking.
             </div>
           </div>
           <div className="flex flex-col gap-2 mt-6">
@@ -432,7 +471,7 @@ const PriceCalculatorForm: React.FC<{ onComplete?: () => void }> = ({ onComplete
       {step > 4 && (
         <div className="text-center py-10">
           <h3 className="text-2xl font-bold mb-4 text-green-700">Thank you!</h3>
-          <p className="mb-2 text-gray-600">We’ve received your request. Jayden or a team member will contact you soon.</p>
+          <p className="mb-2 text-gray-600">We've received your request. Jayden or a team member will contact you soon.</p>
           <a href="tel:7788087620" className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3">
             Call Jayden Now
           </a>

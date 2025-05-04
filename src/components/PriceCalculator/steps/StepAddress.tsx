@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -21,6 +22,7 @@ const formSchema = z.object({
   street: z.string().min(3, { message: "Street address is required" }),
   city: z.string().min(2, { message: "City is required" }),
   postalCode: z.string().min(5, { message: "Postal code is required" }),
+  email: z.string().email({ message: "Valid email is required" }).optional(),
 });
 
 type AddressFormValues = z.infer<typeof formSchema>;
@@ -28,12 +30,20 @@ type AddressFormValues = z.infer<typeof formSchema>;
 export default function StepAddress({ onNext, onBack, formData, updateFormData, form: parentForm, selectedPackage }: StepProps) {
   // Load saved zip code if available
   const [storedZipCode, setStoredZipCode] = useState('');
+  const [storedEmail, setStoredEmail] = useState('');
   
   useEffect(() => {
     const userZipCode = sessionStorage.getItem('userZipCode');
+    const userEmail = sessionStorage.getItem('userEmail');
+    
     if (userZipCode) {
       setStoredZipCode(userZipCode);
       updateFormData({ ...formData, address: { ...formData.address, postalCode: userZipCode } });
+    }
+    
+    if (userEmail) {
+      setStoredEmail(userEmail);
+      updateFormData({ ...formData, contact: { ...formData.contact, email: userEmail } });
     }
   }, []);
   
@@ -43,29 +53,52 @@ export default function StepAddress({ onNext, onBack, formData, updateFormData, 
       street: formData.address?.street || '',
       city: formData.address?.city || '',
       postalCode: formData.address?.postalCode || storedZipCode || '',
+      email: formData.contact?.email || storedEmail || '',
     },
   });
 
   const onSubmit = (values: AddressFormValues) => {
+    // Store the collected information in session storage
+    if (values.postalCode) {
+      sessionStorage.setItem('userZipCode', values.postalCode);
+    }
+    
+    if (values.email) {
+      sessionStorage.setItem('userEmail', values.email);
+    }
+    
     updateFormData({
       ...formData,
-      address: values,
+      address: {
+        street: values.street,
+        city: values.city,
+        postalCode: values.postalCode,
+      },
+      contact: {
+        ...formData.contact,
+        email: values.email,
+      }
     });
+    
     onNext();
   };
   
-  // Update form when stored ZIP code changes
+  // Update form when stored values change
   useEffect(() => {
     if (storedZipCode) {
       form.setValue('postalCode', storedZipCode);
     }
-  }, [storedZipCode, form]);
+    
+    if (storedEmail) {
+      form.setValue('email', storedEmail);
+    }
+  }, [storedZipCode, storedEmail, form]);
 
   return (
     <div className="w-full">
       <div className="flex items-center mb-6">
         <MapPin className="text-red-600 mr-2" />
-        <h3 className="text-xl font-medium">Where do you need service?</h3>
+        <h3 className="text-xl font-medium">What's your address?</h3>
       </div>
 
       <Form {...form}>
@@ -108,6 +141,21 @@ export default function StepAddress({ onNext, onBack, formData, updateFormData, 
                   <Input placeholder="V1A 1A1" {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email (Optional)</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="you@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+                <p className="text-xs text-gray-500 mt-1">So we can send you your quote even if you don't complete the form</p>
               </FormItem>
             )}
           />

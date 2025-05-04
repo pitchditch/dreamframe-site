@@ -3,43 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bc-red: #df1f26;
-  --bc-blue: #007bff;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-}
-
-.has-video-header main {
-  position: relative;
-  z-index: 1;
-}
-
-.has-video-header .hero-section {
-  position: relative;
-  z-index: 10;
-}
-
-.will-change-transform {
-  will-change: transform;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
 @layer base {
   :root {
-    --bc-red: #df1f26;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
+    --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -51,7 +23,7 @@ body {
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
 
@@ -62,7 +34,7 @@ body {
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -74,7 +46,7 @@ body {
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -87,105 +59,77 @@ body {
   }
 }
 
-/* Custom Utility Classes */
 @layer components {
-  .container {
-    @apply px-4 mx-auto max-w-7xl;
-  }
-  
-  .section-padding {
-    @apply py-12 md:py-16 lg:py-20;
-  }
-  
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold text-center mb-4;
-  }
-  
-  .section-subtitle {
-    @apply text-lg text-gray-600 text-center max-w-3xl mx-auto mb-10;
+  .has-video-header .navbar-transparent {
+    @apply bg-transparent text-white;
   }
   
   .badge-pill {
-    @apply bg-bc-red/10 text-bc-red px-4 py-1 rounded-full text-sm font-medium inline-block mb-4;
+    @apply bg-bc-red text-white text-sm px-3 py-1 rounded-full font-medium;
   }
   
-  .btn-primary {
-    @apply bg-bc-red hover:bg-red-700 text-white px-6 py-3 rounded-md font-medium transition-colors;
+  .text-shadow {
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
+  }
+  
+  .text-shadow-sm {
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  
+  .hover-text-shadow:hover {
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  
+  .h1-shadow {
+    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
+  }
+  
+  .gradient-text {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(to right, #ff3d1e, #ff0);
   }
 }
 
-/* Animation for scroll reveal */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.animate-on-scroll.animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.delay-100 {
-  transition-delay: 100ms;
-}
-
-.delay-200 {
-  transition-delay: 200ms;
-}
-
-.delay-300 {
-  transition-delay: 300ms;
-}
-
-.delay-400 {
-  transition-delay: 400ms;
-}
-
-.delay-500 {
-  transition-delay: 500ms;
-}
-
-/* Pulse animation for buttons */
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 rgba(255,255,255,0.4);
+@layer utilities {
+  /* Custom animations */
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
   }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+  
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
   }
-}
-
-.pulse-animation {
-  animation: pulse 2s infinite;
-}
-
-/* Hide scrollbar but allow scrolling */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Bigger service icons in navbar */
-.navbar-service-icon {
-  width: 24px;
-  height: 24px;
-}
-
-/* Expanded services section */
-.expanded-services {
-  margin-top: -30vh;
-  position: relative;
-  z-index: 20;
-}
-
-/* Text shadow for better visibility on darker backgrounds */
-.text-shadow {
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0) rotate(6deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(6deg);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

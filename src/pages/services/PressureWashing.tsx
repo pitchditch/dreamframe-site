@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, MessageCircle } from 'lucide-react';
 import ServiceProcessSection from '../../components/services/pressure-washing/ServiceProcessSection';
 import ServiceBenefitsSection from '../../components/services/pressure-washing/ServiceBenefitsSection';
 import ServiceFeatures from '../../components/services/pressure-washing/ServiceFeatures';
@@ -83,8 +83,19 @@ const PressureWashing = () => {
               <ServiceFeatures />
               <ServiceBenefitsSection />
             </div>
-            <div>
-              <PressureWashingForm />
+            <div className="flex flex-col">
+              <div className="relative mb-6">
+                <div className="absolute -top-12 -left-12 w-24 h-24 animate-spin-slow opacity-80">
+                  <img src="/lovable-uploads/21056867-9ce1-48a7-8503-3d9f1efdf36e.png" alt="BC Pressure Washing" className="w-full h-full object-contain drop-shadow-md" />
+                </div>
+                <div className="absolute -top-16 left-16 bg-white p-3 rounded-lg shadow-md transform rotate-6 animate-bounce-slow">
+                  <MessageCircle className="text-bc-red h-8 w-8" />
+                  <div className="absolute w-4 h-4 bg-white transform rotate-45 -bottom-2 left-6"></div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1">
+                <PressureWashingForm />
+              </div>
             </div>
           </div>
         </div>

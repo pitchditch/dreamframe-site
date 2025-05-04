@@ -67,6 +67,10 @@ const CommercialPressureWashing = () => {
         <img src="/lovable-uploads/d9f3e980-9bd8-4f15-afb2-6df7cb095002.png" alt="Commercial Pressure Washing Services" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-end pb-20">
+          <div className="text-center mb-8">
+            <h2 className="text-white text-2xl md:text-3xl font-semibold mb-4">Enhance Your Property's Value & Image</h2>
+            <p className="text-white text-lg mb-6">Schedule your commercial pressure washing service today</p>
+          </div>
           <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
             <Link to="/calculator">Check Prices & Availability</Link>
           </Button>

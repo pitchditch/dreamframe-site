@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MessageCircle } from "lucide-react";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -61,7 +62,16 @@ const PressureWashingForm = () => {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-white rounded-lg shadow-md relative">
+      {/* Animated elements */}
+      <div className="absolute -top-12 -right-12 w-20 h-20 animate-spin-slow opacity-80 hidden md:block">
+        <img src="/lovable-uploads/21056867-9ce1-48a7-8503-3d9f1efdf36e.png" alt="BC Pressure Washing" className="w-full h-full object-contain drop-shadow-md" />
+      </div>
+      <div className="absolute -top-14 left-6 bg-white p-2 rounded-lg shadow-md transform rotate-6 animate-bounce-slow hidden md:block">
+        <MessageCircle className="text-bc-red h-6 w-6" />
+        <div className="absolute w-3 h-3 bg-white transform rotate-45 -bottom-1.5 left-5"></div>
+      </div>
+      
       <h3 className="text-xl font-bold mb-4">Request Pressure Washing Quote</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

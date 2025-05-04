@@ -26,7 +26,8 @@ const TestimonialsCarousel = () => {
     // Filter out testimonials with beforeAfterImages first
     const testimonialsWithBeforeAfter = testimonials
       .filter(Boolean)
-      .filter(testimonial => testimonial.beforeAfterImage);
+      .filter(testimonial => testimonial.beforeAfterImage)
+      .sort((a, b) => a.id - b.id); // Sort by ID to maintain consistency
       
     // Then get testimonials with profile images (but no before/after)
     const testimonialsWithProfileOnly = testimonials
