@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Shield, Star, Home, MessageSquare } from 'lucide-react';
@@ -8,10 +8,22 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
 import { trackFormSubmission } from '@/utils/analytics';
 
+// List of Lower Mainland postal codes to ghost type
+const lowerMainlandPostalCodes = [
+  'V5T 1Z7', 'V6E 1M3', 'V7Y 1C6', 'V3S 2K7', 'V3R 4N2', 
+  'V8X 1W2', 'V4C 5L8', 'V2X 9V4', 'V1M 0B2', 'V4A 9E3'
+];
+
 const HeroSection = () => {
   const { t, language } = useTranslation();
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [postalCode, setPostalCode] = useState('');
+  const [ghostText, setGhostText] = useState('');
+  const [ghostIndex, setGhostIndex] = useState(0);
+  const [currentGhostChar, setCurrentGhostChar] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   
@@ -42,6 +54,55 @@ const HeroSection = () => {
       }
     };
   }, []);
+
+  // Ghost writer effect for postal code input
+  useEffect(() => {
+    if (inputRef.current !== document.activeElement && ghostText === '') {
+      const timer = setTimeout(() => {
+        if (isTyping && !isPaused) {
+          // Typing forward
+          if (currentGhostChar < lowerMainlandPostalCodes[ghostIndex].length) {
+            setGhostText(lowerMainlandPostalCodes[ghostIndex].substring(0, currentGhostChar + 1));
+            setCurrentGhostChar(prev => prev + 1);
+          } else {
+            // Pause at the end of typing
+            setIsPaused(true);
+            setTimeout(() => {
+              setIsPaused(false);
+              setIsTyping(false);
+            }, 2000);
+          }
+        } else if (!isTyping && !isPaused) {
+          // Deleting
+          if (currentGhostChar > 0) {
+            setGhostText(lowerMainlandPostalCodes[ghostIndex].substring(0, currentGhostChar - 1));
+            setCurrentGhostChar(prev => prev - 1);
+          } else {
+            // Move to next postal code
+            setIsTyping(true);
+            setGhostIndex((prev) => (prev + 1) % lowerMainlandPostalCodes.length);
+          }
+        }
+      }, isTyping ? 150 : 50);
+      
+      return () => clearTimeout(timer);
+    }
+    
+    return () => {};
+  }, [ghostText, currentGhostChar, isTyping, ghostIndex, isPaused]);
+
+  // Clear ghost text on focus
+  const handleInputFocus = () => {
+    setGhostText('');
+  };
+
+  // Show ghost text on blur if input is empty
+  const handleInputBlur = () => {
+    if (!postalCode) {
+      setCurrentGhostChar(0);
+      setIsTyping(true);
+    }
+  };
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,23 +183,31 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Postal Code Input Section - Improved visibility */}
-        <div className="max-w-md mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
+        {/* Postal Code Input Section - Enhanced visibility */}
+        <div className="max-w-xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
+                ref={inputRef}
                 type="text"
                 placeholder="Enter Your Postal Code"
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                className="bg-white/30 backdrop-blur-md border-white/40 text-white h-14 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white/90 text-lg font-medium"
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                className="bg-white/40 backdrop-blur-md border-white/40 text-white h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white text-xl font-medium"
               />
+              {!postalCode && ghostText && (
+                <div className="absolute top-0 left-0 h-full flex items-center pointer-events-none">
+                  <span className="text-gray-300/70 pl-4 text-xl">{ghostText}</span>
+                </div>
+              )}
             </div>
             <Button 
               type="submit" 
               variant="bc-red" 
               size="lg" 
-              className="h-14 text-white text-lg font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
+              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 min-w-[250px]"
             >
               Check Prices & Availability <MessageSquare className="ml-2" size={20} />
             </Button>

@@ -34,6 +34,35 @@ const Calculator = () => {
           <div className="w-full lg:w-3/4 pr-0 lg:pr-8">
             <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
             
+            {/* 100% Satisfaction Guarantee - Now with house background */}
+            <div className="mt-12 relative overflow-hidden rounded-xl shadow-lg">
+              <div className="absolute inset-0">
+                <img 
+                  src="/lovable-uploads/3508b357-c029-4365-bb7c-e8cd605080a5.png" 
+                  alt="Beautiful clean house exterior" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30"></div>
+              </div>
+              <div className="relative p-10 text-white">
+                <h3 className="text-3xl font-bold mb-4">100% Satisfaction Guarantee</h3>
+                <p className="text-lg mb-6">
+                  We stand behind our work with a full satisfaction guarantee. If you're not completely satisfied with our service, we'll return to address any issues at no additional cost.
+                </p>
+                <div className="flex items-center">
+                  <img
+                    src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
+                    alt="Jayden Fisher - Owner"
+                    className="w-16 h-16 rounded-full border-2 border-white mr-4"
+                  />
+                  <div>
+                    <p className="font-bold">Jayden Fisher</p>
+                    <p>Owner, BC Pressure Washing</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <div className="mt-12">
               <QuestionsForm />
             </div>

@@ -85,6 +85,42 @@ const WhyUs = () => {
         </div>
       </section>
       
+      {/* My Car Section - Added section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Have You Seen Our Red Car?</h2>
+            
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <img 
+                  src="/lovable-uploads/3508b357-c029-4365-bb7c-e8cd605080a5.png"
+                  alt="BC Pressure Washing Red Car" 
+                  className="rounded-lg shadow-xl w-full"
+                />
+              </div>
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold">That's Me! Your Local Exterior Cleaning Expert</h3>
+                <p className="text-lg leading-relaxed text-gray-700">
+                  If you've spotted a bright red car with "BC Pressure Washing" around White Rock Beach or driving through Surrey, you've seen us in action! 
+                  As a local business owner, I take pride in personally serving our community and ensuring every job meets our high standards.
+                </p>
+                <p className="text-lg leading-relaxed text-gray-700">
+                  Our distinctive vehicle is fully equipped with professional cleaning equipment, ready to transform your property. We're not just a faceless 
+                  company - we're your neighbors, committed to making our community look its best.
+                </p>
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-bc-red">
+                  <p className="italic text-gray-600">
+                    "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
+                  </p>
+                  <p className="font-medium mt-2">— Jayden, Owner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* Company History - Our Story */}
       <CompanyHistory />
       

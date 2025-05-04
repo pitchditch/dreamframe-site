@@ -113,3 +113,20 @@
     @apply bg-bc-red hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-all duration-300;
   }
 }
+
+.animate-spin {
+  animation: spin 2s linear infinite;
+}
+
+.duration-5000 {
+  animation-duration: 5s;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
