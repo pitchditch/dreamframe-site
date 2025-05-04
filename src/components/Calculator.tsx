@@ -22,7 +22,7 @@ const Calculator = () => {
             <Percent className="inline-block h-4 w-4 mr-1" />
             SPRING SALE: 20% OFF ALL SERVICES
           </div>
-          <h1 className="text-4xl font-bold mb-4">Service Price Calculator</h1>
+          <h1 className="text-4xl font-bold mb-4 text-center mx-auto">Service Price Calculator</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
             {hasPostalCode ? 
               "Thanks for entering your postal code! Now complete the form below to get your custom quote." :
@@ -30,6 +30,13 @@ const Calculator = () => {
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
+        <style jsx global>{`
+          .before-after-image {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+          }
+        `}</style>
         <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
       </div>
     </Layout>

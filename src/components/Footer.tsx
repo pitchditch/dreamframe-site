@@ -19,7 +19,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 mt-16">
           {/* Logo and social media links */}
           <div className="col-span-1">
-            <div className="mb-4">
+            <div className="mb-4 flex flex-col items-center">
+              {/* Car image added above the logo */}
+              <img src="/lovable-uploads/b0a1d1f2-2d54-4eb4-92b6-b4db9b6e56f7.png" alt="BC Pressure Washing Service Car" className="h-20 mb-3" />
               <Link to="/">
                 <img src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" alt="BC Pressure Washing Logo" className="h-24 md:h-28 mb-4" />
               </Link>

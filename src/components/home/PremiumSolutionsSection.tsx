@@ -15,17 +15,17 @@ const PremiumSolutionsSection = () => {
       
       if (section) {
         // Start the transform much earlier for better overlap
-        const startTransform = heroHeight * 0.6;
+        const startTransform = heroHeight * 0.5; // Adjust earlier start point
         // Complete the transform when reaching the end of hero
-        const endTransform = heroHeight * 0.9;
+        const endTransform = heroHeight * 0.8; // Complete transformation earlier
         
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 250px below viewport and end at -400px (significantly overlapping the hero)
-        const translateY = (1 - progress) * 250 - (progress * 400);
+        // Apply transform - start at 250px below viewport and end at -500px (significantly overlapping the hero)
+        const translateY = (1 - progress) * 250 - (progress * 500);
         section.style.transform = `translateY(${translateY}px)`;
-        section.style.opacity = `${Math.min(1, progress * 1.5)}`;
+        section.style.opacity = `1`; // Keep opacity always at 1 to prevent fade effect
       }
     };
     
@@ -67,8 +67,8 @@ const PremiumSolutionsSection = () => {
       ref={sectionRef}
       className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg transform will-change-transform"
       style={{ 
-        marginTop: '-300px',  // Increased negative margin to create more overlap
-        opacity: 0,
+        marginTop: '-400px',  // Increased negative margin to create more overlap
+        opacity: 1, // No fade effect - start fully visible
         transform: 'translateY(250px)'
       }}
     >

@@ -1,28 +1,24 @@
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
-interface ProcessItem {
+export interface ServiceProcessProps {
   title: string;
   description: string;
   icon: ReactNode;
+  number: number;
 }
 
-interface ServiceProcessProps {
-  processes: ProcessItem[];
-}
-
-const ServiceProcess = ({ processes }: ServiceProcessProps) => {
+const ServiceProcess: React.FC<ServiceProcessProps> = ({ title, description, icon, number }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {processes.map((process, index) => (
-        <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all text-center">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-bc-red mb-4 mx-auto">
-            {process.icon}
-          </div>
-          <h3 className="text-xl font-semibold mb-3">{process.title}</h3>
-          <p className="text-gray-600">{process.description}</p>
-        </div>
-      ))}
+    <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm">
+      <div className="bg-gray-100 rounded-full p-4 mb-4">
+        {icon}
+      </div>
+      <div className="absolute -top-2 -right-2 bg-bc-red text-white h-8 w-8 flex items-center justify-center rounded-full font-bold">
+        {number}
+      </div>
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </div>
   );
 };

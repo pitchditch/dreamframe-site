@@ -1,3 +1,4 @@
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -111,6 +112,68 @@
   .btn-primary {
     @apply bg-bc-red hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-all duration-300;
   }
+  
+  /* Ghost writer typing animation */
+  .ghost-text {
+    overflow: hidden;
+    border-right: 0.15em solid transparent;
+    white-space: nowrap;
+    animation: typing 3.5s steps(30, end) infinite, blink-caret 0.75s step-end infinite;
+  }
+
+  @keyframes typing {
+    0% { width: 0 }
+    70% { width: 100% }
+    90% { width: 100% }
+    100% { width: 0 }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #888 }
+  }
+  
+  .logo-container {
+    perspective: 1000px;
+    width: 150px;
+    height: 150px;
+  }
+
+  .spin-logo {
+    width: 100%;
+    height: 100%;
+    animation: spinCoin 3s infinite linear;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 .animate-spin {
@@ -133,4 +196,16 @@
 .animate-spin-coin {
   animation: spinCoin 3s infinite linear;
   transform-style: preserve-3d;
+}
+
+/* Spin site logo after 30 seconds of inactivity */
+.logo-inactive-spin {
+  animation: spinCoin 2s infinite linear;
+  transform-style: preserve-3d;
+}
+
+/* For ghost text typing animation in postal code field */
+.postal-code-ghost {
+  color: #aaa;
+  font-style: italic;
 }

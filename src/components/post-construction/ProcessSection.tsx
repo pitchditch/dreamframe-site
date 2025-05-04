@@ -9,6 +9,13 @@ interface Process {
   icon: ReactNode;
 }
 
+interface ServiceProcessProps {
+  title: string;
+  description: string;
+  icon: ReactNode;
+  number: number;
+}
+
 const ProcessSection: React.FC = () => {
   const processes: Process[] = [{
     title: "Initial Assessment",
