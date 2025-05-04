@@ -1,7 +1,5 @@
-
 import { Link } from 'react-router-dom';
 import PriceCalculatorOverlay from './PriceCalculatorOverlay';
-
 interface CallToActionProps {
   title?: string;
   subtitle?: string;
@@ -22,30 +20,6 @@ const CallToAction = ({
   backgroundImage = "/lovable-uploads/1d7d3c0f-21a5-4ae2-80c7-7f156797449f.png",
   hideImage = false
 }: CallToActionProps) => {
-  return <section className="relative py-16">
-      {/* Background image with overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-      
-      {/* Content */}
-      <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
-        <h2 className="text-3xl font-bold mb-4 text-white text-shadow">{title}</h2>
-        <p className="text-gray-300 mb-8">{subtitle}</p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <PriceCalculatorOverlay 
-            buttonText={primaryButtonText}
-            variant="bc-red"
-            className="py-3 px-6 text-lg font-medium"
-          />
-          <Link to={secondaryButtonLink}>
-            <button className="btn-secondary w-full sm:w-auto py-3 px-6 text-lg font-medium">{secondaryButtonText}</button>
-          </Link>
-        </div>
-      </div>
-    </section>;
+  return;
 };
 export default CallToAction;
