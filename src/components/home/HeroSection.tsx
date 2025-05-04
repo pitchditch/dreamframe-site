@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Shield, Star, Home, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
@@ -13,6 +13,7 @@ const HeroSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [postalCode, setPostalCode] = useState('');
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const video = document.getElementById('hero-video') as HTMLVideoElement;
@@ -53,7 +54,7 @@ const HeroSection = () => {
     trackFormSubmission('hero_postal_code', { postalCode });
     
     // Navigate to calculator page
-    window.location.href = '/calculator';
+    navigate('/calculator');
   };
 
   return (

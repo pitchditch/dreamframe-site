@@ -7,10 +7,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { TestimonialCarousel } from '../PriceCalculator/TestimonialCarousel';
 
 const PROPERTY_SIZES = [
-  { id: 'small', label: '0–1800 sq. ft.' },
-  { id: 'medium', label: '1800–2800 sq. ft.' },
-  { id: 'large', label: '2800–3500 sq. ft.' },
-  { id: 'xlarge', label: 'Over 3500 sq. ft. (On-site quote required)' },
+  { id: 'small', label: '0–1800 sq. ft.', icon: <Home className="h-4 w-4" /> },
+  { id: 'medium', label: '1800–2800 sq. ft.', icon: <Home className="h-5 w-5" /> },
+  { id: 'large', label: '2800–3500 sq. ft.', icon: <Home className="h-6 w-6" /> },
+  { id: 'xlarge', label: 'Over 3500 sq. ft. (On-site quote required)', icon: <Building className="h-6 w-6" /> },
 ];
 
 const PRICING = {
@@ -246,7 +246,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, i
   
   // -- Render steps
   return (
-    <div className="max-w-2xl mx-auto w-full">
+    <div className="max-w-2xl mx-auto w-full mt-16">
       {/* Main disclaimer at the top */}
       <div className="bg-blue-50 p-4 rounded-lg mb-6 text-sm">
         <p className="font-semibold mb-1">About Our Pricing</p>
@@ -366,7 +366,12 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, i
                     className={`p-4 cursor-pointer flex items-center justify-between hover:border-blue-500 transition-all ${size === sz.id ? 'border-2 border-blue-500 bg-blue-50' : ''}`}
                     onClick={() => setSize(sz.id)}
                   >
-                    <span className="font-semibold">{sz.label}</span>
+                    <div className="flex items-center gap-3">
+                      <div className={`text-blue-600 ${size === sz.id ? 'scale-110' : ''}`}>
+                        {sz.icon}
+                      </div>
+                      <span className="font-semibold">{sz.label}</span>
+                    </div>
                     {size === sz.id && (
                       <svg className="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
@@ -461,7 +466,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, i
                           />
                           <span className="font-medium">{addon.name}</span>
                           <span className="ml-auto font-semibold text-blue-700 text-sm">
-                            ${addon.price.toFixed(2)}
+                            Starting at ${addon.price.toFixed(2)}
                           </span>
                         </label>
                       ))}
@@ -605,7 +610,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({ onComplete, i
           )}
         </div>
         
-        {/* Right testimonial carousel - vertical flowing design */}
+        {/* Right testimonial carousel - vertical flowing design outside of the form container */}
         <div className="hidden lg:block lg:col-span-1">
           <TestimonialCarousel />
         </div>

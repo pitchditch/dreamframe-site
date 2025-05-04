@@ -1,3 +1,4 @@
+
 import React from "react";
 const PriceCalculatorIntro = () => {
   return <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mb-8 p-6 rounded-xl bg-gradient-to-r from-blue-100 via-blue-50 to-white shadow-lg relative">
@@ -8,7 +9,7 @@ const PriceCalculatorIntro = () => {
       {/* Text block with fallback image for mobile */}
       <div className="flex-1 min-w-0 text-center sm:text-left">
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-2">
-          <img src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png" alt="Jayden Fisher profile" className="h-16 w-16 sm:hidden rounded-full border-2 border-blue-200 object-cover shadow" />
+          <img src="/lovable-uploads/c5f176cb-9298-4d2f-895b-572863188327.jpg" alt="Jayden Fisher profile" className="h-16 w-16 sm:hidden rounded-full border-2 border-blue-200 object-cover shadow" />
           <div>
             <span className="font-bold text-lg">Jayden Fisher – Owner & Operator</span>
             <div className="text-blue-700 font-medium text-sm">
