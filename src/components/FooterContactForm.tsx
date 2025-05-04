@@ -1,44 +1,37 @@
-
 import React, { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { useToast } from './ui/use-toast';
-
 const FooterContactForm = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [email, setEmail] = useState('');
   const [service, setService] = useState('');
-  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Create mailto URL with form data
     const mailtoLink = `mailto:jaydenf3800@gmail.com?subject=Website Inquiry: ${encodeURIComponent(service)}&body=${encodeURIComponent(`I'm interested in discussing ${service}.\n\nMy email: ${email}`)}`;
-    
+
     // Attempt to open email client
     window.location.href = mailtoLink;
-    
+
     // Show toast
     toast({
       title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
+      description: "We'll get back to you as soon as possible."
     });
-    
+
     // Reset form
     setEmail('');
     setService('');
   };
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="flex flex-col items-center mb-6">
-        <img 
-          src="/lovable-uploads/d8cafee6-2600-4290-9874-200435673474.png" 
-          alt="BC Pressure Washing Service Vehicle" 
-          className="w-full max-w-[250px] h-auto rounded-lg shadow-md mb-4" 
-        />
+        
       </div>
       
       <div className="bg-gradient-to-r from-gray-900 to-black p-6 rounded-lg">
@@ -47,32 +40,16 @@ const FooterContactForm = () => {
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Input
-              type="email"
-              placeholder="Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-            />
+            <Input type="email" placeholder="Your Email" value={email} onChange={e => setEmail(e.target.value)} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" />
           </div>
           <div>
-            <Textarea
-              placeholder="What service are you interested in?"
-              value={service}
-              onChange={(e) => setService(e.target.value)}
-              required
-              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-              rows={3}
-            />
+            <Textarea placeholder="What service are you interested in?" value={service} onChange={e => setService(e.target.value)} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" rows={3} />
           </div>
           <Button type="submit" variant="bc-red" className="w-full">
             Send Message <Send size={16} className="ml-2" />
           </Button>
         </form>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default FooterContactForm;
