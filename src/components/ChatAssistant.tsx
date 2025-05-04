@@ -16,17 +16,16 @@ const ChatAssistant = () => {
       
       if (faqSection) {
         const faqSectionBottom = faqSection.getBoundingClientRect().bottom;
-        const windowHeight = window.innerHeight;
         
         // Show chat assistant only after scrolling past the FAQ section
-        if (faqSectionBottom < windowHeight) {
+        if (faqSectionBottom <= 0) {
           setIsVisible(true);
         } else {
           setIsVisible(false);
         }
       } else {
-        // If there's no FAQ section, show the chat assistant after scrolling down a bit
-        setIsVisible(window.scrollY > 800);
+        // If there's no FAQ section, don't show the chat assistant
+        setIsVisible(false);
       }
     };
     

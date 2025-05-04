@@ -1,11 +1,14 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
+
 const Footer = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
+  
   return <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
         {/* Only show FAQs on non-homepage routes */}
@@ -75,7 +78,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
-                <span className="text-gray-300">15501 Marine Dr, White Rock, BC</span>
+                <span className="text-gray-300">Marine Dr, White Rock, BC</span>
               </li>
               <li className="flex items-center">
                 <Phone className="text-bc-red mr-3 flex-shrink-0" size={18} />
@@ -111,4 +114,5 @@ const Footer = () => {
       </div>
     </footer>;
 };
+
 export default Footer;

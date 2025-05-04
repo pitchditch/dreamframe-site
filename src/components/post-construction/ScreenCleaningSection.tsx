@@ -16,17 +16,17 @@ import { Link } from 'react-router-dom';
 const slides = [
   {
     image: "/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png",
-    title: "Professional Window Cleaning",
+    title: "",
     description: ""
   },
   {
     image: "/lovable-uploads/8bfa7c48-74fb-490c-89e1-e15d87fdcc6d.png",
-    title: "Screen Cleaning",
+    title: "",
     description: ""
   },
   {
     image: "/lovable-uploads/fa16ee2d-1381-4719-80d7-0bec536ba4d8.png",
-    title: "Water-Fed Pole System",
+    title: "",
     description: ""
   }
 ];
@@ -186,12 +186,9 @@ const ScreenCleaningSection: React.FC = () => {
                       >
                         <img 
                           src={slide.image} 
-                          alt={slide.title} 
+                          alt="Window cleaning service" 
                           className="rounded-lg shadow-xl w-full h-[400px] object-cover"
                         />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white">
-                          <h3 className="text-lg font-bold">{slide.title}</h3>
-                        </div>
                       </motion.div>
                     </CarouselItem>
                   ))}

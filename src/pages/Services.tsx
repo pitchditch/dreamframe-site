@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ServiceCard from '../components/ServiceCard';
@@ -111,46 +110,56 @@ const Services = () => {
 
       <section className="py-16 md:py-24 w-full">
         <div className="container mx-auto px-4">
-          <div className="bg-bc-gray p-8 md:p-12 rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="bg-bc-gray p-8 md:p-12 rounded-lg relative overflow-hidden">
+            {/* Background image */}
+            <div className="absolute inset-0 w-full h-full">
+              <img 
+                src="/lovable-uploads/e7d22891-296d-4f9b-befc-796245f0f540.png" 
+                alt="Ready to experience the difference" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/60"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative z-10">
               <div>
-                <div className="badge-pill mb-4">{t("Scheduled Maintenance")}</div>
-                <h2 className="text-3xl font-bold mb-4">{t("Keep Your Property Looking Its Best")}</h2>
-                <p className="text-gray-600 mb-6">
+                <div className="badge-pill mb-4 bg-white/90 text-black">{t("Scheduled Maintenance")}</div>
+                <h2 className="text-3xl font-bold mb-4 text-white">{t("Keep Your Property Looking Its Best")}</h2>
+                <p className="text-gray-100 mb-6">
                   {t("Regular maintenance is key to preserving your property's value and appearance. Our scheduled maintenance programs can be customized to your specific needs and budget.")}
                 </p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-white mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>{t("Quarterly, bi-annual, or annual service plans")}</span>
+                    <span className="text-white">{t("Quarterly, bi-annual, or annual service plans")}</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-white mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>{t("Discounted rates for regular customers")}</span>
+                    <span className="text-white">{t("Discounted rates for regular customers")}</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-white mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>{t("Priority scheduling for maintenance clients")}</span>
+                    <span className="text-white">{t("Priority scheduling for maintenance clients")}</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-5 h-5 text-white mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>{t("Comprehensive property maintenance solutions")}</span>
+                    <span className="text-white">{t("Comprehensive property maintenance solutions")}</span>
                   </li>
                 </ul>
                 <Link to="/contact">
-                  <button className="btn-primary">{t("Get a Custom Maintenance Plan")}</button>
+                  <button className="bg-white hover:bg-gray-100 text-black font-semibold py-3 px-6 rounded-md transition duration-300">{t("Get a Custom Maintenance Plan")}</button>
                 </Link>
               </div>
-              <div>
-                <img alt="Scheduled maintenance services" className="rounded-lg shadow-lg w-full" src="/lovable-uploads/a995557d-d6cd-4372-a7ad-a6006adb6647.png" />
+              <div className="hidden md:block"> {/* Hide this on mobile since we have the background image */}
+                {/* Intentionally left empty as the background image covers this area */}
               </div>
             </div>
           </div>
