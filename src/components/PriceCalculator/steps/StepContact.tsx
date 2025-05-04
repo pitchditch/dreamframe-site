@@ -117,7 +117,7 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
               <FormLabel>Service Address</FormLabel>
               <FormControl>
                 <Input 
-                  placeholder="123 Marine Dr, White Rock, BC" 
+                  placeholder="Marine Dr, White Rock, BC" 
                   defaultValue="Marine Dr, White Rock, BC"
                   {...field} 
                 />

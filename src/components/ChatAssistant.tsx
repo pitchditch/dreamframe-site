@@ -1,10 +1,42 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { MessageCircle, X } from 'lucide-react';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Find FAQ section
+      const faqSection = document.querySelector('section h2[class*="text"]')?.textContent?.includes('FAQ') 
+        ? document.querySelector('section h2[class*="text"]')?.closest('section')
+        : null;
+      
+      if (faqSection) {
+        const faqSectionBottom = faqSection.getBoundingClientRect().bottom;
+        const windowHeight = window.innerHeight;
+        
+        // Show chat assistant only after scrolling past the FAQ section
+        if (faqSectionBottom < windowHeight) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      } else {
+        // If there's no FAQ section, show the chat assistant after scrolling down a bit
+        setIsVisible(window.scrollY > 800);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!isVisible) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-[1000]">
@@ -33,7 +65,6 @@ const ChatAssistant = () => {
               <p className="text-sm text-gray-600">I'm here to help!</p>
             </div>
           </div>
-          {/* Add chat functionality here later */}
           <div className="text-center text-sm text-gray-600">
             Click the button below to start a conversation
           </div>

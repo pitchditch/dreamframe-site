@@ -7,13 +7,13 @@ interface NavbarDesktopProps {
 }
 
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
-  const mainNavLinkClassName = `transition-colors font-medium px-4 py-2 rounded-md text-lg ${
+  const mainNavLinkClassName = `transition-colors font-medium px-4 py-2 rounded-md text-lg whitespace-nowrap ${
     isOverVideo ? 'text-white hover:bg-white/10' : 'text-gray-800 hover:bg-gray-100'
   }`;
 
   return (
     <nav className="hidden lg:flex items-center w-full justify-between px-4">
-      <div className="flex-1 max-w-[350px]"></div>
+      <div className="flex-1 max-w-[400px]"></div>
       <NavigationMenu className="flex-1 flex justify-center">
         <NavigationMenuList className="space-x-8">
           <NavigationMenuItem>
@@ -26,8 +26,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               <div className="w-[600px] bg-white p-4 rounded-lg shadow-lg grid grid-cols-2 gap-3">
                 <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-blue-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png" alt="Window Cleaning Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png" alt="Window Cleaning Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Window Cleaning</h4>
@@ -37,8 +37,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 </Link>
                 <Link to="/services/pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-green-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png" alt="House Washing Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png" alt="House Washing Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">House Washing</h4>
@@ -48,8 +48,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 </Link>
                 <Link to="/services/gutter-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-yellow-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png" alt="Gutter Cleaning Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Gutter Cleaning</h4>
@@ -59,8 +59,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 </Link>
                 <Link to="/services/roof-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-red-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Roof Cleaning</h4>
@@ -78,8 +78,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               <div className="w-[500px] bg-white p-4 rounded-lg shadow-lg">
                 <Link to="/services/commercial-window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-blue-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Commercial Window Cleaning Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Commercial Window Cleaning Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Commercial Window Cleaning</h4>
@@ -89,8 +89,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 </Link>
                 <Link to="/services/commercial-pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-green-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png" alt="Commercial Pressure Washing Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png" alt="Commercial Pressure Washing Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Commercial Pressure Washing</h4>
@@ -100,8 +100,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 </Link>
                 <Link to="/services/post-construction-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 bg-amber-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Post-Construction Cleaning Icon" className="w-8 h-8 object-contain" />
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Post-Construction Cleaning Icon" className="w-10 h-10 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Post-Construction Cleaning</h4>
@@ -119,10 +119,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex-1 max-w-[350px] flex justify-end">
+      <div className="flex-1 max-w-[400px] flex justify-end">
         <a 
           href="tel:7788087620" 
-          className={`px-5 py-3 rounded-lg transition-all font-semibold ${
+          className={`px-5 py-3 rounded-lg transition-all font-semibold whitespace-nowrap ${
             isOverVideo 
               ? 'bg-bc-red hover:bg-red-700 text-white' 
               : 'bg-bc-red hover:bg-red-700 text-white'

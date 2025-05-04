@@ -198,7 +198,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-bold">Phone</h4>
                     <p className="text-gray-600 mt-1">
-                      <a href="tel:7788087620" className="hover:text-bc-red transition-colors">778 808 7620</a>
+                      <a href="tel:7788087620" className="hover:text-bc-red transition-colors">778-808-7620</a>
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Mon-Sat: 8am - 6pm</p>
                   </div>
@@ -219,7 +219,7 @@ const Contact = () => {
                   <MapPin className="text-bc-red mr-4 mt-1" />
                   <div>
                     <h4 className="font-bold">Location</h4>
-                    <p className="text-gray-600 mt-1">15501 Marine Dr<br />White Rock, BC V4B 1C9</p>
+                    <p className="text-gray-600 mt-1">Marine Dr<br />White Rock, BC</p>
                     <p className="text-sm text-gray-500 mt-1">Serving Surrey, White Rock & Metro Vancouver</p>
                   </div>
                 </div>

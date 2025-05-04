@@ -88,13 +88,13 @@ const TrustedCustomersSection = () => {
         </div>
         
         {/* Carousel View (for all screen sizes) */}
-        <div className="relative max-w-md mx-auto">
+        <div className="relative max-w-xl mx-auto">
           <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
             <CarouselContent>
               {customers.map((customer, index) => (
                 <CarouselItem key={index} className="basis-full">
                   <div className="flex flex-col items-center text-center p-2">
-                    <div className="mb-4 w-full h-80 overflow-hidden rounded-lg mx-auto">
+                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
                       <img 
                         src={customer.image} 
                         alt={`${customer.name} from ${customer.location}`} 

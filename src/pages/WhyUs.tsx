@@ -1,14 +1,19 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
 const WhyUs = () => {
-  const {
-    t
-  } = useTranslation();
-  return <Layout>
+  const { t } = useTranslation();
+  
+  return (
+    <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 inline-flex">Why Choose Us</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
             <p className="text-xl text-gray-300 mb-8">
               We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
             </p>
@@ -93,7 +98,7 @@ const WhyUs = () => {
               </p>
             </div>
             <div>
-              <img src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png" alt="BC Pressure Washing Company History" className="rounded-lg shadow-lg w-full" />
+              <img src="/lovable-uploads/bac07608-1eeb-4905-b5db-79aa9ad91672.png" alt="BC Pressure Washing Company History" className="rounded-lg shadow-lg w-full" />
             </div>
           </div>
         </div>
@@ -101,7 +106,41 @@ const WhyUs = () => {
       
       {/* Professional Equipment Section */}
       <section className="py-16 md:py-24">
-        
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Professional Equipment</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <img src="/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png" alt="Pure Water Technology" className="w-full h-60 object-cover" />
+              <div className="p-6">
+                <h3 className="font-bold text-xl mb-2">Pure Water Technology</h3>
+                <p className="text-gray-700">
+                  We use advanced pure water cleaning systems that leave your windows spotless without any chemicals or residue.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <img src="/lovable-uploads/7b5d444c-eda2-4e31-91fd-29752d396c29.png" alt="High-Performance Pressure Washers" className="w-full h-60 object-cover" />
+              <div className="p-6">
+                <h3 className="font-bold text-xl mb-2">High-Performance Equipment</h3>
+                <p className="text-gray-700">
+                  Our commercial-grade pressure washing equipment provides powerful cleaning while protecting your surfaces.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <img src="/lovable-uploads/67b32856-04c4-4832-9c20-9a0e56c5c2b8.png" alt="Eco-Friendly Solutions" className="w-full h-60 object-cover" />
+              <div className="p-6">
+                <h3 className="font-bold text-xl mb-2">Eco-Friendly Solutions</h3>
+                <p className="text-gray-700">
+                  We use environmentally responsible cleaning products that are effective yet safe for your family, pets, and plants.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       
       {/* Call to Action */}
@@ -112,15 +151,21 @@ const WhyUs = () => {
             Contact us today for a free consultation and quote. Let us show you why we're the preferred choice for exterior cleaning in the Vancouver area.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="/contact" className="bg-white text-bc-red font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
-              Get a Free Quote
-            </a>
-            <a href="tel:7788087620" className="bg-black bg-opacity-30 text-white font-bold py-3 px-8 rounded-lg hover:bg-opacity-40 transition duration-300">
-              Call: 778-808-7620
+            <Link to="/contact">
+              <Button className="bg-white text-bc-red font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
+                Get a Free Quote
+              </Button>
+            </Link>
+            <a href="tel:7788087620">
+              <Button variant="outline" className="bg-black bg-opacity-30 text-white font-bold py-3 px-8 rounded-lg hover:bg-opacity-40 transition duration-300">
+                Call: 778 808 7620
+              </Button>
             </a>
           </div>
         </div>
       </section>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default WhyUs;
