@@ -1,12 +1,16 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
+
 const Footer = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
-  return <footer className="bg-black text-white">
+  
+  return (
+    <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
         {/* Only show FAQs on non-homepage routes */}
         {!isHomePage}
@@ -17,11 +21,11 @@ const Footer = () => {
           {/* Logo and social media links */}
           <div className="col-span-1">
             <div className="mb-4 flex flex-col items-center">
-              {/* Car image added above the logo */}
-              <img alt="BC Pressure Washing Service Car" className="h-20 mb-3" src="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" />
               <Link to="/">
                 <img src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" alt="BC Pressure Washing Logo" className="h-24 md:h-28 mb-4" />
               </Link>
+              {/* Car image moved below the logo */}
+              <img alt="BC Pressure Washing Service Car" className="h-20 mt-2" src="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" />
             </div>
             <p className="text-gray-300 mb-6 text-base">
               Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.
@@ -111,6 +115,8 @@ const Footer = () => {
         maxHeight: "400px"
       }} />
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;

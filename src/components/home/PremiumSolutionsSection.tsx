@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -14,18 +13,24 @@ const PremiumSolutionsSection = () => {
       const section = sectionRef.current;
       
       if (section) {
-        // Start the transform much earlier for better overlap
-        const startTransform = heroHeight * 0.5; // Adjust earlier start point
-        // Complete the transform when reaching the end of hero
-        const endTransform = heroHeight * 0.8; // Complete transformation earlier
+        // Don't start transforming until user scrolls a bit
+        const startTransform = heroHeight * 0.7; // Start transforming after 70% of hero height
+        const endTransform = heroHeight * 0.95; // Complete transformation at 95% of hero height
         
-        // Calculate the progress between 0 and 1
-        const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
-        
-        // Apply transform - start at 250px below viewport and end at -500px (significantly overlapping the hero)
-        const translateY = (1 - progress) * 250 - (progress * 500);
-        section.style.transform = `translateY(${translateY}px)`;
-        section.style.opacity = `1`; // Keep opacity always at 1 to prevent fade effect
+        // Calculate the progress between 0 and 1, but only after scrolling starts
+        if (scrollY < startTransform) {
+          // Before scroll starts, keep section below the viewport
+          section.style.transform = `translateY(250px)`;
+          section.style.opacity = '1';
+        } else {
+          // Once scrolling starts, begin the transform animation
+          const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
+          
+          // Apply transform - overlap animation only happens when scrolling
+          const translateY = (1 - progress) * 250 - (progress * 500);
+          section.style.transform = `translateY(${translateY}px)`;
+          section.style.opacity = '1';
+        }
       }
     };
     
@@ -68,8 +73,8 @@ const PremiumSolutionsSection = () => {
       className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg transform will-change-transform"
       style={{ 
         marginTop: '-400px',  // Increased negative margin to create more overlap
-        opacity: 1, // No fade effect - start fully visible
-        transform: 'translateY(250px)'
+        opacity: 1,           // Start fully visible
+        transform: 'translateY(250px)' // Start below viewport, will move up when scrolling
       }}
     >
       <div className="container mx-auto px-4 pt-8">

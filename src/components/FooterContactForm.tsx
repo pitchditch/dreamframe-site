@@ -14,8 +14,13 @@ const FooterContactForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Here you would typically send the form data to your backend
-    // For now, we'll just show a success toast
+    // Create mailto URL with form data
+    const mailtoLink = `mailto:jaydenf3800@gmail.com?subject=Website Inquiry: ${encodeURIComponent(service)}&body=${encodeURIComponent(`I'm interested in discussing ${service}.\n\nMy email: ${email}`)}`;
+    
+    // Attempt to open email client
+    window.location.href = mailtoLink;
+    
+    // Show toast
     toast({
       title: "Message sent!",
       description: "We'll get back to you as soon as possible.",

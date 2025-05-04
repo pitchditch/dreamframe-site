@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -173,7 +174,7 @@ const HeroSection = () => {
             </div>
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Star className="text-yellow-400 mr-2" size={20} />
-              <span className="text-white font-medium">5-Star Rated</span>
+              <span className="text-white font-medium">5-Star Service</span>
             </div>
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Home className="text-white mr-2" size={20} />
@@ -183,7 +184,7 @@ const HeroSection = () => {
         </div>
         
         {/* Postal Code Input Section - Enhanced visibility */}
-        <div className="max-w-xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
+        <div className="max-w-2xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -194,7 +195,7 @@ const HeroSection = () => {
                 onChange={(e) => setPostalCode(e.target.value)}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                className="bg-white/40 backdrop-blur-md border-white/40 text-white h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white text-xl font-medium"
+                className="bg-white/40 backdrop-blur-md border-white/40 text-white h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-white text-xl font-medium w-full"
               />
               {!postalCode && ghostText && (
                 <div className="absolute top-0 left-0 h-full flex items-center pointer-events-none">
@@ -206,7 +207,7 @@ const HeroSection = () => {
               type="submit" 
               variant="bc-red" 
               size="lg" 
-              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 min-w-[250px]"
+              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
             >
               Check Prices & Availability <MessageSquare className="ml-2" size={20} />
             </Button>
