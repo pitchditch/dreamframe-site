@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
@@ -63,7 +64,7 @@ const RoofCleaning = () => {
           height: '100vh',
           objectFit: 'cover'
         }} />
-          <div className="absolute inset-0 bg-black bg-opacity-60 z-10 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
             <div className="text-center px-6">
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
                 Professional Roof Cleaning & Moss Removal
