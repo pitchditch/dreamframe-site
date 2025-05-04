@@ -189,7 +189,7 @@ const Index = () => {
       {/* 100% Satisfaction Guarantee Section */}
       <section className="py-12 bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-[url('/lovable-uploads/20659a58-a7ae-47cb-970a-a2f17c8e2d93.png')] bg-cover bg-center"></div>
+          <div className="absolute inset-0 bg-[url('/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png')] bg-cover bg-center"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">

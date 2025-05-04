@@ -11,22 +11,23 @@ import {
   CarouselNext
 } from "../ui/carousel";
 import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
 
 const slides = [
   {
     image: "/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png",
     title: "Professional Window Cleaning",
-    description: "Specialized streak-free window cleaning techniques"
+    description: ""
   },
   {
     image: "/lovable-uploads/8bfa7c48-74fb-490c-89e1-e15d87fdcc6d.png",
     title: "Screen Cleaning",
-    description: "Complete screen removal and thorough cleaning"
+    description: ""
   },
   {
     image: "/lovable-uploads/fa16ee2d-1381-4719-80d7-0bec536ba4d8.png",
     title: "Water-Fed Pole System",
-    description: "Reaching those difficult high windows with ease"
+    description: ""
   }
 ];
 
@@ -86,7 +87,7 @@ const ScreenCleaningSection: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Window & Screen Cleaning</h2>
+              <h2 className="text-3xl font-bold mb-6">Residential Window Cleaning</h2>
               
               <div className="mb-8 relative">
                 <div 
@@ -128,8 +129,9 @@ const ScreenCleaningSection: React.FC = () => {
                 </div>
                 
                 <p className="text-gray-700 mb-6 text-lg">
-                  Complete your post-construction cleanup with our professional window and screen cleaning services.
-                  We thoroughly clean both your windows and screens to ensure a perfect finish.
+                  Experience premium residential window cleaning services that leave your windows
+                  sparkling and streak-free. Our professional team uses advanced techniques 
+                  and high-quality products for exceptional results.
                 </p>
               </div>
               
@@ -152,15 +154,16 @@ const ScreenCleaningSection: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <Button 
-                variant="bc-red"
-                size="lg"
-                onClick={() => document.getElementById('booking-section')?.scrollIntoView({behavior: 'smooth'})}
-                className="text-white group"
-              >
-                Add Screen Cleaning to Your Service 
-                <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <Link to="/calculator">
+                <Button 
+                  variant="bc-red"
+                  size="lg"
+                  className="text-white group"
+                >
+                  Check Prices & Availability
+                  <MoveRight className="ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
             </div>
             
             <div className="relative">
@@ -188,7 +191,6 @@ const ScreenCleaningSection: React.FC = () => {
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white">
                           <h3 className="text-lg font-bold">{slide.title}</h3>
-                          <p className="text-sm text-gray-200">{slide.description}</p>
                         </div>
                       </motion.div>
                     </CarouselItem>

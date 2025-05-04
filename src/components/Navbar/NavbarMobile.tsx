@@ -46,25 +46,25 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 <div className="flex flex-col space-y-4 border-l-2 border-gray-100 pl-4">
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" alt="Window Cleaning Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png" alt="Window Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/1ca3e3f5-36d2-4bfc-859e-00dc34d55da6.png" alt="House Washing Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png" alt="House Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('House Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/00f3f3d9-15e1-46f2-99c3-535d8e667e35.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/5dc10f3c-9463-4153-94b3-4b99d908580a.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Gutter Cleaning')}</span>
                   </Link>
                   <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/f05fd62e-74a2-4b37-83ac-baee3893fc3d.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Roof Cleaning')}</span>
                   </Link>

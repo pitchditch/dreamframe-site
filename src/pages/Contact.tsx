@@ -62,7 +62,7 @@ const Contact = () => {
       
       <div className="relative bg-black text-white h-screen">
         <img 
-          src="/lovable-uploads/88ee1ee3-e92f-4015-b234-2c07a16f1b58.png"
+          src="/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png"
           alt="Contact Us Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
