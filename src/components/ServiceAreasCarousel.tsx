@@ -35,8 +35,8 @@ const ServiceAreasCarousel = () => {
         <div ref={carouselRef} className="flex overflow-x-hidden scrollbar-none whitespace-nowrap w-full">
           {/* Duplicate the service areas to create seamless loop */}
           {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
-            <div key={index} className="inline-flex px-4 py-2 mx-1">
-              <MapPin size={16} className="text-bc-red mr-2" />
+            <div key={index} className="inline-flex px-5 py-2 mx-1">
+              <MapPin size={16} className="text-bc-red mr-2 flex-shrink-0" />
               <span className="text-white">{area}</span>
             </div>
           ))}

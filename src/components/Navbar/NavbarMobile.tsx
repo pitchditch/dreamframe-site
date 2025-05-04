@@ -126,8 +126,8 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
           </nav>
         </div>
       </div>
-      {/* Bottom-right floating Call button for mobile only - Moved higher to avoid overlap */}
-      <div className="fixed bottom-24 right-6 md:hidden z-40 flex flex-row gap-4 justify-end px-4">
+      {/* Bottom-right floating Call button for mobile only - Fixed position */}
+      <div className="fixed bottom-6 right-6 md:hidden z-20 flex flex-row gap-4 justify-end">
         <a href="tel:7788087620" className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all">
           <Phone size={24} />
         </a>

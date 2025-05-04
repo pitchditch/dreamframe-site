@@ -30,37 +30,47 @@ const FooterContactForm = () => {
     setEmail('');
     setService('');
   };
-  
+
   return (
-    <div className="bg-gradient-to-r from-gray-900 to-black p-6 rounded-lg">
-      <h3 className="text-xl font-semibold mb-4 text-white flex items-center">
-        <Mail className="mr-2" size={20} /> Quick Contact
-      </h3>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <Input
-            type="email"
-            placeholder="Your Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-          />
-        </div>
-        <div>
-          <Textarea
-            placeholder="What service are you interested in?"
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            required
-            className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-            rows={3}
-          />
-        </div>
-        <Button type="submit" variant="bc-red" className="w-full">
-          Send Message <Send size={16} className="ml-2" />
-        </Button>
-      </form>
+    <div className="space-y-6">
+      <div className="flex flex-col items-center mb-6">
+        <img 
+          src="/lovable-uploads/d8cafee6-2600-4290-9874-200435673474.png" 
+          alt="BC Pressure Washing Service Vehicle" 
+          className="w-full max-w-[250px] h-auto rounded-lg shadow-md mb-4" 
+        />
+      </div>
+      
+      <div className="bg-gradient-to-r from-gray-900 to-black p-6 rounded-lg">
+        <h3 className="text-xl font-semibold mb-4 text-white flex items-center">
+          <Mail className="mr-2" size={20} /> Quick Contact
+        </h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Input
+              type="email"
+              placeholder="Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+            />
+          </div>
+          <div>
+            <Textarea
+              placeholder="What service are you interested in?"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              required
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              rows={3}
+            />
+          </div>
+          <Button type="submit" variant="bc-red" className="w-full">
+            Send Message <Send size={16} className="ml-2" />
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

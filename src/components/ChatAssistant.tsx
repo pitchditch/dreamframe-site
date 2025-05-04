@@ -64,7 +64,7 @@ const ChatAssistant = () => {
           <div className="relative">
             <img 
               alt="Chat Assistant" 
-              className="h-16 w-16 rounded-full border-2 border-white" 
+              className="h-20 w-20 rounded-full border-2 border-white" 
               src="/lovable-uploads/970932d4-f8db-4a50-92b1-3fe35f2d06a7.jpg" 
             />
             <div className="absolute -top-2 -right-2 bg-yellow-400 text-xs px-1 rounded-full animate-pulse">
@@ -86,7 +86,7 @@ const ChatAssistant = () => {
             <img 
               src="/lovable-uploads/2159ece1-41e3-4490-934d-771a1e1a10e0.png" 
               alt="BC Pressure Washing Assistant" 
-              className="w-24 h-24 rounded-full object-cover border-2 border-bc-red" 
+              className="w-28 h-28 rounded-full object-cover border-2 border-bc-red" 
             />
             <div>
               <h4 className="font-semibold text-lg">Chat with Jayden</h4>
@@ -94,14 +94,14 @@ const ChatAssistant = () => {
             </div>
           </div>
           
-          <div className="space-y-3 mb-5">
+          <div className="space-y-4 mb-5">
             <div className="bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition-all cursor-pointer">
               How much does window cleaning cost?
             </div>
-            <div className="bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition-all cursor-pointer" style={{animationDelay: "0.5s"}}>
+            <div className="bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition-all cursor-pointer">
               Do you offer same-day service?
             </div>
-            <div className="bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition-all cursor-pointer" style={{animationDelay: "1s"}}>
+            <div className="bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition-all cursor-pointer">
               What areas do you service?
             </div>
           </div>

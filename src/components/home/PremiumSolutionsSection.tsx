@@ -1,45 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const PremiumSolutionsSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      const section = sectionRef.current;
-      
-      if (section) {
-        // Don't start transforming until user scrolls a bit
-        const startTransform = heroHeight * 0.7; // Start transforming after 70% of hero height
-        const endTransform = heroHeight * 0.95; // Complete transformation at 95% of hero height
-        
-        // Calculate the progress between 0 and 1, but only after scrolling starts
-        if (scrollY < startTransform) {
-          // Before scroll starts, keep section below the viewport
-          section.style.transform = `translateY(250px)`;
-          section.style.opacity = '1';
-        } else {
-          // Once scrolling starts, begin the transform animation
-          const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
-          
-          // Apply transform - overlap animation only happens when scrolling
-          const translateY = (1 - progress) * 250 - (progress * 500);
-          section.style.transform = `translateY(${translateY}px)`;
-          section.style.opacity = '1';
-        }
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial position
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  
   const services = [
     {
       title: "Window Cleaning",
@@ -69,13 +34,7 @@ const PremiumSolutionsSection = () => {
 
   return (
     <section 
-      ref={sectionRef}
-      className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg transform will-change-transform"
-      style={{ 
-        marginTop: '-400px',  // Increased negative margin to create more overlap
-        opacity: 1,           // Start fully visible
-        transform: 'translateY(250px)' // Start below viewport, will move up when scrolling
-      }}
+      className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg mt-20"
     >
       <div className="container mx-auto px-4 pt-8">
         <div className="text-center mb-12">
