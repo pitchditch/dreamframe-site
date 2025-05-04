@@ -1,4 +1,3 @@
-
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight } from 'lucide-react';
@@ -7,7 +6,6 @@ import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
 import CallToAction from '../components/CallToAction';
-
 const WhyUs = () => {
   const {
     t
@@ -93,11 +91,7 @@ const WhyUs = () => {
             
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
-                <img 
-                  src="/lovable-uploads/3508b357-c029-4365-bb7c-e8cd605080a5.png"
-                  alt="BC Pressure Washing Red Car" 
-                  className="rounded-lg shadow-xl w-full"
-                />
+                <img alt="BC Pressure Washing Red Car" className="rounded-lg shadow-xl w-full" src="/lovable-uploads/e7b51501-d13b-45ad-889c-383298d75f6f.png" />
               </div>
               <div className="space-y-6">
                 <h3 className="text-2xl font-bold">That's Me! Your Local Exterior Cleaning Expert</h3>
