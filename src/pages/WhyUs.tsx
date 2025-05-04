@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight } from 'lucide-react';
@@ -5,11 +6,36 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
+import FAQSection from '../components/FAQSection';
+
 const WhyUs = () => {
-  const {
-    t
-  } = useTranslation();
-  return <Layout>
+  const { t } = useTranslation();
+  
+  const whyUsFaqs = [
+    {
+      question: "How long have you been in business?",
+      answer: "BC Pressure Washing has been serving the Surrey, White Rock, and Metro Vancouver areas since 2018, with a track record of satisfied customers and exceptional service quality."
+    },
+    {
+      question: "Are you fully insured?",
+      answer: "Yes, we are fully insured with comprehensive liability insurance and WCB coverage for your complete peace of mind."
+    },
+    {
+      question: "What areas do you service?",
+      answer: "We primarily serve Surrey, White Rock, South Surrey, Langley, Delta, and throughout Metro Vancouver. If you're unsure if we cover your area, please contact us."
+    },
+    {
+      question: "Do you offer any guarantees?",
+      answer: "Absolutely! We offer a 100% satisfaction guarantee on all our services. If you're not completely happy with our work, we'll come back and make it right at no additional cost."
+    },
+    {
+      question: "What makes you different from other pressure washing companies?",
+      answer: "As a locally owned and operated business, we provide personalized service with attention to detail that franchise operations can't match. Our owner personally oversees each project, ensuring quality results every time."
+    }
+  ];
+  
+  return (
+    <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
         <div className="absolute inset-0 opacity-30">
           <img src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" alt="House exterior cleaning" className="w-full h-full object-cover" />
@@ -88,8 +114,47 @@ const WhyUs = () => {
       {/* Professional Equipment Section */}
       <EquipmentSection />
       
-      {/* Call to Action */}
+      {/* FAQ Section */}
+      <FAQSection 
+        title="Frequently Asked Questions"
+        subtitle="Common questions about our company and services"
+        faqs={whyUsFaqs}
+      />
       
-    </Layout>;
+      {/* CTA Banner */}
+      <section className="py-16 relative">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/lovable-uploads/d9a25e78-57fd-4f2c-a481-734029cf4067.png" 
+            alt="BC Pressure Washing service vehicle at sunset" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/60"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Experience the BC Pressure Washing Difference</h2>
+            <p className="text-xl mb-8">
+              Ready to transform your property's appearance? Contact us today for a free, no-obligation quote.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-bold px-8 py-6 hover:scale-105 transition-transform">
+                <Link to="/calculator">
+                  Get a Free Quote <ArrowRight className="ml-2" size={18} />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-2 border-white text-white bg-transparent hover:bg-white/20 text-lg font-bold px-8 py-6 hover:scale-105 transition-transform">
+                <a href="tel:7788087620">
+                  Call Us: 778-808-7620
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
 };
+
 export default WhyUs;
