@@ -28,6 +28,16 @@ const ServiceAreaMap = () => {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
+        
+        {/* Rotating BC logo in the corner */}
+        <div className="absolute bottom-4 right-4 logo-container perspective-1000">
+          <img 
+            src="/lovable-uploads/21a4f699-82af-4190-9b74-a66e8e58af65.png"
+            alt="BC Pressure Washing" 
+            className="spin-logo transform-style-preserve-3d w-24 h-24"
+            style={{ animation: 'spinCoin 5s infinite linear' }}
+          />
+        </div>
       </div>
     </div>
   );

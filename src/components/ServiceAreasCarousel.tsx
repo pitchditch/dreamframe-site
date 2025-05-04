@@ -1,5 +1,6 @@
 
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { MapPin } from 'lucide-react';
 
 const ServiceAreasCarousel = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -34,21 +35,19 @@ const ServiceAreasCarousel = () => {
   }, []);
 
   return (
-    <div className="py-6 bg-transparent">
-      <div className="container mx-auto">
-        <h3 className="text-xl font-semibold text-center mb-4 text-white">Our Service Areas</h3>
-        <div className="relative overflow-hidden">
-          <div 
-            ref={carouselRef}
-            className="flex overflow-x-hidden scrollbar-none whitespace-nowrap"
-          >
-            {/* Duplicate the service areas to create seamless loop */}
-            {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
-              <div key={index} className="inline-flex px-4 py-2 mx-1 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                {area}
-              </div>
-            ))}
-          </div>
+    <div className="py-6 bg-transparent overflow-hidden w-full">
+      <div className="relative w-full">
+        <div 
+          ref={carouselRef}
+          className="flex overflow-x-hidden scrollbar-none whitespace-nowrap w-full"
+        >
+          {/* Duplicate the service areas to create seamless loop */}
+          {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
+            <div key={index} className="inline-flex px-4 py-2 mx-1 text-white">
+              <MapPin size={16} className="text-bc-red mr-2" />
+              <span>{area}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

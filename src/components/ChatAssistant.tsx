@@ -6,6 +6,13 @@ import { MessageCircle, X } from 'lucide-react';
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(0);
+  const chatMessages = [
+    "Have any questions?",
+    "I'm here to help!",
+    "Ask me anything about our services",
+    "Get instant answers here"
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,10 +22,9 @@ const ChatAssistant = () => {
         : null;
       
       if (faqSection) {
-        const faqSectionBottom = faqSection.getBoundingClientRect().bottom;
-        
-        // Show chat assistant only after scrolling past the FAQ section
-        if (faqSectionBottom <= 0) {
+        const faqRect = faqSection.getBoundingClientRect();
+        // Show chat assistant when FAQ section is in view
+        if (faqRect.top <= window.innerHeight && faqRect.bottom >= 0) {
           setIsVisible(true);
         } else {
           setIsVisible(false);
@@ -32,8 +38,16 @@ const ChatAssistant = () => {
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Check initial position
     
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Message rotation interval
+    const messageInterval = setInterval(() => {
+      setMessageIndex(prev => (prev + 1) % chatMessages.length);
+    }, 3000);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(messageInterval);
+    }
+  }, [chatMessages.length]);
 
   if (!isVisible) return null;
 
@@ -55,13 +69,13 @@ const ChatAssistant = () => {
         <div className="absolute bottom-16 right-0 w-[300px] bg-white rounded-lg shadow-lg p-4 border border-gray-200">
           <div className="flex items-center gap-3 mb-4">
             <img
-              src="/lovable-uploads/c5219e28-4a09-4d72-bef9-e96193360fa6.png"
+              src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="BC Pressure Washing Assistant"
               className="w-12 h-12 rounded-full object-cover"
             />
             <div>
-              <h4 className="font-semibold">Have any questions?</h4>
-              <p className="text-sm text-gray-600">I'm here to help!</p>
+              <h4 className="font-semibold">Chat with Jayden</h4>
+              <p className="text-sm text-gray-600">{chatMessages[messageIndex]}</p>
             </div>
           </div>
           <div className="text-center text-sm text-gray-600">

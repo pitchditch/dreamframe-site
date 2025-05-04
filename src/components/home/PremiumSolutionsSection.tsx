@@ -14,16 +14,16 @@ const PremiumSolutionsSection = () => {
       const section = sectionRef.current;
       
       if (section) {
-        // Start the transform when scroll reaches 50% of hero height
-        const startTransform = heroHeight * 0.5;
-        // Complete the transform at 80% of hero height
-        const endTransform = heroHeight * 0.8;
+        // Start the transform when scroll reaches 40% of hero height (earlier overlap)
+        const startTransform = heroHeight * 0.4;
+        // Complete the transform at 70% of hero height (more overlap)
+        const endTransform = heroHeight * 0.7;
         
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 120px below viewport and end at -200px (overlapping the hero more)
-        const translateY = (1 - progress) * 120 - (progress * 200);
+        // Apply transform - start at 120px below viewport and end at -300px (overlapping the hero more)
+        const translateY = (1 - progress) * 120 - (progress * 300);
         section.style.transform = `translateY(${translateY}px)`;
         section.style.opacity = `${Math.min(1, progress * 1.5)}`;
       }
@@ -84,7 +84,7 @@ const PremiumSolutionsSection = () => {
           {services.map((service, index) => (
             <div key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow bg-white rounded-lg shadow">
               <div className="relative p-6 flex flex-col items-center">
-                <div className="w-24 h-24 mb-4">
+                <div className="w-32 h-32 mb-4">
                   <img 
                     src={service.image} 
                     alt={service.title} 

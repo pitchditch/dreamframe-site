@@ -148,7 +148,7 @@ const HeroSection = () => {
         {/* Personal Touch Section */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-on-scroll delay-400 bg-white/10 backdrop-blur-sm p-4 rounded-xl max-w-md mx-auto border border-white/20">
           <img 
-            src="/lovable-uploads/10e953e1-c5f0-4899-a3b7-944cf15bca76.png"
+            src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
             alt="Jayden Fisher - Owner" 
             className="w-16 h-16 rounded-full border-2 border-white"
           />

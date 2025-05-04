@@ -178,5 +178,14 @@
   .animate-scroll-vertical {
     animation: scrollVertical 20s linear infinite;
   }
+  
+  /* Horizontal scroll animation for services */
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 1rem)); }
+  }
+  
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
 }
-
