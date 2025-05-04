@@ -1,3 +1,4 @@
+
 import React, { ReactNode } from 'react';
 
 export interface ServiceProcessItemProps {
@@ -9,9 +10,13 @@ export interface ServiceProcessItemProps {
 
 export interface ServiceProcessProps {
   processes?: { title: string; description: string; icon: ReactNode }[];
+  title?: string;
+  description?: string;
+  icon?: ReactNode;
+  number?: number;
 }
 
-const ServiceProcess: React.FC<ServiceProcessProps> = ({ processes }) => {
+const ServiceProcess: React.FC<ServiceProcessProps> = ({ processes, title, description, icon, number }) => {
   // If processes array is provided, render multiple items
   if (processes && processes.length > 0) {
     return (
