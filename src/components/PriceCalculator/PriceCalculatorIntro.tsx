@@ -3,7 +3,7 @@ const PriceCalculatorIntro = () => {
   return <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mb-8 p-6 rounded-xl bg-gradient-to-r from-blue-100 via-blue-50 to-white shadow-lg relative">
       {/* Profile section */}
       <div className="absolute right-6 top-6 hidden sm:block">
-        <img alt="Jayden Fisher – Owner & Operator" className="h-28 w-28 rounded-full border-4 border-blue-200 object-cover shadow-md" src="/lovable-uploads/78b42700-b641-45cf-a11e-fb68f4124509.jpg" />
+        
       </div>
       {/* Text block with fallback image for mobile */}
       <div className="flex-1 min-w-0 text-center sm:text-left">
