@@ -8,29 +8,24 @@ interface LogoProps {
 export const Logo = ({ isOverVideo }: LogoProps) => {
   return (
     <Link to="/" className="flex items-center mr-auto">
-      <div className="logo-container relative h-36 md:h-40 flex items-center perspective-1000">
+      <div className="logo-container relative h-36 md:h-40 flex items-center">
         {isOverVideo ? (
           // White logo for hero section with transparent background
           <img
             src="/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className="spin-logo h-36 md:h-40 w-auto object-contain max-w-[420px] transform-style-preserve-3d"
-            style={{ 
-              filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))',
-              animation: 'spinCoin 5s infinite linear'
-            }}
+            className="h-36 md:h-40 w-auto object-contain max-w-[420px]"
+            style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
           />
         ) : (
           // Black/red logo for scrolled state with white background
           <img
             src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className="spin-logo h-36 md:h-40 w-auto object-contain max-w-[420px] transform-style-preserve-3d"
-            style={{ animation: 'spinCoin 5s infinite linear' }}
+            className="h-36 md:h-40 w-auto object-contain max-w-[420px]"
           />
         )}
       </div>
     </Link>
   );
 };
-
