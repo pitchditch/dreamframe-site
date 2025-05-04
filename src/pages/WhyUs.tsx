@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight } from 'lucide-react';
@@ -5,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
+import CallToAction from '../components/CallToAction';
+
 const WhyUs = () => {
   const {
     t
@@ -89,7 +92,7 @@ const WhyUs = () => {
       <EquipmentSection />
       
       {/* Call to Action */}
-      
+      <CallToAction />
     </Layout>;
 };
 export default WhyUs;

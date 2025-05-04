@@ -71,7 +71,7 @@ const PriceCalculatorOverlay = ({
           </DialogDescription>
         </DialogHeader>
         <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto">
-          <PriceCalculatorForm onComplete={handleComplete} />
+          <PriceCalculatorForm onComplete={handleComplete} initialStep="address" />
         </div>
       </DialogContent>
     </Dialog>
