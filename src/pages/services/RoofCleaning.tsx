@@ -120,27 +120,6 @@ const RoofCleaning = () => {
         </div>
       </section>
 
-      {/* LOCATION BANNER */}
-      <div className="relative z-30 bg-white">
-        <LocationBanner />
-      </div>
-
-      {/* SERVICE AREA MAP */}
-      <section className="py-12 bg-gray-50 relative z-40">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Areas We Service</h2>
-          <ServiceAreaMap />
-          <div className="mt-8">
-            <ServiceAreasCarousel />
-          </div>
-        </div>
-      </section>
-
-      {/* GALLERY/TESTIMONIALS SECTION */}
-      <div className="relative z-50 bg-white">
-        <RoofCleaningGallery />
-      </div>
-
       {/* WHAT WE REMOVE SECTION */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -176,8 +155,18 @@ const RoofCleaning = () => {
         </div>
       </section>
 
+      {/* GALLERY/TESTIMONIALS SECTION */}
+      <div className="relative z-50 bg-white py-16">
+        <RoofCleaningGallery />
+      </div>
+      
+      {/* LOCATION BANNER */}
+      <div className="relative z-30 bg-white">
+        <LocationBanner />
+      </div>
+      
       {/* FAQ SECTION */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white relative">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           
@@ -209,6 +198,17 @@ const RoofCleaning = () => {
                 Yes. We use eco-friendly cleaning solutions and take care to protect surrounding landscaping, plants, and property during the cleaning process.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICE AREA MAP - Moved to the bottom */}
+      <section className="py-12 bg-gray-50 relative z-40">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Areas We Service</h2>
+          <ServiceAreaMap />
+          <div className="mt-8">
+            <ServiceAreasCarousel />
           </div>
         </div>
       </section>

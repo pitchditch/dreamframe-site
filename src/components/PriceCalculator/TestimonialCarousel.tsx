@@ -26,7 +26,7 @@ export const TestimonialCarousel = () => {
           className="flex flex-col gap-4"
           style={{ 
             willChange: 'transform',
-            animation: 'scrollVertical 30s linear infinite',
+            animation: 'scrollVertical 60s linear infinite',
           }}
         >
           {/* Display all images in a vertical flow */}

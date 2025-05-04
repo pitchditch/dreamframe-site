@@ -10,6 +10,7 @@ import {
   CarouselNext
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { testimonialsWithImages } from '@/data/testimonials';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -108,7 +109,7 @@ const RoofCleaningGallery = () => {
           >
             <CarouselContent>
               {roofCleaningTestimonials.map((testimonial) => (
-                <CarouselItem key={testimonial.id} className={`${isMobile ? 'md:basis-1/1' : 'md:basis-1/3'} p-2`}>
+                <CarouselItem key={testimonial.id} className={isMobile ? 'basis-full' : 'basis-1/3'}>
                   <Card className="border-none shadow-lg h-full">
                     <CardContent className="p-0 h-full">
                       <div className="relative h-full flex flex-col">
@@ -176,9 +177,9 @@ const RoofCleaningGallery = () => {
         
         <div className="text-center mt-10">
           <Link to="/testimonials">
-            <button className="btn-primary">
+            <Button className="btn-primary">
               View All Testimonials
-            </button>
+            </Button>
           </Link>
         </div>
       </div>

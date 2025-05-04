@@ -2,8 +2,10 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Percent } from 'lucide-react';
+import { TestimonialCarousel } from '@/components/PriceCalculator/TestimonialCarousel';
+import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
 const Calculator = () => {
   // Check if user was referred from the homepage with a postal code
@@ -30,7 +32,22 @@ const Calculator = () => {
             We serve residential and commercial properties in White Rock and surrounding areas.
           </p>
         </div>
-        <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3">
+            <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
+            
+            <div className="mt-12">
+              <QuestionsForm />
+            </div>
+          </div>
+          
+          <div className="lg:col-span-1 hidden lg:block">
+            <div className="sticky top-32">
+              <TestimonialCarousel />
+            </div>
+          </div>
+        </div>
       </div>
     </Layout>
   );

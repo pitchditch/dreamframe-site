@@ -35,7 +35,7 @@ const ServiceAreasCarousel = () => {
   }, []);
 
   return (
-    <div className="py-6 bg-transparent overflow-hidden w-full">
+    <div className="py-6 bg-gradient-to-r from-gray-100 via-white to-gray-100 overflow-hidden w-full">
       <div className="relative w-full">
         <div 
           ref={carouselRef}
@@ -43,7 +43,7 @@ const ServiceAreasCarousel = () => {
         >
           {/* Duplicate the service areas to create seamless loop */}
           {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
-            <div key={index} className="inline-flex px-4 py-2 mx-1 text-white">
+            <div key={index} className="inline-flex px-4 py-2 mx-1">
               <MapPin size={16} className="text-bc-red mr-2" />
               <span>{area}</span>
             </div>

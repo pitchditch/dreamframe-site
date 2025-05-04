@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import EquipmentSection from '../components/EquipmentSection';
-import { Shield, Leaf } from 'lucide-react';
+import { Shield, Leaf, MapPin } from 'lucide-react';
 
 const Equipment = () => {
   return (
@@ -88,13 +88,32 @@ const Equipment = () => {
         {/* Company Vehicle */}
         <div className="mt-16 max-w-4xl mx-auto">
           <div className="space-y-4">
+            <h2 className="text-3xl font-bold">Our Local Service Vehicle</h2>
             <img 
-              src="/lovable-uploads/4054bbd7-3ebd-48d0-845c-3ec712ac612e.png"
+              src="/lovable-uploads/181cde29-dfdc-4dd4-9d1e-9e95bf60addf.png"
               alt="BC Pressure Washing Company Vehicle"
               className="rounded-lg shadow-lg w-full"
             />
-            <h2 className="text-2xl font-bold">Our Local Service Vehicle</h2>
             <p className="text-gray-700">You've probably seen our distinctive red vehicle parked at White Rock Beach. As a locally owned business with deep roots in the community, we're proud to serve the area where we grew up.</p>
+          </div>
+        </div>
+
+        {/* Locally Operated Section */}
+        <div className="mt-16 max-w-4xl mx-auto bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+          <div className="grid md:grid-cols-2 items-center">
+            <div className="p-0">
+              <img 
+                src="/lovable-uploads/a644a02a-f827-4fde-99a2-d9acedf6dd29.png"
+                alt="Owner's vehicle at White Rock beach"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-8">
+              <h2 className="text-2xl font-bold mb-4">Locally Owned & Operated</h2>
+              <p className="text-gray-700">
+                Seen our red car along Marine Drive? That's me! As a White Rock local, I take pride in serving our beautiful community and surrounding areas. When you choose BC Pressure Washing, you're supporting a local business that truly cares about our neighborhood.
+              </p>
+            </div>
           </div>
         </div>
       </div>
