@@ -17,13 +17,13 @@ const PremiumSolutionsSection = () => {
         // Start the transform when scroll reaches 50% of hero height
         const startTransform = heroHeight * 0.6;
         // Complete the transform at hero height
-        const endTransform = heroHeight * 0.85;
+        const endTransform = heroHeight * 0.9;
         
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 100px below viewport and end at -120px (overlapping the video)
-        const translateY = (1 - progress) * 100 - (progress * 120);
+        // Apply transform - start at 100px below viewport and end at -180px (overlapping the video more)
+        const translateY = (1 - progress) * 100 - (progress * 180);
         section.style.transform = `translateY(${translateY}px)`;
         section.style.opacity = `${Math.min(1, progress * 1.5)}`;
       }
@@ -39,35 +39,35 @@ const PremiumSolutionsSection = () => {
     {
       title: "Window Cleaning",
       description: "Crystal-clear, streak-free windows using advanced pure water technology",
-      image: "/lovable-uploads/73ff1153-6589-4537-996a-1ff5f512cbea.png",
+      image: "/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png",
       link: "/services/window-cleaning"
+    },
+    {
+      title: "House Washing",
+      description: "Safe soft washing techniques to restore your home's exterior beauty",
+      image: "/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png",
+      link: "/services/house-washing"
     },
     {
       title: "Gutter Cleaning",
       description: "Complete gutter cleaning and maintenance to prevent water damage",
-      image: "/lovable-uploads/0c2175e3-0c77-4b8a-8670-db9aa6ff6e63.png",
+      image: "/lovable-uploads/0d6ef232-ef53-475d-a323-3faf6f19982b.png",
       link: "/services/gutter-cleaning"
     },
     {
       title: "Roof Cleaning",
       description: "Gentle but effective moss and algae removal to protect your roof",
-      image: "/lovable-uploads/4da7d34a-a303-4274-ad91-8aeb980fa657.png",
+      image: "/lovable-uploads/b908cb50-e502-4c70-835b-c1deb98ff6fa.png",
       link: "/services/roof-cleaning"
-    },
-    {
-      title: "House Washing",
-      description: "Safe soft washing techniques to restore your home's exterior beauty",
-      image: "/lovable-uploads/c349ee7a-bdd4-43c8-a168-a68aa3b007e3.png",
-      link: "/services/house-washing"
     }
   ];
 
   return (
     <section 
       ref={sectionRef}
-      className="py-16 bg-white relative z-20 rounded-t-[40px] shadow-lg transform will-change-transform"
+      className="py-16 relative z-20 rounded-t-[40px] shadow-lg transform will-change-transform bg-white"
       style={{ 
-        marginTop: '-100px',
+        marginTop: '-120px',
         opacity: 0,
         transform: 'translateY(100px)'
       }}
@@ -83,17 +83,17 @@ const PremiumSolutionsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow bg-white rounded-lg shadow">
-              <div className="relative aspect-video overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
-                />
-              </div>
-              <div className="p-6">
+              <div className="relative p-6 flex flex-col items-center">
+                <div className="w-24 h-24 mb-4">
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
                 <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <Button asChild variant="outline" className="w-full">
+                <p className="text-gray-600 mb-4 text-center">{service.description}</p>
+                <Button asChild variant="outline" className="w-full mt-auto">
                   <Link to={service.link}>
                     Learn More <ArrowRight size={16} className="ml-2" />
                   </Link>

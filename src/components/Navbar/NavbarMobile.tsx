@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Droplets, Building, Home, MessageSquare, Phone, Wind } from 'lucide-react';
+import { ChevronDown, ChevronUp, Phone } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -27,7 +27,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
         <div className="container mx-auto px-4 py-4">
           <nav className="flex flex-col space-y-4">
             <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md">
-              <Home className="w-5 h-5" />
+              <img src="/lovable-uploads/aa6c65c1-a6f5-4b3f-baac-ecc0679d3ce0.png" alt="Logo Icon" className="w-5 h-5 object-contain" />
               <span className="font-medium">{t('Why Us')}</span>
             </Link>
             
@@ -45,26 +45,26 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               }`}>
                 <div className="flex flex-col space-y-4 border-l-2 border-gray-100 pl-4">
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-blue-50 p-1.5 rounded-md">
-                      <Droplets className="w-5 h-5 text-blue-500" />
+                    <div className="bg-blue-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Window Cleaning Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-red-50 p-1.5 rounded-md">
-                      <Home className="w-5 h-5 text-bc-red" />
+                    <div className="bg-red-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png" alt="House Washing Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('House Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-green-50 p-1.5 rounded-md">
-                      <Wind className="w-5 h-5 text-green-600" />
+                    <div className="bg-green-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/0d6ef232-ef53-475d-a323-3faf6f19982b.png" alt="Gutter Cleaning Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('Gutter Cleaning')}</span>
                   </Link>
                   <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-amber-50 p-1.5 rounded-md">
-                      <Home className="w-5 h-5 text-amber-700" />
+                    <div className="bg-amber-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/b908cb50-e502-4c70-835b-c1deb98ff6fa.png" alt="Roof Cleaning Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
@@ -87,20 +87,20 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               }`}>
                 <div className="flex flex-col space-y-4 border-l-2 border-gray-100 pl-4">
                   <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-blue-50 p-1.5 rounded-md">
-                      <Droplets className="w-5 h-5 text-blue-600" />
+                    <div className="bg-blue-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Commercial Window Cleaning Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('Commercial Window Cleaning')}</span>
                   </Link>
                   <Link to="/services/commercial-pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-blue-50 p-1.5 rounded-md">
-                      <Building className="w-5 h-5 text-blue-700" />
+                    <div className="bg-blue-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/abc92e05-fffa-4cad-bb3c-94b74a37bfde.png" alt="Commercial Pressure Washing Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('Commercial Pressure Washing')}</span>
                   </Link>
                   <Link to="/services/post-construction-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="bg-amber-50 p-1.5 rounded-md">
-                      <Home className="w-5 h-5 text-amber-700" />
+                    <div className="bg-amber-50 p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/6d229797-2f4e-4913-b90f-6ee2a95ca9f4.png" alt="Post-Construction Cleaning Icon" className="w-6 h-6 object-contain" />
                     </div>
                     <span>{t('Post-Construction Cleaning')}</span>
                   </Link>

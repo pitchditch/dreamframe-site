@@ -80,12 +80,8 @@ const Index = () => {
         <meta property="og:image" content="/open.png" />
       </Helmet>
       
-      <div className="relative">
-        <div className="hero-section">
-          <HeroSection />
-        </div>
-        <PremiumSolutionsSection />
-      </div>
+      <HeroSection />
+      <PremiumSolutionsSection />
       
       {/* Owner Operated Section */}
       <section className="py-16 bg-gray-100">
@@ -183,8 +179,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Removed ServicesSection - We already have PremiumSolutionsSection above */}
       
       <TestimonialsSection />
       
