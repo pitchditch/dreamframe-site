@@ -126,9 +126,14 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
           </nav>
         </div>
       </div>
-      {/* Call button - Fixed position in the bottom right corner */}
-      <div className="fixed bottom-6 right-6 md:hidden z-30">
-        <a href="tel:7788087620" className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all">
+
+      {/* Fixed call button in bottom right corner - improved positioning with higher z-index */}
+      <div className="fixed bottom-8 right-6 md:hidden z-50">
+        <a 
+          href="tel:7788087620" 
+          className="bg-bc-red text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition-all flex items-center justify-center"
+          aria-label="Call us"
+        >
           <Phone size={24} />
         </a>
       </div>
