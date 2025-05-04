@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Shield, Star, Home, Phone, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     const video = document.getElementById('hero-video') as HTMLVideoElement;
@@ -33,19 +35,34 @@ const HeroSection = () => {
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
-      {/* YouTube Video Background */}
+      {/* YouTube Video Background - Different videos for mobile and desktop */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
-          <iframe 
-            id="hero-video"
-            className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-            src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
-            title="Pressure Washing Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            loading="eager"
-            onLoad={() => setVideoLoaded(true)}
-          ></iframe>
+          {isMobile ? (
+            // Mobile YouTube Video
+            <iframe 
+              id="hero-video"
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+              title="Pressure Washing Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="eager"
+              onLoad={() => setVideoLoaded(true)}
+            ></iframe>
+          ) : (
+            // Desktop YouTube Video
+            <iframe 
+              id="hero-video"
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
+              title="Pressure Washing Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="eager"
+              onLoad={() => setVideoLoaded(true)}
+            ></iframe>
+          )}
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
@@ -57,11 +74,11 @@ const HeroSection = () => {
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll text-shadow-lg">
             <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
           </h1>
           
-          <p className="text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
             Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
           </p>
           

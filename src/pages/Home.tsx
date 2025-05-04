@@ -9,6 +9,7 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
@@ -88,6 +89,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
           <ServiceAreaMap />
+          <ServiceAreasCarousel />
         </div>
       </section>
       

@@ -12,6 +12,7 @@ import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FAQSection from '@/components/FAQSection';
 import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -79,6 +80,7 @@ const Index = () => {
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
         <meta property="og:image" content="/open.png" />
+        <link rel="icon" href="/lovable-uploads/53d080c7-ad32-4a8b-b743-abb557d2c8ef.png" type="image/png" />
       </Helmet>
       
       <HeroSection />
@@ -228,6 +230,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
           <ServiceAreaMap />
+          <ServiceAreasCarousel />
         </div>
       </section>
       
