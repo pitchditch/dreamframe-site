@@ -74,7 +74,7 @@ const ChatAssistant = () => {
         <div className="absolute bottom-20 right-0 w-[350px] bg-white rounded-xl shadow-xl p-5 border border-gray-200">
           <div className="flex items-center gap-4 mb-5">
             <img
-              src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
+              src="/lovable-uploads/e0f67b72-91c6-428d-a7a0-8cde935e35d8.png"
               alt="BC Pressure Washing Assistant"
               className="w-16 h-16 rounded-full object-cover border-2 border-bc-red"
             />

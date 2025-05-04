@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -57,7 +56,7 @@ const HeroSection = () => {
 
   // Ghost writer effect for postal code input
   useEffect(() => {
-    if (inputRef.current !== document.activeElement && ghostText === '') {
+    if (inputRef.current !== document.activeElement && !postalCode) {
       const timer = setTimeout(() => {
         if (isTyping && !isPaused) {
           // Typing forward
@@ -89,7 +88,7 @@ const HeroSection = () => {
     }
     
     return () => {};
-  }, [ghostText, currentGhostChar, isTyping, ghostIndex, isPaused]);
+  }, [ghostText, currentGhostChar, isTyping, ghostIndex, isPaused, postalCode]);
 
   // Clear ghost text on focus
   const handleInputFocus = () => {
