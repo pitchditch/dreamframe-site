@@ -8,10 +8,10 @@ import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection'
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
-import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FAQSection from '@/components/FAQSection';
 import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
+import CitiesCarousel from '../components/CitiesCarousel';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -188,8 +188,12 @@ const Index = () => {
       
       {/* 100% Satisfaction Guarantee Section */}
       <section className="py-12 bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-[url('/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 opacity-30">
+          <img 
+            src="/lovable-uploads/228f6edc-1fa8-49ea-a238-7834839e9829.png" 
+            alt="Satisfaction Guarantee Background" 
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
@@ -223,13 +227,8 @@ const Index = () => {
         darkMode={true}
       />
       
-      {/* Service Areas Section - Only on homepage */}
-      <section className="py-16 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-          <ServiceAreaMap />
-        </div>
-      </section>
+      {/* Service Areas Section - Changed to Carousel */}
+      <CitiesCarousel />
       
       <ReferralButton />
     </Layout>

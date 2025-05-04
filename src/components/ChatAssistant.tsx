@@ -6,6 +6,7 @@ import { MessageCircle, X } from 'lucide-react';
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isHoveringFAQ, setIsHoveringFAQ] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,10 +16,10 @@ const ChatAssistant = () => {
         : null;
       
       if (faqSection) {
-        const faqSectionBottom = faqSection.getBoundingClientRect().bottom;
+        const faqSectionTop = faqSection.getBoundingClientRect().top;
         
-        // Show chat assistant only after scrolling past the FAQ section
-        if (faqSectionBottom <= 0) {
+        // Show chat assistant only after scrolling to the FAQ section
+        if (faqSectionTop <= window.innerHeight) {
           setIsVisible(true);
         } else {
           setIsVisible(false);
@@ -32,8 +33,40 @@ const ChatAssistant = () => {
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Check initial position
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Setup FAQ section hover detection
+    const setupFAQHoverDetection = () => {
+      const faqSection = document.querySelector('section h2[class*="text"]')?.textContent?.includes('FAQ') 
+        ? document.querySelector('section h2[class*="text"]')?.closest('section')
+        : null;
+      
+      if (faqSection) {
+        faqSection.addEventListener('mouseenter', () => setIsHoveringFAQ(true));
+        faqSection.addEventListener('mouseleave', () => setIsHoveringFAQ(false));
+      }
+    };
+    
+    // Wait a bit for the DOM to be ready
+    setTimeout(setupFAQHoverDetection, 1000);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      const faqSection = document.querySelector('section h2[class*="text"]')?.textContent?.includes('FAQ') 
+        ? document.querySelector('section h2[class*="text"]')?.closest('section')
+        : null;
+      
+      if (faqSection) {
+        faqSection.removeEventListener('mouseenter', () => setIsHoveringFAQ(true));
+        faqSection.removeEventListener('mouseleave', () => setIsHoveringFAQ(false));
+      }
+    };
   }, []);
+
+  // Auto-open the chat when hovering over FAQ
+  useEffect(() => {
+    if (isHoveringFAQ && !isOpen && isVisible) {
+      setIsOpen(true);
+    }
+  }, [isHoveringFAQ, isOpen, isVisible]);
 
   if (!isVisible) return null;
 
