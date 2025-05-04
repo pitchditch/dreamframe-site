@@ -17,11 +17,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link to="/" className={mainNavLinkClassName}>Home</Link>
+            <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
           </NavigationMenuItem>
           
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Services</NavigationMenuTrigger>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Residential Services</NavigationMenuTrigger>
             <NavigationMenuContent>
               <div className="w-[600px] bg-white p-4 rounded-lg shadow-lg grid grid-cols-2 gap-3">
                 <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
@@ -81,11 +81,50 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           </NavigationMenuItem>
           
           <NavigationMenuItem>
-            <Link to="/calculator" className={mainNavLinkClassName}>Get a Quote</Link>
-          </NavigationMenuItem>
-          
-          <NavigationMenuItem>
-            <Link to="/about" className={mainNavLinkClassName}>About</Link>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Commercial Services</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className="w-[500px] bg-white p-4 rounded-lg shadow-lg">
+                <Link to="/services/commercial-window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-blue-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Commercial Window Cleaning</h4>
+                      <p className="text-sm text-gray-600">Professional cleaning for business properties</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/commercial-pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-green-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Commercial Pressure Washing</h4>
+                      <p className="text-sm text-gray-600">Exterior cleaning for commercial buildings</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/post-construction-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 bg-amber-100 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Post-Construction Cleaning</h4>
+                      <p className="text-sm text-gray-600">Cleanup after construction projects</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </NavigationMenuContent>
           </NavigationMenuItem>
           
           <NavigationMenuItem>
