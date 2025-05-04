@@ -28,17 +28,17 @@ const formSchema = z.object({
 type AddressFormValues = z.infer<typeof formSchema>;
 
 export default function StepAddress({ onNext, onBack, formData, updateFormData, form: parentForm, selectedPackage }: StepProps) {
-  // Load saved zip code if available
-  const [storedZipCode, setStoredZipCode] = useState('');
+  // Load saved postal code and email if available
+  const [storedPostalCode, setStoredPostalCode] = useState('');
   const [storedEmail, setStoredEmail] = useState('');
   
   useEffect(() => {
-    const userZipCode = sessionStorage.getItem('userZipCode');
-    const userEmail = sessionStorage.getItem('userEmail');
+    const userPostalCode = sessionStorage.getItem('userPostalCode') || localStorage.getItem('userPostalCode');
+    const userEmail = sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail');
     
-    if (userZipCode) {
-      setStoredZipCode(userZipCode);
-      updateFormData({ ...formData, address: { ...formData.address, postalCode: userZipCode } });
+    if (userPostalCode) {
+      setStoredPostalCode(userPostalCode);
+      updateFormData({ ...formData, address: { ...formData.address, postalCode: userPostalCode } });
     }
     
     if (userEmail) {
@@ -52,19 +52,21 @@ export default function StepAddress({ onNext, onBack, formData, updateFormData, 
     defaultValues: {
       street: formData.address?.street || '',
       city: formData.address?.city || '',
-      postalCode: formData.address?.postalCode || storedZipCode || '',
+      postalCode: formData.address?.postalCode || storedPostalCode || '',
       email: formData.contact?.email || storedEmail || '',
     },
   });
 
   const onSubmit = (values: AddressFormValues) => {
-    // Store the collected information in session storage
+    // Store the collected information in both session and local storage
     if (values.postalCode) {
-      sessionStorage.setItem('userZipCode', values.postalCode);
+      sessionStorage.setItem('userPostalCode', values.postalCode);
+      localStorage.setItem('userPostalCode', values.postalCode);
     }
     
     if (values.email) {
       sessionStorage.setItem('userEmail', values.email);
+      localStorage.setItem('userEmail', values.email);
     }
     
     updateFormData({
@@ -85,14 +87,14 @@ export default function StepAddress({ onNext, onBack, formData, updateFormData, 
   
   // Update form when stored values change
   useEffect(() => {
-    if (storedZipCode) {
-      form.setValue('postalCode', storedZipCode);
+    if (storedPostalCode) {
+      form.setValue('postalCode', storedPostalCode);
     }
     
     if (storedEmail) {
       form.setValue('email', storedEmail);
     }
-  }, [storedZipCode, storedEmail, form]);
+  }, [storedPostalCode, storedEmail, form]);
 
   return (
     <div className="w-full">

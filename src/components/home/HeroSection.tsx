@@ -9,6 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const HeroSection = () => {
   const { t, language } = useTranslation();
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showQuoteGuide, setShowQuoteGuide] = useState(false);
   const isMobile = useIsMobile();
   
   useEffect(() => {
@@ -26,10 +27,16 @@ const HeroSection = () => {
       }
     }
     
+    // Show the quote guide animation after a delay
+    const timer = setTimeout(() => {
+      setShowQuoteGuide(true);
+    }, 2000);
+    
     return () => {
       if (video) {
         video.removeEventListener('loadeddata', handleVideoLoad);
       }
+      clearTimeout(timer);
     };
   }, []);
 
@@ -94,6 +101,16 @@ const HeroSection = () => {
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Home className="text-white mr-2" size={20} />
               <span className="text-white font-medium">Locally Owned</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Quote Guide Animation */}
+        <div className={`relative ${showQuoteGuide ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+          <div className="absolute -top-16 right-0 md:right-32 transform translate-y-0 animate-bounce">
+            <div className="bg-white text-gray-800 p-3 rounded-xl max-w-[200px] shadow-xl relative">
+              <p className="text-sm font-medium">Get Your Free Quote Today!</p>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 bg-white"></div>
             </div>
           </div>
         </div>
