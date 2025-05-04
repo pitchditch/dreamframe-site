@@ -60,7 +60,7 @@ const HeroSection = () => {
     if (inputRef.current !== document.activeElement && !postalCode) {
       const timer = setTimeout(() => {
         if (isTyping && !isPaused) {
-          // Typing forward
+          // Typing forward - slower now (250ms instead of 150ms)
           if (currentGhostChar < lowerMainlandPostalCodes[ghostIndex].length) {
             setGhostText(lowerMainlandPostalCodes[ghostIndex].substring(0, currentGhostChar + 1));
             setCurrentGhostChar(prev => prev + 1);
@@ -73,7 +73,7 @@ const HeroSection = () => {
             }, 2000);
           }
         } else if (!isTyping && !isPaused) {
-          // Deleting
+          // Deleting - slightly slower (80ms instead of 50ms)
           if (currentGhostChar > 0) {
             setGhostText(lowerMainlandPostalCodes[ghostIndex].substring(0, currentGhostChar - 1));
             setCurrentGhostChar(prev => prev - 1);
@@ -83,7 +83,7 @@ const HeroSection = () => {
             setGhostIndex((prev) => (prev + 1) % lowerMainlandPostalCodes.length);
           }
         }
-      }, isTyping ? 150 : 50);
+      }, isTyping ? 250 : 80); // Slowed down typing and deleting speed
       
       return () => clearTimeout(timer);
     }
@@ -153,7 +153,7 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-24 sm:pt-16 md:pt-0">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-32 sm:pt-24 md:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>

@@ -30,7 +30,7 @@ const ServiceAreasCarousel = () => {
   }, []);
 
   return (
-    <div className="py-6 bg-gray-900 overflow-hidden w-full border-t border-gray-800">
+    <div className="py-6 bg-gray-900 overflow-hidden w-full">
       <div className="relative w-full">
         <div ref={carouselRef} className="flex overflow-x-hidden scrollbar-none whitespace-nowrap w-full">
           {/* Duplicate the service areas to create seamless loop */}
