@@ -4,41 +4,58 @@ import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide
 import { useLocation } from 'react-router-dom';
 import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
-import FAQSection from './FAQSection';
-import LocationBanner from './LocationBanner';
 
 const Footer = () => {
-  const footerFaqs = [
-    {
-      question: "What areas do you service?",
-      answer: "We serve White Rock, Surrey, South Surrey, Langley, Delta, Tsawwassen, Ladner, Richmond, Vancouver, North Vancouver, West Vancouver, Burnaby, New Westminster, Coquitlam, Port Coquitlam, Port Moody, Pitt Meadows, Maple Ridge, Mission, and Abbotsford."
-    },
-    {
-      question: "Do you offer free estimates?",
-      answer: "Yes, we provide free, no-obligation estimates for all our services. Contact us to schedule yours today!"
-    },
-    {
-      question: "Are you insured and licensed?",
-      answer: "Yes, BC Pressure Washing is fully insured and licensed, giving you peace of mind when we work on your property."
-    },
-    {
-      question: "How do I schedule a service?",
-      answer: "You can schedule a service by calling us at 778-808-7620, emailing bcpressurewashing.ca@gmail.com, or using our online contact form."
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer: "We accept cash, e-transfers, credit cards, and checks for your convenience."
-    }
-  ];
-
+  const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
+  
   return <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
-        <FAQSection 
-          title="Frequently Asked Questions" 
-          faqs={footerFaqs} 
-        />
+        {/* Only show FAQs on non-homepage routes */}
+        {!isHomePage && (
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-white text-center mb-6">Quick Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div>
+                <h4 className="text-xl font-semibold mb-4">Business Hours</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <Clock className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
+                    <div>
+                      <div>Monday-Friday: 8AM - 6PM</div>
+                      <div>Saturday: 9AM - 5PM</div>
+                      <div>Sunday: Closed</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold mb-4">Contact</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <Phone className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
+                    <span>778-808-7620</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Mail className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
+                    <span>bcpressurewashing.ca@gmail.com</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold mb-4">Location</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <MapPin className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
+                    <span>15501 Marine Dr, White Rock, BC</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
         
-        <LocationBanner />
+        {/* LocationBanner has been removed */}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 mt-16">
           {/* Logo and social media links */}

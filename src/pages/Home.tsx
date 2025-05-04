@@ -3,13 +3,11 @@ import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import ServicesSection from '../components/home/ServicesSection';
 import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import PackagesSection from '../components/home/PackagesSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
-import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 const Home = () => {
@@ -60,7 +58,6 @@ const Home = () => {
       <HeroSection />
       <SpringSaleCarousel />
       <TestimonialsSection />
-      <ServicesSection />
       <PackagesSection />
       
       {/* Full Width Contact Section */}
@@ -85,9 +82,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
-      {/* Location Banner */}
-      <LocationBanner />
       
       {/* Service Area Map */}
       <section className="py-16 bg-white">

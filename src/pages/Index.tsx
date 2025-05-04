@@ -4,16 +4,13 @@ import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
-import ServicesSection from '../components/home/ServicesSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
-import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FAQSection from '@/components/FAQSection';
-import ServiceAreasList from '@/components/ServiceAreasList';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -186,8 +183,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Removed ServicesSection - We already have PremiumSolutionsSection above */}
       
-      <ServicesSection />
       <TestimonialsSection />
       
       {/* 100% Satisfaction Guarantee Section */}
@@ -219,7 +217,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* FAQ Section with dark background */}
+      {/* Home page specific FAQ Section with dark background */}
       <FAQSection 
         title="Frequently Asked Questions" 
         subtitle="Everything you need to know about our services"
@@ -227,11 +225,11 @@ const Index = () => {
         darkMode={true}
       />
       
-      {/* Service Areas Section */}
+      {/* Service Areas Section - Only on homepage */}
       <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-          <ServiceAreasList />
+          <ServiceAreaMap />
         </div>
       </section>
       
