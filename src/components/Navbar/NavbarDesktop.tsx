@@ -12,10 +12,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   }`;
 
   return (
-    <nav className="hidden lg:flex items-center w-full justify-between">
-      <div className="flex-1"></div>
+    <nav className="hidden lg:flex items-center w-full justify-between px-4">
+      <div className="flex-1 max-w-[300px]"></div>
       <NavigationMenu className="flex-1 flex justify-center">
-        <NavigationMenuList className="space-x-2">
+        <NavigationMenuList className="space-x-6">
           <NavigationMenuItem>
             <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
           </NavigationMenuItem>
@@ -119,7 +119,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex-1 flex justify-end">
+      <div className="flex-1 max-w-[300px] flex justify-end">
         <a 
           href="tel:7788087620" 
           className={`px-5 py-3 rounded-lg transition-all font-semibold ${

@@ -22,7 +22,7 @@ const PremiumSolutionsSection = () => {
         // Calculate the progress between 0 and 1
         const progress = Math.min(1, Math.max(0, (scrollY - startTransform) / (endTransform - startTransform)));
         
-        // Apply transform - start at 120px below viewport and end at -200px (overlapping the video more)
+        // Apply transform - start at 120px below viewport and end at -200px (overlapping the hero more)
         const translateY = (1 - progress) * 120 - (progress * 200);
         section.style.transform = `translateY(${translateY}px)`;
         section.style.opacity = `${Math.min(1, progress * 1.5)}`;
@@ -65,7 +65,7 @@ const PremiumSolutionsSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="py-16 relative z-20 rounded-t-[40px] shadow-lg transform will-change-transform bg-white"
+      className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg transform will-change-transform"
       style={{ 
         marginTop: '-160px',
         opacity: 0,
