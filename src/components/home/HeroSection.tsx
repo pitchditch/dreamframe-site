@@ -75,17 +75,17 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 md:pt-0">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-24 sm:pt-16 md:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll text-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll text-shadow-lg">
             <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
           </h1>
           
-          <p className="text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
+          <p className="text-lg sm:text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
             Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
           </p>
           
@@ -105,11 +105,14 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Quote Guide Animation */}
+        {/* Quote Guide Animation - Adjusted position for mobile */}
         <div className={`relative ${showQuoteGuide ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-          <div className="absolute -top-16 right-0 md:right-32 transform translate-y-0 animate-bounce">
+          <div className={`absolute ${isMobile ? '-top-12 right-1' : '-top-16 right-0 md:right-32'} transform translate-y-0 animate-bounce`}>
             <div className="bg-white text-gray-800 p-3 rounded-xl max-w-[200px] shadow-xl relative">
-              <p className="text-sm font-medium">Get Your Free Quote Today!</p>
+              <div className="flex items-center">
+                <MessageSquare className="text-bc-red mr-2" size={18} />
+                <p className="text-sm font-medium">Get Your Free Quote Today!</p>
+              </div>
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 bg-white"></div>
             </div>
           </div>

@@ -104,6 +104,20 @@ iframe#hero-video {
   animation: fadeUpIn 0.8s ease forwards;
 }
 
+/* Logo spin animation */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo-spin {
+  animation: logo-spin 1.5s linear;
+}
+
 /* Service Card Styles */
 .service-card {
   background-color: #fff;
@@ -152,6 +166,19 @@ footer {
 
 .animate-slide-in {
   animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-custom-bounce {
+  animation: bounce 2s infinite;
 }
 
 /* Utility Classes */
@@ -330,4 +357,35 @@ footer {
 
 .chat-button {
   animation: pulse-border 2s infinite;
+}
+
+/* Chat bubble animation */
+.chat-bubble {
+  position: relative;
+  animation: bubble-bounce 2.5s ease-in-out infinite;
+}
+
+@keyframes bubble-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Text shadow utilities */
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0,0,0,0.7);
+}
+
+/* Mobile navbar spacing fix */
+@media (max-width: 768px) {
+  .navbar-mobile-padding {
+    padding-top: 80px;
+  }
 }

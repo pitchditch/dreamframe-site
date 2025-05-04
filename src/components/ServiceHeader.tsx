@@ -2,6 +2,7 @@
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ServiceHeaderProps {
   title: ReactNode;
@@ -26,6 +27,8 @@ const ServiceHeader = ({
   buttonPosition = 'center',
   youtubeId
 }: ServiceHeaderProps) => {
+  const isMobile = useIsMobile();
+  
   // Use useEffect to add and remove the has-video-header class
   useEffect(() => {
     if (videoUrl || youtubeId) {
@@ -35,6 +38,11 @@ const ServiceHeader = ({
       };
     }
   }, [videoUrl, youtubeId]);
+
+  // Adjust title text size based on mobile view
+  const titleClasses = isMobile
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20" // Added padding top for mobile
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow";
 
   return (
     <div className="relative w-full h-screen">
@@ -54,7 +62,7 @@ const ServiceHeader = ({
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
-              {title && <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>}
+              {title && <h1 className={titleClasses}>{title}</h1>}
               {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
@@ -86,7 +94,7 @@ const ServiceHeader = ({
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
-              {title && <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">{title}</h1>}
+              {title && <h1 className={titleClasses}>{title}</h1>}
               {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
@@ -120,7 +128,7 @@ const ServiceHeader = ({
           <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
             <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
-              {title && <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">{title}</h1>}
+              {title && <h1 className={titleClasses}>{title}</h1>}
               {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
