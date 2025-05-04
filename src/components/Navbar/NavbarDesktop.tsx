@@ -7,15 +7,15 @@ interface NavbarDesktopProps {
 }
 
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
-  const mainNavLinkClassName = `transition-colors font-medium px-3 py-2 rounded-md text-lg ${
+  const mainNavLinkClassName = `transition-colors font-medium px-4 py-2 rounded-md text-lg ${
     isOverVideo ? 'text-white hover:bg-white/10' : 'text-gray-800 hover:bg-gray-100'
   }`;
 
   return (
     <nav className="hidden lg:flex items-center w-full justify-between px-4">
-      <div className="flex-1 max-w-[300px]"></div>
+      <div className="flex-1 max-w-[350px]"></div>
       <NavigationMenu className="flex-1 flex justify-center">
-        <NavigationMenuList className="space-x-6">
+        <NavigationMenuList className="space-x-8">
           <NavigationMenuItem>
             <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
           </NavigationMenuItem>
@@ -27,7 +27,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-blue-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png" alt="Window Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png" alt="Window Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Window Cleaning</h4>
@@ -38,7 +38,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-green-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/4f5100f2-42bb-471b-aad7-f0700e9a1cab.png" alt="House Washing Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png" alt="House Washing Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">House Washing</h4>
@@ -49,7 +49,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/gutter-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-yellow-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/fe37717f-5fc0-4f4d-9b7c-943b7d4c734f.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Gutter Cleaning</h4>
@@ -60,7 +60,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                 <Link to="/services/roof-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 bg-red-100 rounded-full p-2 flex items-center justify-center w-12 h-12">
-                      <img src="/lovable-uploads/a8be056c-8537-4e17-9559-6514a98817f0.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-contain" />
+                      <img src="/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-1">Roof Cleaning</h4>
@@ -119,7 +119,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex-1 max-w-[300px] flex justify-end">
+      <div className="flex-1 max-w-[350px] flex justify-end">
         <a 
           href="tel:7788087620" 
           className={`px-5 py-3 rounded-lg transition-all font-semibold ${

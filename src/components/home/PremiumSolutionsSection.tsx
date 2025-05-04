@@ -39,25 +39,25 @@ const PremiumSolutionsSection = () => {
     {
       title: "Window Cleaning",
       description: "Crystal-clear, streak-free windows using advanced pure water technology",
-      image: "/lovable-uploads/7fa0104e-36e2-445b-8e02-acb214231c27.png",
+      image: "/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png",
       link: "/services/window-cleaning"
     },
     {
       title: "House Washing",
       description: "Safe soft washing techniques to restore your home's exterior beauty",
-      image: "/lovable-uploads/4f5100f2-42bb-471b-aad7-f0700e9a1cab.png",
+      image: "/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png",
       link: "/services/house-washing"
     },
     {
       title: "Gutter Cleaning",
       description: "Complete gutter cleaning and maintenance to prevent water damage",
-      image: "/lovable-uploads/fe37717f-5fc0-4f4d-9b7c-943b7d4c734f.png",
+      image: "/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png",
       link: "/services/gutter-cleaning"
     },
     {
       title: "Roof Cleaning",
       description: "Gentle but effective moss and algae removal to protect your roof",
-      image: "/lovable-uploads/a8be056c-8537-4e17-9559-6514a98817f0.png",
+      image: "/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png",
       link: "/services/roof-cleaning"
     }
   ];
