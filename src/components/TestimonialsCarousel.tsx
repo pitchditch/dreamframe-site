@@ -21,13 +21,22 @@ const TestimonialsCarousel = () => {
   const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Initialize testimonials with profile pictures
+  // Initialize testimonials with prioritized before/after images
   useEffect(() => {
-    const updatedTestimonials = testimonials
+    // Filter out testimonials with beforeAfterImages first
+    const testimonialsWithBeforeAfter = testimonials
       .filter(Boolean)
-      .filter(testimonial => testimonial.profileImage); // Only show testimonials with profile images
+      .filter(testimonial => testimonial.beforeAfterImage);
+      
+    // Then get testimonials with profile images (but no before/after)
+    const testimonialsWithProfileOnly = testimonials
+      .filter(Boolean)
+      .filter(testimonial => testimonial.profileImage && !testimonial.beforeAfterImage);
     
-    setAllTestimonials(updatedTestimonials);
+    // Combine them with before/after images first
+    const sortedTestimonials = [...testimonialsWithBeforeAfter, ...testimonialsWithProfileOnly];
+    
+    setAllTestimonials(sortedTestimonials);
   }, []);
 
   // Auto-rotate testimonials continuously without stopping on hover

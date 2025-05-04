@@ -15,7 +15,7 @@ export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkPr
   return (
     <Link 
       to={to} 
-      className={`relative transition-all duration-300 hover:scale-105 ${
+      className={`relative transition-all duration-300 hover:scale-110 ${
         isOverVideo 
         ? 'text-white hover:text-bc-red hover:text-shadow-white text-shadow-sm' 
         : `text-black hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`

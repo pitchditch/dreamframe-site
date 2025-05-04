@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
 
@@ -7,8 +6,8 @@ interface NavbarDesktopProps {
 }
 
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
-  const mainNavLinkClassName = `transition-colors font-medium px-4 py-2 rounded-md text-lg whitespace-nowrap ${
-    isOverVideo ? 'text-white hover:bg-white/10' : 'text-gray-800 hover:bg-gray-100'
+  const mainNavLinkClassName = `transition-colors transition-transform duration-200 font-medium px-4 py-2 rounded-md text-lg whitespace-nowrap hover:scale-110 ${
+    isOverVideo ? 'text-white hover:text-bc-red hover:bg-white/10' : 'text-gray-800 hover:text-bc-red hover:bg-gray-100'
   }`;
 
   return (
@@ -22,7 +21,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           </NavigationMenuItem>
           
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Residential</NavigationMenuTrigger>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200' : 'text-gray-800 text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200'}>Residential</NavigationMenuTrigger>
             <NavigationMenuContent>
               <div className="w-[600px] bg-white p-4 rounded-lg shadow-lg grid grid-cols-2 gap-3">
                 <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
@@ -74,7 +73,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           </NavigationMenuItem>
           
           <NavigationMenuItem>
-            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium' : 'text-gray-800 text-lg font-medium'}>Commercial</NavigationMenuTrigger>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200' : 'text-gray-800 text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200'}>Commercial</NavigationMenuTrigger>
             <NavigationMenuContent>
               <div className="w-[500px] bg-white p-4 rounded-lg shadow-lg">
                 <Link to="/services/commercial-window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
