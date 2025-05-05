@@ -74,6 +74,7 @@ const ServiceHeader = ({
               src={`https://www.youtube.com/embed/${effectiveYoutubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${effectiveYoutubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
               title="Service Video"
               className="absolute inset-0 w-full h-full object-cover"
+              style={{ border: 0, transform: isMobile ? 'scale(1.8)' : 'scale(1.5)' }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

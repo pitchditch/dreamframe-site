@@ -29,11 +29,11 @@ const ServiceAreaMap = () => {
           />
         </div>
         
-        {/* Always spinning BC logo in the corner */}
-        <div className="absolute bottom-4 right-4 perspective-1000 logo-container" style={{ width: '80px', height: '80px' }}>
+        {/* Always spinning BC logo in the corner - removed border */}
+        <div className="absolute bottom-4 right-4 perspective-1000" style={{ width: '80px', height: '80px' }}>
           <img 
             alt="BC Pressure Washing" 
-            className="spin-logo" 
+            className="animate-spin-coin" 
             src="/lovable-uploads/a8f2fb18-00c0-4993-9305-cece94d688a5.png" 
           />
         </div>

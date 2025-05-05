@@ -64,10 +64,10 @@ const HeroSection = () => {
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
-            // Mobile YouTube Video - Updated short video
+            // Mobile YouTube Video - Updated short video with proper scaling
             <iframe 
               id="hero-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full top-0 left-0 scale-[1.8] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               src="https://www.youtube.com/embed/HuXyYAxC4Fs?autoplay=1&mute=1&controls=0&loop=1&playlist=HuXyYAxC4Fs&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
               title="Pressure Washing Video"
               frameBorder="0"
@@ -95,7 +95,7 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-28 sm:pt-24 md:pt-0">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
+          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-10">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           

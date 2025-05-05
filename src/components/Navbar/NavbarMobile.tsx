@@ -20,7 +20,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`md:hidden transition-all duration-300 overflow-hidden bg-white ${
+        className={`md:hidden fixed top-20 left-0 right-0 z-30 transition-all duration-300 overflow-hidden bg-white ${
           isMenuOpen ? 'max-h-[800px] shadow-lg' : 'max-h-0'
         }`}
       >
@@ -127,9 +127,9 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
         </div>
       </div>
 
-      {/* Call button now placed in the middle of the navbar for mobile */}
+      {/* Call button now placed at the bottom right for mobile */}
       {!isMenuOpen && (
-        <div className="fixed top-1/2 right-4 md:hidden z-50 transform -translate-y-1/2">
+        <div className="fixed bottom-6 right-6 md:hidden z-50">
           <a 
             href="tel:7788087620" 
             className="bg-bc-red text-white p-4 rounded-full shadow-xl hover:bg-red-700 transition-all flex items-center justify-center"

@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
@@ -55,15 +54,20 @@ const RoofCleaning = () => {
         <meta name="description" content="Professional roof cleaning and moss removal services in Surrey, White Rock, and South Surrey. Extend the life of your roof while improving curb appeal." />
       </Helmet>
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION - Updated with the new YouTube video */}
       <div className="w-full h-screen relative bg-black overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
-          <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" title="Roof Cleaning Process" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style={{
-          border: 'none',
-          width: '100vw',
-          height: '100vh',
-          objectFit: 'cover'
-        }} />
+          <iframe className="absolute inset-0 w-full h-full" 
+            src="https://www.youtube.com/embed/twtzf2gRdFU?autoplay=1&mute=1&loop=1&playlist=twtzf2gRdFU&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" 
+            title="Roof Cleaning Process" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            style={{
+              border: 'none',
+              width: '100vw',
+              height: '100vh',
+              objectFit: 'cover',
+              transform: 'scale(1.8)'
+            }} />
           <div className="absolute inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
             <div className="text-center px-6">
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
@@ -80,6 +84,7 @@ const RoofCleaning = () => {
         </div>
       </div>
 
+      {/* Rest of the page content */}
       {/* BENEFITS SECTION */}
       <div className="relative z-10 -mt-32 pt-32 bg-white">
         <ServiceBenefits title="Why Clean Your Roof?" subtitle="More than just curb appeal - protect your investment" benefits={benefits} />

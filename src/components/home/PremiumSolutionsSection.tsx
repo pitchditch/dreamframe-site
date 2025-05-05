@@ -1,78 +1,111 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useTranslation } from '@/hooks/use-translation';
+import ServiceCard from '../ServiceCard';
+import { Check } from 'lucide-react';
+
+interface ServiceInfo {
+  title: string;
+  description: string;
+  link: string;
+  image: string;
+  whatIsIncluded: string[];
+}
 
 const PremiumSolutionsSection = () => {
-  const services = [
+  const { t } = useTranslation();
+  
+  // Service information with "What's Included" lists
+  const services: ServiceInfo[] = [
     {
-      title: "Window Cleaning",
-      description: "Crystal-clear, streak-free windows using advanced pure water technology",
-      image: "/lovable-uploads/55bfc658-50d0-48fe-ac66-4ba487558bb8.png",
-      link: "/services/window-cleaning"
+      title: t('Window Cleaning'),
+      description: t('Crystal-clear, streak-free windows using advanced pure water technology'),
+      link: '/services/window-cleaning',
+      image: '/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png',
+      whatIsIncluded: [
+        'Interior & exterior window cleaning',
+        'Screen cleaning',
+        'Frame & sill cleaning',
+        'Gentle, eco-friendly cleaning solutions',
+        'Track & detail cleaning'
+      ]
     },
     {
-      title: "House Washing",
-      description: "Safe soft washing techniques to restore your home's exterior beauty",
-      image: "/lovable-uploads/64e17c22-a0ba-4ad1-94f6-60f204cf37b1.png",
-      link: "/services/house-washing"
+      title: t('House Washing'),
+      description: t('Restore the beauty of your exterior surfaces with our specialized pressure washing services'),
+      link: '/services/pressure-washing',
+      image: '/lovable-uploads/5ac75bee-3951-47f2-9a3c-871acaf8f01b.png',
+      whatIsIncluded: [
+        'Safe soft wash techniques with SH',
+        'Surface cleaners for even results',
+        'Extendable poles to reach hard-to-reach spots',
+        '2 years guarantee no moss',
+        'Eco-friendly cleaning solutions'
+      ]
     },
     {
-      title: "Gutter Cleaning",
-      description: "Complete gutter cleaning and maintenance to prevent water damage",
-      image: "/lovable-uploads/aead2bc0-52db-4534-b826-b41fe11a14a0.png",
-      link: "/services/gutter-cleaning"
+      title: t('Gutter Cleaning'),
+      description: t('Maintain proper drainage and protect your foundation with thorough gutter cleaning'),
+      link: '/services/gutter-cleaning',
+      image: '/lovable-uploads/f899a443-8930-4364-b538-916f65545f84.png',
+      whatIsIncluded: [
+        'Roof blow off',
+        'Complete gutter debris removal',
+        'Gutter cleaning and flushing',
+        'Installation of leaf guards (optional)',
+        'Gutter stick installation (optional)'
+      ]
     },
     {
-      title: "Roof Cleaning",
-      description: "Gentle but effective moss and algae removal to protect your roof",
-      image: "/lovable-uploads/fd20884f-f0f2-40f2-ac11-daa1fbd7f404.png",
-      link: "/services/roof-cleaning"
-    }
+      title: t('Roof Cleaning'),
+      description: t('Remove unsightly moss, algae, and stains from your roof to extend its lifespan'),
+      link: '/services/roof-cleaning',
+      image: '/lovable-uploads/51f10eb0-c939-49d5-8ab5-2235a162169e.png',
+      whatIsIncluded: [
+        'Moss and algae treatment',
+        'Low-pressure cleaning',
+        'Preventative treatments',
+        'Roof inspection for damage',
+        'Gutter clearing included'
+      ]
+    },
   ];
 
   return (
-    <section 
-      className="py-16 relative z-20 rounded-t-[40px] bg-white shadow-lg mt-20"
-    >
-      <div className="container mx-auto px-4 pt-8">
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Premium Cleaning Solutions</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Our professional exterior cleaning services deliver exceptional results using state-of-the-art equipment and eco-friendly products.
+            Our comprehensive exterior cleaning services are designed to maintain and enhance the appearance and value of your property.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <div key={index} className="overflow-hidden h-full hover:shadow-lg transition-shadow bg-white rounded-lg shadow">
-              <div className="relative p-6 flex flex-col items-center">
-                <div className="w-40 h-40 mb-4">
-                  <img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4 text-center">{service.description}</p>
-                <Button asChild variant="outline" className="w-full mt-auto">
-                  <Link to={service.link}>
-                    Learn More <ArrowRight size={16} className="ml-2" />
-                  </Link>
-                </Button>
+            <div key={index} className="flex flex-col h-full">
+              <ServiceCard
+                title={service.title}
+                description={service.description}
+                link={service.link}
+                image={service.image}
+                imageAlt={`${service.title} Service`}
+              />
+              
+              {/* What's Included Section */}
+              <div className="mt-4 bg-gray-50 p-4 rounded-lg flex-grow">
+                <h4 className="font-semibold text-gray-800 mb-2">What's Included:</h4>
+                <ul className="space-y-2">
+                  {service.whatIsIncluded.map((item, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={16} />
+                      <span className="text-gray-700 text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
-        </div>
-        
-        <div className="mt-10 text-center">
-          <Button asChild size="lg" variant="bc-red">
-            <Link to="/services">
-              View All Services <ArrowRight className="ml-2" size={18} />
-            </Link>
-          </Button>
         </div>
       </div>
     </section>

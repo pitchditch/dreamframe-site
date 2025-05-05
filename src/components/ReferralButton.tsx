@@ -12,7 +12,7 @@ const ReferralButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the hero section height (approximately 100vh)
+      // Get the hero section height (exactly 100vh)
       const heroSectionHeight = window.innerHeight;
       
       // Only show referral button after scrolling past the hero section
