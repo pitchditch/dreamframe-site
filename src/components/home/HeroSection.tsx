@@ -17,19 +17,38 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    const video = document.getElementById('hero-video') as HTMLVideoElement;
-    
-    const handleVideoLoad = () => {
-      setVideoLoaded(true);
+    const checkVideoStatus = () => {
+      const mobileIframe = document.getElementById('hero-mobile-video') as HTMLIFrameElement;
+      const desktopIframe = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
+      
+      if ((isMobile && mobileIframe) || (!isMobile && desktopIframe)) {
+        setVideoLoaded(true);
+      }
     };
     
-    if (video) {
-      if (video.readyState >= 3) {
-        setVideoLoaded(true);
-      } else {
-        video.addEventListener('loadeddata', handleVideoLoad);
+    // Force video reload on component mount to prevent black bars when navigating
+    const timer = setTimeout(() => {
+      const mobileVideo = document.getElementById('hero-mobile-video') as HTMLIFrameElement;
+      const desktopVideo = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
+      
+      if (mobileVideo && isMobile) {
+        // Force reload mobile video
+        const currentSrc = mobileVideo.src;
+        mobileVideo.src = '';
+        setTimeout(() => {
+          mobileVideo.src = currentSrc;
+          checkVideoStatus();
+        }, 100);
+      } else if (desktopVideo && !isMobile) {
+        // Force reload desktop video
+        const currentSrc = desktopVideo.src;
+        desktopVideo.src = '';
+        setTimeout(() => {
+          desktopVideo.src = currentSrc;
+          checkVideoStatus();
+        }, 100);
       }
-    }
+    }, 200);
     
     // Check if postal code exists in session storage
     const savedPostalCode = sessionStorage.getItem('postalCode');
@@ -37,12 +56,13 @@ const HeroSection = () => {
       setPostalCode(savedPostalCode);
     }
     
+    window.addEventListener('resize', checkVideoStatus);
+    
     return () => {
-      if (video) {
-        video.removeEventListener('loadeddata', handleVideoLoad);
-      }
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkVideoStatus);
     };
-  }, []);
+  }, [isMobile]);
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,9 +84,9 @@ const HeroSection = () => {
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
-            // Mobile YouTube Video - Updated short video with proper scaling
+            // Mobile YouTube Video - Using the specific short video requested
             <iframe 
-              id="hero-video"
+              id="hero-mobile-video"
               className={`absolute w-full h-full top-0 left-0 scale-[2.2] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
               title="Pressure Washing Video"
@@ -78,7 +98,7 @@ const HeroSection = () => {
           ) : (
             // Desktop YouTube Video
             <iframe 
-              id="hero-video"
+              id="hero-desktop-video"
               className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
               title="Pressure Washing Video"

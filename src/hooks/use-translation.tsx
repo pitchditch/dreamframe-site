@@ -23,9 +23,21 @@ const getBrowserLanguage = (): Language => {
     return savedLanguage as Language;
   }
   
+  // Check if user is on mobile for auto-detection of Punjabi
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  // Detect browser language
   const browserLang = navigator.language.split('-')[0];
+  
+  // If on mobile and browser language indicates Punjabi region or language
+  if (isMobile && (browserLang === 'pa' || navigator.language === 'en-IN')) {
+    return 'pa';
+  }
+  
+  // Regular language detection for other cases
   if (browserLang === 'pa') return 'pa';
   if (browserLang === 'hi') return 'hi';
+  
   return 'en';
 };
 

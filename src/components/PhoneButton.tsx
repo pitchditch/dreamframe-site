@@ -1,30 +1,8 @@
 
-import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
 import { trackPageView } from '@/utils/analytics';
 
 const PhoneButton = () => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Hide button when scrolling down, show it when scrolling up
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > lastScrollY) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-      
-      setLastScrollY(currentScrollY);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
-
   const handleCallClick = () => {
     // Track phone call events
     try {
@@ -35,9 +13,7 @@ const PhoneButton = () => {
   };
   
   return (
-    <div className={`fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 md:hidden ${
-      isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-    }`}>
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
       <a
         href="tel:7788087620"
         onClick={handleCallClick}

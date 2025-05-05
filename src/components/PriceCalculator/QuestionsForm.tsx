@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { trackFormSubmission } from '@/utils/analytics';
 
 const QuestionsForm = () => {
   const [email, setEmail] = useState('');
@@ -26,17 +27,21 @@ const QuestionsForm = () => {
     
     setIsSubmitting(true);
     
-    // Simulating API call
-    setTimeout(() => {
-      toast({
-        title: "Question Submitted",
-        description: "We'll get back to you as soon as possible!",
-      });
-      
-      setEmail('');
-      setQuestion('');
-      setIsSubmitting(false);
-    }, 1000);
+    // Track submission and send email
+    trackFormSubmission('question_form', { 
+      email, 
+      question,
+      form_type: 'question'
+    });
+    
+    toast({
+      title: "Question Submitted",
+      description: "We'll get back to you as soon as possible! Final quote confirmed by Jayden.",
+    });
+    
+    setEmail('');
+    setQuestion('');
+    setIsSubmitting(false);
   };
 
   return (
@@ -74,6 +79,10 @@ const QuestionsForm = () => {
             className="w-full min-h-[100px]"
             required
           />
+        </div>
+        
+        <div className="text-sm text-gray-600 italic mb-4">
+          Final quote will be personally reviewed and confirmed by Jayden
         </div>
         
         <Button 

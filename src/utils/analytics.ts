@@ -1,10 +1,65 @@
 
 /**
- * Utility functions for Google Analytics tracking
+ * Utility functions for Google Analytics tracking and form submissions
  */
+import emailjs from 'emailjs-com';
+
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = 'service_k22rhvk';
+const EMAILJS_TEMPLATE_ID = 'template_default';  // You'll need to create this template in EmailJS
+const EMAILJS_USER_ID = 'user_id'; // Replace with your actual EmailJS user ID
 
 /**
- * Track a form submission event in Google Analytics
+ * Send form data via EmailJS
+ * 
+ * @param formName - The name of the form being submitted
+ * @param formData - Data collected from the form
+ */
+export const sendFormViaEmail = (formName: string, formData: Record<string, any>) => {
+  // Create a template parameters object for EmailJS
+  const templateParams = {
+    form_name: formName,
+    user_email: formData.email || 'No email provided',
+    user_name: formData.name || formData.fullName || 'Website visitor',
+    phone: formData.phone || 'Not provided',
+    service_type: formData.service || formData.serviceType || 'Not specified',
+    property_type: formData.propertyType || 'Not specified',
+    message: formData.message || 'No message provided',
+    postal_code: formData.postalCode || 'Not provided',
+    submission_time: new Date().toLocaleString(),
+    ...formData // Include all other form fields
+  };
+
+  // Send email to business owner
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_USER_ID)
+    .then((result) => {
+      console.log('Email sent successfully:', result);
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+    });
+
+  // Send confirmation email to customer if they provided an email
+  if (formData.email) {
+    const confirmationParams = {
+      to_email: formData.email,
+      to_name: formData.name || formData.fullName || 'Valued Customer',
+      quote_type: formData.service || formData.serviceType || 'service',
+      confirmation_message: 'Your quote request has been received. Jayden will personally review and confirm your final quote.',
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, 'template_confirmation', confirmationParams, EMAILJS_USER_ID)
+      .then((result) => {
+        console.log('Confirmation email sent successfully:', result);
+      })
+      .catch((error) => {
+        console.error('Error sending confirmation email:', error);
+      });
+  }
+};
+
+/**
+ * Track a form submission event in Google Analytics and send email
  * 
  * @param formName - The name of the form being submitted (e.g., 'contact', 'maintenance')
  * @param formData - Optional data to include with the event (don't include sensitive information)
@@ -43,29 +98,32 @@ export const trackFormSubmission = (formName: string, formData?: Record<string, 
     } catch (error) {
       console.error('Error with fallback tracking:', error);
     }
-    
-    return;
+  } else {
+    try {
+      // Only include non-sensitive data like form types or categories
+      const safeData = formData ? {
+        form_type: formData.form_type || formName,
+        service_type: formData.service_type,
+        property_type: formData.propertyType,
+        // Avoid including personal data like emails, names, addresses, etc.
+      } : {};
+      
+      // Track the form submission event
+      window.gtag('event', 'form_submission', {
+        'event_category': 'Forms',
+        'event_label': formName,
+        ...safeData
+      });
+      
+      console.log(`Tracked form submission: ${formName}`);
+    } catch (error) {
+      console.error('Error tracking form submission:', error);
+    }
   }
   
-  try {
-    // Only include non-sensitive data like form types or categories
-    const safeData = formData ? {
-      form_type: formData.form_type || formName,
-      service_type: formData.service_type,
-      property_type: formData.propertyType,
-      // Avoid including personal data like emails, names, addresses, etc.
-    } : {};
-    
-    // Track the form submission event
-    window.gtag('event', 'form_submission', {
-      'event_category': 'Forms',
-      'event_label': formName,
-      ...safeData
-    });
-    
-    console.log(`Tracked form submission: ${formName}`);
-  } catch (error) {
-    console.error('Error tracking form submission:', error);
+  // Send form data via email
+  if (formData) {
+    sendFormViaEmail(formName, formData);
   }
 };
 
