@@ -67,8 +67,8 @@ const HeroSection = () => {
             // Mobile YouTube Video - Updated short video with proper scaling
             <iframe 
               id="hero-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.8] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/HuXyYAxC4Fs?autoplay=1&mute=1&controls=0&loop=1&playlist=HuXyYAxC4Fs&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+              className={`absolute w-full h-full top-0 left-0 scale-[2.2] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

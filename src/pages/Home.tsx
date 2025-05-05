@@ -49,18 +49,18 @@ const Home = () => {
   }, [setLanguage]);
 
   return (
-    <Layout image="/open.png">
+    <Layout image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png">
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
         <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
-        <meta property="og:image" content="/open.png" />
+        <meta property="og:image" content="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png" />
       </Helmet>
       
       <HeroSection />
       <PremiumSolutionsSection />
       
-      {/* Red Car Section - Added as requested */}
+      {/* Red Car Section */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -182,7 +182,7 @@ const Home = () => {
       <section className="relative py-20">
         <div className="absolute inset-0">
           <img 
-            src="/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png"
+            src="/lovable-uploads/416a41e6-23fb-40d7-a9ae-5a6a160c3dbb.png" 
             alt="Contact Us Background" 
             className="w-full h-full object-cover"
           />

@@ -12,7 +12,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const [scrolled, setScrolled] = useState(false);
   
   // Different height classes for mobile vs desktop
-  const mobileLogoHeight = 'h-12 w-auto'; // Increased from h-10 to h-12
+  const mobileLogoHeight = 'h-14 w-auto'; // Increased from h-12 to h-14
   const desktopLogoHeight = 'h-36 md:h-40 w-auto';
   
   useEffect(() => {
@@ -26,7 +26,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   }, []);
   
   return (
-    <Link to="/" className="flex items-center mr-auto">
+    <Link to="/" className="flex items-center mr-auto z-20"> {/* Added z-20 to ensure logo is above other elements */}
       <div className="relative flex items-center transition-all duration-300 pt-2"> {/* Added pt-2 for mobile */}
         {isOverVideo ? (
           // White logo for hero section with transparent background

@@ -52,7 +52,7 @@ const PressureWashing = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
-            <div>
+            <div className="mt-24 md:mt-0"> {/* Added margin top on mobile to push content down */}
               <div className="mb-8">
                 <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
                 <p className="text-lg text-gray-700 mb-4">
@@ -61,22 +61,22 @@ const PressureWashing = () => {
                 <p className="text-lg text-gray-700">
                   Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
                 </p>
-                <ul className="mt-4 space-y-2 text-gray-700">
-                  <li className="flex items-center">
-                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
-                    Driveways & walkways
+                <ul className="mt-4 space-y-4 text-gray-700">
+                  <li className="flex items-center space-x-4">
+                    <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-16 h-16 object-cover rounded-lg" />
+                    <span>Driveways & walkways</span>
                   </li>
-                  <li className="flex items-center">
-                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
-                    Decks & patios
+                  <li className="flex items-center space-x-4">
+                    <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-16 h-16 object-cover rounded-lg" />
+                    <span>Decks & patios</span>
                   </li>
-                  <li className="flex items-center">
-                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
-                    Siding & exterior walls
+                  <li className="flex items-center space-x-4">
+                    <img src="/lovable-uploads/8090d09c-920d-4acb-8b9e-222865d6b8fc.png" alt="Siding & Exterior Walls" className="w-16 h-16 object-cover rounded-lg" />
+                    <span>Siding & exterior walls</span>
                   </li>
-                  <li className="flex items-center">
-                    <span className="inline-block w-2 h-2 bg-bc-red rounded-full mr-3"></span>
-                    Fences & gates
+                  <li className="flex items-center space-x-4">
+                    <img src="/lovable-uploads/021dd5ff-95a8-4c83-9d47-9a44e895e0f3.png" alt="Fences & Gates" className="w-16 h-16 object-cover rounded-lg" />
+                    <span>Fences & gates</span>
                   </li>
                 </ul>
               </div>

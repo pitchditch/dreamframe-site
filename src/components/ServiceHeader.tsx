@@ -69,19 +69,22 @@ const ServiceHeader = ({
     <div className="relative w-full h-screen">
       {effectiveYoutubeId ? (
         <>
-          <div className="absolute inset-0 w-full h-full">
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
             <iframe
               src={`https://www.youtube.com/embed/${effectiveYoutubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${effectiveYoutubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
               title="Service Video"
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ border: 0, transform: isMobile ? 'scale(1.8)' : 'scale(1.5)' }}
+              style={{ 
+                border: 0, 
+                transform: isMobile ? 'scale(2.2)' : 'scale(1.5)' // Increased scale for mobile to remove black bars
+              }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center pt-16">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}

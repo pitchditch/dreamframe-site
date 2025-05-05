@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, CheckCircle } from "lucide-react";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -57,7 +57,7 @@ const PressureWashingForm = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // In a real application, you would submit this data to your backend
-    alert("Your request has been submitted! We'll contact you shortly.");
+    alert("Your request has been submitted! We'll contact you shortly. Final quote confirmed by Jayden.");
     form.reset();
   }
 
@@ -226,6 +226,11 @@ const PressureWashingForm = () => {
               </FormItem>
             )}
           />
+          
+          <div className="p-3 bg-gray-50 rounded-lg mb-4 flex items-center gap-2">
+            <CheckCircle className="text-green-500 flex-shrink-0" size={16} />
+            <p className="text-sm text-gray-600">Final quote confirmed by Jayden</p>
+          </div>
           
           <Button type="submit" className="w-full" variant="bc-red">Get Your Free Quote</Button>
         </form>

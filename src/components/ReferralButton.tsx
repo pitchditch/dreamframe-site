@@ -12,10 +12,9 @@ const ReferralButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the hero section height (exactly 100vh)
-      const heroSectionHeight = window.innerHeight;
+      // Only show referral button after scrolling past the hero section (exactly 100vh)
+      const heroSectionHeight = window.innerHeight * 1.2; // Adding a bit more to ensure it's after the hero section
       
-      // Only show referral button after scrolling past the hero section
       if (window.scrollY > heroSectionHeight) {
         setIsVisible(true);
       } else {
@@ -24,7 +23,7 @@ const ReferralButton = () => {
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); // Check initial position
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
