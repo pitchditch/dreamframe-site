@@ -7,21 +7,25 @@ import { useTranslation } from '@/hooks/use-translation';
 
 const ReferralButton = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the hero section height (approximately 80vh)
-      const heroSectionHeight = window.innerHeight * 0.8;
+      // Get the hero section height (approximately 100vh)
+      const heroSectionHeight = window.innerHeight;
+      
+      // Only show referral button after scrolling past the hero section
       if (window.scrollY > heroSectionHeight) {
-        setIsVisible(false);
-      } else {
         setIsVisible(true);
+      } else {
+        setIsVisible(false);
       }
     };
+    
     window.addEventListener('scroll', handleScroll);
     handleScroll();
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };

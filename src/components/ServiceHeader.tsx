@@ -44,13 +44,34 @@ const ServiceHeader = ({
     ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20" // Added padding top for mobile
     : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow";
 
+  // Determine YouTube ID based on the service (for mobile)
+  const getYouTubeIdForService = () => {
+    // Only modify for mobile devices
+    if (!isMobile || !title) return youtubeId;
+    
+    const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
+    
+    // Check the title to determine which service this is
+    if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
+      return 'HuXyYAxC4Fs'; // Professional Pressure Washing
+    } else if (titleStr.includes('gutter')) {
+      return 'dkSPq9opzBg'; // Gutter Cleaning
+    } else if (titleStr.includes('roof')) {
+      return 'twtzf2gRdFU'; // Roof Cleaning
+    }
+    
+    return youtubeId;
+  };
+  
+  const effectiveYoutubeId = getYouTubeIdForService();
+
   return (
     <div className="relative w-full h-screen">
-      {youtubeId ? (
+      {effectiveYoutubeId ? (
         <>
           <div className="absolute inset-0 w-full h-full">
             <iframe
-              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
+              src={`https://www.youtube.com/embed/${effectiveYoutubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${effectiveYoutubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
               title="Service Video"
               className="absolute inset-0 w-full h-full object-cover"
               frameBorder="0"

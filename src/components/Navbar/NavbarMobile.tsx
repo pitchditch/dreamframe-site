@@ -127,9 +127,9 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
         </div>
       </div>
 
-      {/* Fixed call button in bottom right corner - ONLY shown when menu is closed */}
+      {/* Call button now placed in the middle of the navbar for mobile */}
       {!isMenuOpen && (
-        <div className="fixed bottom-6 right-6 md:hidden z-50">
+        <div className="fixed top-1/2 right-4 md:hidden z-50 transform -translate-y-1/2">
           <a 
             href="tel:7788087620" 
             className="bg-bc-red text-white p-4 rounded-full shadow-xl hover:bg-red-700 transition-all flex items-center justify-center"
