@@ -116,6 +116,65 @@ export const trackPageView = (pagePath: string, pageTitle?: string) => {
   }
 };
 
+/**
+ * Track a specific form field interaction
+ */
+export const trackFormFieldInteraction = (formName: string, fieldName: string, action: 'focus' | 'change' | 'blur') => {
+  if (typeof window.gtag !== 'function') {
+    return;
+  }
+  
+  try {
+    window.gtag('event', 'form_field_interaction', {
+      'event_category': 'Form Fields',
+      'event_label': `${formName} - ${fieldName}`,
+      'action': action
+    });
+  } catch (error) {
+    console.error('Error tracking form field interaction:', error);
+  }
+};
+
+/**
+ * Track a form step completion (for multi-step forms)
+ */
+export const trackFormStep = (formName: string, stepNumber: number, stepName?: string) => {
+  if (typeof window.gtag !== 'function') {
+    return;
+  }
+  
+  try {
+    window.gtag('event', 'form_step', {
+      'event_category': 'Multi-Step Forms',
+      'event_label': formName,
+      'step_number': stepNumber,
+      'step_name': stepName || `Step ${stepNumber}`
+    });
+  } catch (error) {
+    console.error('Error tracking form step:', error);
+  }
+};
+
+/**
+ * Track when a form is abandoned (user leaves page without submitting)
+ */
+export const trackFormAbandonment = (formName: string, lastStep?: number, timeSpent?: number) => {
+  if (typeof window.gtag !== 'function') {
+    return;
+  }
+  
+  try {
+    window.gtag('event', 'form_abandonment', {
+      'event_category': 'Forms',
+      'event_label': formName,
+      'last_step': lastStep,
+      'time_spent': timeSpent
+    });
+  } catch (error) {
+    console.error('Error tracking form abandonment:', error);
+  }
+};
+
 // Add global type for gtag
 declare global {
   interface Window {

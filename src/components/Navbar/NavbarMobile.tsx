@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Phone } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -117,28 +117,11 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             </Link>
             
             <div className="pt-4 flex flex-col gap-3 border-t border-gray-100">
-              <a href="tel:7788087620" className="flex items-center justify-center gap-2 w-full bg-bc-red hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium text-center transition-all">
-                <Phone size={18} />
-                778-808-7620
-              </a>
               <LanguageSelector />
             </div>
           </nav>
         </div>
       </div>
-
-      {/* Call button now placed at the bottom right for mobile */}
-      {!isMenuOpen && (
-        <div className="fixed bottom-6 right-6 md:hidden z-50">
-          <a 
-            href="tel:7788087620" 
-            className="bg-bc-red text-white p-4 rounded-full shadow-xl hover:bg-red-700 transition-all flex items-center justify-center"
-            aria-label="Call us"
-          >
-            <Phone size={24} />
-          </a>
-        </div>
-      )}
     </>
   );
 };

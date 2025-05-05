@@ -5,6 +5,12 @@ import PriceCalculatorIntro from './PriceCalculatorIntro';
 import { Droplets, Home, CloudRain, Car, Building, Warehouse } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { TestimonialCarousel } from '../PriceCalculator/TestimonialCarousel';
+import { 
+  trackFormSubmission, 
+  trackFormStep, 
+  trackFormFieldInteraction 
+} from '@/utils/analytics';
+
 const PROPERTY_SIZES = [{
   id: 'small',
   label: '0–1800 sq. ft.',
@@ -156,6 +162,7 @@ interface PriceCalculatorFormProps {
   onComplete?: () => void;
   initialStep?: string;
 }
+
 const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   onComplete,
   initialStep
@@ -188,6 +195,17 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       }));
     }
   }, []);
+
+  // Track form step changes
+  useEffect(() => {
+    trackFormStep('PriceCalculator', step + 1, 
+      step === 0 ? 'Address' : 
+      step === 1 ? 'Property Size' : 
+      step === 2 ? 'Services Selection' : 
+      step === 3 ? 'Contact Info' : 
+      'Summary'
+    );
+  }, [step]);
 
   // Bundle discount
   const eligibleBundleDiscount = services.filter(s => s !== 'Roof Cleaning').length >= 3;
@@ -235,6 +253,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     if (size === 'xlarge' && service !== 'Roof Cleaning') return true;
     return false;
   };
+  
   function handleServiceChange(service: string) {
     if (serviceDisabled(service)) return;
     // Uncheck mutually exclusive services
@@ -250,13 +269,45 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       return true;
     }), service];
     setServices(updated);
+    
+    // Track service selection
+    trackFormFieldInteraction('PriceCalculator', `Service: ${service}`, 'change');
   }
+  
   function handleAddOnChange(addonId: string) {
     setAddOns(prev => prev.includes(addonId) ? prev.filter(id => id !== addonId) : [...prev, addonId]);
+    
+    // Track addon selection
+    const addon = ADD_ONS.find(a => a.id === addonId);
+    if (addon) {
+      trackFormFieldInteraction('PriceCalculator', `Add-on: ${addon.name}`, 'change');
+    }
   }
 
+  const handleFormSubmit = async () => {
+    setSubmitting(true);
+    
+    // Track the form submission
+    trackFormSubmission('PriceCalculator', {
+      form_type: 'PriceCalculator',
+      service_type: services.join(', '),
+      property_type: size,
+      total_estimate: estTotal,
+      addons: addOns.length > 0 ? addOns.join(', ') : 'none',
+      discount_applied: eligibleBundleDiscount ? 'yes' : 'no'
+    });
+    
+    // Submit form with a slight delay to simulate processing
+    setTimeout(() => {
+      setSubmitting(false);
+      if (onComplete) onComplete();
+      setStep(5);
+    }, 1200);
+  };
+
   // -- Render steps
-  return <div className="max-w-2xl mx-auto w-full mt-16">
+  return (
+    <div className="max-w-2xl mx-auto w-full mt-16">
       {/* Main disclaimer at the top */}
       <div className="bg-blue-50 p-4 rounded-lg mb-6 text-sm">
         <p className="font-semibold mb-1">About Our Pricing</p>
@@ -293,36 +344,70 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Street Address</label>
-                  <input type="text" value={address} onChange={e => setAddress(e.target.value)} className="w-full border p-3 rounded-lg" placeholder="1234 Main St" autoFocus />
+                  <input 
+                    type="text" 
+                    value={address} 
+                    onChange={e => {
+                      setAddress(e.target.value);
+                      trackFormFieldInteraction('PriceCalculator', 'Street Address', 'change');
+                    }} 
+                    onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Street Address', 'focus')}
+                    onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Street Address', 'blur')}
+                    className="w-full border p-3 rounded-lg" 
+                    placeholder="1234 Main St" 
+                    autoFocus 
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">City</label>
-                    <input type="text" value={contact.name || ''} onChange={e => setContact({
-                  ...contact,
-                  name: e.target.value
-                })} className="w-full border p-3 rounded-lg" placeholder="Vancouver" />
+                    <input 
+                      type="text" 
+                      value={contact.name || ''} 
+                      onChange={e => {
+                        setContact({...contact, name: e.target.value});
+                        trackFormFieldInteraction('PriceCalculator', 'City', 'change');
+                      }} 
+                      onFocus={() => trackFormFieldInteraction('PriceCalculator', 'City', 'focus')}
+                      onBlur={() => trackFormFieldInteraction('PriceCalculator', 'City', 'blur')}
+                      className="w-full border p-3 rounded-lg" 
+                      placeholder="Vancouver" 
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Postal Code</label>
-                    <input type="text" value={contact.phone || ''} onChange={e => setContact({
-                  ...contact,
-                  phone: e.target.value
-                })} className="w-full border p-3 rounded-lg" placeholder="V1A 1A1" />
+                    <input 
+                      type="text" 
+                      value={contact.phone || ''} 
+                      onChange={e => {
+                        setContact({...contact, phone: e.target.value});
+                        trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'change');
+                      }} 
+                      onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'focus')}
+                      onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'blur')}
+                      className="w-full border p-3 rounded-lg" 
+                      placeholder="V1A 1A1" 
+                    />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Email (Optional)</label>
-                  <input type="email" value={contact.email || ''} onChange={e => {
-                setContact({
-                  ...contact,
-                  email: e.target.value
-                });
-                // Store email in session storage
-                if (e.target.value) {
-                  sessionStorage.setItem('userEmail', e.target.value);
-                }
-              }} className="w-full border p-3 rounded-lg" placeholder="you@example.com" />
+                  <input 
+                    type="email" 
+                    value={contact.email || ''} 
+                    onChange={e => {
+                      setContact({...contact, email: e.target.value});
+                      trackFormFieldInteraction('PriceCalculator', 'Email', 'change');
+                      // Store email in session storage
+                      if (e.target.value) {
+                        sessionStorage.setItem('userEmail', e.target.value);
+                      }
+                    }} 
+                    onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Email', 'focus')}
+                    onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Email', 'blur')}
+                    className="w-full border p-3 rounded-lg" 
+                    placeholder="you@example.com" 
+                  />
                   <p className="text-xs text-gray-500 mt-1">
                     We'll send your quote here, even if you don't complete the form
                   </p>
@@ -342,7 +427,15 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
                 Prices are starting estimates. For homes over 3500 sq. ft., we'll provide an on-site quote.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {PROPERTY_SIZES.map(sz => <Card key={sz.id} className={`p-4 cursor-pointer flex items-center justify-between hover:border-blue-500 transition-all ${size === sz.id ? 'border-2 border-blue-500 bg-blue-50' : ''}`} onClick={() => setSize(sz.id)}>
+                {PROPERTY_SIZES.map(sz => (
+                  <Card 
+                    key={sz.id} 
+                    className={`p-4 cursor-pointer flex items-center justify-between hover:border-blue-500 transition-all ${size === sz.id ? 'border-2 border-blue-500 bg-blue-50' : ''}`} 
+                    onClick={() => {
+                      setSize(sz.id);
+                      trackFormFieldInteraction('PriceCalculator', `Property Size: ${sz.label}`, 'change');
+                    }}
+                  >
                     <div className="flex items-center gap-3">
                       <div className={`text-blue-600 ${size === sz.id ? 'scale-110' : ''}`}>
                         {sz.icon}
@@ -352,7 +445,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
                     {size === sz.id && <svg className="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
                       </svg>}
-                  </Card>)}
+                  </Card>
+                ))}
               </div>
               <div className="flex justify-between mt-6">
                 <Button variant="outline" onClick={() => setStep(0)}>
@@ -368,7 +462,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
             </div>}
 
           {/* Step 3: Services (moved from step 2 to step 3) */}
-          {step === 2 && <div>
+          {step === 2 && 
+            <div>
               <h3 className="text-xl font-bold mb-2">Step 3: Choose Your Services</h3>
               <p className="mb-4 text-gray-600">
                 Choose all that apply. Prices update based on your home size.
@@ -444,40 +539,77 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
                   </li>
                 </ul>
               </div>
-            </div>}
+            </div>
+          }
 
           {/* Step 4: Contact Info (no address field since we moved it to step 1) */}
-          {step === 3 && <div>
+          {step === 3 && 
+            <div>
               <h3 className="text-xl font-bold mb-2">Step 4: Contact Info</h3>
               <p className="mb-4 text-gray-600">Please provide your contact details so we can follow up with your quote.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <input type="text" className="border p-3 rounded-lg" placeholder="Name" value={contact.name} onChange={e => setContact(v => ({
-              ...v,
-              name: e.target.value
-            }))} required />
-                <input type="tel" className="border p-3 rounded-lg" placeholder="Phone" value={contact.phone} onChange={e => setContact(v => ({
-              ...v,
-              phone: e.target.value
-            }))} required />
-                <input type="text" className="border p-3 rounded-lg" placeholder="Referral Name (optional)" value={contact.referredBy} onChange={e => setContact(v => ({
-              ...v,
-              referredBy: e.target.value
-            }))} />
+                <input 
+                  type="text" 
+                  className="border p-3 rounded-lg" 
+                  placeholder="Name" 
+                  value={contact.name} 
+                  onChange={e => {
+                    setContact(v => ({...v, name: e.target.value}));
+                    trackFormFieldInteraction('PriceCalculator', 'Name', 'change');
+                  }}
+                  onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'focus')}
+                  onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'blur')}
+                  required 
+                />
+                <input 
+                  type="tel" 
+                  className="border p-3 rounded-lg" 
+                  placeholder="Phone" 
+                  value={contact.phone} 
+                  onChange={e => {
+                    setContact(v => ({...v, phone: e.target.value}));
+                    trackFormFieldInteraction('PriceCalculator', 'Phone', 'change');
+                  }}
+                  onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'focus')}
+                  onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'blur')}
+                  required 
+                />
+                <input 
+                  type="text" 
+                  className="border p-3 rounded-lg" 
+                  placeholder="Referral Name (optional)" 
+                  value={contact.referredBy} 
+                  onChange={e => {
+                    setContact(v => ({...v, referredBy: e.target.value}));
+                    trackFormFieldInteraction('PriceCalculator', 'Referral', 'change');
+                  }}
+                  onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Referral', 'focus')}
+                  onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Referral', 'blur')}
+                />
               </div>
-              <textarea className="border w-full min-h-[60px] max-h-32 p-3 rounded-lg" placeholder="Any other info you'd like to share? (optional)" value={contact.notes} onChange={e => setContact(v => ({
-            ...v,
-            notes: e.target.value
-          }))} />
+              <textarea 
+                className="border w-full min-h-[60px] max-h-32 p-3 rounded-lg" 
+                placeholder="Any other info you'd like to share? (optional)" 
+                value={contact.notes} 
+                onChange={e => {
+                  setContact(v => ({...v, notes: e.target.value}));
+                  trackFormFieldInteraction('PriceCalculator', 'Notes', 'change');
+                }}
+                onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Notes', 'focus')}
+                onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Notes', 'blur')}
+              />
               <div className="flex justify-between mt-6">
                 <Button variant="outline" onClick={() => setStep(2)}>Back</Button>
                 <Button onClick={() => setStep(4)} disabled={!contact.name || !contact.phone}>
                   Next
                 </Button>
               </div>
-            </div>}
+            </div>
+          }
 
           {/* Step 5: Estimate Summary */}
-          {step === 4 && <div className="animate-fade-in">
+          {step === 4 && 
+            <div className="animate-fade-in">
               <h3 className="text-xl font-bold mb-2">Step 5: Estimate Summary</h3>
               <p className="mb-4 text-gray-600">
                 Here's your custom quote summary. We'll confirm final pricing based on your home layout and needs.
@@ -495,43 +627,50 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
                 </div>
                 <div className="mt-2 text-xs text-gray-500 leading-relaxed">
                   All prices are starting estimates. Your quote may vary based on home layout and condition—<br />
-                  we'll confirm before booking.
+                  we'll confirm before booking. <span className="font-semibold">Final quote confirmed by Jayden.</span>
                 </div>
               </div>
               <div className="flex flex-col gap-2 mt-6">
-                <Button className="w-full" onClick={async () => {
-              setSubmitting(true);
-              setTimeout(() => {
-                setSubmitting(false);
-                if (onComplete) onComplete();
-                setStep(5);
-              }, 1200);
-            }} disabled={submitting}>
+                <Button 
+                  className="w-full" 
+                  onClick={handleFormSubmit} 
+                  disabled={submitting}
+                >
                   {submitting ? "Submitting..." : "Get My Custom Quote"}
                 </Button>
-                <a href="tel:7788087620" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg text-center font-semibold shadow">
+                <a 
+                  href="tel:7788087620" 
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg text-center font-semibold shadow"
+                  onClick={() => trackFormFieldInteraction('PriceCalculator', 'Call Button', 'click')}
+                >
                   Call Jayden Now
                 </a>
               </div>
               <div className="text-sm text-gray-500 mt-5">
                 You'll hear back from Jayden or the team shortly.<br />
-                Want to talk to someone now? Call us at <span className="underline">(604) 778-808-7620</span>.<br />
+                Want to talk to someone now? Call us at <span className="underline">778-808-7620</span>.<br />
                 No spam, no pressure—just a clear and honest quote.
               </div>
-            </div>}
+            </div>
+          }
 
-          {step > 4 && <div className="text-center py-10">
+          {step > 4 && 
+            <div className="text-center py-10">
               <h3 className="text-2xl font-bold mb-4 text-green-700">Thank you!</h3>
               <p className="mb-2 text-gray-600">We've received your request. Jayden or a team member will contact you soon.</p>
-              <a href="tel:7788087620" className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3">
+              <a 
+                href="tel:7788087620" 
+                className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3"
+                onClick={() => trackFormFieldInteraction('PriceCalculator', 'Final Call Button', 'click')}
+              >
                 Call Jayden Now
               </a>
-            </div>}
+            </div>
+          }
         </div>
-        
-        {/* Right testimonial carousel - vertical flowing design outside of the form container */}
-        
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default PriceCalculatorForm;
