@@ -1,8 +1,9 @@
-// Import any necessary libraries
-import { trackEvent } from '@/lib/analytics-client';
+
+// Import from our analytics client
+import { trackEvent, trackPage } from '@/lib/analytics-client';
 
 // Track form submissions
-export const trackFormSubmission = (formName: string, formData: Record<string, any>) => {
+export const trackFormSubmission = (formName: string, formData: Record<string, any> = {}) => {
   try {
     console.log(`Form submission tracked: ${formName}`, formData);
     // Send to Google Analytics or other tracking service if needed
@@ -34,15 +35,26 @@ export const trackFormFieldInteraction = (
   }
 };
 
+// Track form steps
+export const trackFormStep = (formName: string, stepNumber: number, stepName: string) => {
+  try {
+    console.log(`Form step tracked: ${formName} - Step ${stepNumber}: ${stepName}`);
+    trackEvent('form_step', {
+      form_name: formName,
+      step_number: stepNumber,
+      step_name: stepName
+    });
+  } catch (error) {
+    console.error('Error tracking form step:', error);
+  }
+};
+
 // Track page views
 export const trackPageView = (path: string) => {
   try {
     console.log(`Page view tracked: ${path}`);
     // Send to Google Analytics or other tracking service if needed
-    trackEvent('page_view', {
-      path: path,
-      timestamp: new Date().toISOString()
-    });
+    trackPage(path, document.title);
   } catch (error) {
     console.error('Error tracking page view:', error);
   }

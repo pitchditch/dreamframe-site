@@ -24,7 +24,7 @@ const Blog = () => {
 
   // Track blog page view - using useEffect instead of useState
   useEffect(() => {
-    trackFormSubmission('blog_page_view');
+    trackFormSubmission('blog_page_view', { page: 'blog' });
   }, []);
 
   // Meta information based on language

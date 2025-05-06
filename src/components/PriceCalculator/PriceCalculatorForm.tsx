@@ -8,7 +8,8 @@ import { TestimonialCarousel } from '../PriceCalculator/TestimonialCarousel';
 import { 
   trackFormSubmission, 
   trackFormStep, 
-  trackFormFieldInteraction 
+  trackFormFieldInteraction,
+  trackPageView 
 } from '@/utils/analytics';
 
 const PROPERTY_SIZES = [{
@@ -303,6 +304,16 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       if (onComplete) onComplete();
       setStep(5);
     }, 1200);
+  };
+
+  // In the "Get My Custom Quote" button click handler
+  const handleCallClick = () => {
+    trackPageView('/virtual/phone-call-button');
+  };
+
+  // In the "Thank you" screen
+  const handleFinalCallClick = () => {
+    trackPageView('/virtual/final-call-button');
   };
 
   // -- Render steps
@@ -641,7 +652,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
                 <a 
                   href="tel:7788087620" 
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg text-center font-semibold shadow"
-                  onClick={() => trackPageView('/virtual/phone-call-button')}
+                  onClick={handleCallClick}
                 >
                   Call Jayden Now
                 </a>
@@ -661,7 +672,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
               <a 
                 href="tel:7788087620" 
                 className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3"
-                onClick={() => trackPageView('/virtual/final-call-button')}
+                onClick={handleFinalCallClick}
               >
                 Call Jayden Now
               </a>

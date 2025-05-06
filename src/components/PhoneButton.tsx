@@ -28,11 +28,7 @@ const PhoneButton = () => {
 
   const handleCallClick = () => {
     // Track phone call events
-    try {
-      trackPageView('/virtual/phone-call-button');
-    } catch (error) {
-      console.error('Error tracking phone call:', error);
-    }
+    trackPageView('/virtual/phone-call-button');
   };
   
   return (
