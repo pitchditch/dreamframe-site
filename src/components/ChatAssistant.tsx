@@ -51,7 +51,7 @@ const ChatAssistant = () => {
   if (!isVisible) return null;
   
   return (
-    <div className="fixed bottom-6 right-6 z-20">
+    <div className="fixed bottom-24 right-6 z-20">
       <Button 
         onClick={() => setIsOpen(!isOpen)} 
         className={`chat-button rounded-full p-6 shadow-lg bg-transparent ${isOpen ? 'hover:bg-bc-red/10' : 'hover:bg-transparent'}`} 

@@ -1,40 +1,53 @@
 
-// A simple implementation of analytics client
-// This can be replaced with your actual analytics provider like Google Analytics
-
-// Interface for event data
-interface EventData {
-  [key: string]: any;
-}
-
 /**
- * Track an event to analytics
- * @param eventName Name of the event
- * @param eventData Additional data for the event
+ * Analytics client for tracking user events and page views
  */
-export const trackEvent = (eventName: string, eventData: EventData = {}) => {
-  // Log to console for development
-  console.log(`Analytics Event: ${eventName}`, eventData);
-  
-  // Here you would typically send data to your analytics service
-  // For example with Google Analytics:
-  // if (window.gtag) {
-  //   window.gtag('event', eventName, eventData);
-  // }
-  
-  // For development, let's just log to console
-  // In production, you can integrate with actual analytics services
+
+// Function to track page views
+export const trackPage = (path: string, title?: string) => {
+  try {
+    console.log(`📊 Page View: ${path}`, { title });
+    
+    // If window.gtag is available, track with Google Analytics
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('config', 'G-YOUR_TRACKING_ID', {
+        page_path: path,
+        page_title: title
+      });
+    }
+    
+    // You can add additional analytics services here
+  } catch (error) {
+    console.error('Error tracking page view:', error);
+  }
 };
 
-// Track page views
-export const trackPage = (pagePath: string, pageTitle?: string) => {
-  console.log(`Page View: ${pagePath}`, { title: pageTitle });
-  
-  // Example integration with Google Analytics
-  // if (window.gtag) {
-  //   window.gtag('config', 'YOUR-GA-ID', {
-  //     page_path: pagePath,
-  //     page_title: pageTitle
-  //   });
-  // }
+// Function to track events
+export const trackEvent = (eventName: string, eventParams: Record<string, any> = {}) => {
+  try {
+    console.log(`📊 Event: ${eventName}`, eventParams);
+    
+    // If window.gtag is available, track with Google Analytics
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', eventName, eventParams);
+    }
+    
+    // You can add additional analytics services here
+  } catch (error) {
+    console.error('Error tracking event:', error);
+  }
+};
+
+// Function to initialize analytics
+export const initAnalytics = () => {
+  try {
+    console.log('Analytics client initialized');
+    
+    // You can add initialization code for analytics services here
+    
+    // Track initial page view
+    trackPage(window.location.pathname, document.title);
+  } catch (error) {
+    console.error('Error initializing analytics:', error);
+  }
 };

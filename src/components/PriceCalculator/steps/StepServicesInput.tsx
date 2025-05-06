@@ -83,7 +83,7 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
       // Add service
       setServices([...services, serviceId]);
     }
-    trackFormFieldInteraction('PriceCalculator', `Service: ${serviceId}`, 'toggle');
+    trackFormFieldInteraction('PriceCalculator', `Service: ${serviceId}`, 'click');
   };
 
   const toggleAddOn = (addonId: string) => {
@@ -94,7 +94,7 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
       // Add add-on
       setAddOns([...addOns, addonId]);
     }
-    trackFormFieldInteraction('PriceCalculator', `Add-on: ${addonId}`, 'toggle');
+    trackFormFieldInteraction('PriceCalculator', `Add-on: ${addonId}`, 'click');
   };
 
   return (
