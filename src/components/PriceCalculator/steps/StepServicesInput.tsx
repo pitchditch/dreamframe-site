@@ -83,6 +83,7 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
       // Add service
       setServices([...services, serviceId]);
     }
+    // Changed from 'toggle' to 'click' to match the allowed interaction types
     trackFormFieldInteraction('PriceCalculator', `Service: ${serviceId}`, 'click');
   };
 
@@ -94,6 +95,7 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
       // Add add-on
       setAddOns([...addOns, addonId]);
     }
+    // Changed from 'toggle' to 'click' to match the allowed interaction types
     trackFormFieldInteraction('PriceCalculator', `Add-on: ${addonId}`, 'click');
   };
 
