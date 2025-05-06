@@ -641,7 +641,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
                 <a 
                   href="tel:7788087620" 
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg text-center font-semibold shadow"
-                  onClick={() => trackFormFieldInteraction('PriceCalculator', 'Call Button', 'click')}
+                  onClick={() => trackPageView('/virtual/phone-call-button')}
                 >
                   Call Jayden Now
                 </a>
@@ -661,7 +661,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
               <a 
                 href="tel:7788087620" 
                 className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3"
-                onClick={() => trackFormFieldInteraction('PriceCalculator', 'Final Call Button', 'click')}
+                onClick={() => trackPageView('/virtual/final-call-button')}
               >
                 Call Jayden Now
               </a>

@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { trackFormSubmission } from '@/utils/analytics';
+import { trackFormSubmission, trackFormFieldInteraction } from '@/utils/analytics';
 
 const QuestionsForm = () => {
   const [email, setEmail] = useState('');
@@ -44,6 +44,17 @@ const QuestionsForm = () => {
     setIsSubmitting(false);
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, fieldName: string) => {
+    if (fieldName === 'email') {
+      setEmail(e.target.value);
+    } else if (fieldName === 'question') {
+      setQuestion(e.target.value);
+    }
+    
+    // Track field interaction
+    trackFormFieldInteraction('question_form', fieldName, 'change');
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Have a Question?</h2>
@@ -60,7 +71,9 @@ const QuestionsForm = () => {
             id="email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleInputChange(e, 'email')}
+            onFocus={() => trackFormFieldInteraction('question_form', 'email', 'focus')}
+            onBlur={() => trackFormFieldInteraction('question_form', 'email', 'blur')}
             placeholder="Enter your email address"
             className="w-full"
             required
@@ -74,7 +87,9 @@ const QuestionsForm = () => {
           <Textarea
             id="question"
             value={question}
-            onChange={(e) => setQuestion(e.target.value)}
+            onChange={(e) => handleInputChange(e, 'question')}
+            onFocus={() => trackFormFieldInteraction('question_form', 'question', 'focus')}
+            onBlur={() => trackFormFieldInteraction('question_form', 'question', 'blur')}
             placeholder="What would you like to know about our services?"
             className="w-full min-h-[100px]"
             required

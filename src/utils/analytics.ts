@@ -177,7 +177,7 @@ export const trackPageView = (pagePath: string, pageTitle?: string) => {
 /**
  * Track a specific form field interaction
  */
-export const trackFormFieldInteraction = (formName: string, fieldName: string, action: 'focus' | 'change' | 'blur') => {
+export const trackFormFieldInteraction = (formName: string, fieldName: string, action: 'focus' | 'change' | 'blur' | 'click') => {
   if (typeof window.gtag !== 'function') {
     return;
   }
