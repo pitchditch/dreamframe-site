@@ -29,7 +29,6 @@ const ServiceAreaMap = () => {
           />
         </div>
         
-        {/* Always spinning BC logo in the corner - removed border */}
         <div className="absolute bottom-4 right-4 perspective-1000" style={{ width: '80px', height: '80px' }}>
           <img 
             alt="BC Pressure Washing" 

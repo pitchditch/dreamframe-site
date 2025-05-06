@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { trackFormSubmission, trackFormFieldInteraction } from '@/utils/analytics';
+import emailjs from 'emailjs-com';
 
 const QuestionsForm = () => {
   const [email, setEmail] = useState('');
@@ -34,14 +35,55 @@ const QuestionsForm = () => {
       form_type: 'question'
     });
     
-    toast({
-      title: "Question Submitted",
-      description: "We'll get back to you as soon as possible! Final quote confirmed by Jayden.",
-    });
-    
-    setEmail('');
-    setQuestion('');
-    setIsSubmitting(false);
+    // Prepare the data for email
+    const templateParams = {
+      email: email,
+      question: question,
+      to_email: 'bcpressurewashing.ca@gmail.com',
+      subject: 'New Question Submission',
+      time: new Date().toLocaleString()
+    };
+
+    // Send email to business
+    try {
+      await emailjs.send(
+        'service_k22rhvk', 
+        'template_ruw9yri', 
+        templateParams, 
+        'us9P2lxc0qmLLI7hb'
+      );
+      
+      // Send confirmation email to customer
+      const confirmationParams = {
+        to_email: email,
+        subject: 'Your Question Has Been Received - BC Pressure Washing',
+        message: `Thank you for contacting BC Pressure Washing! We have received your question and will get back to you as soon as possible. For reference, here's a copy of your message:\n\n"${question}"\n\nBest regards,\nJayden Fisher\nBC Pressure Washing`
+      };
+      
+      await emailjs.send(
+        'service_k22rhvk',
+        'template_z4pi7zb',
+        confirmationParams,
+        'us9P2lxc0qmLLI7hb'
+      );
+      
+      toast({
+        title: "Question Submitted",
+        description: "We'll get back to you as soon as possible! Final quote confirmed by Jayden.",
+      });
+      
+      setEmail('');
+      setQuestion('');
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit your question. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, fieldName: string) => {
