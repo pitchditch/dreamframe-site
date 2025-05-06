@@ -34,7 +34,7 @@ const PhoneButton = () => {
   return (
     <>
       {isVisible && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 md:hidden">
+        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-30 md:hidden">
           <a
             href="tel:7788087620"
             onClick={handleCallClick}

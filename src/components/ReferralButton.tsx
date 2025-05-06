@@ -48,7 +48,7 @@ const ReferralButton = () => {
       {isVisible && (
         <Button 
           onClick={() => setIsOpen(true)} 
-          className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-5 py-2 flex items-center gap-2 fixed bottom-24 left-6 z-50 md:left-10 transition-all duration-300 hover:scale-105"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-5 py-2 flex items-center gap-2 fixed bottom-32 left-6 z-40 md:left-10 transition-all duration-300 hover:scale-105"
         >
           <Gift size={20} />
           <span>{t("Referral Program")}</span>

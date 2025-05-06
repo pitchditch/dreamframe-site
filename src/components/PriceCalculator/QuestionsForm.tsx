@@ -46,6 +46,7 @@ const QuestionsForm = () => {
 
     // Send email to business
     try {
+      console.log("Sending email to: bcpressurewashing.ca@gmail.com");
       await emailjs.send(
         'service_k22rhvk', 
         'template_ruw9yri', 
@@ -57,7 +58,8 @@ const QuestionsForm = () => {
       const confirmationParams = {
         to_email: email,
         subject: 'Your Question Has Been Received - BC Pressure Washing',
-        message: `Thank you for contacting BC Pressure Washing! We have received your question and will get back to you as soon as possible. For reference, here's a copy of your message:\n\n"${question}"\n\nBest regards,\nJayden Fisher\nBC Pressure Washing`
+        message: `Thank you for contacting BC Pressure Washing! We have received your question and will get back to you as soon as possible. For reference, here's a copy of your message:\n\n"${question}"\n\nBest regards,\nJayden Fisher\nBC Pressure Washing`,
+        business_email: 'bcpressurewashing.ca@gmail.com'
       };
       
       await emailjs.send(

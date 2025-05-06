@@ -1,16 +1,21 @@
 
 import React from 'react';
-import { Droplets, Home, CloudRain, Car, Building, Warehouse } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
-} from '@/components/ui/accordion';
 import { trackFormFieldInteraction } from '@/utils/analytics';
-import { SERVICE_CATEGORIES, ADD_ONS } from '../data/constants';
-import { isServiceDisabled, formatCurrency, getPricing } from '../utils/pricingUtils';
+import { PROPERTY_SIZES } from '../data/constants';
+
+interface ServiceOption {
+  id: string;
+  label: string;
+  description?: string;
+}
+
+interface AddOn {
+  id: string;
+  name: string;
+  price: number;
+}
 
 interface StepServicesInputProps {
   size: string;
@@ -31,145 +36,117 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
   onNextStep,
   onPrevStep
 }) => {
-  // Service icons mapping
-  const SERVICE_ICONS = {
-    'Window Cleaning (Outside)': <Droplets className="h-5 w-5" />,
-    'Window Cleaning (Inside)': <Droplets className="h-5 w-5" />,
-    'Both Window Sides': <Droplets className="h-5 w-5" />,
-    'House Washing': <Home className="h-5 w-5" />,
-    'House Wash + Windows': <Home className="h-5 w-5" />,
-    'Driveway Washing': <Car className="h-5 w-5" />,
-    'Driveway + House Washing': <Home className="h-5 w-5" />,
-    'Deck Washing': <CloudRain className="h-5 w-5" />,
-    'Gutter Cleaning (Inside)': <Home className="h-5 w-5" />,
-    'Gutter Cleaning (Outside)': <Home className="h-5 w-5" />,
-    'Gutter Cleaning (Both)': <Home className="h-5 w-5" />,
-    'Roof Cleaning': <CloudRain className="h-5 w-5" />
+  // Service options based on property size
+  const serviceOptions: ServiceOption[] = [
+    { id: 'Window Cleaning (Outside)', label: 'Window Cleaning (Outside)' },
+    { id: 'Window Cleaning (Inside)', label: 'Window Cleaning (Inside)' },
+    { id: 'Both Window Sides', label: 'Both Window Sides (Inside & Outside)' },
+    { id: 'House Washing', label: 'House Washing' },
+    { id: 'House Wash + Windows', label: 'House Wash + Window Cleaning' },
+    { id: 'Driveway Washing', label: 'Driveway Washing' },
+    { id: 'Driveway + House Washing', label: 'Driveway + House Washing' },
+    { id: 'Deck Washing', label: 'Deck Washing' },
+    { id: 'Gutter Cleaning (Inside)', label: 'Gutter Cleaning (Inside)' },
+    { id: 'Gutter Cleaning (Outside)', label: 'Gutter Cleaning (Outside)' },
+    { id: 'Gutter Cleaning (Both)', label: 'Gutter Cleaning (Both Inside & Outside)' },
+    { id: 'Roof Cleaning', label: 'Roof Cleaning' },
+  ];
+
+  // Available add-ons
+  const ADD_ONS: AddOn[] = [{
+    id: 'moss-treatment',
+    name: 'Moss Treatment',
+    price: 149
+  }, {
+    id: 'gutter-guards',
+    name: 'Gutter Guards Installation',
+    price: 299
+  }, {
+    id: 'fascia-cleaning',
+    name: 'Fascia Cleaning',
+    price: 99
+  }, {
+    id: 'window-track',
+    name: 'Window Track Cleaning',
+    price: 49
+  }, {
+    id: 'screen-cleaning',
+    name: 'Screen Cleaning',
+    price: 39
+  }];
+
+  const toggleService = (serviceId: string) => {
+    if (services.includes(serviceId)) {
+      // Remove service
+      setServices(services.filter(id => id !== serviceId));
+    } else {
+      // Add service
+      setServices([...services, serviceId]);
+    }
+    trackFormFieldInteraction('PriceCalculator', `Service: ${serviceId}`, 'toggle');
   };
 
-  // Function to handle service selection changes
-  function handleServiceChange(service: string) {
-    if (isServiceDisabled(service, services, size)) return;
-    
-    // Uncheck mutually exclusive services
-    const updated = services.includes(service) 
-      ? services.filter(s => s !== service) 
-      : [...services.filter(s => {
-          if (service === 'Both Window Sides' && (s === 'Window Cleaning (Outside)' || s === 'Window Cleaning (Inside)')) return false;
-          if ((service === 'Window Cleaning (Outside)' || service === 'Window Cleaning (Inside)') && s === 'Both Window Sides') return false;
-          if (service === 'House Wash + Windows' && (s === 'House Washing' || s === 'Both Window Sides')) return false;
-          if ((service === 'House Washing' || s === 'Both Window Sides') && s === 'House Wash + Windows') return false;
-          if (service === 'Driveway + House Washing' && (s === 'Driveway Washing' || s === 'House Washing')) return false;
-          if ((service === 'Driveway Washing' || s === 'House Washing') && s === 'Driveway + House Washing') return false;
-          if (service === 'Gutter Cleaning (Both)' && (s === 'Gutter Cleaning (Inside)' || s === 'Gutter Cleaning (Outside)')) return false;
-          if ((service === 'Gutter Cleaning (Inside)' || s === 'Gutter Cleaning (Outside)') && s === 'Gutter Cleaning (Both)') return false;
-          return true;
-        }), service];
-    
-    setServices(updated);
-    
-    // Track service selection
-    trackFormFieldInteraction('PriceCalculator', `Service: ${service}`, 'change');
-  }
-  
-  // Function to handle add-on selection changes
-  function handleAddOnChange(addonId: string) {
-    setAddOns(prev => prev.includes(addonId) ? prev.filter(id => id !== addonId) : [...prev, addonId]);
-    
-    // Track addon selection
-    const addon = ADD_ONS.find(a => a.id === addonId);
-    if (addon) {
-      trackFormFieldInteraction('PriceCalculator', `Add-on: ${addon.name}`, 'change');
+  const toggleAddOn = (addonId: string) => {
+    if (addOns.includes(addonId)) {
+      // Remove add-on
+      setAddOns(addOns.filter(id => id !== addonId));
+    } else {
+      // Add add-on
+      setAddOns([...addOns, addonId]);
     }
-  }
-  
+    trackFormFieldInteraction('PriceCalculator', `Add-on: ${addonId}`, 'toggle');
+  };
+
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Step 3: Choose Your Services</h3>
-      <p className="mb-4 text-gray-600">
-        Choose all that apply. Prices update based on your home size.
-      </p>
-      
-      {/* Service Categories Accordion */}
-      <Accordion type="single" collapsible className="w-full mb-4">
-        {SERVICE_CATEGORIES.map((category, idx) => (
-          <AccordionItem key={idx} value={`item-${idx}`}>
-            <AccordionTrigger className="text-lg font-medium py-3">
-              {category.name}
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-1 gap-2 pt-2">
-                {category.services.map(service => (
-                  <label 
-                    key={service} 
-                    className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all select-none 
-                    ${isServiceDisabled(service, services, size) ? 
-                      'opacity-40 bg-gray-100 pointer-events-none' : 
-                      services.includes(service) ? 
-                        'border-blue-500 bg-blue-50' : 
-                        'hover:border-blue-300'}`}
-                  >
-                    <input 
-                      type="checkbox" 
-                      checked={services.includes(service)} 
-                      disabled={isServiceDisabled(service, services, size)} 
-                      className="form-checkbox accent-blue-600" 
-                      onChange={() => handleServiceChange(service)} 
-                      style={{
-                        width: 20,
-                        height: 20
-                      }} 
-                    />
-                    <div className="flex items-center gap-2">
-                      {SERVICE_ICONS[service as keyof typeof SERVICE_ICONS]}
-                      <span className="font-medium">{service}</span>
-                    </div>
-                    <span className="ml-auto font-semibold text-blue-700 text-sm">
-                      {service === 'Roof Cleaning' || size === 'xlarge' ? 
-                        'On-site quote required' : 
-                        `Starting at ${formatCurrency(getPricing(size, service))}`}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-
-        {/* Add-ons Section */}
-        <AccordionItem value="add-ons">
-          <AccordionTrigger className="text-lg font-medium py-3">
-            Request Add-ons
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="grid grid-cols-1 gap-2 pt-2">
-              {ADD_ONS.map(addon => (
-                <label 
-                  key={addon.id} 
-                  className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all select-none
-                  ${addOns.includes(addon.id) ? 'border-blue-500 bg-blue-50' : 'hover:border-blue-300'}`}
-                >
-                  <input 
-                    type="checkbox" 
-                    checked={addOns.includes(addon.id)} 
-                    className="form-checkbox accent-blue-600" 
-                    onChange={() => handleAddOnChange(addon.id)} 
-                    style={{
-                      width: 20,
-                      height: 20
-                    }} 
-                  />
-                  <span className="font-medium">{addon.name}</span>
-                  <span className="ml-auto font-semibold text-blue-700 text-sm">
-                    Starting at ${addon.price.toFixed(2)}
-                  </span>
-                </label>
-              ))}
+      <h3 className="text-xl font-bold mb-2">Step 3: Select Services</h3>
+      <p className="mb-4 text-gray-600">Choose the services you're interested in. Select all that apply.</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        {serviceOptions.map(option => (
+          <Card 
+            key={option.id} 
+            className={`p-4 cursor-pointer flex items-center justify-between hover:border-blue-500 transition-all ${services.includes(option.id) ? 'border-2 border-blue-500 bg-blue-50' : ''}`}
+            onClick={() => toggleService(option.id)}
+          >
+            <div>
+              <span className="font-semibold">{option.label}</span>
+              {option.description && <p className="text-xs text-gray-500">{option.description}</p>}
+              {option.id === 'Roof Cleaning' && <p className="text-xs text-gray-500">On-site estimate required</p>}
             </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-      
+            {services.includes(option.id) && (
+              <svg className="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
+              </svg>
+            )}
+          </Card>
+        ))}
+      </div>
+
+      {services.length > 0 && (
+        <div className="mb-6">
+          <h4 className="font-semibold mb-3">Add-Ons & Upgrades</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {ADD_ONS.map(addon => (
+              <Card
+                key={addon.id}
+                className={`p-3 cursor-pointer flex items-center justify-between hover:border-green-500 transition-all ${addOns.includes(addon.id) ? 'border-2 border-green-500 bg-green-50' : ''}`}
+                onClick={() => toggleAddOn(addon.id)}
+              >
+                <div>
+                  <span className="font-medium">{addon.name}</span>
+                  <p className="text-xs text-gray-700">${addon.price}</p>
+                </div>
+                {addOns.includes(addon.id) && (
+                  <svg className="h-5 w-5 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                )}
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-between mt-6">
         <Button variant="outline" onClick={onPrevStep}>
           Back
@@ -177,19 +154,6 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
         <Button onClick={onNextStep} disabled={services.length === 0}>
           Next
         </Button>
-      </div>
-      <div className="mt-3 text-xs text-gray-500">
-        <p>
-          <strong>How We Create Your Custom Quote:</strong>
-        </p>
-        <ul className="list-disc list-inside pl-2">
-          <li>
-            <strong>Google Maps Estimate:</strong> For standard homes, we'll generate your estimate using Google Maps and your provided address.
-          </li>
-          <li>
-            <strong>On-Site Estimate:</strong> For roof cleaning or homes over 3500 sq. ft., we'll provide an on-site quote for best accuracy.
-          </li>
-        </ul>
       </div>
     </div>
   );
