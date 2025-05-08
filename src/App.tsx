@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
@@ -6,7 +7,6 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Calculator from './pages/Calculator';
 import About from './pages/About';
-import Process from './pages/ServiceProcess';
 import Testimonials from './pages/Testimonials';
 import BlogPost from './pages/BlogPost';
 import Blog from './pages/Blog';
@@ -23,7 +23,6 @@ import RoofCleaning from './pages/services/RoofCleaning';
 import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
 import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning';
 import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
-import VancouverWindowCleaning from './pages/services/VancouverWindowCleaning';
 
 import ChatAssistant from './components/ChatAssistant';
 import { HelmetProvider } from 'react-helmet-async';
@@ -64,13 +63,12 @@ function App() {
         <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
         <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
         <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
-        <Route path="/services/vancouver-window-cleaning" element={<VancouverWindowCleaning />} />
 
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/equipment" element={<Equipment />} />
-        <Route path="/zip-uploader" element={<ZipUploader />} />
+        <Route path="/zip-uploader" element={<ZipUploader onExtract={() => {}} />} />
         <Route path="/review" element={<Review />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
