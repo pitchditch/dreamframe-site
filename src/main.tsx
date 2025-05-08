@@ -93,15 +93,6 @@ const initializeApp = async () => {
   // Set app version info globally
   (window as any).appVersion = APP_VERSION;
   
-  // Track page view in Google Analytics
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'page_view', {
-      page_title: document.title,
-      page_location: window.location.href,
-      page_path: window.location.pathname
-    });
-  }
-
   // Use StrictMode for better development experience
   try {
     const root = createRoot(container!);
