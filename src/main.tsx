@@ -1,5 +1,6 @@
 
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 import { StrictMode } from 'react'
@@ -107,7 +108,9 @@ const initializeApp = async () => {
     root.render(
       <StrictMode>
         <HelmetProvider>
-          <App key={APP_VERSION.toString()} />
+          <BrowserRouter>
+            <App key={APP_VERSION.toString()} />
+          </BrowserRouter>
         </HelmetProvider>
       </StrictMode>
     );
@@ -197,4 +200,3 @@ window.addEventListener('online', () => {
 
 // Initialize the application
 initializeApp();
-

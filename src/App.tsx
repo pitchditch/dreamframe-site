@@ -14,6 +14,7 @@ import Equipment from './pages/Equipment';
 import ZipUploader from './components/ZipUploader';
 import Review from './pages/Review';
 import NotFound from './pages/NotFound';
+import ServiceProcessPage from './pages/ServiceProcess';
 
 // Services
 import PressureWashing from './pages/services/PressureWashing';
@@ -46,7 +47,7 @@ function App() {
   }, []);
 
   return (
-    <HelmetProvider>
+    <>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/now" element={<Services />} />
@@ -54,6 +55,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/about" element={<About />} />
+        <Route path="/process" element={<ServiceProcessPage />} />
 
         {/* Service Pages */}
         <Route path="/services/pressure-washing" element={<PressureWashing />} />
@@ -74,7 +76,7 @@ function App() {
       </Routes>
 
       <ChatAssistant />
-    </HelmetProvider>
+    </>
   );
 }
 
