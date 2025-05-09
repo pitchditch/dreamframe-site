@@ -6,25 +6,25 @@ import './index.css'
 import { StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 
-// Find the root element
+// Simple root element check
 const rootElement = document.getElementById('root');
 if (!rootElement) {
-  console.error('Root element not found, creating one');
-  const newRoot = document.createElement('div');
-  newRoot.id = 'root';
-  document.body.appendChild(newRoot);
+  console.error('Root element not found in the DOM');
 }
 
-// Initialize the application
-const root = createRoot(rootElement || document.createElement('div'));
-root.render(
-  <StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
-  </StrictMode>
-);
-
-console.log("App initialized successfully");
+// Create root and render app
+try {
+  const root = createRoot(rootElement || document.createElement('div'));
+  root.render(
+    <StrictMode>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
+    </StrictMode>
+  );
+  console.log("App successfully rendered");
+} catch (error) {
+  console.error("Failed to render app:", error);
+}

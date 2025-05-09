@@ -1,6 +1,4 @@
 
-import { APP_VERSION } from './cacheUtils';
-
 /**
  * Initialize and register the service worker
  */
