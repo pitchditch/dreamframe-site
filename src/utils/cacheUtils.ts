@@ -17,3 +17,20 @@ export const addVersionParam = (url: string): string => {
     return url;
   }
 };
+
+/**
+ * Clear all application caches
+ */
+export const clearCaches = async (): Promise<void> => {
+  try {
+    if ('caches' in window) {
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames.map(cacheName => caches.delete(cacheName))
+      );
+      console.log('All caches cleared');
+    }
+  } catch (error) {
+    console.error('Error clearing caches:', error);
+  }
+};
