@@ -5,15 +5,16 @@ import { APP_VERSION, clearCaches } from './cacheUtils';
  * Create root element if it doesn't exist
  */
 export const ensureRootElement = (): HTMLElement => {
-  const rootElement = document.getElementById("root");
+  let rootElement = document.getElementById("root");
   if (!rootElement) {
     console.error("Failed to find the root element - creating one");
     const newRoot = document.createElement("div");
     newRoot.id = "root";
     document.body.appendChild(newRoot);
+    rootElement = newRoot;
   }
 
-  return document.getElementById("root")!;
+  return rootElement;
 };
 
 /**
@@ -36,32 +37,38 @@ export const addVersionIndicator = (): void => {
 };
 
 /**
- * Initialize the application
+ * Initialize the application with more robust error handling
  */
 export const initializeApp = async (): Promise<HTMLElement> => {
-  // Always clear cache on load
-  await clearCaches();
-  
-  // Create container if it doesn't exist
-  const container = ensureRootElement();
-  
-  // Set app version info globally
-  (window as any).appVersion = APP_VERSION;
-  
-  return container;
+  try {
+    // Clear cache on load but don't await
+    clearCaches().catch(err => console.error("Cache clearing error:", err));
+    
+    // Create container if it doesn't exist
+    const container = ensureRootElement();
+    
+    // Set app version info globally
+    (window as any).appVersion = APP_VERSION;
+    
+    return container;
+  } catch (error) {
+    console.error("Error in app initialization:", error);
+    // Fallback to basic DOM element
+    return ensureRootElement();
+  }
 };
 
 /**
  * Set up check for stale content
  */
 export const setupStaleContentCheck = (): void => {
-  // Register event listener to detect if the page is loaded from cache
-  window.addEventListener('load', () => {
-    // Force reload if showing stale content
-    const lastLoad = window.sessionStorage.getItem('app-last-load');
-    if (lastLoad && lastLoad !== APP_VERSION.toString()) {
-      console.log('Detected stale content, forcing reload...');
-      window.location.reload();
-    }
-  });
+  try {
+    // Register event listener to detect if the page is loaded from cache
+    window.addEventListener('load', () => {
+      // Store current version
+      window.sessionStorage.setItem('app-last-load', APP_VERSION.toString());
+    });
+  } catch (error) {
+    console.error("Error setting up stale content check:", error);
+  }
 };
