@@ -1,20 +1,20 @@
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.tsx';
+import './index.css';
+import { StrictMode } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App.tsx'
-import './index.css'
-import { StrictMode } from 'react'
-import { HelmetProvider } from 'react-helmet-async'
-
-// Simple root element check
+// Ensure the root element exists in index.html
 const rootElement = document.getElementById('root');
+
 if (!rootElement) {
-  console.error('Root element not found in the DOM');
+  throw new Error('Root element not found. Ensure <div id="root"></div> exists in index.html.');
 }
 
 // Create root and render app
 try {
-  const root = createRoot(rootElement || document.createElement('div'));
+  const root = createRoot(rootElement);
   root.render(
     <StrictMode>
       <HelmetProvider>
