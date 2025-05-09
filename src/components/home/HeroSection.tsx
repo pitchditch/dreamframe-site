@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -113,9 +112,9 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content - Improved spacing from navbar */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-32 sm:pt-28 md:pt-20">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-40 sm:pt-36 md:pt-32">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-24 md:mt-20">
+          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-12 md:mt-8">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           
@@ -143,7 +142,7 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Postal Code Input Section - White background with black text */}
+        {/* Postal Code Input Section */}
         <div className="max-w-2xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">

@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Index from './pages/Index';
@@ -15,6 +15,7 @@ import ZipUploader from './components/ZipUploader';
 import Review from './pages/Review';
 import NotFound from './pages/NotFound';
 import ServiceProcessPage from './pages/ServiceProcess';
+import Home from './pages/Home';
 
 // Services
 import PressureWashing from './pages/services/PressureWashing';
@@ -27,14 +28,8 @@ import CommercialPressureWashing from './pages/services/CommercialPressureWashin
 
 import ChatAssistant from './components/ChatAssistant';
 import usePageTracking from './hooks/usePageTracking';
-import { initAnalytics } from './lib/analytics-client';
 
 function App() {
-  // Initialize analytics once
-  useEffect(() => {
-    initAnalytics();
-  }, []);
-
   // Track page views on route changes
   usePageTracking();
 
@@ -42,6 +37,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/now" element={<Services />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
