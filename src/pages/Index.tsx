@@ -14,6 +14,11 @@ import CompetitorComparisonSection from '../components/home/CompetitorComparison
 import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import FounderSection from '../components/home/FounderSection';
+import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
+import ProcessSection from '../components/home/ProcessSection';
+import ServicesSection from '../components/home/ServicesSection';
+import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -85,13 +90,18 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
+      <ServicesSection />
       <PremiumSolutionsSection />
+      <FeaturedProjectSection />
+      <ProcessSection />
       <ScreenCleaningSection />
       <OwnerOperatedSection />
+      <FounderSection />
       <TrustedCustomersSection />
       <CompetitorComparisonSection />
       <TestimonialsSection />
       <SatisfactionGuaranteeSection />
+      <CTABanner />
       <FAQSection 
         title="Frequently Asked Questions" 
         subtitle="Everything you need to know about our services"
