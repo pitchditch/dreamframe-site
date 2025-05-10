@@ -2,7 +2,7 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
-import { Check, ArrowRight, Window, Home, Ladder, Building } from 'lucide-react';
+import { Check, ArrowRight, Wind, Home, ParkingSquare, Building2 } from 'lucide-react';
 
 const PremiumSolutionsSection = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const PremiumSolutionsSection = () => {
       description: 'Crystal-clear windows inside and out using eco-friendly solutions.',
       link: '/services/window-cleaning',
       image: '/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png',
-      icon: <Window className="h-7 w-7 text-bc-red" />,
+      icon: <Wind className="h-7 w-7 text-bc-red" />,
       included: [
         'Exterior & interior window cleaning',
         'Screen & sill wipe-down',
@@ -39,7 +39,7 @@ const PremiumSolutionsSection = () => {
       description: 'Prevent clogs and overflow damage with professional gutter care.',
       link: '/services/gutter-cleaning',
       image: '/lovable-uploads/f899a443-8930-4364-b538-916f65545f84.png',
-      icon: <Ladder className="h-7 w-7 text-bc-red" />,
+      icon: <ParkingSquare className="h-7 w-7 text-bc-red" />,
       included: [
         'Interior debris removal',
         'Downspout flushing',
@@ -52,7 +52,7 @@ const PremiumSolutionsSection = () => {
       description: 'Eliminate moss, algae, and stains — extend roof life safely.',
       link: '/services/roof-cleaning',
       image: '/lovable-uploads/51f10eb0-c939-49d5-8ab5-2235a162169e.png',
-      icon: <Building className="h-7 w-7 text-bc-red" />,
+      icon: <Building2 className="h-7 w-7 text-bc-red" />,
       included: [
         'Soft wash or brushing method',
         'Moss & algae treatment',
@@ -68,7 +68,7 @@ const PremiumSolutionsSection = () => {
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 flex items-center justify-center">
             <span className="text-bc-red mr-2">
-              <Window className="h-8 w-8 inline-block" />
+              <Wind className="h-8 w-8 inline-block" />
             </span> 
             Premium Cleaning Solutions
           </h2>
