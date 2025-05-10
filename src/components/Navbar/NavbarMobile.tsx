@@ -102,7 +102,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                     </div>
                     <span>{t('Commercial Pressure Washing')}</span>
                   </Link>
-                  <Link to="/services/post-construction-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                  <Link to="/services/post-construction-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
                       <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning Icon" className="w-8 h-8 object-contain" />
                     </div>

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Index from './pages/Index';
 import Services from './pages/Services';
@@ -16,7 +16,6 @@ import Review from './pages/Review';
 import NotFound from './pages/NotFound';
 import ServiceProcessPage from './pages/ServiceProcess';
 import Home from './pages/Home';
-import WhyUs from './pages/WhyUs'; // Added WhyUs import
 
 // Services
 import PressureWashing from './pages/services/PressureWashing';
@@ -28,25 +27,11 @@ import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning'
 import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
 
 import ChatAssistant from './components/ChatAssistant';
-import { trackPage } from './lib/analytics-client';
+import usePageTracking from './hooks/usePageTracking';
 
 function App() {
-  // Use location directly instead of the custom hook
-  const location = useLocation();
-  
   // Track page views on route changes
-  React.useEffect(() => {
-    trackPage(location.pathname);
-    
-    // Also track in Google Analytics directly
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'page_view', {
-        page_title: document.title,
-        page_location: window.location.href,
-        page_path: location.pathname
-      });
-    }
-  }, [location]);
+  usePageTracking();
 
   return (
     <>
@@ -59,7 +44,6 @@ function App() {
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/about" element={<About />} />
         <Route path="/process" element={<ServiceProcessPage />} />
-        <Route path="/why-us" element={<WhyUs />} /> {/* Added WhyUs route */}
 
         {/* Service Pages */}
         <Route path="/services/pressure-washing" element={<PressureWashing />} />
