@@ -81,12 +81,19 @@ const StepSummary: React.FC<StepSummaryProps> = ({
       {/* Show form summary data */}
       <div className="bg-gray-100 p-4 mb-4 rounded-lg">
         <h4 className="font-medium mb-2">Service Details:</h4>
+        <p><strong>Name:</strong> {contact.name}</p>
+        <p><strong>Phone:</strong> {contact.phone}</p>
+        <p><strong>Email:</strong> {contact.email || 'Not provided'}</p>
         <p><strong>Address:</strong> {address}</p>
         <p><strong>Property Size:</strong> {size}</p>
         <p><strong>Services:</strong> {services.join(', ')}</p>
-        <p><strong>Add-ons:</strong> {addOns.length > 0 ? addOns.join(', ') : 'None'}</p>
-        <p><strong>Name:</strong> {contact.name}</p>
-        <p><strong>Contact:</strong> {contact.phone} {contact.email ? `/ ${contact.email}` : ''}</p>
+        <p><strong>Add-ons:</strong> {addOns.length > 0 ? 
+          addOns.map(addonId => {
+            const addon = ADD_ONS.find(a => a.id === addonId);
+            return addon ? addon.name : addonId;
+          }).join(', ') : 'None'}</p>
+        {contact.referredBy && <p><strong>Referred by:</strong> {contact.referredBy}</p>}
+        {contact.notes && <p><strong>Notes:</strong> {contact.notes}</p>}
       </div>
       
       <div className="bg-gray-50 px-4 py-4 rounded-lg mb-4">

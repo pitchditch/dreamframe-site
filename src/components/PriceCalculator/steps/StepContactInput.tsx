@@ -29,31 +29,49 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
       <h3 className="text-xl font-bold mb-2">Step 4: Contact Info</h3>
       <p className="mb-4 text-gray-600">Please provide your contact details so we can follow up with your quote.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div className="flex flex-col">
+          <input 
+            type="text" 
+            className="border p-3 rounded-lg" 
+            placeholder="Name *" 
+            value={contact.name} 
+            onChange={e => {
+              setContact(v => ({...v, name: e.target.value}));
+              trackFormFieldInteraction('PriceCalculator', 'Name', 'change');
+            }}
+            onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'focus')}
+            onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'blur')}
+            required 
+          />
+          {!contact.name && <span className="text-red-500 text-xs mt-1">Name is required</span>}
+        </div>
+        <div className="flex flex-col">
+          <input 
+            type="tel" 
+            className="border p-3 rounded-lg" 
+            placeholder="Phone Number *" 
+            value={contact.phone} 
+            onChange={e => {
+              setContact(v => ({...v, phone: e.target.value}));
+              trackFormFieldInteraction('PriceCalculator', 'Phone', 'change');
+            }}
+            onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'focus')}
+            onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'blur')}
+            required 
+          />
+          {!contact.phone && <span className="text-red-500 text-xs mt-1">Phone number is required</span>}
+        </div>
         <input 
-          type="text" 
+          type="email" 
           className="border p-3 rounded-lg" 
-          placeholder="Name" 
-          value={contact.name} 
+          placeholder="Email (optional)" 
+          value={contact.email} 
           onChange={e => {
-            setContact(v => ({...v, name: e.target.value}));
-            trackFormFieldInteraction('PriceCalculator', 'Name', 'change');
+            setContact(v => ({...v, email: e.target.value}));
+            trackFormFieldInteraction('PriceCalculator', 'Email', 'change');
           }}
-          onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'focus')}
-          onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'blur')}
-          required 
-        />
-        <input 
-          type="tel" 
-          className="border p-3 rounded-lg" 
-          placeholder="Phone" 
-          value={contact.phone} 
-          onChange={e => {
-            setContact(v => ({...v, phone: e.target.value}));
-            trackFormFieldInteraction('PriceCalculator', 'Phone', 'change');
-          }}
-          onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'focus')}
-          onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'blur')}
-          required 
+          onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Email', 'focus')}
+          onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Email', 'blur')}
         />
         <input 
           type="text" 
