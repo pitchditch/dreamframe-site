@@ -1,4 +1,3 @@
-// At the top (already provided)
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorIntro from './PriceCalculatorIntro';
@@ -58,12 +57,12 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   const handleFormSubmit = async () => {
     setSubmitting(true);
 
-    // Debug logs
-    console.log('Contact Info:', contact);
-    console.log('Address:', address);
-    console.log('Size:', size);
-    console.log('Services:', services);
-    console.log('Add-ons:', addOns);
+    // Debug logs to track the variables
+    console.log('📧 Contact Info:', contact);
+    console.log('📧 Address:', address);
+    console.log('📧 Size:', size);
+    console.log('📧 Services:', services);
+    console.log('📧 Add-ons:', addOns);
 
     let estTotal = 0;
     if (size !== 'xlarge') {
@@ -111,9 +110,9 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
         },
         process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
       );
-      console.log('Email sent successfully');
+      console.log('📧 Email sent successfully');
     } catch (error) {
-      console.error('EmailJS Error:', error);
+      console.error('❌ EmailJS Error:', error);
     }
 
     setTimeout(() => {
