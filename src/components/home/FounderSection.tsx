@@ -24,16 +24,7 @@ const FounderSection = () => {
                   <CircleCheck className="h-5 w-5 text-green-500" />
                 </div>
                 <div>
-                  <p className="font-medium">10+ Years Experience</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="bg-white p-2 rounded-full mr-3">
-                  <Star className="h-5 w-5 text-yellow-500" />
-                </div>
-                <div>
-                  <p className="font-medium">5-Star Rated</p>
+                  <p className="font-medium">3+ Years Experience</p>
                 </div>
               </div>
               
@@ -70,17 +61,6 @@ const FounderSection = () => {
                 alt="Jayden - Owner of BC Pressure Washing" 
                 className="rounded-lg shadow-lg w-full max-w-md object-cover"
               />
-              <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg">
-                <div className="flex items-center">
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="h-5 w-5 text-yellow-400 fill-current" />
-                    ))}
-                  </div>
-                  <span className="ml-2 font-semibold">4.9/5</span>
-                </div>
-                <p className="text-sm text-gray-500">Based on 150+ reviews</p>
-              </div>
             </div>
           </div>
         </div>

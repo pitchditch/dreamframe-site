@@ -52,48 +52,37 @@ const PressureWashing = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="mt-24 md:mt-0"> {/* Added margin top on mobile to push content down */}
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
-                <p className="text-lg text-gray-700 mb-4">
-                  Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
-                </p>
-                <p className="text-lg text-gray-700">
-                  Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
-                </p>
-                <ul className="mt-4 space-y-4 text-gray-700">
-                  <li className="flex items-center space-x-4">
-                    <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-16 h-16 object-cover rounded-lg" />
-                    <span>Driveways & walkways</span>
-                  </li>
-                  <li className="flex items-center space-x-4">
-                    <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-16 h-16 object-cover rounded-lg" />
-                    <span>Decks & patios</span>
-                  </li>
-                  <li className="flex items-center space-x-4">
-                    <img src="/lovable-uploads/8090d09c-920d-4acb-8b9e-222865d6b8fc.png" alt="Siding & Exterior Walls" className="w-16 h-16 object-cover rounded-lg" />
-                    <span>Siding & exterior walls</span>
-                  </li>
-                  <li className="flex items-center space-x-4">
-                    <img src="/lovable-uploads/021dd5ff-95a8-4c83-9d47-9a44e895e0f3.png" alt="Fences & Gates" className="w-16 h-16 object-cover rounded-lg" />
-                    <span>Fences & gates</span>
-                  </li>
-                </ul>
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
+              <p className="text-lg text-gray-700 mb-4">
+                Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
+              </p>
+              <p className="text-lg text-gray-700">
+                Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
+              </p>
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Driveways & walkways</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Decks & patios</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/8090d09c-920d-4acb-8b9e-222865d6b8fc.png" alt="Siding & Exterior Walls" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Siding & exterior walls</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/021dd5ff-95a8-4c83-9d47-9a44e895e0f3.png" alt="Fences & Gates" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Fences & gates</span>
+                </div>
               </div>
               <ServiceFeatures />
               <ServiceBenefitsSection />
             </div>
-            <div className="flex flex-col">
-              <div className="relative mb-6">
-                <div className="absolute -top-12 -left-12 w-24 h-24 animate-spin-slow opacity-80">
-                  <img src="/lovable-uploads/21056867-9ce1-48a7-8503-3d9f1efdf36e.png" alt="BC Pressure Washing" className="w-full h-full object-contain drop-shadow-md" />
-                </div>
-                <div className="absolute -top-16 left-16 bg-white p-3 rounded-lg shadow-md transform rotate-6 animate-bounce-slow">
-                  <MessageCircle className="text-bc-red h-8 w-8" />
-                  <div className="absolute w-4 h-4 bg-white transform rotate-45 -bottom-2 left-6"></div>
-                </div>
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1">
+            <div className="flex justify-center items-start">
+              <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1 max-w-md w-full">
                 <PressureWashingForm />
               </div>
             </div>

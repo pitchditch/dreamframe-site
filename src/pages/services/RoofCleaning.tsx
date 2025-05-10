@@ -9,7 +9,6 @@ import ServiceHeader from '@/components/ServiceHeader';
 import ServiceBenefits from '@/components/ServiceBenefits';
 import ChatAssistant from '@/components/ChatAssistant';
 import { Badge } from '@/components/ui/badge';
-import LocationBanner from '@/components/LocationBanner';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 
@@ -160,17 +159,17 @@ const RoofCleaning = () => {
         </div>
       </section>
 
-      {/* GALLERY/TESTIMONIALS SECTION */}
+      {/* GALLERY/TESTIMONIALS SECTION - Made taller */}
       <div className="relative z-50 bg-white py-16">
-        <RoofCleaningGallery />
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Recent Roof Cleaning Projects</h2>
+          <div className="h-[500px] md:h-[600px]">  {/* Increased height here */}
+            <RoofCleaningGallery />
+          </div>
+        </div>
       </div>
       
-      {/* LOCATION BANNER */}
-      <div className="relative z-30 bg-white">
-        <LocationBanner />
-      </div>
-      
-      {/* FAQ SECTION - removing the gap between FAQ and satisfaction guarantee */}
+      {/* FAQ SECTION */}
       <section className="py-16 pb-0 bg-white relative">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
