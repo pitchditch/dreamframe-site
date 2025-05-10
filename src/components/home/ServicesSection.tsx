@@ -1,8 +1,6 @@
-
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-
 const ServicesSection = () => {
   const services = [{
     title: "Window Cleaning",
@@ -25,53 +23,6 @@ const ServicesSection = () => {
     image: "/lovable-uploads/4da7d34a-a303-4274-ad91-8aeb980fa657.png",
     link: "/services/roof-cleaning"
   }];
-
-  return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <span className="bg-bc-red/10 text-bc-red font-medium px-4 py-1 rounded-full text-sm">OUR SERVICES</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">Professional Exterior Cleaning</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            We offer comprehensive cleaning solutions to keep your property looking its best all year round
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 bg-white hover:-translate-y-2">
-              <div className="h-64 overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <Link 
-                  to={service.link}
-                  className="inline-flex items-center text-bc-red hover:text-red-700 font-medium transition-colors"
-                >
-                  Learn More <ArrowRight className="ml-2" size={16} />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="text-center mt-14">
-          <Button asChild variant="bc-red" size="lg" className="rounded-full shadow-md hover:shadow-lg">
-            <Link to="/services">
-              View All Services 
-              <ArrowRight className="ml-2" size={18} />
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
+  return;
 };
-
 export default ServicesSection;
