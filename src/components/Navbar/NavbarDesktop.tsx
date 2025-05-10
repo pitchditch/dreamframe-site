@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
 
@@ -98,7 +99,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/services/post-construction-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                <Link to="/services/post-construction-window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex items-center justify-center w-12 h-12">
                       <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning Icon" className="w-10 h-10 object-contain" />

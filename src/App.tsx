@@ -16,6 +16,7 @@ import Review from './pages/Review';
 import NotFound from './pages/NotFound';
 import ServiceProcessPage from './pages/ServiceProcess';
 import Home from './pages/Home';
+import WhyUs from './pages/WhyUs'; // Added WhyUs import
 
 // Services
 import PressureWashing from './pages/services/PressureWashing';
@@ -58,6 +59,7 @@ function App() {
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/about" element={<About />} />
         <Route path="/process" element={<ServiceProcessPage />} />
+        <Route path="/why-us" element={<WhyUs />} /> {/* Added WhyUs route */}
 
         {/* Service Pages */}
         <Route path="/services/pressure-washing" element={<PressureWashing />} />

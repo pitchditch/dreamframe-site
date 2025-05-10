@@ -2,6 +2,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import WhySection from '../../components/post-construction/WhySection';
+import BenefitsSection from '../../components/post-construction/BenefitsSection';
+import HeroSection from '../../components/post-construction/HeroSection';
+import ProcessSection from '../../components/post-construction/ProcessSection';
+import FAQSection from '../../components/post-construction/FAQSection';
 
 const PostConstructionWindowCleaning = () => {
   return (
@@ -19,21 +26,9 @@ const PostConstructionWindowCleaning = () => {
         </div>
       </header>
 
-      <section id="intro" className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-6">Why Choose Our Post Construction Window Cleaning?</h2>
-          <p className="text-lg text-gray-700 mb-6">
-            After the dust settles and the construction is complete, the last thing you need is to worry about cleaning your windows. 
-            Our specialized post construction window cleaning service ensures that your windows are spotless and free from construction debris, smudges, or dust.
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            <li>Remove construction dust, dirt, and debris</li>
-            <li>Professional streak-free finish</li>
-            <li>Safe and efficient cleaning methods</li>
-            <li>Serving Metro Vancouver, Surrey, and White Rock</li>
-          </ul>
-        </div>
-      </section>
+      <WhySection />
+      
+      <BenefitsSection />
 
       <section id="how-it-works" className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
@@ -68,7 +63,11 @@ const PostConstructionWindowCleaning = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Your Windows Clean?</h2>
           <p className="text-xl mb-8">Contact us today to schedule your post-construction window cleaning service. We're here to make your home shine!</p>
-          <a href="/contact" className="bg-white text-bc-red px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors">Get a Free Quote</a>
+          <Link to="/contact">
+            <Button className="bg-white text-bc-red hover:bg-gray-100 px-8 py-3 rounded-lg font-bold text-lg">
+              Get a Free Quote
+            </Button>
+          </Link>
         </div>
       </section>
     </Layout>
