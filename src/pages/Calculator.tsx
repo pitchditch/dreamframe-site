@@ -1,82 +1,70 @@
+import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
-import React from 'react';
-import Layout from '../components/Layout';
-import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
-import { Helmet } from 'react-helmet-async';
-import { Percent } from 'lucide-react';
-import { TestimonialCarousel } from '@/components/TestimonialCarousel';
-import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
+const PriceCalculatorForm = ({ initialStep }: { initialStep?: string }) => {
+  const [formData, setFormData] = useState({
+    from_name: '',
+    from_email: '',
+    phone: '',
+    address: '',
+    city: '',
+    postal_code: '',
+    surface_type: '',
+    square_footage: '',
+    additional_services: '',
+    additional_notes: '',
+    home_size: '',
+    selected_services: '',
+    referral_name: '',
+  });
 
-const Calculator = () => {
-  // Check if user was referred from the homepage with a postal code
-  const hasPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // ✅ Log what you're sending to EmailJS
+    console.log("📤 Sending form data to EmailJS:", formData);
+
+    try {
+      const result = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        formData,
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID
+      );
+      console.log("✅ Email sent successfully:", result);
+    } catch (error) {
+      console.error("❌ Email send error:", error);
+    }
+  };
 
   return (
-    <Layout>
-      <Helmet>
-        <title>Service Price Calculator | BC Pressure Washing</title>
-        <meta name="description" content="Get an instant quote for window cleaning, pressure washing, and gutter cleaning services in White Rock, Surrey and Metro Vancouver." />
-        <meta name="keywords" content="pressure washing quote, window cleaning estimate, gutter cleaning cost, White Rock, Surrey, BC" />
-      </Helmet>
-      <div className="container mx-auto py-12 mt-24">
-        <div className="text-center mb-12">
-          <div className="inline-block bg-yellow-400 text-black px-4 py-2 rounded-full font-bold mb-4 animate-pulse">
-            <Percent className="inline-block h-4 w-4 mr-1" />
-            SPRING SALE: 20% OFF ALL SERVICES
-          </div>
-          <h1 className="text-4xl font-bold mb-4">Service Price Calculator</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Quick quote for your exterior cleaning needs in White Rock & Surrey.
-          </p>
-        </div>
-        
-        <div className="relative flex">
-          <div className="w-full lg:w-3/4 pr-0 lg:pr-8">
-            <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
-            
-            {/* 100% Satisfaction Guarantee - Now with house background */}
-            <div className="mt-12 relative overflow-hidden rounded-xl shadow-lg">
-              <div className="absolute inset-0">
-                <img 
-                  src="/lovable-uploads/3508b357-c029-4365-bb7c-e8cd605080a5.png" 
-                  alt="Beautiful clean house exterior" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30"></div>
-              </div>
-              <div className="relative p-10 text-white">
-                <h3 className="text-3xl font-bold mb-4">100% Satisfaction Guarantee</h3>
-                <p className="text-lg mb-6">
-                  We stand behind our work with a full satisfaction guarantee. If you're not completely satisfied with our service, we'll return to address any issues at no additional cost.
-                </p>
-                <div className="flex items-center">
-                  <img
-                    src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
-                    alt="Jayden Fisher - Owner"
-                    className="w-16 h-16 rounded-full border-2 border-white mr-4"
-                  />
-                  <div>
-                    <p className="font-bold">Jayden Fisher</p>
-                    <p>Owner, BC Pressure Washing</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-12">
-              <QuestionsForm />
-            </div>
-          </div>
-          
-          <div className="hidden lg:block w-1/4 absolute top-0 right-0 bottom-0">
-            <div className="sticky top-32">
-              <TestimonialCarousel />
-            </div>
-          </div>
-        </div>
-      </div>
-    </Layout>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input name="from_name" type="text" placeholder="Full Name" value={formData.from_name} onChange={handleChange} />
+      <input name="from_email" type="email" placeholder="Email" value={formData.from_email} onChange={handleChange} />
+      <input name="phone" type="tel" placeholder="Phone Number" value={formData.phone} onChange={handleChange} />
+      <input name="address" type="text" placeholder="Service Address" value={formData.address} onChange={handleChange} />
+      <input name="city" type="text" placeholder="City" value={formData.city} onChange={handleChange} />
+      <input name="postal_code" type="text" placeholder="Postal Code" value={formData.postal_code} onChange={handleChange} />
+      <input name="surface_type" type="text" placeholder="Surface Type (e.g., Vinyl, Brick)" value={formData.surface_type} onChange={handleChange} />
+      <input name="square_footage" type="text" placeholder="Approximate Sq. Ft." value={formData.square_footage} onChange={handleChange} />
+      <input name="additional_services" type="text" placeholder="Additional Services (comma separated)" value={formData.additional_services} onChange={handleChange} />
+      <textarea name="additional_notes" placeholder="Additional Notes" value={formData.additional_notes} onChange={handleChange} />
+      <input name="home_size" type="text" placeholder="Home Size" value={formData.home_size} onChange={handleChange} />
+      <input name="selected_services" type="text" placeholder="Selected Services (comma separated)" value={formData.selected_services} onChange={handleChange} />
+      <input name="referral_name" type="text" placeholder="Referral Name (if any)" value={formData.referral_name} onChange={handleChange} />
+
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        Submit
+      </button>
+    </form>
   );
 };
 
-export default Calculator;
+export default PriceCalculatorForm;
