@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { trackFormStep, trackFormSubmission } from '@/utils/analytics';
@@ -135,24 +134,14 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
       // Log the data being sent to help with debugging
       console.log('Sending data to EmailJS:', templateParams);
 
-      // The EmailJS account is not working properly, let's simulate a successful submission
-      // for demonstration purposes
-      console.log('Simulating EmailJS submission - bypassing EmailJS API call');
-      
-      /*
-      // This code is commented out because the EmailJS account is not working
+      // Send data to EmailJS
       const response = await emailjs.send(
-        'service_qp184qj',
-        'template_820fxcj',
-        templateParams,
-        'w0cDPAeLXkNj47ZkP'
+        'service_qp184qj',   // Your EmailJS service ID
+        'template_820fxcj',   // Your EmailJS template ID
+        templateParams,       // The data being sent
+        'w0cDPAeLXkNj47ZkP'  // Your public key
       );
       console.log('EmailJS response:', response);
-      */
-      
-      // Instead, we'll just proceed as if the submission was successful
-      const simulatedResponse = { status: 200, text: "OK" };
-      console.log('Simulated EmailJS response:', simulatedResponse);
 
       // Track form submission
       trackFormSubmission('PriceCalculator', {
