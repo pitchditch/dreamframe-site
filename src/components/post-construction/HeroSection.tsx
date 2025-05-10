@@ -37,6 +37,10 @@ const HeroSection: React.FC = () => {
             <Button className="bg-bc-red hover:bg-red-700 text-white transition-all hover:scale-105" size="lg">
               Get Started <ArrowRight className="ml-2" size={20} />
             </Button>
+            
+            <div className="mt-4 text-gray-700 font-medium block md:hidden">
+              "Every job is personally checked by me"
+            </div>
           </div>
           
           <div className="md:w-1/3">
@@ -68,6 +72,9 @@ const HeroSection: React.FC = () => {
                   <span>Detailed frame and track cleaning</span>
                 </li>
               </ul>
+              <div className="mt-4 text-gray-700 font-medium hidden md:block">
+                "Every job is personally checked by me"
+              </div>
             </div>
           </div>
         </div>

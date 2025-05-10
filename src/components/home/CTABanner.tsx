@@ -32,8 +32,8 @@ const CTABanner = () => {
           <p className={`text-lg md:text-xl text-white/90 mb-8 ${getLanguageClass()}`}>
             {t("Get a free quote today and see why homeowners across Surrey and White Rock choose us for their exterior cleaning needs.")}
           </p>
-          <div className="mb-4">
-            <p className="text-white font-medium mb-2">Every job is personally checked by me</p>
+          <div className="mb-6">
+            <p className="text-white font-medium text-base md:text-lg">Every job is personally checked by me</p>
           </div>
           <Link to="/contact" className="inline-flex items-center bg-white text-bc-red px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
             {t("Get Your Free Quote")} <ArrowRight className="ml-2" size={20} />
