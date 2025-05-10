@@ -115,7 +115,8 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
       () => {
         setStep(5);
         if (onComplete) onComplete();
-      }
+      },
+      toast
     );
   };
 
