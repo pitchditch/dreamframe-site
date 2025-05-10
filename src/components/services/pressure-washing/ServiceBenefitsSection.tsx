@@ -34,15 +34,25 @@ const ServiceBenefitsSection = () => {
   ];
   
   return (
-    <section className="bg-gray-50 py-16">
-      <div className="container mx-auto px-4">
-        <ServiceBenefits 
-          title={t("Benefits of Professional House Washing")}
-          subtitle={t("Regular exterior cleaning provides numerous advantages for your home's appearance and longevity")}
-          benefits={benefits} 
-        />
+    <>
+      <h2 className="text-3xl font-bold text-center mb-4">{t("Benefits of Professional House Washing")}</h2>
+      <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">{t("Regular exterior cleaning provides numerous advantages for your home's appearance and longevity")}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {benefits.map((benefit, index) => (
+          <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all">
+            <div className="flex items-center mb-4">
+              <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold">{benefit.title}</h3>
+            </div>
+            <p className="text-gray-600">{benefit.description}</p>
+          </div>
+        ))}
       </div>
-    </section>
+    </>
   );
 };
 

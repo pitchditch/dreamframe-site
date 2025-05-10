@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,6 +18,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmission } from "@/utils/analytics";
 import emailjs from '@emailjs/browser';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -30,6 +36,9 @@ const formSchema = z.object({
   }),
   address: z.string().min(5, {
     message: "Please enter your address.",
+  }),
+  preferredDate: z.date({
+    required_error: "Please select a preferred date for service.",
   }),
   cleaningType: z.enum(["inside", "outside", "both"], {
     required_error: "Please select where you need cleaning.",
@@ -68,7 +77,8 @@ const GutterCleaningForm = () => {
       form_type: 'service',
       service_type: 'gutter_cleaning',
       cleaning_type: values.cleaningType,
-      story_count: values.storyCount
+      story_count: values.storyCount,
+      preferred_date: values.preferredDate.toISOString()
     });
     
     // Prepare the data for email
@@ -80,6 +90,7 @@ const GutterCleaningForm = () => {
       service_type: 'Gutter Cleaning',
       cleaning_type: values.cleaningType,
       story_count: values.storyCount,
+      preferred_date: format(values.preferredDate, 'PPP'),
       roof_access_notes: values.roofAccessNotes || 'None',
       message: values.message || 'None',
       subject: 'New Gutter Cleaning Quote Request'
@@ -171,6 +182,49 @@ const GutterCleaningForm = () => {
                 <FormControl>
                   <Input placeholder="123 Main St, White Rock, BC" {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="preferredDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Preferred Service Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) => 
+                        date < new Date(new Date().setDate(new Date().getDate() - 1)) // Can't select dates in the past
+                      }
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}

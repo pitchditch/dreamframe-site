@@ -1,352 +1,247 @@
+
+import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
-import ServiceBenefits from '../../components/ServiceBenefits';
-import ServiceProcess from '../../components/ServiceProcess';
-import CallToAction from '../../components/CallToAction';
-import TestimonialsSection from '../../components/home/TestimonialsSection';
 import FAQSection from '../../components/FAQSection';
-import { Droplets, Leaf, Shield, Clock, PieChart, ThumbsUp } from 'lucide-react';
+import ServiceBenefits from '../../components/ServiceBenefits';
+import CallToAction from '../../components/CallToAction';
+import { Shield, Droplets, Cloud } from 'lucide-react';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
-import { Card, CardContent } from '@/components/ui/card';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 
 const GutterCleaning = () => {
-  const benefits = [{
-    title: "Prevent Water Damage",
-    description: "Clean gutters properly channel water away from your home, preventing costly water damage to foundations, walls, and landscaping."
-  }, {
-    title: "Eliminate Pest Breeding Grounds",
-    description: "Remove debris that can become a breeding ground for mosquitoes, birds, and other pests that can damage your home."
-  }, {
-    title: "Extend Gutter Lifespan",
-    description: "Regular cleaning prevents rust and corrosion, extending the life of your gutter system and saving you money on replacements."
-  }, {
-    title: "Protect Roof and Fascia",
-    description: "Prevent water backup that can damage roof shingles, fascia boards, and cause interior leaks during heavy rainfall."
-  }, {
-    title: "Maintain Home Value",
-    description: "Well-maintained gutters contribute to your home's curb appeal and help preserve its market value over time."
-  }, {
-    title: "Prevent Basement Flooding",
-    description: "Properly functioning gutters direct water away from your foundation, reducing the risk of basement flooding and moisture issues."
-  }];
-  
-  const processes = [{
-    title: "Debris Removal",
-    description: "We carefully remove leaves, twigs, and debris from your gutters and downspouts to ensure proper water flow.",
-    icon: <Leaf size={32} />
-  }, {
-    title: "Gutter Flushing",
-    description: "After removing debris, we thoroughly flush your gutters with water to clear any remaining particles and check for proper drainage.",
-    icon: <Droplets size={32} />
-  }, {
-    title: "Downspout Inspection",
-    description: "We inspect and clear all downspouts to ensure water can flow freely from your roof to the ground, away from your foundation.",
-    icon: <PieChart size={32} />
-  }];
-  const faqs = [{
-    question: "How often should I have my gutters cleaned?",
-    answer: "We recommend having your gutters cleaned at least twice a year - in spring and fall. However, if you have trees overhanging your roof, you might need more frequent cleaning, especially during fall when leaves are dropping."
-  }, {
-    question: "How long does a typical gutter cleaning service take?",
-    answer: "For an average-sized home, our professional team can complete a thorough gutter cleaning in 1-2 hours. This timeframe can vary depending on the size of your home, the amount of debris, and the complexity of your gutter system."
-  }, {
-    question: "What happens if you find damaged gutters during cleaning?",
-    answer: "If we identify any issues with your gutters during cleaning, we'll document them with photos and provide you with a detailed assessment. We can then discuss repair options and provide a quote for any necessary work."
-  }, {
-    question: "Do you install gutter guards?",
-    answer: "Yes, we offer professional installation of high-quality gutter guards. These can significantly reduce how often your gutters need cleaning by preventing debris from entering while still allowing water to flow through."
-  }, {
-    question: "Is there any preparation I need to do before you arrive?",
-    answer: "We ask that you ensure clear access to the perimeter of your home. Please remove any obstacles that might impede our work, secure pets, and inform us of any specific areas of concern before we begin."
-  }];
-  return <Layout>
-      <ServiceHeader title="Professional Gutter Cleaning" description="Keep your home protected from water damage with our thorough gutter cleaning service" youtubeId="m5wfZZCuFeg" darkOverlay={true} />
+  const benefits = [
+    {
+      title: "Prevent Water Damage",
+      description: "Clogged gutters can cause water to overflow and damage your home's foundation, walls, and landscaping."
+    },
+    {
+      title: "Avoid Pest Infestations",
+      description: "Debris-filled gutters create perfect breeding grounds for mosquitoes, rodents, and other pests."
+    },
+    {
+      title: "Extend Gutter Lifespan",
+      description: "Regular cleaning prevents rust and deterioration, adding years to your gutter system."
+    },
+    {
+      title: "Protect Roof & Fascia",
+      description: "Prevent water backup that can damage shingles, roof underlayment, and fascia boards."
+    },
+    {
+      title: "Prevent Ice Dams",
+      description: "Clean gutters help prevent ice dams in winter that can cause serious roof and interior damage."
+    },
+    {
+      title: "Maintain Curb Appeal",
+      description: "Clean, well-functioning gutters enhance your home's appearance and value."
+    }
+  ];
 
-      <section className="container mx-auto px-4 py-16">
-        <div className="flex flex-col md:flex-row gap-12 items-center">
-          <div className="md:w-1/2">
-            <img src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" alt="Professional gutter cleaning in action" className="rounded-lg shadow-xl w-full h-auto" />
-          </div>
-          <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold mb-6">Why Gutter Cleaning Is Essential</h2>
-            <p className="text-gray-600 mb-6">
-              Gutters play a crucial role in protecting your home from water damage by channeling rainwater away from your roof, walls, and foundation. When gutters become clogged with leaves, twigs, and debris, they can't function properly, leading to overflowing water that can damage your home's exterior, foundation, landscaping, and even interior spaces.
-            </p>
-            <p className="text-gray-600 mb-6">
-              Our professional gutter cleaning service removes all debris, ensures proper water flow, and protects your home from costly damage. We recommend gutter cleaning at least twice a year, typically in spring and fall, to prevent clogs and maintain your gutter system.
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center">
-                <Shield className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">Fully Insured</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">Prompt Service</span>
-              </div>
-              <div className="flex items-center">
-                <ThumbsUp className="text-bc-red mr-2" size={24} />
-                <span className="font-medium">100% Satisfaction</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  const faqs = [
+    {
+      question: "How often should I have my gutters cleaned?",
+      answer: "Most homes benefit from gutter cleaning twice per year – once in spring and once in fall. However, if your property has many trees nearby, you may need more frequent cleanings, especially during fall when leaves are dropping."
+    },
+    {
+      question: "What happens if I don't clean my gutters?",
+      answer: "Neglected gutters can lead to water damage to your roof, walls, and foundation. They can also become homes for pests, develop rust and corrosion, and in winter, form ice dams that cause extensive damage."
+    },
+    {
+      question: "Do you install gutter guards?",
+      answer: "Yes, we offer gutter guard installation services. While they don't eliminate the need for cleaning entirely, quality gutter guards significantly reduce cleaning frequency and make maintenance easier."
+    },
+    {
+      question: "How long does gutter cleaning take?",
+      answer: "For an average-sized home, professional gutter cleaning typically takes 1-2 hours. Larger homes or those with severe clogging may take longer. We'll provide a time estimate when you book your service."
+    },
+    {
+      question: "Do I need to be home during the service?",
+      answer: "Not necessarily. As long as we have access to your gutters and exterior water sources, we can perform the cleaning while you're away. Many of our customers prefer this convenience."
+    }
+  ];
 
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="section-title mb-12">Our Gutter Cleaning Process</h2>
-          <ServiceProcess processes={processes} />
-        </div>
-      </section>
+  return (
+    <Layout title="Professional Gutter Cleaning Services | BC Pressure Washing" description="Expert gutter cleaning services in White Rock, Surrey and Metro Vancouver. Prevent water damage and extend the life of your gutters with our thorough cleaning.">
+      <ServiceHeader 
+        title="Professional Gutter Cleaning"
+        description="Keep your home protected with our thorough gutter cleaning services."
+        youtubeId="eKV5YY3hPBc"
+      />
       
-      {/* Gutter Face Cleaning Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title mb-6">Gutter Face Cleaning</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <p className="text-gray-600 mb-6">
-              Beyond the interior cleaning of your gutters, we also provide thorough cleaning of gutter faces and exteriors. Over time, gutters can develop black streaks, algae, and stains that detract from your home's appearance. Our specialized gutter face cleaning service restores the original look of your gutters, enhancing your home's curb appeal.
-            </p>
-            <p className="text-gray-600 mb-6">
-              Using safe, effective cleaning solutions and professional equipment, we can remove all traces of dirt, mildew, and oxidation from your gutters without causing any damage to the material or surrounding areas.
-            </p>
-            <h3 className="text-xl font-bold mb-4">Benefits of Gutter Face Cleaning:</h3>
-            <ul className="space-y-2 mb-6">
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Improved curb appeal and home aesthetics</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Removal of harmful mold and mildew</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Extended gutter lifespan through proper maintenance</span>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-6">
-            
-            <img src="/lovable-uploads/1e06febe-e5ba-4258-88bf-f51b8712cb04.png" alt="Before and after gutter face cleaning" className="rounded-lg shadow-md w-full h-auto" />
-          </div>
-        </div>
-      </section>
-
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="section-title mb-2">Benefits of Professional Gutter Cleaning</h2>
-        <p className="section-subtitle mb-12">
-          Protect your home's foundation, roof, and exterior with our expert gutter cleaning service
-        </p>
-        <ServiceBenefits benefits={benefits} />
-      </section>
-      
-      {/* Leaf Guard Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-10">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Premium Leaf Guard Installation</h2>
-              <p className="text-gray-600 mb-6">
-                Want to reduce the frequency of gutter cleaning? Our professional leaf guard installation offers a long-term solution for keeping debris out while allowing water to flow freely through your gutters.
+              <h2 className="text-3xl font-bold mb-6">Get Your Gutters Cleaned Today</h2>
+              <p className="text-lg text-gray-700 mb-4">
+                Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round.
               </p>
-              <p className="text-gray-600 mb-6">
-                Our premium leaf guards create a protective barrier that prevents leaves, twigs, and other debris from entering your gutters while still allowing rainwater to flow through efficiently. This means less maintenance for you and better protection for your home.
-              </p>
-              
-              <h3 className="text-xl font-bold mb-4">Benefits of Our Leaf Guard System:</h3>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Significantly reduces gutter cleaning frequency</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Prevents clogs in gutters and downspouts</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Extends the life of your gutter system</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Helps prevent water damage to your home</span>
-                </li>
-              </ul>
-              
-              <div className="mt-6">
+
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <Shield size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Complete Gutter System Cleaning</h3>
+                    <p className="text-gray-600">
+                      We thoroughly remove all leaves, debris, and buildup from your gutters and downspouts, ensuring proper water flow.
+                    </p>
+                  </div>
+                </div>
                 
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <Droplets size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Downspout Flushing</h3>
+                    <p className="text-gray-600">
+                      We test all downspouts to ensure water flows freely and remove any blockages using professional equipment.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <Cloud size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Gutter Face Cleaning</h3>
+                    <p className="text-gray-600">
+                      We clean the exterior faces of your gutters to remove black streaks, algae, and dirt, improving your home's appearance.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <PriceCalculatorOverlay buttonText="Check Price & Availability" variant="bc-red" />
+                <a 
+                  href="tel:7788087620"
+                  className="bg-green-600 hover:bg-green-700 text-white text-center py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                  </svg>
+                  Call Now: (778) 808-7620
+                </a>
+              </div>
+              
+              <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
+                <h3 className="text-xl font-bold mb-2 text-amber-800">Gutter Cleaning Warning!</h3>
+                <p className="text-amber-700">
+                  Neglected gutters can lead to costly water damage to your foundation, roof, and interior walls. Don't wait until it's too late - regular maintenance is much more affordable than repairs.
+                </p>
               </div>
             </div>
-            <div className="rounded-lg overflow-hidden shadow-xl h-96">
-              <iframe src={`https://www.youtube.com/embed/OICbIRmx-80?si=FIGd5zZjfhJ9FlRo`} title="Leaf Guard Video" className="w-full h-full object-cover" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Gutter Sticks Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="grid grid-cols-1 gap-6">
-            <img src="/lovable-uploads/8e5ee557-95fc-4103-b9b9-41a3007cc3a6.png" alt="Gutter Stick installation" className="rounded-lg shadow-xl w-full h-auto" />
-            <img src="/lovable-uploads/a5266091-5d6d-42f0-a4bf-f9bfc489bd62.png" alt="Gutter Stick in use" className="rounded-lg shadow-xl w-full h-auto" />
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold mb-6">Gutter Sticks: Affordable Leaf Guard Alternative</h2>
-            <p className="text-gray-600 mb-6">
-              Looking for a cost-effective alternative to traditional leaf guards? Gutter Sticks provide an innovative solution for keeping leaves and debris out of your gutters without breaking the bank.
-            </p>
-            <p className="text-gray-600 mb-6">
-              These simple yet effective devices fit inside your gutters and create a permeable barrier that allows water to flow while blocking larger debris. Installation is quick and non-invasive, with no modifications needed to your existing gutter system.
-            </p>
             
-            <h3 className="text-xl font-bold mb-4">Advantages of Gutter Sticks:</h3>
-            <ul className="space-y-2 mb-6">
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Significantly more affordable than traditional leaf guards</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Quick, simple installation with no tools required</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Easy to remove for occasional maintenance</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Compatible with most standard gutter systems</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Extends time between necessary gutter cleanings</span>
-              </li>
-            </ul>
-            
-            <div className="mt-6">
-              <a href="/calculator" className="btn-primary py-3 px-6 rounded-lg font-medium inline-block">
-                Get a Quote for Gutter Sticks
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Recent Projects Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="section-title mb-8">Recent Gutter Cleaning Projects</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="h-72 overflow-hidden">
-                  <img src="/lovable-uploads/50c2be43-ecf8-4ef3-af03-61bbdaa26e0a.png" alt="Recent gutter cleaning project" className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-2">Residential Gutter Cleaning</h3>
-                  <p className="text-gray-600">Complete gutter system cleaning for a two-story home in Surrey. Removed heavy debris accumulation and ensured proper water flow.</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="h-72 overflow-hidden">
-                  <img src="/lovable-uploads/9c9bdfd6-9f85-46ca-9d4f-3ec96d158813.png" alt="Commercial gutter cleaning" className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-2">Commercial Property Maintenance</h3>
-                  <p className="text-gray-600">Regular gutter cleaning service for a commercial building in White Rock. Part of our scheduled maintenance program.</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="h-72 overflow-hidden">
-                  <img src="/lovable-uploads/1e06febe-e5ba-4258-88bf-f51b8712cb04.png" alt="Gutter face cleaning project" className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-2">Gutter Face Cleaning</h3>
-                  <p className="text-gray-600">Complete gutter face cleaning for a home in Langley. Removed black streaks and restored original appearance.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-4">Get Your Gutters Cleaned Today</h3>
-              <p className="text-gray-600 mb-6">
-                Don't wait until water damage occurs. Our professional team is ready to clean your gutters thoroughly and efficiently. Fill out the form to get a quick quote or schedule your service.
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Free estimates with detailed pricing</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Flexible scheduling to fit your needs</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-bc-red mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Experienced, professional technicians</span>
-                </li>
-              </ul>
-            </div>
-            <div>
+            <div className="bg-white rounded-lg shadow-xl p-6 border-2 border-gray-100">
               <GutterCleaningForm />
             </div>
           </div>
         </div>
       </section>
-
-      <section className="container mx-auto px-4 py-16">
-        <TestimonialsSection />
+      
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <ServiceBenefits 
+            title="Benefits of Regular Gutter Cleaning" 
+            subtitle="Protect your home's structural integrity and prevent costly damage with our professional gutter cleaning services"
+            benefits={benefits} 
+          />
+        </div>
       </section>
       
-      <FAQSection title="Frequently Asked Questions About Gutter Cleaning" subtitle="Get answers to common questions about our services" faqs={faqs} />
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Our Gutter Cleaning Process</h2>
+            
+            <div className="space-y-8">
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-2/5">
+                  <img 
+                    src="/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png" 
+                    alt="Gutter Debris Removal" 
+                    className="rounded-lg shadow-md w-full"
+                  />
+                </div>
+                <div className="md:w-3/5">
+                  <h3 className="text-xl font-bold mb-2">1. Debris Removal</h3>
+                  <p className="text-gray-700">
+                    We safely remove all leaves, twigs, and debris from your gutters by hand to ensure a thorough cleaning. All collected debris is bagged and removed from your property, leaving no mess behind.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-3/5 md:order-1 order-2">
+                  <h3 className="text-xl font-bold mb-2">2. Downspout Clearing & Testing</h3>
+                  <p className="text-gray-700">
+                    We check all downspouts for blockages and flush them with water to ensure proper flow. If we encounter stubborn clogs, we use specialized tools to clear them completely.
+                  </p>
+                </div>
+                <div className="md:w-2/5 md:order-2 order-1">
+                  <img 
+                    src="/lovable-uploads/3c677903-190c-483b-8e1d-b3e33c7231f9.png" 
+                    alt="Downspout Clearing" 
+                    className="rounded-lg shadow-md w-full"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-2/5">
+                  <img 
+                    src="/lovable-uploads/f899a443-8930-4364-b538-916f65545f84.png" 
+                    alt="Gutter Face Cleaning" 
+                    className="rounded-lg shadow-md w-full"
+                  />
+                </div>
+                <div className="md:w-3/5">
+                  <h3 className="text-xl font-bold mb-2">3. Gutter Face Cleaning</h3>
+                  <p className="text-gray-700">
+                    We clean the exterior faces of your gutters to remove unsightly black streaks, tiger stripes, and algae growth. This not only improves functionality but also enhances your home's curb appeal.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-3/5 md:order-1 order-2">
+                  <h3 className="text-xl font-bold mb-2">4. Final Inspection & Cleanup</h3>
+                  <p className="text-gray-700">
+                    We perform a final water flow test to ensure everything is working properly and clean up any debris that may have fallen during the cleaning process. You'll receive before and after photos showing the work completed.
+                  </p>
+                </div>
+                <div className="md:w-2/5 md:order-2 order-1">
+                  <img 
+                    src="/lovable-uploads/73b10424-3e39-4265-a1de-66f4508eaa9d.png" 
+                    alt="Final Inspection" 
+                    className="rounded-lg shadow-md w-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
-      <CallToAction />
-    </Layout>;
+      <TestimonialsSection />
+      
+      <FAQSection
+        title="Frequently Asked Questions About Gutter Cleaning"
+        subtitle="Get answers to common questions about our gutter cleaning services"
+        faqs={faqs}
+      />
+      
+      <CallToAction 
+        title="Ready to Book Your Gutter Cleaning?"
+        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes."
+      />
+    </Layout>
+  );
 };
+
 export default GutterCleaning;

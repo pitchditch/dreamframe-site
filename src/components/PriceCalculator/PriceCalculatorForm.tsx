@@ -18,6 +18,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     if (initialStep === 'services') return 2;
     else if (initialStep === 'contact') return 3;
     else if (initialStep === 'summary') return 4;
+    else if (initialStep === 'address') return 1;
     else return 0;
   };
 
@@ -34,6 +35,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     setAddress,
     contact,
     setContact,
+    preferredDate,
+    setPreferredDate,
     submitting,
     estimateTotal,
     handleFormSubmit,
@@ -59,6 +62,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
           setAddOns={setAddOns}
           contact={contact}
           setContact={setContact}
+          preferredDate={preferredDate}
+          setPreferredDate={setPreferredDate}
           onNextStep={handleNextStep}
           onPrevStep={handlePrevStep}
           onSubmit={handleFormSubmit}

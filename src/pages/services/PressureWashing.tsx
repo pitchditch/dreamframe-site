@@ -52,7 +52,7 @@ const PressureWashing = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
-            <div>
+            <div className="md:col-span-1 lg:pr-8">
               <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
               <p className="text-lg text-gray-700 mb-4">
                 Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
@@ -62,27 +62,26 @@ const PressureWashing = () => {
               </p>
               <div className="grid grid-cols-2 gap-4 mt-6">
                 <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
-                  <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-16 h-16 object-cover rounded-lg" />
-                  <span className="font-medium">Driveways & walkways</span>
+                  <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Siding & exterior walls</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Fences & gates</span>
                 </div>
                 <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
                   <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-16 h-16 object-cover rounded-lg" />
                   <span className="font-medium">Decks & patios</span>
                 </div>
                 <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
-                  <img src="/lovable-uploads/8090d09c-920d-4acb-8b9e-222865d6b8fc.png" alt="Siding & Exterior Walls" className="w-16 h-16 object-cover rounded-lg" />
-                  <span className="font-medium">Siding & exterior walls</span>
-                </div>
-                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
-                  <img src="/lovable-uploads/021dd5ff-95a8-4c83-9d47-9a44e895e0f3.png" alt="Fences & Gates" className="w-16 h-16 object-cover rounded-lg" />
-                  <span className="font-medium">Fences & gates</span>
+                  <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Driveways & walkways</span>
                 </div>
               </div>
               <ServiceFeatures />
-              <ServiceBenefitsSection />
             </div>
-            <div className="flex justify-center items-start">
-              <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1 max-w-md w-full">
+            <div className="md:col-span-1">
+              <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1">
                 <PressureWashingForm />
               </div>
             </div>
@@ -90,11 +89,38 @@ const PressureWashing = () => {
         </div>
       </section>
       
+      <section className="w-full bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <ServiceBenefitsSection />
+        </div>
+      </section>
+      
       <ServiceProcessSection />
       
       <DrivewayCleaning />
       
-      <ImageCarousel />
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-6">Recent Pressure Washing Project</h2>
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            See the impressive results we've achieved for commercial clients in the South Surrey and White Rock area.
+          </p>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="overflow-hidden rounded-lg shadow-xl">
+              <img 
+                src="/lovable-uploads/a2a1376b-3da7-4c9d-9a85-60ba24418d4f.png" 
+                alt="South Abbotsford Church Pressure Washing Project"
+                className="w-full h-auto" 
+              />
+              <div className="p-6 bg-white">
+                <h3 className="font-bold text-xl mb-2">South Abbotsford Church</h3>
+                <p className="text-gray-700">Commercial pressure washing service for walkways, entrances and exterior surfaces to remove dirt, grime, and organic growth.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       <TestimonialsSection />
       
