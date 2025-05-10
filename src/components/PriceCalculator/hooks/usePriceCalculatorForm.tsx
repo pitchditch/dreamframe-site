@@ -1,18 +1,13 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
-import { trackFormStep, trackFormSubmission } from '@/utils/analytics';
-import emailjs from '@emailjs/browser';
+import { trackFormStep } from '@/utils/analytics';
 import { getPricing } from '../utils/pricingUtils';
 import { ADD_ONS } from '../data/constants';
+import { ContactInfo } from '../types/calculatorTypes';
+import { calculateEstimateTotal, formatAddOns, submitFormData } from '../utils/calculatorUtils';
 
-export interface ContactInfo {
-  name: string;
-  phone: string;
-  email: string;
-  referredBy: string;
-  notes: string;
-}
+export { ContactInfo } from '../types/calculatorTypes';
 
 export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void) => {
   const [step, setStep] = useState(initialStep);
@@ -54,34 +49,10 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     );
   }, [step]);
 
-  const calculateEstimateTotal = () => {
-    let estTotal = 0;
-
-    if (size && services.length > 0) {
-      // Calculate base price based on selected services and size
-      for (const service of services) {
-        const servicePrice = getPricing(size, service);
-        if (typeof servicePrice === 'number') {
-          estTotal += servicePrice;
-        }
-      }
-      
-      // Add pricing for add-ons
-      for (const addon of addOns) {
-        const addonInfo = ADD_ONS.find(a => a.id === addon);
-        if (addonInfo && addonInfo.price) {
-          estTotal += addonInfo.price;
-        }
-      }
-      
-      // Apply bundle discount if eligible
-      if (services.filter(s => s !== 'Roof Cleaning').length >= 3) {
-        estTotal -= 200; // $200 bundle discount
-      }
-    }
-
-    setEstimateTotal(estTotal);
-    return estTotal;
+  const calculateAndSetEstimateTotal = () => {
+    const total = calculateEstimateTotal(size, services, addOns, getPricing);
+    setEstimateTotal(total);
+    return total;
   };
 
   const resetForm = () => {
@@ -115,109 +86,36 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     console.log('Starting form submission...');
     
     // Calculate the estimate total before sending
-    const total = calculateEstimateTotal();
+    const total = calculateAndSetEstimateTotal();
     console.log('Calculated total:', total);
 
-    try {
-      // Format services and add-ons for better readability in email
-      const formattedServices = services.join(', ');
-      const formattedAddOns = addOns.length > 0 
-        ? addOns.map(id => {
-            const addon = ADD_ONS.find(a => a.id === id);
-            return addon ? addon.name : id;
-          }).join(', ') 
-        : 'None';
+    // Format services and add-ons for better readability in email
+    const formattedServices = services.join(', ');
+    const formattedAddOns = formatAddOns(addOns);
 
-      // Prepare email template parameters with all form data exactly matching the template
-      const templateParams = {
-        name: contact.name,
-        email: contact.email || 'Not provided',
-        phone: contact.phone,
-        referredBy: contact.referredBy || 'None',
-        address: address,
-        size: size,
-        services: formattedServices,
-        addons: formattedAddOns,
-        notes: contact.notes || 'None',
-        estimate: total ? `${total}` : 'To be determined'
-      };
+    // Prepare email template parameters with all form data
+    const templateParams = {
+      name: contact.name,
+      email: contact.email || 'Not provided',
+      phone: contact.phone,
+      referredBy: contact.referredBy || 'None',
+      address: address,
+      size: size,
+      services: formattedServices,
+      addons: formattedAddOns,
+      notes: contact.notes || 'None',
+      estimate: total ? `${total}` : 'To be determined'
+    };
 
-      // Log the data being sent to help with debugging
-      console.log('Sending data to EmailJS:', templateParams);
-
-      try {
-        // Send data to EmailJS
-        const response = await emailjs.send(
-          'service_qp184qj',   // Your EmailJS service ID
-          'template_820fxcj',  // Your EmailJS template ID
-          templateParams,      // The data being sent
-          'w0cDPAeLXkNj47ZkP'  // Your public key
-        );
-        console.log('EmailJS response:', response);
-
-        // Track form submission
-        trackFormSubmission('PriceCalculator', {
-          property_size: size,
-          services_count: services.length,
-          addons_count: addOns.length,
-          estimate_amount: total,
-          status: 'success'
-        });
-
-        toast({
-          title: "Quote Submitted Successfully!",
-          description: "We will contact you shortly about your service quote.",
-        });
-
-        // Move to thank you step after successful submission
+    // Submit the form data
+    await submitFormData(
+      templateParams, 
+      setSubmitting, 
+      () => {
         setStep(5);
         if (onComplete) onComplete();
-      } catch (emailError) {
-        console.error('EmailJS error:', emailError);
-        
-        // Handle EmailJS 404 error (Account not found)
-        // This is a temporary workaround for testing purposes
-        if (emailError instanceof Error && emailError.message.includes('404')) {
-          console.log('EmailJS account not found, but proceeding for demo purposes');
-          
-          // Still track form submission for analytics
-          trackFormSubmission('PriceCalculator', {
-            property_size: size,
-            services_count: services.length,
-            addons_count: addOns.length,
-            estimate_amount: estimateTotal,
-            status: 'simulated_success'
-          });
-          
-          toast({
-            title: "Quote Submitted Successfully!",
-            description: "We will contact you shortly about your service quote.",
-          });
-          
-          // Move to thank you step
-          setStep(5);
-          if (onComplete) onComplete();
-        } else {
-          throw emailError; // Re-throw if it's not the 404 error we're expecting
-        }
       }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      
-      // Track form submission error
-      trackFormSubmission('PriceCalculator', {
-        error_message: error instanceof Error ? error.message : 'Unknown error',
-        status: 'error'
-      });
-      
-      toast({
-        title: "Submission Failed",
-        description: "There was an error submitting your quote. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    );
   };
 
   return {
@@ -235,7 +133,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     setContact,
     submitting,
     estimateTotal,
-    calculateEstimateTotal,
+    calculateAndSetEstimateTotal,
     handleFormSubmit,
     resetForm
   };
