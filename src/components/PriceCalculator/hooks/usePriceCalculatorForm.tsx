@@ -25,7 +25,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
   const [submitting, setSubmitting] = useState(false);
   const [estimateTotal, setEstimateTotal] = useState<number | null>(null);
 
-  const toast = useToast();
+  const { toast } = useToast();
 
   useEffect(() => {
     const savedPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');

@@ -151,7 +151,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
         <Button 
           onClick={handleNextStep} 
           disabled={!contact.name || !contact.phone}
-          className={!contact.name || !contact.phone ? 'opacity-70' : ''}
+          className={!contact.name || !contact.phone ? 'opacity-70 bg-bc-red hover:bg-red-700 text-white' : 'bg-bc-red hover:bg-red-700 text-white'}
         >
           Next
         </Button>
