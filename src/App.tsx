@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Index from './pages/Index';
 import Services from './pages/Services';
@@ -27,11 +27,25 @@ import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning'
 import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
 
 import ChatAssistant from './components/ChatAssistant';
-import usePageTracking from './hooks/usePageTracking';
+import { trackPage } from './lib/analytics-client';
 
 function App() {
+  // Use location directly instead of the custom hook
+  const location = useLocation();
+  
   // Track page views on route changes
-  usePageTracking();
+  React.useEffect(() => {
+    trackPage(location.pathname);
+    
+    // Also track in Google Analytics directly
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: location.pathname
+      });
+    }
+  }, [location]);
 
   return (
     <>

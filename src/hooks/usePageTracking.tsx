@@ -1,17 +1,18 @@
 
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { trackPageView } from '@/utils/analytics';
+import { trackPage } from '@/lib/analytics-client';
 
 /**
  * Hook to track page views when route changes
+ * This hook must be used inside a component wrapped with BrowserRouter
  */
 const usePageTracking = () => {
   const location = useLocation();
 
   useEffect(() => {
     // Track page view when location changes
-    trackPageView(location.pathname);
+    trackPage(location.pathname);
     
     // Also track in Google Analytics directly
     if (typeof window.gtag === 'function') {
@@ -22,6 +23,9 @@ const usePageTracking = () => {
       });
     }
   }, [location]);
+
+  // Return nothing as this is just a utility hook
+  return null;
 };
 
 export default usePageTracking;
