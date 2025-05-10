@@ -94,9 +94,11 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
 
   const handleFormSubmit = async () => {
     setSubmitting(true);
-    calculateEstimateTotal();
+    // Calculate the estimate total before sending
+    const total = calculateEstimateTotal();
 
     try {
+      // Prepare email template parameters with all form data
       const templateParams = {
         address: address,
         property_size: size,
@@ -107,9 +109,13 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         email: contact.email || 'Not provided',
         referred_by: contact.referredBy || 'None',
         notes: contact.notes || 'None',
-        estimate_total: estimateTotal ? `$${estimateTotal}` : 'To be determined'
+        estimate_total: total ? `$${total}` : 'To be determined'
       };
 
+      // Log the data being sent to help with debugging
+      console.log('Sending data to EmailJS:', templateParams);
+
+      // Send the email using EmailJS
       await emailjs.send(
         'service_qp184qj',
         'template_820fxcj',
@@ -122,7 +128,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         property_size: size,
         services_count: services.length,
         addons_count: addOns.length,
-        estimate_amount: estimateTotal,
+        estimate_amount: total,
         status: 'success'
       });
 

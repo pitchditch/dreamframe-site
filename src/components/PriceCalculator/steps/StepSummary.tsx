@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { trackPageView } from '@/utils/analytics';
 import { getPricing, formatCurrency } from '../utils/pricingUtils';
@@ -74,6 +75,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log('🚀 Submitting quote request...');
+    console.log('Form data:', { size, services, addOns, contact, address });
     onSubmit();
   };
   
@@ -83,6 +85,18 @@ const StepSummary: React.FC<StepSummaryProps> = ({
       <p className="mb-4 text-gray-600">
         Here's your custom quote summary. We'll confirm final pricing based on your home layout and needs.
       </p>
+
+      {/* Show form summary data */}
+      <div className="bg-gray-100 p-4 mb-4 rounded-lg">
+        <h4 className="font-medium mb-2">Service Details:</h4>
+        <p><strong>Address:</strong> {address}</p>
+        <p><strong>Property Size:</strong> {size}</p>
+        <p><strong>Services:</strong> {services.join(', ')}</p>
+        <p><strong>Add-ons:</strong> {addOns.length > 0 ? addOns.join(', ') : 'None'}</p>
+        <p><strong>Name:</strong> {contact.name}</p>
+        <p><strong>Contact:</strong> {contact.phone} {contact.email ? `/ ${contact.email}` : ''}</p>
+      </div>
+      
       <div className="bg-gray-50 px-4 py-4 rounded-lg mb-4">
         {Object.entries(estimateSummary).map(([name, val]) => (
           <div className="flex justify-between py-1 border-b last:border-none" key={name}>
@@ -106,6 +120,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
           className="w-full" 
           onClick={handleSubmit} 
           disabled={submitting}
+          variant="bc-red"
         >
           {submitting ? "Submitting..." : "Get My Custom Quote"}
         </Button>
