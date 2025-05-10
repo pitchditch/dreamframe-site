@@ -148,7 +148,10 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
       
       <div className="flex justify-between mt-6">
         <Button variant="outline" onClick={onPrevStep}>Back</Button>
-        <Button onClick={handleNextStep} disabled={!contact.name || !contact.phone}>
+        <Button 
+          onClick={handleNextStep} 
+          disabled={!contact.name || !contact.phone}
+        >
           Next
         </Button>
       </div>

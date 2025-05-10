@@ -3,6 +3,7 @@ import { ADD_ONS } from '../data/constants';
 import { trackFormSubmission } from '@/utils/analytics';
 import emailjs from '@emailjs/browser';
 import { FormSubmissionData } from '../types/calculatorTypes';
+import { type UseToastReturn } from "@/hooks/use-toast";
 
 export const calculateEstimateTotal = (size: string, services: string[], addOns: string[], getPricing: Function): number => {
   let estTotal = 0;
@@ -46,7 +47,7 @@ export const submitFormData = async (
   formData: FormSubmissionData, 
   setSubmitting: (value: boolean) => void, 
   onSuccess: () => void,
-  toast: any
+  toast: UseToastReturn
 ): Promise<void> => {
   try {
     console.log('Sending data to EmailJS:', formData);
@@ -78,7 +79,7 @@ export const submitFormData = async (
         status: 'success'
       });
 
-      toast({
+      toast.toast({
         title: "Quote Submitted Successfully!",
         description: "We will contact you shortly about your service quote.",
       });
@@ -103,7 +104,7 @@ export const submitFormData = async (
           status: 'simulated_success'
         });
         
-        toast({
+        toast.toast({
           title: "Quote Submitted Successfully!",
           description: "We will contact you shortly about your service quote.",
         });
@@ -123,7 +124,7 @@ export const submitFormData = async (
       status: 'error'
     });
     
-    toast({
+    toast.toast({
       title: "Submission Failed",
       description: "There was an error submitting your quote. Please try again.",
       variant: "destructive"

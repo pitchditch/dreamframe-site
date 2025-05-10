@@ -25,7 +25,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
   const [submitting, setSubmitting] = useState(false);
   const [estimateTotal, setEstimateTotal] = useState<number | null>(null);
 
-  const { toast } = useToast();
+  const toast = useToast();
 
   useEffect(() => {
     const savedPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
@@ -74,7 +74,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
 
   const handleFormSubmit = async () => {
     if (!contact.name || !contact.phone) {
-      toast({
+      toast.toast({
         title: 'Missing Info',
         description: 'Please enter your name and phone number.',
         variant: 'destructive'
@@ -110,7 +110,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         toast
       );
     } catch (error) {
-      toast({
+      toast.toast({
         title: 'Submission Failed',
         description: 'Something went wrong while submitting the form. Please try again.',
         variant: 'destructive'

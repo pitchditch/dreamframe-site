@@ -151,7 +151,11 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
         <Button type="button" onClick={onBack} variant="outline">
           Back
         </Button>
-        <Button type="button" onClick={onNext} className="bg-bc-red hover:bg-red-700">
+        <Button 
+          type="button" 
+          onClick={onNext} 
+          className="bg-bc-red hover:bg-red-700"
+        >
           Review Order
         </Button>
       </div>
