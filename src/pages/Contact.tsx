@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import { useToast } from '@/hooks/use-toast';
