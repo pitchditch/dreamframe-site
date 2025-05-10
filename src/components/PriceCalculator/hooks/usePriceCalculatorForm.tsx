@@ -118,18 +118,17 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         : 'None';
 
       // Prepare email template parameters with all form data
-      const templateParams = {
-        address: address,
-        property_size: size,
-        services: formattedServices,
-        add_ons: formattedAddOns,
-        customer_name: contact.name,
-        phone: contact.phone,
-        email: contact.email || 'Not provided',
-        referred_by: contact.referredBy || 'None',
-        notes: contact.notes || 'None',
-        estimate_total: total ? `$${total}` : 'To be determined'
-      };
+  const templateParams = {
+  address: address,
+  size: size,
+  services: formattedServices,
+  addons: formattedAddOns,
+  email: contact.email || 'Not provided',
+  phone: contact.phone,
+  referredBy: contact.referredBy || 'None',
+  notes: contact.notes || 'None',
+  estimate: total ? `${total}` : 'To be determined'
+};
 
       // Log the data being sent to help with debugging
       console.log('Sending data to EmailJS:', templateParams);
