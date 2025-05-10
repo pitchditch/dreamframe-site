@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Index from './pages/Index';
 import Services from './pages/Services';
@@ -32,6 +31,21 @@ import usePageTracking from './hooks/usePageTracking';
 function App() {
   // Track page views on route changes
   usePageTracking();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Track page views on navigation
+    const handleRouteChange = () => {
+      // Replace this with your tracking function
+      console.log("📊 Tracking page view:", window.location.pathname);
+    };
+
+    handleRouteChange(); // Run on initial load
+
+    window.addEventListener('popstate', handleRouteChange);
+    return () => window.removeEventListener('popstate', handleRouteChange);
+  }, [location]);
 
   return (
     <>
