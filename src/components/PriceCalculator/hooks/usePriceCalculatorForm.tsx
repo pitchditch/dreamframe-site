@@ -83,6 +83,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     }
 
     setSubmitting(true);
+    console.log('Form submission initiated');
 
     try {
       const total = calculateAndSetEstimateTotal();
@@ -100,22 +101,25 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         estimate: total ? `${total}` : 'To be determined'
       };
 
+      console.log('Submitting form data:', templateParams);
+      
       await submitFormData(
         templateParams, 
         setSubmitting, 
         () => {
+          console.log('Form submitted successfully, moving to thank you step');
           setStep(5);
           if (onComplete) onComplete();
         },
         toast
       );
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: 'Submission Failed',
         description: 'Something went wrong while submitting the form. Please try again.',
         variant: 'destructive'
       });
-      console.error('Form submission error:', error);
       setSubmitting(false);
     }
   };
