@@ -67,8 +67,8 @@ const StepRenderer: React.FC<StepRendererProps> = ({
     case 1:
       return (
         <StepSizeInput 
-          size={size} 
-          setSize={setSize} 
+          size={size.houseSize} 
+          setSize={(houseSize: string) => setSize({...size, houseSize})} 
           onPrevStep={() => onPrevStep(0)} 
           onNextStep={() => onNextStep(2)}
         />
@@ -76,7 +76,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
     case 2:
       return (
         <StepServicesInput 
-          size={size}
+          size={size.houseSize}
           services={services}
           setServices={setServices}
           addOns={addOns}
