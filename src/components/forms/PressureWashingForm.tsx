@@ -16,6 +16,9 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { trackFormSubmission } from "@/utils/analytics";
+import emailjs from '@emailjs/browser';
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -40,6 +43,9 @@ const formSchema = z.object({
 });
 
 const PressureWashingForm = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,10 +61,61 @@ const PressureWashingForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // In a real application, you would submit this data to your backend
-    alert("Your request has been submitted! We'll contact you shortly. Final quote confirmed by Jayden.");
-    form.reset();
+    setIsSubmitting(true);
+    console.log("Submitting form with values:", values);
+    
+    // Track form submission
+    trackFormSubmission('pressure_washing_form', {
+      form_type: 'service',
+      service_type: 'pressure_washing',
+      surface_type: values.surfaceType
+    });
+    
+    // Get additional services
+    const additionalServices = [];
+    if (values.addDriveway) additionalServices.push('Driveway Cleaning');
+    if (values.addDeck) additionalServices.push('Deck/Patio Cleaning');
+    
+    // Prepare the data for email
+    const templateParams = {
+      from_name: values.fullName,
+      from_email: values.email,
+      phone: values.phone,
+      address: values.address,
+      service_type: 'Pressure Washing',
+      surface_type: values.surfaceType,
+      square_footage: values.squareFootage || 'Not specified',
+      additional_services: additionalServices.join(', ') || 'None',
+      message: values.message || 'None',
+      subject: 'New Pressure Washing Quote Request'
+    };
+    
+    // Send email using EmailJS
+    emailjs.send(
+      'service_xrk4vas',
+      'template_cpivz2k',
+      templateParams,
+      'MMzAmk5eWrjFgC_nP'
+    )
+    .then((response) => {
+      console.log('Email sent successfully:', response);
+      toast({
+        title: "Request Submitted!",
+        description: "We'll contact you shortly about your pressure washing quote. Final quote confirmed by Jayden.",
+      });
+      form.reset();
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your request. Please try again.",
+        variant: "destructive"
+      });
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
   }
 
   return (
@@ -232,7 +289,14 @@ const PressureWashingForm = () => {
             <p className="text-sm text-gray-600">Final quote confirmed by Jayden</p>
           </div>
           
-          <Button type="submit" className="w-full" variant="bc-red">Get Your Free Quote</Button>
+          <Button 
+            type="submit" 
+            className="w-full" 
+            variant="bc-red"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Get Your Free Quote'}
+          </Button>
         </form>
       </Form>
     </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { trackFormSubmission, trackFormFieldInteraction } from '@/utils/analytics';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 const QuestionsForm = () => {
   const [email, setEmail] = useState('');
@@ -37,21 +36,20 @@ const QuestionsForm = () => {
     
     // Prepare the data for email
     const templateParams = {
-      email: email,
-      question: question,
-      to_email: 'bcpressurewashing.ca@gmail.com',
-      subject: 'New Question Submission',
-      time: new Date().toLocaleString()
+      from_email: email,
+      message: question,
+      subject: 'New Question About Services',
+      form_type: 'Calculator Questions Form'
     };
 
-    // Send email to business
+    // Send email using EmailJS with updated template ID
     try {
-      console.log("Sending email to: bcpressurewashing.ca@gmail.com");
+      console.log("Sending question to BC Pressure Washing");
       await emailjs.send(
-        'service_k22rhvk', 
-        'template_ruw9yri', 
+        'service_xrk4vas', 
+        'template_cpivz2k', 
         templateParams, 
-        'us9P2lxc0qmLLI7hb'
+        'MMzAmk5eWrjFgC_nP'
       );
       
       // Send confirmation email to customer
@@ -63,10 +61,10 @@ const QuestionsForm = () => {
       };
       
       await emailjs.send(
-        'service_k22rhvk',
-        'template_z4pi7zb',
+        'service_xrk4vas',
+        'template_cpivz2k',
         confirmationParams,
-        'us9P2lxc0qmLLI7hb'
+        'MMzAmk5eWrjFgC_nP'
       );
       
       toast({

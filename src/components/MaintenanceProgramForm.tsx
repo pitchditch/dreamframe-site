@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -10,6 +11,7 @@ import { Building, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { trackFormSubmission } from '@/utils/analytics';
+import emailjs from '@emailjs/browser';
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -41,6 +43,7 @@ type FormValues = z.infer<typeof formSchema>;
 const MaintenanceProgramForm = () => {
   const { toast } = useToast();
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -70,21 +73,58 @@ const MaintenanceProgramForm = () => {
   };
 
   const onSubmit = (data: FormValues) => {
+    setIsSubmitting(true);
+    
     // Track the form submission
     trackFormSubmission('maintenance_program', {
       form_type: 'window_cleaning_maintenance',
       window_count: data.numberOfWindows.toString()
     });
     
-    toast({
-      title: "Application Submitted",
-      description: `Thank you for your interest in our monthly maintenance program. We'll contact you soon to schedule your service for ${data.preferredTime}.`,
-      duration: 5000,
-    });
+    // Prepare the data for email
+    const templateParams = {
+      business_name: data.businessName,
+      contact_name: data.contactName,
+      from_email: data.email,
+      phone: data.phone,
+      number_of_windows: data.numberOfWindows.toString(),
+      address: data.address,
+      preferred_time: data.preferredTime,
+      additional_info: data.additionalInfo || 'None',
+      estimated_price: estimatedPrice ? `$${estimatedPrice}` : 'Not calculated',
+      subject: 'New Monthly Maintenance Program Application',
+      form_type: 'Maintenance Program Application'
+    };
     
-    console.log("Form submitted:", data);
-    form.reset();
-    setEstimatedPrice(null);
+    // Send email using EmailJS with the updated template ID
+    emailjs.send(
+      'service_xrk4vas',
+      'template_cpivz2k',
+      templateParams,
+      'MMzAmk5eWrjFgC_nP'
+    )
+    .then((response) => {
+      console.log('Email sent successfully:', response);
+      toast({
+        title: "Application Submitted",
+        description: `Thank you for your interest in our monthly maintenance program. We'll contact you soon to schedule your service for ${data.preferredTime}.`,
+        duration: 5000,
+      });
+      
+      form.reset();
+      setEstimatedPrice(null);
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your application. Please try again.",
+        variant: "destructive"
+      });
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
   };
 
   return (
@@ -256,8 +296,12 @@ const MaintenanceProgramForm = () => {
             </div>
           )}
           
-          <Button type="submit" className="bg-bc-red hover:bg-red-700 w-full">
-            Apply for Monthly Maintenance
+          <Button 
+            type="submit" 
+            className="bg-bc-red hover:bg-red-700 w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting Application...' : 'Apply for Monthly Maintenance'}
           </Button>
         </form>
       </Form>

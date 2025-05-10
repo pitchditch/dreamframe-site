@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,6 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { trackFormSubmission } from "@/utils/analytics";
+import emailjs from '@emailjs/browser';
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -40,6 +42,9 @@ const formSchema = z.object({
 });
 
 const GutterCleaningForm = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,10 +60,57 @@ const GutterCleaningForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // In a real application, you would submit this data to your backend
-    alert("Your request has been submitted! We'll contact you shortly.");
-    form.reset();
+    setIsSubmitting(true);
+    console.log("Submitting form with values:", values);
+    
+    // Track form submission
+    trackFormSubmission('gutter_cleaning_form', {
+      form_type: 'service',
+      service_type: 'gutter_cleaning',
+      cleaning_type: values.cleaningType,
+      story_count: values.storyCount
+    });
+    
+    // Prepare the data for email
+    const templateParams = {
+      from_name: values.fullName,
+      from_email: values.email,
+      phone: values.phone,
+      address: values.address,
+      service_type: 'Gutter Cleaning',
+      cleaning_type: values.cleaningType,
+      story_count: values.storyCount,
+      roof_access_notes: values.roofAccessNotes || 'None',
+      message: values.message || 'None',
+      subject: 'New Gutter Cleaning Quote Request'
+    };
+    
+    // Send email using EmailJS
+    emailjs.send(
+      'service_xrk4vas',
+      'template_cpivz2k',
+      templateParams,
+      'MMzAmk5eWrjFgC_nP'
+    )
+    .then((response) => {
+      console.log('Email sent successfully:', response);
+      toast({
+        title: "Request Submitted!",
+        description: "We'll contact you shortly about your gutter cleaning quote.",
+      });
+      form.reset();
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your request. Please try again.",
+        variant: "destructive"
+      });
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
   }
 
   return (
@@ -222,7 +274,14 @@ const GutterCleaningForm = () => {
             )}
           />
           
-          <Button type="submit" className="w-full" variant="bc-red">Get Your Free Quote</Button>
+          <Button 
+            type="submit" 
+            className="w-full" 
+            variant="bc-red"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Get Your Free Quote'}
+          </Button>
         </form>
       </Form>
     </div>

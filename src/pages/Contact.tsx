@@ -33,44 +33,48 @@ const Contact = () => {
       service_type: formData.service
     });
 
-    const serviceId = 'service_xrk4vas';
-    const templateId = 'template_b2y5ak4';
-    const publicKey = 'MMzAmk5eWrjFgC_nP';
-
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
       phone: formData.phone,
-      service: formData.service,
-      message: formData.message
+      service_interest: formData.service,
+      message: formData.message,
+      subject: 'Contact Form Submission',
+      form_type: 'Main Contact Form'
     };
 
-    emailjs.send(serviceId, templateId, templateParams, publicKey)
-      .then(() => {
-        toast({
-          title: "Message Sent!",
-          description: "We've received your message and will get back to you shortly.",
-        });
-
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: 'Window Cleaning',
-          message: ''
-        });
-
-        setIsSubmitting(false);
-      })
-      .catch((error) => {
-        console.error('EmailJS Error:', error);
-        toast({
-          title: "Something went wrong.",
-          description: "Please try again later or contact us directly.",
-          variant: "destructive"
-        });
-        setIsSubmitting(false);
+    // Send email using EmailJS with updated template ID
+    emailjs.send(
+      'service_xrk4vas',
+      'template_cpivz2k',
+      templateParams,
+      'MMzAmk5eWrjFgC_nP'
+    )
+    .then(() => {
+      toast({
+        title: "Message Sent!",
+        description: "We've received your message and will get back to you shortly.",
       });
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: 'Window Cleaning',
+        message: ''
+      });
+
+      setIsSubmitting(false);
+    })
+    .catch((error) => {
+      console.error('EmailJS Error:', error);
+      toast({
+        title: "Something went wrong.",
+        description: "Please try again later or contact us directly.",
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+    });
   };
 
   return (

@@ -1,35 +1,68 @@
+
 import React, { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { useToast } from './ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
+import emailjs from '@emailjs/browser';
+import { trackFormSubmission } from '@/utils/analytics';
+
 const FooterContactForm = () => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [service, setService] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Create mailto URL with form data
-    const mailtoLink = `mailto:jaydenf3800@gmail.com?subject=Website Inquiry: ${encodeURIComponent(service)}&body=${encodeURIComponent(`I'm interested in discussing ${service}.\n\nMy email: ${email}`)}`;
-
-    // Attempt to open email client
-    window.location.href = mailtoLink;
-
-    // Show toast
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible."
+    setIsSubmitting(true);
+    
+    // Track the form submission
+    trackFormSubmission('footer_contact_form', {
+      form_type: 'quick_contact',
+      service_interest: service
     });
-
-    // Reset form
-    setEmail('');
-    setService('');
+    
+    // Prepare the data for email
+    const templateParams = {
+      from_email: email,
+      service_interest: service,
+      subject: 'Quick Contact Form Submission',
+      form_type: 'Footer Quick Contact'
+    };
+    
+    // Send email using EmailJS
+    emailjs.send(
+      'service_xrk4vas',
+      'template_cpivz2k',
+      templateParams,
+      'MMzAmk5eWrjFgC_nP'
+    )
+    .then((response) => {
+      console.log('Email sent successfully:', response);
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you as soon as possible."
+      });
+      setEmail('');
+      setService('');
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive"
+      });
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
   };
-  return <div className="space-y-6">
+  
+  return (
+    <div className="space-y-6">
       <div className="flex flex-col items-center mb-6">
         
       </div>
@@ -40,16 +73,41 @@ const FooterContactForm = () => {
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Input type="email" placeholder="Your Email" value={email} onChange={e => setEmail(e.target.value)} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" />
+            <Input 
+              type="email" 
+              placeholder="Your Email" 
+              value={email} 
+              onChange={e => setEmail(e.target.value)} 
+              required 
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
+            />
           </div>
           <div>
-            <Textarea placeholder="What service are you interested in?" value={service} onChange={e => setService(e.target.value)} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" rows={3} />
+            <Textarea 
+              placeholder="What service are you interested in?" 
+              value={service} 
+              onChange={e => setService(e.target.value)} 
+              required 
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
+              rows={3} 
+            />
           </div>
-          <Button type="submit" variant="bc-red" className="w-full">
-            Send Message <Send size={16} className="ml-2" />
+          <Button 
+            type="submit" 
+            variant="bc-red" 
+            className="w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Sending...' : (
+              <>
+                Send Message <Send size={16} className="ml-2" />
+              </>
+            )}
           </Button>
         </form>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default FooterContactForm;
