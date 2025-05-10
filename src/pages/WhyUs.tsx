@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight } from 'lucide-react';
@@ -6,10 +7,12 @@ import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
 import CallToAction from '../components/CallToAction';
+
 const WhyUs = () => {
   const {
     t
   } = useTranslation();
+  
   return <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
         <div className="absolute inset-0 opacity-30">
@@ -125,4 +128,5 @@ const WhyUs = () => {
       <CallToAction />
     </Layout>;
 };
+
 export default WhyUs;

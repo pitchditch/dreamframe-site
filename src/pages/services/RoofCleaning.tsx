@@ -58,7 +58,7 @@ const RoofCleaning = () => {
       <div className="w-full h-screen relative bg-black overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <iframe className="absolute inset-0 w-full h-full" 
-            src="https://www.youtube.com/embed/twtzf2gRdFU?autoplay=1&mute=1&loop=1&playlist=twtzf2gRdFU&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" 
+            src="https://www.youtube.com/embed/eQSgdx9ujcc?autoplay=1&mute=1&loop=1&playlist=eQSgdx9ujcc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" 
             title="Roof Cleaning Process" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             style={{
@@ -66,7 +66,7 @@ const RoofCleaning = () => {
               width: '100vw',
               height: '100vh',
               objectFit: 'cover',
-              transform: 'scale(1.8)'
+              transform: 'scale(1.5)'
             }} />
           <div className="absolute inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
             <div className="text-center px-6">
@@ -170,8 +170,8 @@ const RoofCleaning = () => {
         <LocationBanner />
       </div>
       
-      {/* FAQ SECTION */}
-      <section className="py-16 bg-white relative">
+      {/* FAQ SECTION - removing the gap between FAQ and satisfaction guarantee */}
+      <section className="py-16 pb-0 bg-white relative">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           

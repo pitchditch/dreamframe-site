@@ -2,8 +2,41 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
+import ServiceHeader from '@/components/ServiceHeader';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Shield, Construction, CheckCircle } from 'lucide-react';
+import ProcessSection from '@/components/post-construction/ProcessSection';
+import WhySection from '@/components/post-construction/WhySection';
+import TrustSection from '@/components/post-construction/TrustSection';
+import ServiceBenefits from '@/components/ServiceBenefits';
+import LocationBanner from '@/components/LocationBanner';
+import CallToAction from '@/components/CallToAction';
 
-const PostConstructionWindowCleaning = () => {
+const PostConstructionWindowCleaning: React.FC = () => {
+  const benefits = [
+    {
+      title: "Remove All Construction Residues",
+      description: "Eliminate paint, silicone, dust, stickers, debris, and other construction materials",
+      icon: <Shield className="h-6 w-6 text-bc-red" />
+    },
+    {
+      title: "Streak-Free Finish",
+      description: "Professional-grade cleaning solutions and techniques for perfect clarity",
+      icon: <Shield className="h-6 w-6 text-bc-red" />
+    },
+    {
+      title: "Detail-Focused Service",
+      description: "Tracks, frames, and sills thoroughly cleaned in addition to glass surfaces",
+      icon: <Shield className="h-6 w-6 text-bc-red" />
+    },
+    {
+      title: "Developer & Builder Trusted",
+      description: "Experience working with construction companies throughout Metro Vancouver",
+      icon: <Shield className="h-6 w-6 text-bc-red" />
+    }
+  ];
+
   return (
     <Layout>
       <Helmet>
@@ -12,12 +45,12 @@ const PostConstructionWindowCleaning = () => {
         <meta name="keywords" content="post construction window cleaning, window cleaning services, construction cleanup, new home window cleaning, residential window cleaning, Vancouver window cleaning" />
       </Helmet>
 
-      <header className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Post Construction Window Cleaning Services</h1>
-          <p className="text-xl">Your windows deserve the best care after construction. Get rid of dust, debris, and smudges with our expert cleaning services.</p>
-        </div>
-      </header>
+      <ServiceHeader
+        title="Post Construction Window Cleaning"
+        description="Your windows deserve the best care after construction. Get rid of dust, debris, and smudges with our expert cleaning services."
+        darkOverlay={true}
+        imagePath="/lovable-uploads/4b31a7a4-ec16-4996-a49e-ee4b41fe0713.png"
+      />
 
       <section id="intro" className="py-12 bg-white">
         <div className="container mx-auto px-4">
@@ -35,42 +68,29 @@ const PostConstructionWindowCleaning = () => {
         </div>
       </section>
 
-      <section id="how-it-works" className="py-12 bg-gray-100">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-6">How Our Service Works</h2>
-          <ol className="list-decimal pl-6 space-y-4 text-gray-700">
-            <li>Schedule your appointment by contacting us through our website or phone.</li>
-            <li>Our team arrives on-site and inspects the windows to determine the best cleaning methods.</li>
-            <li>We use eco-friendly products and advanced tools to clean your windows thoroughly.</li>
-            <li>After cleaning, we double-check for streaks, dust, and debris to ensure a perfect finish.</li>
-            <li>Enjoy your sparkling windows and the satisfaction of a job well done!</li>
-          </ol>
-        </div>
-      </section>
+      <WhySection />
+      
+      <ProcessSection />
 
-      <section id="testimonial" className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-6">What Our Clients Say</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-              <p className="italic mb-4">"BC Pressure Washing did an amazing job cleaning our windows after our new home construction. The windows were spotless, and the crew was professional!"</p>
-              <cite className="font-bold">— Sarah L., Surrey</cite>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-              <p className="italic mb-4">"Fantastic service! They made sure every window was cleaned perfectly. Highly recommend them!"</p>
-              <cite className="font-bold">— Michael P., White Rock</cite>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ServiceBenefits
+        title="Benefits of Professional Post-Construction Window Cleaning"
+        subtitle="The finishing touch your new construction or renovation needs"
+        benefits={benefits}
+      />
+
+      <TrustSection />
 
       <section id="cta" className="py-12 bg-bc-red text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Your Windows Clean?</h2>
           <p className="text-xl mb-8">Contact us today to schedule your post-construction window cleaning service. We're here to make your home shine!</p>
-          <a href="/contact" className="bg-white text-bc-red px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors">Get a Free Quote</a>
+          <Button asChild variant="default" className="bg-white text-bc-red px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors">
+            <Link to="/contact">Get a Free Quote</Link>
+          </Button>
         </div>
       </section>
+      
+      <LocationBanner />
     </Layout>
   );
 };
