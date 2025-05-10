@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorIntro from './PriceCalculatorIntro';
@@ -63,6 +62,13 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   const handleFormSubmit = async () => {
     setSubmitting(true);
     
+    // Log contact information to check if it's correctly populated
+    console.log('Contact Info:', contact);
+    console.log('Address:', address);
+    console.log('Size:', size);
+    console.log('Services:', services);
+    console.log('Add-ons:', addOns);
+
     // Calculate total estimate for tracking
     let estTotal = 0;
     if (size !== 'xlarge') {
