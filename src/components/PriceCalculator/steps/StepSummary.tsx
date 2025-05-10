@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { trackPageView } from '@/utils/analytics';
-import { getPricing, formatCurrency, ADD_ONS } from '../utils/pricingUtils';
+import { getPricing, formatCurrency } from '../utils/pricingUtils';
+import { ADD_ONS } from '../data/constants';
 
 interface StepSummaryProps {
   size: string;
@@ -69,6 +70,12 @@ const StepSummary: React.FC<StepSummaryProps> = ({
   const handleCallClick = () => {
     trackPageView('/virtual/phone-call-button');
   };
+
+  // Handle submit button click
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onSubmit();
+  };
   
   return (
     <div className="animate-fade-in">
@@ -97,7 +104,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
       <div className="flex flex-col gap-2 mt-6">
         <Button 
           className="w-full" 
-          onClick={onSubmit} 
+          onClick={handleSubmit} 
           disabled={submitting}
         >
           {submitting ? "Submitting..." : "Get My Custom Quote"}
