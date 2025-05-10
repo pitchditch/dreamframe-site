@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google tag (gtag.js) for GA4 -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTJFNK4L59"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -25,27 +25,26 @@
       gtag('config', 'G-XTJFNK4L59');
     </script>
 
-    <!-- Lovable script tag -->
+    <!-- Lovable AI Script -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-      emailjs.init("MMzAmk5eWrjFgC_nP");  // Initialize EmailJS with your public key
+      emailjs.init("MMzAmk5eWrjFgC_nP");  // Your public EmailJS key
     </script>
   </head>
   <body>
     <div id="root"><!-- Your site content gets injected here --></div>
 
-    <!-- Custom script to track Lovable AI form submissions -->
+    <!-- Custom script to track Lovable AI form submissions and send Email -->
     <script>
       const observer = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           for (const node of mutation.addedNodes) {
-            if (node.nodeType === 1) { // Only look at element nodes
+            if (node.nodeType === 1) {
               const text = node.textContent?.toLowerCase();
               if (text && (text.includes('thank you') || text.includes('submitted'))) {
-                console.log("🟢 Detected a form submission success message.");
                 gtag('event', 'form_submission', {
                   event_category: 'Form',
                   event_label: 'Lovable AI Form',
@@ -62,23 +61,26 @@
 
       function sendEmailFormData(node) {
         try {
-          const fullName = node.querySelector('[name="fullName"]')?.value || "Missing";
-          const email = node.querySelector('[name="email"]')?.value || "Missing";
-          const phone = node.querySelector('[name="phone"]')?.value || "Missing";
-          const address = node.querySelector('[name="address"]')?.value || "Missing";
-          const notes = node.querySelector('[name="notes"]')?.value || "Missing";
+          const form = document.createElement("form");
 
-          console.log("📩 Preparing to send form with values:", { fullName, email, phone, address, notes });
-
-          const formData = {
-            fullName,
-            email,
-            phoneNumber: phone,
-            serviceAddress: address,
-            additionalNotes: notes,
+          const fields = {
+            fullName: node.querySelector('[name="fullName"]')?.value || "Missing",
+            email: node.querySelector('[name="email"]')?.value || "Missing",
+            phoneNumber: node.querySelector('[name="phone"]')?.value || "Missing",
+            serviceAddress: node.querySelector('[name="address"]')?.value || "Missing",
+            additionalNotes: node.querySelector('[name="notes"]')?.value || "Missing",
           };
 
-          emailjs.send("service_xrk4vas", "template_b2y5ak4", formData)
+          console.log("📩 Preparing to send form with values:", fields);
+
+          for (const [name, value] of Object.entries(fields)) {
+            const input = document.createElement("input");
+            input.setAttribute("name", name);
+            input.setAttribute("value", value);
+            form.appendChild(input);
+          }
+
+          emailjs.sendForm("service_xrk4vas", "template_b2y5ak4", form)
             .then((res) => {
               console.log("✅ Email sent successfully:", res);
             })
@@ -95,4 +97,3 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
