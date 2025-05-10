@@ -1,14 +1,14 @@
 
 // StepRenderer.tsx
 import React from 'react';
-import AddressStep from './steps/AddressStep';
-import SizeStep from './steps/SizeStep';
-import ServicesStep from './steps/ServicesStep';
-import ContactStep from './steps/ContactStep';
-import SummaryStep from './steps/SummaryStep';
-import CompletionStep from './steps/CompletionStep';
-import DateStep from './steps/DateStep';
 import { AddressData, ContactData, SizeData } from './hooks/usePriceCalculatorForm';
+import StepAddressInput from './steps/StepAddressInput';
+import StepSizeInput from './steps/StepSizeInput';
+import StepServicesInput from './steps/StepServicesInput';
+import StepContactInput from './steps/StepContactInput';
+import StepSummary from './steps/StepSummary';
+import StepThankYou from './steps/StepThankYou';
+import DateStep from './steps/DateStep';
 
 interface StepRendererProps {
   step: number;
@@ -56,15 +56,17 @@ const StepRenderer: React.FC<StepRendererProps> = ({
   switch(step) {
     case 0:
       return (
-        <AddressStep 
+        <StepAddressInput 
           address={address} 
           setAddress={setAddress} 
+          contact={contact}
+          setContact={setContact}
           onNextStep={() => onNextStep(1)}
         />
       );
     case 1:
       return (
-        <SizeStep 
+        <StepSizeInput 
           size={size} 
           setSize={setSize} 
           onPrevStep={() => onPrevStep(0)} 
@@ -73,7 +75,8 @@ const StepRenderer: React.FC<StepRendererProps> = ({
       );
     case 2:
       return (
-        <ServicesStep 
+        <StepServicesInput 
+          size={size}
           services={services}
           setServices={setServices}
           addOns={addOns}
@@ -93,7 +96,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
       );
     case 4:
       return (
-        <ContactStep 
+        <StepContactInput 
           contact={contact}
           setContact={setContact}
           onPrevStep={() => onPrevStep(3)}
@@ -102,21 +105,20 @@ const StepRenderer: React.FC<StepRendererProps> = ({
       );
     case 5:
       return (
-        <SummaryStep 
+        <StepSummary 
           address={address}
           size={size}
           services={services}
           addOns={addOns}
           contact={contact}
-          preferredDate={preferredDate}
-          estimatedTotal={estimateTotal()}
+          estimateTotal={estimateTotal()}
           onPrevStep={() => onPrevStep(4)}
           onSubmit={onSubmit}
           submitting={submitting}
         />
       );
     case 6:
-      return <CompletionStep onStartNew={onStartNew} />;
+      return <StepThankYou estimateTotal={estimateTotal()} onStartNew={onStartNew} />;
     default:
       return null;
   }

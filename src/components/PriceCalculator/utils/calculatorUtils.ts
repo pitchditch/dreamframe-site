@@ -1,143 +1,134 @@
 
-import { ADD_ONS } from '../data/constants';
-import { trackFormSubmission } from '@/utils/analytics';
-import emailjs from '@emailjs/browser';
-import { FormSubmissionData } from '../types/calculatorTypes';
-import { useToast } from '@/hooks/use-toast';
-
-export const calculateEstimateTotal = (size: string, services: string[], addOns: string[], getPricing: Function): number => {
-  let estTotal = 0;
-
-  if (size && services.length > 0) {
-    // Calculate base price based on selected services and size
-    for (const service of services) {
-      const servicePrice = getPricing(size, service);
-      if (typeof servicePrice === 'number') {
-        estTotal += servicePrice;
-      }
-    }
-    
-    // Add pricing for add-ons
-    for (const addon of addOns) {
-      const addonInfo = ADD_ONS.find(a => a.id === addon);
-      if (addonInfo && addonInfo.price) {
-        estTotal += addonInfo.price;
-      }
-    }
-    
-    // Apply bundle discount if eligible
-    if (services.filter(s => s !== 'Roof Cleaning').length >= 3) {
-      estTotal -= 200; // $200 bundle discount
-    }
+/**
+ * Format add-ons array into a readable string
+ */
+export const formatAddOns = (addOns: string[]): string => {
+  if (!addOns || addOns.length === 0) {
+    return 'None';
   }
 
-  return estTotal;
+  // Convert kebab case to title case
+  return addOns.map(addOn => {
+    return addOn
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }).join(', ');
 };
 
-export const formatAddOns = (addOns: string[]): string => {
-  return addOns.length > 0 
-    ? addOns.map(id => {
-        const addon = ADD_ONS.find(a => a.id === id);
-        return addon ? addon.name : id;
-      }).join(', ') 
-    : 'None';
+/**
+ * Calculate estimate total based on selections
+ */
+export const calculateEstimateTotal = (
+  size: any, 
+  services: string[], 
+  addOns: string[],
+  getPricing?: any
+): number => {
+  let total = 0;
+  
+  // Base prices for services
+  const servicePrices: Record<string, number> = {
+    'window-cleaning': 175,
+    'gutter-cleaning': 150,
+    'pressure-washing': 200,
+    'roof-cleaning': 350,
+    'Window Cleaning (Outside)': 150,
+    'Window Cleaning (Inside)': 150,
+    'Both Window Sides': 250,
+    'House Washing': 225,
+    'House Wash + Windows': 350,
+    'Driveway Washing': 175,
+    'Driveway + House Washing': 350,
+    'Deck Washing': 175,
+    'Gutter Cleaning (Inside)': 125,
+    'Gutter Cleaning (Outside)': 125,
+    'Gutter Cleaning (Both)': 200,
+    'Roof Cleaning': 350,
+  };
+  
+  // Add-on prices
+  const addOnPrices: Record<string, number> = {
+    'screen-cleaning': 50,
+    'track-cleaning': 40,
+    'gutter-guards': 75,
+    'moss-treatment': 125,
+    'fascia-cleaning': 99,
+    'window-track': 49,
+  };
+  
+  // Size multipliers
+  const sizeMultipliers: Record<string, number> = {
+    'small': 0.8,
+    'medium': 1,
+    'large': 1.3,
+    'extra-large': 1.6,
+    'x-large': 1.6,
+  };
+  
+  // Calculate base price from services
+  services.forEach(service => {
+    if (servicePrices[service]) {
+      total += servicePrices[service];
+    }
+  });
+  
+  // Add add-on prices
+  addOns.forEach(addOn => {
+    if (addOnPrices[addOn]) {
+      total += addOnPrices[addOn];
+    }
+  });
+  
+  // Apply size multiplier if size is a string
+  if (typeof size === 'string' && sizeMultipliers[size]) {
+    total *= sizeMultipliers[size];
+  } else if (size?.houseSize && sizeMultipliers[size.houseSize]) {
+    // Or if size is an object with a houseSize property
+    total *= sizeMultipliers[size.houseSize];
+  }
+  
+  return Math.round(total);
 };
 
+/**
+ * Submit form data to backend
+ */
 export const submitFormData = async (
-  formData: FormSubmissionData, 
-  setSubmitting: (value: boolean) => void, 
+  formData: any,
+  setSubmitting: (state: boolean) => void,
   onSuccess: () => void,
-  toast: ReturnType<typeof useToast>['toast']
-): Promise<void> => {
+  toast: any
+) => {
   try {
-    console.log('Sending data to EmailJS:', formData);
-
-    // Validate required fields
-    if (!formData.name || !formData.phone) {
-      toast({
-        title: "Missing Information",
-        description: "Please provide your name and phone number.",
-        variant: "destructive"
-      });
-      setSubmitting(false);
-      return;
-    }
-
-    try {
-      // Prepare data for EmailJS by converting arrays to strings if needed
-      const emailjsData = {
-        ...formData,
-        // Convert arrays to strings for EmailJS
-        services: Array.isArray(formData.services) ? formData.services.join(', ') : formData.services,
-        addons: Array.isArray(formData.addons) ? formData.addons.join(', ') : formData.addons
-      };
-      
-      console.log('Sending data to EmailJS with parameters:', {
-        service_id: 'service_xrk4vas',
-        template_id: 'template_b2y5ak4',
-        user_id: 'MMzAmk5eWrjFgC_nP',
-        template_params: emailjsData
-      });
-      
-      // Send data to EmailJS with updated credentials
-      const response = await emailjs.send(
-        'service_xrk4vas',   // Updated EmailJS service ID
-        'template_b2y5ak4',  // Updated EmailJS template ID
-        emailjsData,         // The data being sent
-        'MMzAmk5eWrjFgC_nP'  // Updated public key
-      );
-      console.log('EmailJS response:', response);
-
-      // Track form submission
-      trackFormSubmission('PriceCalculator', {
-        property_size: formData.size,
-        services_count: Array.isArray(formData.services) ? formData.services.length : 0,
-        addons_count: Array.isArray(formData.addons) ? formData.addons.length : 0,
-        estimate_amount: formData.estimate,
-        status: 'success'
-      });
-
-      toast({
-        title: "Quote Submitted Successfully!",
-        description: "We will contact you shortly about your service quote.",
-      });
-
-      // Execute success callback
-      onSuccess();
-      
-    } catch (emailError) {
-      console.error('EmailJS error:', emailError);
-      
-      // Handle EmailJS errors
-      if (emailError instanceof Error) {
-        console.log('EmailJS error message:', emailError.message);
-        
-        toast({
-          title: "Submission Error",
-          description: `Error sending email: ${emailError.message}. Please try again or contact us directly.`,
-          variant: "destructive"
-        });
-        
-        setSubmitting(false);
-      } else {
-        throw emailError;
-      }
-    }
-  } catch (error) {
-    console.error('Error submitting form:', error);
+    // Using EmailJS to send the form data
+    const serviceId = 'service_xrk4vas';
+    const templateId = 'template_cpivz2k';
+    const userId = 'MMzAmk5eWrjFgC_nP';
     
-    // Track form submission error
-    trackFormSubmission('PriceCalculator', {
-      error_message: error instanceof Error ? error.message : 'Unknown error',
-      status: 'error'
-    });
+    // Import EmailJS dynamically to avoid server-side issues
+    const emailjs = await import('@emailjs/browser');
+    
+    await emailjs.send(
+      serviceId,
+      templateId,
+      formData,
+      userId
+    );
     
     toast({
-      title: "Submission Failed",
-      description: "There was an error submitting your quote. Please try again.",
-      variant: "destructive"
+      title: 'Quote Request Submitted!',
+      description: 'We\'ll contact you shortly with your personalized quote.',
     });
     
+    onSuccess();
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    toast({
+      title: 'Submission Failed',
+      description: 'There was a problem submitting your request. Please try again.',
+      variant: 'destructive'
+    });
     setSubmitting(false);
   }
 };

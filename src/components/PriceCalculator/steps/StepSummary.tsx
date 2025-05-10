@@ -1,16 +1,16 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ContactInfo } from '../hooks/usePriceCalculatorForm';
+import { ContactData } from '../hooks/usePriceCalculatorForm';
 import { formatAddOns } from '../utils/calculatorUtils';
 import { Loader } from 'lucide-react';
 
 interface StepSummaryProps {
-  address: string;
-  size: string;
+  address: any;
+  size: any;
   services: string[];
   addOns: string[];
-  contact: ContactInfo;
+  contact: ContactData;
   onPrevStep: () => void;
   onSubmit: () => void;
   submitting: boolean;
@@ -28,7 +28,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
   submitting,
   estimateTotal
 }) => {
-  const formattedAddOns = formatAddOns(addOns);
+  const formattedAddOns = formatAddOns ? formatAddOns(addOns) : addOns.join(', ') || 'None';
   
   return (
     <div>
@@ -48,17 +48,17 @@ const StepSummary: React.FC<StepSummaryProps> = ({
             <span className="font-medium">Email:</span> <span className="text-gray-700">{contact.email || 'Not provided'}</span>
           </div>
           <div>
-            <span className="font-medium">Referral:</span> <span className="text-gray-700">{contact.referredBy || 'None'}</span>
+            <span className="font-medium">Referral:</span> <span className="text-gray-700">{contact.notes || 'None'}</span>
           </div>
         </div>
         
         <h4 className="font-bold text-lg border-b pb-2 mb-3 mt-4">Service Details</h4>
         <div className="space-y-2">
           <div>
-            <span className="font-medium">Address:</span> <span className="text-gray-700">{address || 'Not provided'}</span>
+            <span className="font-medium">Address:</span> <span className="text-gray-700">{typeof address === 'string' ? address : (address?.street ? `${address.street}, ${address.city}, ${address.postalCode}` : 'Not provided')}</span>
           </div>
           <div>
-            <span className="font-medium">Property Size:</span> <span className="text-gray-700">{size || 'Not selected'}</span>
+            <span className="font-medium">Property Size:</span> <span className="text-gray-700">{typeof size === 'string' ? size : (size?.houseSize ? size.houseSize : 'Not selected')}</span>
           </div>
           <div>
             <span className="font-medium">Services:</span> <span className="text-gray-700">{services.join(', ') || 'None selected'}</span>
