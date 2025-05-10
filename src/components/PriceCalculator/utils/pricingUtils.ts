@@ -1,4 +1,6 @@
 
+import { ADD_ONS } from '../data/constants';
+
 /**
  * Formats a number as currency
  */
@@ -67,13 +69,5 @@ export const getPricing = (size: string, service: string): number | null => {
   return typedPricingMap[size]?.[service] ?? null;
 };
 
-/**
- * Add-ons data
- */
-export const ADD_ONS = [
-  { id: 'moss-treatment', name: 'Moss Treatment', price: 149 },
-  { id: 'gutter-guards', name: 'Gutter Guards Installation', price: 299 },
-  { id: 'fascia-cleaning', name: 'Fascia Cleaning', price: 99 },
-  { id: 'window-track', name: 'Window Track Cleaning', price: 49 },
-  { id: 'screen-cleaning', name: 'Screen Cleaning', price: 39 }
-];
+// Re-export ADD_ONS for backwards compatibility
+export { ADD_ONS };

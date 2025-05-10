@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { trackPageView } from '@/utils/analytics';
-import { getPricing, formatCurrency } from '../utils/pricingUtils';
-import { ADD_ONS } from '../data/constants';
+import { getPricing, formatCurrency, ADD_ONS } from '../utils/pricingUtils';
 
 interface StepSummaryProps {
   size: string;
@@ -19,8 +18,8 @@ interface StepSummaryProps {
   address: string;
   onPrevStep: () => void;
   onSubmit: () => void;
-  onComplete?: () => void;
   submitting: boolean;
+  estimateTotal: number | null;
 }
 
 const StepSummary: React.FC<StepSummaryProps> = ({
@@ -31,7 +30,8 @@ const StepSummary: React.FC<StepSummaryProps> = ({
   address,
   onPrevStep,
   onSubmit,
-  submitting
+  submitting,
+  estimateTotal
 }) => {
   // Bundle discount
   const eligibleBundleDiscount = services.filter(s => s !== 'Roof Cleaning').length >= 3;

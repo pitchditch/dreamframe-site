@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorIntro from './PriceCalculatorIntro';
 import { trackFormSubmission, trackFormStep } from '@/utils/analytics';
-import { PROMOS } from './data/constants';
+import { PROMOS, ADD_ONS } from './data/constants';
 import StepAddressInput from './steps/StepAddressInput';
 import StepSizeInput from './steps/StepSizeInput';
 import StepServicesInput from './steps/StepServicesInput';
@@ -12,6 +13,7 @@ import StepThankYou from './steps/StepThankYou';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { getPricing } from './utils/pricingUtils';
 
 interface PriceCalculatorFormProps {
   onComplete?: () => void;
@@ -161,66 +163,6 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       setStep(5);
     }, 1200);
   };
-
-  const getPricing = (size: string, service: string): number | null => {
-    if (service === 'Roof Cleaning' || size === 'xlarge') return null;
-
-    const pricingMap = {
-      small: {
-        'Window Cleaning (Outside)': 300,
-        'Window Cleaning (Inside)': 300,
-        'Both Window Sides': 547.2,
-        'House Washing': 414.3,
-        'House Wash + Windows': 664.2,
-        'Driveway Washing': 300,
-        'Driveway + House Washing': 635.4,
-        'Deck Washing': 300,
-        'Gutter Cleaning (Inside)': 300,
-        'Gutter Cleaning (Outside)': 154,
-        'Gutter Cleaning (Both)': 454,
-      },
-      medium: {
-        'Window Cleaning (Outside)': 357.3,
-        'Window Cleaning (Inside)': 411.3,
-        'Both Window Sides': 768.6,
-        'House Washing': 627.3,
-        'House Wash + Windows': 984.6,
-        'Driveway Washing': 314.1,
-        'Driveway + House Washing': 941.1,
-        'Deck Washing': 300,
-        'Gutter Cleaning (Inside)': 386.1,
-        'Gutter Cleaning (Outside)': 300,
-        'Gutter Cleaning (Both)': 682.2,
-      },
-      large: {
-        'Window Cleaning (Outside)': 431.1,
-        'Window Cleaning (Inside)': 521.1,
-        'Both Window Sides': 952.2,
-        'House Washing': 888.3,
-        'House Wash + Windows': 1319.4,
-        'Driveway Washing': 384.3,
-        'Driveway + House Washing': 1272.6,
-        'Deck Washing': 300,
-        'Gutter Cleaning (Inside)': 465.3,
-        'Gutter Cleaning (Outside)': 357.3,
-        'Gutter Cleaning (Both)': 822.6,
-      },
-      xlarge: {
-        'Roof Cleaning': null
-      }
-    };
-
-    const typedPricingMap = pricingMap as Record<string, Record<string, number | null>>;
-    return typedPricingMap[size]?.[service] ?? null;
-  };
-
-  const ADD_ONS = [
-    { id: 'moss-treatment', name: 'Moss Treatment', price: 149 },
-    { id: 'gutter-guards', name: 'Gutter Guards Installation', price: 299 },
-    { id: 'fascia-cleaning', name: 'Fascia Cleaning', price: 99 },
-    { id: 'window-track', name: 'Window Track Cleaning', price: 49 },
-    { id: 'screen-cleaning', name: 'Screen Cleaning', price: 39 }
-  ];
 
   const resetForm = () => {
     setStep(0);
