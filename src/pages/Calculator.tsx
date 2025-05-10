@@ -1,70 +1,46 @@
-import React, { useState } from 'react';
-import emailjs from '@emailjs/browser';
 
-const PriceCalculatorForm = ({ initialStep }: { initialStep?: string }) => {
-  const [formData, setFormData] = useState({
-    from_name: '',
-    from_email: '',
-    phone: '',
-    address: '',
-    city: '',
-    postal_code: '',
-    surface_type: '',
-    square_footage: '',
-    additional_services: '',
-    additional_notes: '',
-    home_size: '',
-    selected_services: '',
-    referral_name: '',
-  });
+import React from 'react';
+import Layout from '../components/Layout';
+import PriceCalculatorForm from './PriceCalculatorForm';  // Using the component we'll create next
+import { Helmet } from 'react-helmet';
+import { Percent } from 'lucide-react';
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // ✅ Log what you're sending to EmailJS
-    console.log("📤 Sending form data to EmailJS:", formData);
-
-    try {
-      const result = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        formData,
-        process.env.NEXT_PUBLIC_EMAILJS_USER_ID
-      );
-      console.log("✅ Email sent successfully:", result);
-    } catch (error) {
-      console.error("❌ Email send error:", error);
-    }
-  };
+const Calculator = () => {
+  // Check if user was referred from the homepage with a postal code
+  const hasPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <input name="from_name" type="text" placeholder="Full Name" value={formData.from_name} onChange={handleChange} />
-      <input name="from_email" type="email" placeholder="Email" value={formData.from_email} onChange={handleChange} />
-      <input name="phone" type="tel" placeholder="Phone Number" value={formData.phone} onChange={handleChange} />
-      <input name="address" type="text" placeholder="Service Address" value={formData.address} onChange={handleChange} />
-      <input name="city" type="text" placeholder="City" value={formData.city} onChange={handleChange} />
-      <input name="postal_code" type="text" placeholder="Postal Code" value={formData.postal_code} onChange={handleChange} />
-      <input name="surface_type" type="text" placeholder="Surface Type (e.g., Vinyl, Brick)" value={formData.surface_type} onChange={handleChange} />
-      <input name="square_footage" type="text" placeholder="Approximate Sq. Ft." value={formData.square_footage} onChange={handleChange} />
-      <input name="additional_services" type="text" placeholder="Additional Services (comma separated)" value={formData.additional_services} onChange={handleChange} />
-      <textarea name="additional_notes" placeholder="Additional Notes" value={formData.additional_notes} onChange={handleChange} />
-      <input name="home_size" type="text" placeholder="Home Size" value={formData.home_size} onChange={handleChange} />
-      <input name="selected_services" type="text" placeholder="Selected Services (comma separated)" value={formData.selected_services} onChange={handleChange} />
-      <input name="referral_name" type="text" placeholder="Referral Name (if any)" value={formData.referral_name} onChange={handleChange} />
-
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        Submit
-      </button>
-    </form>
+    <Layout>
+      <Helmet>
+        <title>Service Price Calculator | BC Pressure Washing</title>
+        <meta name="description" content="Get an instant quote for window cleaning, pressure washing, and gutter cleaning services in White Rock, Surrey and Metro Vancouver." />
+        <meta name="keywords" content="pressure washing quote, window cleaning estimate, gutter cleaning cost, White Rock, Surrey, BC" />
+      </Helmet>
+      <div className="container mx-auto py-12 mt-32">
+        <div className="text-center mb-12">
+          <div className="inline-block bg-yellow-400 text-black px-4 py-2 rounded-full font-bold mb-4 animate-pulse">
+            <Percent className="inline-block h-4 w-4 mr-1" />
+            SPRING SALE: 20% OFF ALL SERVICES
+          </div>
+          <h1 className="text-4xl font-bold mb-4 text-center mx-auto">Service Price Calculator</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            {hasPostalCode ? 
+              "Thanks for entering your postal code! Now complete the form below to get your custom quote." :
+              "Get an instant estimate for your service needs. Our calculator provides a customized quote based on your specific requirements."}
+            We serve residential and commercial properties in White Rock and surrounding areas.
+          </p>
+        </div>
+        <style>
+          {`.before-after-image {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+          }`}
+        </style>
+        <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
+      </div>
+    </Layout>
   );
 };
 
-export default PriceCalculatorForm;
+export default Calculator;
