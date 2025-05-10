@@ -60,7 +60,10 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     if (size && services.length > 0) {
       // Calculate base price based on selected services and size
       for (const service of services) {
-        estTotal += getPricing(service, size);
+        const servicePrice = getPricing(size, service);
+        if (typeof servicePrice === 'number') {
+          estTotal += servicePrice;
+        }
       }
       
       // Add pricing for add-ons
@@ -69,6 +72,11 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         if (addonInfo && addonInfo.price) {
           estTotal += addonInfo.price;
         }
+      }
+      
+      // Apply bundle discount if eligible
+      if (services.filter(s => s !== 'Roof Cleaning').length >= 3) {
+        estTotal -= 200; // $200 bundle discount
       }
     }
 
@@ -94,16 +102,28 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
 
   const handleFormSubmit = async () => {
     setSubmitting(true);
+    console.log('Starting form submission...');
+    
     // Calculate the estimate total before sending
     const total = calculateEstimateTotal();
+    console.log('Calculated total:', total);
 
     try {
+      // Format services and add-ons for better readability in email
+      const formattedServices = services.join(', ');
+      const formattedAddOns = addOns.length > 0 
+        ? addOns.map(id => {
+            const addon = ADD_ONS.find(a => a.id === id);
+            return addon ? addon.name : id;
+          }).join(', ') 
+        : 'None';
+
       // Prepare email template parameters with all form data
       const templateParams = {
         address: address,
         property_size: size,
-        services: services.join(', '),
-        add_ons: addOns.length > 0 ? addOns.join(', ') : 'None',
+        services: formattedServices,
+        add_ons: formattedAddOns,
         customer_name: contact.name,
         phone: contact.phone,
         email: contact.email || 'Not provided',
@@ -116,14 +136,16 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
       console.log('Sending data to EmailJS:', templateParams);
 
       // Send the email using EmailJS
-      await emailjs.send(
+      const response = await emailjs.send(
         'service_qp184qj',
         'template_820fxcj',
         templateParams,
         'w0cDPAeLXkNj47ZkP'
       );
+      
+      console.log('EmailJS response:', response);
 
-      // Fix: Update to match expected parameters for trackFormSubmission
+      // Track form submission
       trackFormSubmission('PriceCalculator', {
         property_size: size,
         services_count: services.length,
@@ -137,12 +159,13 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         description: "We will contact you shortly about your service quote.",
       });
 
+      // Move to thank you step after successful submission
       setStep(5);
       if (onComplete) onComplete();
     } catch (error) {
       console.error('Error submitting form:', error);
       
-      // Fix: Update to match expected parameters for trackFormSubmission
+      // Track form submission error
       trackFormSubmission('PriceCalculator', {
         error_message: error instanceof Error ? error.message : 'Unknown error',
         status: 'error'

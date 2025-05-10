@@ -71,11 +71,11 @@ const StepSummary: React.FC<StepSummaryProps> = ({
     trackPageView('/virtual/phone-call-button');
   };
 
-  // Handle submit button click
-  const handleSubmit = (e: React.MouseEvent) => {
-    e.preventDefault();
+  // Handle submit button click - fixed to prevent default and log data before submission
+  const handleSubmit = () => {
     console.log('🚀 Submitting quote request...');
     console.log('Form data:', { size, services, addOns, contact, address });
+    // Directly call onSubmit without preventDefault (which was causing issues)
     onSubmit();
   };
   
