@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorIntro from './PriceCalculatorIntro';
@@ -9,7 +10,9 @@ import StepServicesInput from './steps/StepServicesInput';
 import StepContactInput from './steps/StepContactInput';
 import StepSummary from './steps/StepSummary';
 import StepThankYou from './steps/StepThankYou';
-import emailjs from 'emailjs-com';
+import { useToast } from '@/components/ui/use-toast';
+import { Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 interface PriceCalculatorFormProps {
   onComplete?: () => void;
@@ -34,6 +37,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   });
   const [submitting, setSubmitting] = useState(false);
   const [estimateTotal, setEstimateTotal] = useState<number | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const savedPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
@@ -110,6 +114,11 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       !process.env.NEXT_PUBLIC_EMAILJS_USER_ID
     ) {
       console.error("Missing EmailJS environment variables");
+      toast({
+        title: "Configuration Error",
+        description: "Unable to send email due to missing configuration. Please try again later.",
+        variant: "destructive"
+      });
       setSubmitting(false);
       return;
     }
@@ -133,8 +142,18 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
         process.env.NEXT_PUBLIC_EMAILJS_USER_ID
       );
       console.log('📧 Email sent successfully');
+      toast({
+        title: "Quote Submitted",
+        description: "Your quote request has been sent successfully!",
+        duration: 5000,
+      });
     } catch (error) {
       console.error('❌ EmailJS Error:', error);
+      toast({
+        title: "Error Sending Quote",
+        description: "There was an error sending your quote. Please try again.",
+        variant: "destructive",
+      });
     }
 
     setTimeout(() => {
@@ -217,4 +236,69 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       referredBy: '',
       notes: ''
     });
-    setEstimate
+    setEstimateTotal(null);
+  };
+  
+  const renderStep = () => {
+    switch (step) {
+      case 0:
+        return <StepAddressInput 
+          address={address} 
+          setAddress={setAddress}
+          contact={contact}
+          setContact={setContact}
+          onNextStep={() => setStep(1)} 
+        />;
+      case 1:
+        return <StepSizeInput 
+          size={size} 
+          setSize={setSize} 
+          onNextStep={() => setStep(2)} 
+          onPrevStep={() => setStep(0)} 
+        />;
+      case 2:
+        return <StepServicesInput 
+          services={services} 
+          setServices={setServices} 
+          addOns={addOns}
+          setAddOns={setAddOns}
+          onNextStep={() => setStep(3)} 
+          onPrevStep={() => setStep(1)} 
+        />;
+      case 3:
+        return <StepContactInput 
+          contact={contact} 
+          setContact={setContact} 
+          onNextStep={() => setStep(4)} 
+          onPrevStep={() => setStep(2)} 
+        />;
+      case 4:
+        return <StepSummary 
+          address={address}
+          size={size}
+          services={services}
+          addOns={addOns}
+          contact={contact}
+          onPrevStep={() => setStep(3)}
+          onSubmit={handleFormSubmit}
+          isSubmitting={submitting}
+          estimateTotal={estimateTotal}
+        />;
+      case 5:
+        return <StepThankYou estimateTotal={estimateTotal} onStartNew={resetForm} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+      <PriceCalculatorIntro />
+      <div className="p-6">
+        {renderStep()}
+      </div>
+    </div>
+  );
+};
+
+export default PriceCalculatorForm;
