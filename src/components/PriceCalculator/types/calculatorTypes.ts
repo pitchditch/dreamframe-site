@@ -14,8 +14,10 @@ export interface FormSubmissionData {
   referredBy: string;
   address: string;
   size: string;
-  services: string[];
-  addons: string[];
+  services: string[];  // Ensuring this is string[] not string
+  addons: string[];    // Ensuring this is string[] not string
   notes: string;
   estimate: string | number;
+  // Adding an index signature to fix the Record<string, unknown> compatibility issue
+  [key: string]: string | string[] | number | undefined;
 }

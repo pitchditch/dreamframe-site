@@ -4,10 +4,11 @@ import { useToast } from '@/components/ui/use-toast';
 import { trackFormStep } from '@/utils/analytics';
 import { getPricing } from '../utils/pricingUtils';
 import { ADD_ONS } from '../data/constants';
-import { ContactInfo } from '../types/calculatorTypes';
+import { ContactInfo, FormSubmissionData } from '../types/calculatorTypes';
 import { calculateEstimateTotal, formatAddOns, submitFormData } from '../utils/calculatorUtils';
 
-export { ContactInfo } from '../types/calculatorTypes';
+// Use export type for re-exporting types when isolatedModules is enabled
+export type { ContactInfo } from '../types/calculatorTypes';
 
 export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void) => {
   const [step, setStep] = useState(initialStep);
@@ -94,15 +95,15 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     const formattedAddOns = formatAddOns(addOns);
 
     // Prepare email template parameters with all form data
-    const templateParams = {
+    const templateParams: FormSubmissionData = {
       name: contact.name,
       email: contact.email || 'Not provided',
       phone: contact.phone,
       referredBy: contact.referredBy || 'None',
       address: address,
       size: size,
-      services: formattedServices,
-      addons: formattedAddOns,
+      services: services,  // Keep as array to match FormSubmissionData type
+      addons: addOns,      // Keep as array to match FormSubmissionData type
       notes: contact.notes || 'None',
       estimate: total ? `${total}` : 'To be determined'
     };

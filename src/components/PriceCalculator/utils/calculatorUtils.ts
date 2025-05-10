@@ -54,11 +54,19 @@ export const submitFormData = async (
     console.log('Sending data to EmailJS:', formData);
 
     try {
+      // Prepare data for EmailJS by converting arrays to strings if needed
+      const emailjsData = {
+        ...formData,
+        // Convert arrays to strings for EmailJS
+        services: Array.isArray(formData.services) ? formData.services.join(', ') : formData.services,
+        addons: Array.isArray(formData.addons) ? formData.addons.join(', ') : formData.addons
+      };
+      
       // Send data to EmailJS
       const response = await emailjs.send(
         'service_qp184qj',   // EmailJS service ID
         'template_820fxcj',  // EmailJS template ID
-        formData,            // The data being sent
+        emailjsData,         // The data being sent
         'w0cDPAeLXkNj47ZkP'  // Public key
       );
       console.log('EmailJS response:', response);
@@ -66,8 +74,8 @@ export const submitFormData = async (
       // Track form submission
       trackFormSubmission('PriceCalculator', {
         property_size: formData.size,
-        services_count: formData.services.length,
-        addons_count: formData.addons.length,
+        services_count: Array.isArray(formData.services) ? formData.services.length : 0,
+        addons_count: Array.isArray(formData.addons) ? formData.addons.length : 0,
         estimate_amount: formData.estimate,
         status: 'success'
       });
@@ -91,8 +99,8 @@ export const submitFormData = async (
         // Still track form submission for analytics
         trackFormSubmission('PriceCalculator', {
           property_size: formData.size,
-          services_count: formData.services.length,
-          addons_count: formData.addons.length,
+          services_count: Array.isArray(formData.services) ? formData.services.length : 0,
+          addons_count: Array.isArray(formData.addons) ? formData.addons.length : 0,
           estimate_amount: formData.estimate,
           status: 'simulated_success'
         });
