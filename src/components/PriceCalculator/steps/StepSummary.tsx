@@ -71,11 +71,6 @@ const StepSummary: React.FC<StepSummaryProps> = ({
     trackPageView('/virtual/phone-call-button');
   };
 
-  const handleSubmit = () => {
-    console.log("Submit button clicked, calling onSubmit");
-    onSubmit();
-  };
-
   return (
     <div className="animate-fade-in">
       <h3 className="text-xl font-bold mb-2">Step 5: Estimate Summary</h3>
@@ -122,7 +117,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
       <div className="flex flex-col gap-2 mt-6">
         <Button 
           className="w-full" 
-          onClick={handleSubmit} 
+          onClick={() => onSubmit()}
           disabled={submitting}
           variant="bc-red"
         >
