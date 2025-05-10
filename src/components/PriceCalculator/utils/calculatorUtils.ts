@@ -1,8 +1,10 @@
+
 import { ADD_ONS } from '../data/constants';
 import { trackFormSubmission } from '@/utils/analytics';
 import emailjs from '@emailjs/browser';
 import { FormSubmissionData } from '../types/calculatorTypes';
 import { useToast } from '@/hooks/use-toast';
+import type { Toast } from "@/hooks/use-toast";
 
 export const calculateEstimateTotal = (size: string, services: string[], addOns: string[], getPricing: Function): number => {
   let estTotal = 0;
@@ -72,18 +74,18 @@ export const submitFormData = async (
       };
       
       console.log('Sending data to EmailJS with parameters:', {
-        service_id: 'service_qp184qj',
-        template_id: 'template_820fxcj',
-        user_id: 'w0cDPAeLXkNj47ZkP',
+        service_id: 'service_xrk4vas',
+        template_id: 'template_b2y5ak4',
+        user_id: 'MMzAmk5eWrjFgC_nP',
         template_params: emailjsData
       });
       
-      // Send data to EmailJS
+      // Send data to EmailJS with updated credentials
       const response = await emailjs.send(
-        'service_qp184qj',   // EmailJS service ID
-        'template_820fxcj',  // EmailJS template ID
+        'service_xrk4vas',   // Updated EmailJS service ID
+        'template_b2y5ak4',  // Updated EmailJS template ID
         emailjsData,         // The data being sent
-        'w0cDPAeLXkNj47ZkP'  // Public key
+        'MMzAmk5eWrjFgC_nP'  // Updated public key
       );
       console.log('EmailJS response:', response);
 
@@ -111,14 +113,13 @@ export const submitFormData = async (
       if (emailError instanceof Error) {
         console.log('EmailJS error message:', emailError.message);
         
-        // Try a more flexible approach for debugging purposes
         toast({
-          title: "Request Received",
-          description: "We'll process your quote request and contact you soon.",
+          title: "Submission Error",
+          description: `Error sending email: ${emailError.message}. Please try again or contact us directly.`,
+          variant: "destructive"
         });
         
-        // Still mark as success for demo purposes
-        onSuccess();
+        setSubmitting(false);
       } else {
         throw emailError;
       }
@@ -137,7 +138,7 @@ export const submitFormData = async (
       description: "There was an error submitting your quote. Please try again.",
       variant: "destructive"
     });
-  } finally {
+    
     setSubmitting(false);
   }
 };

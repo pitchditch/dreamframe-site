@@ -87,7 +87,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
         <Button 
           onClick={onSubmit} 
           disabled={submitting || !contact.name || !contact.phone}
-          className="bg-bc-red hover:bg-red-700 text-white"
+          className={!submitting ? "bg-bc-red hover:bg-red-700 text-white" : "bg-bc-red/70 text-white cursor-not-allowed"}
         >
           {submitting ? (
             <>
