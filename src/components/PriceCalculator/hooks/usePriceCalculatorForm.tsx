@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { trackFormStep } from '@/utils/analytics';
@@ -99,10 +100,15 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         estimate: total ? `${total}` : 'To be determined'
       };
 
-      await submitFormData(templateParams);
-
-      setStep(5);
-      if (onComplete) onComplete();
+      await submitFormData(
+        templateParams, 
+        setSubmitting, 
+        () => {
+          setStep(5);
+          if (onComplete) onComplete();
+        },
+        toast
+      );
     } catch (error) {
       toast({
         title: 'Submission Failed',
@@ -110,7 +116,6 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         variant: 'destructive'
       });
       console.error('Form submission error:', error);
-    } finally {
       setSubmitting(false);
     }
   };

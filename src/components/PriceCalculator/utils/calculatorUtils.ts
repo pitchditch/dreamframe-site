@@ -3,7 +3,6 @@ import { ADD_ONS } from '../data/constants';
 import { trackFormSubmission } from '@/utils/analytics';
 import emailjs from '@emailjs/browser';
 import { FormSubmissionData } from '../types/calculatorTypes';
-import type { useToast } from "@/hooks/use-toast";
 
 export const calculateEstimateTotal = (size: string, services: string[], addOns: string[], getPricing: Function): number => {
   let estTotal = 0;
@@ -47,7 +46,7 @@ export const submitFormData = async (
   formData: FormSubmissionData, 
   setSubmitting: (value: boolean) => void, 
   onSuccess: () => void,
-  toast: ReturnType<typeof useToast>
+  toast: any
 ): Promise<void> => {
   try {
     console.log('Sending data to EmailJS:', formData);

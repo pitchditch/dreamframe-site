@@ -33,11 +33,27 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
         <FormField
           control={form.control}
           name="fullName"
+          rules={{ required: "Full name is required" }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>Full Name*</FormLabel>
               <FormControl>
                 <Input placeholder="John Doe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="phone"
+          rules={{ required: "Phone number is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number*</FormLabel>
+              <FormControl>
+                <Input placeholder="(123) 456-7890" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,20 +68,6 @@ const StepContact = ({ form, onNext, onBack }: StepContactProps) => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="your@email.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number</FormLabel>
-              <FormControl>
-                <Input placeholder="(123) 456-7890" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
