@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { trackFormStep } from '@/utils/analytics';
 import { getPricing } from '../utils/pricingUtils';
 import { ADD_ONS } from '../data/constants';
@@ -74,7 +74,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
 
   const handleFormSubmit = async () => {
     if (!contact.name || !contact.phone) {
-      toast.toast({
+      toast({
         title: 'Missing Info',
         description: 'Please enter your name and phone number.',
         variant: 'destructive'
@@ -110,7 +110,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         toast
       );
     } catch (error) {
-      toast.toast({
+      toast({
         title: 'Submission Failed',
         description: 'Something went wrong while submitting the form. Please try again.',
         variant: 'destructive'

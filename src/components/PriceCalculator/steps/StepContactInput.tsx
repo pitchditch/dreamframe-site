@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { trackFormFieldInteraction } from '@/utils/analytics';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
@@ -58,7 +58,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
       
       <div className="space-y-4 mb-4">
         <div className="space-y-2">
-          <Label htmlFor="contactName" className="font-medium">Full Name*</Label>
+          <Label htmlFor="contactName" className="font-medium">Full Name<span className="text-red-500">*</span></Label>
           <Input 
             id="contactName"
             type="text" 
@@ -77,7 +77,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="contactPhone" className="font-medium">Phone Number*</Label>
+          <Label htmlFor="contactPhone" className="font-medium">Phone Number<span className="text-red-500">*</span></Label>
           <Input 
             id="contactPhone"
             type="tel" 
@@ -151,6 +151,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
         <Button 
           onClick={handleNextStep} 
           disabled={!contact.name || !contact.phone}
+          className={!contact.name || !contact.phone ? 'opacity-70' : ''}
         >
           Next
         </Button>

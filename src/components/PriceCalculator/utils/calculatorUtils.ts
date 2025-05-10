@@ -52,6 +52,17 @@ export const submitFormData = async (
   try {
     console.log('Sending data to EmailJS:', formData);
 
+    // Validate required fields
+    if (!formData.name || !formData.phone) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide your name and phone number.",
+        variant: "destructive"
+      });
+      setSubmitting(false);
+      return;
+    }
+
     try {
       // Prepare data for EmailJS by converting arrays to strings if needed
       const emailjsData = {
@@ -79,7 +90,7 @@ export const submitFormData = async (
         status: 'success'
       });
 
-      toast.toast({
+      toast({
         title: "Quote Submitted Successfully!",
         description: "We will contact you shortly about your service quote.",
       });
@@ -104,7 +115,7 @@ export const submitFormData = async (
           status: 'simulated_success'
         });
         
-        toast.toast({
+        toast({
           title: "Quote Submitted Successfully!",
           description: "We will contact you shortly about your service quote.",
         });
@@ -124,7 +135,7 @@ export const submitFormData = async (
       status: 'error'
     });
     
-    toast.toast({
+    toast({
       title: "Submission Failed",
       description: "There was an error submitting your quote. Please try again.",
       variant: "destructive"

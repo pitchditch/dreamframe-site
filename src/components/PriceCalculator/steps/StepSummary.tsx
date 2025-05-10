@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ContactInfo } from '../hooks/usePriceCalculatorForm';
 import { formatAddOns } from '../utils/calculatorUtils';
-import { getPricing } from '../utils/pricingUtils';
 import { Loader } from 'lucide-react';
 
 interface StepSummaryProps {
@@ -88,7 +87,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
         <Button 
           onClick={onSubmit} 
           disabled={submitting || !contact.name || !contact.phone}
-          className="relative"
+          className="relative bg-bc-red hover:bg-red-700 text-white"
         >
           {submitting ? (
             <>
