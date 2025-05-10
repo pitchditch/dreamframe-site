@@ -5,18 +5,11 @@ import { trackFormFieldInteraction } from '@/utils/analytics';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-
-interface Contact {
-  name: string;
-  phone: string;
-  email: string;
-  referredBy: string;
-  notes: string;
-}
+import { ContactData } from '../hooks/usePriceCalculatorForm';
 
 interface StepContactInputProps {
-  contact: Contact;
-  setContact: React.Dispatch<React.SetStateAction<Contact>>;
+  contact: ContactData;
+  setContact: (contact: ContactData) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
 }
@@ -66,7 +59,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
             placeholder="Enter your full name" 
             value={contact.name} 
             onChange={e => {
-              setContact(v => ({...v, name: e.target.value}));
+              setContact({...contact, name: e.target.value});
               trackFormFieldInteraction('PriceCalculator', 'Name', 'change');
             }}
             onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Name', 'focus')}
@@ -85,7 +78,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
             placeholder="(123) 456-7890" 
             value={contact.phone} 
             onChange={e => {
-              setContact(v => ({...v, phone: e.target.value}));
+              setContact({...contact, phone: e.target.value});
               trackFormFieldInteraction('PriceCalculator', 'Phone', 'change');
             }}
             onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Phone', 'focus')}
@@ -104,31 +97,14 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
             placeholder="your@email.com" 
             value={contact.email} 
             onChange={e => {
-              setContact(v => ({...v, email: e.target.value}));
+              setContact({...contact, email: e.target.value});
               trackFormFieldInteraction('PriceCalculator', 'Email', 'change');
             }}
             onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Email', 'focus')}
             onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Email', 'blur')}
           />
         </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="contactReferral" className="font-medium">Referral Name (optional)</Label>
-          <Input 
-            id="contactReferral"
-            type="text" 
-            className="w-full" 
-            placeholder="Who referred you to us?" 
-            value={contact.referredBy} 
-            onChange={e => {
-              setContact(v => ({...v, referredBy: e.target.value}));
-              trackFormFieldInteraction('PriceCalculator', 'Referral', 'change');
-            }}
-            onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Referral', 'focus')}
-            onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Referral', 'blur')}
-          />
-        </div>
-        
+                
         <div className="space-y-2">
           <Label htmlFor="contactNotes" className="font-medium">Additional Notes (optional)</Label>
           <textarea 
@@ -137,7 +113,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
             placeholder="Any other information you'd like to share?" 
             value={contact.notes} 
             onChange={e => {
-              setContact(v => ({...v, notes: e.target.value}));
+              setContact({...contact, notes: e.target.value});
               trackFormFieldInteraction('PriceCalculator', 'Notes', 'change');
             }}
             onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Notes', 'focus')}

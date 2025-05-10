@@ -1,18 +1,13 @@
 
 import React from 'react';
 import { trackFormFieldInteraction } from '@/utils/analytics';
+import { AddressData, ContactData } from '../hooks/usePriceCalculatorForm';
 
 interface StepAddressInputProps {
-  address: string;
-  setAddress: (address: string) => void;
-  contact: {
-    name: string;
-    phone: string;
-    email: string;
-    referredBy: string;
-    notes: string;
-  };
-  setContact: (contact: any) => void;
+  address: AddressData;
+  setAddress: (address: AddressData) => void;
+  contact: ContactData;
+  setContact: (contact: ContactData) => void;
   onNextStep: () => void;
 }
 
@@ -34,9 +29,9 @@ const StepAddressInput: React.FC<StepAddressInputProps> = ({
           <label className="block text-sm font-medium mb-1">Street Address</label>
           <input 
             type="text" 
-            value={address} 
+            value={address.street} 
             onChange={e => {
-              setAddress(e.target.value);
+              setAddress({...address, street: e.target.value});
               trackFormFieldInteraction('PriceCalculator', 'Street Address', 'change');
             }} 
             onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Street Address', 'focus')}
@@ -51,9 +46,9 @@ const StepAddressInput: React.FC<StepAddressInputProps> = ({
             <label className="block text-sm font-medium mb-1">City</label>
             <input 
               type="text" 
-              value={contact.name || ''} 
+              value={address.city} 
               onChange={e => {
-                setContact({...contact, name: e.target.value});
+                setAddress({...address, city: e.target.value});
                 trackFormFieldInteraction('PriceCalculator', 'City', 'change');
               }} 
               onFocus={() => trackFormFieldInteraction('PriceCalculator', 'City', 'focus')}
@@ -66,9 +61,9 @@ const StepAddressInput: React.FC<StepAddressInputProps> = ({
             <label className="block text-sm font-medium mb-1">Postal Code</label>
             <input 
               type="text" 
-              value={contact.phone || ''} 
+              value={address.postalCode} 
               onChange={e => {
-                setContact({...contact, phone: e.target.value});
+                setAddress({...address, postalCode: e.target.value});
                 trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'change');
               }} 
               onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'focus')}
@@ -104,7 +99,7 @@ const StepAddressInput: React.FC<StepAddressInputProps> = ({
       <div className="flex justify-end mt-6">
         <button 
           onClick={onNextStep} 
-          disabled={!address.trim()}
+          disabled={!address.street.trim()}
           className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
         >
           Next

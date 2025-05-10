@@ -1,7 +1,7 @@
 
 // StepRenderer.tsx
 import React from 'react';
-import { AddressData, ContactData, SizeData } from './hooks/usePriceCalculatorForm';
+import { AddressData, SizeData, ContactData } from './hooks/usePriceCalculatorForm';
 import StepAddressInput from './steps/StepAddressInput';
 import StepSizeInput from './steps/StepSizeInput';
 import StepServicesInput from './steps/StepServicesInput';
