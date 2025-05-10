@@ -44,7 +44,7 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
         ? services.filter(id => id !== serviceId)
         : [...services, serviceId]
     );
-    trackFormFieldInteraction('PriceCalculator', `Service: ${serviceId}`, 'toggle');
+    trackFormFieldInteraction('PriceCalculator', `Service: ${serviceId}`, 'click');
   };
 
   const handleAddonToggle = (addonId: string) => {
@@ -53,7 +53,7 @@ const StepServicesInput: React.FC<StepServicesInputProps> = ({
         ? addOns.filter(id => id !== addonId)
         : [...addOns, addonId]
     );
-    trackFormFieldInteraction('PriceCalculator', `Add-on: ${addonId}`, 'toggle');
+    trackFormFieldInteraction('PriceCalculator', `Add-on: ${addonId}`, 'click');
   };
 
   const getSizeMultiplier = () => {
