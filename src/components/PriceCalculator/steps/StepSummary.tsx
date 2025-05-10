@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { trackPageView } from '@/utils/analytics';
@@ -74,6 +73,7 @@ const StepSummary: React.FC<StepSummaryProps> = ({
   // Handle submit button click
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log('🚀 Submitting quote request...');
     onSubmit();
   };
   

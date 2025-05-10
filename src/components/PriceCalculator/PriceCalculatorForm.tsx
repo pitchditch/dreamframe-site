@@ -110,29 +110,39 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     });
 
     try {
-      // Since we don't have actual EmailJS credentials in this environment, we'll show a success message anyway
-      // In production with proper credentials, this would send the actual email
-      console.log('📧 Simulating email submission with these details:');
-      console.log({
+      // Create form data object for EmailJS
+      const templateParams = {
         name: contact.name,
         email: contact.email,
         phone: contact.phone,
         referredBy: contact.referredBy,
         notes: contact.notes,
-        address,
+        address: address,
         services: services.join(', '),
-        size,
+        size: size,
         addons: addOns.length > 0 ? addOns.join(', ') : 'none',
         estimate: estTotal.toFixed(2)
-      });
-
+      };
+      
+      console.log('📧 Sending email with EmailJS:', templateParams);
+      
+      // Send the email using EmailJS
+      const response = await emailjs.send(
+        "service_xrk4vas",  // Service ID from index.html
+        "template_b2y5ak4", // Template ID from index.html
+        templateParams,
+        "MMzAmk5eWrjFgC_nP"  // Public key from index.html
+      );
+      
+      console.log('📧 Email sent successfully:', response);
+      
       toast({
         title: "Quote Submitted",
         description: "Your quote request has been sent successfully!",
         duration: 5000,
       });
     } catch (error) {
-      console.error('❌ Submission Error:', error);
+      console.error('❌ EmailJS Error:', error);
       toast({
         title: "Error Sending Quote",
         description: "There was an error sending your quote. Please try again.",
