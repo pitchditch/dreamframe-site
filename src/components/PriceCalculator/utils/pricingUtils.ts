@@ -1,19 +1,23 @@
 
-// Utility functions for price calculations
+/**
+ * Formats a number as currency
+ */
+export const formatCurrency = (amount: number | null): string => {
+  if (amount === null) return 'Custom Quote Required';
+  return new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 /**
- * Get the pricing for a specific service based on property size
+ * Get pricing for a specific service and property size
  */
-export function getPricing(size: string, service: string): number | null {
-  // Only handle "Roof Cleaning" as on-site estimate
-  if (service === 'Roof Cleaning') {
-    return null;
-  }
-  if (size === 'xlarge') {
-    return null;
-  }
+export const getPricing = (size: string, service: string): number | null => {
+  if (service === 'Roof Cleaning' || size === 'xlarge') return null;
 
-  // Get the pricing from the PRICING object based on size and service
   const pricingMap = {
     small: {
       'Window Cleaning (Outside)': 300,
@@ -27,7 +31,6 @@ export function getPricing(size: string, service: string): number | null {
       'Gutter Cleaning (Inside)': 300,
       'Gutter Cleaning (Outside)': 154,
       'Gutter Cleaning (Both)': 454,
-      'Roof Cleaning': null
     },
     medium: {
       'Window Cleaning (Outside)': 357.3,
@@ -41,7 +44,6 @@ export function getPricing(size: string, service: string): number | null {
       'Gutter Cleaning (Inside)': 386.1,
       'Gutter Cleaning (Outside)': 300,
       'Gutter Cleaning (Both)': 682.2,
-      'Roof Cleaning': null
     },
     large: {
       'Window Cleaning (Outside)': 431.1,
@@ -55,48 +57,23 @@ export function getPricing(size: string, service: string): number | null {
       'Gutter Cleaning (Inside)': 465.3,
       'Gutter Cleaning (Outside)': 357.3,
       'Gutter Cleaning (Both)': 822.6,
-      'Roof Cleaning': null
     },
     xlarge: {
       'Roof Cleaning': null
     }
   };
 
-  // Fix the TypeScript error by using proper type annotations
   const typedPricingMap = pricingMap as Record<string, Record<string, number | null>>;
-  return typedPricingMap[size] && typedPricingMap[size][service] || null;
-}
+  return typedPricingMap[size]?.[service] ?? null;
+};
 
 /**
- * Format a number as currency or return a message for null values
+ * Add-ons data
  */
-export function formatCurrency(n: number | null): string {
-  if (!n && n !== 0) return "On-site quote required";
-  return `$${n.toLocaleString(undefined, {
-    minimumFractionDigits: 2
-  })}`;
-}
-
-/**
- * Check if a service should be disabled based on selected services
- */
-export function isServiceDisabled(service: string, services: string[], size: string): boolean {
-  if (services.includes('Both Window Sides')) {
-    if (service === 'Window Cleaning (Outside)' || service === 'Window Cleaning (Inside)') return true;
-  }
-  if (services.includes('House Wash + Windows')) {
-    if (service === 'House Washing' || service === 'Both Window Sides') return true;
-  }
-  if (services.includes('Driveway + House Washing')) {
-    if (service === 'Driveway Washing' || service === 'House Washing') return true;
-  }
-  if (services.includes('Gutter Cleaning (Both)')) {
-    if (service === 'Gutter Cleaning (Inside)' || service === 'Gutter Cleaning (Outside)') return true;
-  }
-  if (service === 'Roof Cleaning' && size !== 'xlarge' && size !== '') {
-    // Allow selection but price will state "On-site quote required"
-    return false;
-  }
-  if (size === 'xlarge' && service !== 'Roof Cleaning') return true;
-  return false;
-}
+export const ADD_ONS = [
+  { id: 'moss-treatment', name: 'Moss Treatment', price: 149 },
+  { id: 'gutter-guards', name: 'Gutter Guards Installation', price: 299 },
+  { id: 'fascia-cleaning', name: 'Fascia Cleaning', price: 99 },
+  { id: 'window-track', name: 'Window Track Cleaning', price: 49 },
+  { id: 'screen-cleaning', name: 'Screen Cleaning', price: 39 }
+];

@@ -1,23 +1,49 @@
 
 import React from 'react';
-import { trackPageView } from '@/utils/analytics';
+import { Button } from '@/components/ui/button';
+import { formatCurrency } from '../utils/pricingUtils';
+import { CheckCircle } from 'lucide-react';
 
-const StepThankYou: React.FC = () => {
-  const handleFinalCallClick = () => {
-    trackPageView('/virtual/final-call-button');
-  };
-  
+interface StepThankYouProps {
+  estimateTotal: number | null;
+  onStartNew: () => void;
+}
+
+const StepThankYou: React.FC<StepThankYouProps> = ({ estimateTotal, onStartNew }) => {
   return (
-    <div className="text-center py-10">
-      <h3 className="text-2xl font-bold mb-4 text-green-700">Thank you!</h3>
-      <p className="mb-2 text-gray-600">We've received your request and sent a confirmation to bcpressurewashing.ca@gmail.com. Jayden or a team member will contact you soon.</p>
-      <a 
-        href="tel:7788087620" 
-        className="w-fit px-6 py-3 inline-block bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-lg font-bold shadow mt-3"
-        onClick={handleFinalCallClick}
-      >
-        Call Jayden Now
-      </a>
+    <div className="text-center py-6">
+      <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
+        <CheckCircle className="h-10 w-10 text-green-600" />
+      </div>
+      
+      <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
+      <p className="text-gray-700 mb-6">
+        We've received your quote request and will be in touch shortly.
+      </p>
+      
+      {estimateTotal !== null && (
+        <div className="bg-gray-50 p-4 rounded-lg mb-6 inline-block">
+          <div className="text-gray-600">Estimated Quote Total</div>
+          <div className="text-2xl font-bold text-bc-red">{formatCurrency(estimateTotal)}</div>
+        </div>
+      )}
+      
+      <p className="text-gray-600 mb-6">
+        One of our team members will contact you soon to discuss your service needs in detail and confirm pricing.
+      </p>
+      
+      <div className="space-y-3">
+        <Button onClick={onStartNew} className="w-full">
+          Get Another Quote
+        </Button>
+        
+        <a 
+          href="tel:7788087620" 
+          className="block w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
+        >
+          Call Us Now: 778-808-7620
+        </a>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import PriceCalculatorIntro from './PriceCalculatorIntro';
@@ -258,6 +257,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
         />;
       case 2:
         return <StepServicesInput 
+          size={size}
           services={services} 
           setServices={setServices} 
           addOns={addOns}
@@ -281,11 +281,14 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
           contact={contact}
           onPrevStep={() => setStep(3)}
           onSubmit={handleFormSubmit}
-          isSubmitting={submitting}
+          submitting={submitting}
           estimateTotal={estimateTotal}
         />;
       case 5:
-        return <StepThankYou estimateTotal={estimateTotal} onStartNew={resetForm} />;
+        return <StepThankYou 
+          estimateTotal={estimateTotal} 
+          onStartNew={resetForm} 
+        />;
       default:
         return null;
     }
