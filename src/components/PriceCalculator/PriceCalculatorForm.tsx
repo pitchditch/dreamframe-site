@@ -10,6 +10,7 @@ import StepServicesInput from './steps/StepServicesInput';
 import StepContactInput from './steps/StepContactInput';
 import StepSummary from './steps/StepSummary';
 import StepThankYou from './steps/StepThankYou';
+import emailjs from 'emailjs-com';
 
 interface PriceCalculatorFormProps {
   onComplete?: () => void;
@@ -45,11 +46,11 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   }, []);
 
   useEffect(() => {
-    trackFormStep('PriceCalculator', step + 1, 
-      step === 0 ? 'Address' : 
-      step === 1 ? 'Property Size' : 
-      step === 2 ? 'Services Selection' : 
-      step === 3 ? 'Contact Info' : 
+    trackFormStep('PriceCalculator', step + 1,
+      step === 0 ? 'Address' :
+      step === 1 ? 'Property Size' :
+      step === 2 ? 'Services Selection' :
+      step === 3 ? 'Contact Info' :
       'Summary'
     );
   }, [step]);
@@ -57,7 +58,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   const handleFormSubmit = async () => {
     setSubmitting(true);
 
-    // ✅ Debug logs
+    // Debug logs
     console.log('Contact Info:', contact);
     console.log('Address:', address);
     console.log('Size:', size);
@@ -90,6 +91,30 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
       addons: addOns.length > 0 ? addOns.join(', ') : 'none',
       discount_applied: services.filter(s => s !== 'Roof Cleaning').length >= 3 ? 'yes' : 'no'
     });
+
+    // ✅ EMAILJS Integration
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          name: contact.name,
+          email: contact.email,
+          phone: contact.phone,
+          referredBy: contact.referredBy,
+          notes: contact.notes,
+          address,
+          services: services.join(', '),
+          size,
+          addons: addOns.length > 0 ? addOns.join(', ') : 'none',
+          estimate: estTotal.toFixed(2)
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+      );
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+    }
 
     setTimeout(() => {
       setSubmitting(false);
@@ -183,9 +208,9 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
         <div className="lg:col-span-4">
           <div className="flex items-center justify-center mb-6 gap-2 text-xs">
             {[...Array(5)].map((_, n) => (
-              <div 
+              <div
                 key={n}
-                className={`h-2 w-8 rounded-full transition-all duration-300 ${step === n ? 'bg-bc-red' : 'bg-gray-300'}`} 
+                className={`h-2 w-8 rounded-full transition-all duration-300 ${step === n ? 'bg-bc-red' : 'bg-gray-300'}`}
               />
             ))}
           </div>
