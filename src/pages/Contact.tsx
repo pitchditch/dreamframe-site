@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { Helmet } from 'react-helmet';
@@ -28,30 +27,50 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Track the contact form submission
+
     trackFormSubmission('contact_form', {
       form_type: 'contact',
       service_type: formData.service
     });
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Message Sent!",
-        description: "We've received your message and will get back to you shortly.",
+
+    const serviceId = 'service_xrk4vas';
+    const templateId = 'template_b2y5ak4';
+    const publicKey = 'MMzAmk5eWrjFgC_nP';
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      service: formData.service,
+      message: formData.message
+    };
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then(() => {
+        toast({
+          title: "Message Sent!",
+          description: "We've received your message and will get back to you shortly.",
+        });
+
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: 'Window Cleaning',
+          message: ''
+        });
+
+        setIsSubmitting(false);
+      })
+      .catch((error) => {
+        console.error('EmailJS Error:', error);
+        toast({
+          title: "Something went wrong.",
+          description: "Please try again later or contact us directly.",
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
       });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: 'Window Cleaning',
-        message: ''
-      });
-    }, 1500);
   };
 
   return (
@@ -60,7 +79,7 @@ const Contact = () => {
         <title>Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock</title>
         <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
       </Helmet>
-      
+
       <div className="relative bg-black text-white h-screen">
         <img 
           src="/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png"
@@ -69,16 +88,15 @@ const Contact = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
       </div>
-      
+
       {/* Chat bot visible floating right */}
       <div className="hidden md:block fixed right-8 bottom-8 z-50">
         <ChatAssistant />
       </div>
       <div className="md:hidden fixed right-5 bottom-5 z-50 flex flex-row gap-4">
-        {/* Only chat and free quote, call is handled differently as per mobile logic */}
         <ChatAssistant />
       </div>
-      
+
       <section className="py-16 -mt-32 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -87,7 +105,7 @@ const Contact = () => {
               <p className="text-gray-200 mb-8">
                 Fill out the form below and we'll get back to you as soon as possible. If you need an immediate response, please call us directly.
               </p>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -117,7 +135,7 @@ const Contact = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">Phone Number</label>
@@ -150,7 +168,7 @@ const Contact = () => {
                     </select>
                   </div>
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Your Message *</label>
                   <textarea
@@ -164,7 +182,7 @@ const Contact = () => {
                     placeholder="Please provide details about your project or questions..."
                   ></textarea>
                 </div>
-                
+
                 <div>
                   <button
                     type="submit"
@@ -189,10 +207,10 @@ const Contact = () => {
                 </div>
               </form>
             </div>
-            
+
             <div className="bg-gray-50 p-8 rounded-lg h-fit">
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <Phone className="text-bc-red mr-4 mt-1" />
@@ -204,7 +222,7 @@ const Contact = () => {
                     <p className="text-sm text-gray-500 mt-1">Mon-Sat: 8am - 6pm</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <Mail className="text-bc-red mr-4 mt-1" />
                   <div>
@@ -215,7 +233,7 @@ const Contact = () => {
                     <p className="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <MapPin className="text-bc-red mr-4 mt-1" />
                   <div>
@@ -224,7 +242,7 @@ const Contact = () => {
                     <p className="text-sm text-gray-500 mt-1">Serving Surrey, White Rock & Metro Vancouver</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <Clock className="text-bc-red mr-4 mt-1" />
                   <div>
