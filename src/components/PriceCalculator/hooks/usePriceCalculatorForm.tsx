@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { trackFormStep, trackFormSubmission } from '@/utils/analytics';
@@ -144,59 +145,64 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
       // Log the data being sent to help with debugging
       console.log('Sending data to EmailJS:', templateParams);
 
-      // Send data to EmailJS
-      const response = await emailjs.send(
-        'service_qp184qj',   // Your EmailJS service ID
-        'template_820fxcj',  // Your EmailJS template ID
-        templateParams,      // The data being sent
-        'w0cDPAeLXkNj47ZkP'  // Your public key
-      );
-      console.log('EmailJS response:', response);
+      try {
+        // Send data to EmailJS
+        const response = await emailjs.send(
+          'service_qp184qj',   // Your EmailJS service ID
+          'template_820fxcj',  // Your EmailJS template ID
+          templateParams,      // The data being sent
+          'w0cDPAeLXkNj47ZkP'  // Your public key
+        );
+        console.log('EmailJS response:', response);
 
-      // Track form submission
-      trackFormSubmission('PriceCalculator', {
-        property_size: size,
-        services_count: services.length,
-        addons_count: addOns.length,
-        estimate_amount: total,
-        status: 'success'
-      });
-
-      toast({
-        title: "Quote Submitted Successfully!",
-        description: "We will contact you shortly about your service quote.",
-      });
-
-      // Move to thank you step after successful submission
-      setStep(5);
-      if (onComplete) onComplete();
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      
-      // Handle EmailJS 404 error (Account not found)
-      // This is a temporary workaround for testing purposes
-      if (error instanceof Error && error.message.includes('404')) {
-        console.log('EmailJS account not found, but proceeding for demo purposes');
-        
-        // Still track form submission for analytics
+        // Track form submission
         trackFormSubmission('PriceCalculator', {
           property_size: size,
           services_count: services.length,
           addons_count: addOns.length,
-          estimate_amount: estimateTotal,
-          status: 'simulated_success'
+          estimate_amount: total,
+          status: 'success'
         });
-        
+
         toast({
           title: "Quote Submitted Successfully!",
           description: "We will contact you shortly about your service quote.",
         });
-        
-        // Move to thank you step
+
+        // Move to thank you step after successful submission
         setStep(5);
         if (onComplete) onComplete();
-        return;
+      } catch (emailError) {
+        console.error('EmailJS error:', emailError);
+        
+        // Handle EmailJS 404 error (Account not found)
+        // This is a temporary workaround for testing purposes
+        if (emailError instanceof Error && emailError.message.includes('404')) {
+          console.log('EmailJS account not found, but proceeding for demo purposes');
+          
+          // Still track form submission for analytics
+          trackFormSubmission('PriceCalculator', {
+            property_size: size,
+            services_count: services.length,
+            addons_count: addOns.length,
+            estimate_amount: estimateTotal,
+            status: 'simulated_success'
+          });
+          
+          toast({
+            title: "Quote Submitted Successfully!",
+            description: "We will contact you shortly about your service quote.",
+          });
+          
+          // Move to thank you step
+          setStep(5);
+          if (onComplete) onComplete();
+        } else {
+          throw emailError; // Re-throw if it's not the 404 error we're expecting
+        }
       }
+    } catch (error) {
+      console.error('Error submitting form:', error);
       
       // Track form submission error
       trackFormSubmission('PriceCalculator', {

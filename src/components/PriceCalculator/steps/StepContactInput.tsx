@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { trackFormFieldInteraction } from '@/utils/analytics';
+import { useToast } from '@/components/ui/use-toast';
 
 interface Contact {
   name: string;
@@ -24,6 +25,30 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
   onNextStep,
   onPrevStep
 }) => {
+  const { toast } = useToast();
+  
+  const handleNextStep = () => {
+    if (!contact.name.trim()) {
+      toast({
+        title: "Name Required",
+        description: "Please enter your name to proceed.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!contact.phone.trim()) {
+      toast({
+        title: "Phone Required",
+        description: "Please enter your phone number to proceed.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    onNextStep();
+  };
+
   return (
     <div>
       <h3 className="text-xl font-bold mb-2">Step 4: Contact Info</h3>
@@ -99,7 +124,7 @@ const StepContactInput: React.FC<StepContactInputProps> = ({
       />
       <div className="flex justify-between mt-6">
         <Button variant="outline" onClick={onPrevStep}>Back</Button>
-        <Button onClick={onNextStep} disabled={!contact.name || !contact.phone}>
+        <Button onClick={handleNextStep} disabled={!contact.name || !contact.phone}>
           Next
         </Button>
       </div>
