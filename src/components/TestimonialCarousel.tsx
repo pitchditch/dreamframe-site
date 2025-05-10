@@ -33,7 +33,7 @@ export const TestimonialCarousel = () => {
     <div className="h-full flex flex-col gap-4">
       <div className="bg-white p-3 rounded-lg shadow-md">
         <h3 className="font-bold text-xl text-center mb-2 text-bc-red">Before & After</h3>
-        <div className="relative h-[400px] overflow-hidden rounded-md">
+        <div className="relative h-[450px] overflow-hidden rounded-md">
           {images.map((image, index) => (
             <div
               key={index}
@@ -46,7 +46,7 @@ export const TestimonialCarousel = () => {
               <img
                 src={image}
                 alt={`Before and after cleaning transformation ${index + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
           ))}
