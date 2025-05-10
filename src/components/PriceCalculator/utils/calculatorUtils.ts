@@ -1,9 +1,9 @@
+
 import { ADD_ONS } from '../data/constants';
 import { trackFormSubmission } from '@/utils/analytics';
 import emailjs from '@emailjs/browser';
 import { FormSubmissionData } from '../types/calculatorTypes';
 import { useToast } from '@/hooks/use-toast';
-import type { Toast } from "@/hooks/use-toast";
 
 export const calculateEstimateTotal = (size: string, services: string[], addOns: string[], getPricing: Function): number => {
   let estTotal = 0;
