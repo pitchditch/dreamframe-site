@@ -59,7 +59,7 @@ const FounderSection = () => {
               <img 
                 src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png" 
                 alt="Jayden - Owner of BC Pressure Washing" 
-                className="rounded-lg shadow-lg w-full max-w-md object-cover"
+                className="rounded-full shadow-lg w-64 h-64 object-cover border-4 border-bc-red"
               />
             </div>
           </div>
