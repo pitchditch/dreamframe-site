@@ -1,8 +1,6 @@
-
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-
 const ServicesSection = () => {
   const services = [{
     title: "Window Cleaning",
@@ -25,49 +23,6 @@ const ServicesSection = () => {
     image: "/lovable-uploads/4da7d34a-a303-4274-ad91-8aeb980fa657.png",
     link: "/services/roof-cleaning"
   }];
-
-  return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Our Professional Services</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Quality exterior cleaning services by experienced professionals
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-              <img 
-                src={service.image} 
-                alt={service.title} 
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <Link to={service.link} className="group">
-                  <Button variant="link" className="p-0 flex items-center text-blue-600">
-                    Learn More
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-12 text-center">
-          <Link to="/services">
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              View All Services
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
+  return;
 };
-
 export default ServicesSection;
