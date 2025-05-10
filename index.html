@@ -45,6 +45,7 @@
             if (node.nodeType === 1) { // Only look at element nodes
               const text = node.textContent?.toLowerCase();
               if (text && (text.includes('thank you') || text.includes('submitted'))) {
+                console.log("🟢 Detected a form submission success message.");
                 gtag('event', 'form_submission', {
                   event_category: 'Form',
                   event_label: 'Lovable AI Form',
@@ -60,25 +61,38 @@
       observer.observe(document.body, { childList: true, subtree: true });
 
       function sendEmailFormData(node) {
-        // Gather form data from the mutation (this should be adjusted to your form structure)
-        const formData = {
-          fullName: node.querySelector('[name="fullName"]').value,
-          email: node.querySelector('[name="email"]').value,
-          phoneNumber: node.querySelector('[name="phone"]').value,
-          serviceAddress: node.querySelector('[name="address"]').value,
-          additionalNotes: node.querySelector('[name="notes"]').value,
-        };
+        try {
+          const fullName = node.querySelector('[name="fullName"]')?.value || "Missing";
+          const email = node.querySelector('[name="email"]')?.value || "Missing";
+          const phone = node.querySelector('[name="phone"]')?.value || "Missing";
+          const address = node.querySelector('[name="address"]')?.value || "Missing";
+          const notes = node.querySelector('[name="notes"]')?.value || "Missing";
 
-        // Send email using EmailJS (you can customize the template and other fields)
-        emailjs.send("service_xrk4vas", "template_b2y5ak4", formData)
-          .then((response) => {
-            console.log("Email sent successfully:", response);
-          }, (error) => {
-            console.error("Error sending email:", error);
-          });
+          console.log("📩 Preparing to send form with values:", { fullName, email, phone, address, notes });
+
+          const formData = {
+            fullName,
+            email,
+            phoneNumber: phone,
+            serviceAddress: address,
+            additionalNotes: notes,
+          };
+
+          emailjs.send("service_xrk4vas", "template_b2y5ak4", formData)
+            .then((res) => {
+              console.log("✅ Email sent successfully:", res);
+            })
+            .catch((err) => {
+              console.error("❌ Email send failed:", err);
+            });
+
+        } catch (err) {
+          console.error("❌ Error in sendEmailFormData:", err);
+        }
       }
     </script>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
