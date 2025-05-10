@@ -55,11 +55,11 @@ const FounderSection = () => {
           </div>
           
           <div className="order-1 md:order-2 flex justify-center">
-            <div className="relative">
+            <div className="relative flex justify-center">
               <img 
                 src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png" 
                 alt="Jayden - Owner of BC Pressure Washing" 
-                className="rounded-full shadow-lg w-64 h-64 object-cover border-4 border-bc-red"
+                className="rounded-full shadow-lg w-56 h-56 object-cover border-4 border-bc-red"
               />
             </div>
           </div>
