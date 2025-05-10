@@ -117,11 +117,13 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         'w0cDPAeLXkNj47ZkP'
       );
 
-      trackFormSubmission('PriceCalculator', 'success', {
+      // Fix: Update to match expected parameters for trackFormSubmission
+      trackFormSubmission('PriceCalculator', {
         property_size: size,
         services_count: services.length,
         addons_count: addOns.length,
-        estimate_amount: estimateTotal
+        estimate_amount: estimateTotal,
+        status: 'success'
       });
 
       toast({
@@ -134,8 +136,10 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     } catch (error) {
       console.error('Error submitting form:', error);
       
-      trackFormSubmission('PriceCalculator', 'error', {
-        error_message: error instanceof Error ? error.message : 'Unknown error'
+      // Fix: Update to match expected parameters for trackFormSubmission
+      trackFormSubmission('PriceCalculator', {
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+        status: 'error'
       });
       
       toast({
