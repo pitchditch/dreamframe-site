@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,9 +24,15 @@
       gtag('js', new Date());
       gtag('config', 'G-XTJFNK4L59');
     </script>
-    
+
     <!-- Lovable script tag -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      emailjs.init("MMzAmk5eWrjFgC_nP");  // Initialize EmailJS with your public key
+    </script>
   </head>
   <body>
     <div id="root"><!-- Your site content gets injected here --></div>
@@ -45,6 +50,7 @@
                   event_label: 'Lovable AI Form',
                   value: 1
                 });
+                sendEmailFormData(node);
               }
             }
           }
@@ -52,7 +58,27 @@
       });
 
       observer.observe(document.body, { childList: true, subtree: true });
+
+      function sendEmailFormData(node) {
+        // Gather form data from the mutation (this should be adjusted to your form structure)
+        const formData = {
+          fullName: node.querySelector('[name="fullName"]').value,
+          email: node.querySelector('[name="email"]').value,
+          phoneNumber: node.querySelector('[name="phone"]').value,
+          serviceAddress: node.querySelector('[name="address"]').value,
+          additionalNotes: node.querySelector('[name="notes"]').value,
+        };
+
+        // Send email using EmailJS (you can customize the template and other fields)
+        emailjs.send("service_xrk4vas", "template_b2y5ak4", formData)
+          .then((response) => {
+            console.log("Email sent successfully:", response);
+          }, (error) => {
+            console.error("Error sending email:", error);
+          });
+      }
     </script>
-   <script type="module" src="/src/main.tsx"></script>
+
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
