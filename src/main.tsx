@@ -15,19 +15,13 @@ if (!rootElement) {
 }
 
 // Create root and render app
-try {
-  const root = createRoot(rootElement);
-  root.render(
-    <StrictMode>
-      <HelmetProvider>
-        <BrowserRouter>
-          <App />
-          <Toaster />
-        </BrowserRouter>
-      </HelmetProvider>
-    </StrictMode>
-  );
-  console.log("App successfully rendered");
-} catch (error) {
-  console.error("Failed to render app:", error);
-}
+createRoot(rootElement).render(
+  <StrictMode>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+        <Toaster />
+      </BrowserRouter>
+    </HelmetProvider>
+  </StrictMode>
+);
