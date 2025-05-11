@@ -168,12 +168,12 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Personal Touch Section - Enhanced visibility on mobile */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500 bg-white/20 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg">
+        {/* Personal Touch Section - Enhanced visibility with increased size and padding */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-6 animate-on-scroll delay-500 bg-white/20 backdrop-blur-sm p-5 md:p-6 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg">
           <img 
             src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
             alt="Jayden Fisher - Owner" 
-            className="w-20 h-20 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md"
+            className="w-24 h-24 md:w-24 md:h-24 rounded-full border-2 border-white shadow-md"
           />
           <div className="text-center sm:text-left">
             <p className="font-bold text-white text-lg md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>

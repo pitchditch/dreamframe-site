@@ -137,7 +137,7 @@ const ExpressCleaning = () => {
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png"
+            src="/lovable-uploads/4ee28276-9468-4daf-8086-ff8774ddc3b3.png"
             alt="Express Cleaning Service" 
             className="w-full h-full object-cover"
           />
@@ -145,8 +145,8 @@ const ExpressCleaning = () => {
         </div>
         <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full inline-block mb-4">
-              <span className="text-white font-medium">🚨 Urgent Cleaning Needed?</span>
+            <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full inline-block mb-6">
+              <span className="text-white font-medium text-lg">🚨 Urgent Cleaning Needed?</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">
               Express Cleaning Service

@@ -23,12 +23,12 @@ const PhoneButton = () => {
           setShowCompact(faqRect.top < window.innerHeight && faqRect.bottom > 0);
         }
         
-        // Check if we've scrolled past the testimonials section
-        const testimonialsSection = document.querySelector('[id*="testimonials"], [class*="testimonials"]');
+        // Check if we've scrolled to testimonials section
+        const testimonialsSection = document.querySelector('[id*="testimonial"], [class*="testimonial"]');
         if (testimonialsSection) {
           const testimonialRect = testimonialsSection.getBoundingClientRect();
-          // Show icon-only after scrolling past testimonials section
-          setIconOnly(testimonialRect.bottom < 0);
+          // Show icon-only when in testimonials section
+          setIconOnly(testimonialRect.top < window.innerHeight && testimonialRect.bottom > 0);
         }
       } else {
         setIsVisible(false);
