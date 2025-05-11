@@ -13,7 +13,7 @@ const ReferralButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Find the residential window cleaning section
+      // Find the hero section
       const heroSection = document.querySelector('.hero-section');
       
       if (heroSection) {
@@ -28,11 +28,11 @@ const ReferralButton = () => {
           setShowIconOnly(false);
         }
       } else {
-        // Fallback to show after hero section if specific section not found
-        const heroSectionHeight = window.innerHeight * 1.2;
-        if (window.scrollY > heroSectionHeight) {
+        // Fallback to show after scrolling down
+        const scrollThreshold = window.innerHeight;
+        if (window.scrollY > scrollThreshold) {
           setIsVisible(true);
-          setShowIconOnly(window.scrollY > heroSectionHeight + 300);
+          setShowIconOnly(window.scrollY > scrollThreshold + 300);
         } else {
           setIsVisible(false);
           setShowIconOnly(false);

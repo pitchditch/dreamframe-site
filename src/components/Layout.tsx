@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ChatAssistant from './ChatAssistant';
-import ReferralButton from './ReferralButton';
 import PhoneButton from './PhoneButton';
 
 interface LayoutProps {
@@ -50,7 +49,6 @@ const Layout = ({
       </main>
       <Footer />
       <ChatAssistant />
-      <ReferralButton />
       <PhoneButton />
     </div>
   );
