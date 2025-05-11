@@ -1,172 +1,137 @@
 
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
-import ButtonWithShadcnButton from './ButtonWithShadcnButton';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
 }
 
-export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ isOverVideo }) => {
-  const [isServicesHovered, setIsServicesHovered] = useState(false);
-  const [isLocationsHovered, setIsLocationsHovered] = useState(false);
+export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
+  const mainNavLinkClassName = `transition-colors transition-transform duration-200 font-medium px-4 py-2 rounded-md text-lg whitespace-nowrap hover:scale-110 ${
+    isOverVideo ? 'text-white hover:text-bc-red hover:bg-white/10' : 'text-gray-800 hover:text-bc-red hover:bg-gray-100'
+  }`;
 
   return (
-    <div className="hidden md:flex items-center gap-2">
-      <nav className={`${isOverVideo ? 'text-white' : 'text-gray-800'} flex items-center gap-1`}>
-        <div className="group relative">
-          <button
-            className={`flex items-center gap-1 px-3 py-2 ${
-              isOverVideo
-                ? 'hover:bg-white/10 hover:text-white'
-                : 'hover:bg-gray-100 hover:text-gray-900'
-            } rounded-lg`}
-            onMouseEnter={() => setIsServicesHovered(true)}
-            onMouseLeave={() => setIsServicesHovered(false)}
-          >
-            Services
-            <ChevronDown size={16} className={`transition-transform ${isServicesHovered ? 'rotate-180' : ''}`} />
-          </button>
+    <div className="hidden lg:flex items-center justify-between w-full">
+      <div className="w-1/5"></div>
+      
+      <NavigationMenu className="flex justify-center">
+        <NavigationMenuList className="space-x-8">
+          <NavigationMenuItem>
+            <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200' : 'text-gray-800 text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200'}>Residential</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className="w-[600px] bg-white p-4 rounded-lg shadow-lg grid grid-cols-2 gap-3">
+                <Link to="/services/window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png" alt="Window Cleaning Icon" className="w-10 h-10 object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Window Cleaning</h4>
+                      <p className="text-sm text-gray-600">Professional cleaning for crystal-clear windows</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/5ac75bee-3951-47f2-9a3c-871acaf8f01b.png" alt="House Washing Icon" className="w-10 h-10 object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">House Washing</h4>
+                      <p className="text-sm text-gray-600">Restore your property's curb appeal</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/gutter-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/f899a443-8930-4364-b538-916f65545f84.png" alt="Gutter Cleaning Icon" className="w-10 h-10 object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Gutter Cleaning</h4>
+                      <p className="text-sm text-gray-600">Keep your gutters flowing freely</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/roof-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/51f10eb0-c939-49d5-8ab5-2235a162169e.png" alt="Roof Cleaning Icon" className="w-10 h-10 object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Roof Cleaning</h4>
+                      <p className="text-sm text-gray-600">Remove moss and debris from your roof</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className={isOverVideo ? 'text-white text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200' : 'text-gray-800 text-lg font-medium hover:text-bc-red hover:scale-110 transition-transform duration-200'}>Commercial</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className="w-[500px] bg-white p-4 rounded-lg shadow-lg">
+                <Link to="/services/commercial-window-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/fe9ad8bf-d5d6-415e-9db8-ebbf40ad6fc5.png" alt="Commercial Window Cleaning Icon" className="w-10 h-10 object-contain" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Commercial Window Cleaning</h4>
+                      <p className="text-sm text-gray-600">Professional cleaning for business properties</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/commercial-pressure-washing" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/b4303ec4-9120-49a2-8553-835158e0ddea.png" alt="Commercial Pressure Washing Icon" className="w-10 h-10 object-contain" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Commercial Pressure Washing</h4>
+                      <p className="text-sm text-gray-600">Exterior cleaning for commercial buildings</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/services/post-construction-cleaning" className="group block p-3 rounded-lg hover:bg-gray-100">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex items-center justify-center w-12 h-12">
+                      <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning Icon" className="w-10 h-10 object-contain" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Post-Construction Cleaning</h4>
+                      <p className="text-sm text-gray-600">Cleanup after construction projects</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <Link to="/contact" className={mainNavLinkClassName}>Contact</Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
 
-          <div
-            className={`absolute left-0 top-full z-50 min-w-[220px] rounded-lg bg-white/95 shadow-lg backdrop-blur-sm p-1 transition-opacity duration-300 ${
-              isServicesHovered ? 'opacity-100' : 'opacity-0 invisible'
-            }`}
-            onMouseEnter={() => setIsServicesHovered(true)}
-            onMouseLeave={() => setIsServicesHovered(false)}
-          >
-            <Link
-              to="/services"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              All Services
-            </Link>
-            
-            <Link
-              to="/services/window-cleaning"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Window Cleaning
-            </Link>
-            <Link
-              to="/services/pressure-washing"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Pressure Washing
-            </Link>
-            <Link
-              to="/services/gutter-cleaning"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Gutter Cleaning
-            </Link>
-            <Link
-              to="/services/roof-cleaning"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Roof Cleaning
-            </Link>
-            <Link
-              to="/services/commercial-window-cleaning"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Commercial Window Cleaning
-            </Link>
-            <Link
-              to="/services/commercial-pressure-washing"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Commercial Pressure Washing
-            </Link>
-            {/* Removed Post Construction Window Cleaning as requested */}
-            <Link
-              to="/express-cleaning"
-              className="block px-4 py-2 text-bc-red font-bold hover:bg-gray-100 rounded-md"
-            >
-              Express Cleaning
-            </Link>
-          </div>
-        </div>
-
-        <div className="group relative">
-          <button
-            className={`flex items-center gap-1 px-3 py-2 ${
-              isOverVideo
-                ? 'hover:bg-white/10 hover:text-white'
-                : 'hover:bg-gray-100 hover:text-gray-900'
-            } rounded-lg`}
-            onMouseEnter={() => setIsLocationsHovered(true)}
-            onMouseLeave={() => setIsLocationsHovered(false)}
-          >
-            Locations
-            <ChevronDown size={16} className={`transition-transform ${isLocationsHovered ? 'rotate-180' : ''}`} />
-          </button>
-
-          <div
-            className={`absolute left-0 top-full z-50 min-w-[220px] rounded-lg bg-white/95 shadow-lg backdrop-blur-sm p-1 transition-opacity duration-300 ${
-              isLocationsHovered ? 'opacity-100' : 'opacity-0 invisible'
-            }`}
-            onMouseEnter={() => setIsLocationsHovered(true)}
-            onMouseLeave={() => setIsLocationsHovered(false)}
-          >
-            <Link
-              to="/locations/white-rock-bc"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              White Rock
-            </Link>
-            <Link
-              to="/locations/vancouver-bc"
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-            >
-              Vancouver
-            </Link>
-          </div>
-        </div>
-
-        <Link
-          to="/why-us"
-          className={`block px-3 py-2 ${
-            isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100'
-          } rounded-lg`}
+      <div className="flex justify-end w-1/5">
+        <a 
+          href="tel:7788087620" 
+          className={`px-5 py-3 rounded-lg transition-all font-semibold whitespace-nowrap ${
+            isOverVideo 
+              ? 'bg-bc-red hover:bg-red-700 text-white' 
+              : 'bg-bc-red hover:bg-red-700 text-white'
+          }`}
         >
-          Why Us
-        </Link>
-
-        <Link
-          to="/equipment"
-          className={`block px-3 py-2 ${
-            isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100'
-          } rounded-lg`}
-        >
-          Equipment
-        </Link>
-
-        <Link
-          to="/testimonials"
-          className={`block px-3 py-2 ${
-            isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100'
-          } rounded-lg`}
-        >
-          Testimonials
-        </Link>
-
-        <Link
-          to="/blog"
-          className={`block px-3 py-2 ${
-            isOverVideo ? 'hover:bg-white/10' : 'hover:bg-gray-100'
-          } rounded-lg`}
-        >
-          Blog
-        </Link>
-      </nav>
-
-      <ButtonWithShadcnButton 
-        text="Contact"
-        to="/contact"
-        isOverVideo={isOverVideo}
-      />
+          Call: 778-808-7620
+        </a>
+      </div>
     </div>
   );
 };
