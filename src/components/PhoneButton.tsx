@@ -27,6 +27,7 @@ const PhoneButton = () => {
         const testimonialsSection = document.querySelector('[id*="testimonials"], [class*="testimonials"]');
         if (testimonialsSection) {
           const testimonialRect = testimonialsSection.getBoundingClientRect();
+          // Show icon-only after scrolling past testimonials section
           setIconOnly(testimonialRect.bottom < 0);
         }
       } else {
@@ -57,7 +58,7 @@ const PhoneButton = () => {
             href="tel:7788087620"
             onClick={handleCallClick}
             className={`flex items-center gap-2 bg-bc-red hover:bg-red-700 text-white ${
-              iconOnly || showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
+              iconOnly ? 'p-3 rounded-full' : showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
             } shadow-lg transition-all duration-300`}
             aria-label="Call us now"
           >

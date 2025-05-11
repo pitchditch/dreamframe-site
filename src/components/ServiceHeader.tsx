@@ -63,7 +63,7 @@ const ServiceHeader = ({
       if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
         return 'HuXyYAxC4Fs'; // Default Pressure Washing
       } else if (titleStr.includes('gutter')) {
-        return 'dkSPq9opzBg'; // Default Gutter Cleaning
+        return 'EdMlx1sYJDc'; // Default Gutter Cleaning - Updated to use the new YouTube short
       } else if (titleStr.includes('roof')) {
         return 'twtzf2gRdFU'; // Default Roof Cleaning
       }

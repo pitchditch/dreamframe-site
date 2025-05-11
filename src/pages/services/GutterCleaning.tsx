@@ -66,8 +66,8 @@ const GutterCleaning = () => {
       <ServiceHeader 
         title="Professional Gutter Cleaning"
         description="Keep your home protected with our thorough gutter cleaning services."
-        youtubeId="dkSPq9opzBg" // Mobile YouTube video ID
-        youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID
+        youtubeId="EdMlx1sYJDc" // Mobile YouTube video ID - Updated to your requested short
+        youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID - Kept as requested
       />
       
       <section className="py-16 bg-white">
@@ -185,14 +185,11 @@ const GutterCleaning = () => {
                   </p>
                 </div>
                 <div className="md:w-2/5 md:order-2 order-1">
-                  <iframe 
-                    className="w-full aspect-video rounded-lg shadow-md"
-                    src="https://www.youtube.com/embed/EdMlx1sYJDc"
-                    title="Downspout Clearing"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <img 
+                    src="/lovable-uploads/17615bf7-9c4b-4eea-84a3-791bd34ef4a3.png" 
+                    alt="Downspout Clearing" 
+                    className="rounded-lg shadow-md w-full"
+                  />
                 </div>
               </div>
               
@@ -236,6 +233,49 @@ const GutterCleaning = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Gutter Sticks: Affordable Gutter Protection</h2>
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div>
+                <h3 className="text-2xl font-bold mb-3">The Budget-Friendly Alternative</h3>
+                <p className="text-gray-700 mb-4">
+                  Not ready to invest in full gutter guards? Gutter Sticks offer an affordable solution that helps keep debris out while allowing water to flow freely through your gutters.
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                  <li>Simple installation that takes minutes</li>
+                  <li>Prevents leaf buildup while allowing water flow</li>
+                  <li>Easy to remove and clean when needed</li>
+                  <li>More affordable than full gutter guard systems</li>
+                  <li>Works with most standard gutter sizes</li>
+                </ul>
+                <div className="mt-6">
+                  <a href="/calculator" className="inline-block bg-bc-red hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-all hover:scale-105">
+                    Learn More About Gutter Sticks
+                  </a>
+                </div>
+              </div>
+              <div>
+                <div className="space-y-4">
+                  <img 
+                    src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" 
+                    alt="Gutter Stick Installation" 
+                    className="rounded-lg shadow-lg w-full"
+                  />
+                  <img 
+                    src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" 
+                    alt="Gutter Stick in Action" 
+                    className="rounded-lg shadow-lg w-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Gutter Vacuum Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Cleaning Tools</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div>
@@ -263,17 +303,24 @@ const GutterCleaning = () => {
       </section>
       
       {/* Leaf Guard Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">Gutter Guards Installation</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div className="order-2 md:order-1">
-                <img 
-                  src="/lovable-uploads/0889ee32-e298-45b5-91f8-825360447c0b.png" 
-                  alt="Gutter Guards" 
-                  className="rounded-lg shadow-lg w-full"
-                />
+                <iframe 
+                  className="w-full aspect-video rounded-lg shadow-lg"
+                  src="https://www.youtube.com/embed/OICbIRmx-80" 
+                  title="Gutter Guards Installation"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ 
+                    transform: 'scale(1.01)', // Slight scaling to remove any potential borders 
+                    transformOrigin: 'center'
+                  }}
+                ></iframe>
               </div>
               <div className="order-1 md:order-2">
                 <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
