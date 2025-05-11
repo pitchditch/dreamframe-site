@@ -5,7 +5,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import CallToAction from '../../components/CallToAction';
-import { Shield, Droplets, Cloud } from 'lucide-react';
+import { Shield, Droplets, Leaf } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import RoofCleaningForm from '@/components/forms/RoofCleaningForm';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
@@ -13,60 +13,61 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 const RoofCleaning = () => {
   const benefits = [
     {
+      title: "Prevent Roof Damage",
+      description: "Moss and algae can deteriorate roofing materials, leading to leaks and expensive repairs."
+    },
+    {
       title: "Extend Roof Lifespan",
-      description: "Remove moss and algae that can trap moisture and deteriorate roofing materials."
+      description: "Regular cleaning can add years to your roof's life expectancy by preventing organic growth damage."
     },
     {
-      title: "Improve Curb Appeal",
-      description: "Restore your roof's appearance and increase your home's value."
+      title: "Improve Energy Efficiency",
+      description: "A clean roof reflects more sunlight and absorbs less heat, potentially reducing cooling costs."
     },
     {
-      title: "Prevent Costly Repairs",
-      description: "Address issues early to avoid expensive repairs or premature roof replacement."
+      title: "Enhance Curb Appeal",
+      description: "Remove unsightly stains and growths to dramatically improve your home's overall appearance."
     },
     {
-      title: "Enhance Energy Efficiency",
-      description: "A clean roof reflects sunlight better, potentially reducing cooling costs."
+      title: "Maintain Property Value",
+      description: "A well-maintained roof is a significant factor in your home's market value and appeal to buyers."
     },
     {
-      title: "Protect Gutters",
-      description: "Prevent debris buildup in gutters caused by moss and algae runoff."
-    },
-    {
-      title: "Healthier Environment",
-      description: "Eliminate harmful organisms like mold and mildew that can affect air quality."
+      title: "Prevent Health Issues",
+      description: "Mold and algae can spread into your home, creating potential health concerns for you and your family."
     }
   ];
 
   const faqs = [
     {
-      question: "Why is roof cleaning important?",
-      answer: "Moss, algae, and lichen can damage your roof by trapping moisture and deteriorating roofing materials. Regular cleaning extends your roof's lifespan and improves your home's appearance."
+      question: "How often should I have my roof cleaned?",
+      answer: "Most homes benefit from roof cleaning every 1-3 years, depending on your location's climate, surrounding trees, and previous growth issues. In the Pacific Northwest's damp climate, annual inspection and cleaning may be recommended."
     },
     {
-      question: "How often should I clean my roof?",
-      answer: "The frequency depends on your location and environmental factors. Generally, cleaning every 2-3 years is recommended to prevent significant buildup."
+      question: "Will roof cleaning damage my shingles?",
+      answer: "Our soft washing technique is specifically designed to clean effectively without damaging roofing materials. We never use high pressure on asphalt shingles, which can remove granules and shorten roof life."
     },
     {
-      question: "What cleaning methods do you use?",
-      answer: "We use soft washing techniques that are safe for all types of roofing materials. This involves applying a gentle cleaning solution that kills organisms without high-pressure washing."
+      question: "How do you remove the moss and algae without damaging my roof?",
+      answer: "We use a specialized two-step process: first applying an environmentally responsible cleaning solution that kills the organic growth, followed by gentle low-pressure rinsing. This method effectively removes growths without damaging shingles."
     },
     {
-      question: "Is soft washing safe for my roof?",
-      answer: "Yes, soft washing is a safe and effective method for cleaning roofs. It avoids the damage that high-pressure washing can cause, while still thoroughly removing moss and algae."
+      question: "Will the cleaning solution harm my plants or landscaping?",
+      answer: "We take precautions to protect your landscaping by pre-wetting plants and covering sensitive areas. Our cleaning solutions are biodegradable and, when properly diluted and applied, won't harm your landscaping."
     },
     {
-      question: "Do I need to be home during the service?",
-      answer: "No, you don't need to be home. As long as we have access to your property, we can perform the cleaning without you being present. We'll notify you when the job is complete."
+      question: "How long does roof cleaning take?",
+      answer: "For an average home, professional roof cleaning typically takes 3-5 hours. Larger homes or those with severe growth may take longer. Weather conditions can also affect timing."
     }
   ];
 
   return (
-    <Layout title="Professional Roof Cleaning Services | BC Pressure Washing" description="Expert roof cleaning services in White Rock and Surrey. Remove moss, algae and extend the life of your roof with our professional cleaning methods.">
+    <Layout title="Professional Roof Cleaning Services | BC Pressure Washing" description="Expert roof cleaning services in White Rock, Surrey and Metro Vancouver. Prevent damage and extend the life of your roof with our soft washing techniques.">
       <ServiceHeader 
         title="Professional Roof Cleaning"
-        description="Restore your roof's appearance and extend its lifespan with our safe and effective cleaning methods."
-        youtubeId="twtzf2gRdFU"
+        description="Protect your investment with our safe and effective roof cleaning service."
+        youtubeId="twtzf2gRdFU" // Mobile YouTube video ID
+        youtubeDesktopId="GJZpuELGJpI" // Desktop YouTube video ID
       />
       
       <section className="py-16 bg-white">
@@ -105,7 +106,7 @@ const RoofCleaning = () => {
                 
                 <div className="flex items-start">
                   <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Cloud size={18} />
+                    <Leaf size={18} />
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg">Eco-Friendly Cleaning Products</h3>
@@ -148,7 +149,7 @@ const RoofCleaning = () => {
         <div className="container mx-auto px-4">
           <ServiceBenefits 
             title="Benefits of Professional Roof Cleaning" 
-            subtitle="Protect your home and extend the life of your roof with our expert cleaning services"
+            subtitle="Protect your biggest investment and enhance your home's appearance with our safe and effective roof cleaning services"
             benefits={benefits} 
           />
         </div>
@@ -163,7 +164,7 @@ const RoofCleaning = () => {
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="md:w-2/5">
                   <img 
-                    src="/lovable-uploads/69999999-9999-9999-9999-999999999999.png" 
+                    src="/lovable-uploads/2429e4a3-7077-402a-813a-f3b996ffa8cd.png" 
                     alt="Roof Assessment" 
                     className="rounded-lg shadow-md w-full"
                   />
@@ -185,7 +186,7 @@ const RoofCleaning = () => {
                 </div>
                 <div className="md:w-2/5 md:order-2 order-1">
                   <img 
-                    src="/lovable-uploads/11111111-1111-1111-1111-111111111111.png" 
+                    src="/lovable-uploads/11de9343-a9b0-48b8-b747-d18318f16d86.png" 
                     alt="Area Protection" 
                     className="rounded-lg shadow-md w-full"
                   />
@@ -195,7 +196,7 @@ const RoofCleaning = () => {
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="md:w-2/5">
                   <img 
-                    src="/lovable-uploads/22222222-2222-2222-2222-222222222222.png" 
+                    src="/lovable-uploads/7fd77226-1d57-4c52-a870-871532745a3f.png" 
                     alt="Soft Washing Application" 
                     className="rounded-lg shadow-md w-full"
                   />
@@ -217,7 +218,7 @@ const RoofCleaning = () => {
                 </div>
                 <div className="md:w-2/5 md:order-2 order-1">
                   <img 
-                    src="/lovable-uploads/33333333-3333-3333-3333-333333333333.png" 
+                    src="/lovable-uploads/05f50dbf-3e53-42bd-8993-e8e7832add9c.png" 
                     alt="Rinsing and Cleanup" 
                     className="rounded-lg shadow-md w-full"
                   />
@@ -237,8 +238,8 @@ const RoofCleaning = () => {
       />
       
       <CallToAction 
-        title="Ready to Restore Your Roof's Beauty?"
-        subtitle="Contact us today for a free estimate and discover the benefits of professional roof cleaning."
+        title="Ready for a Cleaner, Healthier Roof?"
+        subtitle="Contact us today for a free estimate and protect your home with our professional roof cleaning service."
       />
     </Layout>
   );

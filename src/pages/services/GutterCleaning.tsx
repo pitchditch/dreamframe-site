@@ -185,11 +185,14 @@ const GutterCleaning = () => {
                   </p>
                 </div>
                 <div className="md:w-2/5 md:order-2 order-1">
-                  <img 
-                    src="/lovable-uploads/3c677903-190c-483b-8e1d-b3e33c7231f9.png" 
-                    alt="Downspout Clearing" 
-                    className="rounded-lg shadow-md w-full"
-                  />
+                  <iframe 
+                    className="w-full aspect-video rounded-lg shadow-md"
+                    src="https://www.youtube.com/embed/EdMlx1sYJDc"
+                    title="Downspout Clearing"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
               </div>
               
@@ -213,7 +216,7 @@ const GutterCleaning = () => {
                 <div className="md:w-3/5 md:order-1 order-2">
                   <h3 className="text-xl font-bold mb-2">4. Final Inspection & Cleanup</h3>
                   <p className="text-gray-700">
-                    We perform a final water flow test to ensure everything is working properly and clean up any debris that may have fallen during the cleaning process. You'll receive before and after photos showing the work completed.
+                    After allowing the cleaning solution to dwell for the appropriate time, we perform a final water flow test to ensure everything is working properly and clean up any debris that may have fallen during the cleaning process. You'll receive before and after photos showing the work completed.
                   </p>
                 </div>
                 <div className="md:w-2/5 md:order-2 order-1">
@@ -222,6 +225,71 @@ const GutterCleaning = () => {
                     alt="Final Inspection" 
                     className="rounded-lg shadow-md w-full"
                   />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Gutter Stick Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Cleaning Tools</h2>
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div>
+                <h3 className="text-2xl font-bold mb-3">Gutter Vacuum System</h3>
+                <p className="text-gray-700 mb-4">
+                  Our professional-grade gutter vacuum system allows us to efficiently clean gutters with minimal mess. The powerful vacuum removes leaves, debris, and even standing water, ensuring a thorough cleaning every time.
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                  <li>Reaches up to 3 stories high</li>
+                  <li>Removes both wet and dry debris</li>
+                  <li>Safer than cleaning by hand</li>
+                  <li>More efficient for extensive clogging</li>
+                </ul>
+              </div>
+              <div className="rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/281422a1-6eb1-4353-9f93-de7d6163152e.png" 
+                  alt="Gutter Vacuum System" 
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Leaf Guard Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Gutter Guards Installation</h2>
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div className="order-2 md:order-1">
+                <img 
+                  src="/lovable-uploads/0889ee32-e298-45b5-91f8-825360447c0b.png" 
+                  alt="Gutter Guards" 
+                  className="rounded-lg shadow-lg w-full"
+                />
+              </div>
+              <div className="order-1 md:order-2">
+                <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
+                <p className="text-gray-700 mb-4">
+                  After cleaning your gutters, consider installing our premium gutter guard systems. These guards prevent leaves, pine needles, and debris from entering your gutters while allowing water to flow freely.
+                </p>
+                <h4 className="font-bold text-lg mb-2">Benefits of Our Gutter Guards:</h4>
+                <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                  <li>Reduce cleaning frequency</li>
+                  <li>Prevent clogs and overflow</li>
+                  <li>Keep pests and birds out</li>
+                  <li>Extend the lifespan of your gutters</li>
+                  <li>Prevent ice dams in winter</li>
+                </ul>
+                <div className="mt-6">
+                  <PriceCalculatorOverlay buttonText="Get a Quote for Gutter Guards" variant="bc-red" />
                 </div>
               </div>
             </div>

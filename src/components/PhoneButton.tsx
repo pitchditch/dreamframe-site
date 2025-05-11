@@ -1,11 +1,12 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Phone } from 'lucide-react';
 import { trackPageView } from '@/utils/analytics';
 
 const PhoneButton = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showCompact, setShowCompact] = useState(false);
+  const [iconOnly, setIconOnly] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -21,9 +22,17 @@ const PhoneButton = () => {
           const faqRect = faqSection.getBoundingClientRect();
           setShowCompact(faqRect.top < window.innerHeight && faqRect.bottom > 0);
         }
+        
+        // Check if we've scrolled past the testimonials section
+        const testimonialsSection = document.querySelector('[id*="testimonials"], [class*="testimonials"]');
+        if (testimonialsSection) {
+          const testimonialRect = testimonialsSection.getBoundingClientRect();
+          setIconOnly(testimonialRect.bottom < 0);
+        }
       } else {
         setIsVisible(false);
         setShowCompact(false);
+        setIconOnly(false);
       }
     };
     
@@ -47,11 +56,13 @@ const PhoneButton = () => {
           <a
             href="tel:7788087620"
             onClick={handleCallClick}
-            className={`flex items-center gap-2 bg-bc-red hover:bg-red-700 text-white ${showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'} shadow-lg transition-all duration-300`}
+            className={`flex items-center gap-2 bg-bc-red hover:bg-red-700 text-white ${
+              iconOnly || showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
+            } shadow-lg transition-all duration-300`}
             aria-label="Call us now"
           >
             <Phone size={20} />
-            {!showCompact && (
+            {!iconOnly && !showCompact && (
               <span className="font-semibold">Call Jayden: 778-808-7620</span>
             )}
           </a>

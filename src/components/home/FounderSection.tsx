@@ -1,66 +1,47 @@
 
 import React from 'react';
-import { CircleCheck, Star, Shield, Wrench, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const FounderSection = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          <div className="order-2 md:order-1">
-            <div className="badge-pill mb-4">Meet The Owner</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Exterior Cleaning Is My Passion</h2>
-            <p className="text-lg mb-6 text-gray-600">
-              I'm Jayden, the owner and operator of BC Pressure Washing. I founded this company with a simple mission: to provide the highest quality exterior cleaning services with a personal touch that big franchises just can't match.
-            </p>
-            <p className="text-lg mb-6 text-gray-600">
-              As a Surrey resident, I understand the unique challenges our local homes face - from moss growth in our wet climate to the salt air effects near White Rock Beach. Every service is performed by me or under my direct supervision, ensuring exceptional quality every time.
-            </p>
-            
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <div className="flex items-start">
-                <div className="bg-white p-2 rounded-full mr-3">
-                  <CircleCheck className="h-5 w-5 text-green-500" />
-                </div>
-                <div>
-                  <p className="font-medium">3+ Years Experience</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="bg-white p-2 rounded-full mr-3">
-                  <Shield className="h-5 w-5 text-bc-red" />
-                </div>
-                <div>
-                  <p className="font-medium">Fully Insured</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="bg-white p-2 rounded-full mr-3">
-                  <Wrench className="h-5 w-5 text-blue-500" />
-                </div>
-                <div>
-                  <p className="font-medium">Professional Equipment</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-8">
-              <Link to="/why-us" className="text-bc-red font-semibold flex items-center hover:underline">
-                Learn more about our story <ArrowRight className="ml-2 h-4 w-4" />
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div className="order-2 md:order-1">
+              <h2 className="text-3xl font-bold mb-4">Meet the Owner</h2>
+              <h3 className="text-xl text-bc-red font-medium mb-6">Exterior Cleaning Is My Passion</h3>
+              <p className="mb-4 text-gray-700">
+                Hi, I'm Jayden — owner and operator of BC Pressure Washing. I founded this company with a clear mission: to deliver premium exterior cleaning services with the care, precision, and accountability you can only get from someone who does the work themselves.
+              </p>
+              <p className="mb-4 text-gray-700">
+                I grew up in White Rock and went to Semiahmoo Secondary up to Grade 10 before moving to Abbotsford. Now I'm back living along Marine Drive and proudly serving the White Rock and South Surrey communities once again.
+              </p>
+              <p className="mb-6 text-gray-700">
+                Unlike other companies that send random crews, I personally complete every service — from start to finish. With over 3 years of hands-on experience, I use only <Link to="/why-us" className="text-bc-red hover:underline">professional-grade equipment</Link> and treat every home like it's my own. You'll always know exactly who's showing up, and that the job will be done right.
+              </p>
+              <Link 
+                to="/about" 
+                className="inline-flex items-center text-bc-red font-medium hover:underline"
+              >
+                <span>Learn more about our story</span>
+                <ArrowRight size={16} className="ml-2" />
               </Link>
             </div>
-          </div>
-          
-          <div className="order-1 md:order-2 flex justify-center">
-            <div className="relative flex justify-center">
-              <img 
-                src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png" 
-                alt="Jayden - Owner of BC Pressure Washing" 
-                className="rounded-full shadow-lg w-56 h-56 object-cover border-4 border-bc-red"
-              />
+            
+            <div className="order-1 md:order-2">
+              <div className="relative">
+                <img 
+                  src="/lovable-uploads/116727c7-867b-4c6c-b291-da7848be87ac.png" 
+                  alt="Jayden Fisher - Owner of BC Pressure Washing" 
+                  className="w-full h-auto rounded-lg shadow-xl"
+                />
+                <div className="absolute -bottom-6 -left-6 bg-bc-red text-white py-3 px-6 rounded-lg shadow-lg hidden md:block">
+                  <p className="font-medium">Jayden Fisher</p>
+                  <p className="text-sm">Owner & Operator</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,7 +1,8 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Shield, Star, Home, MessageSquare, Zap } from 'lucide-react';
+import { Shield, Star, Home, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
@@ -78,138 +79,117 @@ const HeroSection = () => {
     navigate('/calculator');
   };
 
-  // Move Express Cleaning CTA outside of hero section
-  const ExpressCleaningCTA = () => (
-    <section className="py-4 bg-yellow-400">
-      <div className="container mx-auto px-4">
-        <Link 
-          to="/express-cleaning" 
-          className="flex mx-auto items-center justify-center gap-2 text-gray-900 hover:underline transition-all duration-300 max-w-3xl"
-        >
-          <Zap size={18} />
-          <span className="font-medium">Need urgent service? Check our Express Cleaning option!</span>
-          <span className="ml-2">→</span>
-        </Link>
-      </div>
-    </section>
-  );
-
   return (
-    <>
-      <section className="hero-section relative h-screen w-full overflow-hidden">
-        {/* YouTube Video Background - Different videos for mobile and desktop */}
-        <div className="absolute inset-0 w-full h-full">
-          <div className="relative w-full h-full overflow-hidden">
-            {isMobile ? (
-              // Mobile YouTube Video - Using the specific short video requested
-              <iframe 
-                id="hero-mobile-video"
-                className={`absolute w-full h-full top-0 left-0 scale-[2.2] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-                src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
-                title="Pressure Washing Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                loading="eager"
-                onLoad={() => setVideoLoaded(true)}
-              ></iframe>
-            ) : (
-              // Desktop YouTube Video
-              <iframe 
-                id="hero-desktop-video"
-                className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
-                title="Pressure Washing Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                loading="eager"
-                onLoad={() => setVideoLoaded(true)}
-              ></iframe>
-            )}
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
+    <section className="hero-section relative h-screen w-full overflow-hidden">
+      {/* YouTube Video Background - Different videos for mobile and desktop */}
+      <div className="absolute inset-0 w-full h-full">
+        <div className="relative w-full h-full overflow-hidden">
+          {isMobile ? (
+            // Mobile YouTube Video - Using the specific short video requested
+            <iframe 
+              id="hero-mobile-video"
+              className={`absolute w-full h-full top-0 left-0 scale-[2.2] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+              title="Pressure Washing Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="eager"
+              onLoad={() => setVideoLoaded(true)}
+            ></iframe>
+          ) : (
+            // Desktop YouTube Video
+            <iframe 
+              id="hero-desktop-video"
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
+              title="Pressure Washing Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="eager"
+              onLoad={() => setVideoLoaded(true)}
+            ></iframe>
+          )}
         </div>
-        
-        {/* Hero Content - Improved spacing from navbar */}
-        <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-36 sm:pt-32 md:pt-28">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-10 md:mt-8">
-              <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
-            </div>
-            
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-shadow-lg">
-              <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
-              Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
-            </p>
-            
-            <div className="flex flex-wrap justify-center gap-3 my-6 animate-on-scroll delay-200">
-              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-                <Shield className="text-white mr-2" size={20} />
-                <span className="text-white font-medium">Fully Insured</span>
-              </div>
-              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-                <Star className="text-yellow-400 mr-2" size={20} />
-                <span className="text-white font-medium">5-Star Service</span>
-              </div>
-              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-                <Home className="text-white mr-2" size={20} />
-                <span className="text-white font-medium">Locally Owned</span>
-              </div>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
+      </div>
+      
+      {/* Hero Content - Improved spacing from navbar */}
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-36 sm:pt-32 md:pt-28">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-10 md:mt-8">
+            <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           
-          {/* Postal Code Input Section */}
-          <div className="max-w-2xl mx-auto w-full mt-2 mb-4 animate-on-scroll delay-300">
-            <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
-              <div className="relative flex-grow">
-                <Input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="Enter Your Postal Code"
-                  value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
-                  className="bg-white border-white text-black h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-xl font-medium w-full"
-                />
-              </div>
-              <Button 
-                type="submit" 
-                variant="bc-red" 
-                size="lg" 
-                className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
-              >
-                Check Prices & Availability <MessageSquare className="ml-2" size={20} />
-              </Button>
-            </form>
-          </div>
-
-          {/* Personal Touch Section - Enhanced visibility on mobile */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500 bg-white/20 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg">
-            <img 
-              src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
-              alt="Jayden Fisher - Owner" 
-              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md"
-            />
-            <div className="text-center sm:text-left">
-              <p className="font-bold text-white text-lg md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
-              <p className="text-white font-medium">— Jayden Fisher, Owner</p>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-shadow-lg">
+            <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
+          </h1>
+          
+          <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
+            Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-3 my-6 animate-on-scroll delay-200">
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Shield className="text-white mr-2" size={20} />
+              <span className="text-white font-medium">Fully Insured</span>
+            </div>
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Star className="text-yellow-400 mr-2" size={20} />
+              <span className="text-white font-medium">5-Star Service</span>
+            </div>
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Home className="text-white mr-2" size={20} />
+              <span className="text-white font-medium">Locally Owned</span>
             </div>
           </div>
         </div>
         
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-          <span className="text-white text-sm mb-2">Scroll</span>
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
+        {/* Postal Code Input Section */}
+        <div className="max-w-2xl mx-auto w-full mt-2 mb-4 animate-on-scroll delay-300">
+          <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-grow">
+              <Input
+                ref={inputRef}
+                type="text"
+                placeholder="Enter Your Postal Code"
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
+                className="bg-white border-white text-black h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-xl font-medium w-full"
+              />
+            </div>
+            <Button 
+              type="submit" 
+              variant="bc-red" 
+              size="lg" 
+              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
+            >
+              Check Prices & Availability <MessageSquare className="ml-2" size={20} />
+            </Button>
+          </form>
         </div>
-      </section>
+
+        {/* Personal Touch Section - Enhanced visibility on mobile */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500 bg-white/20 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg">
+          <img 
+            src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
+            alt="Jayden Fisher - Owner" 
+            className="w-20 h-20 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md"
+          />
+          <div className="text-center sm:text-left">
+            <p className="font-bold text-white text-lg md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
+            <p className="text-white font-medium">— Jayden Fisher, Owner</p>
+          </div>
+        </div>
+      </div>
       
-      {/* Express Cleaning CTA moved outside hero section */}
-      <ExpressCleaningCTA />
-    </>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
+        <span className="text-white text-sm mb-2">Scroll</span>
+        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </section>
   );
 };
 

@@ -1,235 +1,279 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2, Check } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { trackFormSubmission } from '@/utils/analytics';
 
-const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Valid phone number required"),
-  address: z.string().min(5, "Address is required"),
-  roofType: z.string().min(1, "Please select a roof type"),
-  roofSize: z.string().optional(),
-  message: z.string().optional(),
-  preferredDate: z.string().optional(),
-  consent: z.boolean().refine(val => val === true, {
-    message: "You must agree to be contacted"
-  })
-});
+interface RoofCleaningFormData {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  roofType: string;
+  roofSize: string;
+  message: string;
+}
 
-type FormValues = z.infer<typeof formSchema>;
-
-const RoofCleaningForm: React.FC = () => {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+const RoofCleaningForm = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  
+  const form = useForm<RoofCleaningFormData>({
     defaultValues: {
       name: '',
-      email: '',
       phone: '',
+      email: '',
       address: '',
       roofType: '',
       roofSize: '',
       message: '',
-      preferredDate: '',
-      consent: false
-    }
+    },
   });
 
-  const onSubmit = (data: FormValues) => {
-    // Process form submission
-    console.log('Form submitted:', data);
+  const onSubmit = async (data: RoofCleaningFormData) => {
+    setIsSubmitting(true);
     
-    // Show success toast
-    toast.success('Quote request submitted! We will contact you shortly.');
-    
-    // Reset form
-    form.reset();
+    try {
+      // Track form submission in analytics
+      trackFormSubmission('roof_cleaning_form', data);
+      
+      // Send email using EmailJS
+      await emailjs.send(
+        'service_xrk4vas', // Service ID
+        'template_cpivz2k', // Template ID
+        {
+          from_name: data.name,
+          phone: data.phone,
+          email: data.email,
+          service_address: data.address,
+          roof_type: data.roofType,
+          roof_size: data.roofSize,
+          message: data.message,
+          subject: 'Roof Cleaning Inquiry',
+          form_type: 'Roof Cleaning Form',
+        },
+        'MMzAmk5eWrjFgC_nP' // Public Key
+      );
+      
+      setIsSuccess(true);
+      form.reset();
+      
+      toast({
+        title: "Request submitted successfully!",
+        description: "We'll be in touch with you shortly.",
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Please try again or call us directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div>
-      <h3 className="text-2xl font-bold mb-4">Request a Free Quote</h3>
-      <p className="mb-6 text-gray-600">Fill out the form below and we'll get back to you with a customized quote for your roof cleaning needs.</p>
+    <div className="w-full">
+      <h3 className="text-xl font-bold mb-6 text-center">Request a Free Roof Cleaning Quote</h3>
       
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name*</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email*</FormLabel>
-                  <FormControl>
-                    <Input type="email" placeholder="your.email@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number*</FormLabel>
-                  <FormControl>
-                    <Input placeholder="(604) 555-1234" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      {isSuccess ? (
+        <div className="text-center p-6 bg-green-50 rounded-lg">
+          <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <Check className="text-green-600" size={24} />
           </div>
-          
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Property Address*</FormLabel>
-                <FormControl>
-                  <Input placeholder="123 Main St, Vancouver, BC" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="roofType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Roof Type*</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select roof type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="asphalt">Asphalt Shingle</SelectItem>
-                      <SelectItem value="metal">Metal</SelectItem>
-                      <SelectItem value="tile">Tile</SelectItem>
-                      <SelectItem value="cedar">Cedar Shake</SelectItem>
-                      <SelectItem value="flat">Flat/Membrane</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="roofSize"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Approximate Roof Size</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select size (sq ft)" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="small">Small (under 1,500 sq ft)</SelectItem>
-                      <SelectItem value="medium">Medium (1,500 - 2,500 sq ft)</SelectItem>
-                      <SelectItem value="large">Large (2,500 - 3,500 sq ft)</SelectItem>
-                      <SelectItem value="xlarge">Extra Large (3,500+ sq ft)</SelectItem>
-                      <SelectItem value="unknown">Not sure</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          
-          <FormField
-            control={form.control}
-            name="preferredDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Preferred Service Date (Optional)</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Additional Comments (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea 
-                    placeholder="Tell us more about your roof cleaning needs or any specific concerns..."
-                    className="min-h-[100px]"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="consent"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>
-                    I consent to be contacted about my roof cleaning quote request*
-                  </FormLabel>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <Button type="submit" className="w-full bg-bc-red hover:bg-red-700">
-            Request Free Quote
+          <h4 className="text-lg font-bold text-green-800 mb-2">Quote Request Received!</h4>
+          <p className="text-green-700 mb-4">
+            Thank you for your interest in our roof cleaning services. We'll contact you shortly to discuss your needs.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => setIsSuccess(false)}
+            className="bg-white border-green-300 text-green-700 hover:bg-green-50"
+          >
+            Submit Another Request
           </Button>
-        </form>
-      </Form>
+        </div>
+      ) : (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              rules={{ required: 'Name is required' }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="phone"
+                rules={{ required: 'Phone number is required' }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input type="tel" placeholder="Your phone number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="email"
+                rules={{ 
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address',
+                  }
+                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="Your email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            <FormField
+              control={form.control}
+              name="address"
+              rules={{ required: 'Address is required' }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Service Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Property address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="roofType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Roof Type</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select roof type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="asphalt">Asphalt Shingles</SelectItem>
+                        <SelectItem value="metal">Metal Roof</SelectItem>
+                        <SelectItem value="tile">Tile Roof</SelectItem>
+                        <SelectItem value="cedar">Cedar Shake</SelectItem>
+                        <SelectItem value="flat">Flat Roof</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="roofSize"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Approximate Roof Size</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select size" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="small">Small (under 1,500 sq ft)</SelectItem>
+                        <SelectItem value="medium">Medium (1,500-2,500 sq ft)</SelectItem>
+                        <SelectItem value="large">Large (2,500-3,500 sq ft)</SelectItem>
+                        <SelectItem value="x-large">Extra Large (3,500+ sq ft)</SelectItem>
+                        <SelectItem value="unsure">Not Sure</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Additional Information</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="Tell us about the moss/algae situation, any specific concerns, or questions you may have."
+                      className="min-h-[100px]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                'Request Free Quote'
+              )}
+            </Button>
+          </form>
+        </Form>
+      )}
+      
+      <div className="mt-6 pt-6 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
+          <div>
+            <h4 className="font-semibold">Need Help?</h4>
+            <p className="text-sm text-gray-500">Call us directly</p>
+          </div>
+          <a href="tel:7788087620" className="text-bc-red font-bold hover:underline">
+            778-808-7620
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

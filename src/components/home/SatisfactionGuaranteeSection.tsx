@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Shield } from 'lucide-react';
+import { Shield, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const SatisfactionGuaranteeSection = () => {
   return (
@@ -20,6 +21,19 @@ const SatisfactionGuaranteeSection = () => {
           <p className="text-lg mb-6">
             If you're not completely satisfied with our work, we'll come back and make it right at no additional cost to you.
           </p>
+          
+          {/* Express Cleaning CTA Button */}
+          <div className="mb-6 p-4 bg-yellow-400 rounded-lg inline-block">
+            <Link 
+              to="/express-cleaning" 
+              className="flex items-center justify-center gap-2 text-gray-900 hover:underline transition-all duration-300"
+            >
+              <Zap size={18} />
+              <span className="font-medium">Need urgent service? Check our Express Cleaning option!</span>
+              <span className="ml-2">→</span>
+            </Link>
+          </div>
+          
           <div className="flex justify-center mt-8 gap-4 flex-col sm:flex-row">
             <a href="tel:7788087620" className="bg-bc-red hover:bg-red-700 text-white px-8 py-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105 pulse-animation">
               Call Now: 778-808-7620

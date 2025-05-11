@@ -137,15 +137,15 @@ const ExpressCleaning = () => {
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/lovable-uploads/775da843-921c-4e15-adf9-8237f632efcf.png"
-            alt="Roof cleaning view" 
+            src="/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png"
+            alt="Express Cleaning Service" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/60 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/70 z-10"></div>
         </div>
         <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-white/10 backdrop-blur-sm px-4 py-1 rounded-full inline-block mb-4">
+            <div className="bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full inline-block mb-4">
               <span className="text-white font-medium">🚨 Urgent Cleaning Needed?</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">
@@ -155,15 +155,15 @@ const ExpressCleaning = () => {
               Same-Day or Next-Day Service for Urgent Cleaning Needs
             </p>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+              <div className="flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <Clock className="text-white mr-2" size={20} />
                 <span className="text-white">Fast Response</span>
               </div>
-              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+              <div className="flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <CheckCircle2 className="text-white mr-2" size={20} />
                 <span className="text-white">Professional Quality</span>
               </div>
-              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+              <div className="flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <Calendar className="text-white mr-2" size={20} />
                 <span className="text-white">Priority Scheduling</span>
               </div>
