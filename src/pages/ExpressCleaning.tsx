@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -122,7 +123,6 @@ const ExpressCleaning = () => {
     }
   };
 
-  // Rest of component remains the same
   return (
     <Layout 
       title="Express Cleaning Service | Same-Day & Next-Day Service"
@@ -133,31 +133,39 @@ const ExpressCleaning = () => {
         <meta name="description" content="Need urgent exterior cleaning before a party, home sale, or inspection? Book our Express Cleaning service for same-day or next-day service." />
       </Helmet>
 
-      {/* Hero Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-bc-red to-red-800 text-white">
-        <div className="container mx-auto px-4">
+      {/* Hero Section with updated image */}
+      <section className="relative py-16 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 w-full h-full z-0">
+          <img 
+            src="/lovable-uploads/775da843-921c-4e15-adf9-8237f632efcf.png"
+            alt="Roof cleaning view" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/60 z-10"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-3xl mx-auto text-center">
             <div className="bg-white/10 backdrop-blur-sm px-4 py-1 rounded-full inline-block mb-4">
               <span className="text-white font-medium">🚨 Urgent Cleaning Needed?</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-6">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">
               Express Cleaning Service
             </h1>
-            <p className="text-xl mb-8">
+            <p className="text-xl mb-8 text-white">
               Same-Day or Next-Day Service for Urgent Cleaning Needs
             </p>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <Clock className="text-white mr-2" size={20} />
-                <span>Fast Response</span>
+                <span className="text-white">Fast Response</span>
               </div>
               <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <CheckCircle2 className="text-white mr-2" size={20} />
-                <span>Professional Quality</span>
+                <span className="text-white">Professional Quality</span>
               </div>
               <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <Calendar className="text-white mr-2" size={20} />
-                <span>Priority Scheduling</span>
+                <span className="text-white">Priority Scheduling</span>
               </div>
             </div>
           </div>

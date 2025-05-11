@@ -16,7 +16,7 @@ const PhoneButton = () => {
         setIsVisible(true);
         
         // Check if we're in the FAQ section to use compact view
-        const faqSection = document.querySelector('section [id*="faq"], section [class*="faq"]');
+        const faqSection = document.querySelector('[id*="faq"], [class*="faq"], [data-component="faq"]');
         if (faqSection) {
           const faqRect = faqSection.getBoundingClientRect();
           setShowCompact(faqRect.top < window.innerHeight && faqRect.bottom > 0);
