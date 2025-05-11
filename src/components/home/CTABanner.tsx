@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const CTABanner = () => {
@@ -35,9 +35,16 @@ const CTABanner = () => {
           <div className="mb-6">
             <p className="text-white font-medium text-base md:text-lg">Every job is personally checked by me</p>
           </div>
-          <Link to="/contact" className="inline-flex items-center bg-white text-bc-red px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-            {t("Get Your Free Quote")} <ArrowRight className="ml-2" size={20} />
-          </Link>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Link to="/contact" className="inline-flex items-center bg-white text-bc-red px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+              {t("Get Your Free Quote")} <ArrowRight className="ml-2" size={20} />
+            </Link>
+            
+            <Link to="/express-cleaning" className="inline-flex items-center bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105">
+              <Zap className="mr-2" size={20} />
+              {t("Express Cleaning")}
+            </Link>
+          </div>
         </div>
       </div>
     </section>

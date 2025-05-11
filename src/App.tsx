@@ -1,87 +1,70 @@
-
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Index from './pages/Index';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Calculator from './pages/Calculator';
-import About from './pages/About';
-import Testimonials from './pages/Testimonials';
-import BlogPost from './pages/BlogPost';
-import Blog from './pages/Blog';
-import Equipment from './pages/Equipment';
-import ZipUploader from './components/ZipUploader';
-import Review from './pages/Review';
-import NotFound from './pages/NotFound';
-import ServiceProcessPage from './pages/ServiceProcess';
 import Home from './pages/Home';
-import WhyUs from './pages/WhyUs';
-
-// Services
-import PressureWashing from './pages/services/PressureWashing';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Services from './pages/Services';
 import WindowCleaning from './pages/services/WindowCleaning';
+import PressureWashing from './pages/services/PressureWashing';
 import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
-import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
 import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning';
 import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
-
-import ChatAssistant from './components/ChatAssistant';
-import usePageTracking from './hooks/usePageTracking';
+import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
+import WhyUs from './pages/WhyUs';
+import Equipment from './pages/Equipment';
+import Testimonials from './pages/Testimonials';
+import ServiceProcess from './pages/ServiceProcess';
+import Calculator from './pages/Calculator';
+import Review from './pages/Review';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
+import WhiteRock from './pages/locations/WhiteRock';
+import VancouverWindowCleaning from './pages/locations/VancouverWindowCleaning';
+import NotFound from './pages/NotFound';
+import ZipUploader from './pages/ZipUploader';
+import { initAnalytics } from './lib/analytics-client';
+import ExpressCleaning from './pages/ExpressCleaning';
 
 function App() {
-  // Track page views on route changes
-  usePageTracking();
-
-  const location = useLocation();
-
   useEffect(() => {
-    // Track page views on navigation
-    const handleRouteChange = () => {
-      // Replace this with your tracking function
-      console.log("📊 Tracking page view:", window.location.pathname);
-    };
-
-    handleRouteChange(); // Run on initial load
-
-    window.addEventListener('popstate', handleRouteChange);
-    return () => window.removeEventListener('popstate', handleRouteChange);
-  }, [location]);
+    // Initialize Google Analytics
+    initAnalytics();
+  }, []);
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/now" element={<Services />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/calculator" element={<Calculator />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/process" element={<ServiceProcessPage />} />
-        <Route path="/why-us" element={<WhyUs />} />
-
-        {/* Service Pages */}
-        <Route path="/services/pressure-washing" element={<PressureWashing />} />
-        <Route path="/services/window-cleaning" element={<WindowCleaning />} />
-        <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-        <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-        <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-        <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
-        <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
-
-        <Route path="/testimonials" element={<Testimonials />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/equipment" element={<Equipment />} />
-        <Route path="/zip-uploader" element={<ZipUploader onExtract={() => {}} />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
-      <ChatAssistant />
-    </>
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/window-cleaning" element={<WindowCleaning />} />
+          <Route path="/services/pressure-washing" element={<PressureWashing />} />
+          <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
+          <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+          <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+          <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
+          <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+          <Route path="/express-cleaning" element={<ExpressCleaning />} /> {/* Add this new route */}
+          <Route path="/why-us" element={<WhyUs />} />
+          <Route path="/equipment" element={<Equipment />} />
+          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/process" element={<ServiceProcess />} />
+          <Route path="/calculator" element={<Calculator />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/locations/white-rock-bc" element={<WhiteRock />} />
+          <Route path="/locations/vancouver-bc" element={<VancouverWindowCleaning />} />
+          <Route path="/zip-uploader" element={<ZipUploader />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

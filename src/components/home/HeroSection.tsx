@@ -1,11 +1,13 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Shield, Star, Home, MessageSquare } from 'lucide-react';
+import { Shield, Star, Home, MessageSquare, Zap } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
 import { trackFormSubmission } from '@/utils/analytics';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
@@ -165,16 +167,25 @@ const HeroSection = () => {
             </Button>
           </form>
         </div>
+
+        {/* Express Cleaning CTA Section */}
+        <Link 
+          to="/express-cleaning" 
+          className="flex max-w-md mx-auto items-center justify-center gap-2 bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all duration-300 px-4 py-2 rounded-lg animate-on-scroll delay-400 mb-6"
+        >
+          <Zap size={18} />
+          <span className="font-medium">Need urgent service? Check our Express Cleaning option!</span>
+        </Link>
         
-        {/* Personal Touch Section */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-on-scroll delay-400 bg-white/10 backdrop-blur-sm p-4 rounded-xl max-w-md mx-auto border border-white/20">
+        {/* Personal Touch Section - Now always visible on all screen sizes */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-on-scroll delay-500 bg-white/10 backdrop-blur-sm p-4 rounded-xl max-w-md mx-auto border border-white/20">
           <img 
             src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
             alt="Jayden Fisher - Owner" 
             className="w-16 h-16 rounded-full border-2 border-white"
           />
           <div className="text-center sm:text-left">
-            <p className="font-medium">"Every Job is Personally Checked by Me."</p>
+            <p className="font-medium">Every Job is Personally Checked by Me.</p>
             <p className="text-white/80">— Jayden Fisher, Owner</p>
           </div>
         </div>
