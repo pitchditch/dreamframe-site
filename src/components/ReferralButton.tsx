@@ -14,16 +14,15 @@ const ReferralButton = () => {
   useEffect(() => {
     const handleScroll = () => {
       // Find the residential window cleaning section
-      const residentialSection = document.querySelector('h2')?.textContent?.includes('Premium Solutions') ? 
-        document.querySelector('h2')?.closest('section') : null;
+      const heroSection = document.querySelector('.hero-section');
       
-      if (residentialSection) {
-        const sectionRect = residentialSection.getBoundingClientRect();
+      if (heroSection) {
+        const sectionRect = heroSection.getBoundingClientRect();
         // Show when scrolled past this section
         if (sectionRect.bottom < 0) {
           setIsVisible(true);
           // Show icon only after scrolling further down
-          setShowIconOnly(window.scrollY > residentialSection.offsetTop + 500);
+          setShowIconOnly(window.scrollY > heroSection.clientHeight + 500);
         } else {
           setIsVisible(false);
           setShowIconOnly(false);

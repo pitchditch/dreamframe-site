@@ -185,7 +185,7 @@ const HeroSection = () => {
             className="w-16 h-16 rounded-full border-2 border-white"
           />
           <div className="text-center sm:text-left">
-            <p className="font-medium">Every Job is Personally Checked by Me.</p>
+            <p className="font-medium text-white">Every Job is Personally Checked by Me.</p>
             <p className="text-white/80">— Jayden Fisher, Owner</p>
           </div>
         </div>

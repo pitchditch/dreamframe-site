@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -15,6 +16,7 @@ import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
+import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
@@ -102,6 +104,7 @@ const Index = () => {
         darkMode={true}
       />
       <ServiceAreasSection />
+      <CTABanner />
       <ReferralButton />
     </Layout>
   );

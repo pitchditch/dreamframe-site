@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Index from './pages/Index';
@@ -26,11 +27,14 @@ import NotFound from './pages/NotFound';
 import ZipUploader from './pages/ZipUploader';
 import { initAnalytics } from './lib/analytics-client';
 import ExpressCleaning from './pages/ExpressCleaning';
+import { setupErrorHandlers } from './utils/errorUtils';
 
 function App() {
   useEffect(() => {
     // Initialize Google Analytics
     initAnalytics();
+    // Setup error handlers
+    setupErrorHandlers();
   }, []);
 
   return (
@@ -49,7 +53,7 @@ function App() {
           <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
           <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
           <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-          <Route path="/express-cleaning" element={<ExpressCleaning />} /> {/* Add this new route */}
+          <Route path="/express-cleaning" element={<ExpressCleaning />} />
           <Route path="/why-us" element={<WhyUs />} />
           <Route path="/equipment" element={<Equipment />} />
           <Route path="/testimonials" element={<Testimonials />} />

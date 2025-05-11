@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Logo } from './Logo';
+import { Logo } from '../Logo';
 import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
