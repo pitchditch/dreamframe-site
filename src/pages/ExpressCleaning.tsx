@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -15,6 +14,7 @@ import { ArrowRight, Clock, CheckCircle2, Calendar } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { trackFormSubmit } from '@/lib/analytics-client';
 import useFormTracking from '@/hooks/useFormTracking';
+import ReferralButton from '@/components/ReferralButton';
 
 interface ExpressCleaningFormData {
   fullName: string;
@@ -58,60 +58,71 @@ const ExpressCleaning = () => {
     trackSubmission(data);
     trackFormSubmit('express_cleaning_request', data);
 
-    // Get selected services as a formatted string
-    const selectedServices = [
-      data.windowCleaning ? 'Window Cleaning' : null,
-      data.houseWashing ? 'House Washing' : null,
-      data.gutterCleaning ? 'Gutter Cleaning' : null,
-      data.drivewayPressureWashing ? 'Driveway Pressure Washing' : null
-    ].filter(Boolean).join(', ');
-    
-    // Convert preferred time to readable format
-    const timeMapping = {
-      today: 'Today',
-      tomorrow: 'Tomorrow',
-      flexible: 'Flexible / First Available'
-    };
-    
-    // Prepare data for emailjs
-    const templateParams = {
-      from_name: data.fullName,
-      phone: data.phoneNumber,
-      service_address: data.serviceAddress,
-      services_needed: selectedServices,
-      preferred_time: timeMapping[data.preferredTime],
-      additional_notes: data.additionalNotes,
-      priority_agreement: data.priorityAgreement ? 'Agreed' : 'Not Agreed',
-      form_type: 'Express Cleaning Request',
-      subject: '🚨 URGENT: Express Cleaning Request'
-    };
+    try {
+      // Get selected services as a formatted string
+      const selectedServices = [
+        data.windowCleaning ? 'Window Cleaning' : null,
+        data.houseWashing ? 'House Washing' : null,
+        data.gutterCleaning ? 'Gutter Cleaning' : null,
+        data.drivewayPressureWashing ? 'Driveway Pressure Washing' : null
+      ].filter(Boolean).join(', ');
+      
+      // Convert preferred time to readable format
+      const timeMapping = {
+        today: 'Today',
+        tomorrow: 'Tomorrow',
+        flexible: 'Flexible / First Available'
+      };
+      
+      // Prepare data for emailjs
+      const templateParams = {
+        from_name: data.fullName,
+        phone: data.phoneNumber,
+        service_address: data.serviceAddress,
+        services_needed: selectedServices,
+        preferred_time: timeMapping[data.preferredTime],
+        additional_notes: data.additionalNotes,
+        priority_agreement: data.priorityAgreement ? 'Agreed' : 'Not Agreed',
+        form_type: 'Express Cleaning Request',
+        subject: '🚨 URGENT: Express Cleaning Request'
+      };
 
-    // Send email using EmailJS
-    emailjs.send(
-      'service_xrk4vas',
-      'template_cpivz2k',
-      templateParams,
-      'MMzAmk5eWrjFgC_nP'
-    )
-    .then(() => {
-      toast({
-        title: "Express Request Submitted!",
-        description: "We'll contact you shortly to confirm availability.",
+      // Send email using EmailJS
+      emailjs.send(
+        'service_xrk4vas',
+        'template_cpivz2k',
+        templateParams,
+        'MMzAmk5eWrjFgC_nP'
+      )
+      .then(() => {
+        toast({
+          title: "Express Request Submitted!",
+          description: "We'll contact you shortly to confirm availability.",
+        });
+        form.reset();
+        setIsSubmitting(false);
+      })
+      .catch((error) => {
+        console.error('EmailJS Error:', error);
+        toast({
+          title: "Something went wrong.",
+          description: "Please try again or contact us directly at 778-808-7620.",
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
       });
-      form.reset();
-      setIsSubmitting(false);
-    })
-    .catch((error) => {
-      console.error('EmailJS Error:', error);
+    } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Something went wrong.",
         description: "Please try again or contact us directly at 778-808-7620.",
         variant: "destructive"
       });
       setIsSubmitting(false);
-    });
+    }
   };
 
+  // Rest of component remains the same
   return (
     <Layout 
       title="Express Cleaning Service | Same-Day & Next-Day Service"
@@ -200,6 +211,7 @@ const ExpressCleaning = () => {
                   
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                      {/* All form fields remain the same */}
                       <FormField
                         control={form.control}
                         name="fullName"

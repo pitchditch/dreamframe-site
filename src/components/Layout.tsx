@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ChatAssistant from './ChatAssistant';
 import PhoneButton from './PhoneButton';
+import ReferralButton from './ReferralButton';
 
 interface LayoutProps {
   children: ReactNode;
@@ -50,6 +51,7 @@ const Layout = ({
       <Footer />
       <ChatAssistant />
       <PhoneButton />
+      <ReferralButton />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import App from './App.tsx';
 import './index.css';
 import { StrictMode } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from './components/ui/toaster';
 
 // Ensure the root element exists in index.html
 const rootElement = document.getElementById('root');
@@ -21,6 +22,7 @@ try {
       <HelmetProvider>
         <BrowserRouter>
           <App />
+          <Toaster />
         </BrowserRouter>
       </HelmetProvider>
     </StrictMode>
