@@ -13,7 +13,8 @@ interface ServiceHeaderProps {
   darkOverlay?: boolean;
   showButton?: boolean;
   buttonPosition?: 'center' | 'bottom';
-  youtubeId?: string; // For direct YouTube embedding
+  youtubeId?: string; // For mobile YouTube embedding
+  youtubeDesktopId?: string; // For desktop YouTube embedding
 }
 
 const ServiceHeader = ({
@@ -25,42 +26,50 @@ const ServiceHeader = ({
   darkOverlay = false,
   showButton = true,
   buttonPosition = 'center',
-  youtubeId
+  youtubeId,
+  youtubeDesktopId
 }: ServiceHeaderProps) => {
   const isMobile = useIsMobile();
   
   // Use useEffect to add and remove the has-video-header class
   useEffect(() => {
-    if (videoUrl || youtubeId) {
+    if (videoUrl || youtubeId || youtubeDesktopId) {
       document.body.classList.add('has-video-header');
       return () => {
         document.body.classList.remove('has-video-header');
       };
     }
-  }, [videoUrl, youtubeId]);
+  }, [videoUrl, youtubeId, youtubeDesktopId]);
 
   // Adjust title text size based on mobile view
   const titleClasses = isMobile
     ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20" // Added padding top for mobile
     : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow";
 
-  // Determine YouTube ID based on the service (for mobile)
+  // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
-    // Only modify for mobile devices
-    if (!isMobile || !title) return youtubeId;
-    
-    const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
-    
-    // Check the title to determine which service this is
-    if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
-      return 'HuXyYAxC4Fs'; // Professional Pressure Washing
-    } else if (titleStr.includes('gutter')) {
-      return 'dkSPq9opzBg'; // Gutter Cleaning
-    } else if (titleStr.includes('roof')) {
-      return 'twtzf2gRdFU'; // Roof Cleaning
+    // If desktop ID is provided and we're on desktop, use that
+    if (!isMobile && youtubeDesktopId) {
+      return youtubeDesktopId;
     }
     
-    return youtubeId;
+    // For mobile or if no desktop ID provided
+    if (youtubeId) return youtubeId;
+    
+    // Special cases for specific services when no ID provided
+    if (!youtubeId && !youtubeDesktopId && isMobile && title) {
+      const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
+      
+      if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
+        return 'HuXyYAxC4Fs'; // Default Pressure Washing
+      } else if (titleStr.includes('gutter')) {
+        return 'dkSPq9opzBg'; // Default Gutter Cleaning
+      } else if (titleStr.includes('roof')) {
+        return 'twtzf2gRdFU'; // Default Roof Cleaning
+      }
+    }
+    
+    return null;
   };
   
   const effectiveYoutubeId = getYouTubeIdForService();

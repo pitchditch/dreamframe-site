@@ -114,21 +114,21 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content - Improved spacing from navbar */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-40 sm:pt-36 md:pt-32">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-36 sm:pt-32 md:pt-28">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-12 md:mt-8">
+          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-10 md:mt-8">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll text-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-shadow-lg">
             <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
           </h1>
           
-          <p className="text-lg sm:text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
+          <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
             Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
           </p>
           
-          <div className="flex flex-wrap justify-center gap-3 my-8 animate-on-scroll delay-200">
+          <div className="flex flex-wrap justify-center gap-3 my-6 animate-on-scroll delay-200">
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Shield className="text-white mr-2" size={20} />
               <span className="text-white font-medium">Fully Insured</span>
@@ -144,8 +144,17 @@ const HeroSection = () => {
           </div>
         </div>
         
+        {/* Express Cleaning CTA Section - Moved up above input form */}
+        <Link 
+          to="/express-cleaning" 
+          className="flex max-w-md mx-auto items-center justify-center gap-2 bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all duration-300 px-4 py-2 rounded-lg animate-on-scroll delay-200 mb-5"
+        >
+          <Zap size={18} />
+          <span className="font-medium">Need urgent service? Check our Express Cleaning option!</span>
+        </Link>
+        
         {/* Postal Code Input Section */}
-        <div className="max-w-2xl mx-auto w-full mt-4 mb-8 animate-on-scroll delay-300">
+        <div className="max-w-2xl mx-auto w-full mt-2 mb-6 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -168,24 +177,15 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Express Cleaning CTA Section */}
-        <Link 
-          to="/express-cleaning" 
-          className="flex max-w-md mx-auto items-center justify-center gap-2 bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all duration-300 px-4 py-2 rounded-lg animate-on-scroll delay-400 mb-6"
-        >
-          <Zap size={18} />
-          <span className="font-medium">Need urgent service? Check our Express Cleaning option!</span>
-        </Link>
-        
-        {/* Personal Touch Section - Now always visible on all screen sizes */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-on-scroll delay-500 bg-white/10 backdrop-blur-sm p-4 rounded-xl max-w-md mx-auto border border-white/20">
+        {/* Personal Touch Section - Ensure visibility on all screen sizes */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500 bg-white/10 backdrop-blur-sm p-4 rounded-xl max-w-md mx-auto border border-white/20">
           <img 
             src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
             alt="Jayden Fisher - Owner" 
             className="w-16 h-16 rounded-full border-2 border-white"
           />
           <div className="text-center sm:text-left">
-            <p className="font-medium text-white">Every Job is Personally Checked by Me.</p>
+            <p className="font-medium text-white text-base md:text-lg">Every Job is Personally Checked by Me.</p>
             <p className="text-white/80">— Jayden Fisher, Owner</p>
           </div>
         </div>

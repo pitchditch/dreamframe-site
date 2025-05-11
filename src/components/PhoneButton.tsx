@@ -5,6 +5,7 @@ import { trackPageView } from '@/utils/analytics';
 
 const PhoneButton = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [showCompact, setShowCompact] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -13,8 +14,16 @@ const PhoneButton = () => {
       
       if (window.scrollY > heroSectionHeight) {
         setIsVisible(true);
+        
+        // Check if we're in the FAQ section to use compact view
+        const faqSection = document.querySelector('section [id*="faq"], section [class*="faq"]');
+        if (faqSection) {
+          const faqRect = faqSection.getBoundingClientRect();
+          setShowCompact(faqRect.top < window.innerHeight && faqRect.bottom > 0);
+        }
       } else {
         setIsVisible(false);
+        setShowCompact(false);
       }
     };
     
@@ -38,11 +47,13 @@ const PhoneButton = () => {
           <a
             href="tel:7788087620"
             onClick={handleCallClick}
-            className="flex items-center gap-2 bg-bc-red hover:bg-red-700 text-white px-6 py-4 rounded-full shadow-lg transition-all"
+            className={`flex items-center gap-2 bg-bc-red hover:bg-red-700 text-white ${showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'} shadow-lg transition-all duration-300`}
             aria-label="Call us now"
           >
             <Phone size={20} />
-            <span className="font-semibold">Call Jayden: 778-808-7620</span>
+            {!showCompact && (
+              <span className="font-semibold">Call Jayden: 778-808-7620</span>
+            )}
           </a>
         </div>
       )}

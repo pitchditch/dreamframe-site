@@ -66,7 +66,8 @@ const GutterCleaning = () => {
       <ServiceHeader 
         title="Professional Gutter Cleaning"
         description="Keep your home protected with our thorough gutter cleaning services."
-        youtubeId="eKV5YY3hPBc"
+        youtubeId="dkSPq9opzBg" // Mobile YouTube video ID
+        youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID
       />
       
       <section className="py-16 bg-white">
