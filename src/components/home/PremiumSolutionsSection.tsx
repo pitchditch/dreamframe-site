@@ -24,7 +24,7 @@ const PremiumSolutionsSection = () => {
       title: 'House Washing',
       description: 'Gentle soft-washing to remove dirt, mold, and algae without damage.',
       link: '/services/pressure-washing',
-      image: '/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png',
+      image: '/lovable-uploads/7f096ea4-ca08-4e10-aa64-82c4f84f24c4.png', // Updated to image #3
       included: [
         'Soft wash siding treatment',
         'Algae & mildew removal',
@@ -36,7 +36,7 @@ const PremiumSolutionsSection = () => {
       title: 'Gutter Cleaning',
       description: 'Prevent clogs and overflow damage with professional gutter care.',
       link: '/services/gutter-cleaning',
-      image: '/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png',
+      image: '/lovable-uploads/c99d75a8-0821-423a-b3a9-08133341c74f.png', // Updated to image #1
       included: [
         'Interior debris removal',
         'Downspout flushing',
@@ -48,7 +48,7 @@ const PremiumSolutionsSection = () => {
       title: 'Roof Cleaning',
       description: 'Eliminate moss, algae, and stains — extend roof life safely.',
       link: '/services/roof-cleaning',
-      image: '/lovable-uploads/9454f467-d96c-435e-b88d-8a78e379102a.png',
+      image: '/lovable-uploads/889de7df-2965-4c37-99ab-a5f07b85896b.png', // Updated to image #2
       included: [
         'Soft wash or brushing method',
         'Moss & algae treatment',

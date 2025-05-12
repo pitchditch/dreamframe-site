@@ -46,6 +46,7 @@ const PressureWashing = () => {
         title="Professional Pressure Washing"
         description="Restore the beauty of your exterior surfaces with our specialized pressure washing services."
         youtubeId="HuXyYAxC4Fs" // Updated YouTube ID for mobile
+        youtubeDesktopId="lYnXijewxCM" // Added new desktop YouTube ID
       />
       
       <section className="py-16 bg-white">

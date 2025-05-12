@@ -85,7 +85,7 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(3.5)' : 'scale(1.5)', // Increased scale for mobile to completely remove black bars
+                transform: isMobile ? 'scale(4)' : 'scale(1.5)', // Increased scale for mobile to completely remove black bars
               }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
