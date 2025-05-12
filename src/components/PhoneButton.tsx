@@ -23,13 +23,8 @@ const PhoneButton = () => {
           setShowCompact(faqRect.top < window.innerHeight && faqRect.bottom > 0);
         }
         
-        // Check if we've scrolled past the testimonials section
-        const testimonialsSection = document.querySelector('[id*="testimonials"], [class*="testimonials"]');
-        if (testimonialsSection) {
-          const testimonialRect = testimonialsSection.getBoundingClientRect();
-          // Show icon-only after scrolling past testimonials section
-          setIconOnly(testimonialRect.bottom < 0);
-        }
+        // Show icon-only when scrolled more than 30% down the page height
+        setIconOnly(window.scrollY > window.innerHeight * 1.3);
       } else {
         setIsVisible(false);
         setShowCompact(false);
@@ -53,7 +48,7 @@ const PhoneButton = () => {
   return (
     <>
       {isVisible && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-30 md:hidden">
+        <div className="fixed bottom-6 right-6 z-30 md:hidden">
           <a
             href="tel:7788087620"
             onClick={handleCallClick}

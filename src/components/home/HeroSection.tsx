@@ -121,7 +121,7 @@ const HeroSection = () => {
           </div>
           
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-shadow-lg">
-            <span className="bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">Transform Your Property's Appearance</span>
+            <span className="text-white">Transform Your Property's Appearance</span>
           </h1>
           
           <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
@@ -168,7 +168,7 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Personal Touch Section - Enhanced visibility on mobile */}
+        {/* Personal Touch Section - Enhanced visibility on mobile and improved layout */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500 bg-white/20 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg">
           <img 
             src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
@@ -176,7 +176,7 @@ const HeroSection = () => {
             className="w-20 h-20 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md"
           />
           <div className="text-center sm:text-left">
-            <p className="font-bold text-white text-lg md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
+            <p className="font-bold text-white text-base md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
             <p className="text-white font-medium">— Jayden Fisher, Owner</p>
           </div>
         </div>
