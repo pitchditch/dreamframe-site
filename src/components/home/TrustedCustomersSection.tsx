@@ -1,130 +1,92 @@
 
 import React from 'react';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-} from "@/components/ui/carousel";
-
-interface CustomerTestimonial {
-  image: string;
-  name: string;
-  location: string;
-  service: string;
-  date: string;
-  quote?: string;
-}
 
 const TrustedCustomersSection = () => {
-  const [api, setApi] = React.useState<any>();
-  
-  const customers: CustomerTestimonial[] = [
-    {
-      image: "/lovable-uploads/2eaacd17-5dff-4af1-b073-c2ecadfdb6d0.png",
-      name: "David",
-      location: "White Rock",
-      service: "Window Cleaning",
-      date: "May 2025",
-      quote: "They nailed it. Windows look crystal clear."
-    },
-    {
-      image: "/lovable-uploads/37b96fc3-a1ad-49b9-b3df-85633bef1d67.png",
-      name: "James",
-      location: "Surrey",
-      service: "Pressure Washing",
-      date: "April 2025",
-      quote: "Professional service from start to finish."
-    },
-    {
-      image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
-      name: "Vikram", 
-      location: "South Surrey",
-      service: "Roof Cleaning",
-      date: "March 2025",
-      quote: "Best decision I made. Roof looks brand new."
-    },
-    {
-      image: "/lovable-uploads/74fff6dd-0d95-4d31-bb6a-606b14280b3a.png",
-      name: "John",
-      location: "White Rock",
-      service: "Window Cleaning",
-      date: "May 2025",
-      quote: "Couldn't be happier with the results!"
-    },
-    {
-      image: "/lovable-uploads/4c1d610e-379a-49cb-9f37-ef1b48a248f4.png",
-      name: "David",
-      location: "Langley",
-      service: "Window Cleaning",
-      date: "April 2025",
-      quote: "Great experience. Will use them again."
-    }
-  ];
-  
-  // Auto-rotate carousel continuously without pausing
-  React.useEffect(() => {
-    if (!api) return;
-    
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 3000);
-    
-    return () => clearInterval(interval);
-  }, [api]);
-
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-100">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">Trusted by Real Homeowners – Verified Customers</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold">Trusted by Local Homeowners</h2>
+          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
+            See why so many homeowners in White Rock, Surrey, and across Metro Vancouver choose us for all their exterior cleaning needs.
           </p>
-          <div className="mt-4">
-            <span className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-medium">
-              Spring Shoot Catalog
-            </span>
-          </div>
         </div>
         
-        {/* Carousel View (for all screen sizes) */}
-        <div className="relative max-w-xl mx-auto">
-          <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
-            <CarouselContent>
-              {customers.map((customer, index) => (
-                <CarouselItem key={index} className="basis-full">
-                  <div className="flex flex-col items-center text-center p-2">
-                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
-                      <img 
-                        src={customer.image} 
-                        alt={`${customer.name} from ${customer.location}`} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h4 className="font-semibold text-lg">{customer.name}</h4>
-                    <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
-                    <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
-                    {customer.quote && (
-                      <p className="mt-2 italic text-sm">"{customer.quote}"</p>
-                    )}
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16">
+          {/* Google Logo with Link */}
+          <a 
+            href="https://www.google.com/search?q=bc+pressure+washing&oq=bc+pressure+washing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex flex-col items-center transition-transform hover:scale-105 group"
+          >
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" 
+              alt="Google Reviews" 
+              className="h-12 object-contain"
+            />
+            <div className="mt-2 flex items-center">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="ml-2 text-sm font-medium text-gray-600">5.0 (50+ reviews)</span>
+            </div>
+            <span className="mt-1 text-sm text-bc-red group-hover:underline">View Reviews</span>
+          </a>
           
-          <div className="flex justify-center mt-4">
-            {customers.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => api?.scrollTo(index)}
-                className={`w-2 h-2 mx-1 rounded-full transition-colors ${
-                  api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
+          {/* Yelp Logo with Link */}
+          <a 
+            href="https://www.yelp.com/biz/bc-pressure-washing-white-rock" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex flex-col items-center transition-transform hover:scale-105 group"
+          >
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Yelp_Logo.svg/2560px-Yelp_Logo.svg.png" 
+              alt="Yelp Reviews" 
+              className="h-12 object-contain"
+            />
+            <div className="mt-2 flex items-center">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="ml-2 text-sm font-medium text-gray-600">5.0 (15+ reviews)</span>
+            </div>
+            <span className="mt-1 text-sm text-bc-red group-hover:underline">View Reviews</span>
+          </a>
+          
+          {/* HomeStars Logo with Link */}
+          <a 
+            href="https://homestars.com/companies/2938191-bc-pressure-washing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex flex-col items-center transition-transform hover:scale-105 group"
+          >
+            <img 
+              src="https://seeklogo.com/images/H/homestars-logo-3EE2CFCE80-seeklogo.com.png" 
+              alt="HomeStars Reviews" 
+              className="h-12 object-contain"
+            />
+            <div className="mt-2 flex items-center">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="ml-2 text-sm font-medium text-gray-600">10.0 (20+ reviews)</span>
+            </div>
+            <span className="mt-1 text-sm text-bc-red group-hover:underline">View Reviews</span>
+          </a>
         </div>
       </div>
     </section>

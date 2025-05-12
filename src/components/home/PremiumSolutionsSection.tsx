@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const PremiumSolutionsSection = () => {
   const { t } = useTranslation();
@@ -108,6 +109,12 @@ const PremiumSolutionsSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        <div className="text-center mt-10">
+          <Button asChild variant="bc-red" size="lg" className="font-semibold">
+            <Link to="/services">See All Services</Link>
+          </Button>
         </div>
       </div>
     </section>

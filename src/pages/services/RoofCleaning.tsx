@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -8,6 +9,7 @@ import { Shield, Droplets, Leaf } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import RoofCleaningForm from '@/components/forms/RoofCleaningForm';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+
 const RoofCleaning = () => {
   const benefits = [{
     title: "Prevent Roof Damage",
@@ -46,7 +48,7 @@ const RoofCleaning = () => {
   }];
   return <Layout title="Professional Roof Cleaning Services | BC Pressure Washing" description="Expert roof cleaning services in White Rock, Surrey and Metro Vancouver. Prevent damage and extend the life of your roof with our soft washing techniques.">
       <ServiceHeader title="Professional Roof Cleaning" description="Protect your investment with our safe and effective roof cleaning service." youtubeId="twtzf2gRdFU" // Mobile YouTube video ID
-    youtubeDesktopId="GJZpuELGJpI" // Desktop YouTube video ID
+    youtubeDesktopId="eQSgdx9ujcc" // Desktop YouTube video ID
     />
       
       <section className="py-16 bg-white">
@@ -127,6 +129,51 @@ const RoofCleaning = () => {
         </div>
       </section>
       
+      {/* New section for Moss Cleaning */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row gap-10 items-center">
+            <div className="md:w-1/2">
+              <h2 className="text-3xl font-bold mb-6">We Clean Moss From Your Roof</h2>
+              <p className="text-lg text-gray-700 mb-4">
+                Moss growth is one of the most common and damaging issues affecting roofs in the Pacific Northwest. Our specialized cleaning process effectively removes moss and prevents regrowth.
+              </p>
+              <p className="text-gray-700 mb-6">
+                Moss can cause several problems for your roof:
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start">
+                  <span className="text-bc-red mr-2">•</span>
+                  <span>Lifts and separates shingles, allowing water to penetrate</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-bc-red mr-2">•</span>
+                  <span>Traps moisture against your roof, causing rot and decay</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-bc-red mr-2">•</span>
+                  <span>Blocks proper drainage, leading to water pooling</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-bc-red mr-2">•</span>
+                  <span>Creates an unsightly appearance that detracts from curb appeal</span>
+                </li>
+              </ul>
+              <p className="text-gray-700">
+                Our eco-friendly cleaning solutions eliminate moss at its roots and help prevent future growth, protecting your roof for years to come.
+              </p>
+            </div>
+            <div className="md:w-1/2">
+              <img 
+                src="/lovable-uploads/318aa0e0-f675-4d75-ab08-27441a16b85f.png" 
+                alt="Roof with moss growth" 
+                className="rounded-lg shadow-lg w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -159,25 +206,25 @@ const RoofCleaning = () => {
               
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="md:w-2/5">
-                  <img alt="Soft Washing Application" className="rounded-lg shadow-md w-full" src="/lovable-uploads/06bbf1e1-0ee0-4176-9417-4af9bf7a4460.jpg" />
+                  <img alt="Professional Roof Cleaning" className="rounded-lg shadow-md w-full" src="/lovable-uploads/4dec0929-9bfc-4d08-85cc-0802477a26cd.png" />
                 </div>
                 <div className="md:w-3/5">
-                  <h3 className="text-xl font-bold mb-2">3. Soft Washing Application</h3>
+                  <h3 className="text-xl font-bold mb-2">3. Professional Cleaning</h3>
                   <p className="text-gray-700">
-                    We apply our eco-friendly cleaning solution using a low-pressure soft washing system. This ensures the solution gently penetrates and kills the moss, algae, and lichen without damaging your roofing materials.
+                    Using specialized equipment and techniques, we safely clean your roof, removing moss, algae, and stains without damaging your roofing materials.
                   </p>
                 </div>
               </div>
               
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="md:w-3/5 md:order-1 order-2">
-                  <h3 className="text-xl font-bold mb-2">4. Rinsing and Cleanup</h3>
+                  <h3 className="text-xl font-bold mb-2">4. Treatment Application</h3>
                   <p className="text-gray-700">
-                    After allowing the cleaning solution to dwell for the appropriate time, we gently rinse your roof to remove the dead moss and algae. We then clean up any remaining debris, leaving your property clean and tidy.
+                    After cleaning, we apply treatments that help prevent rapid regrowth of moss and algae, extending the time between necessary cleanings.
                   </p>
                 </div>
                 <div className="md:w-2/5 md:order-2 order-1">
-                  <img alt="Rinsing and Cleanup" className="rounded-lg shadow-md w-full" src="/lovable-uploads/781082de-7949-4655-bc96-5ef110675262.jpg" />
+                  <img alt="After Cleaning Results" className="rounded-lg shadow-md w-full" src="/lovable-uploads/34ce60a3-3960-4c69-9841-749194c6ad64.png" />
                 </div>
               </div>
             </div>
