@@ -1,43 +1,34 @@
 
+import React from 'react';
+import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap } from 'lucide-react';
-import { useTranslation } from '@/hooks/use-translation';
+import { Phone, Calendar } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-const CTABanner = () => {
-  const { t, language } = useTranslation();
-
-  // Language-specific classes for font adjustments
-  const getLanguageClass = () => {
-    if (language === 'pa') return 'font-pa-font';
-    if (language === 'hi') return 'font-hi-font';
-    return '';
-  };
+const CTABanner: React.FC = () => {
+  const isMobile = useIsMobile();
   
   return (
-    <section className="bg-gradient-to-r from-bc-red to-red-800 py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-white text-center md:text-left">
-            <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${getLanguageClass()}`}>
-              {t('Ready for a Professional Clean?')}
-            </h2>
-            <p className={`text-white/90 text-lg max-w-2xl ${getLanguageClass()}`}>
-              {t('Schedule your service today and experience the difference of professional exterior cleaning.')}
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              to="/calculator"
-              className="bg-white text-bc-red hover:bg-gray-100 transition-colors px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
-            >
-              {t('Get an Estimate')} <ArrowRight size={18} />
-            </Link>
-            <Link
-              to="/contact"
-              className="bg-black/30 hover:bg-black/40 text-white transition-colors border border-white/30 px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
-            >
-              {t('Contact Us')} <Zap size={18} />
-            </Link>
+    <section className="bg-bc-red text-white py-10 md:py-16">
+      <div className="container mx-auto px-4">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-2xl md:text-4xl font-bold mb-4">Ready to Transform Your Property?</h2>
+          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
+            Get a free quote today and see the difference professional cleaning makes.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" variant="outline" className="bg-white text-bc-red border-white hover:bg-gray-100 hover:text-bc-red">
+              <Link to="/calculator" className="flex items-center gap-2 px-6 py-6 text-lg font-semibold">
+                <Calendar className="w-5 h-5" /> Check Availability
+              </Link>
+            </Button>
+            
+            <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
+              <a href="tel:7788087620" className="flex items-center gap-2 px-6 py-6 text-lg font-semibold">
+                <Phone className="w-5 h-5" /> Call: 778-808-7620
+              </a>
+            </Button>
           </div>
         </div>
       </div>

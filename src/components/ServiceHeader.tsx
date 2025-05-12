@@ -1,3 +1,4 @@
+
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -42,7 +43,7 @@ const ServiceHeader = ({
 
   // Adjust title text size based on mobile view
   const titleClasses = isMobile
-    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20 text-shadow-lg" // Added text shadow and padding top for mobile
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-16 text-shadow-lg" // Reduced padding top for mobile
     : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg"; // Enhanced text shadow for better readability
 
   // Determine YouTube ID based on the device and provided IDs
@@ -84,7 +85,7 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(1.6)' : 'scale(1.5)', // Reduced scale for mobile to prevent too much zoom
+                transform: isMobile ? 'scale(1.4)' : 'scale(1.5)', // Reduced scale for mobile to prevent too much zoom
               }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

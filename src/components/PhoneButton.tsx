@@ -24,7 +24,7 @@ const PhoneButton = () => {
         }
         
         // Show icon-only when scrolled more than 30% down the page height
-        setIconOnly(window.scrollY > window.innerHeight * 1.3);
+        setIconOnly(window.scrollY > window.innerHeight * 0.8);
       } else {
         setIsVisible(false);
         setShowCompact(false);
@@ -53,11 +53,11 @@ const PhoneButton = () => {
             href="tel:7788087620"
             onClick={handleCallClick}
             className={`flex items-center justify-center gap-2 bg-bc-red hover:bg-red-700 text-white ${
-              iconOnly ? 'p-3 rounded-full w-12 h-12' : showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
+              iconOnly ? 'p-3 rounded-full w-14 h-14' : showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
             } shadow-lg transition-all duration-300`}
             aria-label="Call us now"
           >
-            <Phone size={20} />
+            <Phone size={24} />
             {!iconOnly && !showCompact && (
               <span className="font-semibold">Call Jayden: 778-808-7620</span>
             )}

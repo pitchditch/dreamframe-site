@@ -15,43 +15,43 @@ const OwnerOperatedSection = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            <div className="text-center bg-gray-50 p-8 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-6">
-                <Shield className="w-12 h-12" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
+              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
+                <Shield className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-2xl mb-4">Fully Insured</h3>
-              <p className="text-gray-600 text-lg flex-grow">
+              <h3 className="font-bold text-xl mb-3">Fully Insured</h3>
+              <p className="text-gray-600 text-base flex-grow">
                 We carry comprehensive liability insurance for your complete peace of mind.
               </p>
             </div>
             
-            <div className="text-center bg-gray-50 p-8 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-6">
-                <Award className="w-12 h-12" />
+            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
+              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
+                <Award className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-2xl mb-4">Satisfaction Guaranteed</h3>
-              <p className="text-gray-600 text-lg flex-grow">
+              <h3 className="font-bold text-xl mb-3">Satisfaction Guaranteed</h3>
+              <p className="text-gray-600 text-base flex-grow">
                 If you're not 100% satisfied, we'll make it right at no extra cost.
               </p>
             </div>
             
-            <div className="text-center bg-gray-50 p-8 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-6">
-                <ThumbsUp className="w-12 h-12" />
+            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
+              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
+                <ThumbsUp className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-2xl mb-4">Quality Equipment</h3>
-              <p className="text-gray-600 text-lg flex-grow">
+              <h3 className="font-bold text-xl mb-3">Quality Equipment</h3>
+              <p className="text-gray-600 text-base flex-grow">
                 We invest in professional-grade tools and eco-friendly cleaning solutions.
               </p>
             </div>
             
-            <div className="text-center bg-gray-50 p-8 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-6">
-                <Clock className="w-12 h-12" />
+            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
+              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
+                <Clock className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-2xl mb-4">Prompt & Reliable</h3>
-              <p className="text-gray-600 text-lg flex-grow">
+              <h3 className="font-bold text-xl mb-3">Prompt & Reliable</h3>
+              <p className="text-gray-600 text-base flex-grow">
                 We value your time with punctual service and clear communication.
               </p>
             </div>
