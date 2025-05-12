@@ -63,7 +63,7 @@ const ServiceHeader = ({
       if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
         return 'HuXyYAxC4Fs'; // Updated Pressure Washing
       } else if (titleStr.includes('gutter')) {
-        return 'OICbIRmx-80'; // Updated Gutter Guards
+        return 'EdMlx1sYJDc'; // Updated Gutter Guards
       } else if (titleStr.includes('roof')) {
         return 'twtzf2gRdFU'; // Updated Roof Cleaning
       }

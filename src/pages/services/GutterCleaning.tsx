@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -86,7 +85,7 @@ const GutterCleaning = () => {
       <ServiceHeader 
         title="Professional Gutter Cleaning" 
         description="Keep your home protected with our thorough gutter cleaning services." 
-        youtubeId="OICbIRmx-80" // Updated mobile YouTube video ID
+        youtubeId="EdMlx1sYJDc" // Updated mobile YouTube video ID
         youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID
       />
       
