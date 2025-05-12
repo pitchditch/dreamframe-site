@@ -43,8 +43,8 @@ const ServiceHeader = ({
 
   // Adjust title text size based on mobile view
   const titleClasses = isMobile
-    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20" // Added padding top for mobile
-    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow";
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20 text-shadow-lg" // Added text shadow and padding top for mobile
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg"; // Enhanced text shadow for better readability
 
   // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
@@ -61,11 +61,11 @@ const ServiceHeader = ({
       const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
       
       if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
-        return 'HuXyYAxC4Fs'; // Default Pressure Washing
+        return 'HuXyYAxC4Fs'; // Updated Pressure Washing
       } else if (titleStr.includes('gutter')) {
-        return 'EdMlx1sYJDc'; // Default Gutter Cleaning - Updated to use the new YouTube short
+        return 'OICbIRmx-80'; // Updated Gutter Guards
       } else if (titleStr.includes('roof')) {
-        return 'twtzf2gRdFU'; // Default Roof Cleaning
+        return 'twtzf2gRdFU'; // Updated Roof Cleaning
       }
     }
     
@@ -85,19 +85,19 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(3)' : 'scale(1.5)' // Increased scale for mobile to remove black bars
+                transform: isMobile ? 'scale(3.5)' : 'scale(1.5)', // Increased scale for mobile to completely remove black bars
               }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Increased opacity for better text contrast */}
           </div>
           <div className="absolute inset-0 flex items-center justify-center pt-16">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
-              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
                   <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
@@ -125,11 +125,11 @@ const ServiceHeader = ({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
-              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
                   <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
@@ -156,7 +156,7 @@ const ServiceHeader = ({
           />
           
           {darkOverlay && (
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
           )}
           
           <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">

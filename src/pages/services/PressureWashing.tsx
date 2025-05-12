@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -46,7 +45,7 @@ const PressureWashing = () => {
       <ServiceHeader 
         title="Professional Pressure Washing"
         description="Restore the beauty of your exterior surfaces with our specialized pressure washing services."
-        youtubeId="lYnXijewxCM"
+        youtubeId="HuXyYAxC4Fs" // Updated YouTube ID for mobile
       />
       
       <section className="py-16 bg-white">

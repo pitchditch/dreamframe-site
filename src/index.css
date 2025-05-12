@@ -84,7 +84,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.01em;
-    font-weight: 500;
+    font-weight: 600; /* Increased from 500 to 600 for better visibility */
   }
 }
 
@@ -189,7 +189,7 @@
   }
   
   .text-shadow-sm {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    text-shadow: 0 2px 3px rgba(0,0,0,0.8); /* Enhanced shadow for better contrast */
   }
   
   .text-shadow-lg {
@@ -200,6 +200,8 @@
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -266,10 +268,10 @@
 
 .text-on-light {
   text-shadow: none;
-  font-weight: 500;
+  font-weight: 600; /* Increased from 500 to 600 */
 }
 
 /* Enhanced contrast for better accessibility */
 .high-contrast-text {
-  text-shadow: 0 0 1px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
