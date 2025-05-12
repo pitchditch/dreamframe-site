@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   Carousel, 
   CarouselContent, 
@@ -62,7 +62,7 @@ const TrustedCustomersSection = () => {
   ];
   
   // Auto-rotate carousel continuously without pausing
-  React.useEffect(() => {
+  useEffect(() => {
     if (!api) return;
     
     const interval = setInterval(() => {

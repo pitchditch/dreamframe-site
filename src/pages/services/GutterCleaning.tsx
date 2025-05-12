@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import FAQSection from '../../components/FAQSection';
@@ -8,7 +9,41 @@ import { Shield, Droplets, Cloud } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
 const GutterCleaning = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    // Intersection Observer to handle video autoplay when scrolled into view
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && videoRef.current) {
+          videoRef.current.play();
+        } else if (videoRef.current) {
+          videoRef.current.pause();
+        }
+      });
+    }, options);
+    
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+    
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
+  }, []);
+
   const benefits = [{
     title: "Prevent Water Damage",
     description: "Clogged gutters can cause water to overflow and damage your home's foundation, walls, and landscaping."
@@ -28,6 +63,7 @@ const GutterCleaning = () => {
     title: "Maintain Curb Appeal",
     description: "Clean, well-functioning gutters enhance your home's appearance and value."
   }];
+  
   const faqs = [{
     question: "How often should I have my gutters cleaned?",
     answer: "Most homes benefit from gutter cleaning twice per year – once in spring and once in fall. However, if your property has many trees nearby, you may need more frequent cleanings, especially during fall when leaves are dropping."
@@ -44,10 +80,15 @@ const GutterCleaning = () => {
     question: "Do I need to be home during the service?",
     answer: "Not necessarily. As long as we have access to your gutters and exterior water sources, we can perform the cleaning while you're away. Many of our customers prefer this convenience."
   }];
-  return <Layout title="Professional Gutter Cleaning Services | BC Pressure Washing" description="Expert gutter cleaning services in White Rock, Surrey and Metro Vancouver. Prevent water damage and extend the life of your gutters with our thorough cleaning.">
-      <ServiceHeader title="Professional Gutter Cleaning" description="Keep your home protected with our thorough gutter cleaning services." youtubeId="EdMlx1sYJDc" // Mobile YouTube video ID - Updated to your requested short
-    youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID - Kept as requested
-    />
+  
+  return (
+    <Layout title="Professional Gutter Cleaning Services | BC Pressure Washing" description="Expert gutter cleaning services in White Rock, Surrey and Metro Vancouver. Prevent water damage and extend the life of your gutters with our thorough cleaning.">
+      <ServiceHeader 
+        title="Professional Gutter Cleaning" 
+        description="Keep your home protected with our thorough gutter cleaning services." 
+        youtubeId="EdMlx1sYJDc" // Mobile YouTube video ID - Updated to your requested short
+        youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID - Kept as requested
+      />
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -97,13 +138,17 @@ const GutterCleaning = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <PriceCalculatorOverlay buttonText="Check Price & Availability" variant="bc-red" />
-                <a href="tel:7788087620" className="bg-green-600 hover:bg-green-700 text-white text-center py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center">
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                  </svg>
-                  Call Now: (778) 808-7620
-                </a>
+                <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg" asChild>
+                  <PriceCalculatorOverlay buttonText="Check Price & Availability" variant="bc-red" />
+                </Button>
+                <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
+                  <a href="tel:7788087620" className="flex items-center justify-center">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    Call Now: (778) 808-7620
+                  </a>
+                </Button>
               </div>
               
               <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
@@ -220,21 +265,25 @@ const GutterCleaning = () => {
         </div>
       </section>
       
-      {/* Gutter Vacuum Section */}
-      
-      
-      {/* Leaf Guard Section */}
+      {/* Gutter Guards Installation Section with larger autoplay video */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto"> {/* Increased width for bigger video */}
             <h2 className="text-3xl font-bold text-center mb-8">Gutter Guards Installation</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div className="order-2 md:order-1">
-                <iframe className="w-full aspect-video rounded-lg shadow-lg" src="https://www.youtube.com/embed/OICbIRmx-80" title="Gutter Guards Installation" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{
-                transform: 'scale(1.01)',
-                // Slight scaling to remove any potential borders 
-                transformOrigin: 'center'
-              }}></iframe>
+              <div className="order-2 md:order-1 w-full">
+                <video 
+                  ref={videoRef}
+                  className="w-full aspect-video rounded-lg shadow-lg"
+                  src="https://www.example.com/gutter-guards-video.mp4" 
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  poster="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png"
+                >
+                  Your browser does not support the video tag.
+                </video>
               </div>
               <div className="order-1 md:order-2">
                 <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
@@ -262,7 +311,13 @@ const GutterCleaning = () => {
       
       <FAQSection title="Frequently Asked Questions About Gutter Cleaning" subtitle="Get answers to common questions about our gutter cleaning services" faqs={faqs} />
       
-      <CallToAction title="Ready to Book Your Gutter Cleaning?" subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes." />
-    </Layout>;
+      <CallToAction 
+        title="Ready to Book Your Gutter Cleaning?" 
+        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes." 
+        backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png"
+      />
+    </Layout>
+  );
 };
+
 export default GutterCleaning;

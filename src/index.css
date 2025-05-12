@@ -78,6 +78,13 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Improved navbar text rendering */
+  nav a, .navbar-text {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 @layer utilities {

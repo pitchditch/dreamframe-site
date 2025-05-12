@@ -10,7 +10,7 @@ const GutterFaceCleaningSection = () => {
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <div className="md:w-1/3">
               <img 
-                src="/lovable-uploads/f899a443-8930-4364-b538-916f65545f84.png" 
+                src="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png" 
                 alt="Gutter Cleaning" 
                 className="rounded-lg w-full h-auto shadow-md"
               />

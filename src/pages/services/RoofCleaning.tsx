@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -8,6 +9,9 @@ import { Shield, Droplets, Leaf } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import RoofCleaningForm from '@/components/forms/RoofCleaningForm';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
 const RoofCleaning = () => {
   const benefits = [{
     title: "Prevent Roof Damage",
@@ -28,6 +32,7 @@ const RoofCleaning = () => {
     title: "Prevent Health Issues",
     description: "Mold and algae can spread into your home, creating potential health concerns for you and your family."
   }];
+  
   const faqs = [{
     question: "How often should I have my roof cleaned?",
     answer: "Most homes benefit from roof cleaning every 1-3 years, depending on your location's climate, surrounding trees, and previous growth issues. In the Pacific Northwest's damp climate, annual inspection and cleaning may be recommended."
@@ -44,10 +49,15 @@ const RoofCleaning = () => {
     question: "How long does roof cleaning take?",
     answer: "For an average home, professional roof cleaning typically takes 3-5 hours. Larger homes or those with severe growth may take longer. Weather conditions can also affect timing."
   }];
-  return <Layout title="Professional Roof Cleaning Services | BC Pressure Washing" description="Expert roof cleaning services in White Rock, Surrey and Metro Vancouver. Prevent damage and extend the life of your roof with our soft washing techniques.">
-      <ServiceHeader title="Professional Roof Cleaning" description="Protect your investment with our safe and effective roof cleaning service." youtubeId="twtzf2gRdFU" // Mobile YouTube video ID
-    youtubeDesktopId="GJZpuELGJpI" // Desktop YouTube video ID
-    />
+
+  return (
+    <Layout title="Professional Roof Cleaning Services | BC Pressure Washing" description="Expert roof cleaning services in White Rock, Surrey and Metro Vancouver. Prevent damage and extend the life of your roof with our soft washing techniques.">
+      <ServiceHeader 
+        title="Professional Roof Cleaning" 
+        description="Protect your investment with our safe and effective roof cleaning service." 
+        youtubeId="twtzf2gRdFU" // Mobile YouTube video ID
+        youtubeDesktopId="GJZpuELGJpI" // Desktop YouTube video ID
+      />
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -97,13 +107,17 @@ const RoofCleaning = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <PriceCalculatorOverlay buttonText="Check Price & Availability" variant="bc-red" />
-                <a href="tel:7788087620" className="bg-green-600 hover:bg-green-700 text-white text-center py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center">
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                  </svg>
-                  Call Now: (778) 808-7620
-                </a>
+                <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg" asChild>
+                  <Link to="/calculator">Check Price & Availability</Link>
+                </Button>
+                <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
+                  <a href="tel:7788087620" className="flex items-center justify-center">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    Call Now: (778) 808-7620
+                  </a>
+                </Button>
               </div>
               
               <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
@@ -185,11 +199,68 @@ const RoofCleaning = () => {
         </div>
       </section>
       
+      {/* New section about what we remove from roofs */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">What We Remove From Your Roof</h2>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="mb-4 h-64 overflow-hidden rounded-md">
+                  <img 
+                    src="/lovable-uploads/915344bc-d3d8-4352-8b18-c51057dbdd10.png" 
+                    alt="Moss on roof" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Moss Removal</h3>
+                <p className="text-gray-700">
+                  Moss can be particularly damaging to your roof as it retains moisture against roofing materials. This constant moisture can deteriorate shingles, create openings for leaks, and even lift shingles causing exposure. Our specialized treatment effectively kills and removes moss, preventing regrowth and extending the life of your roof.
+                </p>
+                <div className="mt-4 text-sm text-bc-red font-medium">
+                  * Moss can reduce your roof's lifespan by up to 10 years if left untreated
+                </div>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="mb-4 h-64 overflow-hidden rounded-md">
+                  <img 
+                    src="/lovable-uploads/bc8662ae-2020-4268-ada3-deb86d5804df.png" 
+                    alt="Roof stain removal" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Black Streak & Stain Removal</h3>
+                <p className="text-gray-700">
+                  Those black streaks on your roof aren't just cosmetic issues—they're actually colonies of algae (Gloeocapsa magnifera) that feed on the limestone filler in asphalt shingles. Beyond being unsightly, these organisms gradually break down your roofing materials. Our cleaning solution thoroughly eliminates these stains without damaging your roof's surface.
+                </p>
+                <div className="mt-4 text-sm text-bc-red font-medium">
+                  * Black streaks can reduce your home's value by up to 5% according to real estate professionals
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-10 text-center">
+              <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg" asChild>
+                <Link to="/calculator">Schedule Your Roof Cleaning</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <TestimonialsSection />
       
       <FAQSection title="Frequently Asked Questions About Roof Cleaning" subtitle="Get answers to common questions about our roof cleaning services" faqs={faqs} />
       
-      <CallToAction title="Ready for a Cleaner, Healthier Roof?" subtitle="Contact us today for a free estimate and protect your home with our professional roof cleaning service." />
-    </Layout>;
+      <CallToAction 
+        title="Ready for a Cleaner, Healthier Roof?" 
+        subtitle="Contact us today for a free estimate and protect your home with our professional roof cleaning service." 
+        backgroundImage="/lovable-uploads/9454f467-d96c-435e-b88d-8a78e379102a.png"
+      />
+    </Layout>
+  );
 };
+
 export default RoofCleaning;
