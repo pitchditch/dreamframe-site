@@ -27,7 +27,7 @@ const CallToAction = ({
     <section className="py-16 relative">
       {!hideImage && (
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/50 z-10"></div>
           <img 
             src={backgroundImage} 
             alt="Call to action background" 
@@ -36,10 +36,10 @@ const CallToAction = ({
         </div>
       )}
       
-      <div className={`container mx-auto px-4 relative z-10 ${!hideImage ? 'text-white' : 'text-gray-800'}`}>
+      <div className={`container mx-auto px-4 relative z-20 ${!hideImage ? 'text-white' : 'text-gray-800'}`}>
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
-          <p className="text-lg mb-8">{subtitle}</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-shadow-lg">{title}</h2>
+          <p className="text-lg mb-8 text-shadow-sm">{subtitle}</p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link 

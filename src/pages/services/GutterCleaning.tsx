@@ -1,11 +1,10 @@
-
 import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import CallToAction from '../../components/CallToAction';
-import { Shield, Droplets, Cloud } from 'lucide-react';
+import { Shield, Droplets, Cloud, CheckCircle } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
@@ -20,13 +19,13 @@ const GutterCleaning = () => {
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.5
+      threshold: 0.1 // Lowered threshold to trigger earlier
     };
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && videoRef.current) {
-          videoRef.current.play();
+          videoRef.current.play().catch(e => console.log('Auto-play prevented:', e));
         } else if (videoRef.current) {
           videoRef.current.pause();
         }
@@ -94,8 +93,8 @@ const GutterCleaning = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-10">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Get Your Gutters Cleaned Today</h2>
-              <p className="text-lg text-gray-700 mb-4">
+              <h2 className="text-3xl font-bold mb-6 heading-text">Get Your Gutters Cleaned Today</h2>
+              <p className="text-lg text-gray-700 mb-4 content-text">
                 Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round.
               </p>
 
@@ -135,6 +134,18 @@ const GutterCleaning = () => {
                     </p>
                   </div>
                 </div>
+
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <CheckCircle size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">100% Satisfaction Guarantee</h3>
+                    <p className="text-gray-600">
+                      We're not happy until you're happy. If you're not completely satisfied with our service, we'll make it right.
+                    </p>
+                  </div>
+                </div>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 mt-8">
@@ -160,6 +171,7 @@ const GutterCleaning = () => {
             </div>
             
             <div className="bg-white rounded-lg shadow-xl p-6 border-2 border-gray-100">
+              <h3 className="text-2xl font-bold mb-4 text-center text-bc-red">Get Your Free Quote</h3>
               <GutterCleaningForm />
             </div>
           </div>
@@ -268,35 +280,51 @@ const GutterCleaning = () => {
       {/* Gutter Guards Installation Section with larger autoplay video */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto"> {/* Increased width for bigger video */}
+          <div className="max-w-6xl mx-auto"> {/* Increased width for bigger video */}
             <h2 className="text-3xl font-bold text-center mb-8">Gutter Guards Installation</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div className="order-2 md:order-1 w-full">
                 <video 
                   ref={videoRef}
-                  className="w-full aspect-video rounded-lg shadow-lg"
+                  className="w-full h-full aspect-video rounded-lg shadow-lg"
                   src="https://www.example.com/gutter-guards-video.mp4" 
                   loop
                   muted
                   playsInline
                   controls
                   poster="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png"
+                  preload="auto"
                 >
                   Your browser does not support the video tag.
                 </video>
               </div>
               <div className="order-1 md:order-2">
                 <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 mb-4 text-lg">
                   After cleaning your gutters, consider installing our premium gutter guard systems. These guards prevent leaves, pine needles, and debris from entering your gutters while allowing water to flow freely.
                 </p>
                 <h4 className="font-bold text-lg mb-2">Benefits of Our Gutter Guards:</h4>
-                <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-                  <li>Reduce cleaning frequency</li>
-                  <li>Prevent clogs and overflow</li>
-                  <li>Keep pests and birds out</li>
-                  <li>Extend the lifespan of your gutters</li>
-                  <li>Prevent ice dams in winter</li>
+                <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span> 
+                    <span>Reduce cleaning frequency</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span> 
+                    <span>Prevent clogs and overflow</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span> 
+                    <span>Keep pests and birds out</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span> 
+                    <span>Extend the lifespan of your gutters</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span> 
+                    <span>Prevent ice dams in winter</span>
+                  </li>
                 </ul>
                 <div className="mt-6">
                   <PriceCalculatorOverlay buttonText="Get a Quote for Gutter Guards" variant="bc-red" />

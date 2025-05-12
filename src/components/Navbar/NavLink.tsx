@@ -15,10 +15,10 @@ export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkPr
   return (
     <Link 
       to={to} 
-      className={`relative transition-all duration-300 hover:scale-110 ${
+      className={`relative font-medium transition-all duration-300 hover:scale-110 ${
         isOverVideo 
-        ? 'text-white hover:text-bc-red hover:text-shadow-white text-shadow-sm' 
-        : `text-black hover:text-bc-red ${isActive ? 'font-medium text-bc-red' : ''}`
+        ? 'text-white hover:text-bc-red text-shadow' 
+        : `text-black hover:text-bc-red ${isActive ? 'font-semibold text-bc-red' : ''}`
       } after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-bc-red after:left-0 after:bottom-0 after:transition-all hover:after:w-full ${className}`}
     >
       {children}
@@ -28,4 +28,3 @@ export const NavLink = ({ to, isOverVideo, children, className = '' }: NavLinkPr
 
 // Add a default export that simply re-exports the named export
 export default NavLink;
-

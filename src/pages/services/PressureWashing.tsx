@@ -53,11 +53,11 @@ const PressureWashing = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
             <div className="md:col-span-1 lg:pr-8">
-              <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
-              <p className="text-lg text-gray-700 mb-4">
+              <h2 className="text-3xl font-bold mb-6 heading-text">Revitalize Your Home's Exterior</h2>
+              <p className="text-lg text-gray-700 mb-4 content-text">
                 Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
               </p>
-              <p className="text-lg text-gray-700">
+              <p className="text-lg text-gray-700 content-text">
                 Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
               </p>
               <div className="grid grid-cols-2 gap-4 mt-6">
@@ -142,6 +142,7 @@ const PressureWashing = () => {
       <CallToAction 
         title="Ready to Transform Your Property?"
         subtitle="Contact us today for a free estimate on our pressure washing services."
+        backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
       />
     </Layout>
   );

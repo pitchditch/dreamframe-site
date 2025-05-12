@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -199,50 +198,50 @@ const RoofCleaning = () => {
         </div>
       </section>
       
-      {/* New section about what we remove from roofs */}
+      {/* Section about what we remove from roofs */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">What We Remove From Your Roof</h2>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-10 heading-text">What We Remove From Your Roof</h2>
             
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="mb-4 h-64 overflow-hidden rounded-md">
+            <div className="grid md:grid-cols-2 gap-10">
+              <div className="bg-white p-7 rounded-lg shadow-md">
+                <div className="mb-5 h-72 overflow-hidden rounded-md">
                   <img 
                     src="/lovable-uploads/915344bc-d3d8-4352-8b18-c51057dbdd10.png" 
                     alt="Moss on roof" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Moss Removal</h3>
-                <p className="text-gray-700">
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Moss Removal</h3>
+                <p className="text-gray-700 text-lg leading-relaxed mb-4">
                   Moss can be particularly damaging to your roof as it retains moisture against roofing materials. This constant moisture can deteriorate shingles, create openings for leaks, and even lift shingles causing exposure. Our specialized treatment effectively kills and removes moss, preventing regrowth and extending the life of your roof.
                 </p>
-                <div className="mt-4 text-sm text-bc-red font-medium">
+                <div className="mt-4 text-base text-bc-red font-medium p-3 bg-red-50 rounded-md">
                   * Moss can reduce your roof's lifespan by up to 10 years if left untreated
                 </div>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="mb-4 h-64 overflow-hidden rounded-md">
+              <div className="bg-white p-7 rounded-lg shadow-md">
+                <div className="mb-5 h-72 overflow-hidden rounded-md">
                   <img 
                     src="/lovable-uploads/bc8662ae-2020-4268-ada3-deb86d5804df.png" 
                     alt="Roof stain removal" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Black Streak & Stain Removal</h3>
-                <p className="text-gray-700">
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Black Streak & Stain Removal</h3>
+                <p className="text-gray-700 text-lg leading-relaxed mb-4">
                   Those black streaks on your roof aren't just cosmetic issues—they're actually colonies of algae (Gloeocapsa magnifera) that feed on the limestone filler in asphalt shingles. Beyond being unsightly, these organisms gradually break down your roofing materials. Our cleaning solution thoroughly eliminates these stains without damaging your roof's surface.
                 </p>
-                <div className="mt-4 text-sm text-bc-red font-medium">
+                <div className="mt-4 text-base text-bc-red font-medium p-3 bg-red-50 rounded-md">
                   * Black streaks can reduce your home's value by up to 5% according to real estate professionals
                 </div>
               </div>
             </div>
             
-            <div className="mt-10 text-center">
-              <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg" asChild>
+            <div className="mt-12 text-center">
+              <Button className="bg-bc-red hover:bg-red-700 text-white px-8 py-6" size="lg" asChild>
                 <Link to="/calculator">Schedule Your Roof Cleaning</Link>
               </Button>
             </div>
