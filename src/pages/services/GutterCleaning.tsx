@@ -168,7 +168,7 @@ const GutterCleaning = () => {
       </section>
       
       {/* Update the CTA section with new background image */}
-      <div className="bg-cover bg-center py-16 relative" style={{ backgroundImage: `url('/lovable-uploads/1f54ff74-e94a-413b-a279-55efad21b29a.png')` }}>
+      <div className="bg-cover bg-center py-16 relative" style={{ backgroundImage: `url('/lovable-uploads/a7e4e4a3-8c7e-43c5-b390-5380515b0cfc.png')` }}>
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">

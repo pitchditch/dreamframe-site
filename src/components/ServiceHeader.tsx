@@ -13,6 +13,7 @@ interface ServiceHeaderProps {
   imagePath?: string;
   darkOverlay?: boolean;
   buttonPosition?: 'top' | 'bottom';
+  showButton?: boolean;
 }
 
 const ServiceHeader: React.FC<ServiceHeaderProps> = ({
@@ -22,7 +23,8 @@ const ServiceHeader: React.FC<ServiceHeaderProps> = ({
   mobileYoutubeId,
   imagePath,
   darkOverlay = false,
-  buttonPosition = 'top'
+  buttonPosition = 'top',
+  showButton = true
 }) => {
   const navigate = useNavigate();
   const isMobile = window.innerWidth < 768;
@@ -34,7 +36,7 @@ const ServiceHeader: React.FC<ServiceHeaderProps> = ({
       <p className="text-xl text-gray-100 max-w-2xl mx-auto mb-8">
         {description}
       </p>
-      {buttonPosition === 'top' && (
+      {buttonPosition === 'top' && showButton && (
         <Button 
           onClick={() => navigate('/calculator')}
           size="lg" 
@@ -87,7 +89,7 @@ const ServiceHeader: React.FC<ServiceHeaderProps> = ({
         </div>
       )}
       
-      {buttonPosition === 'bottom' && (
+      {buttonPosition === 'bottom' && showButton && (
         <div className="absolute bottom-10 left-0 right-0 text-center z-10">
           <Button 
             onClick={() => navigate('/calculator')}

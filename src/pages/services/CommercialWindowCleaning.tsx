@@ -1,9 +1,8 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '@/components/ServiceHeader';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Building, CheckCircle, Droplets, SparkleIcon } from 'lucide-react';
+import { CheckCircle, Droplets, SparkleIcon } from 'lucide-react';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import FAQSection from '@/components/FAQSection';
 import MoreServicesSection from '@/components/MoreServicesSection';
@@ -89,7 +88,6 @@ const CommercialWindowCleaning = () => {
         title="Professional Commercial Window Cleaning" 
         description="Keep your business looking its best with our expert window cleaning services. Serving businesses in Surrey, White Rock & Metro Vancouver." 
         imagePath="/lovable-uploads/598eb62a-290d-41ec-8c69-abae60a5a757.png" 
-        icon={<Building size={36} />} 
         showButton={true}
         darkOverlay={true}
       />
@@ -155,10 +153,12 @@ const CommercialWindowCleaning = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -173,13 +173,15 @@ const CommercialWindowCleaning = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {processes.map((process, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center">
+          {processes.map((process, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center">
               <div className="mb-4 flex justify-center">
                 {process.icon}
               </div>
               <h3 className="text-xl font-bold mb-3">{process.title}</h3>
               <p className="text-gray-600">{process.description}</p>
-            </div>)}
+            </div>
+          ))}
         </div>
       </section>
 

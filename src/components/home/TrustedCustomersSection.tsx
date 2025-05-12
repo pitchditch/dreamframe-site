@@ -30,7 +30,7 @@ const TrustedCustomersSection = () => {
             <img 
               src="/lovable-uploads/8090d09c-920d-4acb-8b9e-222865d6b8fc.png" 
               alt="Google Review" 
-              className="w-48 h-48 object-cover rounded-lg shadow-md mb-2"
+              className="w-full h-60 object-cover rounded-lg shadow-md mb-2"
             />
             <div className="mt-2 flex items-center">
               <div className="flex">
@@ -62,7 +62,7 @@ const TrustedCustomersSection = () => {
             <img 
               src="/lovable-uploads/34ce60a3-3960-4c69-9841-749194c6ad64.png" 
               alt="Yelp Review" 
-              className="w-48 h-48 object-cover rounded-lg shadow-md mb-2"
+              className="w-full h-60 object-cover rounded-lg shadow-md mb-2"
             />
             <div className="mt-2 flex items-center">
               <div className="flex">
@@ -94,7 +94,7 @@ const TrustedCustomersSection = () => {
             <img 
               src="/lovable-uploads/5d9b60f7-561a-4672-acdf-29948d260793.png" 
               alt="HomeStars Review" 
-              className="w-48 h-48 object-cover rounded-lg shadow-md mb-2"
+              className="w-full h-60 object-cover rounded-lg shadow-md mb-2"
             />
             <div className="mt-2 flex items-center">
               <div className="flex">
