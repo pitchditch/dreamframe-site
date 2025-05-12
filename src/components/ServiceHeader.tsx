@@ -1,105 +1,185 @@
 
-import React from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ServiceHeaderProps {
-  title: string;
+  title: ReactNode;
   description: string;
-  youtubeId?: string;
-  mobileYoutubeId?: string;
+  icon?: ReactNode;
   imagePath?: string;
+  videoUrl?: string;
   darkOverlay?: boolean;
-  buttonPosition?: 'top' | 'bottom';
   showButton?: boolean;
+  buttonPosition?: 'center' | 'bottom';
+  youtubeId?: string; // For mobile YouTube embedding
+  youtubeDesktopId?: string; // For desktop YouTube embedding
 }
 
-const ServiceHeader: React.FC<ServiceHeaderProps> = ({
+const ServiceHeader = ({
   title,
   description,
-  youtubeId,
-  mobileYoutubeId,
+  icon,
   imagePath,
+  videoUrl,
   darkOverlay = false,
-  buttonPosition = 'top',
-  showButton = true
-}) => {
-  const navigate = useNavigate();
-  const isMobile = window.innerWidth < 768;
-  const videoId = isMobile && mobileYoutubeId ? mobileYoutubeId : youtubeId;
+  showButton = true,
+  buttonPosition = 'center',
+  youtubeId,
+  youtubeDesktopId
+}: ServiceHeaderProps) => {
+  const isMobile = useIsMobile();
   
-  const renderHeaderContent = () => (
-    <div className="text-center relative z-10">
-      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">{title}</h1>
-      <p className="text-xl text-gray-100 max-w-2xl mx-auto mb-8">
-        {description}
-      </p>
-      {buttonPosition === 'top' && showButton && (
-        <Button 
-          onClick={() => navigate('/calculator')}
-          size="lg" 
-          variant="bc-red"
-          className="font-semibold px-6 py-6 text-lg"
-        >
-          Get A Quote <ArrowRight className="ml-2" size={18} />
-        </Button>
-      )}
-    </div>
-  );
+  // Use useEffect to add and remove the has-video-header class
+  useEffect(() => {
+    if (videoUrl || youtubeId || youtubeDesktopId) {
+      document.body.classList.add('has-video-header');
+      return () => {
+        document.body.classList.remove('has-video-header');
+      };
+    }
+  }, [videoUrl, youtubeId, youtubeDesktopId]);
+
+  // Adjust title text size based on mobile view
+  const titleClasses = isMobile
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20" // Added padding top for mobile
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow";
+
+  // Determine YouTube ID based on the device and provided IDs
+  const getYouTubeIdForService = () => {
+    // If desktop ID is provided and we're on desktop, use that
+    if (!isMobile && youtubeDesktopId) {
+      return youtubeDesktopId;
+    }
+    
+    // For mobile or if no desktop ID provided
+    if (youtubeId) return youtubeId;
+    
+    // Special cases for specific services when no ID provided
+    if (!youtubeId && !youtubeDesktopId && isMobile && title) {
+      const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
+      
+      if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
+        return 'HuXyYAxC4Fs'; // Default Pressure Washing
+      } else if (titleStr.includes('gutter')) {
+        return 'EdMlx1sYJDc'; // Default Gutter Cleaning - Updated to use the new YouTube short
+      } else if (titleStr.includes('roof')) {
+        return 'twtzf2gRdFU'; // Default Roof Cleaning
+      }
+    }
+    
+    return null;
+  };
   
+  const effectiveYoutubeId = getYouTubeIdForService();
+
   return (
-    <div className={`relative ${youtubeId || imagePath ? 'h-[70vh] md:h-[60vh]' : 'py-24 bg-gray-800'}`}>
-      {youtubeId ? (
+    <div className="relative w-full h-screen">
+      {effectiveYoutubeId ? (
         <>
-          <div className="absolute inset-0 w-full h-full">
-            <div className="absolute inset-0 bg-black opacity-50 z-[1]"></div>
-            <iframe 
-              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${videoId}`}
-              title="Background video"
-              className="absolute w-full h-full object-cover"
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
+            <iframe
+              src={`https://www.youtube.com/embed/${effectiveYoutubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${effectiveYoutubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
+              title="Service Video"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ 
+                border: 0, 
+                transform: isMobile ? 'scale(3)' : 'scale(1.5)' // Increased scale for mobile to remove black bars
+              }}
               frameBorder="0"
-              allow="autoplay; encrypted-media"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              style={{ pointerEvents: 'none' }}
             ></iframe>
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
-          <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center">
-            {renderHeaderContent()}
+          <div className="absolute inset-0 flex items-center justify-center pt-16">
+            <div className="text-center p-4 max-w-xl mx-auto z-10">
+              {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
+              {title && <h1 className={titleClasses}>{title}</h1>}
+              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {showButton && buttonPosition === 'center' && (
+                <div className="mt-8">
+                  <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+                    <Link to="/calculator">Check Prices & Availability</Link>
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
+          {showButton && buttonPosition === 'bottom' && (
+            <div className="absolute bottom-10 w-full flex justify-center z-10">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-6 shadow-lg">
+                <Link to="/calculator">Check Prices & Availability</Link>
+              </Button>
+            </div>
+          )}
         </>
-      ) : imagePath ? (
+      ) : videoUrl ? (
         <>
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={imagePath} 
-              alt={title} 
-              className="w-full h-full object-cover" 
-            />
-            {darkOverlay && <div className="absolute inset-0 bg-black opacity-50"></div>}
+          <video
+            src={videoUrl}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="text-center p-4 max-w-xl mx-auto z-10">
+              {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
+              {title && <h1 className={titleClasses}>{title}</h1>}
+              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {showButton && buttonPosition === 'center' && (
+                <div className="mt-8">
+                  <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+                    <Link to="/calculator">Check Prices & Availability</Link>
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center">
-            {renderHeaderContent()}
-          </div>
+          {showButton && buttonPosition === 'bottom' && (
+            <div className="absolute bottom-10 w-full flex justify-center z-10">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-6 shadow-lg">
+                <Link to="/calculator">Check Prices & Availability</Link>
+              </Button>
+            </div>
+          )}
         </>
       ) : (
-        <div className="container mx-auto px-4 flex flex-col justify-center items-center">
-          {renderHeaderContent()}
-        </div>
-      )}
-      
-      {buttonPosition === 'bottom' && showButton && (
-        <div className="absolute bottom-10 left-0 right-0 text-center z-10">
-          <Button 
-            onClick={() => navigate('/calculator')}
-            size="lg" 
-            variant="bc-red"
-            className="font-semibold px-6 py-6 text-lg"
-          >
-            Get A Quote <ArrowRight className="ml-2" size={18} />
-          </Button>
-        </div>
+        <>
+          <img 
+            src={imagePath}
+            alt={typeof title === 'string' ? title : 'Service header image'}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          
+          {darkOverlay && (
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50" />
+          )}
+          
+          <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
+            <div className="text-center max-w-4xl px-4">
+              {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
+              {title && <h1 className={titleClasses}>{title}</h1>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">{description}</p>}
+              {showButton && buttonPosition === 'center' && (
+                <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+                  <Link to="/calculator">Check Prices & Availability</Link>
+                </Button>
+              )}
+            </div>
+          </div>
+          
+          {showButton && buttonPosition === 'bottom' && (
+            <div className="absolute bottom-10 w-full flex justify-center z-10">
+              <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold px-8 py-6 shadow-lg">
+                <Link to="/calculator">Check Prices & Availability</Link>
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

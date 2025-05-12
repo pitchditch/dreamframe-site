@@ -1,90 +1,121 @@
 import React from 'react';
-import Layout from '@/components/Layout';
-import ServiceHeader from '@/components/ServiceHeader';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { Check, ArrowRight } from 'lucide-react';
-import TestimonialsCarousel from '@/components/TestimonialsCarousel';
-import FAQSection from '@/components/FAQSection';
-import MoreServicesSection from '@/components/MoreServicesSection';
-import RoofCleaningGallery from '@/components/services/RoofCleaningGallery';
+import Layout from '../../components/Layout';
+import ServiceHeader from '../../components/ServiceHeader';
+import FAQSection from '../../components/FAQSection';
+import ServiceBenefits from '../../components/ServiceBenefits';
+import CallToAction from '../../components/CallToAction';
+import { Shield, Droplets, Leaf } from 'lucide-react';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import RoofCleaningForm from '@/components/forms/RoofCleaningForm';
-import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
-import ServiceAreaMap from '@/components/ServiceAreaMap';
-
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 const RoofCleaning = () => {
-  const faqs = [
-    {
-      question: "How often should I clean my roof?",
-      answer: "We recommend cleaning your roof every 2-3 years to prevent moss and algae buildup."
-    },
-    {
-      question: "What are the benefits of roof cleaning?",
-      answer: "Roof cleaning removes harmful moss and algae, extends the life of your roof, and improves your home's curb appeal."
-    },
-    {
-      question: "Is roof cleaning safe for my roof?",
-      answer: "Yes, our soft wash cleaning method is safe for all types of roofs and won't damage your shingles."
-    },
-    {
-      question: "Do you offer any guarantees?",
-      answer: "Yes, we offer a 100% satisfaction guarantee. If you're not happy with our work, we'll make it right."
-    },
-    {
-      question: "Are you insured?",
-      answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
-    }
-  ];
-
-  return (
-    <Layout 
-      title="Professional Roof Cleaning Services | BC Pressure Washing" 
-      description="Expert roof cleaning, moss removal and black streak removal services in Surrey, White Rock & Vancouver areas."
-    >
-      <ServiceHeader 
-        title="Professional Roof Cleaning"
-        description="Protect your roof from moss and algae with our expert cleaning services."
-        imagePath="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
-        darkOverlay={true}
-      />
+  const benefits = [{
+    title: "Prevent Roof Damage",
+    description: "Moss and algae can deteriorate roofing materials, leading to leaks and expensive repairs."
+  }, {
+    title: "Extend Roof Lifespan",
+    description: "Regular cleaning can add years to your roof's life expectancy by preventing organic growth damage."
+  }, {
+    title: "Improve Energy Efficiency",
+    description: "A clean roof reflects more sunlight and absorbs less heat, potentially reducing cooling costs."
+  }, {
+    title: "Enhance Curb Appeal",
+    description: "Remove unsightly stains and growths to dramatically improve your home's overall appearance."
+  }, {
+    title: "Maintain Property Value",
+    description: "A well-maintained roof is a significant factor in your home's market value and appeal to buyers."
+  }, {
+    title: "Prevent Health Issues",
+    description: "Mold and algae can spread into your home, creating potential health concerns for you and your family."
+  }];
+  const faqs = [{
+    question: "How often should I have my roof cleaned?",
+    answer: "Most homes benefit from roof cleaning every 1-3 years, depending on your location's climate, surrounding trees, and previous growth issues. In the Pacific Northwest's damp climate, annual inspection and cleaning may be recommended."
+  }, {
+    question: "Will roof cleaning damage my shingles?",
+    answer: "Our soft washing technique is specifically designed to clean effectively without damaging roofing materials. We never use high pressure on asphalt shingles, which can remove granules and shorten roof life."
+  }, {
+    question: "How do you remove the moss and algae without damaging my roof?",
+    answer: "We use a specialized two-step process: first applying an environmentally responsible cleaning solution that kills the organic growth, followed by gentle low-pressure rinsing. This method effectively removes growths without damaging shingles."
+  }, {
+    question: "Will the cleaning solution harm my plants or landscaping?",
+    answer: "We take precautions to protect your landscaping by pre-wetting plants and covering sensitive areas. Our cleaning solutions are biodegradable and, when properly diluted and applied, won't harm your landscaping."
+  }, {
+    question: "How long does roof cleaning take?",
+    answer: "For an average home, professional roof cleaning typically takes 3-5 hours. Larger homes or those with severe growth may take longer. Weather conditions can also affect timing."
+  }];
+  return <Layout title="Professional Roof Cleaning Services | BC Pressure Washing" description="Expert roof cleaning services in White Rock, Surrey and Metro Vancouver. Prevent damage and extend the life of your roof with our soft washing techniques.">
+      <ServiceHeader title="Professional Roof Cleaning" description="Protect your investment with our safe and effective roof cleaning service." youtubeId="twtzf2gRdFU" // Mobile YouTube video ID
+    youtubeDesktopId="GJZpuELGJpI" // Desktop YouTube video ID
+    />
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="md:col-span-1 lg:pr-8">
-              <h2 className="text-3xl font-bold mb-6">Protect Your Roof with Professional Cleaning</h2>
+          <div className="grid md:grid-cols-2 gap-10">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Restore Your Roof's Beauty</h2>
               <p className="text-lg text-gray-700 mb-4">
-                Moss, algae, and lichen can cause serious damage to your roof over time. Our professional roof cleaning services remove these harmful growths, extending the life of your roof and improving your home's curb appeal.
+                Moss, algae, and lichen can not only make your roof look unsightly but also cause significant damage over time. Our professional roof cleaning service safely removes these growths, extending the life of your roof and enhancing your home's curb appeal.
               </p>
-              <p className="text-lg text-gray-700">
-                We use a soft wash cleaning method that is safe for all types of roofs, including asphalt shingles, tile, and metal. Our process won't damage your roof or remove any granules.
-              </p>
-              <div className="mt-6">
-                <h3 className="text-xl font-semibold mb-3">Our Roof Cleaning Services Include:</h3>
-                <ul className="list-none pl-0">
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Moss and algae removal
-                  </li>
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Black streak removal
-                  </li>
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Soft wash cleaning method
-                  </li>
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Environmentally friendly cleaning solutions
-                  </li>
-                </ul>
+
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <Shield size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Safe Soft Washing Techniques</h3>
+                    <p className="text-gray-600">
+                      We use low-pressure soft washing to gently remove moss and algae without damaging your roofing materials.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <Droplets size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Effective Algae and Moss Removal</h3>
+                    <p className="text-gray-600">
+                      Our specialized cleaning solutions effectively kill and remove moss, algae, and lichen, preventing regrowth for longer-lasting results.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                    <Leaf size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Eco-Friendly Cleaning Products</h3>
+                    <p className="text-gray-600">
+                      We use environmentally friendly cleaning solutions that are safe for your family, pets, and landscaping.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <PriceCalculatorOverlay buttonText="Check Price & Availability" variant="bc-red" />
+                <a href="tel:7788087620" className="bg-green-600 hover:bg-green-700 text-white text-center py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                  </svg>
+                  Call Now: (778) 808-7620
+                </a>
+              </div>
+              
+              <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
+                <h3 className="text-xl font-bold mb-2 text-amber-800">Roof Cleaning Warning!</h3>
+                <p className="text-amber-700">
+                  Ignoring moss and algae growth can lead to significant roof damage and costly repairs. Protect your investment with regular, professional cleaning.
+                </p>
               </div>
             </div>
-            <div className="md:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1">
-                <RoofCleaningForm />
-              </div>
+            
+            <div className="bg-white rounded-lg shadow-xl p-6 border-2 border-gray-100">
+              <RoofCleaningForm />
             </div>
           </div>
         </div>
@@ -92,50 +123,73 @@ const RoofCleaning = () => {
       
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Before & After</h2>
-          <RoofCleaningGallery />
+          <ServiceBenefits title="Benefits of Professional Roof Cleaning" subtitle="Protect your biggest investment and enhance your home's appearance with our safe and effective roof cleaning services" benefits={benefits} />
         </div>
       </section>
       
-      <TestimonialsCarousel />
-      
-      <FAQSection
-        title="Frequently Asked Questions"
-        subtitle="Get answers to common questions about our roof cleaning services"
-        faqs={faqs}
-      />
-      
-      <MoreServicesSection />
-
-      <section className="py-12 bg-gray-100">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Areas We Service</h2>
-          <ServiceAreaMap />
-          <div className="mt-8">
-            <ServiceAreasCarousel />
-          </div>
-        </div>
-      </section>
-      
-      {/* CTA Section with Updated Background */}
-      <div className="bg-cover bg-center py-16 relative" style={{ backgroundImage: `url('/lovable-uploads/59401248-58ee-4944-b37e-410cc26c471d.png')` }}>
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready for a Cleaner, Healthier Roof?</h2>
-            <p className="text-lg md:text-xl text-gray-100 mb-8">
-              Book your professional roof cleaning service today and protect your home's most important asset.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild variant="bc-red" size="lg" className="px-8 py-6">
-                <Link to="/calculator">Get Your Free Quote</Link>
-              </Button>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Our Roof Cleaning Process</h2>
+            
+            <div className="space-y-8">
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-2/5">
+                  <img alt="Roof Assessment" className="rounded-lg shadow-md w-full" src="/lovable-uploads/5f628a3f-670b-4ac2-b2b8-f6e15c408c3f.jpg" />
+                </div>
+                <div className="md:w-3/5">
+                  <h3 className="text-xl font-bold mb-2">1. Roof Assessment</h3>
+                  <p className="text-gray-700">
+                    We start with a thorough inspection of your roof to identify the type of growth, assess the condition of your roofing materials, and determine the best cleaning approach.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-3/5 md:order-1 order-2">
+                  <h3 className="text-xl font-bold mb-2">2. Preparation and Protection</h3>
+                  <p className="text-gray-700">
+                    We protect your landscaping, plants, and surrounding areas by covering them with tarps and taking precautions to prevent any damage during the cleaning process.
+                  </p>
+                </div>
+                <div className="md:w-2/5 md:order-2 order-1">
+                  <img src="/lovable-uploads/11de9343-a9b0-48b8-b747-d18318f16d86.png" alt="Area Protection" className="rounded-lg shadow-md w-full" />
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-2/5">
+                  <img alt="Soft Washing Application" className="rounded-lg shadow-md w-full" src="/lovable-uploads/06bbf1e1-0ee0-4176-9417-4af9bf7a4460.jpg" />
+                </div>
+                <div className="md:w-3/5">
+                  <h3 className="text-xl font-bold mb-2">3. Soft Washing Application</h3>
+                  <p className="text-gray-700">
+                    We apply our eco-friendly cleaning solution using a low-pressure soft washing system. This ensures the solution gently penetrates and kills the moss, algae, and lichen without damaging your roofing materials.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="md:w-3/5 md:order-1 order-2">
+                  <h3 className="text-xl font-bold mb-2">4. Rinsing and Cleanup</h3>
+                  <p className="text-gray-700">
+                    After allowing the cleaning solution to dwell for the appropriate time, we gently rinse your roof to remove the dead moss and algae. We then clean up any remaining debris, leaving your property clean and tidy.
+                  </p>
+                </div>
+                <div className="md:w-2/5 md:order-2 order-1">
+                  <img alt="Rinsing and Cleanup" className="rounded-lg shadow-md w-full" src="/lovable-uploads/781082de-7949-4655-bc96-5ef110675262.jpg" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Layout>
-  );
+      </section>
+      
+      <TestimonialsSection />
+      
+      <FAQSection title="Frequently Asked Questions About Roof Cleaning" subtitle="Get answers to common questions about our roof cleaning services" faqs={faqs} />
+      
+      <CallToAction title="Ready for a Cleaner, Healthier Roof?" subtitle="Contact us today for a free estimate and protect your home with our professional roof cleaning service." />
+    </Layout>;
 };
-
 export default RoofCleaning;

@@ -1,88 +1,84 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { Check, ArrowRight } from 'lucide-react';
-import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import CallToAction from '../../components/CallToAction';
+import { ExternalLink, MessageCircle } from 'lucide-react';
+import ServiceProcessSection from '../../components/services/pressure-washing/ServiceProcessSection';
+import ServiceBenefitsSection from '../../components/services/pressure-washing/ServiceBenefitsSection';
+import ServiceFeatures from '../../components/services/pressure-washing/ServiceFeatures';
+import DrivewayCleaning from '../../components/services/pressure-washing/DrivewayCleaning';
+import ImageCarousel from '../../components/services/pressure-washing/ImageCarousel';
+import MoreServicesSection from '../../components/MoreServicesSection';
+import CitiesCarousel from '@/components/CitiesCarousel';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
-import MoreServicesSection from '@/components/MoreServicesSection';
-import ServiceProcessSection from '@/components/services/pressure-washing/ServiceProcessSection';
-import ServiceBenefitsSection from '@/components/services/pressure-washing/ServiceBenefitsSection';
-import ImageCarousel from '@/components/services/pressure-washing/ImageCarousel';
-import DrivewayCleaning from '@/components/services/pressure-washing/DrivewayCleaning';
-import ServiceFeatures from '@/components/services/pressure-washing/ServiceFeatures';
 import PressureWashingForm from '@/components/forms/PressureWashingForm';
+import { Card } from '@/components/ui/card';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
 
 const PressureWashing = () => {
   const faqs = [
     {
-      question: "What types of surfaces can you pressure wash?",
-      answer: "We can pressure wash a wide variety of surfaces, including concrete, brick, siding, wood, and more. We adjust our pressure settings and cleaning solutions to safely and effectively clean each surface."
+      question: "Do you use eco-friendly cleaning solutions?",
+      answer: "Yes, we use biodegradable, environmentally friendly cleaning solutions that are safe for your property, your family, and your pets, while still delivering excellent cleaning results."
     },
     {
-      question: "Is pressure washing safe for my property?",
-      answer: "Yes, when done correctly. Our experienced technicians use the appropriate pressure and techniques to avoid damaging your property. We also take precautions to protect plants, windows, and other sensitive areas."
+      question: "Will pressure washing damage my property?",
+      answer: "Our technicians are trained to use appropriate pressure levels for different surfaces. We utilize soft washing techniques for delicate surfaces and adjust our approach to ensure effective cleaning without damage."
     },
     {
-      question: "How often should I pressure wash my home?",
-      answer: "We recommend pressure washing your home every 1-2 years to remove dirt, grime, and mildew. However, this can vary depending on your location and the amount of exposure your home has to the elements."
+      question: "How often should I have my property pressure washed?",
+      answer: "Most residential properties benefit from annual pressure washing. However, homes in areas with high humidity, extensive tree coverage, or near water bodies may require cleaning every 6-8 months to prevent buildup of organic growth."
     },
     {
-      question: "Do I need to be home during the pressure washing service?",
-      answer: "No, you do not need to be home during the service. However, we do ask that you close all windows and doors and remove any items that could be damaged by the water pressure."
+      question: "How long does pressure washing take?",
+      answer: "The time required depends on the size and condition of the area being cleaned. A typical house exterior might take 3-5 hours, while a driveway or deck could take 1-2 hours. We'll provide a time estimate when you book your service."
     },
     {
-      question: "Are you insured?",
-      answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
+      question: "What preparation is needed before you arrive?",
+      answer: "We ask that you remove any obstacles like furniture, potted plants, garden hoses, and vehicles from the areas to be cleaned. Also, please ensure exterior electrical outlets are accessible and water sources are turned on."
     }
   ];
-
+  
   return (
-    <Layout 
-      title="Professional Pressure Washing Services | BC Pressure Washing" 
-      description="Expert pressure washing services for homes and businesses in Surrey, White Rock & Vancouver areas."
-    >
+    <Layout title="Professional Pressure Washing Services | Surrey & White Rock" description="Expert pressure washing services for homes and businesses. Remove dirt, grime, and stains with our specialized equipment and eco-friendly solutions.">
       <ServiceHeader 
         title="Professional Pressure Washing"
-        description="Revitalize your property with our expert pressure washing services. Serving Surrey, White Rock & Metro Vancouver."
-        youtubeId="Eqv9-jVzPMU"
+        description="Restore the beauty of your exterior surfaces with our specialized pressure washing services."
+        youtubeId="lYnXijewxCM"
       />
       
-      <ServiceBenefitsSection />
-
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
             <div className="md:col-span-1 lg:pr-8">
-              <h2 className="text-3xl font-bold mb-6">Transform Your Home with Pressure Washing</h2>
+              <h2 className="text-3xl font-bold mb-6">Revitalize Your Home's Exterior</h2>
               <p className="text-lg text-gray-700 mb-4">
-                Over time, dirt, grime, and mildew can accumulate on your home's exterior, making it look dull and uninviting. Our professional pressure washing services can remove these unsightly stains and restore your home's natural beauty.
+                Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
               </p>
               <p className="text-lg text-gray-700">
-                We use the latest equipment and techniques to safely and effectively clean a variety of surfaces, including siding, brick, concrete, and more.
+                Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
               </p>
-              <div className="mt-6">
-                <h3 className="text-xl font-semibold mb-3">Our Pressure Washing Services Include:</h3>
-                <ul className="list-none pl-0">
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    House washing
-                  </li>
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Driveway and walkway cleaning
-                  </li>
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Deck and patio cleaning
-                  </li>
-                  <li className="mb-2 flex items-center">
-                    <Check className="text-green-500 mr-2" size={16} />
-                    Fence cleaning
-                  </li>
-                </ul>
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Siding & exterior walls</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Fences & gates</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Decks & patios</span>
+                </div>
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-16 h-16 object-cover rounded-lg" />
+                  <span className="font-medium">Driveways & walkways</span>
+                </div>
               </div>
+              <ServiceFeatures />
             </div>
             <div className="md:col-span-1">
               <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1">
@@ -93,15 +89,40 @@ const PressureWashing = () => {
         </div>
       </section>
       
+      <section className="w-full bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <ServiceBenefitsSection />
+        </div>
+      </section>
+      
       <ServiceProcessSection />
       
       <DrivewayCleaning />
       
-      <ImageCarousel />
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-6">Recent Pressure Washing Project</h2>
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            See the impressive results we've achieved for commercial clients in the South Surrey and White Rock area.
+          </p>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="overflow-hidden rounded-lg shadow-xl">
+              <img 
+                src="/lovable-uploads/a2a1376b-3da7-4c9d-9a85-60ba24418d4f.png" 
+                alt="South Abbotsford Church Pressure Washing Project"
+                className="w-full h-auto" 
+              />
+              <div className="p-6 bg-white">
+                <h3 className="font-bold text-xl mb-2">South Abbotsford Church</h3>
+                <p className="text-gray-700">Commercial pressure washing service for walkways, entrances and exterior surfaces to remove dirt, grime, and organic growth.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
-      <ServiceFeatures />
-      
-      <TestimonialsCarousel />
+      <TestimonialsSection />
       
       <FAQSection
         title="Frequently Asked Questions"
@@ -111,26 +132,17 @@ const PressureWashing = () => {
       
       <MoreServicesSection />
       
-      {/* CTA Section with updated background */}
-      <div className="bg-cover bg-center py-16 relative" style={{ backgroundImage: `url('/lovable-uploads/6484c6c5-3c65-46de-b9f2-c054c708124b.png')` }}>
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Transform Your Property?</h2>
-            <p className="text-lg md:text-xl text-gray-100 mb-8">
-              Book your professional pressure washing service today and see the difference.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild variant="bc-red" size="lg" className="px-8 py-6">
-                <Link to="/calculator">Get Your Free Quote</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="px-8 py-6 bg-transparent text-white border-white hover:bg-white hover:text-gray-900">
-                <a href="tel:7788087620">Call Us: 778-808-7620</a>
-              </Button>
-            </div>
-          </div>
+      <section className="py-12 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Areas We Service</h2>
+          <ServiceAreaMap />
         </div>
-      </div>
+      </section>
+      
+      <CallToAction 
+        title="Ready to Transform Your Property?"
+        subtitle="Contact us today for a free estimate on our pressure washing services."
+      />
     </Layout>
   );
 };

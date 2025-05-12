@@ -1,73 +1,130 @@
 
 import React from 'react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { testimonials } from '@/data/testimonials';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star } from 'lucide-react';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+} from "@/components/ui/carousel";
+
+interface CustomerTestimonial {
+  image: string;
+  name: string;
+  location: string;
+  service: string;
+  date: string;
+  quote?: string;
+}
 
 const TrustedCustomersSection = () => {
-  // Filter testimonials to only show the first 6
-  const displayedTestimonials = testimonials.slice(0, 6);
+  const [api, setApi] = React.useState<any>();
   
+  const customers: CustomerTestimonial[] = [
+    {
+      image: "/lovable-uploads/2eaacd17-5dff-4af1-b073-c2ecadfdb6d0.png",
+      name: "David",
+      location: "White Rock",
+      service: "Window Cleaning",
+      date: "May 2025",
+      quote: "They nailed it. Windows look crystal clear."
+    },
+    {
+      image: "/lovable-uploads/37b96fc3-a1ad-49b9-b3df-85633bef1d67.png",
+      name: "James",
+      location: "Surrey",
+      service: "Pressure Washing",
+      date: "April 2025",
+      quote: "Professional service from start to finish."
+    },
+    {
+      image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
+      name: "Vikram", 
+      location: "South Surrey",
+      service: "Roof Cleaning",
+      date: "March 2025",
+      quote: "Best decision I made. Roof looks brand new."
+    },
+    {
+      image: "/lovable-uploads/74fff6dd-0d95-4d31-bb6a-606b14280b3a.png",
+      name: "John",
+      location: "White Rock",
+      service: "Window Cleaning",
+      date: "May 2025",
+      quote: "Couldn't be happier with the results!"
+    },
+    {
+      image: "/lovable-uploads/4c1d610e-379a-49cb-9f37-ef1b48a248f4.png",
+      name: "David",
+      location: "Langley",
+      service: "Window Cleaning",
+      date: "April 2025",
+      quote: "Great experience. Will use them again."
+    }
+  ];
+  
+  // Auto-rotate carousel continuously without pausing
+  React.useEffect(() => {
+    if (!api) return;
+    
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
-    <section className="py-16 bg-gray-100">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold">Trusted by Local Homeowners</h2>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
-            See why so many homeowners in White Rock, Surrey, and across Metro Vancouver choose us for all their exterior cleaning needs.
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">Trusted by Real Homeowners – Verified Customers</h2>
+          <p className="text-gray-600 max-w-3xl mx-auto">
+            Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.
           </p>
+          <div className="mt-4">
+            <span className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-medium">
+              Spring Shoot Catalog
+            </span>
+          </div>
         </div>
         
-        <div className="max-w-5xl mx-auto">
-          <Carousel className="w-full">
+        {/* Carousel View (for all screen sizes) */}
+        <div className="relative max-w-xl mx-auto">
+          <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
             <CarouselContent>
-              {displayedTestimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-2">
-                    <div className="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">
-                      <div className="flex items-center mb-4">
-                        <Avatar className="h-10 w-10 mr-3">
-                          {testimonial.profileImage ? (
-                            <AvatarImage src={testimonial.profileImage} alt={testimonial.name} />
-                          ) : null}
-                          <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <h3 className="font-medium text-gray-800">{testimonial.name}</h3>
-                          <p className="text-sm text-gray-500">{testimonial.location}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex mb-2">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                      
-                      <p className="text-gray-600 italic text-sm flex-grow">
-                        "{testimonial.quote.length > 120 
-                          ? testimonial.quote.substring(0, 120) + '...' 
-                          : testimonial.quote}"
-                      </p>
-                      
-                      {testimonial.beforeAfterImage && (
-                        <div className="mt-4 h-40 overflow-hidden rounded-md">
-                          <img 
-                            src={testimonial.beforeAfterImage} 
-                            alt="Before and after cleaning" 
-                            className="w-full h-full object-cover" 
-                          />
-                        </div>
-                      )}
+              {customers.map((customer, index) => (
+                <CarouselItem key={index} className="basis-full">
+                  <div className="flex flex-col items-center text-center p-2">
+                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
+                      <img 
+                        src={customer.image} 
+                        alt={`${customer.name} from ${customer.location}`} 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
+                    <h4 className="font-semibold text-lg">{customer.name}</h4>
+                    <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
+                    <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
+                    {customer.quote && (
+                      <p className="mt-2 italic text-sm">"{customer.quote}"</p>
+                    )}
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-0" />
-            <CarouselNext className="right-0" />
           </Carousel>
+          
+          <div className="flex justify-center mt-4">
+            {customers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={`w-2 h-2 mx-1 rounded-full transition-colors ${
+                  api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
