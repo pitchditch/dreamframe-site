@@ -45,7 +45,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/74fff6dd-0d95-4d31-bb6a-606b14280b3a.png",
-      name: "Jennifer",
+      name: "Jennifer & Frank",
       location: "White Rock",
       service: "Window Cleaning",
       date: "May 2025",
