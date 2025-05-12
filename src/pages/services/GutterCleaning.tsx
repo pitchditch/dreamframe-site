@@ -284,19 +284,14 @@ const GutterCleaning = () => {
             <h2 className="text-3xl font-bold text-center mb-8">Gutter Guards Installation</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div className="order-2 md:order-1 w-full">
-                <video 
-                  ref={videoRef}
+                <iframe
                   className="w-full h-full aspect-video rounded-lg shadow-lg"
-                  src="https://www.example.com/gutter-guards-video.mp4" 
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  poster="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png"
-                  preload="auto"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                  src="https://www.youtube.com/embed/OICbIRmx-80?autoplay=1&mute=1&controls=0&loop=1&playlist=OICbIRmx-80&showinfo=0&rel=0"
+                  title="Gutter Guards Installation"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
               <div className="order-1 md:order-2">
                 <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>

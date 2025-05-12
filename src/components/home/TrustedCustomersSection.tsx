@@ -37,7 +37,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/09e0bf79-aa0b-43bd-be2b-3a2b44bf5bc9.png",
-      name: "Vikram", 
+      name: "Michael", 
       location: "South Surrey",
       service: "Roof Cleaning",
       date: "March 2025",
@@ -45,7 +45,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/74fff6dd-0d95-4d31-bb6a-606b14280b3a.png",
-      name: "John",
+      name: "Jennifer",
       location: "White Rock",
       service: "Window Cleaning",
       date: "May 2025",
@@ -53,7 +53,7 @@ const TrustedCustomersSection = () => {
     },
     {
       image: "/lovable-uploads/4c1d610e-379a-49cb-9f37-ef1b48a248f4.png",
-      name: "David",
+      name: "Robert",
       location: "Langley",
       service: "Window Cleaning",
       date: "April 2025",
