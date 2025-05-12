@@ -1,16 +1,18 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
-import ServiceProcessSection from '../../components/services/gutter-cleaning/ServiceProcessSection';
+import ServiceProcess from '../../components/ServiceProcess';
 import MoreServicesSection from '../../components/MoreServicesSection';
 import CitiesCarousel from '@/components/CitiesCarousel';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import { Button } from '@/components/ui/button';
 
 const GutterCleaning = () => {
   const faqs = [
@@ -33,6 +35,33 @@ const GutterCleaning = () => {
     {
       question: "Are you insured?",
       answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
+    }
+  ];
+
+  const gutterCleaningProcesses = [
+    {
+      title: "Inspection",
+      description: "We begin by inspecting your gutters to assess their condition and identify any issues.",
+      icon: <Check size={24} />,
+      number: 1
+    },
+    {
+      title: "Debris Removal",
+      description: "We remove all leaves, twigs, and debris from your gutters and downspouts by hand.",
+      icon: <Check size={24} />,
+      number: 2
+    },
+    {
+      title: "Flushing",
+      description: "We flush your gutters with water to ensure proper flow and check for any leaks or drainage issues.",
+      icon: <Check size={24} />,
+      number: 3
+    },
+    {
+      title: "Final Inspection",
+      description: "We conduct a thorough final inspection to ensure your gutters are clean and functioning properly.",
+      icon: <Check size={24} />,
+      number: 4
     }
   ];
   
@@ -86,7 +115,12 @@ const GutterCleaning = () => {
         </div>
       </section>
       
-      <ServiceProcessSection />
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Our Gutter Cleaning Process</h2>
+          <ServiceProcess processes={gutterCleaningProcesses} />
+        </div>
+      </section>
       
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">

@@ -1,16 +1,16 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
-import { ExternalLink, MessageCircle } from 'lucide-react';
-import ServiceProcessSection from '../../components/services/roof-cleaning/ServiceProcessSection';
-import ServiceBenefitsSection from '../../components/services/roof-cleaning/ServiceBenefitsSection';
+import { ExternalLink, MessageCircle, Check, CheckCircle } from 'lucide-react';
+import ServiceProcess from '../../components/ServiceProcess';
+import ServiceBenefits from '../../components/ServiceBenefits';
 import MoreServicesSection from '../../components/MoreServicesSection';
 import CitiesCarousel from '@/components/CitiesCarousel';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import RoofCleaningForm from '@/components/forms/RoofCleaningForm';
-import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
@@ -38,13 +38,69 @@ const RoofCleaning = () => {
       answer: "Yes, we use eco-friendly cleaning solutions that are safe for your property, your family, and the environment. Our products are biodegradable and won't harm your landscaping."
     }
   ];
+
+  const roofCleaningProcesses = [
+    {
+      title: "Inspection",
+      description: "We begin with a thorough inspection of your roof to identify areas of concern and determine the best cleaning approach.",
+      icon: <Check size={24} />,
+      number: 1
+    },
+    {
+      title: "Protection",
+      description: "Our team prepares the surrounding area, protecting your landscaping and property from cleaning solutions and debris.",
+      icon: <Check size={24} />,
+      number: 2
+    },
+    {
+      title: "Treatment",
+      description: "We apply our eco-friendly cleaning solution to kill moss, algae, and other organic growth on your roof.",
+      icon: <Check size={24} />,
+      number: 3
+    },
+    {
+      title: "Removal",
+      description: "We carefully remove debris and rinse your roof with a gentle low-pressure system to preserve your shingles.",
+      icon: <Check size={24} />,
+      number: 4
+    }
+  ];
+
+  const roofCleaningBenefits = [
+    {
+      title: "Extended Roof Life",
+      description: "Regular cleaning prevents damage from moss and algae, potentially extending your roof's lifespan by years.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Improved Energy Efficiency",
+      description: "A clean roof reflects more sunlight, helping to keep your home cooler in summer and reducing energy costs.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Enhanced Curb Appeal",
+      description: "Removing unsightly stains and growth dramatically improves your home's appearance and value.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Prevent Costly Repairs",
+      description: "Regular cleaning helps identify and address minor issues before they become expensive repairs.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Maintain Warranty",
+      description: "Many shingle manufacturers require regular roof maintenance to maintain warranty coverage.",
+      icon: <Check size={18} />
+    }
+  ];
   
   return (
     <Layout title="Professional Roof Cleaning Services | Surrey & White Rock" description="Expert roof cleaning services to remove moss, algae, and debris, protecting your roof and extending its lifespan.">
       <ServiceHeader 
         title="Professional Roof Cleaning"
         description="Protect your roof and extend its lifespan with our expert cleaning services."
-        youtubeId="twtzf2gRdFU"
+        youtubeId="eQSgdx9ujcc"
+        mobileYoutubeId="twtzf2gRdFU"
       />
       
       <section className="py-16 bg-white">
@@ -88,11 +144,29 @@ const RoofCleaning = () => {
       
       <section className="w-full bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <ServiceBenefitsSection />
+          <h2 className="text-3xl font-bold text-center mb-8">Benefits of Professional Roof Cleaning</h2>
+          <ServiceBenefits benefits={roofCleaningBenefits} />
+        </div>
+      </section>
+
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-6">We Clean Moss</h2>
+          <div className="max-w-4xl mx-auto mt-8">
+            <img src="/lovable-uploads/5d9b60f7-561a-4672-acdf-29948d260793.png" alt="Roof Moss Cleaning" className="w-full h-auto rounded-lg shadow-lg" />
+            <p className="text-lg text-gray-700 mt-4">
+              Moss growth on your roof can cause significant damage if left untreated. Our specialized cleaning process effectively removes moss without damaging your roofing materials.
+            </p>
+          </div>
         </div>
       </section>
       
-      <ServiceProcessSection />
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Our Roof Cleaning Process</h2>
+          <ServiceProcess processes={roofCleaningProcesses} />
+        </div>
+      </section>
       
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">

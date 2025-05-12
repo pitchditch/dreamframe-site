@@ -1,10 +1,12 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
 import { ExternalLink, MessageCircle } from 'lucide-react';
-import ServiceProcessSection from '../../components/services/window-cleaning/ServiceProcessSection';
-import ServiceBenefitsSection from '../../components/services/window-cleaning/ServiceBenefitsSection';
+import ServiceProcess from '../../components/ServiceProcess';
+import ServiceBenefits from '../../components/ServiceBenefits';
+import { Check } from 'lucide-react';
 import TestimonialsSection from '../../components/home/TestimonialsSection';
 import FAQSection from '../../components/FAQSection';
 import MoreServicesSection from '../../components/MoreServicesSection';
@@ -12,8 +14,8 @@ import CitiesCarousel from '@/components/CitiesCarousel';
 import WindowCleaningForm from '@/components/forms/WindowCleaningForm';
 import { Card } from '@/components/ui/card';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
-import BeforeAfterSection from '@/components/services/window-cleaning/BeforeAfterSection';
-import WhyChooseUsSection from '@/components/services/window-cleaning/WhyChooseUsSection';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const WindowCleaning = () => {
   const faqs = [
@@ -36,6 +38,60 @@ const WindowCleaning = () => {
     {
       question: "How long does the window cleaning service take?",
       answer: "The duration of the service depends on the size and number of windows in your home or business. We will provide you with an estimated time frame when you book your appointment."
+    }
+  ];
+
+  const windowCleaningProcesses = [
+    {
+      title: "Assessment",
+      description: "We start with a thorough assessment of your windows and property to determine the best cleaning approach.",
+      icon: <Check size={24} />,
+      number: 1
+    },
+    {
+      title: "Preparation",
+      description: "Our team prepares the area, removing obstacles and ensuring your property is protected during cleaning.",
+      icon: <Check size={24} />,
+      number: 2
+    },
+    {
+      title: "Cleaning",
+      description: "Using our professional tools and eco-friendly cleaning solutions, we clean each window inside and out.",
+      icon: <Check size={24} />,
+      number: 3
+    }
+  ];
+
+  const windowCleaningBenefits = [
+    {
+      title: "Improved Natural Light",
+      description: "Clean windows allow more natural light to enter your home, creating a brighter, more inviting environment.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Enhanced Curb Appeal",
+      description: "Sparkling windows instantly improve your property's appearance and create a positive first impression.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Extended Window Life",
+      description: "Regular cleaning prevents corrosion and extends the lifespan of your windows and frames.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Better Energy Efficiency",
+      description: "Clean windows maximize sunlight transmission, potentially reducing your heating costs during colder months.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Healthier Indoor Environment",
+      description: "Removing accumulated dust, pollen, and allergens from your windows improves indoor air quality.",
+      icon: <Check size={18} />
+    },
+    {
+      title: "Professional Results",
+      description: "Our skilled technicians deliver streak-free, spotless windows that DIY methods simply can't match.",
+      icon: <Check size={18} />
     }
   ];
   
@@ -88,15 +144,50 @@ const WindowCleaning = () => {
       
       <section className="w-full bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <ServiceBenefitsSection />
+          <h2 className="text-3xl font-bold text-center mb-8">Benefits of Professional Window Cleaning</h2>
+          <ServiceBenefits benefits={windowCleaningBenefits} />
         </div>
       </section>
       
-      <WhyChooseUsSection />
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Why Choose Our Window Cleaning Service</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Experienced Professionals</h3>
+              <p className="text-gray-600">Our fully trained and insured team has years of experience cleaning windows of all types and sizes.</p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Advanced Equipment</h3>
+              <p className="text-gray-600">We use professional-grade tools and purified water systems for spotless results every time.</p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Eco-Friendly Solutions</h3>
+              <p className="text-gray-600">Our cleaning solutions are effective yet safe for your family, pets, and the environment.</p>
+            </Card>
+          </div>
+        </div>
+      </section>
       
-      <BeforeAfterSection />
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-3">Before & After</h2>
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            See the dramatic difference our professional window cleaning makes on homes in Surrey and White Rock.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <img src="/lovable-uploads/5d9b60f7-561a-4672-acdf-29948d260793.png" alt="Before Window Cleaning" className="rounded-lg shadow-lg w-full h-auto" />
+            <img src="/lovable-uploads/ef54ad3a-1e61-4d1e-b827-b556187487ef.png" alt="After Window Cleaning" className="rounded-lg shadow-lg w-full h-auto" />
+          </div>
+        </div>
+      </section>
       
-      <ServiceProcessSection />
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Our Window Cleaning Process</h2>
+          <ServiceProcess processes={windowCleaningProcesses} />
+        </div>
+      </section>
       
       <TestimonialsSection />
       
