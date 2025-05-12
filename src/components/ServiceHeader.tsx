@@ -43,8 +43,8 @@ const ServiceHeader = ({
 
   // Adjust title text size based on mobile view
   const titleClasses = isMobile
-    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20" // Added padding top for mobile
-    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow";
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-20 text-shadow-lg" // Added text shadow for mobile
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg"; // Enhanced text shadow for desktop
 
   // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
@@ -85,19 +85,20 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(3)' : 'scale(1.5)' // Increased scale for mobile to remove black bars
+                transform: isMobile ? 'scale(3)' : 'scale(1.5)', // Increased scale for mobile to remove black bars
+                transformOrigin: 'center center' // Ensure scaling happens from center
               }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Increased opacity for better text contrast */}
           </div>
           <div className="absolute inset-0 flex items-center justify-center pt-16">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
-              {description && <p className="text-lg md:text-xl text-gray-200">{description}</p>}
+              {description && <p className="text-lg md:text-xl text-gray-100 text-shadow-sm font-medium">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
                   <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
