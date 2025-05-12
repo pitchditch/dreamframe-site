@@ -88,7 +88,7 @@ const HeroSection = () => {
             // Mobile YouTube Video - Using the specific short video requested
             <iframe 
               id="hero-mobile-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[2.2] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full top-0 left-0 scale-[1.8] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
               title="Pressure Washing Video"
               frameBorder="0"
@@ -173,11 +173,11 @@ const HeroSection = () => {
           <img 
             src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
             alt="Jayden Fisher - Owner" 
-            className="w-20 h-20 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md"
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md"
           />
           <div className="text-center sm:text-left">
-            <p className="font-bold text-white text-base md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
-            <p className="text-white font-medium">— Jayden Fisher, Owner</p>
+            <p className="font-bold text-white text-sm md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
+            <p className="text-white font-medium text-xs md:text-base">— Jayden Fisher, Owner</p>
           </div>
         </div>
       </div>

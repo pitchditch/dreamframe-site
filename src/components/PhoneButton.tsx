@@ -48,12 +48,12 @@ const PhoneButton = () => {
   return (
     <>
       {isVisible && (
-        <div className="fixed bottom-6 right-6 z-30 md:hidden">
+        <div className="fixed bottom-6 right-6 z-50">
           <a
             href="tel:7788087620"
             onClick={handleCallClick}
-            className={`flex items-center gap-2 bg-bc-red hover:bg-red-700 text-white ${
-              iconOnly ? 'p-3 rounded-full' : showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
+            className={`flex items-center justify-center gap-2 bg-bc-red hover:bg-red-700 text-white ${
+              iconOnly ? 'p-3 rounded-full w-12 h-12' : showCompact ? 'px-3 py-3 rounded-full' : 'px-6 py-4 rounded-full'
             } shadow-lg transition-all duration-300`}
             aria-label="Call us now"
           >

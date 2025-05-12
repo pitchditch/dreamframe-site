@@ -1,4 +1,3 @@
-
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -85,7 +84,7 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(5)' : 'scale(1.5)', // Increased scale for mobile to completely remove black bars
+                transform: isMobile ? 'scale(1.6)' : 'scale(1.5)', // Reduced scale for mobile to prevent too much zoom
               }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
