@@ -13,17 +13,24 @@ const TrustedCustomersSection = () => {
         </div>
         
         <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16">
-          {/* Google Logo with Link */}
+          {/* Google with Logo and Link */}
           <a 
             href="https://www.google.com/search?q=bc+pressure+washing&oq=bc+pressure+washing" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex flex-col items-center transition-transform hover:scale-105 group"
           >
+            <div className="flex items-center mb-2">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" 
+                alt="Google Reviews" 
+                className="h-10 object-contain"
+              />
+            </div>
             <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" 
-              alt="Google Reviews" 
-              className="h-12 object-contain"
+              src="/lovable-uploads/8090d09c-920d-4acb-8b9e-222865d6b8fc.png" 
+              alt="Google Review" 
+              className="w-48 h-48 object-cover rounded-lg shadow-md mb-2"
             />
             <div className="mt-2 flex items-center">
               <div className="flex">
@@ -38,17 +45,24 @@ const TrustedCustomersSection = () => {
             <span className="mt-1 text-sm text-bc-red group-hover:underline">View Reviews</span>
           </a>
           
-          {/* Yelp Logo with Link */}
+          {/* Yelp with Logo and Link */}
           <a 
             href="https://www.yelp.com/biz/bc-pressure-washing-white-rock" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex flex-col items-center transition-transform hover:scale-105 group"
           >
+            <div className="flex items-center mb-2">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Yelp_Logo.svg/2560px-Yelp_Logo.svg.png" 
+                alt="Yelp Reviews" 
+                className="h-10 object-contain"
+              />
+            </div>
             <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Yelp_Logo.svg/2560px-Yelp_Logo.svg.png" 
-              alt="Yelp Reviews" 
-              className="h-12 object-contain"
+              src="/lovable-uploads/34ce60a3-3960-4c69-9841-749194c6ad64.png" 
+              alt="Yelp Review" 
+              className="w-48 h-48 object-cover rounded-lg shadow-md mb-2"
             />
             <div className="mt-2 flex items-center">
               <div className="flex">
@@ -63,17 +77,24 @@ const TrustedCustomersSection = () => {
             <span className="mt-1 text-sm text-bc-red group-hover:underline">View Reviews</span>
           </a>
           
-          {/* HomeStars Logo with Link */}
+          {/* HomeStars with Logo and Link */}
           <a 
             href="https://homestars.com/companies/2938191-bc-pressure-washing" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex flex-col items-center transition-transform hover:scale-105 group"
           >
+            <div className="flex items-center mb-2">
+              <img 
+                src="https://seeklogo.com/images/H/homestars-logo-3EE2CFCE80-seeklogo.com.png" 
+                alt="HomeStars Reviews" 
+                className="h-10 object-contain"
+              />
+            </div>
             <img 
-              src="https://seeklogo.com/images/H/homestars-logo-3EE2CFCE80-seeklogo.com.png" 
-              alt="HomeStars Reviews" 
-              className="h-12 object-contain"
+              src="/lovable-uploads/5d9b60f7-561a-4672-acdf-29948d260793.png" 
+              alt="HomeStars Review" 
+              className="w-48 h-48 object-cover rounded-lg shadow-md mb-2"
             />
             <div className="mt-2 flex items-center">
               <div className="flex">

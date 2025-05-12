@@ -9,7 +9,7 @@ const HeroSection = () => {
     <ServiceHeader 
       title="Post Construction Window Cleaning"
       description="Professional cleaning for newly constructed or renovated properties"
-      imagePath="/lovable-uploads/a2e65aef-c23d-4e15-87b4-3269f1dceede.png"
+      imagePath="/lovable-uploads/1f54ff74-e94a-413b-a279-55efad21b29a.png"
       darkOverlay={true}
       buttonPosition="bottom"
     />
