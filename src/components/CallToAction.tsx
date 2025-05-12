@@ -27,12 +27,11 @@ const CallToAction = ({
     <section className="py-16 relative">
       {!hideImage && (
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-black/60 z-10"></div>
+          <div className="absolute inset-0 bg-black/50 z-10"></div>
           <img 
             src={backgroundImage} 
             alt="Call to action background" 
             className="w-full h-full object-cover"
-            style={{ objectPosition: 'center center' }} // Ensure image is centered
           />
         </div>
       )}

@@ -61,11 +61,11 @@ const ServiceHeader = ({
       const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
       
       if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
-        return 'HuXyYAxC4Fs'; // Updated Pressure Washing mobile video
+        return 'HuXyYAxC4Fs'; // Default Pressure Washing
       } else if (titleStr.includes('gutter')) {
         return 'EdMlx1sYJDc'; // Default Gutter Cleaning - Updated to use the new YouTube short
       } else if (titleStr.includes('roof')) {
-        return 'twtzf2gRdFU'; // Updated Roof Cleaning mobile video
+        return 'twtzf2gRdFU'; // Default Roof Cleaning
       }
     }
     
@@ -85,7 +85,7 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(3.5)' : 'scale(1.5)', // Increased scale for mobile to better remove black bars
+                transform: isMobile ? 'scale(3)' : 'scale(1.5)', // Increased scale for mobile to remove black bars
                 transformOrigin: 'center center' // Ensure scaling happens from center
               }}
               frameBorder="0"
