@@ -3,9 +3,28 @@ import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
+import HoverImageSlideshow from '../HoverImageSlideshow';
+import { testimonials } from '@/data/testimonials';
 
 const PremiumSolutionsSection = () => {
   const { t } = useTranslation();
+  
+  // Filter testimonial images by service type
+  const windowCleaningImages = testimonials
+    .filter(t => t.service === 'window-cleaning' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
+  
+  const houseWashingImages = testimonials
+    .filter(t => t.service === 'pressure-washing' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
+  
+  const gutterCleaningImages = testimonials
+    .filter(t => t.service === 'gutter-cleaning' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
+  
+  const roofCleaningImages = testimonials
+    .filter(t => t.service === 'roof-cleaning' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
   
   const services = [
     {
@@ -13,6 +32,7 @@ const PremiumSolutionsSection = () => {
       description: 'Crystal-clear windows inside and out using eco-friendly solutions.',
       link: '/services/window-cleaning',
       image: '/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png',
+      slideImages: windowCleaningImages,
       included: [
         'Exterior & interior window cleaning',
         'Screen & sill wipe-down',
@@ -24,7 +44,8 @@ const PremiumSolutionsSection = () => {
       title: 'House Washing',
       description: 'Gentle soft-washing to remove dirt, mold, and algae without damage.',
       link: '/services/pressure-washing',
-      image: '/lovable-uploads/7f096ea4-ca08-4e10-aa64-82c4f84f24c4.png', // Updated to image #3
+      image: '/lovable-uploads/7f096ea4-ca08-4e10-aa64-82c4f84f24c4.png',
+      slideImages: houseWashingImages,
       included: [
         'Soft wash siding treatment',
         'Algae & mildew removal',
@@ -36,7 +57,8 @@ const PremiumSolutionsSection = () => {
       title: 'Gutter Cleaning',
       description: 'Prevent clogs and overflow damage with professional gutter care.',
       link: '/services/gutter-cleaning',
-      image: '/lovable-uploads/c99d75a8-0821-423a-b3a9-08133341c74f.png', // Updated to image #1
+      image: '/lovable-uploads/c99d75a8-0821-423a-b3a9-08133341c74f.png',
+      slideImages: gutterCleaningImages,
       included: [
         'Interior debris removal',
         'Downspout flushing',
@@ -48,7 +70,8 @@ const PremiumSolutionsSection = () => {
       title: 'Roof Cleaning',
       description: 'Eliminate moss, algae, and stains — extend roof life safely.',
       link: '/services/roof-cleaning',
-      image: '/lovable-uploads/889de7df-2965-4c37-99ab-a5f07b85896b.png', // Updated to image #2
+      image: '/lovable-uploads/889de7df-2965-4c37-99ab-a5f07b85896b.png',
+      slideImages: roofCleaningImages,
       included: [
         'Soft wash or brushing method',
         'Moss & algae treatment',
@@ -70,16 +93,25 @@ const PremiumSolutionsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-xl hover:-translate-y-1">
+            <div 
+              key={index} 
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-xl hover:-translate-y-1 h-full flex flex-col"
+            >
               <div className="h-48 relative overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover"
-                />
+                <HoverImageSlideshow 
+                  images={service.slideImages} 
+                  interval={2500}
+                  altText={`${service.title} showcase`}
+                >
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-cover"
+                  />
+                </HoverImageSlideshow>
               </div>
               
-              <div className="p-5">
+              <div className="p-5 flex flex-col flex-grow">
                 <h3 className="text-xl font-bold mb-2">
                   {service.title}
                 </h3>
