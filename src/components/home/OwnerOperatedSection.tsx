@@ -1,7 +1,11 @@
+
 import React from 'react';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import ProcessStep from '../ProcessStep';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
+
 const OwnerOperatedSection = () => {
   return <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -13,6 +17,32 @@ const OwnerOperatedSection = () => {
                 We take personal pride in every job we complete. When you hire us, you're getting service directly from the business owner, not a crew of subcontractors.
               </p>
               
+              {/* Owner profile with discount promotion */}
+              <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-6 max-w-2xl mx-auto">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <Avatar className="w-20 h-20 border-2 border-bc-red">
+                    <AvatarImage src="/lovable-uploads/969ac3ca-fa54-42e4-b9e7-e5db55db0b67.png" alt="Jayden - Owner" />
+                    <AvatarFallback>JF</AvatarFallback>
+                  </Avatar>
+                  <div className="text-center sm:text-left">
+                    <p className="text-gray-700 font-medium mb-2">
+                      "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
+                    </p>
+                    <p className="font-bold text-bc-red">— Jayden, Owner</p>
+                  </div>
+                </div>
+                
+                <div className="mt-4 bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
+                  <p className="font-medium text-gray-800">
+                    <span className="text-bc-red font-bold">Special Offer:</span> Spotted our red car along Marine Drive? Mention it when you contact us for a 10% discount!
+                  </p>
+                  <div className="mt-3 flex justify-center">
+                    <Button asChild variant="bc-red" size="sm" className="rounded-full">
+                      <Link to="/contact">Contact Us Now</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

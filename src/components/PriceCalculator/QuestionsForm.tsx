@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,7 @@ import emailjs from '@emailjs/browser';
 const QuestionsForm = () => {
   const [email, setEmail] = useState('');
   const [question, setQuestion] = useState('');
+  const [sawRedCar, setSawRedCar] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -31,15 +33,17 @@ const QuestionsForm = () => {
     trackFormSubmission('question_form', { 
       email, 
       question,
-      form_type: 'question'
+      form_type: 'question',
+      saw_red_car: sawRedCar
     });
     
     // Prepare the data for email
     const templateParams = {
       from_email: email,
       message: question,
-      subject: 'New Question About Services',
-      form_type: 'Calculator Questions Form'
+      subject: sawRedCar ? 'New Question About Services (10% RED CAR DISCOUNT)' : 'New Question About Services',
+      form_type: 'Calculator Questions Form',
+      discount_eligible: sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No'
     };
 
     // Send email using EmailJS with updated template ID
@@ -74,6 +78,7 @@ const QuestionsForm = () => {
       
       setEmail('');
       setQuestion('');
+      setSawRedCar(false);
     } catch (error) {
       console.error("Failed to send email:", error);
       toast({
@@ -136,6 +141,19 @@ const QuestionsForm = () => {
             className="w-full min-h-[100px]"
             required
           />
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <input 
+            type="checkbox" 
+            id="sawRedCar" 
+            checked={sawRedCar} 
+            onChange={(e) => setSawRedCar(e.target.checked)}
+            className="w-4 h-4 text-bc-red border-gray-300 rounded focus:ring-bc-red"
+          />
+          <label htmlFor="sawRedCar" className="text-sm font-medium text-gray-700">
+            I spotted the red car on Marine Drive (10% discount!)
+          </label>
         </div>
         
         <div className="text-sm text-gray-600 italic mb-4">

@@ -7,6 +7,7 @@ import { Textarea } from './ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import emailjs from '@emailjs/browser';
 import { trackFormSubmission } from '@/utils/analytics';
+import { Link } from 'react-router-dom';
 
 const FooterContactForm = () => {
   const { toast } = useToast();
@@ -104,6 +105,22 @@ const FooterContactForm = () => {
               </>
             )}
           </Button>
+          
+          <div className="text-center mt-3">
+            <Button 
+              variant="outline" 
+              className="bg-transparent hover:bg-gray-800 text-white border-gray-600 w-full"
+              asChild
+            >
+              <Link to="/contact">View All Contact Options</Link>
+            </Button>
+          </div>
+          
+          <div className="mt-3 bg-gray-800 p-3 rounded-lg border border-gray-700">
+            <p className="text-yellow-300 text-sm text-center">
+              Spotted our red car on Marine Drive? Mention it for 10% off!
+            </p>
+          </div>
         </form>
       </div>
     </div>
