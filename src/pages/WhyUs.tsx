@@ -1,7 +1,6 @@
-
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
@@ -26,6 +25,35 @@ const WhyUs = () => {
             <p className="text-xl text-gray-300 mb-8">
               We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Red Car Discount Banner - NEW SECTION */}
+      <section className="bg-bc-red py-8 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="bg-white p-2 rounded-full">
+                <img 
+                  src="/lovable-uploads/e7b51501-d13b-45ad-889c-383298d75f6f.png" 
+                  alt="BC Pressure Washing Red Car" 
+                  className="w-16 h-16 object-cover rounded-full" 
+                />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">Spotted Our Red Car?</h3>
+                <p className="text-lg">Mention you saw us on Marine Drive for 10% OFF!</p>
+              </div>
+            </div>
+            <div>
+              <Button asChild size="lg" variant="secondary" className="whitespace-nowrap">
+                <a href="tel:7788087620" className="flex items-center gap-2">
+                  <Phone className="w-5 h-5" />
+                  <span>Call Now: 778-808-7620</span>
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -87,7 +115,7 @@ const WhyUs = () => {
         </div>
       </section>
       
-      {/* My Car Section - Added section */}
+      {/* My Car Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">

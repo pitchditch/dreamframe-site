@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '../ui/navigation-menu';
 
@@ -17,6 +16,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
       
       <NavigationMenu className="flex justify-center">
         <NavigationMenuList className="space-x-8">
+          <NavigationMenuItem>
+            <Link to="/" className={mainNavLinkClassName}>Home</Link>
+          </NavigationMenuItem>
+          
           <NavigationMenuItem>
             <Link to="/why-us" className={mainNavLinkClassName}>Why Us</Link>
           </NavigationMenuItem>
