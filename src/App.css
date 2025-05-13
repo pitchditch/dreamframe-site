@@ -118,6 +118,19 @@ iframe#hero-video {
   animation: logo-spin 1.5s linear;
 }
 
+@keyframes spin-coin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.animate-spin-coin {
+  animation: spin-coin 2s linear infinite;
+}
+
 /* Service Card Styles */
 .service-card {
   background-color: #fff;
@@ -179,6 +192,23 @@ footer {
 
 .animate-custom-bounce {
   animation: bounce 2s infinite;
+}
+
+/* 10% discount pulse animation */
+@keyframes pulse-red {
+  0%, 100% {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(220, 38, 38, 0.7);
+  }
+  50% {
+    color: #ff8a8a;
+    text-shadow: 0 0 15px rgba(220, 38, 38, 1);
+  }
+}
+
+.pulse-discount {
+  animation: pulse-red 2s ease-in-out infinite;
+  font-weight: bold;
 }
 
 /* Utility Classes */

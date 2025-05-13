@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
@@ -15,7 +16,6 @@ import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSecti
 import PackagesSection from '@/components/home/PackagesSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
-import ServiceCleaningCarousel from '@/components/ServiceCleaningCarousel';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
@@ -79,9 +79,8 @@ const Home = () => {
       </Helmet>
       
       <HeroSection />
-      <ServiceCleaningCarousel />
-      <PremiumSolutionsSection />
       <RedCarSection />
+      <PremiumSolutionsSection />
       <OwnerOperatedSection />
       <SatisfactionGuaranteeSection />
       <SpringSaleCarousel />
@@ -98,6 +97,8 @@ const Home = () => {
           <ServiceAreasCarousel />
         </div>
       </section>
+      
+      <ReferralButton />
     </Layout>
   );
 };

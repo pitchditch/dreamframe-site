@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { MessageCircle, X, Send } from 'lucide-react';
@@ -43,17 +44,40 @@ const ChatAssistant = () => {
     "commercial": "Yes, we offer commercial services for businesses, strata properties, and multi-unit buildings including window cleaning, pressure washing, and building maintenance. Would you like information about our commercial services?"
   };
 
-  // Always visible in footer, no need for scroll detection
   useEffect(() => {
-    // Only set initial visibility
-    setIsVisible(true);
+    const handleScroll = () => {
+      // Find FAQ section specifically
+      const faqSection = document.querySelector('h2')?.textContent?.includes('Frequently Asked Questions') ? 
+        document.querySelector('h2')?.closest('section') : null;
+        
+      if (faqSection) {
+        const faqRect = faqSection.getBoundingClientRect();
+        // Show when FAQ section enters viewport
+        if (faqRect.top <= window.innerHeight && faqRect.bottom >= 0) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      } else {
+        // If there's no FAQ section, show when user scrolls down 70% of the page
+        if (window.scrollY > document.body.scrollHeight * 0.7) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      }
+    };
     
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+
     // Message rotation interval
     const messageInterval = setInterval(() => {
       setMessageIndex(prev => (prev + 1) % chatMessages.length);
     }, 3000);
     
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       clearInterval(messageInterval);
     };
   }, [chatMessages.length]);
