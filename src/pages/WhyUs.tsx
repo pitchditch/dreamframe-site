@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Layout } from '@/components/Layout';
+import Layout from '@/components/Layout';
 import { Shield, Award, Users, CheckCircle2, Star, Clock, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
