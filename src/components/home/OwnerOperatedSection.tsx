@@ -1,14 +1,11 @@
-
 import React from 'react';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import ProcessStep from '../ProcessStep';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
-
 const OwnerOperatedSection = () => {
-  return (
-    <section className="py-16 bg-white">
+  return <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -77,22 +74,11 @@ const OwnerOperatedSection = () => {
                 </div>
               </div>
               
-              <div className="mt-4 bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                <p className="font-medium text-gray-800">
-                  <span className="text-bc-red font-bold">Special Offer:</span> Spotted our red car along Marine Drive? Mention it when you contact us for a 10% discount!
-                </p>
-                <div className="mt-3 flex justify-center">
-                  <Button asChild variant="bc-red" size="sm" className="rounded-full">
-                    <Link to="/contact">Contact Us Now</Link>
-                  </Button>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default OwnerOperatedSection;
