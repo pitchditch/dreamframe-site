@@ -59,7 +59,7 @@ const Layout = ({
         {children}
       </main>
       <Footer />
-      <ChatAssistant />
+      {/* Chat Assistant moved to Footer component */}
     </div>
   );
 };

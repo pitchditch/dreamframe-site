@@ -24,7 +24,7 @@ const CTABanner: React.FC = () => {
               <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-0">
+            <div className="flex flex-col gap-2 mt-2 sm:mt-0">
               <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
                 <a href="tel:+16047860399">
                   <Phone className="w-4 h-4" />

@@ -4,13 +4,14 @@ import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide
 import { useLocation } from 'react-router-dom';
 import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
+import ChatAssistant from './ChatAssistant';
 
 const Footer = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
   
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-black text-white relative">
       <div className="container mx-auto px-4 pt-16">
         {/* Only show FAQs on non-homepage routes */}
         {!isHomePage}
@@ -115,6 +116,9 @@ const Footer = () => {
         maxHeight: "400px"
       }} />
       </div>
+      
+      {/* Chat Assistant positioned here in the footer */}
+      <ChatAssistant />
     </footer>
   );
 };

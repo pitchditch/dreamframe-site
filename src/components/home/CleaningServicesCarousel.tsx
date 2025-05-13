@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 
-const ServiceCleaningCarousel = () => {
+const CleaningServicesCarousel = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const cleaningServices = [
     "House Exteriors", "Driveways", "Patios", "Decks", "Fences", 
@@ -52,4 +52,4 @@ const ServiceCleaningCarousel = () => {
   );
 };
 
-export default ServiceCleaningCarousel;
+export default CleaningServicesCarousel;

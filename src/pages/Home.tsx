@@ -5,7 +5,6 @@ import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import TestimonialsSection from '../components/home/TestimonialsSection';
-import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
@@ -81,8 +80,8 @@ const Home = () => {
       
       <HeroSection />
       <ServiceCleaningCarousel />
-      <RedCarSection />
       <PremiumSolutionsSection />
+      <RedCarSection />
       <OwnerOperatedSection />
       <SatisfactionGuaranteeSection />
       <SpringSaleCarousel />
@@ -99,8 +98,6 @@ const Home = () => {
           <ServiceAreasCarousel />
         </div>
       </section>
-      
-      <ReferralButton />
     </Layout>
   );
 };
