@@ -24,9 +24,9 @@ const RedCarSection = () => {
               </p>
               <div className="flex items-center p-4 bg-gray-100 rounded-lg">
                 <img 
-                  src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
-                  alt="Owner" 
-                  className="w-16 h-16 rounded-full mr-4 border-2 border-bc-red"
+                  src="/lovable-uploads/5ab1b520-40ad-4e25-b0d6-6292266b90ea.png"
+                  alt="Jayden Fisher, Owner" 
+                  className="w-16 h-16 rounded-full mr-4 border-2 border-bc-red object-cover"
                 />
                 <div>
                   <p className="font-semibold">"I'm personally committed to the quality of every service we provide."</p>

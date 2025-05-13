@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
 import CallToAction from '../components/CallToAction';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const WhyUs = () => {
   const {
@@ -106,11 +107,18 @@ const WhyUs = () => {
                   Our distinctive vehicle is fully equipped with professional cleaning equipment, ready to transform your property. We're not just a faceless 
                   company - we're your neighbors, committed to making our community look its best.
                 </p>
-                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-bc-red">
-                  <p className="italic text-gray-600">
-                    "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
-                  </p>
-                  <p className="font-medium mt-2">— Jayden, Owner</p>
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-bc-red flex items-center">
+                  <img 
+                    src="/lovable-uploads/5ab1b520-40ad-4e25-b0d6-6292266b90ea.png" 
+                    alt="Jayden, Owner" 
+                    className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-bc-red"
+                  />
+                  <div>
+                    <p className="italic text-gray-600">
+                      "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
+                    </p>
+                    <p className="font-medium mt-2">— Jayden, Owner</p>
+                  </div>
                 </div>
               </div>
             </div>
