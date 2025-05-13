@@ -210,8 +210,13 @@ const CommercialPressureWashing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-bc-red text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 bg-bc-red text-white relative overflow-hidden">
+        <img 
+          src="/lovable-uploads/b54ea65f-7f3b-438b-a788-4530cde9147a.png" 
+          alt="Pressure washing equipment" 
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Transform Your Commercial Property?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Contact us today to schedule a consultation or request a free quote for your commercial pressure washing needs.

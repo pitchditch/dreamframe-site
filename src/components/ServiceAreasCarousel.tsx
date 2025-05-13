@@ -37,7 +37,7 @@ const ServiceAreasCarousel = () => {
           {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
             <div key={index} className="inline-flex px-5 py-2 mx-1">
               <MapPin size={16} className="text-bc-red mr-2 flex-shrink-0" />
-              <span className="text-white">{area}</span>
+              <span className="text-white font-medium">{area}</span>
             </div>
           ))}
         </div>

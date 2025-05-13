@@ -13,26 +13,26 @@ const CTABanner: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center">
           <img 
-            src="/lovable-uploads/72766780-6dc1-42de-8971-3a11add4daad.png"
+            src="/lovable-uploads/5f0b8643-4703-4237-9723-b6f07a39a74b.png"
             alt="Jayden Fisher, Owner" 
             className="w-10 h-10 rounded-full mr-3 border-2 border-white object-cover" 
           />
           
-          <div className="flex-1 flex flex-col sm:flex-row items-start sm:items-center justify-between">
-            <div className="text-white mb-1 sm:mb-0">
+          <div className="flex-1 flex flex-row items-center justify-between">
+            <div className="text-white">
               <p className="font-bold text-sm sm:text-base">Ready for a free quote?</p>
               <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
             </div>
             
-            <div className="flex flex-row gap-2 mt-1 sm:mt-0">
-              <Button asChild size="sm" variant="secondary" className="gap-1">
+            <div className="flex flex-row gap-2">
+              <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
                 <a href="tel:+16047860399">
                   <Phone className="w-4 h-4" />
                   <span className="text-xs sm:text-sm">Call</span>
                 </a>
               </Button>
               
-              <Button asChild size="sm" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1">
+              <Button asChild size="sm" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 whitespace-nowrap">
                 <Link to="/contact">
                   <Calendar className="w-4 h-4" />
                   <span className="text-xs sm:text-sm">Get Quote</span>

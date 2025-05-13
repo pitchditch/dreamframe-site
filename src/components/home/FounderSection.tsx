@@ -21,7 +21,7 @@ const FounderSection = () => {
             <h2 className="text-3xl font-bold mb-4 text-red-500">Seen Our Red Car?</h2>
             <p className="mb-6 text-lg text-gray-300">
               If you've spotted our distinctive red vehicle along Marine Drive in White Rock, 
-              mention it when you contact us to receive a special 10% discount on your service!
+              mention it when you contact us to receive a special <span className="animate-pulse font-bold text-red-500 text-xl">10% discount</span> on your service!
             </p>
             <p className="mb-8 text-gray-300">
               As a locally owned and operated business, we're proud to be an active part of the White Rock 
