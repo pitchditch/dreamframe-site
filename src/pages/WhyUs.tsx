@@ -1,168 +1,176 @@
-import Layout from '../components/Layout';
-import { useTranslation } from '@/hooks/use-translation';
-import { ArrowRight, Phone } from 'lucide-react';
+
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Layout } from '@/components/Layout';
+import { Shield, Award, Users, CheckCircle2, Star, Clock, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import EquipmentSection from '../components/EquipmentSection';
-import CompanyHistory from '../components/CompanyHistory';
-import CallToAction from '../components/CallToAction';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const WhyUs = () => {
-  const {
-    t
-  } = useTranslation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
-  return <Layout>
-      <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="absolute inset-0 opacity-30">
-          <img src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" alt="House exterior cleaning" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
-            <p className="text-xl text-gray-300 mb-8">
-              We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
-            </p>
+  return (
+    <Layout 
+      title="Why Choose BC Pressure Washing | Surrey & White Rock's Premier Cleaning Service"
+      description="Learn why BC Pressure Washing is the top choice for exterior cleaning in White Rock & Surrey. Professional equipment, expert technicians, and satisfaction guaranteed."
+      canonicalUrl="/why-us"
+      image="/lovable-uploads/281422a1-6eb1-4353-9f93-de7d6163152e.png"
+    >
+      <Helmet>
+        <title>Why Choose BC Pressure Washing | Surrey & White Rock's Premier Cleaning Service</title>
+        <meta name="description" content="Learn why BC Pressure Washing is the top choice for exterior cleaning in White Rock & Surrey. Professional equipment, expert technicians, and satisfaction guaranteed." />
+        <meta property="og:title" content="Why Choose BC Pressure Washing - Surrey's Premier Cleaning Service" />
+        <meta property="og:description" content="Professional, reliable exterior cleaning services with top-of-the-line equipment and expert technicians." />
+        <meta name="keywords" content="best pressure washing Surrey, top window cleaning White Rock, expert gutter cleaning, professional exterior cleaning services, BC Pressure Washing quality" />
+      </Helmet>
+
+      {/* Hero Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Why Choose BC Pressure Washing</h1>
+            <p className="text-xl opacity-90 mb-8">Discover what makes us the preferred exterior cleaning specialists in White Rock, Surrey and across the Lower Mainland</p>
           </div>
         </div>
       </section>
 
-      {/* Red Car Discount Banner - NEW SECTION */}
-      <section className="bg-bc-red py-8 text-white">
+      {/* Key Benefits Section */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="bg-white p-2 rounded-full">
+          <h2 className="text-3xl font-bold mb-12 text-center">What Sets Us Apart</h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="rounded-full bg-red-100 p-3 w-14 h-14 flex items-center justify-center mb-4">
+                <Shield className="text-bc-red h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Fully Insured</h3>
+              <p className="text-gray-600">We carry comprehensive insurance for your peace of mind. Your property is always protected when we're on the job.</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="rounded-full bg-red-100 p-3 w-14 h-14 flex items-center justify-center mb-4">
+                <Award className="text-bc-red h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Premium Equipment</h3>
+              <p className="text-gray-600">We invest in top-quality, professional-grade equipment to deliver superior results for every service we provide.</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="rounded-full bg-red-100 p-3 w-14 h-14 flex items-center justify-center mb-4">
+                <Users className="text-bc-red h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Experienced Team</h3>
+              <p className="text-gray-600">Our technicians are highly trained and experienced, ensuring consistent quality and attention to detail.</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="rounded-full bg-red-100 p-3 w-14 h-14 flex items-center justify-center mb-4">
+                <CheckCircle2 className="text-bc-red h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Satisfaction Guaranteed</h3>
+              <p className="text-gray-600">We stand behind our work with a satisfaction guarantee. If you're not happy, we'll make it right.</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="rounded-full bg-red-100 p-3 w-14 h-14 flex items-center justify-center mb-4">
+                <Star className="text-bc-red h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">5-Star Service</h3>
+              <p className="text-gray-600">Our commitment to excellence has earned us consistent 5-star ratings from our satisfied customers.</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="rounded-full bg-red-100 p-3 w-14 h-14 flex items-center justify-center mb-4">
+                <Truck className="text-bc-red h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Locally Owned</h3>
+              <p className="text-gray-600">As a local business, we take pride in serving our community with personal care and attention.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Red Car Section */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="order-2 md:order-1">
+              <h2 className="text-3xl font-bold mb-4">Spotted Our Red Car?</h2>
+              <p className="text-gray-700 mb-4">
+                If you've seen our distinctive red vehicle around White Rock and Surrey, mention it when you contact us to receive a special <span className="font-bold text-bc-red animate-pulse text-xl">10% discount</span> on your service!
+              </p>
+              <p className="text-gray-700 mb-6">
+                Our red car has become a recognized symbol of quality pressure washing and window cleaning services throughout the community. We take pride in being visible and accessible to our customers.
+              </p>
+              <Button asChild variant="bc-red" size="lg">
+                <Link to="/contact">
+                  Claim Your Discount
+                </Link>
+              </Button>
+            </div>
+            <div className="order-1 md:order-2">
+              <img 
+                src="/lovable-uploads/082a711b-0417-4ffb-aa1a-69a4a7b54f09.png" 
+                alt="BC Pressure Washing Red Company Car" 
+                className="w-full rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Owner Profile */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
                 <img 
-                  src="/lovable-uploads/e7b51501-d13b-45ad-889c-383298d75f6f.png" 
-                  alt="BC Pressure Washing Red Car" 
-                  className="w-16 h-16 object-cover rounded-full" 
+                  src="/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png" 
+                  alt="Jayden Fisher - Owner of BC Pressure Washing" 
+                  className="rounded-lg shadow-lg"
                 />
               </div>
               <div>
-                <h3 className="text-xl font-bold">Spotted Our Red Car?</h3>
-                <p className="text-lg">Mention you saw us on Marine Drive for 10% OFF!</p>
-              </div>
-            </div>
-            <div>
-              <Button asChild size="lg" variant="secondary" className="whitespace-nowrap">
-                <a href="tel:7788087620" className="flex items-center gap-2">
-                  <Phone className="w-5 h-5" />
-                  <span>Call Now: 778-808-7620</span>
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Our Core Values</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Quality Service</h3>
-              <p className="text-gray-600">
-                We never compromise on quality. Our team is trained to deliver exceptional results on every project.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Reliability</h3>
-              <p className="text-gray-600">
-                We show up on time, every time, and complete projects within the promised timeframe.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Innovation</h3>
-              <p className="text-gray-600">
-                We utilize the latest technology and techniques to deliver superior cleaning results.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Customer Focus</h3>
-              <p className="text-gray-600">
-                Your satisfaction is our priority. We listen to your needs and exceed expectations.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* My Car Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Have You Seen Our Red Car?</h2>
-            
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <img alt="BC Pressure Washing Red Car" className="rounded-lg shadow-xl w-full" src="/lovable-uploads/e7b51501-d13b-45ad-889c-383298d75f6f.png" />
-              </div>
-              <div className="space-y-6">
-                <h3 className="text-2xl font-bold">That's Me! Your Local Exterior Cleaning Expert</h3>
-                <p className="text-lg leading-relaxed text-gray-700">
-                  If you've spotted a bright red car with "BC Pressure Washing" around White Rock Beach or driving through Surrey, you've seen us in action! 
-                  As a local business owner, I take pride in personally serving our community and ensuring every job meets our high standards.
+                <h2 className="text-3xl font-bold mb-4">Meet the Owner</h2>
+                <p className="text-gray-700 mb-4">
+                  "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
                 </p>
-                <p className="text-lg leading-relaxed text-gray-700">
-                  Our distinctive vehicle is fully equipped with professional cleaning equipment, ready to transform your property. We're not just a faceless 
-                  company - we're your neighbors, committed to making our community look its best.
+                <p className="text-gray-700 mb-6">
+                  "Every service we provide is delivered with the same attention to detail and quality that I would expect for my own property. That's my personal guarantee to you."
                 </p>
-                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-bc-red flex items-center">
-                  <img 
-                    src="/lovable-uploads/5ab1b520-40ad-4e25-b0d6-6292266b90ea.png" 
-                    alt="Jayden, Owner" 
-                    className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-bc-red"
-                  />
-                  <div>
-                    <p className="italic text-gray-600">
-                      "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
-                    </p>
-                    <p className="font-medium mt-2">— Jayden, Owner</p>
-                  </div>
+                <div className="flex items-center">
+                  <p className="font-bold text-bc-red">— Jayden Fisher, Owner</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Company History - Our Story */}
-      <CompanyHistory />
-      
-      {/* Professional Equipment Section */}
-      <EquipmentSection />
-      
+
       {/* Call to Action */}
-      <CallToAction />
-    </Layout>;
+      <section className="py-16 bg-bc-red text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Experience the Difference?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Contact us today to schedule your service or request a free, no-obligation quote.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button asChild size="lg" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none">
+              <Link to="/contact">Get a Free Quote</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <a href="tel:+16047860399">Call Us Today</a>
+            </Button>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
 };
 
 export default WhyUs;

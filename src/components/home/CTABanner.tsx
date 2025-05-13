@@ -18,17 +18,17 @@ const CTABanner: React.FC = () => {
             className="w-10 h-10 rounded-full mr-3 border-2 border-white object-cover" 
           />
           
-          <div className="flex-1 flex flex-row items-center justify-between">
+          <div className="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div className="text-white">
               <p className="font-bold text-sm sm:text-base">Ready for a free quote?</p>
               <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
             </div>
             
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-0">
               <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
                 <a href="tel:+16047860399">
                   <Phone className="w-4 h-4" />
-                  <span className="text-xs sm:text-sm">Call</span>
+                  <span className="text-xs sm:text-sm">Call Now</span>
                 </a>
               </Button>
               
