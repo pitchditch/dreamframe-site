@@ -14,7 +14,6 @@ import RedCarSection from '@/components/home/RedCarSection';
 import LocalCompanySection from '@/components/home/LocalCompanySection';
 import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSection';
 import PackagesSection from '@/components/home/PackagesSection';
-import FounderSection from '@/components/home/FounderSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 
 const Home = () => {
@@ -81,10 +80,9 @@ const Home = () => {
       <HeroSection />
       <RedCarSection />
       <PremiumSolutionsSection />
-      <FounderSection />
+      <OwnerOperatedSection />
       <SpringSaleCarousel />
       <TestimonialsSection />
-      <OwnerOperatedSection />
       <PackagesSection />
       <LocalCompanySection />
       <GutterFaceCleaningSection />

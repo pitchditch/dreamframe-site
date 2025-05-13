@@ -64,10 +64,6 @@ const FooterContactForm = () => {
   
   return (
     <div className="space-y-6">
-      <div className="flex flex-col items-center mb-6">
-        
-      </div>
-      
       <div className="bg-gradient-to-r from-gray-900 to-black p-6 rounded-lg">
         <h3 className="text-xl font-semibold mb-4 text-white flex items-center">
           <Mail className="mr-2" size={20} /> Quick Contact
@@ -118,7 +114,7 @@ const FooterContactForm = () => {
           
           <div className="mt-3 bg-gray-800 p-3 rounded-lg border border-gray-700">
             <p className="text-yellow-300 text-sm text-center">
-              Spotted our red car on Marine Drive? Mention it for 10% off!
+              Mention you've seen our car on Marine Drive for 10% off!
             </p>
           </div>
         </form>

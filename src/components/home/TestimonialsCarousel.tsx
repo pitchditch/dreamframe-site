@@ -51,7 +51,7 @@ const TestimonialsCarousel = () => {
         <div className="flex flex-col items-center">
           <div className="w-20 h-20 rounded-full overflow-hidden mb-6 border-4 border-gray-100 shadow">
             <img
-              src={currentTestimonial.avatar}
+              src={currentTestimonial.profileImage || '/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png'}
               alt={`${currentTestimonial.name}'s avatar`}
               className="w-full h-full object-cover"
             />
@@ -59,14 +59,14 @@ const TestimonialsCarousel = () => {
           
           <div className={`text-center transition-opacity duration-500 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
             <p className="text-lg md:text-xl mb-6 text-gray-700 italic">
-              "{currentTestimonial.text}"
+              "{currentTestimonial.quote}"
             </p>
             
             <div>
               <div className="font-bold">{currentTestimonial.name}</div>
               <div className="text-gray-500">{currentTestimonial.location}</div>
               <div className="flex justify-center mt-3">
-                {[...Array(5)].map((_, i) => (
+                {[...Array(currentTestimonial.rating)].map((_, i) => (
                   <svg key={i} className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 24 24">
                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                   </svg>

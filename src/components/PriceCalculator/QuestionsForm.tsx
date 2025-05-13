@@ -157,7 +157,7 @@ const QuestionsForm = () => {
         </div>
         
         <div className="text-sm text-gray-600 italic mb-4">
-          Final quote will be personally reviewed and confirmed by Jayden
+          Mention you've seen our car on Marine Drive for 10% off
         </div>
         
         <Button 
