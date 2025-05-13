@@ -10,24 +10,23 @@ const FounderSection = () => {
         <div className="flex flex-col md:flex-row items-center gap-10">
           <div className="w-full md:w-1/2">
             <img
-              src="/lovable-uploads/9773afa1-26cf-4788-ade6-2da27716dd3d.png"
-              alt="BC Pressure Washing Founder"
+              src="/lovable-uploads/9dc6484c-91bb-4ae3-994d-f6cfefbf7c63.png" 
+              alt="BC Pressure Washing Red Car at Marine Drive"
               className="rounded-lg shadow-xl border-4 border-gray-800"
               width={500}
               height={400}
             />
           </div>
           <div className="w-full md:w-1/2">
-            <h2 className="text-3xl font-bold mb-4 text-red-500">Meet Our Founder</h2>
+            <h2 className="text-3xl font-bold mb-4 text-red-500">Seen Our Red Car?</h2>
             <p className="mb-6 text-lg text-gray-300">
-              Hi, I'm Nicholas, the founder of BC Pressure Washing. With over 10 years in the industry, 
-              I started this company with a simple mission: to provide the highest quality exterior 
-              cleaning services with unmatched attention to detail.
+              If you've spotted our distinctive red vehicle along Marine Drive in White Rock, 
+              mention it when you contact us to receive a special 10% discount on your service!
             </p>
             <p className="mb-8 text-gray-300">
-              As a family-owned business based in White Rock, we take pride in serving our local 
-              community and building lasting relationships with our customers. My team and I are 
-              committed to excellence in every project we undertake.
+              As a locally owned and operated business, we're proud to be an active part of the White Rock 
+              and Surrey communities. We're not just a service provider - we're your neighbors, 
+              committed to keeping our local properties looking their best.
             </p>
             <Button 
               variant="bc-red" 
@@ -35,8 +34,8 @@ const FounderSection = () => {
               className="group"
               asChild
             >
-              <Link to="/about">
-                Learn More About Us
+              <Link to="/contact">
+                Claim Your Discount
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>

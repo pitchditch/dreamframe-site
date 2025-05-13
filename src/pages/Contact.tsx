@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { Helmet } from 'react-helmet';
@@ -14,7 +15,8 @@ const Contact = () => {
     email: '',
     phone: '',
     service: 'Window Cleaning',
-    message: ''
+    message: '',
+    sawRedCar: false
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,13 +26,18 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({ ...prev, sawRedCar: e.target.checked }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     trackFormSubmission('contact_form', {
       form_type: 'contact',
-      service_type: formData.service
+      service_type: formData.service,
+      saw_red_car: formData.sawRedCar
     });
 
     const templateParams = {
@@ -39,8 +46,9 @@ const Contact = () => {
       phone: formData.phone,
       service_interest: formData.service,
       message: formData.message,
-      subject: 'Contact Form Submission',
-      form_type: 'Main Contact Form'
+      subject: formData.sawRedCar ? 'Contact Form Submission (RED CAR DISCOUNT 10%)' : 'Contact Form Submission',
+      form_type: 'Main Contact Form',
+      discount_eligible: formData.sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No'
     };
 
     // Send email using EmailJS with updated template ID
@@ -61,7 +69,8 @@ const Contact = () => {
         email: '',
         phone: '',
         service: 'Window Cleaning',
-        message: ''
+        message: '',
+        sawRedCar: false
       });
 
       setIsSubmitting(false);
@@ -185,6 +194,24 @@ const Contact = () => {
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                     placeholder="Please provide details about your project or questions..."
                   ></textarea>
+                </div>
+
+                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <div className="flex items-center gap-2">
+                    <input 
+                      type="checkbox" 
+                      id="sawRedCar" 
+                      checked={formData.sawRedCar} 
+                      onChange={handleCheckboxChange}
+                      className="w-4 h-4 text-bc-red border-gray-300 rounded focus:ring-bc-red"
+                    />
+                    <label htmlFor="sawRedCar" className="font-medium text-gray-700">
+                      I spotted your red car along Marine Drive (10% discount!)
+                    </label>
+                  </div>
+                  <p className="text-sm text-gray-500 mt-1 pl-6">
+                    Mention this for a special 10% discount on your service
+                  </p>
                 </div>
 
                 <div>

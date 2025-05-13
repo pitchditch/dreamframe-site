@@ -21,7 +21,7 @@ const OwnerOperatedSection = () => {
               <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-6 max-w-2xl mx-auto">
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <Avatar className="w-20 h-20 border-2 border-bc-red">
-                    <AvatarImage src="/lovable-uploads/969ac3ca-fa54-42e4-b9e7-e5db55db0b67.png" alt="Jayden - Owner" />
+                    <AvatarImage src="/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png" alt="Jayden - Owner" />
                     <AvatarFallback>JF</AvatarFallback>
                   </Avatar>
                   <div className="text-center sm:text-left">

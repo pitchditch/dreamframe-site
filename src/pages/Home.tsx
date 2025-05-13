@@ -14,6 +14,8 @@ import RedCarSection from '@/components/home/RedCarSection';
 import LocalCompanySection from '@/components/home/LocalCompanySection';
 import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSection';
 import PackagesSection from '@/components/home/PackagesSection';
+import FounderSection from '@/components/home/FounderSection';
+import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
@@ -52,19 +54,37 @@ const Home = () => {
   }, [setLanguage]);
 
   return (
-    <Layout image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png">
+    <Layout 
+      image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
+      canonicalUrl="/"
+      title="BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock"
+      description="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts. Mention our red car for 10% off!"
+    >
       <Helmet>
         <title>BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock</title>
-        <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
+        <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts. Mention our red car for 10% off!" />
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
         <meta property="og:image" content="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png" />
+        
+        {/* Additional SEO tags for better indexing */}
+        <link rel="canonical" href="https://www.bcpressurewashing.ca/" />
+        <meta property="og:title" content="BC Pressure Washing - #1 Window & Pressure Washing in Surrey & White Rock" />
+        <meta property="og:description" content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.bcpressurewashing.ca/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="BC Pressure Washing - #1 Window & Pressure Washing in Surrey & White Rock" />
+        <meta name="twitter:description" content="Professional pressure washing and cleaning services. Mention our red car for 10% off!" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       </Helmet>
       
       <HeroSection />
-      <PremiumSolutionsSection />
       <RedCarSection />
+      <PremiumSolutionsSection />
+      <FounderSection />
       <SpringSaleCarousel />
       <TestimonialsSection />
+      <OwnerOperatedSection />
       <PackagesSection />
       <LocalCompanySection />
       <GutterFaceCleaningSection />
