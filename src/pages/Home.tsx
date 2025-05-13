@@ -16,6 +16,7 @@ import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSecti
 import PackagesSection from '@/components/home/PackagesSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
+import ServiceCleaningCarousel from '@/components/ServiceCleaningCarousel';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
@@ -79,6 +80,7 @@ const Home = () => {
       </Helmet>
       
       <HeroSection />
+      <ServiceCleaningCarousel />
       <RedCarSection />
       <PremiumSolutionsSection />
       <OwnerOperatedSection />

@@ -26,7 +26,7 @@ const RedCarSection = () => {
               </p>
               <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200 mb-6">
                 <p className="font-bold text-gray-800 mb-2">🚗 Special Offer</p>
-                <p className="text-gray-700">Mention you've seen our red car on Marine Drive when you contact us and receive <span className="font-bold text-bc-red pulse-discount">10% OFF</span> your service!</p>
+                <p className="text-gray-700">Mention you've seen our red car on Marine Drive when you contact us and receive <span className="font-bold text-bc-red">10% OFF</span> your service!</p>
                 <div className="mt-4">
                   <Button asChild variant="bc-red" className="w-full sm:w-auto">
                     <Link to="/contact">
