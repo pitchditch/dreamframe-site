@@ -1,5 +1,4 @@
 
-import React from 'react';
 import Layout from '../../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -206,16 +205,14 @@ const CommercialPressureWashing = () => {
               className="shadow-lg"
             ></iframe>
           </div>
-          <div className="bg-white py-6">
-            <ServiceAreasCarousel />
-          </div>
+          <ServiceAreasCarousel />
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-16 bg-bc-red text-white relative overflow-hidden">
         <img 
-          src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" 
+          src="/lovable-uploads/b54ea65f-7f3b-438b-a788-4530cde9147a.png" 
           alt="Pressure washing equipment" 
           className="absolute inset-0 w-full h-full object-cover opacity-20"
         />

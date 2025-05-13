@@ -1,5 +1,3 @@
-
-import React from 'react';
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight, Phone } from 'lucide-react';
@@ -125,11 +123,7 @@ const WhyUs = () => {
             
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
-                <img 
-                  src="/lovable-uploads/5c8425dd-120e-4ba4-82e5-c85429984033.png" 
-                  alt="BC Pressure Washing Red Car" 
-                  className="w-full rounded-lg shadow-xl" 
-                />
+                <img alt="BC Pressure Washing Red Car" className="rounded-lg shadow-xl w-full" src="/lovable-uploads/e7b51501-d13b-45ad-889c-383298d75f6f.png" />
               </div>
               <div className="space-y-6">
                 <h3 className="text-2xl font-bold">That's Me! Your Local Exterior Cleaning Expert</h3>
