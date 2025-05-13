@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import HoverImageSlideshow from '../HoverImageSlideshow';
 import { testimonials } from '@/data/testimonials';
+import { Button } from '@/components/ui/button';
 
 const PremiumSolutionsSection = () => {
   const { t } = useTranslation();
@@ -140,6 +141,15 @@ const PremiumSolutionsSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Add "See All Services" button */}
+        <div className="text-center mt-12">
+          <Button asChild variant="bc-red" size="lg" className="rounded-full px-8">
+            <Link to="/services">
+              See All Services <ArrowRight className="ml-2" size={16} />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
