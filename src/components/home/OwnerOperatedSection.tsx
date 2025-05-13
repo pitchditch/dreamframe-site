@@ -1,12 +1,9 @@
-
 import React from 'react';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import ProcessStep from '../ProcessStep';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 const OwnerOperatedSection = () => {
-  return (
-    <section className="py-16 bg-white">
+  return <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -15,17 +12,7 @@ const OwnerOperatedSection = () => {
               <p className="text-gray-600 max-w-3xl mx-auto text-lg mb-4">
                 We take personal pride in every job we complete. When you hire us, you're getting service directly from the business owner, not a crew of subcontractors.
               </p>
-              <div className="flex items-center justify-center mt-4">
-                <img
-                  src="/lovable-uploads/5ab1b520-40ad-4e25-b0d6-6292266b90ea.png"
-                  alt="Jayden Fisher - Owner"
-                  className="w-16 h-16 rounded-full object-cover border-2 border-bc-red"
-                />
-                <p className="ml-3 text-gray-800 font-medium">
-                  <span className="block text-bc-red font-bold">Jayden Fisher</span>
-                  <span className="text-sm">Owner Operator</span>
-                </p>
-              </div>
+              
             </div>
           </div>
 
@@ -72,8 +59,6 @@ const OwnerOperatedSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default OwnerOperatedSection;
