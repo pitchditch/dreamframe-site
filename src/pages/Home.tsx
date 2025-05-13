@@ -15,6 +15,7 @@ import LocalCompanySection from '@/components/home/LocalCompanySection';
 import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSection';
 import PackagesSection from '@/components/home/PackagesSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
+import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
@@ -81,6 +82,7 @@ const Home = () => {
       <RedCarSection />
       <PremiumSolutionsSection />
       <OwnerOperatedSection />
+      <SatisfactionGuaranteeSection />
       <SpringSaleCarousel />
       <TestimonialsSection />
       <PackagesSection />

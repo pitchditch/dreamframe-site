@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Phone } from 'lucide-react';
 import { trackPageView } from '@/utils/analytics';
+import { toast } from '@/hooks/use-toast';
 
 const PhoneButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,6 +44,10 @@ const PhoneButton = () => {
   const handleCallClick = () => {
     // Track phone call events
     trackPageView('/virtual/phone-call-button');
+    toast({
+      description: "Mention you've seen our car on Marine Drive for 10% off",
+      duration: 5000,
+    });
   };
   
   return (

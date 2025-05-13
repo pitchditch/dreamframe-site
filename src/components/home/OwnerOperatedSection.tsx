@@ -1,11 +1,14 @@
+
 import React from 'react';
 import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
 import ProcessStep from '../ProcessStep';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
+
 const OwnerOperatedSection = () => {
-  return <section className="py-16 bg-white">
+  return (
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -63,7 +66,7 @@ const OwnerOperatedSection = () => {
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-6 max-w-2xl mx-auto">
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Avatar className="w-20 h-20 border-2 border-bc-red">
-                  <AvatarImage src="/lovable-uploads/761663e4-04b5-48f6-8d47-235fbec8008d.png" alt="Jayden - Owner" />
+                  <AvatarImage src="/lovable-uploads/72766780-6dc1-42de-8971-3a11add4daad.png" alt="Jayden - Owner" />
                   <AvatarFallback>JF</AvatarFallback>
                 </Avatar>
                 <div className="text-center sm:text-left">
@@ -73,12 +76,12 @@ const OwnerOperatedSection = () => {
                   <p className="font-bold text-bc-red">— Jayden, Owner</p>
                 </div>
               </div>
-              
-              
             </div>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default OwnerOperatedSection;
