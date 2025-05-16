@@ -1,5 +1,6 @@
 
 import { useContext } from 'react';
-import { TranslationContext } from '../App';
+import { TranslationContext, TranslationContextType } from '../App';
 
-export const useTranslation = () => useContext(TranslationContext);
+// Export the hook with proper typing
+export const useTranslation = (): TranslationContextType => useContext(TranslationContext);

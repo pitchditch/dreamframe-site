@@ -1,17 +1,12 @@
 
-import englishTranslations from './en';
-import punjabiTranslations from './pa';
-import hindiTranslations from './hi';
+import en from './en';
+import pa from './pa';
+import hi from './hi';
 
-export type Language = 'en' | 'pa' | 'hi';
-export type TranslationKey = string;
-export type TranslationMap = Record<TranslationKey, string>;
-export type TranslationsType = Record<Language, TranslationMap>;
-
-const translations: TranslationsType = {
-  en: englishTranslations,
-  pa: punjabiTranslations,
-  hi: hindiTranslations
+const translations = {
+  en,
+  pa,
+  hi
 };
 
 export default translations;

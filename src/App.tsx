@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -21,7 +21,8 @@ import RoofCleaning from './pages/services/RoofCleaning';
 // Remove AdminLogin import as it doesn't exist
 // Remove SoftWashing import as it doesn't exist
 import WhyUs from './pages/WhyUs';
-// Create a simple TranslationProvider context
+// Import translations
+import translations from './translations';
 import WhiteRock from './pages/locations/WhiteRock';
 
 // Styles
@@ -29,24 +30,39 @@ import './App.css';
 
 const queryClient = new QueryClient();
 
-// Create a simple TranslationContext and Provider
-const TranslationContext = React.createContext({
+// Create a proper TranslationContext with types
+export interface TranslationContextType {
+  language: string;
+  setLanguage: (lang: string) => void;
+  t: (key: string) => string;
+}
+
+// Create the context with default values
+export const TranslationContext = createContext<TranslationContextType>({
   language: 'en',
-  setLanguage: (lang: string) => {},
+  setLanguage: () => {},
+  t: (key: string) => key,
 });
 
 export const TranslationProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const [language, setLanguage] = useState('en');
   
+  const t = (key: string): string => {
+    if (!key) return '';
+    
+    // Access the translation for current language
+    const currentLang = translations[language as keyof typeof translations] || translations.en;
+    
+    // Return the translated string or fallback to the key itself
+    return currentLang[key] || translations.en[key] || key;
+  };
+
   return (
-    <TranslationContext.Provider value={{ language, setLanguage }}>
+    <TranslationContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </TranslationContext.Provider>
   );
 };
-
-// Export the context for use in other components
-export const useTranslation = () => React.useContext(TranslationContext);
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
