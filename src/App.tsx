@@ -1,110 +1,76 @@
 
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// Remove ReactQueryDevtools import as it's not installed
-
-// Pages
-import Home from './pages/Home';
 import Index from './pages/Index';
-import Contact from './pages/Contact';
+import Home from './pages/Home';
 import About from './pages/About';
+import Contact from './pages/Contact';
 import Services from './pages/Services';
-import FAQ from './pages/FAQ';
-import Calculator from './pages/Calculator';
-import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
 import WindowCleaning from './pages/services/WindowCleaning';
 import PressureWashing from './pages/services/PressureWashing';
 import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
-// Remove AdminLogin import as it doesn't exist
-// Remove SoftWashing import as it doesn't exist
+import CommercialWindowCleaning from './pages/services/CommercialWindowCleaning';
+import CommercialPressureWashing from './pages/services/CommercialPressureWashing';
+import PostConstructionWindowCleaning from './pages/services/PostConstructionWindowCleaning';
 import WhyUs from './pages/WhyUs';
-// Import translations
-import translations from './translations';
+import Equipment from './pages/Equipment';
+import Testimonials from './pages/Testimonials';
+import ServiceProcess from './pages/ServiceProcess';
+import Calculator from './pages/Calculator';
+import Review from './pages/Review';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import WhiteRock from './pages/locations/WhiteRock';
-
-// Styles
-import './App.css';
-
-const queryClient = new QueryClient();
-
-// Create a proper TranslationContext with types
-export interface TranslationContextType {
-  language: string;
-  setLanguage: (lang: string) => void;
-  t: (key: string) => string;
-}
-
-// Create the context with default values
-export const TranslationContext = createContext<TranslationContextType>({
-  language: 'en',
-  setLanguage: () => {},
-  t: (key: string) => key,
-});
-
-export const TranslationProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const [language, setLanguage] = useState('en');
-  
-  const t = (key: string): string => {
-    if (!key) return '';
-    
-    // Access the translation for current language
-    const currentLang = translations[language as keyof typeof translations] || translations.en;
-    
-    // Return the translated string or fallback to the key itself
-    return currentLang[key] || translations.en[key] || key;
-  };
-
-  return (
-    <TranslationContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </TranslationContext.Provider>
-  );
-};
+import VancouverWindowCleaning from './pages/locations/VancouverWindowCleaning';
+import NotFound from './pages/NotFound';
+import ZipUploader from './pages/ZipUploader';
+import { initAnalytics } from './lib/analytics-client';
+import ExpressCleaning from './pages/ExpressCleaning';
+import { setupErrorHandlers } from './utils/errorUtils';
+import usePageTracking from './hooks/usePageTracking';
 
 function App() {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
+  // Track page views
+  usePageTracking();
   
+  useEffect(() => {
+    // Initialize Google Analytics
+    initAnalytics();
+    // Setup error handlers
+    setupErrorHandlers();
+  }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <TranslationProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/index" element={<Index />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
-            <Route path="/services/window-cleaning" element={<WindowCleaning />} />
-            <Route path="/services/pressure-washing" element={<PressureWashing />} />
-            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-            {/* Remove routes for AdminLogin and SoftWashing */}
-            <Route path="/why-choose-us" element={<WhyUs />} />
-            <Route path="/locations/white-rock" element={<WhiteRock />} />
-          </Routes>
-        </TranslationProvider>
-      </HelmetProvider>
-      {/* Remove ReactQueryDevtools */}
-    </QueryClientProvider>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/services/window-cleaning" element={<WindowCleaning />} />
+        <Route path="/services/pressure-washing" element={<PressureWashing />} />
+        <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
+        <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+        <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+        <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
+        <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+        <Route path="/express-cleaning" element={<ExpressCleaning />} />
+        <Route path="/why-us" element={<WhyUs />} />
+        <Route path="/equipment" element={<Equipment />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/process" element={<ServiceProcess />} />
+        <Route path="/calculator" element={<Calculator />} />
+        <Route path="/review" element={<Review />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/locations/white-rock-bc" element={<WhiteRock />} />
+        <Route path="/locations/vancouver-bc" element={<VancouverWindowCleaning />} />
+        <Route path="/zip-uploader" element={<ZipUploader />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 
