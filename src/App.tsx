@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// Remove ReactQueryDevtools import as it's not installed
 
 // Pages
 import Home from './pages/Home';
@@ -17,16 +18,35 @@ import WindowCleaning from './pages/services/WindowCleaning';
 import PressureWashing from './pages/services/PressureWashing';
 import GutterCleaning from './pages/services/GutterCleaning';
 import RoofCleaning from './pages/services/RoofCleaning';
-import AdminLogin from './pages/admin/Login';
-import SoftWashing from './pages/services/SoftWashing';
+// Remove AdminLogin import as it doesn't exist
+// Remove SoftWashing import as it doesn't exist
 import WhyUs from './pages/WhyUs';
-import { TranslationProvider } from './contexts/TranslationContext';
+// Create a simple TranslationProvider context
 import WhiteRock from './pages/locations/WhiteRock';
 
 // Styles
 import './App.css';
 
 const queryClient = new QueryClient();
+
+// Create a simple TranslationContext and Provider
+const TranslationContext = React.createContext({
+  language: 'en',
+  setLanguage: (lang: string) => {},
+});
+
+export const TranslationProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+  const [language, setLanguage] = useState('en');
+  
+  return (
+    <TranslationContext.Provider value={{ language, setLanguage }}>
+      {children}
+    </TranslationContext.Provider>
+  );
+};
+
+// Export the context for use in other components
+export const useTranslation = () => React.useContext(TranslationContext);
 
 function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -61,14 +81,13 @@ function App() {
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
             <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
             <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-            <Route path="/services/soft-washing" element={<SoftWashing />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
+            {/* Remove routes for AdminLogin and SoftWashing */}
             <Route path="/why-choose-us" element={<WhyUs />} />
             <Route path="/locations/white-rock" element={<WhiteRock />} />
           </Routes>
         </TranslationProvider>
       </HelmetProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* Remove ReactQueryDevtools */}
     </QueryClientProvider>
   );
 }
