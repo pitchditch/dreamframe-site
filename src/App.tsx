@@ -22,6 +22,7 @@ import Review from './pages/Review';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import WhiteRock from './pages/locations/WhiteRock';
+import WhiteRockBC from './pages/locations/WhiteRockBC';
 import VancouverWindowCleaning from './pages/locations/VancouverWindowCleaning';
 import NotFound from './pages/NotFound';
 import ZipUploader from './pages/ZipUploader';
@@ -65,7 +66,8 @@ function App() {
         <Route path="/review" element={<Review />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/locations/white-rock-bc" element={<WhiteRock />} />
+        <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
+        <Route path="/locations/white-rock" element={<WhiteRock />} />
         <Route path="/locations/vancouver-bc" element={<VancouverWindowCleaning />} />
         <Route path="/zip-uploader" element={<ZipUploader />} />
         <Route path="*" element={<NotFound />} />
