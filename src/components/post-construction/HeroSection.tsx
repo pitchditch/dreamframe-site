@@ -18,8 +18,8 @@ const HeroSection: React.FC = () => {
         darkOverlay={false} // Remove dark overlay
       />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row gap-8 items-center justify-between max-w-5xl mx-auto">
+      <div className="container mx-auto px-4 py-8 -mt-24 md:-mt-32 relative z-10">
+        <div className="flex flex-col md:flex-row gap-8 items-center justify-between max-w-5xl mx-auto bg-white rounded-lg shadow-xl p-6">
           <div className="md:w-2/3">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Expert Post-Construction Window Cleaning</h2>
             <p className="text-gray-700 mb-4">

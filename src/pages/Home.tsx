@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -128,34 +129,39 @@ const Home = () => {
       </Helmet>
 
       <HeroSection />
-      <RedCarSection />
-      <PremiumSolutionsSection />
-      <OwnerOperatedSection />
-      <SatisfactionGuaranteeSection />
-      <SpringSaleCarousel />
-      <TestimonialsSection />
-      <PackagesSection />
-      <LocalCompanySection />
-      <GutterFaceCleaningSection />
+      
+      <div className="relative z-20 -mt-24 md:-mt-32">
+        <div className="bg-white rounded-t-3xl shadow-xl">
+          <RedCarSection />
+          <PremiumSolutionsSection />
+          <OwnerOperatedSection />
+          <SatisfactionGuaranteeSection />
+          <SpringSaleCarousel />
+          <TestimonialsSection />
+          <PackagesSection />
+          <LocalCompanySection />
+          <GutterFaceCleaningSection />
 
-      <section className="py-16 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-          <ServiceAreaMap />
-          <ServiceAreasCarousel />
+          <section className="py-16 bg-gray-900 text-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+              <ServiceAreaMap />
+              <ServiceAreasCarousel />
+            </div>
+          </section>
+
+          <ReferralButton />
+
+          <footer className="text-center text-sm text-gray-500 mt-12">
+            <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>
+            <p>Follow us: 
+              <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Instagram</a> | 
+              <a href="https://www.youtube.com/@bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">YouTube</a> | 
+              <a href="https://www.facebook.com/bcpressurewashing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Facebook</a>
+            </p>
+          </footer>
         </div>
-      </section>
-
-      <ReferralButton />
-
-      <footer className="text-center text-sm text-gray-500 mt-12">
-        <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>
-        <p>Follow us: 
-          <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Instagram</a> | 
-          <a href="https://www.youtube.com/@bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">YouTube</a> | 
-          <a href="https://www.facebook.com/bcpressurewashing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Facebook</a>
-        </p>
-      </footer>
+      </div>
     </Layout>
   );
 };

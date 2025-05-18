@@ -89,24 +89,29 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
-      <PremiumSolutionsSection />
-      <FeaturedProjectSection />
-      <ScreenCleaningSection />
-      <OwnerOperatedSection />
-      <FounderSection />
-      <TrustedCustomersSection />
-      <CompetitorComparisonSection />
-      <TestimonialsSection />
-      <SatisfactionGuaranteeSection />
-      <FAQSection 
-        title="Frequently Asked Questions" 
-        subtitle="Everything you need to know about our services"
-        faqs={faqItems}
-        darkMode={true}
-      />
-      <ServiceAreasSection />
-      <CTABanner />
-      <ReferralButton />
+      
+      <div className="relative z-20 -mt-24 md:-mt-32">
+        <div className="bg-white rounded-t-3xl shadow-xl">
+          <PremiumSolutionsSection />
+          <FeaturedProjectSection />
+          <ScreenCleaningSection />
+          <OwnerOperatedSection />
+          <FounderSection />
+          <TrustedCustomersSection />
+          <CompetitorComparisonSection />
+          <TestimonialsSection />
+          <SatisfactionGuaranteeSection />
+          <FAQSection 
+            title="Frequently Asked Questions" 
+            subtitle="Everything you need to know about our services"
+            faqs={faqItems}
+            darkMode={true}
+          />
+          <ServiceAreasSection />
+          <CTABanner />
+          <ReferralButton />
+        </div>
+      </div>
     </Layout>
   );
 };
