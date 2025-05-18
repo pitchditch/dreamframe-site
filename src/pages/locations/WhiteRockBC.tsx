@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import Layout from '@/components/Layout';
@@ -12,9 +11,8 @@ import {
   ChevronRight, 
   Phone,
   Droplet,
-  Window,
-  Layers,
   Wind,
+  Layers,
   CloudRain,
   Locate
 } from 'lucide-react';
@@ -111,7 +109,7 @@ const WhiteRockBC = () => {
                 description: "Gentle yet effective soft washing for your home's exterior surfaces that removes dirt, grime, and organic growth." 
               },
               { 
-                icon: <Window className="h-10 w-10 text-bc-red" />, 
+                icon: <Wind className="h-10 w-10 text-bc-red" />, 
                 title: "Window Cleaning", 
                 description: "Professional interior and exterior window cleaning for crystal-clear views of White Rock's beautiful scenery." 
               },
