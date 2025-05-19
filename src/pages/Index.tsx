@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
@@ -20,6 +20,7 @@ import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
+  const solutionsSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Ensure English is the default language on initial load
@@ -47,10 +48,29 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Setup scroll listener for premium solutions overlap effect
+    const handleScroll = () => {
+      if (solutionsSectionRef.current) {
+        const scrollPosition = window.scrollY;
+        const heroHeight = window.innerHeight * 0.7; // 70% of viewport height
+        
+        if (scrollPosition > heroHeight * 0.3) {
+          // Start sliding up earlier for a smoother effect
+          const translateY = Math.max(0, heroHeight - scrollPosition);
+          solutionsSectionRef.current.style.transform = `translateY(-${translateY}px)`;
+        } else {
+          solutionsSectionRef.current.style.transform = 'translateY(0)';
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [setLanguage]);
 
@@ -90,7 +110,8 @@ const Index = () => {
       
       <HeroSection />
       
-      <div className="relative z-20 -mt-24 md:-mt-32">
+      {/* Premium Solutions section with the slide-up overlap effect */}
+      <div ref={solutionsSectionRef} className="relative z-20 transition-transform duration-300" style={{ marginTop: '-6rem' }}>
         <div className="bg-white rounded-t-3xl shadow-xl">
           <PremiumSolutionsSection />
           <FeaturedProjectSection />

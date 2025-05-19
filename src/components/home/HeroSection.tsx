@@ -114,10 +114,10 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
-      {/* Hero Content - Improved spacing from navbar */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-36 sm:pt-32 md:pt-28">
+      {/* Hero Content - Improved visibility on first load */}
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll mt-10 md:mt-8">
+          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
           </div>
           
@@ -169,7 +169,7 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Personal Touch Section - Enhanced visibility and improved layout for mobile */}
+        {/* Personal Touch Section - Enhanced visibility */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500">
           <div className="bg-white/20 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
