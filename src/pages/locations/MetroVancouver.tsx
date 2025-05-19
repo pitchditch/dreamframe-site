@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import Layout from '@/components/Layout';
 import { motion } from 'framer-motion';
@@ -14,26 +14,33 @@ import {
   Droplet,
   Wind,
   Layers,
-  CloudRain
+  CloudRain,
+  Building
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "@/components/ui/carousel";
 import { testimonials } from '@/data/testimonials';
 
 const MetroVancouver = () => {
   const { t } = useTranslation();
   const [postalCode, setPostalCode] = useState('');
   const [houseSize, setHouseSize] = useState('medium');
+  const [scrollY, setScrollY] = useState(0);
+
+  // Handle scroll for premium services section animation
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +51,13 @@ const MetroVancouver = () => {
     
     // Redirect to calculator page
     window.location.href = `/calculator`;
+  };
+
+  const handleBusinessCTA = () => {
+    // Save indication that user is a business owner
+    localStorage.setItem('isBusinessContact', 'true');
+    // Navigate to contact page
+    window.location.href = '/contact';
   };
 
   // Animation variants
@@ -98,8 +112,14 @@ const MetroVancouver = () => {
 
       {/* Content sections that overlap the hero */}
       <div className="relative z-20 -mt-24 md:-mt-32">
-        {/* SECTION 2: Services We Offer in Metro Vancouver */}
-        <section className="py-16 bg-white rounded-t-3xl shadow-xl">
+        {/* SECTION 2: Services We Offer in Metro Vancouver - slides over hero on scroll */}
+        <motion.section 
+          className="py-16 bg-white rounded-t-3xl shadow-xl"
+          style={{
+            translateY: Math.max(0, scrollY * 0.1 - 20),
+            zIndex: 20
+          }}
+        >
           <div className="container mx-auto px-4">
             <motion.div
               initial="hidden"
@@ -161,7 +181,7 @@ const MetroVancouver = () => {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* SECTION 3: Why Metro Vancouver Residents Choose Us */}
         <section className="py-16 bg-gray-50">
@@ -225,7 +245,7 @@ const MetroVancouver = () => {
           </div>
         </section>
 
-        {/* SECTION 4: Before & After Carousel - Using Actual Testimonials */}
+        {/* SECTION 4: Business CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <motion.div
@@ -233,45 +253,35 @@ const MetroVancouver = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeIn}
-              className="text-center mb-12"
+              className="bg-gray-50 p-8 rounded-lg shadow-lg max-w-4xl mx-auto"
             >
-              <h2 className="text-3xl font-bold mb-2">Before & After Transformations</h2>
-              <p className="text-gray-600">Real results from Metro Vancouver properties</p>
-            </motion.div>
-
-            <div className="max-w-4xl mx-auto">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {testimonials
-                    .filter(testimonial => testimonial.beforeAfterImage)
-                    .slice(0, 3)
-                    .map((testimonial, index) => (
-                      <CarouselItem key={index}>
-                        <div className="p-2">
-                          <div className="rounded-lg overflow-hidden shadow-md">
-                            <img 
-                              src={testimonial.beforeAfterImage} 
-                              alt="Before and After Transformation" 
-                              className="w-full h-64 object-cover"
-                            />
-                          </div>
-                          <h3 className="text-xl font-bold text-center mt-4">{testimonial.service.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} Transformation</h3>
-                          <p className="text-center text-gray-600 mt-2">
-                            {testimonial.location}
-                          </p>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <div className="flex justify-center mt-4">
-                  <CarouselPrevious className="relative mr-2" />
-                  <CarouselNext className="relative ml-2" />
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="md:w-3/5">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4">Business Owner?</h2>
+                  <p className="text-gray-700 mb-4">
+                    We provide specialized commercial cleaning services for businesses throughout Metro Vancouver. 
+                    Our team can handle properties of any size with minimal disruption to your operations.
+                  </p>
+                  <ul className="list-disc pl-4 mb-6 text-gray-700">
+                    <li>Custom maintenance schedules</li>
+                    <li>Corporate account management</li>
+                    <li>Property management solutions</li>
+                    <li>Multi-location service agreements</li>
+                  </ul>
                 </div>
-              </Carousel>
-              <p className="text-center text-gray-600 mt-4">
-                Real projects from homes and businesses across Metro Vancouver.
-              </p>
-            </div>
+                <div className="md:w-2/5 flex justify-center">
+                  <Button 
+                    onClick={handleBusinessCTA}
+                    size="lg" 
+                    variant="bc-red" 
+                    className="w-full md:w-auto text-white flex items-center justify-center gap-2 py-6"
+                  >
+                    <Building className="h-5 w-5" />
+                    <span>Get a Business Quote</span>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -293,7 +303,15 @@ const MetroVancouver = () => {
               <ServiceAreaMap />
             </div>
             
-            <ServiceAreasCarousel />
+            {/* Modified service areas carousel with white bg and black text */}
+            <div className="py-6 bg-white overflow-hidden w-full rounded-lg shadow-sm">
+              <div className="text-center mb-2 text-gray-500 text-sm font-medium">
+                Service Areas
+              </div>
+              <div className="relative w-full">
+                <ServiceAreasCarousel />
+              </div>
+            </div>
           </div>
         </section>
 

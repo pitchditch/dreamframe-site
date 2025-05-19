@@ -1,10 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, Building } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
 import ChatAssistant from '@/components/ChatAssistant';
 
@@ -16,10 +16,22 @@ const Contact = () => {
     phone: '',
     service: 'Window Cleaning',
     message: '',
-    sawRedCar: false
+    sawRedCar: false,
+    isBusinessInquiry: false
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  useEffect(() => {
+    // Check if the user came from the business CTA
+    const isBusinessContact = localStorage.getItem('isBusinessContact');
+    if (isBusinessContact === 'true') {
+      // Update form data to indicate business inquiry
+      setFormData(prev => ({ ...prev, isBusinessInquiry: true, service: 'Commercial Services' }));
+      // Clear the localStorage item
+      localStorage.removeItem('isBusinessContact');
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -27,7 +39,8 @@ const Contact = () => {
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, sawRedCar: e.target.checked }));
+    const { name, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,7 +50,8 @@ const Contact = () => {
     trackFormSubmission('contact_form', {
       form_type: 'contact',
       service_type: formData.service,
-      saw_red_car: formData.sawRedCar
+      saw_red_car: formData.sawRedCar,
+      is_business_inquiry: formData.isBusinessInquiry
     });
 
     const templateParams = {
@@ -46,9 +60,14 @@ const Contact = () => {
       phone: formData.phone,
       service_interest: formData.service,
       message: formData.message,
-      subject: formData.sawRedCar ? 'Contact Form Submission (RED CAR DISCOUNT 10%)' : 'Contact Form Submission',
-      form_type: 'Main Contact Form',
-      discount_eligible: formData.sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No'
+      subject: formData.sawRedCar 
+        ? 'Contact Form Submission (RED CAR DISCOUNT 10%)' 
+        : formData.isBusinessInquiry 
+          ? 'Business Inquiry Contact Form Submission'
+          : 'Contact Form Submission',
+      form_type: formData.isBusinessInquiry ? 'Business Contact Form' : 'Main Contact Form',
+      discount_eligible: formData.sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No',
+      business_inquiry: formData.isBusinessInquiry ? 'YES' : 'No'
     };
 
     // Send email using EmailJS with updated template ID
@@ -70,7 +89,8 @@ const Contact = () => {
         phone: '',
         service: 'Window Cleaning',
         message: '',
-        sawRedCar: false
+        sawRedCar: false,
+        isBusinessInquiry: false
       });
 
       setIsSubmitting(false);
@@ -89,13 +109,21 @@ const Contact = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock</title>
-        <meta name="description" content="Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver." />
+        <title>{formData.isBusinessInquiry 
+          ? "Commercial Cleaning Services | BC Pressure Washing" 
+          : "Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock"}
+        </title>
+        <meta name="description" content={formData.isBusinessInquiry 
+          ? "Get in touch with BC Pressure Washing for professional commercial cleaning services, including storefront cleaning, parking lot maintenance, and property management services." 
+          : "Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver."} 
+        />
       </Helmet>
 
       <div className="relative bg-black text-white h-screen">
         <img 
-          src="/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png"
+          src={formData.isBusinessInquiry 
+            ? "/lovable-uploads/6e463050-a822-420e-8227-6bc3306b6832.png" 
+            : "/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png"}
           alt="Contact Us Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -114,12 +142,31 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold mb-6 text-white">Get In Touch</h2>
+              <h2 className="text-3xl font-bold mb-6 text-white">
+                {formData.isBusinessInquiry ? "Business Inquiry" : "Get In Touch"}
+              </h2>
               <p className="text-gray-200 mb-8">
-                Fill out the form below and we'll get back to you as soon as possible. If you need an immediate response, please call us directly.
+                {formData.isBusinessInquiry 
+                  ? "We provide specialized cleaning services for businesses of all sizes. Complete this form for a customized quote tailored to your commercial needs."
+                  : "Fill out the form below and we'll get back to you as soon as possible. If you need an immediate response, please call us directly."}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-xl">
+                {formData.isBusinessInquiry && (
+                  <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <Building className="h-5 w-5 text-blue-500" />
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-sm font-medium text-blue-800">Business Inquiry</h3>
+                        <div className="text-sm text-blue-700 mt-1">
+                          We'll customize our services to match your business needs.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Your Name *</label>
@@ -131,7 +178,7 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                      placeholder="John Smith"
+                      placeholder={formData.isBusinessInquiry ? "Your Name / Company Rep" : "John Smith"}
                     />
                   </div>
                   <div>
@@ -148,6 +195,21 @@ const Contact = () => {
                     />
                   </div>
                 </div>
+
+                {formData.isBusinessInquiry && (
+                  <div>
+                    <label htmlFor="company" className="block text-gray-700 font-medium mb-2">Company Name *</label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                      placeholder="Your Company Name"
+                    />
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -172,12 +234,25 @@ const Contact = () => {
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                     >
-                      <option value="Window Cleaning">Window Cleaning</option>
-                      <option value="Pressure Washing">Pressure Washing</option>
-                      <option value="Roof Cleaning">Roof Cleaning</option>
-                      <option value="Gutter Cleaning">Gutter Cleaning</option>
-                      <option value="Commercial Services">Commercial Services</option>
-                      <option value="Other">Other</option>
+                      {formData.isBusinessInquiry ? (
+                        <>
+                          <option value="Commercial Services">Commercial Cleaning</option>
+                          <option value="Storefront Cleaning">Storefront Cleaning</option>
+                          <option value="Commercial Window Cleaning">Commercial Window Cleaning</option>
+                          <option value="Parking Lot Cleaning">Parking Lot Maintenance</option>
+                          <option value="Building Exterior Cleaning">Building Exterior Cleaning</option>
+                          <option value="Property Management">Property Management</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="Window Cleaning">Window Cleaning</option>
+                          <option value="Pressure Washing">Pressure Washing</option>
+                          <option value="Roof Cleaning">Roof Cleaning</option>
+                          <option value="Gutter Cleaning">Gutter Cleaning</option>
+                          <option value="Commercial Services">Commercial Services</option>
+                          <option value="Other">Other</option>
+                        </>
+                      )}
                     </select>
                   </div>
                 </div>
@@ -192,27 +267,50 @@ const Contact = () => {
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                    placeholder="Please provide details about your project or questions..."
+                    placeholder={formData.isBusinessInquiry 
+                      ? "Please provide details about your company's cleaning needs, facility size, and any specific requirements..." 
+                      : "Please provide details about your project or questions..."}
                   ></textarea>
                 </div>
 
-                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                  <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      id="sawRedCar" 
-                      checked={formData.sawRedCar} 
-                      onChange={handleCheckboxChange}
-                      className="w-4 h-4 text-bc-red border-gray-300 rounded focus:ring-bc-red"
-                    />
-                    <label htmlFor="sawRedCar" className="font-medium text-gray-700">
-                      I spotted your red car along Marine Drive (10% discount!)
-                    </label>
+                {!formData.isBusinessInquiry && (
+                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <div className="flex items-center gap-2">
+                      <input 
+                        type="checkbox" 
+                        id="sawRedCar" 
+                        name="sawRedCar"
+                        checked={formData.sawRedCar} 
+                        onChange={handleCheckboxChange}
+                        className="w-4 h-4 text-bc-red border-gray-300 rounded focus:ring-bc-red"
+                      />
+                      <label htmlFor="sawRedCar" className="font-medium text-gray-700">
+                        I spotted your red car along Marine Drive (10% discount!)
+                      </label>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1 pl-6">
+                      Mention this for a special 10% discount on your service
+                    </p>
                   </div>
-                  <p className="text-sm text-gray-500 mt-1 pl-6">
-                    Mention this for a special 10% discount on your service
-                  </p>
-                </div>
+                )}
+                
+                {formData.isBusinessInquiry && (
+                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <div className="flex items-center gap-2">
+                      <input 
+                        type="checkbox" 
+                        id="isBusinessInquiry" 
+                        name="isBusinessInquiry"
+                        checked={formData.isBusinessInquiry} 
+                        onChange={handleCheckboxChange}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <label htmlFor="isBusinessInquiry" className="font-medium text-gray-700">
+                        This is a commercial/business inquiry
+                      </label>
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <button
