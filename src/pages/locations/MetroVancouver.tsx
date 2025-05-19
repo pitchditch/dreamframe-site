@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import Layout from '@/components/Layout';
@@ -18,13 +17,17 @@ import {
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { TestimonialCarousel } from '@/components/TestimonialCarousel';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from "../ui/carousel";
+import { testimonials } from '@/data/testimonials';
 
 const MetroVancouver = () => {
   const { t } = useTranslation();
@@ -58,8 +61,8 @@ const MetroVancouver = () => {
       <div className="relative h-[70vh] min-h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/lovable-uploads/0e9565e9-5c55-469b-9373-28abcec11dcb.png" 
-            alt="Metro Vancouver Skyline" 
+            src="/lovable-uploads/9c8f9c31-61c5-43ea-a6a5-89a6aba7c4af.png" 
+            alt="Commercial Pressure Washing in Metro Vancouver" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -221,7 +224,7 @@ const MetroVancouver = () => {
           </div>
         </section>
 
-        {/* SECTION 4: Before & After Carousel */}
+        {/* SECTION 4: Before & After Carousel - Using Actual Testimonials */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <motion.div
@@ -238,69 +241,26 @@ const MetroVancouver = () => {
             <div className="max-w-4xl mx-auto">
               <Carousel className="w-full">
                 <CarouselContent>
-                  <CarouselItem>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <img 
-                          src="/lovable-uploads/9c5e6f5f-cc13-408c-af83-ca211626f285.png" 
-                          alt="Driveway Before Cleaning" 
-                          className="rounded-lg h-64 w-full object-cover"
-                        />
-                        <p className="text-center mt-2 font-medium">Before</p>
-                      </div>
-                      <div>
-                        <img 
-                          src="/lovable-uploads/55261385-ad80-4322-9551-dbc3392a881c.png" 
-                          alt="Driveway After Cleaning" 
-                          className="rounded-lg h-64 w-full object-cover"
-                        />
-                        <p className="text-center mt-2 font-medium">After</p>
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold text-center mt-4">Driveway Transformation</h3>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <img 
-                          src="/lovable-uploads/fa3b438e-d980-439e-9d0f-e829e376fcf7.png" 
-                          alt="Roof Before Cleaning" 
-                          className="rounded-lg h-64 w-full object-cover"
-                        />
-                        <p className="text-center mt-2 font-medium">Before</p>
-                      </div>
-                      <div>
-                        <img 
-                          src="/lovable-uploads/7e1a9bdf-7cca-4b17-857e-6acaedd8309c.png" 
-                          alt="Roof After Cleaning" 
-                          className="rounded-lg h-64 w-full object-cover"
-                        />
-                        <p className="text-center mt-2 font-medium">After</p>
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold text-center mt-4">Roof Moss Removal</h3>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <img 
-                          src="/lovable-uploads/46bdd024-275a-4b16-ae57-e690113dae3f.png" 
-                          alt="Gutters Before Cleaning" 
-                          className="rounded-lg h-64 w-full object-cover"
-                        />
-                        <p className="text-center mt-2 font-medium">Before</p>
-                      </div>
-                      <div>
-                        <img 
-                          src="/lovable-uploads/775da843-921c-4e15-adf9-8237f632efcf.png" 
-                          alt="Gutters After Cleaning" 
-                          className="rounded-lg h-64 w-full object-cover"
-                        />
-                        <p className="text-center mt-2 font-medium">After</p>
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold text-center mt-4">Gutter Cleaning</h3>
-                  </CarouselItem>
+                  {testimonials
+                    .filter(testimonial => testimonial.beforeAfterImage)
+                    .slice(0, 3)
+                    .map((testimonial, index) => (
+                      <CarouselItem key={index}>
+                        <div className="p-2">
+                          <div className="rounded-lg overflow-hidden shadow-md">
+                            <img 
+                              src={testimonial.beforeAfterImage} 
+                              alt="Before and After Transformation" 
+                              className="w-full h-64 object-cover"
+                            />
+                          </div>
+                          <h3 className="text-xl font-bold text-center mt-4">{testimonial.service.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} Transformation</h3>
+                          <p className="text-center text-gray-600 mt-2">
+                            {testimonial.location}
+                          </p>
+                        </div>
+                      </CarouselItem>
+                    ))}
                 </CarouselContent>
                 <div className="flex justify-center mt-4">
                   <CarouselPrevious className="relative mr-2" />
@@ -314,7 +274,7 @@ const MetroVancouver = () => {
           </div>
         </section>
 
-        {/* SECTION 5: Areas We Service in Metro Vancouver */}
+        {/* SECTION 5: Areas We Service in Metro Vancouver - Using ServiceAreaMap and ServiceAreasCarousel from homepage */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <motion.div
@@ -328,64 +288,15 @@ const MetroVancouver = () => {
               <p className="text-gray-600">From city centers to suburban neighborhoods, we've got you covered</p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <div>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-bold mb-4">Locations We Service</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <ul className="space-y-2">
-                      {[
-                        "Vancouver", 
-                        "Burnaby", 
-                        "Richmond", 
-                        "North Vancouver",
-                        "West Vancouver",
-                        "Coquitlam",
-                        "Port Coquitlam"
-                      ].map((area, index) => (
-                        <li key={index} className="flex items-start">
-                          <MapPin className="h-5 w-5 text-bc-red mr-2 flex-shrink-0 mt-0.5" />
-                          <span>{area}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <ul className="space-y-2">
-                      {[
-                        "Surrey", 
-                        "White Rock", 
-                        "Delta", 
-                        "Langley",
-                        "New Westminster",
-                        "Port Moody",
-                        "Maple Ridge"
-                      ].map((area, index) => (
-                        <li key={index} className="flex items-start">
-                          <MapPin className="h-5 w-5 text-bc-red mr-2 flex-shrink-0 mt-0.5" />
-                          <span>{area}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="relative h-64 md:h-auto rounded-lg overflow-hidden shadow-sm">
-                <img 
-                  src="/lovable-uploads/8394dd9e-fddc-4ab9-bf15-b4bd364b8c71.png" 
-                  alt="Metro Vancouver Map" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    <MapPin className="h-16 w-16 text-bc-red" />
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 h-4 w-4 bg-bc-red rounded-full animate-ping" />
-                  </div>
-                </div>
-              </div>
+            <div className="mb-8">
+              <ServiceAreaMap />
             </div>
+            
+            <ServiceAreasCarousel />
           </div>
         </section>
 
-        {/* SECTION 6: Testimonials */}
+        {/* SECTION 6: Testimonials - Using the same TestimonialCarousel from homepage */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <motion.div
@@ -399,48 +310,7 @@ const MetroVancouver = () => {
               <p className="text-gray-600">Testimonials from satisfied customers across Metro Vancouver</p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "David L.",
-                  location: "West Vancouver",
-                  stars: 5,
-                  text: "BC Pressure Washing did an incredible job on my cedar siding and windows. The team was professional, on time, and thorough. My home looks brand new again!"
-                },
-                {
-                  name: "Amanda T.",
-                  location: "Surrey",
-                  stars: 5,
-                  text: "I've used many pressure washing companies in the past, but none compare to the quality and service provided by BC Pressure Washing. They're now my go-to for all exterior cleaning needs."
-                },
-                {
-                  name: "Robert K.",
-                  location: "Vancouver",
-                  stars: 5,
-                  text: "The team at BC Pressure Washing removed years of algae and moss from my roof and gutters. They were professional, careful around my landscaping, and left everything spotless. Highly recommended!"
-                }
-              ].map((testimonial, index) => (
-                <motion.div 
-                  key={index}
-                  className="bg-gray-50 p-6 rounded-lg shadow-sm"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <div className="flex mb-2">
-                    {Array.from({ length: testimonial.stars }).map((_, starIndex) => (
-                      <Star key={starIndex} className="h-5 w-5 text-yellow-400 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 italic mb-4">"{testimonial.text}"</p>
-                  <div>
-                    <p className="font-bold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.location}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <TestimonialCarousel />
           </div>
         </section>
 

@@ -1,71 +1,116 @@
 
-import React, { useState, useEffect } from 'react';
-import { testimonialsWithImages } from '@/data/testimonials';
+import { useEffect, useState, useRef } from 'react';
+import { testimonials } from '@/data/testimonials';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import TestimonialCard from './TestimonialCard';
 
 export const TestimonialCarousel = () => {
-  const [images, setImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Initialize testimonials with before/after images
+  const [allTestimonials, setAllTestimonials] = useState([]);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  
+  // Initialize testimonials with prioritized before/after images
   useEffect(() => {
-    const testimonialImages = testimonialsWithImages
+    // Filter out testimonials with beforeAfterImages first
+    const testimonialsWithBeforeAfter = testimonials
+      .filter(Boolean)
       .filter(testimonial => testimonial.beforeAfterImage)
-      .map(testimonial => testimonial.beforeAfterImage as string);
-
-    // Double the images to create seamless scrolling effect
-    setImages([...testimonialImages, ...testimonialImages]);
+      .sort((a, b) => a.id - b.id); // Sort by ID to maintain consistency
+      
+    // Then get testimonials with profile images (but no before/after)
+    const testimonialsWithProfileOnly = testimonials
+      .filter(Boolean)
+      .filter(testimonial => testimonial.profileImage && !testimonial.beforeAfterImage);
+    
+    // Combine them with before/after images first
+    const sortedTestimonials = [...testimonialsWithBeforeAfter, ...testimonialsWithProfileOnly];
+    
+    setAllTestimonials(sortedTestimonials);
   }, []);
 
-  // Auto-rotate testimonials at a slower pace
+  // Auto-rotate testimonials continuously without stopping on hover
   useEffect(() => {
-    if (images.length === 0) return;
+    if (allTestimonials.length === 0) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex(prevIndex => (prevIndex + 1) % images.length);
-    }, 8000); // Slower rotation (8 seconds)
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % allTestimonials.length);
+      
+      if (carouselRef.current) {
+        const scrollAmount = carouselRef.current.clientWidth;
+        carouselRef.current.scrollTo({
+          left: scrollAmount * ((currentIndex + 1) % allTestimonials.length),
+          behavior: 'smooth'
+        });
+      }
+    }, 5000);
     
     return () => clearInterval(interval);
-  }, [images.length]);
-
-  if (images.length === 0) return null;
+  }, [allTestimonials.length, currentIndex]);
 
   return (
-    <div className="h-full flex flex-col gap-4">
-      <div className="bg-white p-3 rounded-lg shadow-md">
-        <h3 className="font-bold text-xl text-center mb-2 text-bc-red">Before & After</h3>
-        <div className="relative h-[450px] overflow-hidden rounded-md">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="absolute inset-0 transition-opacity duration-1000"
-              style={{ 
-                opacity: index === currentIndex ? 1 : 0,
-                zIndex: index === currentIndex ? 10 : 0 
-              }}
-            >
-              <img
-                src={image}
-                alt={`Before and after cleaning transformation ${index + 1}`}
-                className="w-full h-full object-contain"
+    <section className="bg-gray-50 py-16 w-full">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-2">What Our Clients Say</h2>
+        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Don't just take our word for it. Here's what our satisfied customers have to say about our services.
+        </p>
+        
+        <div className="relative max-w-6xl mx-auto mb-12">
+          <div 
+            ref={carouselRef}
+            className="flex overflow-x-hidden snap-x snap-mandatory"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            {allTestimonials.map((testimonial) => (
+              <div 
+                key={testimonial.id} 
+                className="min-w-full snap-center px-4"
+              >
+                <div className="max-w-4xl mx-auto">
+                  <TestimonialCard
+                    quote={testimonial.quote}
+                    name={testimonial.name}
+                    location={testimonial.location}
+                    rating={testimonial.rating}
+                    beforeAfterImage={testimonial.beforeAfterImage}
+                    profileImage={testimonial.profileImage}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="flex justify-center mt-6">
+            {allTestimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setCurrentIndex(index);
+                  if (carouselRef.current) {
+                    const scrollAmount = carouselRef.current.clientWidth;
+                    carouselRef.current.scrollTo({
+                      left: scrollAmount * index,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
+                className={`w-3 h-3 mx-1 rounded-full ${
+                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
               />
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        
+        <div className="text-center">
+          <Button asChild variant="bc-red">
+            <Link to="/testimonials">View All Testimonials</Link>
+          </Button>
         </div>
       </div>
-      
-      <div className="flex justify-center mt-2">
-        <div className="flex gap-2">
-          {images.slice(0, images.length / 2).map((_, idx) => (
-            <button
-              key={idx}
-              className={`w-3 h-3 rounded-full ${idx === currentIndex % (images.length / 2) ? 'bg-bc-red' : 'bg-gray-300'}`}
-              onClick={() => setCurrentIndex(idx)}
-              aria-label={`View before and after image ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    </section>
   );
 };
 
