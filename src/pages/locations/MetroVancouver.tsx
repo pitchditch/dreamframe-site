@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import Layout from '@/components/Layout';
@@ -26,7 +27,7 @@ import {
   CarouselItem, 
   CarouselNext, 
   CarouselPrevious 
-} from "../ui/carousel";
+} from "@/components/ui/carousel";
 import { testimonials } from '@/data/testimonials';
 
 const MetroVancouver = () => {
