@@ -48,31 +48,36 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Setup scroll listener for premium solutions overlap effect with improved performance
+    // Setup scroll listener for premium solutions overlap effect with smooth transitions
     const handleScroll = () => {
       if (solutionsSectionRef.current) {
         const scrollPosition = window.scrollY;
-        const heroHeight = window.innerHeight * 0.8; // 80% of viewport height for more overlap
+        const heroHeight = window.innerHeight * 0.9; // 90% of viewport height for overlap
         
-        // Apply transform only when necessary to avoid layout thrashing
         if (scrollPosition < heroHeight) {
-          // Calculate translateY with a smoother curve
-          const translateYValue = Math.max(0, (heroHeight - scrollPosition) * 0.8);
+          // Calculate translateY with a smooth curve and easing
+          const translateYValue = Math.max(0, (heroHeight - scrollPosition) * 0.9);
           
-          // Using requestAnimationFrame for smoother animation
-          window.requestAnimationFrame(() => {
+          // Using requestAnimationFrame for smoother animation and preventing jank
+          requestAnimationFrame(() => {
             if (solutionsSectionRef.current) {
               solutionsSectionRef.current.style.transform = `translateY(-${translateYValue}px)`;
             }
           });
-        } else if (scrollPosition >= heroHeight) {
+        } else {
           // Snap to final position when scrolled past the hero
-          solutionsSectionRef.current.style.transform = 'translateY(0)';
+          requestAnimationFrame(() => {
+            if (solutionsSectionRef.current) {
+              solutionsSectionRef.current.style.transform = 'translateY(0)';
+            }
+          });
         }
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
+    // Add scroll event listener with a passive flag for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
     // Run once on load to set initial position
     handleScroll();
 
@@ -120,8 +125,16 @@ const Index = () => {
       
       <HeroSection />
       
-      {/* Premium Solutions section with the slide-up overlap effect */}
-      <div ref={solutionsSectionRef} className="relative z-20 transition-transform duration-300 will-change-transform" style={{ marginTop: '-6rem' }}>
+      {/* Premium Solutions section with the smooth slide-up overlap effect */}
+      <div 
+        ref={solutionsSectionRef} 
+        className="relative z-20 will-change-transform" 
+        style={{ 
+          marginTop: '-6rem', 
+          transform: 'translateY(0)', 
+          transition: 'transform 0.2s ease-out'
+        }}
+      >
         <div className="bg-white rounded-t-3xl shadow-xl">
           <PremiumSolutionsSection />
           <FeaturedProjectSection />
@@ -139,8 +152,12 @@ const Index = () => {
             darkMode={true}
           />
           <ServiceAreasSection />
+          
+          {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
+          <div className="h-20"></div>
         </div>
       </div>
+      
       <CTABanner />
       <ReferralButton />
     </Layout>
