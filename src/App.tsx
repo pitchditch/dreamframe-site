@@ -23,6 +23,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import WhiteRock from './pages/locations/WhiteRock';
 import WhiteRockBC from './pages/locations/WhiteRockBC';
+import MetroVancouver from './pages/locations/MetroVancouver';
 import VancouverWindowCleaning from './pages/locations/VancouverWindowCleaning';
 import NotFound from './pages/NotFound';
 import ZipUploader from './pages/ZipUploader';
@@ -68,6 +69,7 @@ function App() {
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
         <Route path="/locations/white-rock" element={<WhiteRock />} />
+        <Route path="/locations/metro-vancouver" element={<MetroVancouver />} />
         <Route path="/locations/vancouver-bc" element={<VancouverWindowCleaning />} />
         <Route path="/zip-uploader" element={<ZipUploader />} />
         <Route path="*" element={<NotFound />} />
