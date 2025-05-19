@@ -9,7 +9,7 @@ const CTABanner: React.FC = () => {
   const isMobile = useIsMobile();
   
   return (
-    <section className="bg-bc-red py-3 sticky bottom-0 z-40 shadow-lg">
+    <section className="bg-bc-red py-3 fixed bottom-0 left-0 right-0 z-50 shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center">
           <img 

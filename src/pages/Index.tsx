@@ -48,23 +48,33 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Setup scroll listener for premium solutions overlap effect
+    // Setup scroll listener for premium solutions overlap effect with improved performance
     const handleScroll = () => {
       if (solutionsSectionRef.current) {
         const scrollPosition = window.scrollY;
-        const heroHeight = window.innerHeight * 0.7; // 70% of viewport height
+        const heroHeight = window.innerHeight * 0.8; // 80% of viewport height for more overlap
         
-        if (scrollPosition > heroHeight * 0.3) {
-          // Start sliding up earlier for a smoother effect
-          const translateY = Math.max(0, heroHeight - scrollPosition);
-          solutionsSectionRef.current.style.transform = `translateY(-${translateY}px)`;
-        } else {
+        // Apply transform only when necessary to avoid layout thrashing
+        if (scrollPosition < heroHeight) {
+          // Calculate translateY with a smoother curve
+          const translateYValue = Math.max(0, (heroHeight - scrollPosition) * 0.8);
+          
+          // Using requestAnimationFrame for smoother animation
+          window.requestAnimationFrame(() => {
+            if (solutionsSectionRef.current) {
+              solutionsSectionRef.current.style.transform = `translateY(-${translateYValue}px)`;
+            }
+          });
+        } else if (scrollPosition >= heroHeight) {
+          // Snap to final position when scrolled past the hero
           solutionsSectionRef.current.style.transform = 'translateY(0)';
         }
       }
     };
     
     window.addEventListener('scroll', handleScroll);
+    // Run once on load to set initial position
+    handleScroll();
 
     return () => {
       // Clean up
@@ -111,7 +121,7 @@ const Index = () => {
       <HeroSection />
       
       {/* Premium Solutions section with the slide-up overlap effect */}
-      <div ref={solutionsSectionRef} className="relative z-20 transition-transform duration-300" style={{ marginTop: '-6rem' }}>
+      <div ref={solutionsSectionRef} className="relative z-20 transition-transform duration-300 will-change-transform" style={{ marginTop: '-6rem' }}>
         <div className="bg-white rounded-t-3xl shadow-xl">
           <PremiumSolutionsSection />
           <FeaturedProjectSection />
@@ -129,10 +139,10 @@ const Index = () => {
             darkMode={true}
           />
           <ServiceAreasSection />
-          <CTABanner />
-          <ReferralButton />
         </div>
       </div>
+      <CTABanner />
+      <ReferralButton />
     </Layout>
   );
 };
