@@ -20,7 +20,6 @@ import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { setLanguage } = useTranslation();
-  const solutionsSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Ensure English is the default language on initial load
@@ -48,44 +47,10 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Setup scroll listener for premium solutions overlap effect with smooth transitions
-    const handleScroll = () => {
-      if (solutionsSectionRef.current) {
-        const scrollPosition = window.scrollY;
-        const heroHeight = window.innerHeight * 0.9; // 90% of viewport height for overlap
-        
-        if (scrollPosition < heroHeight) {
-          // Calculate translateY with a smooth curve and easing
-          const translateYValue = Math.max(0, (heroHeight - scrollPosition) * 0.9);
-          
-          // Using requestAnimationFrame for smoother animation and preventing jank
-          requestAnimationFrame(() => {
-            if (solutionsSectionRef.current) {
-              solutionsSectionRef.current.style.transform = `translateY(-${translateYValue}px)`;
-            }
-          });
-        } else {
-          // Snap to final position when scrolled past the hero
-          requestAnimationFrame(() => {
-            if (solutionsSectionRef.current) {
-              solutionsSectionRef.current.style.transform = 'translateY(0)';
-            }
-          });
-        }
-      }
-    };
-    
-    // Add scroll event listener with a passive flag for better performance
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Run once on load to set initial position
-    handleScroll();
-
     return () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
-      window.removeEventListener('scroll', handleScroll);
     };
   }, [setLanguage]);
 
@@ -125,37 +90,26 @@ const Index = () => {
       
       <HeroSection />
       
-      {/* Premium Solutions section with the smooth slide-up overlap effect */}
-      <div 
-        ref={solutionsSectionRef} 
-        className="relative z-20 will-change-transform" 
-        style={{ 
-          marginTop: '-6rem', 
-          transform: 'translateY(0)', 
-          transition: 'transform 0.2s ease-out'
-        }}
-      >
-        <div className="bg-white rounded-t-3xl shadow-xl">
-          <PremiumSolutionsSection />
-          <FeaturedProjectSection />
-          <ScreenCleaningSection />
-          <OwnerOperatedSection />
-          <FounderSection />
-          <TrustedCustomersSection />
-          <CompetitorComparisonSection />
-          <TestimonialsSection />
-          <SatisfactionGuaranteeSection />
-          <FAQSection 
-            title="Frequently Asked Questions" 
-            subtitle="Everything you need to know about our services"
-            faqs={faqItems}
-            darkMode={true}
-          />
-          <ServiceAreasSection />
-          
-          {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
-          <div className="h-20"></div>
-        </div>
+      <div className="bg-white">
+        <PremiumSolutionsSection />
+        <FeaturedProjectSection />
+        <ScreenCleaningSection />
+        <OwnerOperatedSection />
+        <FounderSection />
+        <TrustedCustomersSection />
+        <CompetitorComparisonSection />
+        <TestimonialsSection />
+        <SatisfactionGuaranteeSection />
+        <FAQSection 
+          title="Frequently Asked Questions" 
+          subtitle="Everything you need to know about our services"
+          faqs={faqItems}
+          darkMode={true}
+        />
+        <ServiceAreasSection />
+        
+        {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
+        <div className="h-20"></div>
       </div>
       
       <CTABanner />
