@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import PriceCalculatorForm from '../components/PriceCalculator/PriceCalculatorForm';
 import { Helmet } from 'react-helmet-async';
@@ -8,8 +8,23 @@ import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
 const Calculator = () => {
-  // Check if user was referred from the homepage with a postal code
-  const hasPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
+  // Check if user was referred with form data
+  const savedPostalCode = localStorage.getItem('calculatorPostalCode');
+  const savedHouseSize = localStorage.getItem('calculatorHouseSize');
+  
+  // Determine initial step based on available data
+  const determineInitialStep = () => {
+    if (savedPostalCode) {
+      return "address";
+    }
+    return undefined;
+  };
+  
+  // Clean up localStorage after retrieving the values
+  useEffect(() => {
+    // We don't clear localStorage here to allow for page refreshes
+    // The form component will handle this after successful submission
+  }, []);
 
   return (
     <Layout>
@@ -32,7 +47,13 @@ const Calculator = () => {
         
         <div className="relative flex">
           <div className="w-full lg:w-3/4 pr-0 lg:pr-8">
-            <PriceCalculatorForm initialStep={hasPostalCode ? "address" : undefined} />
+            <PriceCalculatorForm 
+              initialStep={determineInitialStep()} 
+              prefillData={{
+                postalCode: savedPostalCode || '',
+                houseSize: savedHouseSize || 'medium'
+              }}
+            />
             
             {/* 100% Satisfaction Guarantee - Now with house background */}
             <div className="mt-12 relative overflow-hidden rounded-xl shadow-lg">

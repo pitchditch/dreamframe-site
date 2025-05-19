@@ -12,6 +12,10 @@ interface PriceCalculatorOverlayProps {
   icon?: boolean;
   onComplete?: () => void;
   showCallJaydenNow?: boolean;
+  prefillData?: {
+    postalCode?: string;
+    houseSize?: string;
+  };
 }
 
 const PriceCalculatorOverlay = ({ 
@@ -21,6 +25,7 @@ const PriceCalculatorOverlay = ({
   icon = false,
   onComplete,
   showCallJaydenNow = false,
+  prefillData,
 }: PriceCalculatorOverlayProps) => {
   const [open, setOpen] = useState(false);
   
@@ -71,7 +76,11 @@ const PriceCalculatorOverlay = ({
           </DialogDescription>
         </DialogHeader>
         <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto">
-          <PriceCalculatorForm onComplete={handleComplete} initialStep="address" />
+          <PriceCalculatorForm 
+            onComplete={handleComplete} 
+            initialStep="address" 
+            prefillData={prefillData}
+          />
         </div>
       </DialogContent>
     </Dialog>

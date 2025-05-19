@@ -7,11 +7,16 @@ import StepRenderer from './StepRenderer';
 interface PriceCalculatorFormProps {
   onComplete?: () => void;
   initialStep?: string;
+  prefillData?: {
+    postalCode?: string;
+    houseSize?: string;
+  };
 }
 
 const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   onComplete,
-  initialStep
+  initialStep,
+  prefillData = {}
 }) => {
   // Convert string initialStep to number
   const getInitialStep = (): number => {
@@ -41,7 +46,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     estimateTotal,
     handleFormSubmit,
     resetForm
-  } = usePriceCalculatorForm(getInitialStep(), onComplete);
+  } = usePriceCalculatorForm(getInitialStep(), onComplete, prefillData);
 
   const handleNextStep = (nextStep: number) => setStep(nextStep);
   const handlePrevStep = (prevStep: number) => setStep(prevStep);

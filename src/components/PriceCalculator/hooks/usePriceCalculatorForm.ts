@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmission } from "@/utils/analytics";
 import emailjs from '@emailjs/browser';
@@ -23,10 +22,27 @@ export interface ContactData {
   notes: string;
 }
 
-export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void) => {
+interface PrefillData {
+  postalCode?: string;
+  houseSize?: string;
+}
+
+export const usePriceCalculatorForm = (
+  initialStep = 0, 
+  onComplete?: () => void,
+  prefillData?: PrefillData
+) => {
   const [step, setStep] = useState<number>(initialStep);
-  const [address, setAddress] = useState<AddressData>({ street: '', city: '', postalCode: '' });
-  const [size, setSize] = useState<SizeData>({ houseSize: 'medium', stories: '2', windowCount: '15' });
+  const [address, setAddress] = useState<AddressData>({ 
+    street: '', 
+    city: '', 
+    postalCode: prefillData?.postalCode || '' 
+  });
+  const [size, setSize] = useState<SizeData>({ 
+    houseSize: prefillData?.houseSize || 'medium', 
+    stories: '2', 
+    windowCount: '15' 
+  });
   const [services, setServices] = useState<string[]>([]);
   const [addOns, setAddOns] = useState<string[]>([]);
   const [contact, setContact] = useState<ContactData>({ name: '', email: '', phone: '', notes: '' });
@@ -34,6 +50,20 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
   const [submitting, setSubmitting] = useState<boolean>(false);
 
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Clear localStorage values after successful form submission
+    const handleBeforeUnload = () => {
+      localStorage.removeItem('calculatorPostalCode');
+      localStorage.removeItem('calculatorHouseSize');
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   // Calculate the estimated total based on selections
   const estimateTotal = () => {

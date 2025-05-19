@@ -33,8 +33,13 @@ const MetroVancouver = () => {
 
   const handleQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Open form overlay or redirect to quote page
-    window.location.href = `/calculator?postal=${postalCode}&size=${houseSize}`;
+    
+    // Save form data to localStorage for the calculator page to use
+    localStorage.setItem('calculatorPostalCode', postalCode);
+    localStorage.setItem('calculatorHouseSize', houseSize);
+    
+    // Redirect to calculator page
+    window.location.href = `/calculator`;
   };
 
   // Animation variants
