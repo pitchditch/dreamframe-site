@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -18,21 +17,19 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Simplified video loading logic for better performance
-    const checkVideoStatus = () => {
-      // Preload attribute added for faster loading
-      const videoElement = isMobile 
-        ? document.getElementById('hero-mobile-video') 
-        : document.getElementById('hero-desktop-video');
-      
+    // Preload the videos for faster loading
+    if (isMobile) {
+      const img = new Image();
+      img.src = "/lovable-uploads/8ff26553-6cc8-4cc7-8d6f-d225d5ab6cdb.png";
+      img.onload = () => setVideoLoaded(true);
+    } else {
+      const videoElement = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
       if (videoElement) {
-        setVideoLoaded(true);
+        videoElement.onload = () => setVideoLoaded(true);
       }
-    };
-    
-    // Check video status immediately and after a short delay
-    checkVideoStatus();
-    const timer = setTimeout(checkVideoStatus, 200);
+      // Set video as loaded after a short delay even if onload doesn't trigger
+      setTimeout(() => setVideoLoaded(true), 500);
+    }
     
     // Check if postal code exists in session storage
     const savedPostalCode = sessionStorage.getItem('postalCode');
@@ -40,12 +37,6 @@ const HeroSection = () => {
       setPostalCode(savedPostalCode);
     }
     
-    window.addEventListener('resize', checkVideoStatus);
-    
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', checkVideoStatus);
-    };
   }, [isMobile]);
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
@@ -64,40 +55,33 @@ const HeroSection = () => {
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
-      {/* YouTube Video Background - Different videos for mobile and desktop */}
+      {/* Background - Different for mobile and desktop */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
-            // Mobile YouTube Video - Using the specific short video requested
-            <iframe 
-              id="hero-mobile-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.6] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=auto"
-              title="Pressure Washing Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              loading="eager"
-              onLoad={() => setVideoLoaded(true)}
-              style={{ objectFit: 'cover' }}
-            ></iframe>
+            // Mobile Image Background
+            <img 
+              src="/lovable-uploads/8ff26553-6cc8-4cc7-8d6f-d225d5ab6cdb.png"
+              alt="House with palm tree and red BC Pressure Washing car"
+              className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+            />
           ) : (
             // Desktop YouTube Video
             <iframe 
               id="hero-desktop-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               loading="eager"
-              onLoad={() => setVideoLoaded(true)}
             ></iframe>
           )}
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
-      {/* Hero Content - Improved visibility and padding to ensure content is always in view */}
+      {/* Hero Content - Keep existing code */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 sm:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">

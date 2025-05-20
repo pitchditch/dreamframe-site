@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Check } from 'lucide-react';
+import { Loader2, Check, Info } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { trackFormSubmission } from '@/utils/analytics';
 
@@ -84,7 +84,19 @@ const RoofCleaningForm = () => {
 
   return (
     <div className="w-full">
-      <h3 className="text-xl font-bold mb-6 text-center">Request a Free Roof Cleaning Quote</h3>
+      <h3 className="text-xl font-bold mb-4 text-center">Request a Free Roof Cleaning Quote</h3>
+      
+      <div className="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
+        <div className="flex items-start">
+          <Info className="text-green-700 mr-2 flex-shrink-0 mt-1" size={18} />
+          <div>
+            <h4 className="font-bold text-green-800 mb-1">Our Unique Roof Cleaning Process</h4>
+            <p className="text-sm text-green-700">
+              We brush off large moss accumulations delicately with a soft brush, then apply our specialized solution to kill remaining moss. All our roof cleaning services come with a <span className="font-bold">2-year moss-free guarantee</span>.
+            </p>
+          </div>
+        </div>
+      </div>
       
       {isSuccess ? (
         <div className="text-center p-6 bg-green-50 rounded-lg">

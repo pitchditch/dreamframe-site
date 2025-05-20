@@ -1,8 +1,9 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
-import { ExternalLink, MessageCircle } from 'lucide-react';
+import { ExternalLink, MessageCircle, AlertCircle } from 'lucide-react';
 import ServiceProcessSection from '../../components/services/pressure-washing/ServiceProcessSection';
 import ServiceBenefitsSection from '../../components/services/pressure-washing/ServiceBenefitsSection';
 import ServiceFeatures from '../../components/services/pressure-washing/ServiceFeatures';
@@ -79,6 +80,70 @@ const PressureWashing = () => {
                 </div>
               </div>
               <ServiceFeatures />
+
+              {/* Pressure Washing vs Soft Washing Section */}
+              <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-100">
+                <h3 className="text-2xl font-bold mb-4 text-blue-800">Pressure Washing vs. Soft Washing</h3>
+                <div className="flex items-start mb-4">
+                  <AlertCircle className="text-blue-700 mr-2 flex-shrink-0 mt-1" size={20} />
+                  <p className="text-blue-700">
+                    <strong>We recommend soft washing for most exterior surfaces.</strong> Our professional technicians use specialized equipment and quality products to ensure the best results without damage.
+                  </p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-6 mt-6">
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 className="font-bold text-lg mb-2">Pressure Washing</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Uses high-pressure water spray</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Ideal for concrete, stone, and brick</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Removes tough stains and built-up grime</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Can damage delicate surfaces if not done properly</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-lg shadow-sm border-2 border-green-200">
+                    <h4 className="font-bold text-lg mb-2 text-green-700">Soft Washing <span className="text-sm font-normal text-green-600">(Recommended)</span></h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Uses low pressure and specialized cleaning solutions</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Safe for all surfaces including vinyl siding, stucco, and roofs</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Kills mold, mildew, and algae at the root</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-gray-700 mr-2">•</span>
+                        <span>Longer-lasting results than pressure washing alone</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="mt-6 bg-green-50 p-4 rounded-lg border border-green-100">
+                  <p className="text-green-800">
+                    <strong>Our Approach:</strong> We specialize in quality products and proper application techniques, ensuring your property receives the appropriate cleaning method for each surface. 
+                    Our technicians are trained to assess your specific needs and recommend the safest, most effective solution.
+                  </p>
+                </div>
+              </div>
             </div>
             <div className="md:col-span-1">
               <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-100 hover:border-bc-red transition-all duration-300 transform hover:-translate-y-1">
