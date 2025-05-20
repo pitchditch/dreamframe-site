@@ -1,12 +1,11 @@
 
-import { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import TestimonialsCarousel from '../TestimonialsCarousel';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const TestimonialsSection = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   
   return (
     <section className="py-16 bg-gray-50">

@@ -44,6 +44,9 @@ const getBrowserLanguage = (): Language => {
 export const TranslationProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>(getBrowserLanguage());
 
+  // Force re-render on language change
+  const [, forceUpdate] = useState({});
+
   // Save language preference when it changes
   useEffect(() => {
     localStorage.setItem('preferred_language', language);
@@ -52,6 +55,9 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     // Add language class to body for CSS targeting
     document.body.classList.remove('lang-en', 'lang-pa', 'lang-hi');
     document.body.classList.add(`lang-${language}`);
+    
+    // Force re-render when language changes
+    forceUpdate({});
     
     // Log the language change to help with debugging
     console.log(`Language changed to: ${language}`);

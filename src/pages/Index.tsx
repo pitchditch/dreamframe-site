@@ -89,15 +89,15 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Position language selector on top right corner */}
+      {/* Position language selector on top right corner with higher z-index */}
       <div className="fixed top-4 right-4 z-[100]">
         <LanguageSelector />
       </div>
       
-      <HeroSection />
+      <HeroSection key={`hero-${language}`} />
       
       <div className="bg-white">
-        <PremiumSolutionsSection />
+        <PremiumSolutionsSection key={`premium-${language}`} />
         <FeaturedProjectSection />
         <ScreenCleaningSection />
         <div data-component="owner-operated">
@@ -106,7 +106,7 @@ const Index = () => {
         <FounderSection />
         <TrustedCustomersSection />
         <CompetitorComparisonSection />
-        <TestimonialsSection />
+        <TestimonialsSection key={`testimonials-${language}`} />
         <SatisfactionGuaranteeSection />
         <FAQSection 
           title="Frequently Asked Questions" 

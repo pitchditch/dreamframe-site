@@ -11,7 +11,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const LanguageSelector = () => {
-  const { language, setLanguage, t } = useTranslation();
+  const { language, setLanguage } = useTranslation();
+
+  const handleLanguageChange = (lang: 'en' | 'pa' | 'hi') => {
+    setLanguage(lang);
+    // Force page reload to ensure all components update with new language
+    // This is a heavier approach but ensures everything updates
+    window.location.reload();
+  };
 
   return (
     <DropdownMenu>
@@ -41,15 +48,15 @@ const LanguageSelector = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40 bg-white/95 backdrop-blur-sm">
-        <DropdownMenuItem onClick={() => setLanguage('en')} className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => handleLanguageChange('en')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
           <span>English</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('pa')} className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => handleLanguageChange('pa')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
           <span>ਪੰਜਾਬੀ (Punjabi)</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('hi')} className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => handleLanguageChange('hi')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
           <span>हिंदी (Hindi)</span>
         </DropdownMenuItem>

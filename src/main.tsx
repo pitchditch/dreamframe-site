@@ -1,27 +1,22 @@
 
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App.tsx';
-import './index.css';
-import { StrictMode } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import App from './App';
+import './index.css';
+import { TranslationProvider } from './hooks/use-translation';
 import { Toaster } from './components/ui/toaster';
 
-// Ensure the root element exists in index.html
-const rootElement = document.getElementById('root');
-
-if (!rootElement) {
-  throw new Error('Root element not found. Ensure <div id="root"></div> exists in index.html.');
-}
-
-// Create root and render app
-createRoot(rootElement).render(
-  <StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-        <Toaster />
-      </BrowserRouter>
-    </HelmetProvider>
-  </StrictMode>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <HelmetProvider>
+        <TranslationProvider>
+          <App />
+          <Toaster />
+        </TranslationProvider>
+      </HelmetProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
 );
