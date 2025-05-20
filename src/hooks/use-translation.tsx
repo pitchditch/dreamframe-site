@@ -52,12 +52,24 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     // Add language class to body for CSS targeting
     document.body.classList.remove('lang-en', 'lang-pa', 'lang-hi');
     document.body.classList.add(`lang-${language}`);
+    
+    // Log the language change to help with debugging
+    console.log(`Language changed to: ${language}`);
   }, [language]);
 
   // Translation function
   const t = (key: TranslationKey): string => {
-    if (!translations[language]) return key;
-    return translations[language][key] || key;
+    if (!translations[language]) {
+      console.log(`No translations found for language: ${language}`);
+      return key;
+    }
+    
+    const translatedText = translations[language][key];
+    if (!translatedText) {
+      console.log(`No translation found for key: ${key} in language: ${language}`);
+    }
+    
+    return translatedText || key;
   };
 
   return (

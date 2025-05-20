@@ -24,11 +24,8 @@ const Home = () => {
 
   useEffect(() => {
     // We don't force English as default anymore to allow language selection
-    // Only set English if there's no language preference already set
-    if (!localStorage.getItem('preferred_language')) {
-      setLanguage('en');
-    }
-
+    // Leave existing preferred language if set
+    
     document.body.classList.add('has-video-header');
 
     const observerOptions = {
@@ -49,11 +46,14 @@ const Home = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Log current language for debugging
+    console.log('Current language on Home page:', language);
+
     return () => {
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
-  }, [setLanguage]);
+  }, [language, setLanguage]);
 
   return (
     <Layout 

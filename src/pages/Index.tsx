@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
@@ -17,14 +17,12 @@ import TrustedCustomersSection from '../components/home/TrustedCustomersSection'
 import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Index = () => {
-  const { setLanguage } = useTranslation();
+  const { language } = useTranslation();
 
   useEffect(() => {
-    // Ensure English is the default language on initial load
-    setLanguage('en');
-
     // Mark body to have video header (for navbar transparency)
     document.body.classList.add('has-video-header');
 
@@ -47,12 +45,15 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Log current language for debugging
+    console.log('Current language on Index page:', language);
+
     return () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
-  }, [setLanguage]);
+  }, [language]);
 
   const faqItems = [
     {
@@ -88,13 +89,19 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
+      <div className="absolute top-4 right-4 z-50">
+        <LanguageSelector />
+      </div>
+      
       <HeroSection />
       
       <div className="bg-white">
         <PremiumSolutionsSection />
         <FeaturedProjectSection />
         <ScreenCleaningSection />
-        <OwnerOperatedSection />
+        <div data-component="owner-operated">
+          <OwnerOperatedSection />
+        </div>
         <FounderSection />
         <TrustedCustomersSection />
         <CompetitorComparisonSection />

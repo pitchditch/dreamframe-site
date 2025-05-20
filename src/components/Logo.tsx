@@ -12,7 +12,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const [scrolled, setScrolled] = useState(false);
   
   // Different height classes for mobile vs desktop - increased mobile size
-  const mobileLogoHeight = 'h-32 w-auto'; // Increased from h-28 to h-32 for bigger mobile logo
+  const mobileLogoHeight = 'h-36 w-auto'; // Increased from h-32 to h-36 for bigger mobile logo
   const desktopLogoHeight = 'h-36 md:h-40 w-auto';
   
   useEffect(() => {

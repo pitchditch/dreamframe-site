@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Globe } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Button } from './ui/button';
 import {
@@ -19,37 +18,38 @@ const LanguageSelector = () => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="bg-white/20 backdrop-blur-sm border-white/30 hover:bg-white/30 text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+          className="bg-white/90 backdrop-blur-sm border border-gray-300 hover:bg-white text-sm md:text-base px-2 md:px-3 py-1 md:py-2 shadow-md"
         >
           {language === 'en' ? (
             <span className="flex items-center">
               <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
+              <span className="ml-1 font-medium">English</span>
             </span>
           ) : language === 'pa' ? (
             <span className="flex items-center">
               <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
-              <span className="ml-1">ਪੰਜਾਬੀ</span>
+              <span className="ml-1 font-medium">ਪੰਜਾਬੀ</span>
             </span>
           ) : (
             <span className="flex items-center">
               <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
-              <span className="ml-1">हिंदी</span>
+              <span className="ml-1 font-medium">हिंदी</span>
             </span>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-36">
-        <DropdownMenuItem onClick={() => setLanguage('en')} className="flex items-center gap-2">
+      <DropdownMenuContent align="end" className="w-40 bg-white/95 backdrop-blur-sm">
+        <DropdownMenuItem onClick={() => setLanguage('en')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
-          English
+          <span>English</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('pa')} className="flex items-center gap-2">
+        <DropdownMenuItem onClick={() => setLanguage('pa')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
-          ਪੰਜਾਬੀ (Punjabi)
+          <span>ਪੰਜਾਬੀ (Punjabi)</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('hi')} className="flex items-center gap-2">
+        <DropdownMenuItem onClick={() => setLanguage('hi')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
-          हिंदी (Hindi)
+          <span>हिंदी (Hindi)</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
