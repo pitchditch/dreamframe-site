@@ -15,7 +15,15 @@ const PhoneButton = () => {
       const heroSectionHeight = window.innerHeight * 0.8;
       
       if (window.scrollY > heroSectionHeight) {
-        setIsVisible(true);
+        // Check if Owner Operated section is visible
+        const ownerSection = document.querySelector('[data-component="owner-operated"]');
+        if (ownerSection) {
+          const ownerRect = ownerSection.getBoundingClientRect();
+          // Only show button when owner section is NOT visible on screen
+          setIsVisible(ownerRect.bottom < 0 || ownerRect.top > window.innerHeight);
+        } else {
+          setIsVisible(true);
+        }
         
         // Check if we're in the FAQ section to use compact view
         const faqSection = document.querySelector('[id*="faq"], [class*="faq"], [data-component="faq"]');

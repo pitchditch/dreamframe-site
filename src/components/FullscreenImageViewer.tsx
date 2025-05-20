@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface FullscreenImageViewerProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ const FullscreenImageViewer: React.FC<FullscreenImageViewerProps> = ({
   altText = "Image" 
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const { t } = useTranslation();
 
   const openFullscreen = () => {
     setIsFullscreen(true);
@@ -30,7 +32,7 @@ const FullscreenImageViewer: React.FC<FullscreenImageViewerProps> = ({
       <div onClick={openFullscreen} className="cursor-pointer relative">
         {children}
         <div className="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-          <span className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">Click to enlarge</span>
+          <span className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">{t("Click to enlarge")}</span>
         </div>
       </div>
 

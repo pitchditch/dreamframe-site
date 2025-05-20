@@ -47,7 +47,9 @@ const hindiTranslations = {
   "Operated by Jayden Fisher": "जेडन फिशर द्वारा संचालित",
   "Type your question...": "अपना प्रश्न लिखें...",
   "Talk to a Human": "किसी व्यक्ति से बात करें",
-  "Book Now": "अभी बुक करें"
+  "Book Now": "अभी बुक करें",
+  "Click to enlarge": "बड़ा करने के लिए क्लिक करें",
+  "Refer & Save 50%": "रेफर करें और 50% बचाएं"
 };
 
 export default hindiTranslations;

@@ -19,9 +19,16 @@ import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuarante
 import LanguageSelector from '@/components/LanguageSelector';
 
 const Home = () => {
-  const { setLanguage } = useTranslation();
+  // Explicitly getting language related functions to ensure they're available
+  const { language, setLanguage } = useTranslation();
 
   useEffect(() => {
+    // We don't force English as default anymore to allow language selection
+    // Only set English if there's no language preference already set
+    if (!localStorage.getItem('preferred_language')) {
+      setLanguage('en');
+    }
+
     document.body.classList.add('has-video-header');
 
     const observerOptions = {
@@ -138,7 +145,10 @@ const Home = () => {
         <div className="bg-white rounded-t-3xl shadow-xl">
           <RedCarSection />
           <PremiumSolutionsSection />
-          <OwnerOperatedSection />
+          {/* Add data-component attribute to help with visibility detection */}
+          <div data-component="owner-operated">
+            <OwnerOperatedSection />
+          </div>
           <SatisfactionGuaranteeSection />
           <SpringSaleCarousel />
           <TestimonialsSection />
