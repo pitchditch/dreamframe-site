@@ -1,3 +1,4 @@
+
 const hindiTranslations = {
   // General
   "Home": "होम",
@@ -101,19 +102,19 @@ const hindiTranslations = {
   "Our Cleaning Packages": "हमारे क्लीनिंग पैकेज",
   "Affordable Solutions for Every Need": "हर जरूरत के लिए किफायती समाधान",
   "Satisfaction Guaranteed": "संतुष्टि की गारंटी",
-  "What Our Customers Say": "हमारे ग्राहक क्या कहते हैं",
-  "Real Feedback from Satisfied Clients": "संतुष्ट ग्राहकों से वास्तविक प्रतिक्रिया",
   "Frequently Asked Questions": "अक्सर पूछे जाने वाले प्रश्न",
   "Find Answers to Common Questions": "सामान्य प्रश्नों के उत्तर खोजें",
   "About BC Pressure Washing": "बीसी प्रेशर वॉशिंग के बारे में",
-  "Professional Exterior Cleaning Services": "पेशेवर एक्सटीरियर क्लीनिंग सेवाएँ",
   "Years of Experience": "अनुभव के वर्ष",
   "Satisfied Customers": "संतुष्ट ग्राहक",
   "Completed Projects": "पूरी की गई परियोजनाएँ",
   "Service Areas": "सेवा क्षेत्र",
   
   // Call to action
-  "Call us now: 778 808 7620": "हमें अभी कॉल करें: 778 808 7620"
+  "Call us now: 778 808 7620": "हमें अभी कॉल करें: 778 808 7620",
+  
+  // Additional missing translations
+  "Learn More": "और अधिक जानें"
 };
 
 export default hindiTranslations;
