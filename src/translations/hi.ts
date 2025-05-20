@@ -31,23 +31,55 @@ const hindiTranslations = {
   "Safe, effective pressure washing that removes dirt, algae, and mildew without damaging your home's exterior surfaces.": "सुरक्षित, प्रभावी प्रेशर वॉशिंग जो आपके घर की बाहरी सतहों को नुकसान पहुंचाए बिना गंदगी, शैवाल और फफूंदी को हटाती है।",
   "Roof Cleaning": "छत की सफाई",
   "Professional roof cleaning that safely removes moss, algae, and debris, extending the life of your roof.": "पेशेवर छत की सफाई जो सुरक्षित रूप से मॉस, शैवाल और मलबे को हटाती है, आपकी छत के जीवन को बढ़ाती है।",
-  "Learn More": "अधिक जानें",
-  
-  // Owner Operated Section
-  "Every Job is Personally Checked by Me": "हर काम मेरे द्वारा व्यक्तिगत रूप से जांचा जाता है",
-  "As the owner of BC Pressure Washing, I personally oversee every job we complete. This isn't just a business for me—it's my passion and my promise to you.": "बीसी प्रेशर वॉशिंग के मालिक के रूप में, मैं व्यक्तिगत रूप से हर काम की देखरेख करता हूं जो हम पूरा करते हैं। यह मेरे लिए सिर्फ एक व्यवसाय नहीं है - यह मेरा जुनून और आपके लिए मेरा वादा है।",
-  "I inspect every project for quality": "मैं गुणवत्ता के लिए हर प्रोजेक्ट का निरीक्षण करता हूं",
-  "No subcontractors—our trained team only": "कोई उप-ठेकेदार नहीं - केवल हमारी प्रशिक्षित टीम",
-  "Your satisfaction is my personal guarantee": "आपकी संतुष्टि मेरी व्यक्तिगत गारंटी है",
-  "Owner Operated": "मालिक द्वारा संचालित",
-  "Since 2015": "2015 से",
   
   // Get a Free Quote
   "Get a Free Quote": "निःशुल्क मूल्य पूछें",
   "Explore Our Services": "हमारी सेवाएं देखें",
   
-  // Refer and Save
+  // Contact Page
+  "Get in Touch": "संपर्क करें",
+  "Contact us today for a free, no-obligation quote": "बिना किसी बाध्यता के मुफ्त मूल्य के लिए आज ही हमसे संपर्क करें",
+  "Your Name": "आपका नाम",
+  "Your Email": "आपका ईमेल",
+  "Your Phone": "आपका फोन",
+  "Service Needed": "आवश्यक सेवा",
+  "Message": "संदेश",
+  "Submit": "जमा करें",
+  "Send Message": "संदेश भेजें",
+  
+  // Banner
+  "Ready to Transform Your Property?": "अपनी संपत्ति को बदलने के लिए तैयार हैं?",
+  "Get in touch today for a free, no-obligation quote and see how we can help you maintain your property's pristine appearance.": "आज ही बिना किसी बाध्यता के मुफ्त मूल्य के लिए संपर्क करें और देखें कि हम आपकी संपत्ति की स्वच्छ उपस्थिति को बनाए रखने में आपकी कैसे मदद कर सकते हैं।",
+  
+  // Chat Assistant
+  "Have a question?": "कोई सवाल है?",
+  "Need help with a quote?": "मूल्य के साथ मदद चाहिए?",
+  "Want to learn more about our services?": "हमारी सेवाओं के बारे में और जानना चाहते हैं?",
+  "BC Pressure Washing Assistant": "बीसी प्रेशर वॉशिंग सहायक",
+  "Hi there! Ask me any questions about our services.": "नमस्ते! हमारी सेवाओं के बारे में कोई भी प्रश्न पूछें।",
+  "Type your message...": "अपना संदेश लिखें...",
+  "Typing...": "टाइपिंग...",
+  "Operated by Jayden Fisher": "जेडन फिशर द्वारा संचालित",
+  "Type your question...": "अपना प्रश्न लिखें...",
+  "Talk to a Human": "किसी व्यक्ति से बात करें",
+  "Book Now": "अभी बुक करें",
+  "Click to enlarge": "बड़ा करने के लिए क्लिक करें",
   "Refer & Save 50%": "रेफर करें और 50% बचाएं",
+  
+  // Additional home page sections
+  "Our Cleaning Packages": "हमारे क्लीनिंग पैकेज",
+  "Affordable Solutions for Every Need": "हर जरूरत के लिए किफायती समाधान",
+  "Satisfaction Guaranteed": "संतुष्टि की गारंटी",
+  "What Our Customers Say": "हमारे ग्राहक क्या कहते हैं",
+  "Real Feedback from Satisfied Clients": "संतुष्ट ग्राहकों से वास्तविक प्रतिक्रिया",
+  "Frequently Asked Questions": "अक्सर पूछे जाने वाले प्रश्न",
+  "Find Answers to Common Questions": "सामान्य प्रश्नों के उत्तर खोजें",
+  "About BC Pressure Washing": "बीसी प्रेशर वॉशिंग के बारे में",
+  "Professional Exterior Cleaning Services": "पेशेवर एक्सटीरियर क्लीनिंग सेवाएँ",
+  "Years of Experience": "अनुभव के वर्ष",
+  "Satisfied Customers": "संतुष्ट ग्राहक",
+  "Completed Projects": "पूरी की गई परियोजनाएँ",
+  "Service Areas": "सेवा क्षेत्र",
   
   // Call to action
   "Call us now: 778 808 7620": "हमें अभी कॉल करें: 778 808 7620"
