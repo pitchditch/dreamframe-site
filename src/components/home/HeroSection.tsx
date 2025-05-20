@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { Phone, ArrowRight, ChevronDown } from 'lucide-react';
+import PriceCalculatorOverlay from '../PriceCalculatorOverlay';
 
 const HeroSection = () => {
   const handleScrollDown = () => {
@@ -58,6 +59,12 @@ const HeroSection = () => {
                   Call Now: 778 808 7620
                 </Button>
               </a>
+              
+              <PriceCalculatorOverlay 
+                buttonText="Get a Free Quote" 
+                className="px-6 py-6 text-base md:text-lg transition-all duration-300 hover:scale-105"
+                variant="outline"
+              />
               
               <Button
                 variant="outline"
