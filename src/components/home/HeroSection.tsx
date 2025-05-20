@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { Phone, ArrowRight, ChevronDown } from 'lucide-react';
 import { Link as ScrollLink } from 'react-scroll';
-import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 
 const HeroSection = () => {
