@@ -1,69 +1,30 @@
 
-import { useState, useEffect } from 'react';
-import { Gift } from 'lucide-react';
+import React from 'react';
 import { Button } from './ui/button';
+import { Gift } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import ReferralProgramDialog from './ReferralProgramDialog';
-import { useTranslation } from '@/hooks/use-translation';
+import { useState } from 'react';
 
-const ReferralButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [showIconOnly, setShowIconOnly] = useState(false);
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Find the hero section
-      const heroSection = document.querySelector('.hero-section');
-      
-      if (heroSection) {
-        const sectionRect = heroSection.getBoundingClientRect();
-        // Show when scrolled past this section
-        if (sectionRect.bottom < 0) {
-          setIsVisible(true);
-          // Show icon only after scrolling further down
-          setShowIconOnly(window.scrollY > heroSection.clientHeight + 500);
-        } else {
-          setIsVisible(false);
-          setShowIconOnly(false);
-        }
-      } else {
-        // Fallback to show after scrolling down
-        const scrollThreshold = window.innerHeight;
-        if (window.scrollY > scrollThreshold) {
-          setIsVisible(true);
-          setShowIconOnly(window.scrollY > scrollThreshold + 300);
-        } else {
-          setIsVisible(false);
-          setShowIconOnly(false);
-        }
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+const ReferralButton: React.FC = () => {
+  const isMobile = useIsMobile();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  
   return (
     <>
-      {isVisible && (
-        <Button 
-          onClick={() => setIsOpen(true)} 
-          className={`bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-5 py-2 flex items-center gap-2 fixed bottom-44 left-6 z-40 md:left-10 transition-all duration-300 hover:scale-105 ${showIconOnly ? 'w-14 h-14 p-0 justify-center' : ''}`}
+      <div className="fixed bottom-20 right-4 z-[900] flex flex-col items-end gap-2">
+        <Button
+          onClick={() => setDialogOpen(true)}
+          variant="secondary"
+          size={isMobile ? "sm" : "lg"}
+          className="rounded-full shadow-lg bg-white border-2 border-bc-red text-bc-red hover:bg-gray-50 animate-pulse"
         >
-          <Gift size={20} />
-          {!showIconOnly && <span>{t("Referral Program")}</span>}
+          <Gift className="mr-2" size={isMobile ? 16 : 20} />
+          <span className={isMobile ? "text-xs" : "text-sm"}>Refer & Earn $50</span>
         </Button>
-      )}
-
-      <ReferralProgramDialog 
-        open={isOpen}
-        onOpenChange={setIsOpen}
-      />
+      </div>
+      
+      <ReferralProgramDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </>
   );
 };

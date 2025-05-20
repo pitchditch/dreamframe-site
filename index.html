@@ -1,99 +1,39 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/lovable-uploads/d5fef288-fb5f-42f4-9391-9c837b84d047.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dc2626" />
+    <meta
+      name="description"
+      content="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver."
+    />
     <title>BC Pressure Washing | Exterior Cleaning in Metro Vancouver</title>
-    <meta name="description" content="Professional pressure washing, window cleaning, roof & gutter cleaning across Metro Vancouver. Get a free quote today." />
-    <meta name="keywords" content="pressure washing, window cleaning, gutter cleaning, roof cleaning, White Rock, Surrey, Metro Vancouver" />
-    <meta name="author" content="BC Pressure Washing" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/lovable-uploads/6068ea75-d3bc-4895-a1c8-9404365843b0.png" />
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTJFNK4L59"></script>
+    
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MQ7F31PYX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
+      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XTJFNK4L59');
+      gtag('config', 'G-2MQ7F31PYX');
     </script>
-
-    <!-- Lovable AI Script -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    
+    <!-- Google tag - old -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-277490173-1"></script>
     <script>
-      emailjs.init("MMzAmk5eWrjFgC_nP");  // Your public EmailJS key
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-277490173-1');
     </script>
+    
+    <script defer src="https://cdn.gpteng.co/gptengineer.js"></script>
   </head>
   <body>
-    <div id="root"><!-- Your site content gets injected here --></div>
-
-    <!-- Custom script to track Lovable AI form submissions and send Email -->
-    <script>
-      const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          for (const node of mutation.addedNodes) {
-            if (node.nodeType === 1) {
-              const text = node.textContent?.toLowerCase();
-              if (text && (text.includes('thank you') || text.includes('submitted'))) {
-                gtag('event', 'form_submission', {
-                  event_category: 'Form',
-                  event_label: 'Lovable AI Form',
-                  value: 1
-                });
-                sendEmailFormData(node);
-              }
-            }
-          }
-        }
-      });
-
-      observer.observe(document.body, { childList: true, subtree: true });
-
-      function sendEmailFormData(node) {
-        try {
-          const form = document.createElement("form");
-
-          const fields = {
-            fullName: node.querySelector('[name="fullName"]')?.value || "Missing",
-            email: node.querySelector('[name="email"]')?.value || "Missing",
-            phoneNumber: node.querySelector('[name="phone"]')?.value || "Missing",
-            serviceAddress: node.querySelector('[name="address"]')?.value || "Missing",
-            additionalNotes: node.querySelector('[name="notes"]')?.value || "Missing",
-          };
-
-          console.log("📩 Preparing to send form with values:", fields);
-
-          for (const [name, value] of Object.entries(fields)) {
-            const input = document.createElement("input");
-            input.setAttribute("name", name);
-            input.setAttribute("value", value);
-            form.appendChild(input);
-          }
-
-          emailjs.sendForm("service_xrk4vas", "template_b2y5ak4", form)
-            .then((res) => {
-              console.log("✅ Email sent successfully:", res);
-            })
-            .catch((err) => {
-              console.error("❌ Email send failed:", err);
-            });
-
-        } catch (err) {
-          console.error("❌ Error in sendEmailFormData:", err);
-        }
-      }
-    </script>
-
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

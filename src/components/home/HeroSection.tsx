@@ -18,38 +18,21 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
+    // Simplified video loading logic for better performance
     const checkVideoStatus = () => {
-      const mobileIframe = document.getElementById('hero-mobile-video') as HTMLIFrameElement;
-      const desktopIframe = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
+      // Preload attribute added for faster loading
+      const videoElement = isMobile 
+        ? document.getElementById('hero-mobile-video') 
+        : document.getElementById('hero-desktop-video');
       
-      if ((isMobile && mobileIframe) || (!isMobile && desktopIframe)) {
+      if (videoElement) {
         setVideoLoaded(true);
       }
     };
     
-    // Force video reload on component mount to prevent black bars when navigating
-    const timer = setTimeout(() => {
-      const mobileVideo = document.getElementById('hero-mobile-video') as HTMLIFrameElement;
-      const desktopVideo = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
-      
-      if (mobileVideo && isMobile) {
-        // Force reload mobile video
-        const currentSrc = mobileVideo.src;
-        mobileVideo.src = '';
-        setTimeout(() => {
-          mobileVideo.src = currentSrc;
-          checkVideoStatus();
-        }, 100);
-      } else if (desktopVideo && !isMobile) {
-        // Force reload desktop video
-        const currentSrc = desktopVideo.src;
-        desktopVideo.src = '';
-        setTimeout(() => {
-          desktopVideo.src = currentSrc;
-          checkVideoStatus();
-        }, 100);
-      }
-    }, 200);
+    // Check video status immediately and after a short delay
+    checkVideoStatus();
+    const timer = setTimeout(checkVideoStatus, 200);
     
     // Check if postal code exists in session storage
     const savedPostalCode = sessionStorage.getItem('postalCode');
@@ -89,7 +72,7 @@ const HeroSection = () => {
             <iframe 
               id="hero-mobile-video"
               className={`absolute w-full h-full top-0 left-0 scale-[1.6] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+              src="https://www.youtube.com/embed/sAjdWDNtFQw?autoplay=1&mute=1&controls=0&loop=1&playlist=sAjdWDNtFQw&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=auto"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -102,7 +85,7 @@ const HeroSection = () => {
             <iframe 
               id="hero-desktop-video"
               className={`absolute w-full h-full top-0 left-0 scale-[1.5] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -185,12 +168,12 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Scroll indicator */}
+      {/* Enhanced scroll indicator with animation and label */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-white text-sm mb-2">Scroll</span>
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-        </svg>
+        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">Scroll Down</span>
+        <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center">
+          <div className="h-2 w-1 bg-white rounded-full animate-pulse"></div>
+        </div>
       </div>
     </section>
   );
