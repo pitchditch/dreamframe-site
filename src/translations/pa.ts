@@ -1,4 +1,3 @@
-
 const punjabiTranslations = {
   // General
   "Home": "ਹੋਮ",
@@ -40,6 +39,8 @@ const punjabiTranslations = {
   "Sort": "ਕ੍ਰਮਬੱਧ",
   "English": "ਅੰਗਰੇਜ਼ੀ",
   "Punjabi": "ਪੰਜਾਬੀ",
+  "Scroll Down": "ਹੇਠਾਂ ਸਕਰੋਲ ਕਰੋ",
+  "Transform Your Property's Appearance": "ਆਪਣੀ ਸੰਪਤੀ ਦੀ ਦਿੱਖ ਨੂੰ ਬਦਲੋ",
 
   // Hero Section
   "Professional Pressure Washing Services": "ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ",

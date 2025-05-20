@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -20,7 +21,7 @@ const HeroSection = () => {
     // Preload the videos for faster loading
     if (isMobile) {
       const img = new Image();
-      img.src = "/lovable-uploads/8ff26553-6cc8-4cc7-8d6f-d225d5ab6cdb.png";
+      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
       img.onload = () => setVideoLoaded(true);
     } else {
       const videoElement = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
@@ -61,7 +62,7 @@ const HeroSection = () => {
           {isMobile ? (
             // Mobile Image Background
             <img 
-              src="/lovable-uploads/8ff26553-6cc8-4cc7-8d6f-d225d5ab6cdb.png"
+              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
               className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
@@ -81,7 +82,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
-      {/* Hero Content - Keep existing code */}
+      {/* Hero Content */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 sm:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
@@ -154,7 +155,7 @@ const HeroSection = () => {
       
       {/* Enhanced scroll indicator with animation and label */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">Scroll Down</span>
+        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">{t("Scroll Down")}</span>
         <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center">
           <div className="h-2 w-1 bg-white rounded-full animate-pulse"></div>
         </div>

@@ -12,7 +12,7 @@ const ReferralButton: React.FC = () => {
   
   return (
     <>
-      <div className="fixed bottom-20 right-4 z-[900] flex flex-col items-end gap-2">
+      <div className="fixed bottom-28 right-4 z-[900] flex flex-col items-end gap-2">
         <Button
           onClick={() => setDialogOpen(true)}
           variant="secondary"
@@ -20,7 +20,7 @@ const ReferralButton: React.FC = () => {
           className="rounded-full shadow-lg bg-white border-2 border-bc-red text-bc-red hover:bg-gray-50 animate-pulse"
         >
           <Gift className="mr-2" size={isMobile ? 16 : 20} />
-          <span className={isMobile ? "text-xs" : "text-sm"}>Refer & Save $50</span>
+          <span className={isMobile ? "text-xs" : "text-sm"}>Refer & Save 50%</span>
         </Button>
       </div>
       

@@ -1,5 +1,16 @@
-
 const hindiTranslations = {
+  // General
+  "Home": "होम",
+  "About": "हमारे बारे में",
+  "Services": "सेवाएं",
+  "Gallery": "गैलरी",
+  "Contact": "संपर्क",
+  "Get a Quote": "मूल्य पूछें",
+  "Call Now": "अभी कॉल करें",
+  "Email Us": "हमें ईमेल करें",
+  "Scroll Down": "नीचे स्क्रॉल करें",
+  "Transform Your Property's Appearance": "अपनी संपत्ति की उपस्थिति को बदलें",
+  
   // General
   "Home": "होम",
   "About": "हमारे बारे में",

@@ -16,12 +16,12 @@ import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSecti
 import PackagesSection from '@/components/home/PackagesSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Home = () => {
   const { setLanguage } = useTranslation();
 
   useEffect(() => {
-    setLanguage('en');
     document.body.classList.add('has-video-header');
 
     const observerOptions = {
@@ -127,6 +127,10 @@ const Home = () => {
           `}
         </script>
       </Helmet>
+
+      <div className="absolute top-4 right-4 z-50">
+        <LanguageSelector />
+      </div>
 
       <HeroSection />
       
