@@ -5,7 +5,7 @@ import ReferralProgramDialog from './ReferralProgramDialog';
 import { useTranslation } from '@/hooks/use-translation';
 
 const ReferralButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
   // Check if we're in view of the owner section to avoid overlapping 
@@ -41,14 +41,14 @@ const ReferralButton = () => {
     <>
       {isVisible && (
         <Button
-          onClick={() => setIsOpen(true)}
+          onClick={() => setOpen(true)}
           className="fixed bottom-24 md:bottom-6 right-6 z-40 bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-4 py-2 rounded-lg shadow-lg animate-pulse-slow text-xs md:text-sm flex items-center justify-center gap-1"
         >
           <span>🤝</span> {t("Refer & Save 50%")}
         </Button>
       )}
       
-      <ReferralProgramDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ReferralProgramDialog open={open} onOpenChange={setOpen} />
     </>
   );
 };
