@@ -2,6 +2,7 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Button } from './ui/button';
+import { Globe } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +37,7 @@ const LanguageSelector = () => {
               <span className="ml-1 font-medium">हिंदी</span>
             </span>
           )}
+          <Globe className="ml-1 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40 bg-white/95 backdrop-blur-sm">

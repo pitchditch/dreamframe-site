@@ -1,4 +1,3 @@
-
 const hindiTranslations = {
   // General
   "Home": "होम",
@@ -14,25 +13,57 @@ const hindiTranslations = {
   
   // Hero Section
   "Professional Pressure Washing Services": "पेशेवर प्रेशर वॉशिंग सेवाएं",
+  "Professional Exterior Cleaning Services": "पेशेवर एक्सटीरियर क्लीनिंग सेवाएँ",
   "The Ultimate Cleaning": "अल्टीमेट क्लीनिंग",
   "Solution": "समाधान",
   "for Your Property": "आपकी संपत्ति के लिए",
   "We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.": "हम अपने अत्याधुनिक उपकरणों और पेशेवर तकनीकों के साथ आवासीय और वाणिज्यिक संपत्तियों के लिए असाधारण सफाई परिणाम प्रदान करते हैं।",
+  "Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions": "सरी, व्हाइट रॉक और लोअर मेनलैंड में प्रीमियम प्रेशर वॉशिंग और सफाई समाधान प्रदान करते हैं",
+  "Enter Your Postal Code": "अपना पोस्टल कोड दर्ज करें",
+  "Check Prices & Availability": "कीमतें और उपलब्धता जांचें",
+  "Fully Insured": "पूरी तरह से बीमित",
+  "5-Star Service": "5-स्टार सेवा",
+  "Locally Owned": "स्थानीय स्वामित्व",
+  "Every Job is Personally Checked by Me.": "प्रत्येक काम मेरे द्वारा व्यक्तिगत रूप से जांचा जाता है।",
+  "Owner": "मालिक",
   
   // Services Section
   "Our Professional Services": "हमारी पेशेवर सेवाएं",
-  "Premium Cleaning Solutions for Every Surface": "हर सतह के लिए प्रीमियम सफाई समाधान",
-  "We offer a comprehensive range of pressure washing services tailored to meet the unique needs of both residential and commercial properties.": "हम आवासीय और वाणिज्यिक दोनों संपत्तियों की अनूठी जरूरतों को पूरा करने के लिए प्रेशर वॉशिंग सेवाओं की व्यापक श्रृंखला प्रदान करते हैं।",
+  "Premium Cleaning Solutions": "प्रीमियम सफाई समाधान",
+  "Enhance your home's curb appeal and protect its value with professional, fully insured exterior cleaning services — personally checked by Jayden Fisher.": "जेडन फिशर द्वारा व्यक्तिगत रूप से जांची गई पेशेवर, पूरी तरह से बीमित बाहरी सफाई सेवाओं के साथ अपने घर की आकर्षकता बढ़ाएं और इसके मूल्य की रक्षा करें।",
   "Window Cleaning": "विंडो क्लीनिंग",
-  "Professional window cleaning using purified water for crystal clear, streak-free results on homes and commercial buildings.": "घरों और व्यावसायिक इमारतों पर क्रिस्टल क्लियर, धारीदार-मुक्त परिणामों के लिए शुद्ध पानी का उपयोग करके पेशेवर विंडो क्लीनिंग।",
+  "Crystal-clear windows inside and out using eco-friendly solutions.": "पर्यावरण-अनुकूल समाधानों का उपयोग करके अंदर और बाहर क्रिस्टल-क्लियर खिड़कियां।",
+  "Exterior & interior window cleaning": "बाहरी और आंतरिक खिड़की सफाई",
+  "Screen & sill wipe-down": "स्क्रीन और विंडोसिल की सफाई",
+  "Streak-free finish": "धारी-मुक्त फिनिश",
+  "Track & debris cleaning": "ट्रैक और मलबे की सफाई",
   "Gutter Cleaning": "गटर क्लीनिंग",
-  "Thorough gutter cleaning to prevent damage and maintain proper drainage, extending the life of your gutter system.": "क्षति को रोकने और उचित जल निकासी बनाए रखने के लिए गहन गटर सफाई, आपकी गटर प्रणाली के जीवन को बढ़ाती है।",
+  "Prevent clogs and overflow damage with professional gutter care.": "पेशेवर गटर देखभाल के साथ जाम और ओवरफ्लो क्षति को रोकें।",
+  "Interior debris removal": "आंतरिक मलबा हटाना",
+  "Downspout flushing": "डाउनस्पाउट फ्लशिंग",
+  "Exterior gutter brightening": "बाहरी गटर को चमकाना",
+  "Safe ladder access": "सुरक्षित सीढ़ी पहुंच",
   "Pressure Washing": "प्रेशर वॉशिंग",
-  "Safe, effective pressure washing that removes dirt, algae, and mildew without damaging your home's exterior surfaces.": "सुरक्षित, प्रभावी प्रेशर वॉशिंग जो आपके घर की बाहरी सतहों को नुकसान पहुंचाए बिना गंदगी, शैवाल और फफूंदी को हटाती है।",
+  "House Washing": "हाउस वॉशिंग",
+  "Gentle soft-washing to remove dirt, mold, and algae without damage.": "बिना नुकसान के गंदगी, मोल्ड और शैवाल को हटाने के लिए नरम सॉफ्ट-वॉशिंग।",
+  "Soft wash siding treatment": "सॉफ्ट वॉश साइडिंग ट्रीटमेंट",
+  "Algae & mildew removal": "शैवाल और फफूंदी हटाना",
+  "Safe for stucco, vinyl, wood": "स्टको, विनाइल, लकड़ी के लिए सुरक्षित",
+  "Enhanced curb appeal": "बढ़ी हुई आकर्षकता",
   "Roof Cleaning": "छत की सफाई",
-  "Professional roof cleaning that safely removes moss, algae, and debris, extending the life of your roof.": "पेशेवर छत की सफाई जो सुरक्षित रूप से मॉस, शैवाल और मलबे को हटाती है, आपकी छत के जीवन को बढ़ाती है।",
+  "Eliminate moss, algae, and stains — extend roof life safely.": "मॉस, शैवाल और दाग मिटाएं — छत की आयु को सुरक्षित रूप से बढ़ाएं।",
+  "Soft wash or brushing method": "सॉफ्ट वॉश या ब्रशिंग विधि",
+  "Moss & algae treatment": "मॉस और शैवाल का उपचार",
+  "Roof inspection": "छत निरीक्षण",
+  "Gentle on shingles (no pressure)": "शिंगल्स पर नरम (बिना दबाव)",
+  "See All Services": "सभी सेवाएं देखें",
+  "Included": "शामिल",
+
+  // Testimonials Section
+  "What Our Customers Say": "हमारे ग्राहक क्या कहते हैं",
+  "Real Feedback from Satisfied Clients": "संतुष्ट ग्राहकों से वास्तविक प्रतिक्रिया",
+  "View All Testimonials": "सभी प्रशंसापत्र देखें",
   
-  // Get a Free Quote
   "Get a Free Quote": "निःशुल्क मूल्य पूछें",
   "Explore Our Services": "हमारी सेवाएं देखें",
   

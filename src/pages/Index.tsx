@@ -89,7 +89,8 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      <div className="absolute top-4 right-4 z-50">
+      {/* Position language selector on top right corner */}
+      <div className="fixed top-4 right-4 z-[100]">
         <LanguageSelector />
       </div>
       

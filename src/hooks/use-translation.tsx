@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import translations, { Language, TranslationKey } from '../translations';
 
 type TranslationContextType = {
@@ -58,7 +58,7 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
   }, [language]);
 
   // Translation function
-  const t = (key: TranslationKey): string => {
+  const t = useCallback((key: TranslationKey): string => {
     if (!translations[language]) {
       console.log(`No translations found for language: ${language}`);
       return key;
@@ -67,10 +67,11 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     const translatedText = translations[language][key];
     if (!translatedText) {
       console.log(`No translation found for key: ${key} in language: ${language}`);
+      return key;
     }
     
-    return translatedText || key;
-  };
+    return translatedText;
+  }, [language]);
 
   return (
     <TranslationContext.Provider value={{ language, setLanguage, t }}>
