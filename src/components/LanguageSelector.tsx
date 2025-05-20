@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const LanguageSelector = () => {
-  const { language, setLanguage, t } = useTranslation();
+  const { language, setLanguage } = useTranslation();
 
   return (
     <DropdownMenu>
@@ -18,7 +18,7 @@ const LanguageSelector = () => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="bg-white/90 backdrop-blur-sm border border-gray-300 hover:bg-white text-sm md:text-base px-2 md:px-3 py-1 md:py-2 shadow-md"
+          className="bg-white/90 backdrop-blur-sm border border-gray-300 hover:bg-white text-sm md:text-base px-3 md:px-4 py-2 md:py-3 shadow-md"
         >
           {language === 'en' ? (
             <span className="flex items-center">

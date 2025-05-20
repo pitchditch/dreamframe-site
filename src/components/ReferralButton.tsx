@@ -1,32 +1,54 @@
 
-import React from 'react';
-import { Button } from './ui/button';
-import { Gift } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import ReferralProgramDialog from './ReferralProgramDialog';
 import { useState } from 'react';
+import { Button } from './ui/button';
+import ReferralProgramDialog from './ReferralProgramDialog';
 import { useTranslation } from '@/hooks/use-translation';
 
-const ReferralButton: React.FC = () => {
-  const isMobile = useIsMobile();
-  const [dialogOpen, setDialogOpen] = useState(false);
+const ReferralButton = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
+
+  // Check if we're in view of the owner section to avoid overlapping 
+  const [isVisible, setIsVisible] = useState(true);
+
+  // Use an intersection observer to hide the button when owner section is visible
+  const setupIntersectionObserver = () => {
+    const ownerSection = document.querySelector('[data-component="owner-operated"]');
+    
+    if (ownerSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Hide button when owner section is visible, show when not visible
+            setIsVisible(!entry.isIntersecting);
+          });
+        },
+        { threshold: 0.1 } // Trigger when 10% of the element is visible
+      );
+      
+      observer.observe(ownerSection);
+      return () => observer.disconnect();
+    }
+  };
   
+  // Set up the observer on mount
+  useState(() => {
+    const cleanup = setupIntersectionObserver();
+    return cleanup;
+  });
+
   return (
     <>
-      <div className="fixed bottom-28 right-4 z-[900] flex flex-col items-end gap-2">
+      {isVisible && (
         <Button
-          onClick={() => setDialogOpen(true)}
-          variant="secondary"
-          size={isMobile ? "sm" : "lg"}
-          className="rounded-full shadow-lg bg-white border-2 border-bc-red text-bc-red hover:bg-gray-50 animate-pulse"
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-24 md:bottom-6 right-6 z-40 bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-4 py-2 rounded-lg shadow-lg animate-pulse-slow text-xs md:text-sm flex items-center justify-center gap-1"
         >
-          <Gift className="mr-2" size={isMobile ? 16 : 20} />
-          <span className={isMobile ? "text-xs" : "text-sm"}>{t("Refer & Save 50%")}</span>
+          <span>🤝</span> {t("Refer & Save 50%")}
         </Button>
-      </div>
+      )}
       
-      <ReferralProgramDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      <ReferralProgramDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

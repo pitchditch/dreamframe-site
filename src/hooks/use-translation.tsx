@@ -59,17 +59,19 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
 
   // Translation function
   const t = (key: TranslationKey): string => {
+    // If the key is not found in translations, return the key itself
     if (!translations[language]) {
-      console.log(`No translations found for language: ${language}`);
+      console.warn(`No translations found for language: ${language}`);
       return key;
     }
     
     const translatedText = translations[language][key];
     if (!translatedText) {
-      console.log(`No translation found for key: ${key} in language: ${language}`);
+      console.warn(`No translation found for key: ${key} in language: ${language}`);
+      return key;
     }
     
-    return translatedText || key;
+    return translatedText;
   };
 
   return (

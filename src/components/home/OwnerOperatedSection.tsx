@@ -1,80 +1,64 @@
 
 import React from 'react';
-import { Shield, Award, ThumbsUp, Clock } from 'lucide-react';
-import ProcessStep from '../ProcessStep';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
+import { useTranslation } from '@/hooks/use-translation';
 
 const OwnerOperatedSection = () => {
+  const { t } = useTranslation();
+  
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">Owner-Operated Excellence</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
-                <Shield className="w-10 h-10" />
-              </div>
-              <h3 className="font-bold text-xl mb-3">Fully Insured</h3>
-              <p className="text-gray-600 text-base flex-grow">
-                We carry comprehensive liability insurance for your complete peace of mind.
-              </p>
-            </div>
+        <div className="flex flex-col-reverse md:flex-row items-center">
+          <div className="md:w-1/2 md:pr-8 mt-8 md:mt-0 animate-on-scroll">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              {t("Every Job is Personally Checked by Me")} <br />
+              <span className="text-bc-red">— Jayden Fisher, Owner</span>
+            </h2>
             
-            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
-                <Award className="w-10 h-10" />
-              </div>
-              <h3 className="font-bold text-xl mb-3">Satisfaction Guaranteed</h3>
-              <p className="text-gray-600 text-base flex-grow">
-                If you're not 100% satisfied, we'll make it right at no extra cost.
-              </p>
-            </div>
-            
-            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
-                <ThumbsUp className="w-10 h-10" />
-              </div>
-              <h3 className="font-bold text-xl mb-3">Quality Equipment</h3>
-              <p className="text-gray-600 text-base flex-grow">
-                We invest in professional-grade tools and eco-friendly cleaning solutions.
-              </p>
-            </div>
-            
-            <div className="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow h-full flex flex-col">
-              <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
-                <Clock className="w-10 h-10" />
-              </div>
-              <h3 className="font-bold text-xl mb-3">Prompt & Reliable</h3>
-              <p className="text-gray-600 text-base flex-grow">
-                We value your time with punctual service and clear communication.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg mb-4">
-              We take personal pride in every job we complete. When you hire us, you're getting service directly from the business owner, not a crew of subcontractors.
+            <p className="text-gray-700 mb-6 text-lg">
+              {t("As the owner of BC Pressure Washing, I personally oversee every job we complete. This isn't just a business for me—it's my passion and my promise to you.")}
             </p>
             
-            {/* Owner profile with discount promotion */}
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-6 max-w-2xl mx-auto">
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Avatar className="w-20 h-20 border-2 border-bc-red">
-                  <AvatarImage src="/lovable-uploads/72766780-6dc1-42de-8971-3a11add4daad.png" alt="Jayden - Owner" />
-                  <AvatarFallback>JF</AvatarFallback>
-                </Avatar>
-                <div className="text-center sm:text-left">
-                  <p className="text-gray-700 font-medium mb-2">
-                    "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
-                  </p>
-                  <p className="font-bold text-bc-red">— Jayden, Owner</p>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <div className="bg-red-100 rounded-full p-2 mr-4">
+                  <svg className="w-6 h-6 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
                 </div>
+                <p className="text-gray-800 font-medium">{t("I inspect every project for quality")}</p>
+              </div>
+              
+              <div className="flex items-center">
+                <div className="bg-red-100 rounded-full p-2 mr-4">
+                  <svg className="w-6 h-6 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <p className="text-gray-800 font-medium">{t("No subcontractors—our trained team only")}</p>
+              </div>
+              
+              <div className="flex items-center">
+                <div className="bg-red-100 rounded-full p-2 mr-4">
+                  <svg className="w-6 h-6 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <p className="text-gray-800 font-medium">{t("Your satisfaction is my personal guarantee")}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="md:w-1/2 animate-on-scroll">
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/9fa4bf3e-6a32-47a0-aca1-6e202ab78527.png" 
+                alt="Jayden Fisher, Owner of BC Pressure Washing" 
+                className="rounded-lg shadow-xl w-full"
+              />
+              <div className="absolute -bottom-6 -right-6 bg-bc-red text-white p-4 rounded-lg shadow-lg hidden md:block">
+                <p className="font-bold text-xl">{t("Owner Operated")}</p>
+                <p className="text-sm">{t("Since 2015")}</p>
               </div>
             </div>
           </div>
