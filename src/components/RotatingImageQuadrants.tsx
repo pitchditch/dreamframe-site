@@ -87,7 +87,7 @@ const RotatingImageQuadrants = ({ image, altText }: RotatingImageQuadrantsProps)
       
       {/* Label */}
       <div className="absolute bottom-4 right-4 bg-black/50 text-white px-2 py-1 rounded">
-        Gutter Cleaning
+        {altText}
       </div>
     </div>
   );

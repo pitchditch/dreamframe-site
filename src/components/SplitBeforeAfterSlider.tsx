@@ -39,7 +39,7 @@ const SplitBeforeAfterSlider = ({ image, altText }: SplitBeforeAfterSliderProps)
           <img 
             src={image} 
             alt={`Before ${altText}`}
-            className="w-full h-[800px] object-cover object-top"
+            className="w-full h-full object-cover"
           />
         </div>
       </div>
@@ -53,7 +53,7 @@ const SplitBeforeAfterSlider = ({ image, altText }: SplitBeforeAfterSliderProps)
           <img 
             src={image} 
             alt={`After ${altText}`}
-            className="w-full h-[800px] object-cover object-bottom transform translate-y-[-400px]"
+            className="w-full h-[400px] object-cover object-bottom transform translate-y-[-200px]"
           />
         </div>
       </div>

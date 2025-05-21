@@ -27,14 +27,14 @@ const BeforeAfterSection = () => {
     {
       id: 3,
       component: 'split',
-      splitImage: '/lovable-uploads/068112d9-e61f-4def-94ed-7f1c34172bfd.png',
+      splitImage: '/lovable-uploads/7be3c823-5909-45b7-8972-c2917ec523d5.png',
       service: 'Roof Cleaning',
       description: 'Remove moss and debris'
     },
     {
       id: 4,
       component: 'rotating',
-      rotatingImage: '/lovable-uploads/3a5d6770-e34e-4a72-b310-07de41af1c93.png',
+      rotatingImage: '/lovable-uploads/a8550ac3-e835-44c0-a30c-b105c0c8e773.png',
       service: 'Gutter Cleaning',
       description: 'Clean gutters prevent damage'
     }
