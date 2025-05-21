@@ -2,7 +2,6 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Button } from './ui/button';
-import { Globe } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const LanguageSelector = () => {
-  const { language, setLanguage } = useTranslation();
-
-  const handleLanguageChange = (lang: 'en' | 'pa' | 'hi') => {
-    setLanguage(lang);
-    // Force page reload to ensure all components update with new language
-    // This is a heavier approach but ensures everything updates
-    window.location.reload();
-  };
+  const { language, setLanguage, t } = useTranslation();
 
   return (
     <DropdownMenu>
@@ -44,19 +36,18 @@ const LanguageSelector = () => {
               <span className="ml-1 font-medium">हिंदी</span>
             </span>
           )}
-          <Globe className="ml-1 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40 bg-white/95 backdrop-blur-sm">
-        <DropdownMenuItem onClick={() => handleLanguageChange('en')} className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => setLanguage('en')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
           <span>English</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleLanguageChange('pa')} className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => setLanguage('pa')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
           <span>ਪੰਜਾਬੀ (Punjabi)</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleLanguageChange('hi')} className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => setLanguage('hi')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
           <span>हिंदी (Hindi)</span>
         </DropdownMenuItem>

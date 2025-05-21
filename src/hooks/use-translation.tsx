@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import translations, { Language, TranslationKey } from '../translations';
 
 type TranslationContextType = {
@@ -44,9 +44,6 @@ const getBrowserLanguage = (): Language => {
 export const TranslationProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>(getBrowserLanguage());
 
-  // Force re-render on language change
-  const [, forceUpdate] = useState({});
-
   // Save language preference when it changes
   useEffect(() => {
     localStorage.setItem('preferred_language', language);
@@ -56,15 +53,12 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     document.body.classList.remove('lang-en', 'lang-pa', 'lang-hi');
     document.body.classList.add(`lang-${language}`);
     
-    // Force re-render when language changes
-    forceUpdate({});
-    
     // Log the language change to help with debugging
     console.log(`Language changed to: ${language}`);
   }, [language]);
 
   // Translation function
-  const t = useCallback((key: TranslationKey): string => {
+  const t = (key: TranslationKey): string => {
     if (!translations[language]) {
       console.log(`No translations found for language: ${language}`);
       return key;
@@ -73,11 +67,10 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     const translatedText = translations[language][key];
     if (!translatedText) {
       console.log(`No translation found for key: ${key} in language: ${language}`);
-      return key;
     }
     
-    return translatedText;
-  }, [language]);
+    return translatedText || key;
+  };
 
   return (
     <TranslationContext.Provider value={{ language, setLanguage, t }}>

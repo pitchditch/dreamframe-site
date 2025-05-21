@@ -29,55 +29,55 @@ const PremiumSolutionsSection = () => {
   
   const services = [
     {
-      title: t('Window Cleaning'),
-      description: t('Crystal-clear windows inside and out using eco-friendly solutions.'),
+      title: 'Window Cleaning',
+      description: 'Crystal-clear windows inside and out using eco-friendly solutions.',
       link: '/services/window-cleaning',
       image: '/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png',
       slideImages: windowCleaningImages,
       included: [
-        t('Exterior & interior window cleaning'),
-        t('Screen & sill wipe-down'),
-        t('Streak-free finish'),
-        t('Track & debris cleaning')
+        'Exterior & interior window cleaning',
+        'Screen & sill wipe-down',
+        'Streak-free finish',
+        'Track & debris cleaning'
       ]
     },
     {
-      title: t('House Washing'),
-      description: t('Gentle soft-washing to remove dirt, mold, and algae without damage.'),
+      title: 'House Washing',
+      description: 'Gentle soft-washing to remove dirt, mold, and algae without damage.',
       link: '/services/pressure-washing',
       image: '/lovable-uploads/7f096ea4-ca08-4e10-aa64-82c4f84f24c4.png',
       slideImages: houseWashingImages,
       included: [
-        t('Soft wash siding treatment'),
-        t('Algae & mildew removal'),
-        t('Safe for stucco, vinyl, wood'),
-        t('Enhanced curb appeal')
+        'Soft wash siding treatment',
+        'Algae & mildew removal',
+        'Safe for stucco, vinyl, wood',
+        'Enhanced curb appeal'
       ]
     },
     {
-      title: t('Gutter Cleaning'),
-      description: t('Prevent clogs and overflow damage with professional gutter care.'),
+      title: 'Gutter Cleaning',
+      description: 'Prevent clogs and overflow damage with professional gutter care.',
       link: '/services/gutter-cleaning',
       image: '/lovable-uploads/c99d75a8-0821-423a-b3a9-08133341c74f.png',
       slideImages: gutterCleaningImages,
       included: [
-        t('Interior debris removal'),
-        t('Downspout flushing'),
-        t('Exterior gutter brightening'),
-        t('Safe ladder access')
+        'Interior debris removal',
+        'Downspout flushing',
+        'Exterior gutter brightening',
+        'Safe ladder access'
       ]
     },
     {
-      title: t('Roof Cleaning'),
-      description: t('Eliminate moss, algae, and stains — extend roof life safely.'),
+      title: 'Roof Cleaning',
+      description: 'Eliminate moss, algae, and stains — extend roof life safely.',
       link: '/services/roof-cleaning',
       image: '/lovable-uploads/889de7df-2965-4c37-99ab-a5f07b85896b.png',
       slideImages: roofCleaningImages,
       included: [
-        t('Soft wash or brushing method'),
-        t('Moss & algae treatment'),
-        t('Roof inspection'),
-        t('Gentle on shingles (no pressure)')
+        'Soft wash or brushing method',
+        'Moss & algae treatment',
+        'Roof inspection',
+        'Gentle on shingles (no pressure)'
       ]
     }
   ];
@@ -86,9 +86,9 @@ const PremiumSolutionsSection = () => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("Premium Cleaning Solutions")}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Premium Cleaning Solutions</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            {t("Enhance your home's curb appeal and protect its value with professional, fully insured exterior cleaning services — personally checked by Jayden Fisher.")}
+            Enhance your home's curb appeal and protect its value with professional, fully insured exterior cleaning services — personally checked by Jayden Fisher.
           </p>
         </div>
 
@@ -119,7 +119,7 @@ const PremiumSolutionsSection = () => {
                 <p className="text-gray-600 mb-4">{service.description}</p>
                 
                 <div className="mb-4">
-                  <h4 className="font-semibold text-sm text-gray-500 mb-2">{t("Included")}:</h4>
+                  <h4 className="font-semibold text-sm text-gray-500 mb-2">Included:</h4>
                   <ul className="space-y-2">
                     {service.included.map((item, idx) => (
                       <li key={idx} className="flex items-start">
@@ -135,7 +135,7 @@ const PremiumSolutionsSection = () => {
                     to={service.link} 
                     className="flex items-center text-bc-red hover:text-bc-red/80 font-medium"
                   >
-                    {t("Learn More")} <ArrowRight className="ml-1" size={16} />
+                    Learn More <ArrowRight className="ml-1" size={16} />
                   </Link>
                 </div>
               </div>
@@ -147,7 +147,7 @@ const PremiumSolutionsSection = () => {
         <div className="text-center mt-12">
           <Button asChild variant="bc-red" size="lg" className="rounded-full px-8">
             <Link to="/services">
-              {t("See All Services")} <ArrowRight className="ml-2" size={16} />
+              See All Services <ArrowRight className="ml-2" size={16} />
             </Link>
           </Button>
         </div>
