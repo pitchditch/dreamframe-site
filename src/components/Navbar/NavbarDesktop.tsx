@@ -17,14 +17,11 @@ const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   return (
     <div className="container mx-auto hidden lg:flex items-center justify-between py-4">
       <div className="flex items-center gap-4">
-        <Link to="/" aria-label="BC Pressure Washing">
-          <Logo isOverVideo={isOverVideo} />
-        </Link>
         <nav className="ml-4">
           <ul className="flex">
             <li><NavLink isOverVideo={isOverVideo} to="/">{t("Home")}</NavLink></li>
             <li><ServicesDropdown /></li>
-            <li><NavLink isOverVideo={isOverVideo} to="/about">{t("About")}</NavLink></li>
+            <li><NavLink isOverVideo={isOverVideo} to="/why-us">{t("Why Us")}</NavLink></li>
             <li><NavLink isOverVideo={isOverVideo} to="/blog">{t("Blog")}</NavLink></li>
             <li>
               <div className="group relative">

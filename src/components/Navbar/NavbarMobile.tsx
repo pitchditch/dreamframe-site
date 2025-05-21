@@ -139,8 +139,8 @@ const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }:
             </li>
             
             <li>
-              <Link to="/about" onClick={closeMenu} className="block py-2 hover:text-bc-red">
-                {t("About")}
+              <Link to="/why-us" onClick={closeMenu} className="block py-2 hover:text-bc-red">
+                {t("Why Us")}
               </Link>
             </li>
             
