@@ -16,7 +16,7 @@ const ServicesDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="text" className="rounded-none hover:bg-transparent">
+        <Button variant="ghost" className="rounded-none hover:bg-transparent">
           {t("Services")} <ChevronDown className="ml-1 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>

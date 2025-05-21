@@ -1,14 +1,20 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from './Logo';
-import MobileMenuButton from './MobileMenuButton';
+import { Logo } from '../Logo';
+import { MobileMenuButton } from './MobileMenuButton';
 import { X, Phone, ChevronDown } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-const NavbarMobile = () => {
+interface NavbarMobileProps {
+  isMenuOpen: boolean;
+  isServicesMenuOpen: boolean;
+  setIsServicesMenuOpen: (value: boolean) => void;
+}
+
+const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,13 +25,13 @@ const NavbarMobile = () => {
     <div className="lg:hidden">
       <div className="flex justify-between items-center py-4 px-4">
         <Link to="/" onClick={closeMenu} className="z-20" aria-label="BC Pressure Washing">
-          <Logo />
+          <Logo isOverVideo={false} />
         </Link>
         <div className="flex items-center z-20">
           <a href="tel:7788087620" className="mr-4 bg-bc-red text-white p-2 rounded-full">
             <Phone size={20} />
           </a>
-          <MobileMenuButton isOpen={isOpen} onClick={toggleMenu} />
+          <MobileMenuButton isOverVideo={false} isMenuOpen={isOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
 

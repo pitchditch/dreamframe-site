@@ -2,29 +2,33 @@
 import { Link } from "react-router-dom";
 import ServicesDropdown from "./ServicesDropdown";
 import { Button } from '@/components/ui/button';
-import Logo from "./Logo";
-import NavLink from "./NavLink";
+import { Logo } from '../Logo';
+import { NavLink } from "./NavLink";
 import { useTranslation } from '@/hooks/use-translation';
 import { CalendarCheck, Users, Star } from 'lucide-react';
 
-const NavbarDesktop = () => {
+interface NavbarDesktopProps {
+  isOverVideo: boolean;
+}
+
+const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
   
   return (
     <div className="container mx-auto hidden lg:flex items-center justify-between py-4">
       <div className="flex items-center gap-4">
         <Link to="/" aria-label="BC Pressure Washing">
-          <Logo />
+          <Logo isOverVideo={isOverVideo} />
         </Link>
         <nav className="ml-4">
           <ul className="flex">
-            <li><NavLink to="/">{t("Home")}</NavLink></li>
+            <li><NavLink isOverVideo={isOverVideo} to="/">{t("Home")}</NavLink></li>
             <li><ServicesDropdown /></li>
-            <li><NavLink to="/about">{t("About")}</NavLink></li>
-            <li><NavLink to="/blog">{t("Blog")}</NavLink></li>
+            <li><NavLink isOverVideo={isOverVideo} to="/about">{t("About")}</NavLink></li>
+            <li><NavLink isOverVideo={isOverVideo} to="/blog">{t("Blog")}</NavLink></li>
             <li>
               <div className="group relative">
-                <NavLink to="#" className="flex items-center">
+                <NavLink isOverVideo={isOverVideo} to="#" className="flex items-center">
                   {t("More")} <span className="ml-1">▾</span>
                 </NavLink>
                 <div className="absolute left-0 top-full z-50 hidden w-48 rounded-md bg-white shadow-lg group-hover:block">
@@ -61,7 +65,7 @@ const NavbarDesktop = () => {
                 </div>
               </div>
             </li>
-            <li><NavLink to="/contact">{t("Contact")}</NavLink></li>
+            <li><NavLink isOverVideo={isOverVideo} to="/contact">{t("Contact")}</NavLink></li>
           </ul>
         </nav>
       </div>
