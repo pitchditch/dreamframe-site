@@ -1,6 +1,9 @@
 
 import { useTranslation } from '@/hooks/use-translation';
 import BeforeAfterSlider from '../BeforeAfterSlider';
+import SplitBeforeAfterSlider from '../SplitBeforeAfterSlider';
+import VideoHoverPlayer from '../VideoHoverPlayer';
+import RotatingImageQuadrants from '../RotatingImageQuadrants';
 
 const BeforeAfterSection = () => {
   const { t } = useTranslation();
@@ -15,17 +18,25 @@ const BeforeAfterSection = () => {
     },
     {
       id: 2,
-      beforeImage: '/lovable-uploads/281422a1-6eb1-4353-9f93-de7d6163152e.png',
-      afterImage: '/lovable-uploads/8f51f55c-a8ce-472b-b398-1a35211096d3.png',
+      component: 'video',
+      thumbnailImage: '/lovable-uploads/8f51f55c-a8ce-472b-b398-1a35211096d3.png',
+      videoIds: ['xeUNIHhOxb8', 'PKw0OS7iDmY'],
       service: 'Window Cleaning',
       description: 'Crystal clear windows'
     },
     {
       id: 3,
-      beforeImage: '/lovable-uploads/ac700f26-0c3f-4bb6-9297-862295529d82.png',
-      afterImage: '/lovable-uploads/3ff52f8f-29e2-421b-983b-b72c1ab34b52.png',
+      component: 'split',
+      splitImage: '/lovable-uploads/068112d9-e61f-4def-94ed-7f1c34172bfd.png',
       service: 'Roof Cleaning',
       description: 'Remove moss and debris'
+    },
+    {
+      id: 4,
+      component: 'rotating',
+      rotatingImage: '/lovable-uploads/3a5d6770-e34e-4a72-b310-07de41af1c93.png',
+      service: 'Gutter Cleaning',
+      description: 'Clean gutters prevent damage'
     }
   ];
   
@@ -34,17 +45,35 @@ const BeforeAfterSection = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-4">{t("See The Difference")}</h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto text-center mb-10">
-          {t("Drag the slider to reveal the dramatic before and after results of our professional cleaning services")}
+          {t("Explore our professional cleaning results with these interactive before and after demonstrations")}
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {beforeAfterExamples.map((example) => (
             <div key={example.id} className="flex flex-col">
-              <BeforeAfterSlider 
-                beforeImage={example.beforeImage} 
-                afterImage={example.afterImage} 
-                altText={example.description} 
-              />
+              {example.component === 'video' ? (
+                <VideoHoverPlayer 
+                  videoIds={(example as any).videoIds} 
+                  thumbnailUrl={(example as any).thumbnailImage} 
+                  altText={example.description}
+                />
+              ) : example.component === 'split' ? (
+                <SplitBeforeAfterSlider 
+                  image={(example as any).splitImage} 
+                  altText={example.description} 
+                />
+              ) : example.component === 'rotating' ? (
+                <RotatingImageQuadrants 
+                  image={(example as any).rotatingImage} 
+                  altText={example.description}
+                />
+              ) : (
+                <BeforeAfterSlider 
+                  beforeImage={example.beforeImage!} 
+                  afterImage={example.afterImage!} 
+                  altText={example.description} 
+                />
+              )}
               <div className="mt-4">
                 <h3 className="text-xl font-semibold">{t(example.service)}</h3>
                 <p className="text-gray-600">{t(example.description)}</p>
