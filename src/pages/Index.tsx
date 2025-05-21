@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
@@ -18,9 +18,11 @@ import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import LanguageSelector from '@/components/LanguageSelector';
+import SlidingOverlapSection from '../components/home/SlidingOverlapSection';
 
 const Index = () => {
   const { language } = useTranslation();
+  const overlapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Mark body to have video header (for navbar transparency)
@@ -45,6 +47,24 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Setup scroll handling for the sliding overlap effect
+    const handleScroll = () => {
+      if (!overlapRef.current) return;
+      
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight;
+      const triggerPoint = heroHeight * 0.7; // Start sliding when scrolled 70% of hero height
+      
+      if (scrollY > triggerPoint) {
+        const translateY = Math.min(heroHeight - scrollY, 0);
+        overlapRef.current.style.transform = `translateY(${translateY}px)`;
+      } else {
+        overlapRef.current.style.transform = 'translateY(0)';
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     // Log current language for debugging
     console.log('Current language on Index page:', language);
 
@@ -52,6 +72,7 @@ const Index = () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [language]);
 
@@ -93,30 +114,37 @@ const Index = () => {
         <LanguageSelector />
       </div>
       
-      <HeroSection />
-      
-      <div className="bg-white">
-        <PremiumSolutionsSection />
-        <FeaturedProjectSection />
-        <ScreenCleaningSection />
-        <div data-component="owner-operated">
-          <OwnerOperatedSection />
-        </div>
-        <FounderSection />
-        <TrustedCustomersSection />
-        <CompetitorComparisonSection />
-        <TestimonialsSection />
-        <SatisfactionGuaranteeSection />
-        <FAQSection 
-          title="Frequently Asked Questions" 
-          subtitle="Everything you need to know about our services"
-          faqs={faqItems}
-          darkMode={true}
-        />
-        <ServiceAreasSection />
+      <div className="relative">
+        <HeroSection />
         
-        {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
-        <div className="h-20"></div>
+        {/* Sliding overlap section that will slide over the hero on scroll */}
+        <div ref={overlapRef} className="relative z-20 bg-white rounded-t-[40px] shadow-xl transition-transform duration-300">
+          <SlidingOverlapSection />
+          
+          <div className="bg-white">
+            <PremiumSolutionsSection />
+            <FeaturedProjectSection />
+            <ScreenCleaningSection />
+            <div data-component="owner-operated">
+              <OwnerOperatedSection />
+            </div>
+            <FounderSection />
+            <TrustedCustomersSection />
+            <CompetitorComparisonSection />
+            <TestimonialsSection />
+            <SatisfactionGuaranteeSection />
+            <FAQSection 
+              title="Frequently Asked Questions" 
+              subtitle="Everything you need to know about our services"
+              faqs={faqItems}
+              darkMode={true}
+            />
+            <ServiceAreasSection />
+            
+            {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
+            <div className="h-20"></div>
+          </div>
+        </div>
       </div>
       
       <CTABanner />
