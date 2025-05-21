@@ -23,6 +23,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import WhiteRock from './pages/locations/WhiteRock';
 import WhiteRockBC from './pages/locations/WhiteRockBC';
+import Surrey from './pages/locations/Surrey';
 import MetroVancouver from './pages/locations/MetroVancouver';
 import VancouverWindowCleaning from './pages/locations/VancouverWindowCleaning';
 import NotFound from './pages/NotFound';
@@ -31,6 +32,10 @@ import { initAnalytics } from './lib/analytics-client';
 import ExpressCleaning from './pages/ExpressCleaning';
 import { setupErrorHandlers } from './utils/errorUtils';
 import usePageTracking from './hooks/usePageTracking';
+import ServiceComparison from './pages/ServiceComparison';
+import OnlineBooking from './pages/OnlineBooking';
+import SuccessStories from './pages/SuccessStories';
+import Referrals from './pages/Referrals';
 
 function App() {
   // Track page views
@@ -69,9 +74,14 @@ function App() {
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
         <Route path="/locations/white-rock" element={<WhiteRock />} />
+        <Route path="/locations/surrey" element={<Surrey />} />
         <Route path="/locations/metro-vancouver" element={<MetroVancouver />} />
         <Route path="/locations/vancouver-bc" element={<VancouverWindowCleaning />} />
         <Route path="/zip-uploader" element={<ZipUploader />} />
+        <Route path="/service-comparison" element={<ServiceComparison />} />
+        <Route path="/online-booking" element={<OnlineBooking />} />
+        <Route path="/success-stories" element={<SuccessStories />} />
+        <Route path="/referrals" element={<Referrals />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

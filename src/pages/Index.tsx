@@ -18,6 +18,10 @@ import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import LanguageSelector from '@/components/LanguageSelector';
+import BeforeAfterSection from '@/components/home/BeforeAfterSection';
+import TrustBadges from '@/components/TrustBadges';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const { language } = useTranslation();
@@ -98,6 +102,47 @@ const Index = () => {
       
       <div className="bg-white">
         <PremiumSolutionsSection />
+        
+        {/* Add the new Before/After Section */}
+        <BeforeAfterSection />
+        
+        <div className="py-16 container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-4">Why Choose BC Pressure Washing?</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              We're committed to providing exceptional service with guaranteed results
+            </p>
+          </div>
+          <TrustBadges />
+        </div>
+        
+        <div className="container mx-auto px-4 py-16 text-center">
+          <h2 className="text-3xl font-bold mb-8">Our Enhanced Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-4">Compare Services</h3>
+              <p className="text-gray-600 mb-6">Find the right service package for your needs and budget with our comparison tool.</p>
+              <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white">
+                <Link to="/service-comparison">Compare Options</Link>
+              </Button>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-4">Book Online</h3>
+              <p className="text-gray-600 mb-6">Schedule your service at your convenience with our easy online booking system.</p>
+              <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white">
+                <Link to="/online-booking">Book Now</Link>
+              </Button>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-semibold mb-4">Refer & Earn</h3>
+              <p className="text-gray-600 mb-6">Refer friends and family to earn rewards and discounts on future services.</p>
+              <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white">
+                <Link to="/referrals">Earn Rewards</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
         <FeaturedProjectSection />
         <ScreenCleaningSection />
         <div data-component="owner-operated">
