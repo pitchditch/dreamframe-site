@@ -86,29 +86,29 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 sm:pt-0">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
-            <span className="text-white font-medium text-sm md:text-base">Professional Exterior Cleaning Services</span>
+            <span className="text-white font-medium text-sm md:text-base">{t("Professional Exterior Cleaning Services")}</span>
           </div>
           
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-shadow-lg">
-            <span className="text-white">Transform Your Property's Appearance</span>
+            <span className="text-white">{t("Transform Your Property's Appearance")}</span>
           </h1>
           
           <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
-            Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions
+            {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
           </p>
           
           <div className="flex flex-wrap justify-center gap-3 my-6 animate-on-scroll delay-200">
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Shield className="text-white mr-2" size={20} />
-              <span className="text-white font-medium">Fully Insured</span>
+              <span className="text-white font-medium">{t("Fully Insured")}</span>
             </div>
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Star className="text-yellow-400 mr-2" size={20} />
-              <span className="text-white font-medium">5-Star Service</span>
+              <span className="text-white font-medium">{t("5-Star Service")}</span>
             </div>
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Home className="text-white mr-2" size={20} />
-              <span className="text-white font-medium">Locally Owned</span>
+              <span className="text-white font-medium">{t("Locally Owned")}</span>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ const HeroSection = () => {
               <Input
                 ref={inputRef}
                 type="text"
-                placeholder="Enter Your Postal Code"
+                placeholder={t("Enter Your Postal Code")}
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
                 className="bg-white border-white text-black h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-xl font-medium w-full"
@@ -132,7 +132,7 @@ const HeroSection = () => {
               size="lg" 
               className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
             >
-              Check Prices & Availability <MessageSquare className="ml-2" size={20} />
+              {t("Check Prices & Availability")} <MessageSquare className="ml-2" size={20} />
             </Button>
           </form>
         </div>
@@ -146,8 +146,8 @@ const HeroSection = () => {
               className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md mr-4"
             />
             <div className="text-center sm:text-left">
-              <p className="font-bold text-white text-sm md:text-xl drop-shadow-md">Every Job is Personally Checked by Me.</p>
-              <p className="text-white font-medium text-xs md:text-base">— Jayden Fisher, Owner</p>
+              <p className="font-bold text-white text-sm md:text-xl drop-shadow-md">{t("Every Job is Personally Checked by Me.")}</p>
+              <p className="text-white font-medium text-xs md:text-base">— Jayden Fisher, {t("Owner")}</p>
             </div>
           </div>
         </div>
