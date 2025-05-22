@@ -11,16 +11,15 @@ const BeforeAfterSection = () => {
   const beforeAfterExamples = [
     {
       id: 1,
-      beforeImage: '/lovable-uploads/3f865bfb-458a-4ab3-b2d3-a324d755ab27.png',
-      afterImage: '/lovable-uploads/6792b6a1-2ada-44bf-8ccd-b2665245e13d.png',
+      component: 'animated',
+      image: '/lovable-uploads/0ba0d2d2-78fb-4e69-8727-5f98806e5237.png',
       service: 'Pressure Washing',
       description: 'House exterior cleaning'
     },
     {
       id: 2,
-      component: 'video',
-      thumbnailImage: '/lovable-uploads/8f51f55c-a8ce-472b-b398-1a35211096d3.png',
-      videoIds: ['xeUNIHhOxb8', 'PKw0OS7iDmY'],
+      component: 'rotating',
+      rotatingImage: '/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png',
       service: 'Window Cleaning',
       description: 'Crystal clear windows'
     },
@@ -66,6 +65,11 @@ const BeforeAfterSection = () => {
                 <RotatingImageQuadrants 
                   image={(example as any).rotatingImage} 
                   altText={example.description}
+                />
+              ) : example.component === 'animated' ? (
+                <AnimatedPressureWashing 
+                  image={(example as any).image} 
+                  altText={example.description} 
                 />
               ) : (
                 <BeforeAfterSlider 

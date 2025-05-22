@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../Logo';
 import { MobileMenuButton } from './MobileMenuButton';
-import { X, Phone, ChevronDown } from 'lucide-react';
+import { X, Phone, ChevronDown, Home, Building, Droplets, Window } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -76,53 +76,63 @@ const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }:
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="ml-4 space-y-1">
+                      <h3 className="text-sm font-semibold text-gray-500 py-1">{t("Residential")}</h3>
                       <Link 
                         to="/services/window-cleaning" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Window className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Window Cleaning")}
                       </Link>
                       <Link 
                         to="/services/pressure-washing" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Droplets className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Pressure Washing")}
                       </Link>
                       <Link 
                         to="/services/gutter-cleaning" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Home className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Gutter Cleaning")}
                       </Link>
                       <Link 
                         to="/services/roof-cleaning" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Home className="w-4 h-4 mr-2 text-bc-red rotate-180" />
                         {t("Roof Cleaning")}
                       </Link>
+                      
+                      <h3 className="text-sm font-semibold text-gray-500 py-1 mt-2">{t("Commercial")}</h3>
                       <Link 
                         to="/services/commercial-window-cleaning" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Building className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Commercial Window Cleaning")}
                       </Link>
                       <Link 
                         to="/services/commercial-pressure-washing" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Building className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Commercial Pressure Washing")}
                       </Link>
                       <Link 
                         to="/services/post-construction-window-cleaning" 
                         onClick={closeMenu}
-                        className="block py-2 text-gray-600 hover:text-bc-red"
+                        className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
+                        <Building className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Post-Construction Cleaning")}
                       </Link>
                       <Link 

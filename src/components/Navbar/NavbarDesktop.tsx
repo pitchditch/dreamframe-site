@@ -18,7 +18,7 @@ const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
     <div className="container mx-auto hidden lg:flex items-center justify-between py-4">
       <div className="flex items-center gap-4">
         <nav className="ml-4">
-          <ul className="flex">
+          <ul className="flex items-center space-x-8">
             <li><NavLink isOverVideo={isOverVideo} to="/">{t("Home")}</NavLink></li>
             <li><ServicesDropdown /></li>
             <li><NavLink isOverVideo={isOverVideo} to="/why-us">{t("Why Us")}</NavLink></li>
