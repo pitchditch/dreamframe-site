@@ -119,7 +119,7 @@ const AnimatedPressureWashing = ({ image, altText }: AnimatedPressureWashingProp
             className="w-full h-full object-cover"
             style={{
               filter: "brightness(1.2) contrast(1.05) saturate(1.05)",
-              mixBlendMode: "source-over",
+              mixBlendMode: "normal",
             }}
           />
           {renderCleanedMask()}

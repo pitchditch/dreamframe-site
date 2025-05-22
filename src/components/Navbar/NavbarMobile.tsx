@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../Logo';
 import { MobileMenuButton } from './MobileMenuButton';
-import { X, Phone, ChevronDown, Home, Building, Droplets, Window } from 'lucide-react';
+import { X, Phone, ChevronDown, Home, Building, Droplets, Wind } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -82,7 +82,7 @@ const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }:
                         onClick={closeMenu}
                         className="block py-2 text-gray-600 hover:text-bc-red flex items-center"
                       >
-                        <Window className="w-4 h-4 mr-2 text-bc-red" />
+                        <Wind className="w-4 h-4 mr-2 text-bc-red" />
                         {t("Window Cleaning")}
                       </Link>
                       <Link 

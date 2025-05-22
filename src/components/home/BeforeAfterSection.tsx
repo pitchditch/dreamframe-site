@@ -4,6 +4,7 @@ import BeforeAfterSlider from '../BeforeAfterSlider';
 import SplitBeforeAfterSlider from '../SplitBeforeAfterSlider';
 import VideoHoverPlayer from '../VideoHoverPlayer';
 import RotatingImageQuadrants from '../RotatingImageQuadrants';
+import AnimatedPressureWashing from '../AnimatedPressureWashing';
 
 const BeforeAfterSection = () => {
   const { t } = useTranslation();
@@ -50,31 +51,35 @@ const BeforeAfterSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {beforeAfterExamples.map((example) => (
             <div key={example.id} className="flex flex-col">
-              {example.component === 'video' ? (
+              {example.component === 'video' && (example as any).videoIds && (
                 <VideoHoverPlayer 
                   videoIds={(example as any).videoIds} 
                   thumbnailUrl={(example as any).thumbnailImage} 
                   altText={example.description}
                 />
-              ) : example.component === 'split' ? (
+              )}
+              {example.component === 'split' && (example as any).splitImage && (
                 <SplitBeforeAfterSlider 
                   image={(example as any).splitImage} 
                   altText={example.description} 
                 />
-              ) : example.component === 'rotating' ? (
+              )}
+              {example.component === 'rotating' && (example as any).rotatingImage && (
                 <RotatingImageQuadrants 
                   image={(example as any).rotatingImage} 
                   altText={example.description}
                 />
-              ) : example.component === 'animated' ? (
+              )}
+              {example.component === 'animated' && (example as any).image && (
                 <AnimatedPressureWashing 
                   image={(example as any).image} 
                   altText={example.description} 
                 />
-              ) : (
+              )}
+              {example.component === 'slider' && (example as any).beforeImage && (example as any).afterImage && (
                 <BeforeAfterSlider 
-                  beforeImage={example.beforeImage!} 
-                  afterImage={example.afterImage!} 
+                  beforeImage={(example as any).beforeImage} 
+                  afterImage={(example as any).afterImage} 
                   altText={example.description} 
                 />
               )}

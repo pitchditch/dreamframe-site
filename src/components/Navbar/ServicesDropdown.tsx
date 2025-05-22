@@ -12,7 +12,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Home, Building, Droplets, Window } from "lucide-react";
+import { ChevronDown, Home, Building, Droplets, Wind } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -31,7 +31,7 @@ const ServicesDropdown = () => {
           <DropdownMenuLabel>{t("Residential")}</DropdownMenuLabel>
           <DropdownMenuItem asChild>
             <Link to="/services/window-cleaning" className="cursor-pointer flex items-center">
-              <Window className="mr-2 h-4 w-4 text-bc-red" />
+              <Wind className="mr-2 h-4 w-4 text-bc-red" />
               {t("Window Cleaning")}
             </Link>
           </DropdownMenuItem>
