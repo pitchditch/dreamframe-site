@@ -1,6 +1,5 @@
 
 import React from 'react';
-import SplitBeforeAfterSlider from '../SplitBeforeAfterSlider';
 
 const BeforeAfterSection: React.FC = () => {
   return (

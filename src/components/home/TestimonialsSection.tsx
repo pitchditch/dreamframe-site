@@ -20,12 +20,9 @@ const TestimonialsSection = () => {
         
         <TestimonialsCarousel />
         
-        <div className="text-center mt-10 space-y-4">
-          <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white mr-4">
+        <div className="text-center mt-10">
+          <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white">
             <Link to="/testimonials">{t("View All Testimonials")}</Link>
-          </Button>
-          <Button asChild variant="bc-red">
-            <Link to="/success-stories">{t("Read Success Stories")}</Link>
           </Button>
         </div>
       </div>

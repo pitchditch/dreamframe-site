@@ -1,93 +1,81 @@
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
-} from "@/components/ui/dropdown-menu";
-import { ChevronDown, Home, Building, Droplets, Wind } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 
-const ServicesDropdown = () => {
-  const { t } = useTranslation();
+interface ServicesDropdownProps {
+  isOpen: boolean;
+}
+
+export const ServicesDropdown = ({ 
+  isOpen
+}: ServicesDropdownProps) => {
+  const location = useLocation();
+  const { t, language } = useTranslation();
+  
+  // Get language-specific classes for Punjabi and Hindi
+  const getLanguageClass = () => {
+    if (language === 'pa') return 'font-pa-font';
+    if (language === 'hi') return 'font-hi-font';
+    return '';
+  };
   
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="rounded-none hover:bg-transparent">
-          {t("Services")} <ChevronDown className="ml-1 h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-72 bg-white">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>{t("Residential")}</DropdownMenuLabel>
-          <DropdownMenuItem asChild>
-            <Link to="/services/window-cleaning" className="cursor-pointer flex items-center">
-              <Wind className="mr-2 h-4 w-4 text-bc-red" />
-              {t("Window Cleaning")}
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/services/pressure-washing" className="cursor-pointer flex items-center">
-              <Droplets className="mr-2 h-4 w-4 text-bc-red" />
-              {t("Pressure Washing")}
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/services/gutter-cleaning" className="cursor-pointer flex items-center">
-              <Home className="mr-2 h-4 w-4 text-bc-red" />
-              {t("Gutter Cleaning")}
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/services/roof-cleaning" className="cursor-pointer flex items-center">
-              <Home className="mr-2 h-4 w-4 text-bc-red rotate-180" />
-              {t("Roof Cleaning")}
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>{t("Commercial")}</DropdownMenuLabel>
-          <DropdownMenuItem asChild>
-            <Link to="/services/commercial-window-cleaning" className="cursor-pointer flex items-center">
-              <Building className="mr-2 h-4 w-4 text-bc-red" />
-              {t("Commercial Window Cleaning")}
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/services/commercial-pressure-washing" className="cursor-pointer flex items-center">
-              <Building className="mr-2 h-4 w-4 text-bc-red" />
-              {t("Commercial Pressure Washing")}
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/services/post-construction-window-cleaning" className="cursor-pointer flex items-center">
-              <Building className="mr-2 h-4 w-4 text-bc-red" />
-              {t("Post-Construction Window Cleaning")}
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuItem asChild>
-          <Link to="/service-comparison" className="cursor-pointer font-semibold text-bc-red">
-            {t("Compare Services")}
+    <div className="relative">
+      {isOpen && (
+        <div className="absolute z-20 mt-2 py-2 w-72 bg-white rounded-md shadow-lg">
+          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Residential')}</div>
+          
+          <Link 
+            to="/services/window-cleaning" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Window Cleaning')}
           </Link>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <Link 
+            to="/services/gutter-cleaning" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Gutter Cleaning')}
+          </Link>
+          <Link 
+            to="/services/pressure-washing" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Pressure Washing')}
+          </Link>
+          <Link 
+            to="/services/roof-cleaning" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Roof Cleaning')}
+          </Link>
+          
+          <div className="border-t border-gray-100 mx-2 my-2"></div>
+          
+          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Commercial')}</div>
+          <Link 
+            to="/services/commercial-window-cleaning" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Commercial Window Cleaning')}
+          </Link>
+          <Link 
+            to="/services/commercial-pressure-washing" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Commercial Pressure Washing')}
+          </Link>
+          <Link 
+            to="/services/post-construction-cleaning" 
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
+          >
+            {t('Post-Construction Cleaning')}
+          </Link>
+        </div>
+      )}
+    </div>
   );
 };
 
