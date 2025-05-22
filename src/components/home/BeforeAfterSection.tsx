@@ -27,7 +27,7 @@ const BeforeAfterSection = () => {
     {
       id: 3,
       component: 'split',
-      splitImage: '/lovable-uploads/7be3c823-5909-45b7-8972-c2917ec523d5.png',
+      splitImage: '/lovable-uploads/761e19f7-4f68-4a54-ae9f-60649f31aa71.png',
       service: 'Roof Cleaning',
       description: 'Remove moss and debris'
     },
