@@ -36,6 +36,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     setServices,
     addOns,
     setAddOns,
+    photos,
+    setPhotos,
     address,
     setAddress,
     contact,
@@ -68,6 +70,8 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
           setServices={setServices}
           addOns={addOns}
           setAddOns={setAddOns}
+          photos={photos}
+          setPhotos={setPhotos}
           contact={contact}
           setContact={setContact}
           preferredDate={preferredDate}
