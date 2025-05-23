@@ -1,10 +1,10 @@
 
-// StepRenderer.tsx
 import React from 'react';
 import { AddressData, SizeData, ContactData } from './hooks/usePriceCalculatorForm';
 import StepAddressInput from './steps/StepAddressInput';
 import StepSizeInput from './steps/StepSizeInput';
 import StepServicesInput from './steps/StepServicesInput';
+import StepPhotos from './steps/StepPhotos';
 import StepContactInput from './steps/StepContactInput';
 import StepSummary from './steps/StepSummary';
 import StepThankYou from './steps/StepThankYou';
@@ -12,14 +12,16 @@ import DateStep from './steps/DateStep';
 
 interface StepRendererProps {
   step: number;
-  address: AddressData;
-  setAddress: (address: AddressData) => void;
-  size: SizeData;
-  setSize: (size: SizeData) => void;
+  address: string;
+  setAddress: (address: string) => void;
+  size: string;
+  setSize: (size: string) => void;
   services: string[];
   setServices: (services: string[]) => void;
   addOns: string[];
   setAddOns: (addOns: string[]) => void;
+  photos: File[];
+  setPhotos: (photos: File[]) => void;
   contact: ContactData;
   setContact: (contact: ContactData) => void;
   preferredDate?: Date;
@@ -42,6 +44,8 @@ const StepRenderer: React.FC<StepRendererProps> = ({
   setServices,
   addOns,
   setAddOns,
+  photos,
+  setPhotos,
   contact,
   setContact,
   preferredDate,
@@ -67,8 +71,8 @@ const StepRenderer: React.FC<StepRendererProps> = ({
     case 1:
       return (
         <StepSizeInput 
-          size={size.houseSize} 
-          setSize={(houseSize: string) => setSize({...size, houseSize})} 
+          size={size} 
+          setSize={setSize} 
           onPrevStep={() => onPrevStep(0)} 
           onNextStep={() => onNextStep(2)}
         />
@@ -76,7 +80,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
     case 2:
       return (
         <StepServicesInput 
-          size={size.houseSize}
+          size={size}
           services={services}
           setServices={setServices}
           addOns={addOns}
@@ -87,37 +91,46 @@ const StepRenderer: React.FC<StepRendererProps> = ({
       );
     case 3:
       return (
-        <DateStep
-          preferredDate={preferredDate}
-          setPreferredDate={setPreferredDate}
+        <StepPhotos
+          photos={photos}
+          setPhotos={setPhotos}
           onPrevStep={() => onPrevStep(2)}
           onNextStep={() => onNextStep(4)}
         />
       );
     case 4:
       return (
-        <StepContactInput 
-          contact={contact}
-          setContact={setContact}
+        <DateStep
+          preferredDate={preferredDate}
+          setPreferredDate={setPreferredDate}
           onPrevStep={() => onPrevStep(3)}
           onNextStep={() => onNextStep(5)}
         />
       );
     case 5:
       return (
+        <StepContactInput 
+          contact={contact}
+          setContact={setContact}
+          onPrevStep={() => onPrevStep(4)}
+          onNextStep={() => onNextStep(6)}
+        />
+      );
+    case 6:
+      return (
         <StepSummary 
-          address={address}
-          size={size}
+          address={{ street: address, city: '', postalCode: '' }}
+          size={{ houseSize: size }}
           services={services}
           addOns={addOns}
           contact={contact}
           estimateTotal={estimateTotal()}
-          onPrevStep={() => onPrevStep(4)}
+          onPrevStep={() => onPrevStep(5)}
           onSubmit={onSubmit}
           submitting={submitting}
         />
       );
-    case 6:
+    case 7:
       return <StepThankYou estimateTotal={estimateTotal()} onStartNew={onStartNew} />;
     default:
       return null;

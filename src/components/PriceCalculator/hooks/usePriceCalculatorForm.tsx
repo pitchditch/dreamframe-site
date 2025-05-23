@@ -9,12 +9,13 @@ import { calculateEstimateTotal, formatAddOns, submitFormData } from '../utils/c
 
 export type { ContactInfo } from '../types/calculatorTypes';
 
-export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void) => {
+export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void, prefillData: any = {}) => {
   const [step, setStep] = useState(initialStep);
-  const [size, setSize] = useState<string>('');
+  const [size, setSize] = useState<string>(prefillData.houseSize || '');
   const [services, setServices] = useState<string[]>([]);
   const [addOns, setAddOns] = useState<string[]>([]);
-  const [address, setAddress] = useState('');
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [address, setAddress] = useState(prefillData.postalCode || '');
   const [contact, setContact] = useState<ContactInfo>({
     name: '',
     phone: '',
@@ -22,6 +23,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     referredBy: '',
     notes: ''
   });
+  const [preferredDate, setPreferredDate] = useState<Date | undefined>();
   const [submitting, setSubmitting] = useState(false);
   const [estimateTotal, setEstimateTotal] = useState<number | null>(null);
 
@@ -44,8 +46,10 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
       step === 0 ? 'Address' :
       step === 1 ? 'Property Size' :
       step === 2 ? 'Services Selection' :
-      step === 3 ? 'Contact Info' :
-      step === 4 ? 'Summary' :
+      step === 3 ? 'Photos Upload' :
+      step === 4 ? 'Date Selection' :
+      step === 5 ? 'Contact Info' :
+      step === 6 ? 'Summary' :
       'Thank You'
     );
   }, [step]);
@@ -61,6 +65,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     setSize('');
     setServices([]);
     setAddOns([]);
+    setPhotos([]);
     setAddress('');
     setContact({
       name: '',
@@ -69,6 +74,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
       referredBy: '',
       notes: ''
     });
+    setPreferredDate(undefined);
     setEstimateTotal(null);
   };
 
@@ -98,7 +104,8 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         services: services.length > 0 ? services : ['None'],
         addons: addOns.length > 0 ? addOns : ['None'],
         notes: contact.notes || 'None',
-        estimate: total ? `${total}` : 'To be determined'
+        estimate: total ? `${total}` : 'To be determined',
+        photoCount: photos.length.toString()
       };
 
       console.log('Submitting form data:', templateParams);
@@ -108,7 +115,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
         setSubmitting, 
         () => {
           console.log('Form submitted successfully, moving to thank you step');
-          setStep(5);
+          setStep(7);
           if (onComplete) onComplete();
         },
         toast
@@ -133,10 +140,14 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void)
     setServices,
     addOns,
     setAddOns,
+    photos,
+    setPhotos,
     address,
     setAddress,
     contact,
     setContact,
+    preferredDate,
+    setPreferredDate,
     submitting,
     estimateTotal,
     calculateAndSetEstimateTotal,
