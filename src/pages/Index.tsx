@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -19,6 +20,7 @@ import CTABanner from '../components/home/CTABanner';
 import LanguageSelector from '@/components/LanguageSelector';
 import BeforeAfterAnimation from '@/components/home/BeforeAfterAnimation';
 import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
+import PropertySpecificSection from '../components/home/PropertySpecificSection';
 
 const Index = () => {
   const { language } = useTranslation();
@@ -130,6 +132,9 @@ const Index = () => {
             </div>
           </div>
         </div>
+        
+        {/* Add property-specific section */}
+        <PropertySpecificSection />
         
         <ScreenCleaningSection />
         <div data-component="owner-operated">
