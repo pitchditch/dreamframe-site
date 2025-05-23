@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AddressData, SizeData, ContactData } from './hooks/usePriceCalculatorForm';
+import { ContactInfo } from './types/calculatorTypes';
 import StepAddressInput from './steps/StepAddressInput';
 import StepSizeInput from './steps/StepSizeInput';
 import StepServicesInput from './steps/StepServicesInput';
@@ -22,8 +22,8 @@ interface StepRendererProps {
   setAddOns: (addOns: string[]) => void;
   photos: File[];
   setPhotos: (photos: File[]) => void;
-  contact: ContactData;
-  setContact: (contact: ContactData) => void;
+  contact: ContactInfo;
+  setContact: (contact: ContactInfo) => void;
   preferredDate?: Date;
   setPreferredDate: (date: Date | undefined) => void;
   onNextStep: (nextStep: number) => void;

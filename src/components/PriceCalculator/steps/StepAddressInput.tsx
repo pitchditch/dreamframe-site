@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { trackFormFieldInteraction } from '@/utils/analytics';
-import { AddressData, ContactData } from '../hooks/usePriceCalculatorForm';
+import { ContactInfo } from '../types/calculatorTypes';
 
 interface StepAddressInputProps {
-  address: AddressData;
-  setAddress: (address: AddressData) => void;
-  contact: ContactData;
-  setContact: (contact: ContactData) => void;
+  address: string;
+  setAddress: (address: string) => void;
+  contact: ContactInfo;
+  setContact: (contact: ContactInfo) => void;
   onNextStep: () => void;
 }
 
@@ -26,52 +26,20 @@ const StepAddressInput: React.FC<StepAddressInputProps> = ({
       </p>
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Street Address</label>
+          <label className="block text-sm font-medium mb-1">Address</label>
           <input 
             type="text" 
-            value={address.street} 
+            value={address} 
             onChange={e => {
-              setAddress({...address, street: e.target.value});
-              trackFormFieldInteraction('PriceCalculator', 'Street Address', 'change');
+              setAddress(e.target.value);
+              trackFormFieldInteraction('PriceCalculator', 'Address', 'change');
             }} 
-            onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Street Address', 'focus')}
-            onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Street Address', 'blur')}
+            onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Address', 'focus')}
+            onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Address', 'blur')}
             className="w-full border p-3 rounded-lg" 
-            placeholder="1234 Main St" 
+            placeholder="1234 Main St, Vancouver, BC V1A 1A1" 
             autoFocus 
           />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">City</label>
-            <input 
-              type="text" 
-              value={address.city} 
-              onChange={e => {
-                setAddress({...address, city: e.target.value});
-                trackFormFieldInteraction('PriceCalculator', 'City', 'change');
-              }} 
-              onFocus={() => trackFormFieldInteraction('PriceCalculator', 'City', 'focus')}
-              onBlur={() => trackFormFieldInteraction('PriceCalculator', 'City', 'blur')}
-              className="w-full border p-3 rounded-lg" 
-              placeholder="Vancouver" 
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Postal Code</label>
-            <input 
-              type="text" 
-              value={address.postalCode} 
-              onChange={e => {
-                setAddress({...address, postalCode: e.target.value});
-                trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'change');
-              }} 
-              onFocus={() => trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'focus')}
-              onBlur={() => trackFormFieldInteraction('PriceCalculator', 'Postal Code', 'blur')}
-              className="w-full border p-3 rounded-lg" 
-              placeholder="V1A 1A1" 
-            />
-          </div>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Email (Optional)</label>
@@ -99,7 +67,7 @@ const StepAddressInput: React.FC<StepAddressInputProps> = ({
       <div className="flex justify-end mt-6">
         <button 
           onClick={onNextStep} 
-          disabled={!address.street.trim()}
+          disabled={!address.trim()}
           className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
         >
           Next
