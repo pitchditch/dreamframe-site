@@ -58,7 +58,7 @@ const WindowCleaningAnimation = () => {
           </div>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .window-clean-animation {
             position: relative;
             width: 600px;
