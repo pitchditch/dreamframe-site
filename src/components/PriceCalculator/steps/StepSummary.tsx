@@ -1,16 +1,26 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { AddressData, ContactData, SizeData } from '../hooks/usePriceCalculatorForm';
+import { ContactInfo } from '../types/calculatorTypes';
 import { formatAddOns } from '../utils/calculatorUtils';
 import { Loader } from 'lucide-react';
 
+interface AddressDataSimple {
+  street: string;
+  city: string;
+  postalCode: string;
+}
+
+interface SizeDataSimple {
+  houseSize: string;
+}
+
 interface StepSummaryProps {
-  address: AddressData;
-  size: SizeData;
+  address: AddressDataSimple;
+  size: SizeDataSimple;
   services: string[];
   addOns: string[];
-  contact: ContactData;
+  contact: ContactInfo;
   onPrevStep: () => void;
   onSubmit: () => void;
   submitting: boolean;

@@ -1,15 +1,14 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { trackFormFieldInteraction } from '@/utils/analytics';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { ContactData } from '../hooks/usePriceCalculatorForm';
+import { ContactInfo } from '../types/calculatorTypes';
 
 interface StepContactInputProps {
-  contact: ContactData;
-  setContact: (contact: ContactData) => void;
+  contact: ContactInfo;
+  setContact: (contact: ContactInfo) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
 }

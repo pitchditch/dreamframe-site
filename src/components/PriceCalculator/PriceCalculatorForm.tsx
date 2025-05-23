@@ -51,6 +51,9 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
   const handleNextStep = (nextStep: number) => setStep(nextStep);
   const handlePrevStep = (prevStep: number) => setStep(prevStep);
 
+  // Function to pass as prop that returns the current estimate total
+  const getEstimateTotal = () => estimateTotal;
+
   return (
     <div className="bg-white shadow-lg rounded-xl overflow-hidden">
       <PriceCalculatorIntro />
@@ -73,7 +76,7 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
           onPrevStep={handlePrevStep}
           onSubmit={handleFormSubmit}
           submitting={submitting}
-          estimateTotal={estimateTotal}
+          estimateTotal={getEstimateTotal}
           onStartNew={resetForm}
         />
       </div>
