@@ -10,6 +10,7 @@ import TestimonialsSection from '../../components/home/TestimonialsSection';
 import FAQSection from '../../components/FAQSection';
 import WindowCleaningForm from '@/components/forms/WindowCleaningForm';
 import ServiceAreasList from '@/components/ServiceAreasList';
+import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
 
 const WindowCleaning = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -105,10 +106,21 @@ const WindowCleaning = () => {
               </div>
             </div>
           </div>
+          
+          {/* Add the interactive simulator */}
+          <div className="mt-16">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-4">Try Our Water-Fed Pole System</h3>
+              <p className="text-lg text-gray-600">Experience how our pure water technology delivers streak-free results</p>
+            </div>
+            <WindowCleaningSimulator />
+          </div>
         </div>
       </section>
 
       {/* Rest of the content */}
+      
+      {/* Our Process */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
