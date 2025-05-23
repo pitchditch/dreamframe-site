@@ -23,7 +23,7 @@ const PropertySpecificSection = () => {
         "Landscaping protection during service",
         "Interior window cleaning available"
       ],
-      image: "/lovable-uploads/ef45fd36-a81d-41a3-8184-d3a91694f5ca.png",
+      image: "/lovable-uploads/2aa44443-acb7-47d2-a63d-295c7414a46d.png",
       link: "/services/window-cleaning"
     },
     {
@@ -42,7 +42,7 @@ const PropertySpecificSection = () => {
         "Custom maintenance contracts",
         "Minimal business disruption"
       ],
-      image: "/lovable-uploads/8a7d4e73-fa89-44ab-8814-ecaed5b1d23c.png",
+      image: "/lovable-uploads/44fea6cf-3991-4456-9cd6-04d2a1d836fd.png",
       link: "/services/commercial-window-cleaning"
     },
     {
@@ -61,7 +61,7 @@ const PropertySpecificSection = () => {
         "Bulk pricing for multiple units",
         "Regular maintenance schedules"
       ],
-      image: "/lovable-uploads/76968d4f-c862-4989-a3e3-b74ac31968e2.png",
+      image: "/lovable-uploads/14d8f5da-5c4c-4be3-a974-8f34da54186f.png",
       link: "/services/window-cleaning"
     }
   ];

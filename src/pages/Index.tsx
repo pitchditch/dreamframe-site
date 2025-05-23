@@ -21,6 +21,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import BeforeAfterAnimation from '@/components/home/BeforeAfterAnimation';
 import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
+import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 
 const Index = () => {
   const { language } = useTranslation();
@@ -135,6 +136,9 @@ const Index = () => {
         
         {/* Add property-specific section */}
         <PropertySpecificSection />
+        
+        {/* Add seasonal maintenance guide */}
+        <SeasonalMaintenanceGuide />
         
         <ScreenCleaningSection />
         <div data-component="owner-operated">
