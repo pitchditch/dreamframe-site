@@ -18,6 +18,7 @@ import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import LanguageSelector from '@/components/LanguageSelector';
+import BeforeAfterAnimation from '@/components/home/BeforeAfterAnimation';
 
 const Index = () => {
   const { language } = useTranslation();
@@ -99,6 +100,18 @@ const Index = () => {
       <div className="bg-white">
         <PremiumSolutionsSection />
         <FeaturedProjectSection />
+        
+        {/* Add the pressure washing animation component */}
+        <div className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">Experience the Difference</h2>
+              <p className="text-lg text-gray-600">Try our virtual pressure washing simulator below!</p>
+            </div>
+            <BeforeAfterAnimation />
+          </div>
+        </div>
+        
         <ScreenCleaningSection />
         <div data-component="owner-operated">
           <OwnerOperatedSection />
