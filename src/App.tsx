@@ -17,15 +17,9 @@ const Calculator = lazy(() => import("./pages/Calculator"));
 const Blog = lazy(() => import("./pages/Blog"));
 const EducationalBlog = lazy(() => import("./pages/EducationalBlog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
-const ServiceAreas = lazy(() => import("./pages/ServiceAreas"));
 const GutterCleaning = lazy(() => import("./pages/services/GutterCleaning"));
 const RoofCleaning = lazy(() => import("./pages/services/RoofCleaning"));
-const HouseWashing = lazy(() => import("./pages/services/HouseWashing"));
-const DrivewayPatioSteps = lazy(() => import("./pages/services/DrivewayPatioSteps"));
 const PressureWashing = lazy(() => import("./pages/services/PressureWashing"));
-const PostConstructionCleanup = lazy(() => import("./pages/services/PostConstructionCleanup"));
-const Privacy = lazy(() => import("./pages/Privacy"));
-const Terms = lazy(() => import("./pages/Terms"));
 const Review = lazy(() => import("./pages/Review"));
 
 const queryClient = new QueryClient({
@@ -54,16 +48,10 @@ const App = () => (
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/educational-blog" element={<EducationalBlog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/service-areas" element={<ServiceAreas />} />
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />
                 <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
                 <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-                <Route path="/services/house-washing" element={<HouseWashing />} />
-                <Route path="/services/driveway-cleaning" element={<DrivewayPatioSteps />} />
                 <Route path="/services/pressure-washing" element={<PressureWashing />} />
-                <Route path="/services/post-construction-cleanup" element={<PostConstructionCleanup />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/terms" element={<Terms />} />
                 <Route path="/review" element={<Review />} />
               </Routes>
             </Suspense>
