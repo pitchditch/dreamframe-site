@@ -22,6 +22,8 @@ import BeforeAfterAnimation from '@/components/home/BeforeAfterAnimation';
 import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
+import WeatherService from '../components/WeatherService';
+import WindowCleaningAnimation from '../components/WindowCleaningAnimation';
 
 const Index = () => {
   const { language } = useTranslation();
@@ -99,6 +101,12 @@ const Index = () => {
       </div>
       
       <HeroSection />
+      
+      {/* Weather Service Integration */}
+      <WeatherService />
+      
+      {/* Window Cleaning Animation */}
+      <WindowCleaningAnimation />
       
       <div className="bg-white">
         <PremiumSolutionsSection />
