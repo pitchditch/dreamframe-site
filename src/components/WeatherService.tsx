@@ -1,12 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sun, CloudRain, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sun, CloudRain, CalendarClock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const WeatherService = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [currentWeather, setCurrentWeather] = useState({
+  const [currentWeather] = useState({
     condition: 'clear',
     temperature: 18,
     location: 'White Rock, BC'
@@ -38,87 +40,85 @@ const WeatherService = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-10 bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Weather & Service Availability</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Perfect weather conditions for professional cleaning services in White Rock and Surrey
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">Weather & Service Availability</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Check current weather conditions for window cleaning services in White Rock and Surrey
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Current Weather */}
-          <Card className="col-span-1">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Sun className="text-yellow-500" size={24} />
+        <div className="flex flex-col lg:flex-row gap-6 max-w-4xl mx-auto">
+          {/* Current Weather - Smaller Card */}
+          <Card className="lg:w-1/3">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <Sun className="text-yellow-500" size={20} />
                 Current Weather
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">{currentWeather.temperature}°C</div>
-                <div className="text-lg font-medium mb-2">Clear Skies</div>
-                <div className="text-gray-600 mb-4">{currentWeather.location}</div>
+                <div className="text-3xl font-bold text-blue-600 mb-1">{currentWeather.temperature}°C</div>
+                <div className="text-base font-medium mb-1">Clear Skies</div>
+                <div className="text-sm text-gray-600 mb-3">{currentWeather.location}</div>
                 
-                {/* Service Availability Alert */}
-                <div className={`p-3 rounded-lg ${isServiceAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    {isServiceAvailable ? (
-                      <CheckCircle size={20} />
-                    ) : (
-                      <AlertTriangle size={20} />
-                    )}
-                    <span className="font-medium">
-                      {isServiceAvailable ? 'Services Available' : 'Weather Advisory'}
-                    </span>
+                {/* Service Availability Banner */}
+                <div className={`p-2 rounded-lg mt-2 ${isServiceAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  <div className="font-medium text-sm">
+                    {isServiceAvailable ? 'Perfect Conditions!' : 'Weather Advisory'}
                   </div>
-                  <p className="text-sm">
-                    {isServiceAvailable 
-                      ? 'Perfect conditions for all cleaning services!'
-                      : 'Poor weather conditions. Services may be delayed.'
-                    }
-                  </p>
                 </div>
+                
+                {isServiceAvailable && (
+                  <Button 
+                    className="w-full mt-3 bg-bc-red hover:bg-red-700"
+                    asChild
+                  >
+                    <Link to="/contact">Book Now</Link>
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Calendar with Clear Days */}
-          <Card className="col-span-2">
-            <CardHeader>
-              <CardTitle>Clear Days This Month</CardTitle>
-              <p className="text-sm text-gray-600">Green dots indicate optimal days for cleaning services</p>
+          {/* Calendar with Clear Days - Cleaner Look */}
+          <Card className="lg:w-2/3">
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <CalendarClock size={20} />
+                  Clear Days This Month
+                </CardTitle>
+                <Badge variant="outline" className="text-xs">
+                  Green = Optimal Days
+                </Badge>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-center">
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  modifiers={modifiers}
-                  modifiersStyles={modifiersStyles}
-                  className="rounded-md border"
-                />
-              </div>
-              <div className="mt-4 text-center">
-                <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span>Clear Weather Days</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
-                    <span>Regular Days</span>
-                  </div>
-                </div>
-              </div>
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                modifiers={modifiers}
+                modifiersStyles={modifiersStyles}
+                className="rounded-md border mx-auto"
+              />
             </CardContent>
           </Card>
         </div>
       </div>
     </section>
+  );
+};
+
+// Missing Badge import
+const Badge = ({ children, variant, className }: { children: React.ReactNode, variant?: string, className?: string }) => {
+  return (
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${className}`}>
+      {children}
+    </span>
   );
 };
 

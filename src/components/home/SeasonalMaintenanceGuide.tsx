@@ -138,6 +138,24 @@ const SeasonalMaintenanceGuide = () => {
   const currentSeason = getCurrentSeason();
   const currentTasks = maintenanceTasks.filter(task => task.season === currentSeason);
 
+  // Season background styles
+  const seasonBackgroundStyle = (season: string) => {
+    const commonStyles = "bg-cover bg-center text-white after:content-[''] after:absolute after:inset-0 after:bg-black after:bg-opacity-40 after:rounded-lg relative z-0";
+    
+    switch (season) {
+      case 'spring':
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[0%_0%]`;
+      case 'summer':
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[100%_0%]`;
+      case 'fall':
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[0%_100%]`;
+      case 'winter':
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[100%_100%]`;
+      default:
+        return "";
+    }
+  };
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -218,29 +236,29 @@ const SeasonalMaintenanceGuide = () => {
           </Card>
         </div>
 
-        {/* All Tasks by Season */}
+        {/* All Tasks by Season with Background Images */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {['spring', 'summer', 'fall', 'winter'].map((season) => (
-            <Card key={season} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-center">
-                  <Badge className={`${getSeasonColor(season)} mb-2`}>
+            <Card key={season} className={`${seasonBackgroundStyle(season)} hover:shadow-lg transition-shadow overflow-hidden`}>
+              <CardHeader className="relative z-10">
+                <CardTitle className="text-center text-white">
+                  <span className="text-2xl font-bold">
                     {season.charAt(0).toUpperCase() + season.slice(1)}
-                  </Badge>
+                  </span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="relative z-10">
                 <div className="space-y-3">
                   {maintenanceTasks
                     .filter(task => task.season === season)
                     .map((task) => (
-                      <div key={task.id} className="p-3 bg-gray-50 rounded-lg">
+                      <div key={task.id} className="p-3 bg-white bg-opacity-90 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
                           {getPriorityIcon(task.priority)}
-                          <h5 className="font-medium text-sm">{task.title}</h5>
+                          <h5 className="font-medium text-sm text-gray-800">{task.title}</h5>
                         </div>
-                        <p className="text-xs text-gray-600 mb-2">{task.description}</p>
-                        <Badge variant="outline" className="text-xs">
+                        <p className="text-xs text-gray-700 mb-2">{task.description}</p>
+                        <Badge variant="outline" className="text-xs bg-white">
                           {task.service.replace('-', ' ')}
                         </Badge>
                       </div>

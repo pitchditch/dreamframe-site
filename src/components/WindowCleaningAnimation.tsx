@@ -31,12 +31,12 @@ const WindowCleaningAnimation = () => {
             onClick={handleStartAnimation}
           >
             <img 
-              src="/lovable-uploads/fba99b3e-4c8b-48f2-9ed7-2abe842008f1.png" 
+              src="/lovable-uploads/2a16d7b1-1d21-4fc7-91d4-cf14e366285d.png" 
               alt="Dirty window before cleaning"
               className="dirty-window" 
             />
             <img 
-              src="/lovable-uploads/31236a35-bb3b-4d03-99fd-ea6454acd26e.png" 
+              src="/lovable-uploads/1443b705-4ff2-4dcd-94d7-0568cc1044ac.png" 
               alt="Clean window after cleaning"
               className={`clean-window ${isAnimating ? 'animate' : ''}`}
             />
