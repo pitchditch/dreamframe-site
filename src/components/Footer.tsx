@@ -2,8 +2,8 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import FooterContactForm from './FooterContactForm';
 import ServiceAreaMap from './ServiceAreaMap';
+import WeatherService from './WeatherService';
 
 const Footer = () => {
   const location = useLocation();
@@ -102,9 +102,12 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Footer Contact Form */}
+          {/* Weather Service Component (replacing FooterContactForm) */}
           <div className="col-span-1">
-            <FooterContactForm />
+            <h4 className="text-xl font-semibold mb-6 text-white">Weather & Service Availability</h4>
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <WeatherService compact={true} />
+            </div>
           </div>
         </div>
       </div>

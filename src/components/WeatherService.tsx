@@ -5,8 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Sun, CloudRain, CalendarClock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Badge } from '@/components/ui/badge';
 
-const WeatherService = () => {
+interface WeatherServiceProps {
+  compact?: boolean;
+}
+
+const WeatherService = ({ compact = false }: WeatherServiceProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [currentWeather] = useState({
     condition: 'clear',
@@ -38,18 +43,46 @@ const WeatherService = () => {
       borderRadius: '50%'
     }
   };
+  
+  // Compact version for footer
+  if (compact) {
+    return (
+      <div className="text-white">
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center">
+            <Sun className="text-yellow-500 mr-2" size={18} />
+            <span>{currentWeather.temperature}°C</span>
+          </div>
+          <Badge variant="outline" className={`text-xs ${isServiceAvailable ? 'border-green-500 text-green-500' : 'border-red-500 text-red-500'}`}>
+            {isServiceAvailable ? 'Service Available' : 'Service Alert'}
+          </Badge>
+        </div>
+        
+        <p className="text-sm mb-3">
+          Currently {isServiceAvailable ? 'perfect conditions' : 'weather advisory'} for window cleaning in {currentWeather.location}
+        </p>
+        
+        {isServiceAvailable && (
+          <Button size="sm" className="w-full bg-bc-red hover:bg-red-700 text-xs py-1" asChild>
+            <Link to="/contact">Book Now - Perfect Conditions!</Link>
+          </Button>
+        )}
+      </div>
+    );
+  }
 
+  // Full version for main content
   return (
-    <section className="py-10 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-8 bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Weather & Service Availability</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Check current weather conditions for window cleaning services in White Rock and Surrey
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold mb-2">Weather & Service Availability</h2>
+          <p className="text-gray-600 text-sm max-w-2xl mx-auto">
+            Check current conditions for window cleaning services in White Rock and Surrey
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 max-w-4xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-4 max-w-4xl mx-auto">
           {/* Current Weather - Smaller Card */}
           <Card className="lg:w-1/3">
             <CardHeader className="pb-2">
@@ -76,14 +109,14 @@ const WeatherService = () => {
                     className="w-full mt-3 bg-bc-red hover:bg-red-700"
                     asChild
                   >
-                    <Link to="/contact">Book Now</Link>
+                    <Link to="/contact">Book Now!</Link>
                   </Button>
                 )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Calendar with Clear Days - Cleaner Look */}
+          {/* Calendar with Clear Days */}
           <Card className="lg:w-2/3">
             <CardHeader className="pb-2">
               <div className="flex justify-between items-center">
@@ -110,15 +143,6 @@ const WeatherService = () => {
         </div>
       </div>
     </section>
-  );
-};
-
-// Missing Badge import
-const Badge = ({ children, variant, className }: { children: React.ReactNode, variant?: string, className?: string }) => {
-  return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${className}`}>
-      {children}
-    </span>
   );
 };
 

@@ -23,7 +23,6 @@ import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
-import WindowCleaningAnimation from '../components/WindowCleaningAnimation';
 
 const Index = () => {
   const { language } = useTranslation();
@@ -105,8 +104,21 @@ const Index = () => {
       {/* Weather Service Integration */}
       <WeatherService />
       
-      {/* Window Cleaning Animation */}
-      <WindowCleaningAnimation />
+      {/* Window Cleaning Simulator instead of animation */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">See Our Window Cleaning in Action</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              Try our interactive simulator to see how our professional window cleaning transforms dirty windows
+            </p>
+          </div>
+
+          <div className="flex justify-center">
+            <WindowCleaningSimulator />
+          </div>
+        </div>
+      </section>
       
       <div className="bg-white">
         <PremiumSolutionsSection />
