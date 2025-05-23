@@ -157,7 +157,10 @@ const BeforeAfterAnimation = () => {
         <div className="relative w-full">
           <canvas 
             ref={canvasRef}
-            className="mx-auto border-2 border-gray-300 rounded-lg cursor-pointer"
+            className="mx-auto border-2 border-gray-300 rounded-lg"
+            style={{
+              cursor: isMobile ? 'default' : `url('/lovable-uploads/479553d0-b664-48ff-81cf-a171c9e73d8c.png') 16 16, crosshair`
+            }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseOut={handleMouseUp}
