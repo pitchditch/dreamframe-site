@@ -105,7 +105,7 @@ const Index = () => {
       {/* Weather Service Integration */}
       <WeatherService />
       
-      {/* Window Cleaning Animation */}
+      {/* Window Cleaning Simulator */}
       <WindowCleaningAnimation />
       
       <div className="bg-white">

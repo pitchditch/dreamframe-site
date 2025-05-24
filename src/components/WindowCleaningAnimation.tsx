@@ -1,153 +1,192 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-const WindowCleaningAnimation = () => {
-  const [isAnimating, setIsAnimating] = useState(false);
+const WindowCleaningSimulator = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const dirtyImageRef = useRef<HTMLImageElement | null>(null);
+  const cleanImageRef = useRef<HTMLImageElement | null>(null);
+  const isMobile = useIsMobile();
+  const touchRadius = isMobile ? 30 : 40;
+  
+  // Initialize canvas when component mounts
+  useEffect(() => {
+    const dirtyImg = new Image();
+    const cleanImg = new Image();
+    
+    // Using the uploaded dirty and clean window images
+    dirtyImg.src = '/lovable-uploads/52c11bb9-3222-434f-9ae0-b3e010ec2ae6.png'; // Dirty window
+    cleanImg.src = '/lovable-uploads/32e9034a-f751-46e7-b9ca-71f8e5956ace.png'; // Clean window
+    
+    dirtyImageRef.current = dirtyImg;
+    cleanImageRef.current = cleanImg;
 
-  const handleStartAnimation = () => {
-    if (isAnimating) return;
+    // When dirty image loads, set up the canvas
+    dirtyImg.onload = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      
+      // Set canvas dimensions based on image dimensions
+      // but maintain responsive sizing
+      const container = canvas.parentElement;
+      if (container) {
+        const containerWidth = container.clientWidth;
+        const aspectRatio = dirtyImg.height / dirtyImg.width;
+        canvas.width = Math.min(containerWidth, 600);
+        canvas.height = canvas.width * aspectRatio;
+      } else {
+        canvas.width = Math.min(dirtyImg.width, 600);
+        canvas.height = Math.min(dirtyImg.height, 600);
+      }
+      
+      // Initial draw
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(dirtyImg, 0, 0, canvas.width, canvas.height);
+      }
+    };
     
-    setIsAnimating(true);
+    // When both images are loaded, we're ready to enable the interaction
+    let loadedCount = 0;
+    const checkLoaded = () => {
+      loadedCount++;
+      if (loadedCount === 2) setImagesLoaded(true);
+    };
     
-    // Reset animation after it completes
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 3000);
+    dirtyImg.onload = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      
+      const container = canvas.parentElement;
+      if (container) {
+        const containerWidth = container.clientWidth;
+        const aspectRatio = dirtyImg.height / dirtyImg.width;
+        canvas.width = Math.min(containerWidth, 600);
+        canvas.height = canvas.width * aspectRatio;
+      } else {
+        canvas.width = Math.min(dirtyImg.width, 600);
+        canvas.height = Math.min(dirtyImg.height, 600);
+      }
+      
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(dirtyImg, 0, 0, canvas.width, canvas.height);
+      }
+      
+      checkLoaded();
+    };
+    
+    cleanImg.onload = checkLoaded;
+    
+    // Handle window resize for responsive canvas
+    const handleResize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas || !dirtyImageRef.current) return;
+      
+      const container = canvas.parentElement;
+      if (container) {
+        const containerWidth = container.clientWidth;
+        const aspectRatio = dirtyImageRef.current.height / dirtyImageRef.current.width;
+        canvas.width = Math.min(containerWidth, 600);
+        canvas.height = canvas.width * aspectRatio;
+      }
+      
+      // Redraw the canvas after resize
+      const ctx = canvas.getContext('2d');
+      if (ctx && dirtyImageRef.current) {
+        ctx.drawImage(dirtyImageRef.current, 0, 0, canvas.width, canvas.height);
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  // Reveal clean window where the user interacts
+  const reveal = (clientX: number, clientY: number) => {
+    if (!isDrawing || !imagesLoaded) return;
+    
+    const canvas = canvasRef.current;
+    const cleanImg = cleanImageRef.current;
+    if (!canvas || !cleanImg) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    
+    // Draw the clean image inside a circular mask
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, touchRadius, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(cleanImg, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
   };
-
+  
+  // Mouse events
+  const handleMouseDown = () => setIsDrawing(true);
+  const handleMouseUp = () => setIsDrawing(false);
+  const handleMouseMove = (e: React.MouseEvent) => reveal(e.clientX, e.clientY);
+  
+  // Touch events
+  const handleTouchStart = () => setIsDrawing(true);
+  const handleTouchEnd = () => setIsDrawing(false);
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches && e.touches[0]) {
+      reveal(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+  
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">See Our Window Cleaning in Action</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Window Cleaning Simulator</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-            Click to watch our professional window cleaning process transform dirty windows into crystal clear perfection
+            {isMobile ? "Drag your finger" : "Click and drag your mouse"} to clean the windows with our water-fed pole system!
           </p>
         </div>
 
         <div className="flex justify-center">
-          <div 
-            className="window-clean-animation cursor-pointer"
-            onClick={handleStartAnimation}
-          >
-            <img 
-              src="/lovable-uploads/2a16d7b1-1d21-4fc7-91d4-cf14e366285d.png" 
-              alt="Dirty window before cleaning"
-              className="dirty-window" 
-            />
-            <img 
-              src="/lovable-uploads/1443b705-4ff2-4dcd-94d7-0568cc1044ac.png" 
-              alt="Clean window after cleaning"
-              className={`clean-window ${isAnimating ? 'animate' : ''}`}
-            />
-            <div className={`squeegee ${isAnimating ? 'animate' : ''}`}></div>
-            
-            {!isAnimating && (
-              <div className="play-overlay">
-                <div className="play-button">
-                  <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.9)" stroke="#dc2626" strokeWidth="2"/>
-                    <polygon points="10,8 16,12 10,16" fill="#dc2626"/>
-                  </svg>
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <div className="relative w-full">
+              <canvas 
+                ref={canvasRef}
+                className="mx-auto border-2 border-gray-300 rounded-lg"
+                style={{
+                  cursor: isMobile ? 'default' : `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><image href='/lovable-uploads/f2b8f46f-5297-4e12-9413-1513e082ab95.png' width='32' height='32'/></svg>") 16 16, crosshair`
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseOut={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
+                onTouchMove={handleTouchMove}
+              />
+              {!imagesLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 rounded-lg">
+                  <div className="loader animate-spin border-4 border-t-bc-red border-gray-200 rounded-full h-10 w-10" />
                 </div>
-                <p className="mt-4 text-white font-semibold bg-black bg-opacity-50 px-4 py-2 rounded">
-                  Click to see the transformation!
-                </p>
-              </div>
-            )}
+              )}
+            </div>
+            <div className="mt-3 text-center text-sm text-gray-500">
+              Experience our water-fed pole system - streak-free cleaning with pure water!
+            </div>
           </div>
         </div>
-
-        <style jsx>{`
-          .window-clean-animation {
-            position: relative;
-            width: 600px;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-          }
-
-          .window-clean-animation:hover {
-            transform: scale(1.02);
-          }
-
-          .window-clean-animation img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-          .clean-window {
-            clip-path: inset(0 100% 0 0);
-            transition: clip-path 3s ease-in-out;
-          }
-
-          .clean-window.animate {
-            clip-path: inset(0 0 0 0);
-          }
-
-          .squeegee {
-            position: absolute;
-            width: 60px;
-            height: 200px;
-            background: url('/lovable-uploads/479553d0-b664-48ff-81cf-a171c9e73d8c.png') no-repeat center center;
-            background-size: contain;
-            top: 100px;
-            left: -60px;
-            transform: rotate(10deg);
-            transition: left 3s ease-in-out;
-            z-index: 10;
-          }
-
-          .squeegee.animate {
-            left: 550px;
-          }
-
-          .play-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 5;
-          }
-
-          .play-button {
-            animation: pulse 2s infinite;
-          }
-
-          @keyframes pulse {
-            0% {
-              transform: scale(1);
-            }
-            50% {
-              transform: scale(1.1);
-            }
-            100% {
-              transform: scale(1);
-            }
-          }
-
-          @media (max-width: 768px) {
-            .window-clean-animation {
-              width: 90vw;
-              max-width: 500px;
-              height: 300px;
-            }
-            
-            .squeegee.animate {
-              left: calc(90vw - 120px);
-            }
-          }
-        `}</style>
       </div>
     </section>
   );
 };
 
-export default WindowCleaningAnimation;
+export default WindowCleaningSimulator;
