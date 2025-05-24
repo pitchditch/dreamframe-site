@@ -16,6 +16,7 @@ import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSecti
 import PackagesSection from '@/components/home/PackagesSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Home = () => {
   // Explicitly getting language related functions to ensure they're available
@@ -133,6 +134,10 @@ const Home = () => {
           `}
         </script>
       </Helmet>
+
+      <div className="absolute top-4 right-4 z-50">
+        <LanguageSelector />
+      </div>
 
       <HeroSection />
       

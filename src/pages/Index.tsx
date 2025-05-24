@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -17,19 +16,17 @@ import TrustedCustomersSection from '../components/home/TrustedCustomersSection'
 import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
+import LanguageSelector from '@/components/LanguageSelector';
 import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
+import WindowCleaningAnimation from '../components/WindowCleaningAnimation';
 
 const Index = () => {
   const { language } = useTranslation();
 
-  console.log('Index page rendering, language:', language);
-
   useEffect(() => {
-    console.log('Index page mounted');
-    
     // Mark body to have video header (for navbar transparency)
     document.body.classList.add('has-video-header');
 
@@ -85,81 +82,65 @@ const Index = () => {
     }
   ];
 
-  console.log('About to render Index page content');
-
-  try {
-    return (
-      <Layout 
-        image="/open.png"
-        canonicalUrl="/"
-        title="BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock"
-        description="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts."
-      >
-        <Helmet>
-          <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
-        </Helmet>
-        
-        <div style={{ minHeight: '100vh', background: 'white' }}>
-          <h1 style={{ padding: '20px', fontSize: '24px', color: 'black' }}>
-            BC Pressure Washing - Test Content
-          </h1>
-          <p style={{ padding: '20px', color: 'black' }}>
-            If you can see this, the page is loading. Language: {language}
-          </p>
-        </div>
-        
-        <HeroSection />
-        
-        {/* Weather Service Integration */}
-        <WeatherService />
-        
-        {/* Combined Simulators Section */}
-        <CombinedSimulatorsSection />
-        
-        <div className="bg-white">
-          <PremiumSolutionsSection />
-          <FeaturedProjectSection />
-          
-          {/* Add property-specific section */}
-          <PropertySpecificSection />
-          
-          {/* Add seasonal maintenance guide */}
-          <SeasonalMaintenanceGuide />
-          
-          <ScreenCleaningSection />
-          <div data-component="owner-operated">
-            <OwnerOperatedSection />
-          </div>
-          <FounderSection />
-          <TrustedCustomersSection />
-          <CompetitorComparisonSection />
-          <TestimonialsSection />
-          <SatisfactionGuaranteeSection />
-          <FAQSection 
-            title="Frequently Asked Questions" 
-            subtitle="Everything you need to know about our services"
-            faqs={faqItems}
-            darkMode={true}
-          />
-          <ServiceAreasSection />
-          
-          {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
-          <div className="h-20"></div>
-        </div>
-        
-        <CTABanner />
-        <ReferralButton />
-      </Layout>
-    );
-  } catch (error) {
-    console.error('Error rendering Index page:', error);
-    return (
-      <div style={{ padding: '20px', background: 'white', minHeight: '100vh' }}>
-        <h1 style={{ color: 'red' }}>Error loading page</h1>
-        <p style={{ color: 'black' }}>Check console for details</p>
+  return (
+    <Layout 
+      image="/open.png"
+      canonicalUrl="/"
+      title="BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock"
+      description="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts."
+    >
+      <Helmet>
+        <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
+      </Helmet>
+      
+      {/* Position language selector on top right corner */}
+      <div className="fixed top-4 right-4 z-[100]">
+        <LanguageSelector />
       </div>
-    );
-  }
+      
+      <HeroSection />
+      
+      {/* Weather Service Integration */}
+      <WeatherService />
+      
+      {/* Combined Simulators Section */}
+      <CombinedSimulatorsSection />
+      
+      <div className="bg-white">
+        <PremiumSolutionsSection />
+        <FeaturedProjectSection />
+        
+        {/* Add property-specific section */}
+        <PropertySpecificSection />
+        
+        {/* Add seasonal maintenance guide */}
+        <SeasonalMaintenanceGuide />
+        
+        <ScreenCleaningSection />
+        <div data-component="owner-operated">
+          <OwnerOperatedSection />
+        </div>
+        <FounderSection />
+        <TrustedCustomersSection />
+        <CompetitorComparisonSection />
+        <TestimonialsSection />
+        <SatisfactionGuaranteeSection />
+        <FAQSection 
+          title="Frequently Asked Questions" 
+          subtitle="Everything you need to know about our services"
+          faqs={faqItems}
+          darkMode={true}
+        />
+        <ServiceAreasSection />
+        
+        {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
+        <div className="h-20"></div>
+      </div>
+      
+      <CTABanner />
+      <ReferralButton />
+    </Layout>
+  );
 };
 
 export default Index;

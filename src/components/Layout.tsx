@@ -5,7 +5,6 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ChatAssistant from './ChatAssistant';
 import ReferralButton from './ReferralButton';
-import LanguageSelector from './LanguageSelector';
 
 interface LayoutProps {
   children: ReactNode;
@@ -54,11 +53,6 @@ const Layout = ({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
-      
-      {/* Language selector positioned globally */}
-      <div className="fixed top-4 right-4 z-[100]">
-        <LanguageSelector />
-      </div>
       
       <Navbar />
       <main className="flex-grow w-full">
