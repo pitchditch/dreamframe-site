@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -18,8 +17,7 @@ import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import LanguageSelector from '@/components/LanguageSelector';
-import BeforeAfterAnimation from '@/components/home/BeforeAfterAnimation';
-import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
+import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
@@ -105,42 +103,12 @@ const Index = () => {
       {/* Weather Service Integration */}
       <WeatherService />
       
-      {/* Window Cleaning Simulator */}
-      <WindowCleaningAnimation />
+      {/* Combined Simulators Section */}
+      <CombinedSimulatorsSection />
       
       <div className="bg-white">
         <PremiumSolutionsSection />
         <FeaturedProjectSection />
-        
-        {/* Add the simulators section */}
-        <div className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Experience Our Services</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Try our interactive simulators to see the difference our professional cleaning makes!
-              </p>
-            </div>
-            
-            <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              <div>
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold mb-2">Pressure Washing</h3>
-                  <p className="text-gray-600">See how we restore your surfaces</p>
-                </div>
-                <BeforeAfterAnimation />
-              </div>
-              
-              <div>
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold mb-2">Window Cleaning</h3>
-                  <p className="text-gray-600">Experience our water-fed pole system</p>
-                </div>
-                <WindowCleaningSimulator />
-              </div>
-            </div>
-          </div>
-        </div>
         
         {/* Add property-specific section */}
         <PropertySpecificSection />

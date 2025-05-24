@@ -2,23 +2,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-const WindowCleaningSimulator = () => {
+const PressureWashingSimulator = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const dirtyImageRef = useRef<HTMLImageElement | null>(null);
   const cleanImageRef = useRef<HTMLImageElement | null>(null);
   const isMobile = useIsMobile();
-  const touchRadius = isMobile ? 30 : 40;
+  const touchRadius = isMobile ? 25 : 35;
   
   // Initialize canvas when component mounts
   useEffect(() => {
     const dirtyImg = new Image();
     const cleanImg = new Image();
     
-    // Using the uploaded dirty and clean window images
-    dirtyImg.src = '/lovable-uploads/52c11bb9-3222-434f-9ae0-b3e010ec2ae6.png'; // Dirty window
-    cleanImg.src = '/lovable-uploads/32e9034a-f751-46e7-b9ca-71f8e5956ace.png'; // Clean window
+    // Using pressure washing before/after images
+    dirtyImg.src = '/lovable-uploads/bac07608-1eeb-4905-b5db-79aa9ad91672.png'; // Dirty driveway
+    cleanImg.src = '/lovable-uploads/89515ed3-256d-4840-a9ed-2049bb5d0d1f.png'; // Clean driveway
     
     dirtyImageRef.current = dirtyImg;
     cleanImageRef.current = cleanImg;
@@ -28,8 +28,6 @@ const WindowCleaningSimulator = () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
       
-      // Set canvas dimensions based on image dimensions
-      // but maintain responsive sizing
       const container = canvas.parentElement;
       if (container) {
         const containerWidth = container.clientWidth;
@@ -41,14 +39,12 @@ const WindowCleaningSimulator = () => {
         canvas.height = Math.min(dirtyImg.height, 600);
       }
       
-      // Initial draw
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(dirtyImg, 0, 0, canvas.width, canvas.height);
       }
     };
     
-    // When both images are loaded, we're ready to enable the interaction
     let loadedCount = 0;
     const checkLoaded = () => {
       loadedCount++;
@@ -80,7 +76,6 @@ const WindowCleaningSimulator = () => {
     
     cleanImg.onload = checkLoaded;
     
-    // Handle window resize for responsive canvas
     const handleResize = () => {
       const canvas = canvasRef.current;
       if (!canvas || !dirtyImageRef.current) return;
@@ -93,7 +88,6 @@ const WindowCleaningSimulator = () => {
         canvas.height = canvas.width * aspectRatio;
       }
       
-      // Redraw the canvas after resize
       const ctx = canvas.getContext('2d');
       if (ctx && dirtyImageRef.current) {
         ctx.drawImage(dirtyImageRef.current, 0, 0, canvas.width, canvas.height);
@@ -107,7 +101,7 @@ const WindowCleaningSimulator = () => {
     };
   }, []);
   
-  // Reveal clean window where the user interacts
+  // Reveal clean surface where the user interacts
   const reveal = (clientX: number, clientY: number) => {
     if (!isDrawing || !imagesLoaded) return;
     
@@ -152,7 +146,7 @@ const WindowCleaningSimulator = () => {
           ref={canvasRef}
           className="mx-auto border-2 border-gray-300 rounded-lg"
           style={{
-            cursor: isMobile ? 'default' : `url("/lovable-uploads/cd8c0d62-927d-4df2-9cd0-79747923b298.png") 16 16, crosshair`
+            cursor: isMobile ? 'default' : `url("/lovable-uploads/f46e5017-7ff2-47da-801c-4ef68108a6b1.png") 16 16, crosshair`
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
@@ -170,10 +164,10 @@ const WindowCleaningSimulator = () => {
         )}
       </div>
       <div className="mt-3 text-center text-sm text-gray-500">
-        Experience our water-fed pole system - streak-free cleaning with pure water!
+        Experience our high-pressure cleaning power - remove years of buildup!
       </div>
     </div>
   );
 };
 
-export default WindowCleaningSimulator;
+export default PressureWashingSimulator;
