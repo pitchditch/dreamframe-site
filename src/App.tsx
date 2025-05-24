@@ -21,6 +21,7 @@ import Calculator from './pages/Calculator';
 import Review from './pages/Review';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import EducationalBlog from './pages/EducationalBlog';
 import ComparePrices from './pages/ComparePrices';
 import WhiteRock from './pages/locations/WhiteRock';
 import WhiteRockBC from './pages/locations/WhiteRockBC';
@@ -67,7 +68,8 @@ function App() {
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/review" element={<Review />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/educational-blog" element={<EducationalBlog />} />
         <Route path="/compare-prices" element={<ComparePrices />} />
         <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
         <Route path="/locations/white-rock" element={<WhiteRock />} />
