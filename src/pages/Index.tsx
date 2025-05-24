@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -24,7 +25,7 @@ import WeatherService from '../components/WeatherService';
 import WindowCleaningAnimation from '../components/WindowCleaningAnimation';
 
 const Index = () => {
-  const { language } = useTranslation();
+  const { language, t } = useTranslation();
 
   useEffect(() => {
     // Mark body to have video header (for navbar transparency)
@@ -61,24 +62,24 @@ const Index = () => {
 
   const faqItems = [
     {
-      question: "What areas do you service?",
-      answer: "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas."
+      question: t("What areas do you service?"),
+      answer: t("We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.")
     },
     {
-      question: "Are you fully insured?",
-      answer: "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind."
+      question: t("Are you fully insured?"),
+      answer: t("Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.")
     },
     {
-      question: "How often should I have my windows cleaned?",
-      answer: "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference."
+      question: t("How often should I have my windows cleaned?"),
+      answer: t("Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.")
     },
     {
-      question: "Do you offer any guarantees?",
-      answer: "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost."
+      question: t("Do you offer any guarantees?"),
+      answer: t("Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.")
     },
     {
-      question: "How do you price your services?",
-      answer: "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs."
+      question: t("How do you price your services?"),
+      answer: t("Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.")
     }
   ];
 
@@ -86,8 +87,8 @@ const Index = () => {
     <Layout 
       image="/open.png"
       canonicalUrl="/"
-      title="BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock"
-      description="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts."
+      title={t("BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock")}
+      description={t("Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.")}
     >
       <Helmet>
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
@@ -126,8 +127,8 @@ const Index = () => {
         <TestimonialsSection />
         <SatisfactionGuaranteeSection />
         <FAQSection 
-          title="Frequently Asked Questions" 
-          subtitle="Everything you need to know about our services"
+          title={t("Frequently Asked Questions")} 
+          subtitle={t("Everything you need to know about our services")}
           faqs={faqItems}
           darkMode={true}
         />
