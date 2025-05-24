@@ -138,19 +138,19 @@ const SeasonalMaintenanceGuide = () => {
   const currentSeason = getCurrentSeason();
   const currentTasks = maintenanceTasks.filter(task => task.season === currentSeason);
 
-  // Updated season background styles with new images
+  // Season background styles
   const seasonBackgroundStyle = (season: string) => {
     const commonStyles = "bg-cover bg-center text-white after:content-[''] after:absolute after:inset-0 after:bg-black after:bg-opacity-40 after:rounded-lg relative z-0";
     
     switch (season) {
       case 'spring':
-        return `${commonStyles} bg-[url('/lovable-uploads/1a670391-99fd-4a8c-9df5-df800ab8755f.png')]`;
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[0%_0%]`;
       case 'summer':
-        return `${commonStyles} bg-[url('/lovable-uploads/900edb87-48fb-4dd7-af20-11d55e376439.png')]`;
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[100%_0%]`;
       case 'fall':
-        return `${commonStyles} bg-[url('/lovable-uploads/fd4676df-c7bc-4aa1-b7e7-b3e918a5940e.png')]`;
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[0%_100%]`;
       case 'winter':
-        return `${commonStyles} bg-[url('/lovable-uploads/656f9aff-1471-4489-a9e7-be6ef850c592.png')]`;
+        return `${commonStyles} bg-[url('/lovable-uploads/6d0f3325-485d-4353-88ae-2c9c019aebc8.png')] bg-[100%_100%]`;
       default:
         return "";
     }

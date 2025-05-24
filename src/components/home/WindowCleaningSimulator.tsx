@@ -16,8 +16,8 @@ const WindowCleaningSimulator = () => {
     const dirtyImg = new Image();
     const cleanImg = new Image();
     
-    // Using the uploaded image for dirty windows and a clean window image
-    dirtyImg.src = '/lovable-uploads/5cf3e54d-fec2-4532-9db7-d8f4d5436808.png';
+    // Using placeholder images for dirty and clean windows
+    dirtyImg.src = 'https://images.unsplash.com/photo-1496307653780-42ee777d4833?w=800&h=600&fit=crop'; // Dirty glass building
     cleanImg.src = 'https://images.unsplash.com/photo-1439337153520-7082a56a81f4?w=800&h=600&fit=crop'; // Clean glass roof
     
     dirtyImageRef.current = dirtyImg;
