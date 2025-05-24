@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import CallToAction from '../../components/CallToAction';
@@ -119,6 +118,8 @@ const WindowCleaning = () => {
         </div>
       </section>
 
+      {/* Rest of the content */}
+      
       {/* Our Process */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -165,6 +166,8 @@ const WindowCleaning = () => {
           </div>
         </div>
       </section>
+
+      {/* Remaining sections */}
       
       {/* Our Process */}
       <section className="py-16 bg-gray-50">
@@ -215,6 +218,8 @@ const WindowCleaning = () => {
           </div>
         </div>
       </section>
+
+      <TestimonialsSection />
 
       {/* Only include ONE FAQ section */}
       <FAQSection 
