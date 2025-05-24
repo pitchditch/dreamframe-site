@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { TranslationProvider } from "@/hooks/use-translation";
 import Index from "./pages/Index";
-import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +20,6 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/home" element={<Home />} />
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
