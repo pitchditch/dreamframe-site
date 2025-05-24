@@ -26,6 +26,11 @@ const LanguageSelector = () => {
               <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
               <span className="ml-1 font-medium">English</span>
             </span>
+          ) : language === 'fr' ? (
+            <span className="flex items-center">
+              <img src="https://flagcdn.com/w20/fr.png" width="20" alt="French flag" className="h-4" />
+              <span className="ml-1 font-medium">Français</span>
+            </span>
           ) : language === 'pa' ? (
             <span className="flex items-center">
               <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />
@@ -44,6 +49,10 @@ const LanguageSelector = () => {
         <DropdownMenuItem onClick={() => setLanguage('en')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/ca.png" width="20" alt="Canadian flag" className="h-4" />
           <span>English</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage('fr')} className="flex items-center gap-2 cursor-pointer">
+          <img src="https://flagcdn.com/w20/fr.png" width="20" alt="French flag" className="h-4" />
+          <span>Français (French)</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage('pa')} className="flex items-center gap-2 cursor-pointer">
           <img src="https://flagcdn.com/w20/in.png" width="20" alt="Indian flag" className="h-4" />

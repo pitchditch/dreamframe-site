@@ -19,7 +19,7 @@ const TranslationContext = createContext<TranslationContextType>(defaultContext)
 // Get browser language or stored preference
 const getBrowserLanguage = (): Language => {
   const savedLanguage = localStorage.getItem('preferred_language');
-  if (savedLanguage && ['en', 'pa', 'hi'].includes(savedLanguage)) {
+  if (savedLanguage && ['en', 'pa', 'hi', 'fr'].includes(savedLanguage)) {
     return savedLanguage as Language;
   }
   
@@ -37,6 +37,7 @@ const getBrowserLanguage = (): Language => {
   // Regular language detection for other cases
   if (browserLang === 'pa') return 'pa';
   if (browserLang === 'hi') return 'hi';
+  if (browserLang === 'fr') return 'fr';
   
   return 'en';
 };
@@ -50,7 +51,7 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.lang = language;
     
     // Add language class to body for CSS targeting
-    document.body.classList.remove('lang-en', 'lang-pa', 'lang-hi');
+    document.body.classList.remove('lang-en', 'lang-pa', 'lang-hi', 'lang-fr');
     document.body.classList.add(`lang-${language}`);
     
     // Log the language change to help with debugging

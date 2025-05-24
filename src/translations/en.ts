@@ -1,4 +1,3 @@
-
 const englishTranslations = {
   // General
   "Home": "Home",
@@ -229,7 +228,12 @@ const englishTranslations = {
   "Call us now: 778 808 7620": "Call us now: 778 808 7620",
   "Our House Washing Process": "Our House Washing Process",
   "We follow a comprehensive approach to safely clean and restore your home's exterior": "We follow a comprehensive approach to safely clean and restore your home's exterior",
-  "Surface Inspection": "Surface Inspection"
+  "Surface Inspection": "Surface Inspection",
+  
+  // Additional translations for new features
+  "Residential": "Residential",
+  "Commercial": "Commercial",
+  "French": "French"
 };
 
 export default englishTranslations;
