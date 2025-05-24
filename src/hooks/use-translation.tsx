@@ -56,9 +56,10 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     
     // Log the language change to help with debugging
     console.log(`Language changed to: ${language}`);
+    console.log('Available translations for this language:', Object.keys(translations[language] || {}));
   }, [language]);
 
-  // Translation function
+  // Translation function that depends on language state
   const t = useCallback((key: TranslationKey): string => {
     if (!translations[language]) {
       console.log(`No translations found for language: ${language}`);
@@ -74,11 +75,26 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
     return translatedText;
   }, [language]);
 
+  const contextValue = {
+    language,
+    setLanguage: useCallback((lang: Language) => {
+      console.log('Setting language to:', lang);
+      setLanguage(lang);
+    }, []),
+    t
+  };
+
   return (
-    <TranslationContext.Provider value={{ language, setLanguage, t }}>
+    <TranslationContext.Provider value={contextValue}>
       {children}
     </TranslationContext.Provider>
   );
 };
 
-export const useTranslation = () => useContext(TranslationContext);
+export const useTranslation = () => {
+  const context = useContext(TranslationContext);
+  if (!context) {
+    throw new Error('useTranslation must be used within a TranslationProvider');
+  }
+  return context;
+};

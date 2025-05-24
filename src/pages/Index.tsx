@@ -22,7 +22,6 @@ import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
-import WindowCleaningAnimation from '../components/WindowCleaningAnimation';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -52,13 +51,14 @@ const Index = () => {
 
     // Log current language for debugging
     console.log('Current language on Index page:', language);
+    console.log('Translation test:', t("Home"));
 
     return () => {
       // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
-  }, [language]);
+  }, [language, t]);
 
   const faqItems = [
     {
