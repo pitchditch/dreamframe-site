@@ -29,16 +29,16 @@ const WindowCleaningSimulator = () => {
       if (!canvas) return;
       
       // Set canvas dimensions based on image dimensions
-      // but maintain responsive sizing
+      // but maintain responsive sizing - made slightly smaller
       const container = canvas.parentElement;
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 350); // Reduced from 600 to 350
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 600);
-        canvas.height = Math.min(dirtyImg.height, 600);
+        canvas.width = Math.min(dirtyImg.width, 350);
+        canvas.height = Math.min(dirtyImg.height, 350);
       }
       
       // Initial draw
@@ -63,11 +63,11 @@ const WindowCleaningSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 350); // Reduced from 600 to 350
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 600);
-        canvas.height = Math.min(dirtyImg.height, 600);
+        canvas.width = Math.min(dirtyImg.width, 350);
+        canvas.height = Math.min(dirtyImg.height, 350);
       }
       
       const ctx = canvas.getContext('2d');
@@ -89,7 +89,7 @@ const WindowCleaningSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImageRef.current.height / dirtyImageRef.current.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 350); // Reduced from 600 to 350
         canvas.height = canvas.width * aspectRatio;
       }
       

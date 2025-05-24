@@ -16,9 +16,9 @@ const PressureWashingSimulator = () => {
     const dirtyImg = new Image();
     const cleanImg = new Image();
     
-    // Using pressure washing before/after images
-    dirtyImg.src = '/lovable-uploads/bac07608-1eeb-4905-b5db-79aa9ad91672.png'; // Dirty driveway
-    cleanImg.src = '/lovable-uploads/89515ed3-256d-4840-a9ed-2049bb5d0d1f.png'; // Clean driveway
+    // Using the new dirty and clean siding images
+    dirtyImg.src = '/lovable-uploads/6ef411f5-301d-4831-a771-db9458439e3a.png'; // Dirty siding
+    cleanImg.src = '/lovable-uploads/240368df-59b7-4175-b921-bd4e5dca9397.png'; // Clean siding
     
     dirtyImageRef.current = dirtyImg;
     cleanImageRef.current = cleanImg;
@@ -32,11 +32,11 @@ const PressureWashingSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 400); // Reduced from 600 to 400
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 600);
-        canvas.height = Math.min(dirtyImg.height, 600);
+        canvas.width = Math.min(dirtyImg.width, 400);
+        canvas.height = Math.min(dirtyImg.height, 400);
       }
       
       const ctx = canvas.getContext('2d');
@@ -59,11 +59,11 @@ const PressureWashingSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 400); // Reduced from 600 to 400
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 600);
-        canvas.height = Math.min(dirtyImg.height, 600);
+        canvas.width = Math.min(dirtyImg.width, 400);
+        canvas.height = Math.min(dirtyImg.height, 400);
       }
       
       const ctx = canvas.getContext('2d');
@@ -84,7 +84,7 @@ const PressureWashingSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImageRef.current.height / dirtyImageRef.current.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 400); // Reduced from 600 to 400
         canvas.height = canvas.width * aspectRatio;
       }
       
@@ -146,7 +146,7 @@ const PressureWashingSimulator = () => {
           ref={canvasRef}
           className="mx-auto border-2 border-gray-300 rounded-lg"
           style={{
-            cursor: isMobile ? 'default' : `url("/lovable-uploads/ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png") 16 16, crosshair`
+            cursor: isMobile ? 'default' : `url("/lovable-uploads/bec764c0-fb53-42c1-bedc-681661b5788e.png") 16 16, crosshair`
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
