@@ -146,7 +146,7 @@ const PressureWashingSimulator = () => {
           ref={canvasRef}
           className="mx-auto border-2 border-gray-300 rounded-lg"
           style={{
-            cursor: isMobile ? 'default' : `url("/lovable-uploads/f46e5017-7ff2-47da-801c-4ef68108a6b1.png") 16 16, crosshair`
+            cursor: isMobile ? 'default' : `url("/lovable-uploads/ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png") 16 16, crosshair`
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}

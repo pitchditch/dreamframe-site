@@ -152,7 +152,7 @@ const WindowCleaningSimulator = () => {
           ref={canvasRef}
           className="mx-auto border-2 border-gray-300 rounded-lg"
           style={{
-            cursor: isMobile ? 'default' : `url("/lovable-uploads/cd8c0d62-927d-4df2-9cd0-79747923b298.png") 16 16, crosshair`
+            cursor: isMobile ? 'default' : `url("/lovable-uploads/aa926c91-97fb-4f9f-bab5-77cb342a2b38.png") 16 16, crosshair`
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
