@@ -27,23 +27,6 @@ const FeaturedProjectSection = () => {
           
           <div className="animate-on-scroll">
             <h3 className="text-2xl font-bold mb-4">{t("Complete House Washing Service")}</h3>
-            
-            {/* Cost Savings Highlight */}
-            <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6 rounded-r-lg">
-              <div className="flex items-center">
-                <span className="text-green-600 font-bold text-lg">💰 Customer Saved $4,000</span>
-              </div>
-              <p className="text-green-700 mt-2">
-                Our thorough exterior cleaning helped this homeowner avoid costly roof repairs. 
-                <Link 
-                  to="/testimonials?highlight=roof-savings" 
-                  className="text-green-600 hover:text-green-800 underline ml-1 font-medium"
-                >
-                  Read their full review →
-                </Link>
-              </p>
-            </div>
-
             <ul className="space-y-3 mb-6 text-gray-700">
               <li className="flex items-start">
                 <span className="text-bc-red mr-2">✓</span>
