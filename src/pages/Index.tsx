@@ -6,7 +6,6 @@ import HeroSection from '../components/home/HeroSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
-import ReferralBanner from '../components/home/ReferralBanner';
 import { useTranslation } from '@/hooks/use-translation';
 import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
 import FAQSection from '@/components/FAQSection';
@@ -121,8 +120,8 @@ const Index = () => {
         <CompetitorComparisonSection />
         <TestimonialsSection />
         
-        {/* New Referral Banner - placed directly after testimonials */}
-        <ReferralBanner />
+        {/* Referral Banner - moved directly after testimonials */}
+        <ReferralButton />
         
         <SatisfactionGuaranteeSection />
         <FAQSection 
