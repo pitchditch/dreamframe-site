@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
-import SatisfiedClientsSection from '../components/home/SatisfiedClientsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
@@ -85,7 +84,7 @@ const Index = () => {
 
   return (
     <Layout 
-      image="/lovable-uploads/0bf0a978-d845-42ec-bca3-110e16dd54bf.png"
+      image="/open.png"
       canonicalUrl="/"
       title={t("BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock")}
       description={t("Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.")}
@@ -119,11 +118,9 @@ const Index = () => {
         <FounderSection />
         <TrustedCustomersSection />
         <CompetitorComparisonSection />
+        <TestimonialsSection />
         
-        {/* New Satisfied Clients Section */}
-        <SatisfiedClientsSection />
-        
-        {/* Referral Banner - moved directly after satisfied clients */}
+        {/* Referral Banner - moved directly after testimonials */}
         <ReferralButton />
         
         <SatisfactionGuaranteeSection />

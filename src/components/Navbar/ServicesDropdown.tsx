@@ -24,56 +24,52 @@ export const ServicesDropdown = ({
   return (
     <div className="relative">
       {isOpen && (
-        <div className="absolute top-full left-0 z-[9999] mt-1 py-4 w-96 bg-white rounded-lg shadow-2xl border border-gray-200 max-h-96 overflow-y-auto">
-          <div className="px-5 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-100 mb-3">
-            {t('Residential Services')}
-          </div>
+        <div className="absolute z-20 mt-2 py-2 w-72 bg-white rounded-md shadow-lg">
+          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Residential')}</div>
           
           <Link 
             to="/services/window-cleaning" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Window Cleaning')}
           </Link>
           <Link 
             to="/services/gutter-cleaning" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Gutter Cleaning')}
           </Link>
           <Link 
             to="/services/pressure-washing" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Pressure Washing')}
           </Link>
           <Link 
             to="/services/roof-cleaning" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Roof Cleaning')}
           </Link>
           
-          <div className="border-t border-gray-100 mx-4 my-3"></div>
+          <div className="border-t border-gray-100 mx-2 my-2"></div>
           
-          <div className="px-5 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-            {t('Commercial Services')}
-          </div>
+          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Commercial')}</div>
           <Link 
             to="/services/commercial-window-cleaning" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Commercial Window Cleaning')}
           </Link>
           <Link 
             to="/services/commercial-pressure-washing" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Commercial Pressure Washing')}
           </Link>
           <Link 
             to="/services/post-construction-cleaning" 
-            className={`block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors ${getLanguageClass()}`}
+            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-bc-red ${getLanguageClass()}`}
           >
             {t('Post-Construction Cleaning')}
           </Link>
