@@ -18,7 +18,7 @@ const Layout = ({
   children, 
   title = "BC Pressure Washing | #1 Pressure Washing in Surrey & White Rock", 
   description = "Trusted pressure washing, window & roof cleaning in Surrey & White Rock. ⭐ 5-Star Rated | ✅ Free Quotes | 🏠 Same-Day Service. Book now & save!",
-  image = "/lovable-uploads/16331103-22f8-48d7-a74e-cce38b2e0dfc.png",
+  image = "/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png",
   canonicalUrl
 }: LayoutProps) => {
   const baseUrl = "https://www.bcpressurewashing.ca";

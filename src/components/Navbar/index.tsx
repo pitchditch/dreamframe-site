@@ -31,9 +31,8 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.8; // Get 80% of the hero section height
+      const heroHeight = window.innerHeight * 0.8;
       
-      // Only consider transparent when in the hero section (not scrolled past it)
       const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight;
       
       setIsOverVideo(shouldBeTransparent);
@@ -41,7 +40,7 @@ const Navbar = () => {
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
@@ -50,7 +49,6 @@ const Navbar = () => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
     
-    // Reset isOverVideo state when route changes
     const isOnDarkPage = darkOverlayPages.includes(location.pathname);
     setIsOverVideo(isOnDarkPage);
   }, [location.pathname]);
@@ -60,7 +58,10 @@ const Navbar = () => {
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-28 md:h-32' : 'bg-transparent h-28 md:h-36'
-    }`}>
+    }`}
+    style={{
+      borderBottom: (isScrolled || !isOverVideo) ? 'none' : 'none'
+    }}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
         <NavbarDesktop isOverVideo={isOverVideo && !isScrolled} />

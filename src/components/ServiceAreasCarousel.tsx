@@ -2,11 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 
-interface ServiceAreasCarouselProps {
-  isDarkBackground?: boolean;
-}
-
-const ServiceAreasCarousel = ({ isDarkBackground = true }: ServiceAreasCarouselProps) => {
+const ServiceAreasCarousel = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const serviceAreas = ["White Rock", "Surrey", "South Surrey", "Langley", "Delta", "Tsawwassen", "Ladner", "Richmond", "Vancouver", "North Vancouver", "West Vancouver", "Burnaby", "New Westminster", "Coquitlam", "Port Coquitlam", "Port Moody", "Pitt Meadows", "Maple Ridge", "Mission", "Abbotsford"];
 
@@ -34,22 +30,14 @@ const ServiceAreasCarousel = ({ isDarkBackground = true }: ServiceAreasCarouselP
   }, []);
 
   return (
-    <div className={`py-4 overflow-hidden w-full ${
-      isDarkBackground 
-        ? 'bg-blue-900' 
-        : 'bg-white border-t border-b border-gray-200'
-    }`}>
+    <div className="py-4 bg-blue-900 overflow-hidden w-full">
       <div className="relative w-full">
         <div ref={carouselRef} className="flex overflow-x-hidden scrollbar-none whitespace-nowrap w-full">
           {/* Duplicate the service areas to create seamless loop */}
           {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
             <div key={index} className="inline-flex px-5 py-2 mx-1">
-              <MapPin size={16} className={`mr-2 flex-shrink-0 ${
-                isDarkBackground ? 'text-bc-red' : 'text-bc-red'
-              }`} />
-              <span className={`font-medium ${
-                isDarkBackground ? 'text-white' : 'text-gray-800'
-              }`}>{area}</span>
+              <MapPin size={16} className="text-bc-red mr-2 flex-shrink-0" />
+              <span className="text-white font-medium">{area}</span>
             </div>
           ))}
         </div>

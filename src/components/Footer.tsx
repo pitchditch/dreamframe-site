@@ -4,7 +4,6 @@ import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide
 import { useLocation } from 'react-router-dom';
 import FooterWeatherService from './FooterWeatherService';
 import ServiceAreaMap from './ServiceAreaMap';
-import ServiceAreasCarousel from './ServiceAreasCarousel';
 
 const Footer = () => {
   const location = useLocation();
@@ -107,12 +106,6 @@ const Footer = () => {
           <div className="col-span-1">
             <FooterWeatherService />
           </div>
-        </div>
-
-        {/* Service Areas Section in Footer */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold mb-4 text-center text-white">Service Areas</h3>
-          <ServiceAreasCarousel isDarkBackground={true} />
         </div>
       </div>
       

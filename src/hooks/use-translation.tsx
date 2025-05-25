@@ -16,29 +16,43 @@ const defaultContext: TranslationContextType = {
 
 const TranslationContext = createContext<TranslationContextType>(defaultContext);
 
-// Get browser language or stored preference
+// Enhanced browser language detection
 const getBrowserLanguage = (): Language => {
   const savedLanguage = localStorage.getItem('preferred_language');
   if (savedLanguage && ['en', 'pa', 'hi', 'fr'].includes(savedLanguage)) {
+    console.log('Using saved language:', savedLanguage);
     return savedLanguage as Language;
   }
   
   // Check if user is on mobile for auto-detection of Punjabi
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
-  // Detect browser language
-  const browserLang = navigator.language.split('-')[0];
+  // Get full browser language and locale
+  const browserLang = navigator.language.toLowerCase();
+  const shortLang = browserLang.split('-')[0];
   
-  // If on mobile and browser language indicates Punjabi region or language
-  if (isMobile && (browserLang === 'pa' || navigator.language === 'en-IN')) {
+  console.log('Browser language detected:', browserLang, 'Short:', shortLang, 'Is mobile:', isMobile);
+  
+  // Enhanced Punjabi detection
+  if (shortLang === 'pa' || browserLang.includes('pa') || 
+      (isMobile && (browserLang === 'en-in' || browserLang.includes('india')))) {
+    console.log('Auto-detecting Punjabi');
     return 'pa';
   }
   
-  // Regular language detection for other cases
-  if (browserLang === 'pa') return 'pa';
-  if (browserLang === 'hi') return 'hi';
-  if (browserLang === 'fr') return 'fr';
+  // Hindi detection
+  if (shortLang === 'hi' || browserLang.includes('hi')) {
+    console.log('Auto-detecting Hindi');
+    return 'hi';
+  }
   
+  // French detection (Canadian French)
+  if (shortLang === 'fr' || browserLang === 'fr-ca') {
+    console.log('Auto-detecting French');
+    return 'fr';
+  }
+  
+  console.log('Defaulting to English');
   return 'en';
 };
 

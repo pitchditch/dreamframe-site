@@ -9,7 +9,7 @@ const ServiceAreasSection = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
         <ServiceAreaMap />
-        <ServiceAreasCarousel isDarkBackground={true} />
+        <ServiceAreasCarousel />
       </div>
     </section>
   );
