@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -8,13 +9,14 @@ import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
-import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
-import LocalCompanySection from '../components/home/LocalCompanySection';
-import GutterFaceCleaningSection from '../components/home/GutterFaceCleaningSection';
-import PackagesSection from '../components/home/PackagesSection';
-import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
-import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
-import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
+import PremiumSolutionsSection from '@/components/home/PremiumSolutionsSection';
+import RedCarSection from '@/components/home/RedCarSection';
+import LocalCompanySection from '@/components/home/LocalCompanySection';
+import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSection';
+import PackagesSection from '@/components/home/PackagesSection';
+import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
+import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
+import FeaturedProjectSection from '@/components/home/FeaturedProjectSection';
 
 const Home = () => {
   // Explicitly getting language related functions to ensure they're available
@@ -137,6 +139,7 @@ const Home = () => {
       
       <div className="relative z-20 -mt-24 md:-mt-32">
         <div className="bg-white rounded-t-3xl shadow-xl">
+          <RedCarSection />
           <FeaturedProjectSection />
           <PremiumSolutionsSection />
           {/* Add data-component attribute to help with visibility detection */}
