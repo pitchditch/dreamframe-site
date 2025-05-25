@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { Calculator, ChevronDown, HelpCircle, Star } from 'lucide-react';
+import { Calculator, HelpCircle, Star } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,7 +22,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   return (
     <div className="hidden md:flex items-center justify-between flex-1">
       <NavigationMenu>
-        <NavigationMenuList className="flex items-center justify-center space-x-12">
+        <NavigationMenuList className="flex items-center justify-center space-x-16">
           <NavigationMenuItem>
             <Link 
               to="/" 
@@ -47,11 +47,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
+              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto [&>svg]:hidden ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
             >
-              {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
+              {t('Services')}
             </NavigationMenuTrigger>
             <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
               <div className="grid grid-cols-2 gap-8">
@@ -95,6 +95,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                   </div>
                   
                   <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link to="/services/compare" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
+                      <Star className="w-6 h-6 text-bc-red" />
+                      <span className="text-gray-700 group-hover:text-bc-red font-medium">{t('Compare Services')}</span>
+                    </Link>
                     <Link to="/services" className="text-bc-red hover:text-red-700 font-medium text-sm">
                       {t('See All Services')} →
                     </Link>
@@ -106,13 +110,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
+              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto [&>svg]:hidden ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
             >
-              {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
+              {t('More')}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[700px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
+            <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
               <div className="space-y-4">
                 <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
                   <Star className="h-6 w-6 text-yellow-500" />
@@ -145,16 +149,12 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                   </h4>
                   <div className="flex space-x-4">
                     <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                      <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
+                      <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-6 w-6 object-contain" />
                       <span className="text-sm font-medium">Google</span>
                     </a>
                     <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                      <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
+                      <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-6 w-6 object-contain" />
                       <span className="text-sm font-medium">Yelp</span>
-                    </a>
-                    <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                      <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
-                      <span className="text-sm font-medium">BBB</span>
                     </a>
                   </div>
                 </div>
