@@ -21,6 +21,7 @@ import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
+import ServiceBanner from '../components/ServiceBanner';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -94,6 +95,9 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
+      
+      {/* Service Banner */}
+      <ServiceBanner />
       
       {/* Weather Service Integration */}
       <WeatherService />

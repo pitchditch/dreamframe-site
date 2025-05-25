@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { Calculator, HelpCircle, Star } from 'lucide-react';
+import { Calculator, HelpCircle, Star, ChevronDown } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -48,11 +47,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto [&>svg]:hidden ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
                   isOverVideo ? 'text-white' : 'text-black'
                 }`}
               >
-                {t('Services')}
+                {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
               </NavigationMenuTrigger>
               <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
                 <div className="grid grid-cols-2 gap-8">
@@ -111,13 +110,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto [&>svg]:hidden ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
                   isOverVideo ? 'text-white' : 'text-black'
                 }`}
               >
-                {t('More')}
+                {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
+              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100 mt-2">
                 <div className="space-y-4">
                   <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
                     <Star className="h-6 w-6 text-yellow-500" />
