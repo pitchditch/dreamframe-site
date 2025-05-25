@@ -20,7 +20,6 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
-import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
 
 const Index = () => {
@@ -96,7 +95,7 @@ const Index = () => {
       
       <HeroSection />
       
-      {/* New Service Banner */}
+      {/* Service Banner */}
       <ServiceBanner />
       
       {/* Weather Service Integration */}
@@ -111,9 +110,6 @@ const Index = () => {
         
         {/* Add property-specific section */}
         <PropertySpecificSection />
-        
-        {/* Add seasonal maintenance guide */}
-        <SeasonalMaintenanceGuide />
         
         <ScreenCleaningSection />
         <div data-component="owner-operated">
