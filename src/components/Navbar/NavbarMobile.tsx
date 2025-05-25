@@ -20,11 +20,11 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`md:hidden fixed left-0 right-0 z-30 transition-all duration-300 overflow-hidden bg-white ${
-          isMenuOpen ? 'max-h-[800px] shadow-lg top-24' : 'max-h-0 top-24'
+        className={`md:hidden fixed left-0 right-0 z-50 transition-all duration-300 overflow-hidden bg-white border-t border-gray-200 ${
+          isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
         }`}
       >
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
           <nav className="flex flex-col space-y-4">
             <Link to="/" className="flex items-center gap-2 py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md">
               <Home className="w-5 h-5" />
