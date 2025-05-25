@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import ServiceBanner from '../components/home/ServiceBanner';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
@@ -15,12 +14,12 @@ import CompetitorComparisonSection from '../components/home/CompetitorComparison
 import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
-import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import WeatherService from '../components/WeatherService';
+import ServiceBanner from '../components/ServiceBanner';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -115,7 +114,6 @@ const Index = () => {
         <div data-component="owner-operated">
           <OwnerOperatedSection />
         </div>
-        <FounderSection />
         <TrustedCustomersSection />
         <CompetitorComparisonSection />
         <TestimonialsSection />

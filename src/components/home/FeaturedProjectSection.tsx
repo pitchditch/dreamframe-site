@@ -17,12 +17,16 @@ const FeaturedProjectSection = () => {
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="animate-on-scroll">
+          <div className="animate-on-scroll relative">
             <img 
               src="/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png" 
               alt={t("House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing")}
               className="rounded-lg shadow-lg w-full h-auto"
             />
+            <div className="absolute top-4 left-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg">
+              <div className="text-sm font-bold">💰 SAVED $4,000</div>
+              <div className="text-xs">in roof repairs!</div>
+            </div>
           </div>
           
           <div className="animate-on-scroll">
@@ -49,9 +53,17 @@ const FeaturedProjectSection = () => {
                 <span>{t("Protection of landscaping and surroundings")}</span>
               </li>
             </ul>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-4 text-gray-600">
               {t("This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.")}
             </p>
+            <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+              <p className="text-green-800 font-semibold">
+                💰 This customer saved $4,000 in roof repairs through our professional cleaning service!
+              </p>
+              <Link to="/testimonials?highlight=15" className="text-green-700 underline text-sm">
+                Read Elizabeth's full review →
+              </Link>
+            </div>
             <Link to="/services/house-washing">
               <button className="btn-primary">
                 {t("Learn About House Washing")} <ArrowRight className="ml-2 inline-block" size={16} />

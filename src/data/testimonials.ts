@@ -1,4 +1,3 @@
-
 export interface Testimonial {
   id: number;
   service: 'gutter-cleaning' | 'window-cleaning' | 'pressure-washing' | 'roof-cleaning';
@@ -150,11 +149,12 @@ const allTestimonials: Testimonial[] = [
   },
   {
     id: 15,
-    service: 'pressure-washing',
+    service: 'roof-cleaning',
     rating: 5,
-    quote: "I'm beyond impressed with the pressure washing on my driveway and sidewalks. It was covered in dirt and stains, but now it looks brand new. The team was super friendly, and the results were definitely worth it.",
+    quote: "BC Pressure Washing saved me $4,000 in roof repairs! When they cleaned my roof, they discovered the moss damage wasn't as extensive as I thought. The professional cleaning and treatment they provided has extended my roof's life significantly. I was quoted $4,000 for repairs by another company, but their thorough cleaning solved the problem completely.",
     name: "Elizabeth Turner",
     location: "Abbotsford, BC",
+    beforeAfterImage: "/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png",
     profileImage: "/lovable-uploads/781d0a19-3b5f-4860-af2b-ffe54366a5f7.png"
   },
   {
