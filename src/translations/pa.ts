@@ -139,7 +139,7 @@ const punjabiTranslations = {
   "Learn About House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਬਾਰੇ ਜਾਣੋ",
 
   // FAQ Section
-  "Frequently Asked Questions": "ਅਕਸਰ ਪੁੱ and ਜਾਂ and ਸਵਾ Aਲ",
+  "Frequently Asked Questions": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ",
   "Everything you need to know about our services": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਤੁਹਾਨੂੰ ਜਾਣਨ ਦੀ ਜ਼ਰੂਰਤ ਵਾਲੀ ਹਰ ਚੀਜ਼",
   "What areas do you service?": "ਤੁਸੀਂ ਕਿਹੜੇ ਖੇਤਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹੋ?",
   "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.": "ਅਸੀਂ ਵ੍ਹਾਈਟ ਰਾਕ ਵਿੱਚ ਸਥਿਤ ਹਾਂ ਅਤੇ ਸਰੇ, ਲੈਂਗਲੇ, ਡੈਲਟਾ, ਵੈਂਕੂਵਰ ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਖੇਤਰਾਂ ਸਮੇਤ ਪੂਰੇ ਮੈਟਰੋ ਵੈਂਕੂਵਰ ਖੇਤਰ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।",
