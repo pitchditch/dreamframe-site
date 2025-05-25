@@ -43,7 +43,14 @@ const ServiceAreasCarousel = ({ isDarkBackground = true }: ServiceAreasCarouselP
         <div ref={carouselRef} className="flex overflow-x-hidden scrollbar-none whitespace-nowrap w-full">
           {/* Duplicate the service areas to create seamless loop */}
           {[...serviceAreas, ...serviceAreas, ...serviceAreas].map((area, index) => (
-            <div key={index} className="inline-flex px-5 py-2 mx-1">
+            <div 
+              key={index} 
+              className={`inline-flex px-5 py-2 mx-1 rounded-md ${
+                isDarkBackground 
+                  ? 'bg-blue-900 text-white' 
+                  : 'bg-white text-gray-800'
+              }`}
+            >
               <MapPin size={16} className={`mr-2 flex-shrink-0 ${
                 isDarkBackground ? 'text-bc-red' : 'text-bc-red'
               }`} />

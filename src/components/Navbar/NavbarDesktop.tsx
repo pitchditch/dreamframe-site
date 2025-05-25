@@ -19,16 +19,46 @@ interface NavbarDesktopProps {
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
 
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const target = e.currentTarget as HTMLElement;
+    target.style.transform = 'scale(1.1)';
+    target.style.color = '#dc2626';
+    target.style.textShadow = '0 0 8px rgba(220, 38, 38, 0.6)';
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const target = e.currentTarget as HTMLElement;
+    target.style.transform = 'scale(1)';
+    target.style.color = isOverVideo ? 'white' : 'black';
+    target.style.textShadow = 'none';
+  };
+
+  const handleTriggerMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.currentTarget as HTMLElement;
+    target.style.transform = 'scale(1.1)';
+    target.style.color = '#dc2626';
+    target.style.textShadow = '0 0 8px rgba(220, 38, 38, 0.6)';
+  };
+
+  const handleTriggerMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.currentTarget as HTMLElement;
+    target.style.transform = 'scale(1)';
+    target.style.color = isOverVideo ? 'white' : 'black';
+    target.style.textShadow = 'none';
+  };
+
   return (
     <div className="hidden md:flex items-center justify-between flex-1 px-8">
       <NavigationMenu>
-        <NavigationMenuList className="flex items-center space-x-12">
+        <NavigationMenuList className="flex items-center space-x-16">
           <NavigationMenuItem>
             <Link 
               to="/" 
               className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               {t('Home')}
             </Link>
@@ -40,6 +70,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               {t('Why Us')}
             </Link>
@@ -47,13 +79,15 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg bg-transparent border-none shadow-none p-0 h-auto ${
+              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent hover:bg-transparent focus:bg-transparent ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
+              onMouseEnter={handleTriggerMouseEnter}
+              onMouseLeave={handleTriggerMouseLeave}
             >
-              {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
+              {t('Services')}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[600px] p-6 bg-white/95 backdrop-blur-sm">
+            <NavigationMenuContent className="w-[600px] p-6 bg-white/95 backdrop-blur-sm z-50">
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">Residential</h3>
@@ -106,13 +140,15 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg bg-transparent border-none shadow-none p-0 h-auto ${
+              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent hover:bg-transparent focus:bg-transparent ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
+              onMouseEnter={handleTriggerMouseEnter}
+              onMouseLeave={handleTriggerMouseLeave}
             >
-              {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
+              {t('More')}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[400px] p-6 bg-white/95 backdrop-blur-sm">
+            <NavigationMenuContent className="w-[400px] p-6 bg-white/95 backdrop-blur-sm z-50">
               <div className="space-y-4">
                 <Link to="/testimonials" className="block p-3 hover:bg-gray-50 rounded-md transition-colors">
                   <h4 className="font-medium text-black hover:text-bc-red">{t('Testimonials')}</h4>
@@ -157,6 +193,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               ? 'border-white text-white hover:bg-white hover:text-black' 
               : 'border-bc-red text-bc-red hover:bg-bc-red hover:text-white'
           }`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <Calculator size={16} />
           {t('Get a Quote')}
@@ -167,6 +205,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg ${
             isOverVideo ? 'text-white' : 'text-black'
           }`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           {t('Contact')}
         </Link>
