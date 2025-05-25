@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom';
 
 const OwnerOperatedSection = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white" id="owner-operated-excellence">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">Owner-Operated Excellence</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">Trusted, Owner-Operated Pressure Washing Services</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
@@ -22,7 +22,7 @@ const OwnerOperatedSection = () => {
               </div>
               <h3 className="font-bold text-xl mb-3">Fully Insured</h3>
               <p className="text-gray-600 text-base flex-grow">
-                We carry comprehensive liability insurance for your complete peace of mind.
+                Rest easy knowing we carry full liability insurance for all pressure washing and exterior cleaning services.
               </p>
             </div>
             
@@ -30,9 +30,9 @@ const OwnerOperatedSection = () => {
               <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
                 <Award className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-xl mb-3">Satisfaction Guaranteed</h3>
+              <h3 className="font-bold text-xl mb-3">Satisfaction Guarantee</h3>
               <p className="text-gray-600 text-base flex-grow">
-                If you're not 100% satisfied, we'll make it right at no extra cost.
+                Your happiness is our priority—if you're not 100% satisfied, we'll fix it at no extra cost.
               </p>
             </div>
             
@@ -40,9 +40,9 @@ const OwnerOperatedSection = () => {
               <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
                 <ThumbsUp className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-xl mb-3">Quality Equipment</h3>
+              <h3 className="font-bold text-xl mb-3">Professional Equipment</h3>
               <p className="text-gray-600 text-base flex-grow">
-                We invest in professional-grade tools and eco-friendly cleaning solutions.
+                We use top-of-the-line, eco-friendly tools for safe and effective exterior cleaning results.
               </p>
             </div>
             
@@ -50,19 +50,19 @@ const OwnerOperatedSection = () => {
               <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-bc-red mb-5">
                 <Clock className="w-10 h-10" />
               </div>
-              <h3 className="font-bold text-xl mb-3">Prompt & Reliable</h3>
+              <h3 className="font-bold text-xl mb-3">Reliable & On-Time</h3>
               <p className="text-gray-600 text-base flex-grow">
-                We value your time with punctual service and clear communication.
+                We show up when we say we will—with clear communication and punctual service every time.
               </p>
             </div>
           </div>
 
           <div className="flex flex-col items-center">
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg mb-4">
-              We take personal pride in every job we complete. When you hire us, you're getting service directly from the business owner, not a crew of subcontractors.
+            <p className="text-gray-600 max-w-4xl mx-auto text-lg mb-4 text-center">
+              At BC Pressure Washing, every job is personally handled or overseen by the owner. No outsourced teams—just local expertise and pride in every project. When you hire us, you're supporting a small, reliable business that puts your home and satisfaction first.
             </p>
             
-            {/* Owner profile with discount promotion */}
+            {/* Owner profile with improved quote */}
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-6 max-w-2xl mx-auto">
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Avatar className="w-20 h-20 border-2 border-bc-red">
@@ -71,7 +71,7 @@ const OwnerOperatedSection = () => {
                 </Avatar>
                 <div className="text-center sm:text-left">
                   <p className="text-gray-700 font-medium mb-2">
-                    "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
+                    "I'm committed to providing high-quality service with a personal touch. If you see my red car around town, feel free to wave or stop for a chat!"
                   </p>
                   <p className="font-bold text-bc-red">— Jayden, Owner</p>
                 </div>
