@@ -49,17 +49,9 @@ const FeaturedProjectSection = () => {
                 <span>{t("Protection of landscaping and surroundings")}</span>
               </li>
             </ul>
-            <p className="mb-4 text-gray-600">
+            <p className="mb-6 text-gray-600">
               {t("This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.")}
             </p>
-            <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
-              <p className="text-green-800 font-semibold">
-                💰 This customer saved $4,000 in roof repairs through our professional cleaning service!
-              </p>
-              <Link to="/testimonials?highlight=15" className="text-green-700 underline text-sm">
-                Read Elizabeth's full review →
-              </Link>
-            </div>
             <Link to="/services/house-washing">
               <button className="btn-primary">
                 {t("Learn About House Washing")} <ArrowRight className="ml-2 inline-block" size={16} />

@@ -1,6 +1,5 @@
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import Layout from '@/components/Layout';
 import TestimonialCard from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
@@ -10,25 +9,10 @@ import { testimonials } from '@/data/testimonials';
 
 const Testimonials = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [searchParams] = useSearchParams();
-  const highlightId = searchParams.get('highlight');
   
   const filteredTestimonials = activeCategory === 'all' 
     ? testimonials 
     : testimonials.filter(testimonial => testimonial.service === activeCategory);
-
-  useEffect(() => {
-    if (highlightId) {
-      const element = document.getElementById(`testimonial-${highlightId}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        element.classList.add('ring-4', 'ring-bc-red', 'ring-opacity-50');
-        setTimeout(() => {
-          element.classList.remove('ring-4', 'ring-bc-red', 'ring-opacity-50');
-        }, 3000);
-      }
-    }
-  }, [highlightId, filteredTestimonials]);
 
   return (
     <Layout>
@@ -109,20 +93,15 @@ const Testimonials = () => {
         {/* Testimonial Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTestimonials.map((testimonial) => (
-            <div
+            <TestimonialCard
               key={testimonial.id}
-              id={`testimonial-${testimonial.id}`}
-              className="transition-all duration-300"
-            >
-              <TestimonialCard
-                quote={testimonial.quote}
-                name={testimonial.name}
-                location={testimonial.location}
-                rating={testimonial.rating}
-                beforeAfterImage={testimonial.beforeAfterImage}
-                profileImage={testimonial.profileImage}
-              />
-            </div>
+              quote={testimonial.quote}
+              name={testimonial.name}
+              location={testimonial.location}
+              rating={testimonial.rating}
+              beforeAfterImage={testimonial.beforeAfterImage}
+              profileImage={testimonial.profileImage}
+            />
           ))}
         </div>
       </div>
