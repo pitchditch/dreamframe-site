@@ -1,4 +1,3 @@
-
 const punjabiTranslations = {
   // General
   "Home": "ਹੋਮ",
@@ -40,6 +39,8 @@ const punjabiTranslations = {
   "Sort": "ਕ੍ਰਮਬੱਧ",
   "English": "ਅੰਗਰੇਜ਼ੀ",
   "Punjabi": "ਪੰਜਾਬੀ",
+  "Hindi": "ਹਿੰਦੀ",
+  "French": "ਫ੍ਰੈਂਚ",
   "Scroll Down": "ਹੇਠਾਂ ਸਕਰੋਲ ਕਰੋ",
   "Transform Your Property's Appearance": "ਆਪਣੀ ਸੰਪਤੀ ਦੀ ਦਿੱਖ ਨੂੰ ਬਦਲੋ",
   "Why Us": "ਸਾਨੂੰ ਕਿਉਂ ਚੁਣੋ",
@@ -50,22 +51,6 @@ const punjabiTranslations = {
   "BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ - ਸਰੀ ਅਤੇ ਵਾਈਟ ਰਾਕ ਵਿੱਚ #1 ਵਿੰਡੋ ਅਤੇ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ",
   "Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.": "ਸਰੀ, ਵਾਈਟ ਰਾਕ ਅਤੇ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਵਿੰਡੋ ਸਫਾਈ, ਛੱਤ ਅਤੇ ਗਟਰ ਸਫਾਈ ਸੇਵਾਵਾਂ। ਪਰਿਵਾਰਿਕ ਮਲਕੀਅਤ ਵਾਲੇ ਸਥਾਨਕ ਸਫਾਈ ਮਾਹਰ।",
   "Everything you need to know about our services": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਸਭ ਕੁਝ ਜੋ ਤੁਸੀਂ ਜਾਣਨਾ ਚਾਹੁੰਦੇ ਹੋ",
-
-  // FAQ Content
-  "What areas do you service?": "ਤੁਸੀਂ ਕਿਹੜੇ ਖੇਤਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹੋ?",
-  "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.": "ਅਸੀਂ ਵਾਈਟ ਰਾਕ ਵਿੱਚ ਸਥਿਤ ਹਾਂ ਅਤੇ ਸਰੀ, ਲੈਂਗਲੇ, ਡੈਲਟਾ, ਵੈਨਕੂਵਰ ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਖੇਤਰਾਂ ਸਮੇਤ ਪੂਰੇ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਖੇਤਰ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।",
-  
-  "Are you fully insured?": "ਕੀ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ ਹੋ?",
-  "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.": "ਹਾਂ, ਅਸੀਂ ਤੁਹਾਡੀ ਪੂਰੀ ਮਾਨਸਿਕ ਸ਼ਾਂਤੀ ਲਈ WCB ਕਵਰੇਜ ਅਤੇ ਦੇਣਦਾਰੀ ਬੀਮਾ ਦੇ ਨਾਲ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ ਹਾਂ।",
-  
-  "How often should I have my windows cleaned?": "ਮੈਨੂੰ ਕਿੰਨੀ ਵਾਰ ਆਪਣੀਆਂ ਖਿੜਕੀਆਂ ਸਾਫ਼ ਕਰਵਾਉਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ?",
-  "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.": "ਜ਼ਿਆਦਾਤਰ ਘਰ ਮਾਲਕਾਂ ਨੂੰ ਸਾਲ ਵਿੱਚ 2-3 ਵਾਰ ਵਿੰਡੋ ਸਫਾਈ ਤੋਂ ਫਾਇਦਾ ਹੁੰਦਾ ਹੈ, ਹਾਲਾਂਕਿ ਇਹ ਤੁਹਾਡੀ ਸਥਿਤੀ, ਜਾਇਦਾਦ ਦੀ ਸਥਿਤੀ, ਅਤੇ ਨਿੱਜੀ ਪਸੰਦ ਦੇ ਆਧਾਰ 'ਤੇ ਵੱਖਰਾ ਹੁੰਦਾ ਹੈ।",
-  
-  "Do you offer any guarantees?": "ਕੀ ਤੁਸੀਂ ਕੋਈ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹੋ?",
-  "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.": "ਬਿਲਕੁਲ! ਅਸੀਂ 100% ਸੰਤੁਸ਼ਟੀ ਦੀ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹਾਂ। ਜੇਕਰ ਤੁਸੀਂ ਸਾਡੇ ਕੰਮ ਤੋਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੋ, ਤਾਂ ਅਸੀਂ ਬਿਨਾਂ ਕਿਸੇ ਵਾਧੂ ਲਾਗਤ ਦੇ ਵਾਪਸ ਆਵਾਂਗੇ ਅਤੇ ਇਸਨੂੰ ਠੀਕ ਕਰਾਂਗੇ।",
-  
-  "How do you price your services?": "ਤੁਸੀਂ ਆਪਣੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਕੀਮਤ ਕਿਵੇਂ ਕਰਦੇ ਹੋ?",
-  "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.": "ਸਾਡੀ ਕੀਮਤ ਬੇਨਤੀ ਕੀਤੀ ਸੇਵਾ, ਜਾਇਦਾਦ ਦਾ ਆਕਾਰ, ਪਹੁੰਚਯੋਗਤਾ, ਅਤੇ ਖਾਸ ਲੋੜਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਹੈ। ਅਸੀਂ ਤੁਹਾਡੀ ਜਾਇਦਾਦ ਦੀਆਂ ਲੋੜਾਂ ਦਾ ਮੁਲਾਂਕਣ ਕਰਨ ਤੋਂ ਬਾਅਦ ਮੁਫ਼ਤ ਕੋਟੇਸ਼ਨ ਦਿੰਦੇ ਹਾਂ।",
 
   // Hero Section
   "Professional Pressure Washing Services": "ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ",
@@ -262,6 +247,7 @@ const punjabiTranslations = {
   "Trusted by Real Homeowners – Verified Customers": "ਅਸਲ ਘਰ ਮਾਲਕਾਂ ਦੁਆਰਾ ਭਰੋਸਾ - ਪ੍ਰਮਾਣਿਤ ਗਾਹਕ",
   "Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.": "ਇਹਨਾਂ ਵਿੱਚੋਂ ਹਰ ਇੱਕ ਗਾਹਕ ਉਹ ਹੈ ਜਿਸਦੀ ਅਸੀਂ ਮਾਣ ਨਾਲ ਸੇਵਾ ਕੀਤੀ ਹੈ - ਅਤੇ ਇਸ ਨੂੰ ਸਾਬਤ ਕਰਨ ਲਈ ਉਹ ਕਮੀਜ਼ ਪਹਿਨੇ ਹੋਏ ਹਨ।",
   "Verified Customer": "ਪ੍ਰਮਾਣਿਤ ਗਾਹਕ",
+  "Spring Shoot Catalog": "ਸਪ੍ਰਿੰਗ ਸ਼ੂਟ ਕੈਟਾਲੌਗ",
 
   // Testimonials Section
   "What Our Customers Say": "ਸਾਡੇ ਗਾਹਕ ਕੀ ਕਹਿੰਦੇ ਹਨ",
@@ -281,8 +267,19 @@ const punjabiTranslations = {
   "Local Knowledge": "ਸਥਾਨਕ ਗਿਆਨ",
   "Deep understanding of Surrey & White Rock conditions and properties": "ਸਰੀ ਅਤੇ ਵਾਈਟ ਰਾਕ ਦੀਆਂ ਸਥਿਤੀਆਂ ਅਤੇ ਜਾਇਦਾਦਾਂ ਦੀ ਡੂੰਘੀ ਸਮਝ",
 
-  // FAQ Section
+  // FAQ Content
+  "What areas do you service?": "ਤੁਸੀਂ ਕਿਹੜੇ ਖੇਤਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹੋ?",
+  "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.": "ਅਸੀਂ ਵਾਈਟ ਰਾਕ ਵਿੱਚ ਸਥਿਤ ਹਾਂ ਅਤੇ ਸਰੀ, ਲੈਂਗਲੇ, ਡੈਲਟਾ, ਵੈਨਕੂਵਰ ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਖੇਤਰਾਂ ਸਮੇਤ ਪੂਰੇ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਖੇਤਰ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।",
+  "Are you fully insured?": "ਕੀ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ ਹੋ?",
+  "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.": "ਹਾਂ, ਅਸੀਂ ਤੁਹਾਡੀ ਪੂਰੀ ਮਾਨਸਿਕ ਸ਼ਾਂਤੀ ਲਈ WCB ਕਵਰੇਜ ਅਤੇ ਦੇਣਦਾਰੀ ਬੀਮਾ ਦੇ ਨਾਲ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ ਹਾਂ।",
+  "How often should I have my windows cleaned?": "ਮੈਨੂੰ ਕਿੰਨੀ ਵਾਰ ਆਪਣੀਆਂ ਖਿੜਕੀਆਂ ਸਾਫ਼ ਕਰਵਾਉਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ?",
+  "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.": "ਜ਼ਿਆਦਾਤਰ ਘਰ ਮਾਲਕਾਂ ਨੂੰ ਸਾਲ ਵਿੱਚ 2-3 ਵਾਰ ਵਿੰਡੋ ਸਫਾਈ ਤੋਂ ਫਾਇਦਾ ਹੁੰਦਾ ਹੈ, ਹਾਲਾਂਕਿ ਇਹ ਤੁਹਾਡੀ ਸਥਿਤੀ, ਜਾਇਦਾਦ ਦੀ ਸਥਿਤੀ, ਅਤੇ ਨਿੱਜੀ ਪਸੰਦ ਦੇ ਆਧਾਰ 'ਤੇ ਵੱਖਰਾ ਹੁੰਦਾ ਹੈ।",
+  "Do you offer any guarantees?": "ਕੀ ਤੁਸੀਂ ਕੋਈ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹੋ?",
+  "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.": "ਬਿਲਕੁਲ! ਅਸੀਂ 100% ਸੰਤੁਸ਼ਟੀ ਦੀ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹਾਂ। ਜੇਕਰ ਤੁਸੀਂ ਸਾਡੇ ਕੰਮ ਤੋਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੋ, ਤਾਂ ਅਸੀਂ ਬਿਨਾਂ ਕਿਸੇ ਵਾਧੂ ਲਾਗਤ ਦੇ ਵਾਪਸ ਆਵਾਂਗੇ ਅਤੇ ਇਸਨੂੰ ਠੀਕ ਕਰਾਂਗੇ।",
+  "How do you price your services?": "ਤੁਸੀਂ ਆਪਣੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਕੀਮਤ ਕਿਵੇਂ ਕਰਦੇ ਹੋ?",
+  "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.": "ਸਾਡੀ ਕੀਮਤ ਬੇਨਤੀ ਕੀਤੀ ਸੇਵਾ, ਜਾਇਦਾਦ ਦਾ ਆਕਾਰ, ਪਹੁੰਚਯੋਗਤਾ, ਅਤੇ ਖਾਸ ਲੋੜਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਹੈ। ਅਸੀਂ ਤੁਹਾਡੀ ਜਾਇਦਾਦ ਦੀਆਂ ਲੋੜਾਂ ਦਾ ਮੁਲਾਂਕਣ ਕਰਨ ਤੋਂ ਬਾਅਦ ਮੁਫ਼ਤ ਕੋਟੇਸ਼ਨ ਦਿੰਦੇ ਹਾਂ।",
   "Frequently Asked Questions": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ",
+  "Everything you need to know about our services": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਸਭ ਕੁਝ ਜੋ ਤੁਹਾਨੂੰ ਜਾਣਨਾ ਚਾਹੀਦਾ ਹੈ",
 
   // Service Areas
   "Areas We Service": "ਸੇਵਾ ਖੇਤਰ",
@@ -295,7 +292,6 @@ const punjabiTranslations = {
   "Monday-Friday: 8AM - 6PM": "ਸੋਮਵਾਰ-ਸ਼ੁੱਕਰਵਾਰ: 8AM - 6PM",
   "Saturday: 9AM - 5PM": "ਸ਼ਨੀਵਾਰ: 9AM - 5PM",
   "Sunday: Closed": "ਐਤਵਾਰ: ਬੰਦ",
-  "Weather & Service": "ਮੌਸਮ ਅਤੇ ਸੇਵਾ",
   "View All Contact Options": "ਸਾਰੇ ਸੰਪਰਕ ਵਿਕਲਪ ਵੇਖੋ",
   "Mention you've seen our car on Marine Drive for 10% off!": "ਮਰੀਨ ਡਰਾਇਵ 'ਤੇ ਸਾਡੀ ਕਾਰ ਦੇਖਣ ਦਾ ਜ਼ਿਕਰ ਕਰੋ 10% ਛੋਟ ਲਈ!",
 
