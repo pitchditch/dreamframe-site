@@ -63,6 +63,13 @@ const punjabiTranslations = {
   "House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ",
   "Gutter Cleaning": "ਗਟਰ ਸਫਾਈ",
   "Roof Cleaning": "ਛੱਤ ਸਫਾਈ",
+  
+  // CTA Banner translations
+  "Get a Fast Quote – No Visit Needed": "ਤੇਜ਼ ਕੋਟੇਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ - ਕੋਈ ਮੁਲਾਕਾਤ ਦੀ ਲੋੜ ਨਹੀਂ",
+  "Get a response within 24 hours": "24 ਘੰਟਿਆਂ ਵਿੱਚ ਜਵਾਬ ਪ੍ਰਾਪਤ ਕਰੋ",
+  "Call": "ਕਾਲ ਕਰੋ",
+  "Get Quote": "ਕੋਟੇਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ",
+
   // FeaturedProjectSection translations
   "Featured Project": "ਵਿਸ਼ੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
   "See the transformation we achieved for this beautiful residential property in British Columbia": "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਇਸ ਸੁੰਦਰ ਰਿਹਾਇਸ਼ੀ ਜਾਇਦਾਦ ਲਈ ਅਸੀਂ ਜੋ ਤਬਦੀਲੀ ਪ੍ਰਾਪਤ ਕੀਤੀ ਹੈ ਉਸ ਨੂੰ ਦੇਖੋ",

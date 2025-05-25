@@ -119,6 +119,10 @@ const Index = () => {
         <TrustedCustomersSection />
         <CompetitorComparisonSection />
         <TestimonialsSection />
+        
+        {/* Referral Banner - moved directly after testimonials */}
+        <ReferralButton />
+        
         <SatisfactionGuaranteeSection />
         <FAQSection 
           title={t("Frequently Asked Questions")} 
@@ -133,7 +137,6 @@ const Index = () => {
       </div>
       
       <CTABanner />
-      <ReferralButton />
     </Layout>
   );
 };

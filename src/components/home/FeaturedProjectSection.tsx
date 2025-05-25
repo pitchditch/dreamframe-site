@@ -17,12 +17,15 @@ const FeaturedProjectSection = () => {
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="animate-on-scroll">
+          <div className="animate-on-scroll relative">
             <img 
               src="/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png" 
               alt={t("House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing")}
               className="rounded-lg shadow-lg w-full h-auto"
             />
+            <div className="absolute bottom-4 left-4 right-4 bg-black/80 text-white p-3 rounded-lg">
+              <p className="font-bold text-sm sm:text-base">We saved this homeowner $4,000 in roof replacement costs.</p>
+            </div>
           </div>
           
           <div className="animate-on-scroll">
