@@ -50,7 +50,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   return (
     <div className="hidden md:flex items-center justify-between flex-1 px-8">
       <NavigationMenu>
-        <NavigationMenuList className="flex items-center space-x-16">
+        <NavigationMenuList className="flex items-center space-x-20">
           <NavigationMenuItem>
             <Link 
               to="/" 
@@ -87,7 +87,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             >
               {t('Services')}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[600px] p-6 bg-white/95 backdrop-blur-sm z-50">
+            <NavigationMenuContent className="w-[600px] p-6 bg-white/95 backdrop-blur-sm z-[60] mt-2">
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">Residential</h3>
@@ -148,7 +148,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             >
               {t('More')}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[400px] p-6 bg-white/95 backdrop-blur-sm z-50">
+            <NavigationMenuContent className="w-[400px] p-6 bg-white/95 backdrop-blur-sm z-[60] mt-2">
               <div className="space-y-4">
                 <Link to="/testimonials" className="block p-3 hover:bg-gray-50 rounded-md transition-colors">
                   <h4 className="font-medium text-black hover:text-bc-red">{t('Testimonials')}</h4>
