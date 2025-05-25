@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
-import WindowCleaningSimulator from './home/WindowCleaningSimulator';
+import EnhancedWindowCleaningSimulator from './home/EnhancedWindowCleaningSimulator';
 import PressureWashingSimulator from './PressureWashingSimulator';
 
 const CombinedSimulatorsSection = () => {
@@ -20,7 +20,7 @@ const CombinedSimulatorsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-          {/* Window Cleaning Simulator */}
+          {/* Enhanced Window Cleaning Simulator */}
           <div className="flex flex-col">
             <div className="bg-white p-6 rounded-lg shadow-lg h-full">
               <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
@@ -30,7 +30,7 @@ const CombinedSimulatorsSection = () => {
                 {t("Try our water-fed pole system with squeegee technique")}
               </p>
               <div className="flex justify-center mb-4">
-                <WindowCleaningSimulator />
+                <EnhancedWindowCleaningSimulator />
               </div>
               <div className="space-y-2">
                 <h4 className="font-semibold text-gray-800">{t("Window Cleaning Features")}</h4>
