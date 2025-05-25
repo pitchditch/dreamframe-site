@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -63,7 +62,7 @@ const WeatherService = () => {
     // Add days of the month with realistic weather prediction
     for (let day = 1; day <= daysInMonth; day++) {
       // More realistic optimal day calculation based on season and weather patterns
-      const dayOfYear = Math.floor((new Date(year, month, day) - new Date(year, 0, 0)) / 86400000);
+      const dayOfYear = Math.floor((Number(new Date(year, month, day)) - Number(new Date(year, 0, 0))) / 86400000);
       const seasonalFactor = Math.sin((dayOfYear / 365) * Math.PI * 2) * 0.3 + 0.7; // Higher in summer
       const randomFactor = Math.random();
       const isOptimalDay = (seasonalFactor * randomFactor) > 0.4;
