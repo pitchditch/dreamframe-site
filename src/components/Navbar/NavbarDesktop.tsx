@@ -20,13 +20,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="hidden md:flex items-center space-x-6">
+    <div className="hidden md:flex items-center justify-center flex-1">
       <NavigationMenu>
-        <NavigationMenuList className="space-x-6">
+        <NavigationMenuList className="flex items-center justify-center space-x-8">
           <NavigationMenuItem>
             <Link 
               to="/" 
-              className={`transition-colors hover:text-bc-red font-medium ${
+              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
             >
@@ -37,7 +37,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           <NavigationMenuItem>
             <Link 
               to="/why-us" 
-              className={`transition-colors hover:text-bc-red font-medium ${
+              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
             >
@@ -47,13 +47,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-colors hover:text-bc-red font-medium bg-transparent border-none shadow-none p-0 h-auto ${
+              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
             >
               {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="min-w-[700px] p-8 bg-white/98 backdrop-blur-sm shadow-xl border border-gray-200 z-[9999]">
+            <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
               <div className="grid grid-cols-2 gap-8">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential</h3>
@@ -106,13 +106,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-colors hover:text-bc-red font-medium bg-transparent border-none shadow-none p-0 h-auto ${
+              className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
                 isOverVideo ? 'text-white' : 'text-black'
               }`}
             >
               {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[450px] p-6 bg-white/98 backdrop-blur-sm shadow-xl border border-gray-200 z-[9999]">
+            <NavigationMenuContent className="w-[600px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
               <div className="space-y-4">
                 <Link to="/testimonials" className="block p-3 hover:bg-gray-50 rounded-md transition-colors">
                   <h4 className="font-medium text-black hover:text-bc-red">{t('Testimonials')}</h4>
@@ -149,28 +149,30 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
       
-      <Link 
-        to="/calculator" 
-        className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors ${
-          isOverVideo 
-            ? 'border-white text-white hover:bg-white hover:text-black' 
-            : 'border-bc-red text-bc-red hover:bg-bc-red hover:text-white'
-        }`}
-      >
-        <Calculator size={16} />
-        {t('Get a Quote')}
-      </Link>
-      
-      <Link 
-        to="/contact" 
-        className={`transition-colors hover:text-bc-red font-medium ${
-          isOverVideo ? 'text-white' : 'text-black'
-        }`}
-      >
-        {t('Contact')}
-      </Link>
-      
-      <LanguageSelector />
+      <div className="flex items-center space-x-6 ml-8">
+        <Link 
+          to="/calculator" 
+          className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-all duration-300 hover:scale-105 ${
+            isOverVideo 
+              ? 'border-white text-white hover:bg-white hover:text-black' 
+              : 'border-bc-red text-bc-red hover:bg-bc-red hover:text-white'
+          }`}
+        >
+          <Calculator size={16} />
+          {t('Get a Quote')}
+        </Link>
+        
+        <Link 
+          to="/contact" 
+          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg ${
+            isOverVideo ? 'text-white' : 'text-black'
+          }`}
+        >
+          {t('Contact')}
+        </Link>
+        
+        <LanguageSelector />
+      </div>
     </div>
   );
 };
