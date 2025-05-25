@@ -20,9 +20,9 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="hidden md:flex items-center justify-center flex-1">
+    <div className="hidden md:flex items-center justify-between flex-1">
       <NavigationMenu>
-        <NavigationMenuList className="flex items-center justify-center space-x-8">
+        <NavigationMenuList className="flex items-center justify-center space-x-12">
           <NavigationMenuItem>
             <Link 
               to="/" 
@@ -149,7 +149,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
       
-      <div className="flex items-center space-x-6 ml-8">
+      <div className="flex items-center space-x-6">
         <Link 
           to="/calculator" 
           className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-all duration-300 hover:scale-105 ${
