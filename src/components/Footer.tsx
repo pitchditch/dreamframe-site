@@ -110,7 +110,7 @@ const Footer = () => {
         </div>
 
         {/* Service Areas Section in Footer */}
-        <div className="mb-8">
+        <div className="pb-0">
           <h3 className="text-xl font-semibold mb-4 text-center text-white">Service Areas</h3>
           <ServiceAreasCarousel isDarkBackground={true} />
         </div>

@@ -48,7 +48,7 @@ const ServiceAreasCarousel = ({ isDarkBackground = true }: ServiceAreasCarouselP
               className={`inline-flex px-5 py-2 mx-1 rounded-md ${
                 isDarkBackground 
                   ? 'bg-gray-800 text-white' 
-                  : 'bg-white text-gray-800'
+                  : 'bg-gray-100 text-gray-800'
               }`}
             >
               <MapPin size={16} className={`mr-2 flex-shrink-0 ${

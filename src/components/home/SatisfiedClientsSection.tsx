@@ -13,7 +13,7 @@ const SatisfiedClientsSection = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Counter animation
+  // Counter animation - only trigger once when section comes into view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,7 +37,7 @@ const SatisfiedClientsSection = () => {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.5, rootMargin: '-100px' }
     );
 
     if (sectionRef.current) {
@@ -120,9 +120,6 @@ const SatisfiedClientsSection = () => {
 
         {/* Testimonials Carousel */}
         <div className="mb-8">
-          <h3 className="text-2xl font-bold text-center mb-8">
-            {t("What Our Customers Say")}
-          </h3>
           <TestimonialsCarousel />
         </div>
       </div>
