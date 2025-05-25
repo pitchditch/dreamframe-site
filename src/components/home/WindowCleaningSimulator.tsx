@@ -16,9 +16,9 @@ const WindowCleaningSimulator = () => {
     const dirtyImg = new Image();
     const cleanImg = new Image();
     
-    // Using placeholder images for dirty and clean windows
-    dirtyImg.src = 'https://images.unsplash.com/photo-1496307653780-42ee777d4833?w=800&h=600&fit=crop'; // Dirty glass building
-    cleanImg.src = 'https://images.unsplash.com/photo-1439337153520-7082a56a81f4?w=800&h=600&fit=crop'; // Clean glass roof
+    // Using the uploaded dirty and clean window images
+    dirtyImg.src = '/lovable-uploads/4ecee3de-d4e6-4650-9af1-6ce401970811.png'; // Dirty window
+    cleanImg.src = '/lovable-uploads/da19d985-5736-4d97-99ef-2d4881d1bf70.png'; // Clean window
     
     dirtyImageRef.current = dirtyImg;
     cleanImageRef.current = cleanImg;
@@ -152,7 +152,7 @@ const WindowCleaningSimulator = () => {
           ref={canvasRef}
           className="border-2 border-gray-300 rounded-lg max-w-full"
           style={{
-            cursor: isMobile ? 'default' : 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 32 32\'><circle cx=\'16\' cy=\'16\' r=\'8\' fill=\'%234A90E2\' opacity=\'0.7\'/><circle cx=\'16\' cy=\'16\' r=\'12\' stroke=\'%234A90E2\' stroke-width=\'2\' fill=\'none\'/></svg>") 16 16, crosshair'
+            cursor: isMobile ? 'default' : `url("/lovable-uploads/d9eb7373-3ddd-4062-89c7-3c2d515b23f9.png") 16 16, crosshair`
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}

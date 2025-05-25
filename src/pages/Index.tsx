@@ -17,7 +17,6 @@ import TrustedCustomersSection from '../components/home/TrustedCustomersSection'
 import FounderSection from '../components/home/FounderSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
-import LanguageSelector from '@/components/LanguageSelector';
 import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
@@ -93,11 +92,6 @@ const Index = () => {
       <Helmet>
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
-      
-      {/* Position language selector on top right corner */}
-      <div className="fixed top-4 right-4 z-[100]">
-        <LanguageSelector />
-      </div>
       
       <HeroSection />
       

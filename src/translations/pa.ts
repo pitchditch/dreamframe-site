@@ -1,4 +1,3 @@
-
 const punjabiTranslations = {
   "BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ - ਸਰੀ ਅਤੇ ਵ੍ਹਾਈਟ ਰੌਕ ਵਿੱਚ #1 ਵਿੰਡੋ ਅਤੇ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾਵਾਂ",
   "Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.": "ਸਰੀ, ਵ੍ਹਾਈਟ ਰੌਕ ਅਤੇ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਵਿੰਡੋ ਕਲੀਨਿੰਗ, ਰੂਫ ਅਤੇ ਗਟਰ ਕਲੀਨਿੰਗ ਸੇਵਾਵਾਂ। ਪਰਿਵਾਰਕ ਮਲਕੀਅਤ ਵਾਲੇ ਸਥਾਨਕ ਸਫਾਈ ਮਾਹਿਰ।",
@@ -8,43 +7,43 @@ const punjabiTranslations = {
   "BC Pressure Washing, pressure washing White Rock, window cleaning, gutter cleaning, soft washing, exterior cleaning services, red car pressure washing": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਵ੍ਹਾਈਟ ਰੌਕ, ਵਿੰਡੋ ਕਲੀਨਿੰਗ, ਗਟਰ ਕਲੀਨਿੰਗ, ਸਾਫਟ ਵਾਸ਼ਿੰਗ, ਬਾਹਰੀ ਸਫਾਈ ਸੇਵਾਵਾਂ, ਲਾਲ ਕਾਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ",
   "BC Pressure Washing - Local Cleaning Experts": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ - ਸਥਾਨਕ ਸਫਾਈ ਮਾਹਿਰ",
   "Pressure washing, window cleaning, and gutter services from BC Pressure Washing. Seen our red car at the beach? Get 10% off!": "ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਤੋਂ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਅਤੇ ਗਟਰ ਸੇਵਾਵਾਂ। ਕੀ ਤੁਸੀਂ ਸਾਡੀ ਲਾਲ ਕਾਰ ਨੂੰ ਬੀਚ 'ਤੇ ਦੇਖਿਆ ਹੈ? 10% ਦੀ ਛੋਟ ਪ੍ਰਾਪਤ ਕਰੋ!",
+
+  // Hero Section translations
+  "Premium Exterior Cleaning Solutions": "ਪ੍ਰੀਮੀਅਮ ਬਾਹਰੀ ਸਫਾਈ ਹੱਲ",
+  "Professional pressure washing, window cleaning, and exterior maintenance services across Metro Vancouver": "ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਪੇਸ਼ੇਵਰ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ, ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਅਤੇ ਬਾਹਰੀ ਰੱਖ-ਰਖਾਅ ਸੇਵਾਵਾਂ",
+  "Get Free Estimate": "ਮੁਫ਼ਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ",
+
+  // Premium Solutions translations
+  "Premium Cleaning Solutions": "ਪ੍ਰੀਮੀਅਮ ਸਫਾਈ ਹੱਲ",
+  "Professional-grade equipment and techniques for exceptional results": "ਬੇਮਿਸਾਲ ਨਤੀਜਿਆਂ ਲਈ ਪੇਸ਼ੇਵਰ-ਗ੍ਰੇਡ ਉਪਕਰਣ ਅਤੇ ਤਕਨੀਕਾਂ",
+
+  // Experience Professional Cleaning Translations
+  "Experience Our Professional Cleaning": "ਸਾਡੀ ਪੇਸ਼ੇਵਰ ਸਫਾਈ ਦਾ ਅਨੁਭਵ ਕਰੋ",
+  "Click and drag your mouse to see the difference our professional equipment makes!": "ਸਾਡੇ ਪੇਸ਼ੇਵਰ ਉਪਕਰਣ ਦੇ ਫਰਕ ਨੂੰ ਦੇਖਣ ਲਈ ਕਲਿੱਕ ਕਰਕੇ ਆਪਣਾ ਮਾਊਸ ਖਿੱਚੋ!",
+  "Window Cleaning Simulator": "ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਸਿਮੂਲੇਟਰ",
+  "Try our water-fed pole system with squeegee technique": "ਸਕਿਊਜੀ ਤਕਨੀਕ ਦੇ ਨਾਲ ਸਾਡੇ ਪਾਣੀ-ਫੈਡ ਪੋਲ ਸਿਸਟਮ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+  "Pressure Washing Simulator": "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਸਿਮੂਲੇਟਰ",
+  "Experience our high-pressure cleaning power": "ਸਾਡੀ ਹਾਈ-ਪ੍ਰੈਸ਼ਰ ਸਫਾਈ ਸ਼ਕਤੀ ਦਾ ਅਨੁਭਵ ਕਰੋ",
+  "Window Cleaning Features": "ਵਿੰਡੋ ਕਲੀਨਿੰਗ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+  "Pure water technology": "ਸ਼ੁੱਧ ਪਾਣੀ ਤਕਨਾਲੋਜੀ",
+  "Streak-free results": "ਦਾਗ਼-ਰਹਿਤ ਨਤੀਜੇ",
+  "Professional squeegee technique": "ਪੇਸ਼ੇਵਰ ਸਕਿਊਜੀ ਤਕਨੀਕ",
+  "Up to 5 stories high": "5 ਮੰਜ਼ਿਲਾਂ ਤੱਕ ਉੱਚਾ",
+  "Pressure Washing Features": "ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+  "High-pressure cleaning": "ਹਾਈ-ਪ੍ਰੈਸ਼ਰ ਸਫਾਈ",
+  "Removes stubborn stains": "ਜ਼ਿੱਦੀ ਦਾਗ਼ ਹਟਾਉਂਦਾ ਹੈ",
+  "Professional equipment": "ਪੇਸ਼ੇਵਰ ਉਪਕਰਣ",
+  "Surface restoration": "ਸਤਹ ਪੁਨਰਸਥਾਪਨਾ",
+  "See the dramatic difference professional equipment makes for your property!": "ਆਪਣੀ ਜਾਇਦਾਦ ਲਈ ਪੇਸ਼ੇਵਰ ਉਪਕਰਣ ਦਾ ਨਾਟਕੀ ਫਰਕ ਦੇਖੋ!",
+
+  // Basic service translations
   "Exterior and interior window cleaning": "ਬਾਹਰੀ ਅਤੇ ਅੰਦਰੂਨੀ ਵਿੰਡੋ ਸਫਾਈ",
   "Gutter and downspout cleaning": "ਗਟਰ ਅਤੇ ਡਾਊਨਸਪਾਊਟ ਸਫਾਈ",
   "House siding soft wash": "ਹਾਊਸ ਸਾਈਡਿੰਗ ਸਾਫਟ ਵਾਸ਼",
   "Driveway and walkway pressure washing": "ਡਰਾਈਵਵੇਅ ਅਤੇ ਵਾਕਵੇਅ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ",
   "Roof moss removal and treatment": "ਛੱਤ ਤੋਂ ਮੌਸ ਹਟਾਉਣਾ ਅਤੇ ਇਲਾਜ",
-  "We are a family-owned and operated business": "ਅਸੀਂ ਇੱਕ ਪਰਿਵਾਰਕ ਮਲਕੀਅਤ ਵਾਲਾ ਅਤੇ ਸੰਚਾਲਿਤ ਕਾਰੋਬਾਰ ਹਾਂ",
-  "We treat every home like our own": "ਅਸੀਂ ਹਰ ਘਰ ਨੂੰ ਆਪਣੇ ਵਾਂਗ ਮੰਨਦੇ ਹਾਂ",
-  "We are committed to providing exceptional service": "ਅਸੀਂ ਬੇਮਿਸਾਲ ਸੇਵਾ ਪ੍ਰਦਾਨ ਕਰਨ ਲਈ ਵਚਨਬੱਧ ਹਾਂ",
-  "We offer a 100% satisfaction guarantee": "ਅਸੀਂ 100% ਸੰਤੁਸ਼ਟੀ ਦੀ ਗਰੰਟੀ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We are fully insured and licensed": "ਅਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਾਯੁਕਤ ਅਤੇ ਲਾਇਸੰਸਸ਼ੁਦਾ ਹਾਂ",
-  "We use eco-friendly cleaning products": "ਅਸੀਂ ਵਾਤਾਵਰਣ ਅਨੁਕੂਲ ਸਫਾਈ ਉਤਪਾਦਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹਾਂ",
-  "We offer free estimates": "ਅਸੀਂ ਮੁਫ਼ਤ ਅਨੁਮਾਨ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We are available 7 days a week": "ਅਸੀਂ ਹਫ਼ਤੇ ਵਿੱਚ 7 ਦਿਨ ਉਪਲਬਧ ਹਾਂ",
-  "We offer same-day service": "ਅਸੀਂ ਉਸੇ ਦਿਨ ਸੇਵਾ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer senior discounts": "ਅਸੀਂ ਸੀਨੀਅਰ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer military discounts": "ਅਸੀਂ ਫੌਜੀ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer referral discounts": "ਅਸੀਂ ਰੈਫਰਲ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer seasonal discounts": "ਅਸੀਂ ਮੌਸਮੀ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer package discounts": "ਅਸੀਂ ਪੈਕੇਜ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer multi-service discounts": "ਅਸੀਂ ਬਹੁ-ਸੇਵਾ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer commercial discounts": "ਅਸੀਂ ਵਪਾਰਕ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer strata discounts": "ਅਸੀਂ ਸਟ੍ਰੈਟਾ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer property management discounts": "ਅਸੀਂ ਜਾਇਦਾਦ ਪ੍ਰਬੰਧਨ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer real estate agent discounts": "ਅਸੀਂ ਰੀਅਲ ਅਸਟੇਟ ਏਜੰਟ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer contractor discounts": "ਅਸੀਂ ਠੇਕੇਦਾਰ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer builder discounts": "ਅਸੀਂ ਬਿਲਡਰ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer developer discounts": "ਅਸੀਂ ਡਿਵੈਲਪਰ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer government discounts": "ਅਸੀਂ ਸਰਕਾਰੀ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer non-profit discounts": "ਅਸੀਂ ਗੈਰ-ਲਾਭਕਾਰੀ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer charity discounts": "ਅਸੀਂ ਚੈਰਿਟੀ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer school discounts": "ਅਸੀਂ ਸਕੂਲ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer church discounts": "ਅਸੀਂ ਚਰਚ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer hospital discounts": "ਅਸੀਂ ਹਸਪਤਾਲ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We offer care home discounts": "ਅਸੀਂ ਕੇਅਰ ਹੋਮ ਛੋਟਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ",
-  "We accept cash": "ਅਸੀਂ ਨਕਦ ਸਵੀਕਾਰ ਕਰਦੇ ਹਾਂ",
-  "We accept credit cards": "ਅਸੀਂ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਸਵੀਕਾਰ ਕਰਦੇ ਹਾਂ",
-  "We accept e-transfers": "ਅਸੀਂ ਈ-ਟ੍ਰਾਂਸਫਰ ਸਵੀਕਾਰ ਕਰਦੇ ਹਾਂ",
+
+  // Navigation items
   "Home": "ਘਰ",
   "Why Us": "ਸਾਨੂੰ ਕਿਉਂ ਚੁਣੋ",
   "Services": "ਸੇਵਾਵਾਂ",
@@ -64,7 +63,6 @@ const punjabiTranslations = {
   "House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ",
   "Gutter Cleaning": "ਗਟਰ ਸਫਾਈ",
   "Roof Cleaning": "ਛੱਤ ਸਫਾਈ",
-
   // FeaturedProjectSection translations
   "Featured Project": "ਵਿਸ਼ੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
   "See the transformation we achieved for this beautiful residential property in British Columbia": "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਇਸ ਸੁੰਦਰ ਰਿਹਾਇਸ਼ੀ ਜਾਇਦਾਦ ਲਈ ਅਸੀਂ ਜੋ ਤਬਦੀਲੀ ਪ੍ਰਾਪਤ ਕੀਤੀ ਹੈ ਉਸ ਨੂੰ ਦੇਖੋ",

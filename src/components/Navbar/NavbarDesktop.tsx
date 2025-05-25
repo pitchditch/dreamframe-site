@@ -22,7 +22,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   return (
     <div className="hidden md:flex items-center space-x-6">
       <NavigationMenu>
-        <NavigationMenuList className="space-x-4">
+        <NavigationMenuList className="space-x-6">
           <NavigationMenuItem>
             <Link 
               to="/" 
