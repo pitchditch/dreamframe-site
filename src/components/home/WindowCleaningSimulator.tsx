@@ -34,11 +34,11 @@ const WindowCleaningSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 350); // Reduced for better mobile fit
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 600);
-        canvas.height = Math.min(dirtyImg.height, 600);
+        canvas.width = Math.min(dirtyImg.width, 350);
+        canvas.height = Math.min(dirtyImg.height, 350);
       }
       
       // Initial draw
@@ -63,11 +63,11 @@ const WindowCleaningSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 350); // Reduced for better mobile fit
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 600);
-        canvas.height = Math.min(dirtyImg.height, 600);
+        canvas.width = Math.min(dirtyImg.width, 350);
+        canvas.height = Math.min(dirtyImg.height, 350);
       }
       
       const ctx = canvas.getContext('2d');
@@ -89,7 +89,7 @@ const WindowCleaningSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImageRef.current.height / dirtyImageRef.current.width;
-        canvas.width = Math.min(containerWidth, 600);
+        canvas.width = Math.min(containerWidth, 350); // Reduced for better mobile fit
         canvas.height = canvas.width * aspectRatio;
       }
       
@@ -146,39 +146,28 @@ const WindowCleaningSimulator = () => {
   };
   
   return (
-    <div className="w-full max-w-2xl mx-auto my-8">
-      <div className="bg-white p-4 rounded-lg shadow-lg">
-        <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
-          Window Cleaning Simulator
-        </h3>
-        <p className="text-gray-600 text-center mb-4">
-          {isMobile ? "Drag your finger" : "Click and drag your mouse"} to clean the windows with our water-fed pole system!
-        </p>
-        <div className="relative w-full">
-          <canvas 
-            ref={canvasRef}
-            className="mx-auto border-2 border-gray-300 rounded-lg"
-            style={{
-              cursor: isMobile ? 'default' : 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 32 32\'><circle cx=\'16\' cy=\'16\' r=\'8\' fill=\'%234A90E2\' opacity=\'0.7\'/><circle cx=\'16\' cy=\'16\' r=\'12\' stroke=\'%234A90E2\' stroke-width=\'2\' fill=\'none\'/></svg>") 16 16, crosshair'
-            }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseOut={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onTouchCancel={handleTouchEnd}
-            onTouchMove={handleTouchMove}
-          />
-          {!imagesLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 rounded-lg">
-              <div className="loader animate-spin border-4 border-t-bc-red border-gray-200 rounded-full h-10 w-10" />
-            </div>
-          )}
-        </div>
-        <div className="mt-3 text-center text-sm text-gray-500">
-          Experience our water-fed pole system - streak-free cleaning with pure water!
-        </div>
+    <div className="w-full max-w-sm mx-auto">
+      <div className="relative w-full flex justify-center">
+        <canvas 
+          ref={canvasRef}
+          className="border-2 border-gray-300 rounded-lg max-w-full"
+          style={{
+            cursor: isMobile ? 'default' : 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 32 32\'><circle cx=\'16\' cy=\'16\' r=\'8\' fill=\'%234A90E2\' opacity=\'0.7\'/><circle cx=\'16\' cy=\'16\' r=\'12\' stroke=\'%234A90E2\' stroke-width=\'2\' fill=\'none\'/></svg>") 16 16, crosshair'
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseOut={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          onTouchMove={handleTouchMove}
+        />
+        {!imagesLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 rounded-lg">
+            <div className="loader animate-spin border-4 border-t-bc-red border-gray-200 rounded-full h-10 w-10" />
+          </div>
+        )}
       </div>
     </div>
   );

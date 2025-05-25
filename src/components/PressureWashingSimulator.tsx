@@ -32,11 +32,11 @@ const PressureWashingSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 400); // Reduced from 600 to 400
+        canvas.width = Math.min(containerWidth, 350); // Reduced for better mobile fit
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 400);
-        canvas.height = Math.min(dirtyImg.height, 400);
+        canvas.width = Math.min(dirtyImg.width, 350);
+        canvas.height = Math.min(dirtyImg.height, 350);
       }
       
       const ctx = canvas.getContext('2d');
@@ -59,11 +59,11 @@ const PressureWashingSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImg.height / dirtyImg.width;
-        canvas.width = Math.min(containerWidth, 400); // Reduced from 600 to 400
+        canvas.width = Math.min(containerWidth, 350); // Reduced for better mobile fit
         canvas.height = canvas.width * aspectRatio;
       } else {
-        canvas.width = Math.min(dirtyImg.width, 400);
-        canvas.height = Math.min(dirtyImg.height, 400);
+        canvas.width = Math.min(dirtyImg.width, 350);
+        canvas.height = Math.min(dirtyImg.height, 350);
       }
       
       const ctx = canvas.getContext('2d');
@@ -84,7 +84,7 @@ const PressureWashingSimulator = () => {
       if (container) {
         const containerWidth = container.clientWidth;
         const aspectRatio = dirtyImageRef.current.height / dirtyImageRef.current.width;
-        canvas.width = Math.min(containerWidth, 400); // Reduced from 600 to 400
+        canvas.width = Math.min(containerWidth, 350); // Reduced for better mobile fit
         canvas.height = canvas.width * aspectRatio;
       }
       
@@ -140,11 +140,11 @@ const PressureWashingSimulator = () => {
   };
   
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
-      <div className="relative w-full">
+    <div className="w-full max-w-sm mx-auto">
+      <div className="relative w-full flex justify-center">
         <canvas 
           ref={canvasRef}
-          className="mx-auto border-2 border-gray-300 rounded-lg"
+          className="border-2 border-gray-300 rounded-lg max-w-full"
           style={{
             cursor: isMobile ? 'default' : `url("/lovable-uploads/bec764c0-fb53-42c1-bedc-681661b5788e.png") 16 16, crosshair`
           }}
@@ -162,9 +162,6 @@ const PressureWashingSimulator = () => {
             <div className="loader animate-spin border-4 border-t-bc-red border-gray-200 rounded-full h-10 w-10" />
           </div>
         )}
-      </div>
-      <div className="mt-3 text-center text-sm text-gray-500">
-        Experience our high-pressure cleaning power - remove years of buildup!
       </div>
     </div>
   );
