@@ -4,65 +4,71 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Home, Building2, Building } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 const PropertySpecificSection = () => {
+  const { t } = useTranslation();
+  
   const propertyTypes = [
     {
       icon: Home,
-      title: "Residential Homes",
-      description: "Comprehensive exterior cleaning for single-family homes, townhouses, and duplexes.",
+      title: t("Residential Homes"),
+      description: t("Comprehensive exterior cleaning for single-family homes, townhouses, and duplexes."),
       services: [
-        "Window cleaning (interior & exterior)",
-        "Pressure washing (siding, driveways, patios)",
-        "Gutter cleaning & maintenance",
-        "Roof cleaning & moss removal"
+        t("Exterior & interior window cleaning"),
+        t("Soft wash siding treatment"),
+        t("Interior debris removal"),
+        t("Roof inspection")
       ],
       specialFeatures: [
-        "Family-safe cleaning products",
-        "Flexible scheduling around your routine",
-        "Landscaping protection during service",
-        "Interior window cleaning available"
+        t("Family-safe cleaning products"),
+        t("Flexible scheduling around your routine"),
+        t("Landscaping protection during service"),
+        t("Interior window cleaning available")
       ],
       image: "/lovable-uploads/2aa44443-acb7-47d2-a63d-295c7414a46d.png",
-      link: "/services/window-cleaning"
+      link: "/services/window-cleaning",
+      buttonText: t("Get Quote for Residential Homes")
     },
     {
       icon: Building2,
-      title: "Commercial Buildings",
-      description: "Professional exterior cleaning services for offices, retail spaces, and business complexes.",
+      title: t("Commercial Buildings"),
+      description: t("Professional exterior cleaning services for offices, retail spaces, and business complexes."),
       services: [
-        "High-rise window cleaning",
-        "Building facade pressure washing",
-        "Commercial gutter systems",
-        "Maintenance programs available"
+        t("High-rise window cleaning"),
+        t("Building facade pressure washing"),
+        t("Commercial gutter systems"),
+        t("Maintenance programs available")
       ],
       specialFeatures: [
-        "After-hours & weekend scheduling",
-        "Fully insured & bonded",
-        "Custom maintenance contracts",
-        "Minimal business disruption"
+        t("After-hours & weekend scheduling"),
+        t("Fully insured & bonded"),
+        t("Custom maintenance contracts"),
+        t("Minimal business disruption")
       ],
       image: "/lovable-uploads/44fea6cf-3991-4456-9cd6-04d2a1d836fd.png",
-      link: "/services/commercial-window-cleaning"
+      link: "/services/commercial-window-cleaning",
+      buttonText: t("Get Quote for Commercial Buildings")
     },
     {
       icon: Building,
-      title: "Multi-Story Apartments",
-      description: "Specialized cleaning for apartment complexes, condos, and high-rise residential buildings.",
+      title: t("Multi-Story Apartments"),
+      description: t("Specialized cleaning for apartment complexes, condos, and high-rise residential buildings."),
       services: [
-        "Water-fed pole window cleaning",
-        "Balcony & exterior cleaning",
-        "Common area maintenance",
-        "Strata-approved services"
+        t("Water-fed pole window cleaning"),
+        t("Balcony & exterior cleaning"),
+        t("Common area maintenance"),
+        t("Strata-approved services")
       ],
       specialFeatures: [
-        "Reach up to 5 stories safely",
-        "Strata council coordination",
-        "Bulk pricing for multiple units",
-        "Regular maintenance schedules"
+        t("Reach up to 5 stories safely"),
+        t("Strata council coordination"),
+        t("Bulk pricing for multiple units"),
+        t("Regular maintenance schedules")
       ],
       image: "/lovable-uploads/14d8f5da-5c4c-4be3-a974-8f34da54186f.png",
-      link: "/services/window-cleaning"
+      link: "/services/window-cleaning",
+      buttonText: t("Get Quote for Multi-Story Apartments")
     }
   ];
 
@@ -71,11 +77,10 @@ const PropertySpecificSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Tailored Services for Every Property Type
+            {t("Tailored Services for Every Property Type")}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            From residential homes to commercial buildings, we provide specialized cleaning solutions 
-            designed for your specific property needs.
+            {t("From residential homes to commercial buildings, we provide specialized cleaning solutions designed for your specific property needs.")}
           </p>
         </div>
 
@@ -100,7 +105,7 @@ const PropertySpecificSection = () => {
                   <p className="text-gray-600 mb-4">{property.description}</p>
                   
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-2 text-bc-red">Our Services:</h4>
+                    <h4 className="font-semibold mb-2 text-bc-red">{t("Our Services")}:</h4>
                     <ul className="text-sm text-gray-600 space-y-1">
                       {property.services.map((service, idx) => (
                         <li key={idx} className="flex items-center">
@@ -112,7 +117,7 @@ const PropertySpecificSection = () => {
                   </div>
                   
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-2 text-bc-red">Why Choose Us:</h4>
+                    <h4 className="font-semibold mb-2 text-bc-red">{t("Why Choose Us")}:</h4>
                     <ul className="text-sm text-gray-600 space-y-1">
                       {property.specialFeatures.map((feature, idx) => (
                         <li key={idx} className="flex items-center">
@@ -125,7 +130,7 @@ const PropertySpecificSection = () => {
                   
                   <Button asChild className="w-full bg-bc-red hover:bg-red-700">
                     <Link to={property.link}>
-                      Get Quote for {property.title}
+                      {property.buttonText}
                     </Link>
                   </Button>
                 </CardContent>

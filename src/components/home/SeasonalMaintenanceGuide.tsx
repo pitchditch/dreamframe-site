@@ -5,104 +5,106 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, CheckCircle, AlertCircle, Info } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface MaintenanceTask {
   id: string;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   season: 'spring' | 'summer' | 'fall' | 'winter';
   month: number;
   priority: 'high' | 'medium' | 'low';
   service: 'window-cleaning' | 'pressure-washing' | 'gutter-cleaning' | 'roof-cleaning';
 }
 
-const maintenanceTasks: MaintenanceTask[] = [
-  {
-    id: '1',
-    title: 'Spring Window Cleaning',
-    description: 'Remove winter grime and salt buildup from windows',
-    season: 'spring',
-    month: 3,
-    priority: 'high',
-    service: 'window-cleaning'
-  },
-  {
-    id: '2',
-    title: 'Pressure Wash Exterior',
-    description: 'Clean siding, driveways, and patios after winter',
-    season: 'spring',
-    month: 4,
-    priority: 'high',
-    service: 'pressure-washing'
-  },
-  {
-    id: '3',
-    title: 'Gutter Cleaning',
-    description: 'Remove debris and check for winter damage',
-    season: 'spring',
-    month: 4,
-    priority: 'medium',
-    service: 'gutter-cleaning'
-  },
-  {
-    id: '4',
-    title: 'Summer Window Maintenance',
-    description: 'Mid-year window cleaning for optimal clarity',
-    season: 'summer',
-    month: 7,
-    priority: 'medium',
-    service: 'window-cleaning'
-  },
-  {
-    id: '5',
-    title: 'Deck & Patio Cleaning',
-    description: 'Prepare outdoor spaces for summer entertaining',
-    season: 'summer',
-    month: 5,
-    priority: 'medium',
-    service: 'pressure-washing'
-  },
-  {
-    id: '6',
-    title: 'Fall Gutter Cleaning',
-    description: 'Remove leaves and prepare for winter',
-    season: 'fall',
-    month: 10,
-    priority: 'high',
-    service: 'gutter-cleaning'
-  },
-  {
-    id: '7',
-    title: 'Roof Cleaning & Inspection',
-    description: 'Remove moss and check for damage before winter',
-    season: 'fall',
-    month: 9,
-    priority: 'high',
-    service: 'roof-cleaning'
-  },
-  {
-    id: '8',
-    title: 'Pre-Winter Window Cleaning',
-    description: 'Final window cleaning before harsh weather',
-    season: 'fall',
-    month: 11,
-    priority: 'medium',
-    service: 'window-cleaning'
-  },
-  {
-    id: '9',
-    title: 'Winter Maintenance Check',
-    description: 'Inspect and clean accessible exterior areas',
-    season: 'winter',
-    month: 1,
-    priority: 'low',
-    service: 'pressure-washing'
-  }
-];
-
 const SeasonalMaintenanceGuide = () => {
+  const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedSeason, setSelectedSeason] = useState<string>('all');
+
+  const maintenanceTasks: MaintenanceTask[] = [
+    {
+      id: '1',
+      titleKey: 'Spring Window Cleaning',
+      descriptionKey: 'Remove winter grime and salt buildup from windows',
+      season: 'spring',
+      month: 3,
+      priority: 'high',
+      service: 'window-cleaning'
+    },
+    {
+      id: '2',
+      titleKey: 'Pressure Wash Exterior',
+      descriptionKey: 'Clean siding, driveways, and patios after winter',
+      season: 'spring',
+      month: 4,
+      priority: 'high',
+      service: 'pressure-washing'
+    },
+    {
+      id: '3',
+      titleKey: 'Gutter Cleaning',
+      descriptionKey: 'Remove debris and check for winter damage',
+      season: 'spring',
+      month: 4,
+      priority: 'medium',
+      service: 'gutter-cleaning'
+    },
+    {
+      id: '4',
+      titleKey: 'Summer Window Maintenance',
+      descriptionKey: 'Mid-year window cleaning for optimal clarity',
+      season: 'summer',
+      month: 7,
+      priority: 'medium',
+      service: 'window-cleaning'
+    },
+    {
+      id: '5',
+      titleKey: 'Deck & Patio Cleaning',
+      descriptionKey: 'Prepare outdoor spaces for summer entertaining',
+      season: 'summer',
+      month: 5,
+      priority: 'medium',
+      service: 'pressure-washing'
+    },
+    {
+      id: '6',
+      titleKey: 'Fall Gutter Cleaning',
+      descriptionKey: 'Remove leaves and prepare for winter',
+      season: 'fall',
+      month: 10,
+      priority: 'high',
+      service: 'gutter-cleaning'
+    },
+    {
+      id: '7',
+      titleKey: 'Roof Cleaning & Inspection',
+      descriptionKey: 'Remove moss and check for damage before winter',
+      season: 'fall',
+      month: 9,
+      priority: 'high',
+      service: 'roof-cleaning'
+    },
+    {
+      id: '8',
+      titleKey: 'Pre-Winter Window Cleaning',
+      descriptionKey: 'Final window cleaning before harsh weather',
+      season: 'fall',
+      month: 11,
+      priority: 'medium',
+      service: 'window-cleaning'
+    },
+    {
+      id: '9',
+      titleKey: 'Winter Maintenance Check',
+      descriptionKey: 'Inspect and clean accessible exterior areas',
+      season: 'winter',
+      month: 1,
+      priority: 'low',
+      service: 'pressure-washing'
+    }
+  ];
 
   const getCurrentSeason = () => {
     const month = new Date().getMonth() + 1;
@@ -161,11 +163,10 @@ const SeasonalMaintenanceGuide = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Seasonal Maintenance Guide
+            {t("Seasonal Maintenance Guide")}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Stay on top of your property maintenance with our comprehensive seasonal guide. 
-            Plan ahead and keep your home looking its best year-round.
+            {t("Stay on top of your property maintenance with our comprehensive seasonal guide. Plan ahead and keep your home looking its best year-round.")}
           </p>
         </div>
 
@@ -175,7 +176,7 @@ const SeasonalMaintenanceGuide = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CalendarDays className="w-5 h-5 text-bc-red" />
-                Maintenance Calendar
+                {t("Maintenance Calendar")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -186,7 +187,7 @@ const SeasonalMaintenanceGuide = () => {
                 className="rounded-md border"
               />
               <div className="mt-4">
-                <p className="text-sm text-gray-600 mb-2">Filter by season:</p>
+                <p className="text-sm text-gray-600 mb-2">{t("Filter by season:")}</p>
                 <div className="flex flex-wrap gap-2">
                   {['all', 'spring', 'summer', 'fall', 'winter'].map((season) => (
                     <Button
@@ -196,7 +197,7 @@ const SeasonalMaintenanceGuide = () => {
                       onClick={() => setSelectedSeason(season)}
                       className={selectedSeason === season ? "bg-bc-red hover:bg-red-700" : ""}
                     >
-                      {season.charAt(0).toUpperCase() + season.slice(1)}
+                      {season === 'all' ? t("All") : season.charAt(0).toUpperCase() + season.slice(1)}
                     </Button>
                   ))}
                 </div>
@@ -211,7 +212,7 @@ const SeasonalMaintenanceGuide = () => {
                 <Badge className={getSeasonColor(currentSeason)}>
                   {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}
                 </Badge>
-                Recommended Tasks
+                {t("Recommended Tasks")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -220,9 +221,9 @@ const SeasonalMaintenanceGuide = () => {
                   <div key={task.id} className="border-l-4 border-bc-red pl-4 py-2">
                     <div className="flex items-center gap-2 mb-1">
                       {getPriorityIcon(task.priority)}
-                      <h4 className="font-semibold">{task.title}</h4>
+                      <h4 className="font-semibold">{t(task.titleKey)}</h4>
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+                    <p className="text-sm text-gray-600 mb-2">{t(task.descriptionKey)}</p>
                     <Badge variant="outline" className="text-xs">
                       {task.service.replace('-', ' ')}
                     </Badge>
@@ -230,7 +231,7 @@ const SeasonalMaintenanceGuide = () => {
                 ))}
               </div>
               <Button className="w-full mt-4 bg-bc-red hover:bg-red-700">
-                Schedule {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)} Service
+                {t(`Schedule ${currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)} Service`)}
               </Button>
             </CardContent>
           </Card>
@@ -255,9 +256,9 @@ const SeasonalMaintenanceGuide = () => {
                       <div key={task.id} className="p-3 bg-white bg-opacity-90 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
                           {getPriorityIcon(task.priority)}
-                          <h5 className="font-medium text-sm text-gray-800">{task.title}</h5>
+                          <h5 className="font-medium text-sm text-gray-800">{t(task.titleKey)}</h5>
                         </div>
-                        <p className="text-xs text-gray-700 mb-2">{task.description}</p>
+                        <p className="text-xs text-gray-700 mb-2">{t(task.descriptionKey)}</p>
                         <Badge variant="outline" className="text-xs bg-white">
                           {task.service.replace('-', ' ')}
                         </Badge>
@@ -271,10 +272,10 @@ const SeasonalMaintenanceGuide = () => {
 
         <div className="text-center mt-8">
           <p className="text-gray-600 mb-4">
-            Need help planning your maintenance schedule? Our experts are here to help!
+            {t("Need help planning your maintenance schedule? Our experts are here to help!")}
           </p>
           <Button size="lg" className="bg-bc-red hover:bg-red-700">
-            Get Custom Maintenance Plan
+            {t("Get Custom Maintenance Plan")}
           </Button>
         </div>
       </div>

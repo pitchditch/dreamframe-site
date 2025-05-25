@@ -1,124 +1,183 @@
 
-import React, { useState } from 'react';
-import { Calendar } from '@/components/ui/calendar';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Sun, CloudRain, CalendarClock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Badge } from '@/components/ui/badge';
+import { Sun, Cloud, CloudRain, Wind, Thermometer } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
+
+// Mock weather data - in a real app, this would come from an API
+const mockWeatherData = {
+  location: "White Rock, BC",
+  temperature: 18,
+  condition: "Clear",
+  humidity: 65,
+  windSpeed: 12,
+  visibility: 10,
+  isOptimal: true
+};
 
 const WeatherService = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [currentWeather] = useState({
-    condition: 'clear',
-    temperature: 18,
-    location: 'White Rock, BC'
-  });
+  const { t } = useTranslation();
+  const [weather, setWeather] = useState(mockWeatherData);
+  const [optimalDays, setOptimalDays] = useState(22);
 
-  // Mock clear days for the month (in a real app, this would come from weather API)
-  const clearDays = [
-    1, 3, 5, 7, 9, 12, 14, 16, 18, 20, 22, 25, 27, 29, 31
-  ];
+  useEffect(() => {
+    // Simulate fetching weather data
+    const fetchWeather = () => {
+      // In a real app, you'd fetch from an API like OpenWeatherMap
+      setWeather(mockWeatherData);
+      
+      // Calculate optimal days for this month (mock calculation)
+      const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+      const randomOptimalDays = Math.floor(Math.random() * 10) + 15; // 15-25 optimal days
+      setOptimalDays(Math.min(randomOptimalDays, daysInMonth));
+    };
 
-  const isServiceAvailable = currentWeather.condition === 'clear';
+    fetchWeather();
+    // Update every 30 minutes
+    const interval = setInterval(fetchWeather, 30 * 60 * 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
-  // Function to check if a date is a clear day
-  const isDayClear = (date: Date) => {
-    return clearDays.includes(date.getDate());
-  };
-
-  // Custom day renderer for calendar
-  const modifiers = {
-    clear: (date: Date) => isDayClear(date)
-  };
-
-  const modifiersStyles = {
-    clear: {
-      backgroundColor: '#22c55e',
-      color: 'white',
-      borderRadius: '50%'
+  const getWeatherIcon = (condition: string) => {
+    switch (condition.toLowerCase()) {
+      case 'clear':
+      case 'sunny':
+        return <Sun className="w-8 h-8 text-yellow-500" />;
+      case 'cloudy':
+      case 'partly cloudy':
+        return <Cloud className="w-8 h-8 text-gray-500" />;
+      case 'rainy':
+      case 'rain':
+        return <CloudRain className="w-8 h-8 text-blue-500" />;
+      default:
+        return <Sun className="w-8 h-8 text-yellow-500" />;
     }
   };
 
+  const getConditionColor = (isOptimal: boolean) => {
+    return isOptimal ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+  };
+
+  // Generate calendar grid for current month
+  const generateCalendarDays = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startDay = firstDay.getDay();
+
+    const days = [];
+    
+    // Add empty cells for days before month starts
+    for (let i = 0; i < startDay; i++) {
+      days.push(<div key={`empty-${i}`} className="w-8 h-8"></div>);
+    }
+    
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const isOptimalDay = Math.random() > 0.3; // 70% chance of optimal day
+      const isToday = day === now.getDate();
+      
+      days.push(
+        <div
+          key={day}
+          className={`w-8 h-8 flex items-center justify-center text-xs rounded ${
+            isToday 
+              ? 'bg-bc-red text-white font-bold' 
+              : isOptimalDay 
+                ? 'bg-green-200 text-green-800' 
+                : 'bg-red-200 text-red-800'
+          }`}
+        >
+          {day}
+        </div>
+      );
+    }
+    
+    return days;
+  };
+
   return (
-    <section className="py-10 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-8 bg-gradient-to-br from-blue-50 to-blue-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Weather & Service Availability</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+            {t("Weather & Service Availability")}
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Check current weather conditions for window cleaning services in White Rock and Surrey
+            {t("Check current weather conditions for window cleaning services in White Rock and Surrey")}
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 max-w-4xl mx-auto">
-          {/* Current Weather - Smaller Card */}
-          <Card className="lg:w-1/3">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-xl">
-                <Sun className="text-yellow-500" size={20} />
-                Current Weather
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* Current Weather Card */}
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Thermometer className="w-5 h-5 text-bc-red" />
+                {t("Current Weather")}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-1">{currentWeather.temperature}°C</div>
-                <div className="text-base font-medium mb-1">Clear Skies</div>
-                <div className="text-sm text-gray-600 mb-3">{currentWeather.location}</div>
-                
-                {/* Service Availability Banner */}
-                <div className={`p-2 rounded-lg mt-2 ${isServiceAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  <div className="font-medium text-sm">
-                    {isServiceAvailable ? 'Perfect Conditions!' : 'Weather Advisory'}
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    {getWeatherIcon(weather.condition)}
+                    <span className="text-2xl font-bold">{weather.temperature}°C</span>
                   </div>
+                  <p className="text-lg font-semibold">{t("Clear Skies")}</p>
+                  <p className="text-sm text-gray-600">{t("White Rock, BC")}</p>
                 </div>
-                
-                {isServiceAvailable && (
-                  <Button 
-                    className="w-full mt-3 bg-bc-red hover:bg-red-700"
-                    asChild
-                  >
-                    <Link to="/contact">Book Now</Link>
-                  </Button>
-                )}
+                <Badge className={getConditionColor(weather.isOptimal)}>
+                  {weather.isOptimal ? t("Perfect Conditions!") : "Not Optimal"}
+                </Badge>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <Wind className="w-4 h-4 text-gray-500" />
+                  <span>Wind: {weather.windSpeed} km/h</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Cloud className="w-4 h-4 text-gray-500" />
+                  <span>Humidity: {weather.humidity}%</span>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Calendar with Clear Days - Cleaner Look */}
-          <Card className="lg:w-2/3">
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <CalendarClock size={20} />
-                  Clear Days This Month
-                </CardTitle>
-                <Badge variant="outline" className="text-xs">
-                  Green = Optimal Days
-                </Badge>
-              </div>
+          {/* Monthly Optimal Days Calendar */}
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sun className="w-5 h-5 text-bc-red" />
+                {t("Clear Days This Month")}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
-                modifiers={modifiers}
-                modifiersStyles={modifiersStyles}
-                className="rounded-md border mx-auto"
-              />
+              <div className="text-center mb-4">
+                <span className="text-3xl font-bold text-green-600">{optimalDays}</span>
+                <span className="text-lg text-gray-600"> / {new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()}</span>
+                <p className="text-sm text-gray-600 mt-1">{t("Green = Optimal Days")}</p>
+              </div>
+              
+              <div className="grid grid-cols-7 gap-1 text-center">
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                  <div key={index} className="text-xs font-semibold text-gray-500 pb-1">
+                    {day}
+                  </div>
+                ))}
+                {generateCalendarDays()}
+              </div>
             </CardContent>
           </Card>
         </div>
       </div>
     </section>
-  );
-};
-
-// Missing Badge import
-const Badge = ({ children, variant, className }: { children: React.ReactNode, variant?: string, className?: string }) => {
-  return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${className}`}>
-      {children}
-    </span>
   );
 };
 
