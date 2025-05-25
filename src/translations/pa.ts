@@ -1,3 +1,4 @@
+
 const punjabiTranslations = {
   // General
   "Home": "ਘਰ",
@@ -78,7 +79,78 @@ const punjabiTranslations = {
   "High-pressure cleaning": "ਉੱਚ-ਦਬਾਅ ਸਫਾਈ",
   "Removes stubborn stains": "ਜਿੱਦੀ ਦਾਗ਼ ਹਟਾਉਂਦਾ ਹੈ",
   "Professional equipment": "ਪੇਸ਼ੇਵਰ ਉਪਕਰਣ",
-  "Surface restoration": "ਸਤਹ ਬਹਾਲੀ"
+  "Surface restoration": "ਸਤਹ ਬਹਾਲੀ",
+
+  // Hero Section
+  "Professional Exterior Cleaning Services": "ਪੇਸ਼ੇਵਰ ਬਾਹਰੀ ਸਫਾਈ ਸੇਵਾਵਾਂ",
+  "Transform Your Property's Appearance": "ਆਪਣੀ ਜਾਇਦਾਦ ਦੀ ਦਿੱਖ ਬਦਲੋ",
+  "Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions": "ਪ੍ਰੀਮੀਅਮ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਅਤੇ ਸਫਾਈ ਹੱਲਾਂ ਨਾਲ ਸਰੇ, ਵ੍ਹਾਈਟ ਰਾਕ ਅਤੇ ਲੋਅਰ ਮੇਨਲੈਂਡ ਦੀ ਸੇਵਾ ਕਰਨਾ",
+  "Fully Insured": "ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਾਕ੍ਰਿਤ",
+  "5-Star Service": "5-ਸਟਾਰ ਸੇਵਾ",
+  "Locally Owned": "ਸਥਾਨਕ ਮਾਲਕੀ",
+  "Enter Your Postal Code": "ਆਪਣਾ ਡਾਕ ਕੋਡ ਦਾਖਲ ਕਰੋ",
+  "Check Prices & Availability": "ਕੀਮਤਾਂ ਅਤੇ ਉਪਲਬਧਤਾ ਦੀ ਜਾਂਚ ਕਰੋ",
+  "Jayden Fisher - Owner": "ਜੈਡਨ ਫਿਸ਼ਰ - ਮਾਲਕ",
+  "Every Job is Personally Checked by Me.": "ਹਰ ਕੰਮ ਦੀ ਜਾਂਚ ਮੈਂ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਕਰਦਾ ਹਾਂ।",
+  "— Jayden Fisher, Owner": "— ਜੈਡਨ ਫਿਸ਼ਰ, ਮਾਲਕ",
+  "Scroll Down": "ਹੇਠਾਂ ਸਕ੍ਰੋਲ ਕਰੋ",
+
+  // Premium Cleaning Solutions
+  "Premium Cleaning Solutions": "ਪ੍ਰੀਮੀਅਮ ਸਫਾਈ ਹੱਲ",
+  "Enhance your home's curb appeal and protect its value with professional, fully insured exterior cleaning services — personally checked by Jayden Fisher.": "ਪੇਸ਼ੇਵਰ, ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਾਕ੍ਰਿਤ ਬਾਹਰੀ ਸਫਾਈ ਸੇਵਾਵਾਂ ਨਾਲ ਆਪਣੇ ਘਰ ਦੀ ਆਕਰਸ਼ਣ ਸ਼ਕਤੀ ਵਧਾਓ ਅਤੇ ਇਸਦੀ ਕੀਮਤ ਦੀ ਰੱਖਿਆ ਕਰੋ — ਜੈਡਨ ਫਿਸ਼ਰ ਦੁਆਰਾ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਜਾਂਚੀ ਗਈ।",
+  "Window Cleaning": "ਵਿੰਡੋ ਸਫਾਈ",
+  "Crystal-clear windows inside and out using eco-friendly solutions.": "ਈਕੋ-ਫ੍ਰੈਂਡਲੀ ਹੱਲਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋਏ ਅੰਦਰ ਅਤੇ ਬਾਹਰ ਕ੍ਰਿਸਟਲ-ਸਾਫ਼ ਵਿੰਡੋਜ਼।",
+  "Included:": "ਸ਼ਾਮਲ:",
+  "Exterior & interior window cleaning": "ਬਾਹਰੀ ਅਤੇ ਅੰਦਰੂਨੀ ਵਿੰਡੋ ਸਫਾਈ",
+  "Screen & sill wipe-down": "ਸਕ੍ਰੀਨ ਅਤੇ ਸਿਲ ਸਾਫ਼ ਕਰਨਾ",
+  "Streak-free finish": "ਸਟ੍ਰੀਕ-ਫ੍ਰੀ ਫਿਨਿਸ਼",
+  "Track & debris cleaning": "ਟ੍ਰੈਕ ਅਤੇ ਮਲਬੇ ਦੀ ਸਫਾਈ",
+  "House Washing": "ਘਰ ਦੀ ਸਫਾਈ",
+  "Gentle soft-washing to remove dirt, mold, and algae without damage.": "ਬਿਨਾਂ ਨੁਕਸਾਨ ਦੇ ਗੰਦਗੀ, ਉੱਲੀ ਅਤੇ ਐਲਗੀ ਨੂੰ ਹਟਾਉਣ ਲਈ ਨਰਮ ਸਾਫਟ-ਵਾਸ਼ਿੰਗ।",
+  "Soft wash siding treatment": "ਸਾਫਟ ਵਾਸ਼ ਸਾਈਡਿੰਗ ਇਲਾਜ",
+  "Algae & mildew removal": "ਐਲਗੀ ਅਤੇ ਉੱਲੀ ਹਟਾਉਣਾ",
+  "Safe for stucco, vinyl, wood": "ਸਟਕੋ, ਵਿਨਾਇਲ, ਲੱਕੜ ਲਈ ਸੁਰੱਖਿਅਤ",
+  "Enhanced curb appeal": "ਵਧੀ ਹੋਈ ਆਕਰਸ਼ਣ ਸ਼ਕਤੀ",
+  "Gutter Cleaning": "ਗਟਰ ਸਫਾਈ",
+  "Prevent clogs and overflow damage with professional gutter care.": "ਪੇਸ਼ੇਵਰ ਗਟਰ ਦੇਖਭਾਲ ਨਾਲ ਰੁਕਾਵਟਾਂ ਅਤੇ ਓਵਰਫਲੋ ਨੁਕਸਾਨ ਨੂੰ ਰੋਕੋ।",
+  "Interior debris removal": "ਅੰਦਰੂਨੀ ਮਲਬਾ ਹਟਾਉਣਾ",
+  "Downspout flushing": "ਡਾਊਨਸਪਾਉਟ ਫਲਸ਼ਿੰਗ",
+  "Exterior gutter brightening": "ਬਾਹਰੀ ਗਟਰ ਚਮਕਾਉਣਾ",
+  "Safe ladder access": "ਸੁਰੱਖਿਅਤ ਪੌੜੀ ਪਹੁੰਚ",
+  "Roof Cleaning": "ਛਤ ਸਫਾਈ",
+  "Eliminate moss, algae, and stains — extend roof life safely.": "ਕਾਈ, ਐਲਗੀ, ਅਤੇ ਦਾਗ਼ਾਂ ਨੂੰ ਖਤਮ ਕਰੋ — ਛਤ ਦੀ ਜ਼ਿੰਦਗੀ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੂਪ ਵਿੱਚ ਵਧਾਓ।",
+  "Soft wash or brushing method": "ਸਾਫਟ ਵਾਸ਼ ਜਾਂ ਬ੍ਰਸ਼ਿੰਗ ਵਿਧੀ",
+  "Moss & algae treatment": "ਕਾਈ ਅਤੇ ਐਲਗੀ ਇਲਾਜ",
+  "Roof inspection": "ਛਤ ਨਿਰੀਖਣ",
+  "Gentle on shingles (no pressure)": "ਸ਼ਿੰਗਲਸ 'ਤੇ ਨਰਮ (ਬਿਨਾਂ ਦਬਾਅ)",
+  "See All Services": "ਸਾਰੀਆਂ ਸੇਵਾਵਾਂ ਵੇਖੋ",
+
+  // Featured Project
+  "Featured Project": "ਵਿਸ਼ੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
+  "See the transformation we achieved for this beautiful residential property in British Columbia": "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਇਸ ਸੁੰਦਰ ਰਿਹਾਇਸ਼ੀ ਜਾਇਦਾਦ ਲਈ ਅਸੀਂ ਜੋ ਤਬਦੀਲੀ ਲਿਆਈ ਹੈ ਉਸਨੂੰ ਵੇਖੋ",
+  "House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing": "ਵ੍ਹਾਈਟ ਰਾਕ ਵਿੱਚ ਘਰ ਦੀ ਸਫਾਈ | ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਦੁਆਰਾ ਸੰਪੂਰਨ ਬਾਹਰੀ ਸਫਾਈ",
+  "Complete House Washing Service": "ਸੰਪੂਰਨ ਘਰ ਵਾਸ਼ਿੰਗ ਸੇਵਾ",
+  "Full exterior siding cleaning": "ਪੂਰੀ ਬਾਹਰੀ ਸਾਈਡਿੰਗ ਸਫਾਈ",
+  "Safe low-pressure washing techniques": "ਸੁਰੱਖਿਅਤ ਘੱਟ-ਦਬਾਅ ਵਾਸ਼ਿੰਗ ਤਕਨੀਕਾਂ",
+  "Eco-friendly cleaning solutions": "ਈਕੋ-ਫ੍ਰੈਂਡਲੀ ਸਫਾਈ ਹੱਲ",
+  "Removal of dirt, mold, and algae": "ਗੰਦਗੀ, ਉੱਲੀ, ਅਤੇ ਐਲਗੀ ਨੂੰ ਹਟਾਉਣਾ",
+  "Protection of landscaping and surroundings": "ਲੈਂਡਸਕੇਪਿੰਗ ਅਤੇ ਆਸ-ਪਾਸ ਦੀ ਸੁਰੱਖਿਆ",
+  "This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.": "ਇਸ ਉੱਤਰੀ ਵੈਂਕੂਵਰ ਘਰ ਨੇ ਸਾਡੀ ਪ੍ਰੀਮੀਅਮ ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਸੇਵਾ ਪ੍ਰਾਪਤ ਕੀਤੀ, ਜਿਸਦੇ ਨਤੀਜੇ ਵਜੋਂ ਇੱਕ ਬੇਦਾਗ ਬਾਹਰੀ ਹਿੱਸਾ ਬਣਿਆ ਜੋ ਆਕਰਸ਼ਣ ਸ਼ਕਤੀ ਵਧਾਉਂਦਾ ਹੈ ਅਤੇ ਜਾਇਦਾਦ ਦੀ ਕੀਮਤ ਦੀ ਰੱਖਿਆ ਕਰਦਾ ਹੈ।",
+  "Learn About House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਬਾਰੇ ਜਾਣੋ",
+
+  // FAQ Section
+  "Frequently Asked Questions": "ਅਕਸਰ ਪੁੱ and ਜਾਂ and ਸਵਾ Aਲ",
+  "Everything you need to know about our services": "ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ ਬਾਰੇ ਤੁਹਾਨੂੰ ਜਾਣਨ ਦੀ ਜ਼ਰੂਰਤ ਵਾਲੀ ਹਰ ਚੀਜ਼",
+  "What areas do you service?": "ਤੁਸੀਂ ਕਿਹੜੇ ਖੇਤਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹੋ?",
+  "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.": "ਅਸੀਂ ਵ੍ਹਾਈਟ ਰਾਕ ਵਿੱਚ ਸਥਿਤ ਹਾਂ ਅਤੇ ਸਰੇ, ਲੈਂਗਲੇ, ਡੈਲਟਾ, ਵੈਂਕੂਵਰ ਅਤੇ ਆਸ-ਪਾਸ ਦੇ ਖੇਤਰਾਂ ਸਮੇਤ ਪੂਰੇ ਮੈਟਰੋ ਵੈਂਕੂਵਰ ਖੇਤਰ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।",
+  "Are you fully insured?": "ਕੀ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਾਕ੍ਰਿਤ ਹੋ?",
+  "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.": "ਹਾਂ, ਅਸੀਂ ਤੁਹਾਡੇ ਪੂਰੇ ਮਾਨਸਿਕ ਸ਼ਾਂਤੀ ਲਈ WCB ਕਵਰੇਜ ਅਤੇ ਦੇਣਦਾਰੀ ਬੀਮਾ ਨਾਲ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਾਕ੍ਰਿਤ ਹਾਂ।",
+  "How often should I have my windows cleaned?": "ਮੈਨੂੰ ਕਿੰਨੀ ਵਾਰ ਆਪਣੀਆਂ ਵਿੰਡੋਜ਼ ਸਾਫ਼ ਕਰਵਾਉਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ?",
+  "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.": "ਜ਼ਿਆਦਾਤਰ ਘਰ ਮਾਲਕਾਂ ਨੂੰ ਸਾਲ ਵਿੱਚ 2-3 ਵਾਰ ਵਿੰਡੋ ਸਫਾਈ ਤੋਂ ਫਾਇਦਾ ਹੁੰਦਾ ਹੈ, ਹਾਲਾਂਕਿ ਇਹ ਤੁਹਾਡੇ ਸਥਾਨ, ਜਾਇਦਾਦ ਦੀਆਂ ਸਥਿਤੀਆਂ ਅਤੇ ਨਿੱਜੀ ਤਰਜੀਹ ਦੇ ਆਧਾਰ 'ਤੇ ਵੱਖਰਾ ਹੁੰਦਾ ਹੈ।",
+  "Do you offer any guarantees?": "ਕੀ ਤੁਸੀਂ ਕੋਈ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹੋ?",
+  "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.": "ਬਿਲਕੁਲ! ਅਸੀਂ 100% ਸੰਤੁਸ਼ਟੀ ਗਾਰੰਟੀ ਦਿੰਦੇ ਹਾਂ। ਜੇਕਰ ਤੁਸੀਂ ਸਾਡੇ ਕੰਮ ਤੋਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੰਤੁਸ਼ਟ ਨਹੀਂ ਹੋ, ਤਾਂ ਅਸੀਂ ਬਿਨਾਂ ਕਿਸੇ ਵਾਧੂ ਲਾਗਤ ਦੇ ਵਾਪਸ ਆਵਾਂਗੇ ਅਤੇ ਇਸਨੂੰ ਠੀਕ ਕਰਾਂਗੇ।",
+  "How do you price your services?": "ਤੁਸੀਂ ਆਪਣੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਕੀਮਤ ਕਿਵੇਂ ਲਗਾਉਂਦੇ ਹੋ?",
+  "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.": "ਸਾਡੀ ਕੀਮਤ ਮੰਗੀ ਗਈ ਸੇਵਾ, ਜਾਇਦਾਦ ਦੇ ਆਕਾਰ, ਪਹੁੰਚਯੋਗਤਾ ਅਤੇ ਵਿਸ਼ੇਸ਼ ਲੋੜਾਂ 'ਤੇ ਆਧਾਰਿਤ ਹੈ। ਅਸੀਂ ਤੁਹਾਡੀ ਜਾਇਦਾਦ ਦੀਆਂ ਲੋੜਾਂ ਦਾ ਮੁਲਾਂਕਣ ਕਰਨ ਤੋਂ ਬਾਅਦ ਮੁਫਤ ਕੋਟੇਸ਼ਨ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ।"
 };
 
 export default punjabiTranslations;
