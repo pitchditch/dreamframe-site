@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Home, MessageSquare } from 'lucide-react';
+import { Shield, Star, Home, MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
@@ -98,6 +98,14 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-3 my-6 animate-on-scroll delay-200">
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Shield className="text-white mr-2" size={20} />
+              <span className="text-white font-medium">{t("Fully Insured")}</span>
+            </div>
+            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+              <Star className="text-yellow-400 mr-2" size={20} />
+              <span className="text-white font-medium">{t("5-Star Service")}</span>
+            </div>
             <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
               <Home className="text-white mr-2" size={20} />
               <span className="text-white font-medium">{t("Locally Owned")}</span>

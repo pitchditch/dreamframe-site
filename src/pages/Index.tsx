@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import ServiceBanner from '../components/home/ServiceBanner';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
@@ -95,9 +94,6 @@ const Index = () => {
       </Helmet>
       
       <HeroSection />
-      
-      {/* New Service Banner */}
-      <ServiceBanner />
       
       {/* Weather Service Integration */}
       <WeatherService />
