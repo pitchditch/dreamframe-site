@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
+import ServiceBanner from '../components/home/ServiceBanner';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
@@ -21,7 +22,6 @@ import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import SeasonalMaintenanceGuide from '../components/home/SeasonalMaintenanceGuide';
 import WeatherService from '../components/WeatherService';
-import ServiceBanner from '../components/ServiceBanner';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -96,7 +96,7 @@ const Index = () => {
       
       <HeroSection />
       
-      {/* Service Banner */}
+      {/* New Service Banner */}
       <ServiceBanner />
       
       {/* Weather Service Integration */}
