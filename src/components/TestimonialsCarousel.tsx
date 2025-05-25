@@ -5,20 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import TestimonialCard from './TestimonialCard';
 
-interface TestimonialWithProfile {
-  id: number;
-  quote: string;
-  name: string;
-  location?: string;
-  rating: number;
-  beforeAfterImage?: string;
-  profileImage?: string;
-  service?: "gutter-cleaning" | "window-cleaning" | "pressure-washing" | "roof-cleaning";
-}
-
 const TestimonialsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
+  const [allTestimonials, setAllTestimonials] = useState(testimonials);
   const carouselRef = useRef<HTMLDivElement>(null);
   
   // Initialize testimonials with prioritized before/after images

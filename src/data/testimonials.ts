@@ -1,10 +1,11 @@
+
 export interface Testimonial {
   id: number;
   name: string;
   location: string;
   rating: number;
   quote: string;
-  service: string;
+  service: "roof-cleaning" | "window-cleaning" | "pressure-washing" | "gutter-cleaning";
   beforeAfterImage?: string;
   profileImage?: string;
 }
