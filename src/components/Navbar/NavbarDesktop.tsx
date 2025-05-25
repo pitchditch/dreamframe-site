@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { Calculator, ChevronDown } from 'lucide-react';
+import { Calculator, ChevronDown, HelpCircle, Star } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -112,34 +112,49 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             >
               {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-[600px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
+            <NavigationMenuContent className="w-[700px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
               <div className="space-y-4">
-                <Link to="/testimonials" className="block p-3 hover:bg-gray-50 rounded-md transition-colors">
-                  <h4 className="font-medium text-black hover:text-bc-red">{t('Testimonials')}</h4>
-                  <p className="text-sm text-gray-600">Read what our customers say</p>
+                <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
+                  <Star className="h-6 w-6 text-yellow-500" />
+                  <div>
+                    <h4 className="font-medium text-black hover:text-bc-red">{t('Testimonials')}</h4>
+                    <p className="text-sm text-gray-600">Read what our customers say</p>
+                  </div>
                 </Link>
                 
-                <Link to="/equipment" className="block p-3 hover:bg-gray-50 rounded-md transition-colors">
-                  <h4 className="font-medium text-black hover:text-bc-red">{t('Our Equipment')}</h4>
-                  <p className="text-sm text-gray-600">Professional-grade cleaning tools</p>
+                <Link to="/equipment" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
+                  <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Equipment" className="h-6 w-6 object-contain" />
+                  <div>
+                    <h4 className="font-medium text-black hover:text-bc-red">{t('Our Equipment')}</h4>
+                    <p className="text-sm text-gray-600">Professional-grade cleaning tools</p>
+                  </div>
                 </Link>
                 
-                <Link to="/why-us" className="block p-3 hover:bg-gray-50 rounded-md transition-colors">
-                  <h4 className="font-medium text-black hover:text-bc-red">{t('Why Choose Us')}</h4>
-                  <p className="text-sm text-gray-600">Learn about our company values</p>
+                <Link to="/why-us" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
+                  <HelpCircle className="h-6 w-6 text-yellow-600" />
+                  <div>
+                    <h4 className="font-medium text-black hover:text-bc-red">{t('Why Choose Us')}</h4>
+                    <p className="text-sm text-gray-600">Learn about our company values</p>
+                  </div>
                 </Link>
                 
                 <div className="pt-4 border-t border-gray-200">
-                  <h4 className="font-medium text-gray-900 mb-3">{t('Leave a Review')}</h4>
-                  <div className="flex space-x-3">
-                    <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                  <h4 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                    <Star className="h-5 w-5 text-bc-red" />
+                    {t('Leave a Review')}
+                  </h4>
+                  <div className="flex space-x-4">
+                    <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
                       <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
+                      <span className="text-sm font-medium">Google</span>
                     </a>
-                    <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                    <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
                       <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
+                      <span className="text-sm font-medium">Yelp</span>
                     </a>
-                    <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                    <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
                       <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
+                      <span className="text-sm font-medium">BBB</span>
                     </a>
                   </div>
                 </div>
