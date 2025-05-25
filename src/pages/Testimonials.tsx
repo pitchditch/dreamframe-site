@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import TestimonialCard from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,23 @@ import { testimonials } from '@/data/testimonials';
 
 const Testimonials = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  
+  // Check for highlight parameter in URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const highlight = urlParams.get('highlight');
+    if (highlight === 'roof-savings') {
+      setActiveCategory('roof-cleaning');
+      // Scroll to the specific testimonial after a brief delay
+      setTimeout(() => {
+        const element = document.getElementById('testimonial-1');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          element.classList.add('ring-4', 'ring-green-400', 'ring-opacity-50');
+        }
+      }, 500);
+    }
+  }, []);
   
   const filteredTestimonials = activeCategory === 'all' 
     ? testimonials 
@@ -47,7 +64,7 @@ const Testimonials = () => {
 
           {/* Filter Tabs */}
           <Tabs 
-            defaultValue="all"
+            value={activeCategory}
             className="max-w-3xl mx-auto mt-8"
             onValueChange={setActiveCategory}
           >
@@ -93,15 +110,16 @@ const Testimonials = () => {
         {/* Testimonial Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTestimonials.map((testimonial) => (
-            <TestimonialCard
-              key={testimonial.id}
-              quote={testimonial.quote}
-              name={testimonial.name}
-              location={testimonial.location}
-              rating={testimonial.rating}
-              beforeAfterImage={testimonial.beforeAfterImage}
-              profileImage={testimonial.profileImage}
-            />
+            <div key={testimonial.id} id={`testimonial-${testimonial.id}`}>
+              <TestimonialCard
+                quote={testimonial.quote}
+                name={testimonial.name}
+                location={testimonial.location}
+                rating={testimonial.rating}
+                beforeAfterImage={testimonial.beforeAfterImage}
+                profileImage={testimonial.profileImage}
+              />
+            </div>
           ))}
         </div>
       </div>
