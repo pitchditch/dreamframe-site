@@ -5,12 +5,13 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 
 interface ServicesDropdownProps {
-  isOpen: boolean;
+  isOverVideo: boolean;
 }
 
 export const ServicesDropdown = ({ 
-  isOpen
+  isOverVideo
 }: ServicesDropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { t, language } = useTranslation();
   
@@ -23,8 +24,26 @@ export const ServicesDropdown = ({
   
   return (
     <div className="relative">
+      <button
+        className={`flex items-center space-x-1 transition-colors duration-300 hover:text-bc-red ${
+          isOverVideo ? 'text-white' : 'text-gray-900'
+        } ${getLanguageClass()}`}
+        onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+      >
+        <span>{t("Services")}</span>
+        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
       {isOpen && (
-        <div className="absolute z-20 mt-2 py-2 w-72 bg-white rounded-md shadow-lg">
+        <div 
+          className="absolute z-20 mt-2 py-2 w-72 bg-white rounded-md shadow-lg"
+          onMouseEnter={() => setIsOpen(true)}
+          onMouseLeave={() => setIsOpen(false)}
+        >
           <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">{t('Residential')}</div>
           
           <Link 
