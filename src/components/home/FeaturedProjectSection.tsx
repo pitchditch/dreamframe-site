@@ -20,7 +20,7 @@ const FeaturedProjectSection = () => {
           <div className="animate-on-scroll relative">
             <img 
               src="/lovable-uploads/deea00c1-1c27-44fd-b409-09d0f3ff0afa.png" 
-              alt={t("House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing")}
+              alt={t("Roof Cleaning in North Vancouver | Professional Moss Removal by BC Pressure Washing")}
               className="rounded-lg shadow-lg w-full h-auto"
             />
             <div className="absolute top-4 left-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg">
@@ -30,15 +30,15 @@ const FeaturedProjectSection = () => {
           </div>
           
           <div className="animate-on-scroll">
-            <h3 className="text-2xl font-bold mb-4">{t("Complete House Washing Service")}</h3>
+            <h3 className="text-2xl font-bold mb-4">{t("Professional Roof Cleaning Service")}</h3>
             <ul className="space-y-3 mb-6 text-gray-700">
               <li className="flex items-start">
                 <span className="text-bc-red mr-2">✓</span>
-                <span>{t("Full exterior siding cleaning")}</span>
+                <span>{t("Complete moss and algae removal")}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-bc-red mr-2">✓</span>
-                <span>{t("Safe low-pressure washing techniques")}</span>
+                <span>{t("Safe soft-washing techniques")}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-bc-red mr-2">✓</span>
@@ -46,15 +46,15 @@ const FeaturedProjectSection = () => {
               </li>
               <li className="flex items-start">
                 <span className="text-bc-red mr-2">✓</span>
-                <span>{t("Removal of dirt, mold, and algae")}</span>
+                <span>{t("Gutter cleaning and inspection")}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-bc-red mr-2">✓</span>
-                <span>{t("Protection of landscaping and surroundings")}</span>
+                <span>{t("Preventative maintenance approach")}</span>
               </li>
             </ul>
             <p className="mb-4 text-gray-600">
-              {t("This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.")}
+              {t("This North Vancouver home received our premium roof cleaning service, preventing costly roof repairs and extending the roof's lifespan significantly.")}
             </p>
             <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
               <p className="text-green-800 font-semibold">
@@ -64,9 +64,9 @@ const FeaturedProjectSection = () => {
                 Read Elizabeth's full review →
               </Link>
             </div>
-            <Link to="/services/house-washing">
+            <Link to="/services/roof-cleaning">
               <button className="btn-primary">
-                {t("Learn About House Washing")} <ArrowRight className="ml-2 inline-block" size={16} />
+                {t("Learn About Roof Cleaning")} <ArrowRight className="ml-2 inline-block" size={16} />
               </button>
             </Link>
           </div>
