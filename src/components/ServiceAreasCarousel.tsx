@@ -36,7 +36,7 @@ const ServiceAreasCarousel = ({ isDarkBackground = true }: ServiceAreasCarouselP
   return (
     <div className={`py-4 overflow-hidden w-full ${
       isDarkBackground 
-        ? 'bg-blue-900' 
+        ? 'bg-gray-900' 
         : 'bg-white border-t border-b border-gray-200'
     }`}>
       <div className="relative w-full">
@@ -47,7 +47,7 @@ const ServiceAreasCarousel = ({ isDarkBackground = true }: ServiceAreasCarouselP
               key={index} 
               className={`inline-flex px-5 py-2 mx-1 rounded-md ${
                 isDarkBackground 
-                  ? 'bg-blue-900 text-white' 
+                  ? 'bg-gray-800 text-white' 
                   : 'bg-white text-gray-800'
               }`}
             >

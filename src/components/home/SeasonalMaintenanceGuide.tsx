@@ -139,7 +139,7 @@ const SeasonalMaintenanceGuide = () => {
   const currentSeason = getCurrentSeason();
   const currentTasks = maintenanceTasks.filter(task => task.season === currentSeason);
 
-  // Season background styles with updated winter image
+  // Season background styles with updated images
   const seasonBackgroundStyle = (season: string) => {
     const commonStyles = "bg-cover bg-center text-white after:content-[''] after:absolute after:inset-0 after:bg-black after:bg-opacity-40 after:rounded-lg relative z-0";
     
@@ -147,11 +147,11 @@ const SeasonalMaintenanceGuide = () => {
       case 'spring':
         return `${commonStyles} bg-[url('/lovable-uploads/72fb0626-4eb1-451f-b8e0-2b4c1a0b0124.png')]`;
       case 'summer':
-        return `${commonStyles} bg-[url('/lovable-uploads/453b4258-4fed-4125-8587-dc518b9e12c3.png')]`;
-      case 'fall':
         return `${commonStyles} bg-[url('/lovable-uploads/1dc68ebd-89dd-4abf-8432-8ab04c509c12.png')]`;
+      case 'fall':
+        return `${commonStyles} bg-[url('/lovable-uploads/453b4258-4fed-4125-8587-dc518b9e12c3.png')]`;
       case 'winter':
-        return `${commonStyles} bg-[url('/lovable-uploads/0625036b-9b12-4c49-8aee-ffc07ed1fc1f.png')]`;
+        return `${commonStyles} bg-[url('/lovable-uploads/00f3f3d9-15e1-46f2-99c3-535d8e667e35.png')]`;
       default:
         return "";
     }

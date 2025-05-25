@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import SatisfiedClientsSection from '../components/home/SatisfiedClientsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
@@ -118,9 +119,11 @@ const Index = () => {
         <FounderSection />
         <TrustedCustomersSection />
         <CompetitorComparisonSection />
-        <TestimonialsSection />
         
-        {/* Referral Banner - moved directly after testimonials */}
+        {/* New Satisfied Clients Section */}
+        <SatisfiedClientsSection />
+        
+        {/* Referral Banner - moved directly after satisfied clients */}
         <ReferralButton />
         
         <SatisfactionGuaranteeSection />
