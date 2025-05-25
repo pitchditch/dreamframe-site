@@ -20,7 +20,7 @@ const CTABanner: React.FC = () => {
           
           <div className="flex-1 flex flex-row items-center justify-between">
             <div className="text-white">
-              <p className="font-bold text-sm sm:text-base">Get a Fast Quote – No Visit Needed</p>
+              <p className="font-bold text-sm sm:text-base">Ready for a free quote?</p>
               <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
             </div>
             

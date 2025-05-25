@@ -63,13 +63,6 @@ const punjabiTranslations = {
   "House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ",
   "Gutter Cleaning": "ਗਟਰ ਸਫਾਈ",
   "Roof Cleaning": "ਛੱਤ ਸਫਾਈ",
-  
-  // CTA Banner translations
-  "Get a Fast Quote – No Visit Needed": "ਤੇਜ਼ ਕੋਟੇਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ - ਕੋਈ ਮੁਲਾਕਾਤ ਦੀ ਲੋੜ ਨਹੀਂ",
-  "Get a response within 24 hours": "24 ਘੰਟਿਆਂ ਵਿੱਚ ਜਵਾਬ ਪ੍ਰਾਪਤ ਕਰੋ",
-  "Call": "ਕਾਲ ਕਰੋ",
-  "Get Quote": "ਕੋਟੇਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ",
-
   // FeaturedProjectSection translations
   "Featured Project": "ਵਿਸ਼ੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
   "See the transformation we achieved for this beautiful residential property in British Columbia": "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਇਸ ਸੁੰਦਰ ਰਿਹਾਇਸ਼ੀ ਜਾਇਦਾਦ ਲਈ ਅਸੀਂ ਜੋ ਤਬਦੀਲੀ ਪ੍ਰਾਪਤ ਕੀਤੀ ਹੈ ਉਸ ਨੂੰ ਦੇਖੋ",
@@ -140,17 +133,7 @@ const punjabiTranslations = {
   "White Rock, BC": "ਵ੍ਹਾਈਟ ਰਾਕ, ਬੀਸੀ",
   "Perfect Conditions!": "ਸੰਪੂਰਨ ਸਥਿਤੀਆਂ!",
   "Clear Days This Month": "ਇਸ ਮਹੀਨੇ ਸਾਫ ਦਿਨ",
-  "Green = Optimal Days": "ਹਰਾ = ਸਰਵੋਤਮ ਦਿਨ",
-
-  // New Referral Banner translations
-  "Spread the Word, Save 5%!": "ਗੱਲ ਫੈਲਾਓ, 5% ਬਚਾਓ!",
-  "Submit Screenshot for 5% Back": "5% ਵਾਪਸੀ ਲਈ ਸਕ੍ਰੀਨਸ਼ਾਟ ਜਮ੍ਹਾਂ ਕਰੋ",
-  "Recommend us in your local Facebook group and tag our page.": "ਆਪਣੇ ਸਥਾਨਕ ਫੇਸਬੁੱਕ ਗਰੁੱਪ ਵਿੱਚ ਸਾਡੀ ਸਿਫਾਰਸ਼ ਕਰੋ ਅਤੇ ਸਾਡੇ ਪੇਜ ਨੂੰ ਟੈਗ ਕਰੋ।",
-  "Send us a screenshot, and we'll refund you 5% of your service — no strings attached.": "ਸਾਨੂੰ ਇੱਕ ਸਕ੍ਰੀਨਸ਼ਾਟ ਭੇਜੋ, ਅਤੇ ਅਸੀਂ ਤੁਹਾਨੂੰ ਤੁਹਾਡੀ ਸੇਵਾ ਦਾ 5% ਵਾਪਸ ਕਰ ਦੇਵਾਂਗੇ - ਕੋਈ ਸ਼ਰਤ ਨਹੀਂ।",
-  "Bonus: If someone books from your post, you'll get a $20 credit too!": "ਬੋਨਸ: ਜੇ ਕੋਈ ਤੁਹਾਡੀ ਪੋਸਟ ਤੋਂ ਬੁੱਕ ਕਰਦਾ ਹੈ, ਤਾਂ ਤੁਹਾਨੂੰ $20 ਕ੍ਰੈਡਿਟ ਵੀ ਮਿਲੇਗਾ!",
-  "How to tag us:": "ਸਾਨੂੰ ਕਿਵੇਂ ਟੈਗ ਕਰਨਾ ਹੈ:",
-  "In your group post, type @BC Pressure Washing and select our business page.": "ਆਪਣੀ ਗਰੁੱਪ ਪੋਸਟ ਵਿੱਚ, @BC Pressure Washing ਟਾਈਪ ਕਰੋ ਅਤੇ ਸਾਡਾ ਵਿਆਪਾਰਕ ਪੇਜ ਚੁਣੋ।",
-  "Upload Screenshot": "ਸਕ੍ਰੀਨਸ਼ਾਟ ਅਪਲੋਡ ਕਰੋ",
+  "Green = Optimal Days": "ਹਰਾ = ਸਰਵੋਤਮ ਦਿਨ"
 };
 
 export default punjabiTranslations;
