@@ -20,7 +20,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`md:hidden fixed left-0 right-0 z-50 transition-all duration-300 overflow-hidden bg-white border-t border-gray-200 ${
+        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white border-t border-gray-200 ${
           isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
         }`}
       >
@@ -54,7 +54,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 isServicesMenuOpen ? 'max-h-[800px] py-2' : 'max-h-0'
               }`}>
                 <div className="flex flex-col space-y-1 border-l-2 border-gray-100 pl-4">
-                  <div className="text-xs font-semibold text-gray-500 uppercase py-2">{t('Residential')}</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential</div>
                   
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
@@ -81,7 +81,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
                   
-                  <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">{t('Commercial')}</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">Commercial</div>
                   
                   <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">

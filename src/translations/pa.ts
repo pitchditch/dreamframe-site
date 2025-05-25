@@ -165,6 +165,23 @@ const punjabiTranslations = {
   "Commercial Window Cleaning": "ਵਪਾਰਕ ਖਿੜਕੀ ਸਫਾਈ",
   "Commercial Pressure Washing": "ਵਪਾਰਕ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ",
   "Post-Construction Cleaning": "ਉਸਾਰੀ ਤੋਂ ਬਾਅਦ ਸਫਾਈ",
+  "Window Cleaning": "ਖਿੜਕੀ ਸਫਾਈ",
+  "House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ",
+  "Gutter Cleaning": "ਗਟਰ ਸਫਾਈ",
+  "Roof Cleaning": "ਛੱਤ ਸਫਾਈ",
+
+  // FeaturedProjectSection translations
+  "Featured Project": "ਵਿਸ਼ੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
+  "See the transformation we achieved for this beautiful residential property in British Columbia": "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਇਸ ਸੁੰਦਰ ਰਿਹਾਇਸ਼ੀ ਜਾਇਦਾਦ ਲਈ ਅਸੀਂ ਜੋ ਤਬਦੀਲੀ ਪ੍ਰਾਪਤ ਕੀਤੀ ਹੈ ਉਸ ਨੂੰ ਦੇਖੋ",
+  "House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing": "ਵ੍ਹਾਈਟ ਰੌਕ ਵਿੱਚ ਹਾਊਸ ਵਾਸ਼ਿੰਗ | ਬੀਸੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼ਿੰਗ ਦੁਆਰਾ ਪੂਰਨ ਬਾਹਰੀ ਸਫਾਈ",
+  "Complete House Washing Service": "ਪੂਰਨ ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਸੇਵਾ",
+  "Full exterior siding cleaning": "ਪੂਰਨ ਬਾਹਰੀ ਸਾਈਡਿੰਗ ਸਫਾਈ",
+  "Safe low-pressure washing techniques": "ਸੁਰੱਖਿਅਤ ਘੱਟ ਦਬਾਅ ਵਾਲੀ ਧੁਲਾਈ ਤਕਨੀਕਾਂ",
+  "Eco-friendly cleaning solutions": "ਵਾਤਾਵਰਣ ਅਨੁਕੂਲ ਸਫਾਈ ਹੱਲ",
+  "Removal of dirt, mold, and algae": "ਗੰਦਗੀ, ਫੰਗਸ ਅਤੇ ਐਲਗੀ ਨੂੰ ਹਟਾਉਣਾ",
+  "Protection of landscaping and surroundings": "ਲੈਂਡਸਕੇਪਿੰਗ ਅਤੇ ਮਾਹੌਲ ਦੀ ਸੁਰੱਖਿਆ",
+  "This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.": "ਇਸ ਉੱਤਰੀ ਵੈਨਕੂਵਰ ਘਰ ਨੂੰ ਸਾਡੀ ਪ੍ਰੀਮੀਅਮ ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਸੇਵਾ ਮਿਲੀ, ਜਿਸ ਦੇ ਨਤੀਜੇ ਵਜੋਂ ਇੱਕ ਦਾਗ਼ਰਹਿਤ ਬਾਹਰੀ ਹਿੱਸਾ ਮਿਲਿਆ ਜੋ ਆਕਰਸ਼ਣ ਵਧਾਉਂਦਾ ਹੈ ਅਤੇ ਜਾਇਦਾਦ ਦੀ ਕੀਮਤ ਦੀ ਰੱਖਿਆ ਕਰਦਾ ਹੈ।",
+  "Learn About House Washing": "ਹਾਊਸ ਵਾਸ਼ਿੰਗ ਬਾਰੇ ਜਾਣੋ",
 
   // PropertySpecificSection translations
   "Tailored Services for Every Property Type": "ਹਰ ਜਾਇਦਾਦ ਕਿਸਮ ਲਈ ਅਨੁਕੂਲ ਸੇਵਾਵਾਂ",
@@ -221,7 +238,6 @@ const punjabiTranslations = {
   "Remove winter grime and salt buildup from windows": "ਖਿੜਕੀਆਂ ਤੋਂ ਸਰਦੀ ਦੀ ਗੰਦਗੀ ਅਤੇ ਨਮਕ ਦਾ ਨਿਰਮਾਣ ਹਟਾਓ",
   "Pressure Wash Exterior": "ਬਾਹਰੀ ਪ੍ਰੈਸ਼ਰ ਵਾਸ਼",
   "Clean siding, driveways, and patios after winter": "ਸਰਦੀ ਤੋਂ ਬਾਅਦ ਸਾਈਡਿੰਗ, ਡਰਾਈਵਵੇ ਅਤੇ ਵਿਹੜੇ ਸਾਫ ਕਰੋ",
-  "Gutter Cleaning": "ਗਟਰ ਸਫਾਈ",
   "Remove debris and check for winter damage": "ਮਲਬਾ ਹਟਾਓ ਅਤੇ ਸਰਦੀ ਦੇ ਨੁਕਸਾਨ ਦੀ ਜਾਂਚ ਕਰੋ",
   "Summer Window Maintenance": "ਗਰਮੀ ਖਿੜਕੀ ਰੱਖ-ਰਖਾਅ",
   "Mid-year window cleaning for optimal clarity": "ਸਰਵੋਤਮ ਸਪਸ਼ਟਤਾ ਲਈ ਮੱਧ-ਸਾਲ ਖਿੜਕੀ ਸਫਾਈ",

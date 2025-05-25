@@ -1,3 +1,4 @@
+
 const hindiTranslations = {
   "Home": "होम",
   "Why Us": "हमें क्यों चुनें",
@@ -18,6 +19,19 @@ const hindiTranslations = {
   "House Washing": "हाउस वाशिंग",
   "Gutter Cleaning": "गटर की सफाई",
   "Roof Cleaning": "छत की सफाई",
+  
+  // FeaturedProjectSection translations
+  "Featured Project": "विशेष परियोजना",
+  "See the transformation we achieved for this beautiful residential property in British Columbia": "ब्रिटिश कोलंबिया में इस सुंदर आवासीय संपत्ति के लिए हमारे द्वारा प्राप्त परिवर्तन देखें",
+  "House Washing in White Rock | Complete Exterior Cleaning by BC Pressure Washing": "व्हाइट रॉक में हाउस वाशिंग | बीसी प्रेशर वाशिंग द्वारा पूर्ण बाहरी सफाई",
+  "Complete House Washing Service": "पूर्ण हाउस वाशिंग सेवा",
+  "Full exterior siding cleaning": "पूर्ण बाहरी साइडिंग सफाई",
+  "Safe low-pressure washing techniques": "सुरक्षित कम दबाव वाली धुलाई तकनीक",
+  "Eco-friendly cleaning solutions": "पर्यावरण अनुकूल सफाई समाधान",
+  "Removal of dirt, mold, and algae": "गंदगी, फफूंद और शैवाल को हटाना",
+  "Protection of landscaping and surroundings": "भूदृश्य और आसपास की सुरक्षा",
+  "This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.": "इस उत्तर वैंकूवर घर को हमारी प्रीमियम हाउस वाशिंग सेवा मिली, जिसके परिणामस्वरूप एक निर्दोष बाहरी भाग मिला जो आकर्षण बढ़ाता है और संपत्ति मूल्य की रक्षा करता है।",
+  "Learn About House Washing": "हाउस वाशिंग के बारे में जानें",
   
   // PropertySpecificSection translations
   "Tailored Services for Every Property Type": "हर संपत्ति प्रकार के लिए अनुकूलित सेवाएं",
@@ -74,7 +88,6 @@ const hindiTranslations = {
   "Remove winter grime and salt buildup from windows": "खिड़कियों से सर्दी की गंदगी और नमक का निर्माण हटाएं",
   "Pressure Wash Exterior": "बाहरी प्रेशर वॉश",
   "Clean siding, driveways, and patios after winter": "सर्दी के बाद साइडिंग, ड्राइववे और आंगन साफ करें",
-  "Gutter Cleaning": "गटर सफाई",
   "Remove debris and check for winter damage": "मलबा हटाएं और सर्दी के नुकसान की जांच करें",
   "Summer Window Maintenance": "गर्मी खिड़की रखरखाव",
   "Mid-year window cleaning for optimal clarity": "इष्टतम स्पष्टता के लिए मध्य-वर्ष खिड़की सफाई",

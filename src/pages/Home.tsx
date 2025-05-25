@@ -16,7 +16,7 @@ import GutterFaceCleaningSection from '@/components/home/GutterFaceCleaningSecti
 import PackagesSection from '@/components/home/PackagesSection';
 import OwnerOperatedSection from '@/components/home/OwnerOperatedSection';
 import SatisfactionGuaranteeSection from '@/components/home/SatisfactionGuaranteeSection';
-import LanguageSelector from '@/components/LanguageSelector';
+import FeaturedProjectSection from '@/components/home/FeaturedProjectSection';
 
 const Home = () => {
   // Explicitly getting language related functions to ensure they're available
@@ -135,15 +135,12 @@ const Home = () => {
         </script>
       </Helmet>
 
-      <div className="absolute top-4 right-4 z-50">
-        <LanguageSelector />
-      </div>
-
       <HeroSection />
       
       <div className="relative z-20 -mt-24 md:-mt-32">
         <div className="bg-white rounded-t-3xl shadow-xl">
           <RedCarSection />
+          <FeaturedProjectSection />
           <PremiumSolutionsSection />
           {/* Add data-component attribute to help with visibility detection */}
           <div data-component="owner-operated">
