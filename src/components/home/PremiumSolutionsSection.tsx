@@ -83,22 +83,24 @@ const PremiumSolutionsSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("Premium Cleaning Solutions")}</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+            {t("Premium Cleaning Solutions")}
+          </h2>
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             {t("Enhance your home's curb appeal and protect its value with professional, fully insured exterior cleaning services — personally checked by Jayden Fisher.")}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-xl hover:-translate-y-1 h-full flex flex-col"
+              className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col group"
             >
-              <div className="h-48 relative overflow-hidden">
+              <div className="h-56 relative overflow-hidden">
                 <HoverImageSlideshow 
                   images={service.slideImages} 
                   interval={2500}
@@ -107,35 +109,41 @@ const PremiumSolutionsSection = () => {
                   <img 
                     src={service.image} 
                     alt={service.title} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </HoverImageSlideshow>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               
-              <div className="p-5 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold mb-2">
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-bc-red transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
+                <p className="text-gray-600 mb-6 leading-relaxed flex-grow text-base">
+                  {service.description}
+                </p>
                 
-                <div className="mb-4">
-                  <h4 className="font-semibold text-sm text-gray-500 mb-2">{t("Included")}:</h4>
-                  <ul className="space-y-2">
+                <div className="mb-6">
+                  <h4 className="font-semibold text-gray-800 mb-3 text-sm uppercase tracking-wide">
+                    {t("Included")}:
+                  </h4>
+                  <ul className="space-y-3">
                     {service.included.map((item, idx) => (
                       <li key={idx} className="flex items-start">
-                        <Check className="text-green-500 mr-2 mt-1 flex-shrink-0" size={16} />
-                        <span className="text-gray-700 text-sm">{item}</span>
+                        <Check className="text-green-500 mr-3 mt-0.5 flex-shrink-0" size={18} />
+                        <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="mt-auto pt-2">
+                <div className="mt-auto">
                   <Link 
                     to={service.link} 
-                    className="flex items-center text-bc-red hover:text-bc-red/80 font-medium"
+                    className="inline-flex items-center text-bc-red hover:text-red-700 font-semibold transition-all duration-200 group/link"
                   >
-                    {t("Learn More")} <ArrowRight className="ml-1" size={16} />
+                    {t("Learn More")} 
+                    <ArrowRight className="ml-2 group-hover/link:translate-x-1 transition-transform" size={18} />
                   </Link>
                 </div>
               </div>
@@ -143,11 +151,10 @@ const PremiumSolutionsSection = () => {
           ))}
         </div>
         
-        {/* Add "See All Services" button */}
-        <div className="text-center mt-12">
-          <Button asChild variant="bc-red" size="lg" className="rounded-full px-8">
+        <div className="text-center mt-16">
+          <Button asChild variant="bc-red" size="lg" className="rounded-full px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
             <Link to="/services">
-              {t("See All Services")} <ArrowRight className="ml-2" size={16} />
+              {t("See All Services")} <ArrowRight className="ml-3" size={20} />
             </Link>
           </Button>
         </div>
