@@ -22,7 +22,7 @@ const ReferralBanner = () => {
             {/* Content */}
             <div className="flex-1 text-center md:text-left">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                {t("Get 5% Back – Just for Spreading the Word!")}
+                {t("Spread the Word, Save 5%!")}
               </h2>
               <div className="text-gray-700 mb-4 space-y-2">
                 <p>
@@ -49,7 +49,7 @@ const ReferralBanner = () => {
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
               >
                 <a href="mailto:info@bcpressurewashing.ca?subject=Referral Screenshot&body=Hi! I shared your business in a local Facebook group. Please find the screenshot attached.">
-                  📸 {t("Upload Screenshot")}
+                  📸 {t("Submit Screenshot for 5% Back")}
                 </a>
               </Button>
             </div>

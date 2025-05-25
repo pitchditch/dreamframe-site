@@ -143,7 +143,8 @@ const punjabiTranslations = {
   "Green = Optimal Days": "ਹਰਾ = ਸਰਵੋਤਮ ਦਿਨ",
 
   // New Referral Banner translations
-  "Get 5% Back – Just for Spreading the Word!": "5% ਵਾਪਸ ਪਾਓ - ਸਿਰਫ਼ ਗੱਲ ਫੈਲਾਉਣ ਲਈ!",
+  "Spread the Word, Save 5%!": "ਗੱਲ ਫੈਲਾਓ, 5% ਬਚਾਓ!",
+  "Submit Screenshot for 5% Back": "5% ਵਾਪਸੀ ਲਈ ਸਕ੍ਰੀਨਸ਼ਾਟ ਜਮ੍ਹਾਂ ਕਰੋ",
   "Recommend us in your local Facebook group and tag our page.": "ਆਪਣੇ ਸਥਾਨਕ ਫੇਸਬੁੱਕ ਗਰੁੱਪ ਵਿੱਚ ਸਾਡੀ ਸਿਫਾਰਸ਼ ਕਰੋ ਅਤੇ ਸਾਡੇ ਪੇਜ ਨੂੰ ਟੈਗ ਕਰੋ।",
   "Send us a screenshot, and we'll refund you 5% of your service — no strings attached.": "ਸਾਨੂੰ ਇੱਕ ਸਕ੍ਰੀਨਸ਼ਾਟ ਭੇਜੋ, ਅਤੇ ਅਸੀਂ ਤੁਹਾਨੂੰ ਤੁਹਾਡੀ ਸੇਵਾ ਦਾ 5% ਵਾਪਸ ਕਰ ਦੇਵਾਂਗੇ - ਕੋਈ ਸ਼ਰਤ ਨਹੀਂ।",
   "Bonus: If someone books from your post, you'll get a $20 credit too!": "ਬੋਨਸ: ਜੇ ਕੋਈ ਤੁਹਾਡੀ ਪੋਸਟ ਤੋਂ ਬੁੱਕ ਕਰਦਾ ਹੈ, ਤਾਂ ਤੁਹਾਨੂੰ $20 ਕ੍ਰੈਡਿਟ ਵੀ ਮਿਲੇਗਾ!",

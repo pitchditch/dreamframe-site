@@ -8,12 +8,12 @@ const HeroSection = () => {
   const { t } = useTranslation();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Updated seasonal images - fall/winter focused
+  // Original seasonal images
   const backgroundImages = [
-    '/lovable-uploads/b95d1627-279e-41d5-877b-865a57c88997.png', // Winter street scene (new)
-    'https://images.unsplash.com/photo-1472396961693-142e6e269027', // Fall deer scene
-    'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9', // Winter pine trees
-    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05', // Winter foggy mountain
+    '/lovable-uploads/b95d1627-279e-41d5-877b-865a57c88997.png',
+    'https://images.unsplash.com/photo-1472396961693-142e6e269027',
+    'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9',
+    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05',
   ];
 
   useEffect(() => {

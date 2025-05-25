@@ -20,15 +20,27 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="hidden md:flex items-center space-x-6">
+    <div className="hidden md:flex items-center justify-between w-full max-w-4xl">
       <NavigationMenu>
-        <NavigationMenuList className="space-x-6">
+        <NavigationMenuList className="flex items-center space-x-8">
           <NavigationMenuItem>
             <Link 
               to="/" 
-              className={`transition-colors hover:text-bc-red font-medium ${
-                isOverVideo ? 'text-white' : 'text-black'
+              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg ${
+                isOverVideo ? 'text-white text-shadow-lg' : 'text-black'
               }`}
+              style={{
+                textShadow: isOverVideo ? '0 0 10px rgba(255, 0, 0, 0.5)' : 'none',
+                filter: 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (isOverVideo) {
+                  e.target.style.filter = 'drop-shadow(0 0 8px rgba(255, 0, 0, 0.8))';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.filter = 'none';
+              }}
             >
               {t('Home')}
             </Link>
@@ -37,9 +49,21 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           <NavigationMenuItem>
             <Link 
               to="/why-us" 
-              className={`transition-colors hover:text-bc-red font-medium ${
-                isOverVideo ? 'text-white' : 'text-black'
+              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg ${
+                isOverVideo ? 'text-white text-shadow-lg' : 'text-black'
               }`}
+              style={{
+                textShadow: isOverVideo ? '0 0 10px rgba(255, 0, 0, 0.5)' : 'none',
+                filter: 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (isOverVideo) {
+                  e.target.style.filter = 'drop-shadow(0 0 8px rgba(255, 0, 0, 0.8))';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.filter = 'none';
+              }}
             >
               {t('Why Us')}
             </Link>
@@ -47,9 +71,21 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-colors hover:text-bc-red font-medium bg-transparent border-none shadow-none p-0 h-auto ${
-                isOverVideo ? 'text-white' : 'text-black'
+              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg bg-transparent border-none shadow-none p-0 h-auto ${
+                isOverVideo ? 'text-white text-shadow-lg' : 'text-black'
               }`}
+              style={{
+                textShadow: isOverVideo ? '0 0 10px rgba(255, 0, 0, 0.5)' : 'none',
+                filter: 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (isOverVideo) {
+                  e.target.style.filter = 'drop-shadow(0 0 8px rgba(255, 0, 0, 0.8))';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.filter = 'none';
+              }}
             >
               {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
             </NavigationMenuTrigger>
@@ -106,9 +142,21 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
           <NavigationMenuItem>
             <NavigationMenuTrigger 
-              className={`transition-colors hover:text-bc-red font-medium bg-transparent border-none shadow-none p-0 h-auto ${
-                isOverVideo ? 'text-white' : 'text-black'
+              className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg bg-transparent border-none shadow-none p-0 h-auto ${
+                isOverVideo ? 'text-white text-shadow-lg' : 'text-black'
               }`}
+              style={{
+                textShadow: isOverVideo ? '0 0 10px rgba(255, 0, 0, 0.5)' : 'none',
+                filter: 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (isOverVideo) {
+                  e.target.style.filter = 'drop-shadow(0 0 8px rgba(255, 0, 0, 0.8))';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.filter = 'none';
+              }}
             >
               {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
             </NavigationMenuTrigger>
@@ -149,28 +197,54 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenuList>
       </NavigationMenu>
       
-      <Link 
-        to="/calculator" 
-        className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors ${
-          isOverVideo 
-            ? 'border-white text-white hover:bg-white hover:text-black' 
-            : 'border-bc-red text-bc-red hover:bg-bc-red hover:text-white'
-        }`}
-      >
-        <Calculator size={16} />
-        {t('Get a Quote')}
-      </Link>
-      
-      <Link 
-        to="/contact" 
-        className={`transition-colors hover:text-bc-red font-medium ${
-          isOverVideo ? 'text-white' : 'text-black'
-        }`}
-      >
-        {t('Contact')}
-      </Link>
-      
-      <LanguageSelector />
+      <div className="flex items-center space-x-6">
+        <Link 
+          to="/calculator" 
+          className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-all duration-300 font-bold hover:scale-105 ${
+            isOverVideo 
+              ? 'border-white text-white hover:bg-bc-red hover:text-white hover:border-bc-red' 
+              : 'border-bc-red text-bc-red hover:bg-bc-red hover:text-white'
+          }`}
+          style={{
+            textShadow: isOverVideo ? '0 0 10px rgba(255, 0, 0, 0.5)' : 'none',
+            filter: 'none'
+          }}
+          onMouseEnter={(e) => {
+            if (isOverVideo) {
+              e.target.style.filter = 'drop-shadow(0 0 8px rgba(255, 0, 0, 0.8))';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.filter = 'none';
+          }}
+        >
+          <Calculator size={16} />
+          {t('Get a Quote')}
+        </Link>
+        
+        <Link 
+          to="/contact" 
+          className={`transition-all duration-300 font-bold text-lg hover:scale-110 hover:text-bc-red hover:drop-shadow-lg ${
+            isOverVideo ? 'text-white text-shadow-lg' : 'text-black'
+          }`}
+          style={{
+            textShadow: isOverVideo ? '0 0 10px rgba(255, 0, 0, 0.5)' : 'none',
+            filter: 'none'
+          }}
+          onMouseEnter={(e) => {
+            if (isOverVideo) {
+              e.target.style.filter = 'drop-shadow(0 0 8px rgba(255, 0, 0, 0.8))';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.filter = 'none';
+          }}
+        >
+          {t('Contact')}
+        </Link>
+        
+        <LanguageSelector />
+      </div>
     </div>
   );
 };
