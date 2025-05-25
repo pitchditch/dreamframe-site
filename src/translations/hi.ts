@@ -11,6 +11,54 @@ const hindiTranslations = {
   "Email Us": "हमें ईमेल करें",
   "Scroll Down": "नीचे स्क्रॉल करें",
   "Transform Your Property's Appearance": "अपनी संपत्ति की उपस्थिति को बदलें",
+  "Why Us": "हमें क्यों चुनें",
+  "More": "और",
+  "Call: 778-808-7620": "कॉल: 778-808-7620",
+  "Submit": "जमा करें",
+  "Send Message": "संदेश भेजें",
+  "Learn More": "और जानें",
+  "View All": "सभी देखें",
+  "Read More": "और पढ़ें",
+  "Get Started": "शुरू करें",
+  "Book Now": "अभी बुक करें",
+  "Free Quote": "मुफ्त मूल्य",
+  "Our Services": "हमारी सेवाएं",
+  "Contact Us": "हमसे संपर्क करें",
+  "About Us": "हमारे बारे में",
+  "Testimonials": "प्रशंसापत्र",
+  "FAQ": "आम सवाल",
+  "Blog": "ब्लॉग",
+  "Menu": "मेनू",
+  "Close": "बंद करें",
+  "Next": "अगला",
+  "Previous": "पिछला",
+  "Loading": "लोड हो रहा है",
+  "Search": "खोज",
+  "Filter": "फिल्टर",
+  "Sort": "सॉर्ट करें",
+  "English": "अंग्रेजी",
+  "Punjabi": "पंजाबी",
+  
+  // Page titles and descriptions
+  "BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock": "बीसी प्रेशर वॉशिंग - सरी और व्हाइट रॉक में #1 विंडो और प्रेशर वॉशिंग सेवाएं",
+  "Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.": "सरी, व्हाइट रॉक और मेट्रो वैंकूवर में पेशेवर प्रेशर वॉशिंग, विंडो क्लीनिंग, छत और गटर क्लीनिंग सेवाएं। पारिवारिक स्वामित्व वाले स्थानीय सफाई विशेषज्ञ।",
+  "Everything you need to know about our services": "हमारी सेवाओं के बारे में सब कुछ जो आपको जानना चाहिए",
+
+  // FAQ Content
+  "What areas do you service?": "आप किन क्षेत्रों में सेवा करते हैं?",
+  "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.": "हम व्हाइट रॉक में स्थित हैं और सरी, लैंगले, डेल्टा, वैंकूवर और आसपास के क्षेत्रों सहित पूरे मेट्रो वैंकूवर क्षेत्र में सेवा करते हैं।",
+  
+  "Are you fully insured?": "क्या आप पूरी तरह से बीमित हैं?",
+  "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.": "हां, हम आपकी पूरी मानसिक शांति के लिए WCB कवरेज और देयता बीमा के साथ पूरी तरह से बीमित हैं।",
+  
+  "How often should I have my windows cleaned?": "मुझे कितनी बार अपनी खिड़कियों की सफाई करानी चाहिए?",
+  "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.": "अधिकांश घर मालिकों को साल में 2-3 बार विंडो सफाई से फायदा होता है, हालांकि यह आपके स्थान, संपत्ति की स्थिति और व्यक्तिगत प्राथमिकता के आधार पर भिन्न होता है।",
+  
+  "Do you offer any guarantees?": "क्या आप कोई गारंटी देते हैं?",
+  "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.": "बिल्कुल! हम 100% संतुष्टि की गारंटी देते हैं। यदि आप हमारे काम से पूरी तरह संतुष्ट नहीं हैं, तो हम बिना किसी अतिरिक्त लागत के वापस आएंगे और इसे ठीक करेंगे।",
+  
+  "How do you price your services?": "आप अपनी सेवाओं की कीमत कैसे करते हैं?",
+  "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.": "हमारी कीमत अनुरोधित सेवा, संपत्ति का आकार, पहुंच और विशिष्ट आवश्यकताओं के आधार पर है। हम आपकी संपत्ति की जरूरतों का आकलन करने के बाद मुफ्त मूल्य देते हैं।",
   
   // Hero Section
   "Professional Pressure Washing Services": "पेशेवर प्रेशर वॉशिंग सेवाएं",
@@ -27,6 +75,37 @@ const hindiTranslations = {
   "Locally Owned": "स्थानीय स्वामित्व",
   "Every Job is Personally Checked by Me.": "प्रत्येक काम मेरे द्वारा व्यक्तिगत रूप से जांचा जाता है।",
   "Owner": "मालिक",
+
+  // Weather Service
+  "Weather & Service Availability": "मौसम और सेवा उपलब्धता",
+  "Check current weather conditions for window cleaning services in White Rock and Surrey": "व्हाइट रॉक और सरी में विंडो सफाई सेवाओं के लिए वर्तमान मौसम स्थितियों की जांच करें",
+  "Current Weather": "वर्तमान मौसम",
+  "Clear Skies": "साफ आसमान",
+  "White Rock, BC": "व्हाइट रॉक, बीसी",
+  "Perfect Conditions!": "सही स्थितियां!",
+  "Clear Days This Month": "इस महीने साफ दिन",
+  "Green = Optimal Days": "हरा = अनुकूल दिन",
+
+  // Simulators
+  "Experience Our Professional Cleaning": "हमारी पेशेवर सफाई का अनुभव करें",
+  "Click and drag your mouse to see the difference our professional equipment makes!": "हमारे पेशेवर उपकरण का अंतर देखने के लिए अपने माउस को क्लिक करें और खींचें!",
+  "Window Cleaning Simulator": "विंडो क्लीनिंग सिमुलेटर",
+  "Try our water-fed pole system with squeegee technique": "स्क्वीजी तकनीक के साथ हमारे पानी-फेड पोल सिस्टम को आज़माएं",
+  "Experience our water-fed pole system - streak-free cleaning with pure water!": "हमारे पानी-फेड पोल सिस्टम का अनुभव करें - शुद्ध पानी के साथ स्ट्रीक-फ्री सफाई!",
+  "Pressure Washing Simulator": "प्रेशर वॉशिंग सिमुलेटर",
+  "Experience our high-pressure cleaning power": "हमारी उच्च-दबाव सफाई शक्ति का अनुभव करें",
+  "Experience our high-pressure cleaning power - remove years of buildup!": "हमारी उच्च-दबाव सफाई शक्ति का अनुभव करें - वर्षों के बिल्डअप को हटाएं!",
+  "See the dramatic difference professional equipment makes for your property!": "देखें कि पेशेवर उपकरण आपकी संपत्ति के लिए क्या नाटकीय अंतर लाते हैं!",
+  "Window Cleaning Features": "विंडो क्लीनिंग विशेषताएं",
+  "Pure water technology": "शुद्ध जल तकनीक",
+  "Streak-free results": "स्ट्रीक-फ्री परिणाम",
+  "Professional squeegee technique": "पेशेवर स्क्वीजी तकनीक",
+  "Up to 5 stories high": "5 मंजिल तक ऊंचा",
+  "Pressure Washing Features": "प्रेशर वॉशिंग विशेषताएं",
+  "High-pressure cleaning": "उच्च-दबाव सफाई",
+  "Removes stubborn stains": "जिद्दी दाग हटाता है",
+  "Professional equipment": "पेशेवर उपकरण",
+  "Surface restoration": "सतह बहाली",
   
   // Services Section
   "Our Professional Services": "हमारी पेशेवर सेवाएं",
@@ -60,29 +139,165 @@ const hindiTranslations = {
   "See All Services": "सभी सेवाएं देखें",
   "Included": "शामिल",
 
+  // Featured Project
+  "Featured Project": "फीचर्ड प्रोजेक्ट",
+  "See the transformation we achieved for this beautiful residential property in British Columbia": "ब्रिटिश कोलंबिया में इस सुंदर आवासीय संपत्ति के लिए हमने जो परिवर्तन हासिल किया है उसे देखें",
+  "Complete House Washing Service": "संपूर्ण हाउस वॉशिंग सेवा",
+  "Full exterior siding cleaning": "पूर्ण बाहरी साइडिंग सफाई",
+  "Safe low-pressure washing techniques": "सुरक्षित कम-दबाव वॉशिंग तकनीकें",
+  "Eco-friendly cleaning solutions": "पर्यावरण-अनुकूल सफाई समाधान",
+  "Removal of dirt, mold, and algae": "गंदगी, मोल्ड और शैवाल का हटाना",
+  "Protection of landscaping and surroundings": "भूनिर्माण और आसपास की सुरक्षा",
+  "This North Vancouver home received our premium house washing service, resulting in a spotless exterior that enhances curb appeal and protects the property value.": "इस नॉर्थ वैंकूवर घर ने हमारी प्रीमियम हाउस वॉशिंग सेवा प्राप्त की, जिसके परिणामस्वरूप एक बेदाग बाहरी हिस्सा मिला जो आकर्षकता बढ़ाता है और संपत्ति मूल्य की सुरक्षा करता है।",
+  "Learn About House Washing": "हाउस वॉशिंग के बारे में जानें",
+
+  // Property Types
+  "Tailored Services for Every Property Type": "हर संपत्ति प्रकार के लिए अनुकूलित सेवाएं",
+  "From residential homes to commercial buildings, we provide specialized cleaning solutions designed for your specific property needs.": "आवासीय घरों से लेकर वाणिज्यिक भवनों तक, हम आपकी विशिष्ट संपत्ति आवश्यकताओं के लिए डिज़ाइन किए गए विशेष सफाई समाधान प्रदान करते हैं।",
+  "Residential Homes": "आवासीय घर",
+  "Comprehensive exterior cleaning for single-family homes, townhouses, and duplexes.": "एकल-परिवार घरों, टाउनहाउसों और डुप्लेक्स के लिए व्यापक बाहरी सफाई।",
+  "Window cleaning (interior & exterior)": "विंडो क्लीनिंग (आंतरिक और बाहरी)",
+  "Pressure washing (siding, driveways, patios)": "प्रेशर वॉशिंग (साइडिंग, ड्राइववे, पैटियो)",
+  "Gutter cleaning & maintenance": "गटर सफाई और रखरखाव",
+  "Roof cleaning & moss removal": "छत सफाई और मॉस हटाना",
+  "Why Choose Us:": "हमें क्यों चुनें:",
+  "Family-safe cleaning products": "परिवार-सुरक्षित सफाई उत्पाद",
+  "Flexible scheduling around your routine": "आपकी दिनचर्या के अनुसार लचीला शेड्यूलिंग",
+  "Landscaping protection during service": "सेवा के दौरान भूनिर्माण सुरक्षा",
+  "Interior window cleaning available": "आंतरिक विंडो सफाई उपलब्ध",
+  "Get Quote for Residential Homes": "आवासीय घरों के लिए मूल्य पूछें",
+  "Commercial Buildings": "वाणिज्यिक भवन",
+  "Professional exterior cleaning services for offices, retail spaces, and business complexes.": "कार्यालयों, खुदरा स्थानों और व्यावसायिक परिसरों के लिए पेशेवर बाहरी सफाई सेवाएं।",
+  "High-rise window cleaning": "ऊंची इमारतों की विंडो सफाई",
+  "Building facade pressure washing": "भवन फेसेड प्रेशर वॉशिंग",
+  "Commercial gutter systems": "वाणिज्यिक गटर सिस्टम",
+  "Maintenance programs available": "रखरखाव कार्यक्रम उपलब्ध",
+  "After-hours & weekend scheduling": "कार्य समय के बाद और सप्ताहांत शेड्यूलिंग",
+  "Fully insured & bonded": "पूरी तरह से बीमित और बंधक",
+  "Custom maintenance contracts": "कस्टम रखरखाव अनुबंध",
+  "Minimal business disruption": "न्यूनतम व्यावसायिक बाधा",
+  "Get Quote for Commercial Buildings": "वाणिज्यिक भवनों के लिए मूल्य पूछें",
+  "Multi-Story Apartments": "बहु-मंजिला अपार्टमेंट",
+  "Specialized cleaning for apartment complexes, condos, and high-rise residential buildings.": "अपार्टमेंट परिसरों, कॉन्डो और ऊंची आवासीय इमारतों के लिए विशेष सफाई।",
+  "Water-fed pole window cleaning": "पानी-फेड पोल विंडो सफाई",
+  "Balcony & exterior cleaning": "बालकोनी और बाहरी सफाई",
+  "Common area maintenance": "सामान्य क्षेत्र रखरखाव",
+  "Strata-approved services": "स्ट्रेटा-अनुमोदित सेवाएं",
+  "Reach up to 5 stories safely": "सुरक्षित रूप से 5 मंजिल तक पहुंच",
+  "Strata council coordination": "स्ट्रेटा काउंसिल समन्वय",
+  "Bulk pricing for multiple units": "मल्टिपल यूनिट के लिए बल्क प्राइसिंग",
+  "Regular maintenance schedules": "नियमित रखरखाव शेड्यूल",
+  "Get Quote for Multi-Story Apartments": "बहु-मंजिला अपार्टमेंट के लिए मूल्य पूछें",
+
+  // Seasonal Maintenance
+  "Seasonal Maintenance Guide": "मौसमी रखरखाव गाइड",
+  "Stay on top of your property maintenance with our comprehensive seasonal guide. Plan ahead and keep your home looking its best year-round.": "हमारे व्यापक मौसमी गाइड के साथ अपनी संपत्ति के रखरखाव में आगे रहें। आगे की योजना बनाएं और अपने घर को साल भर सबसे अच्छा दिखने में रखें।",
+  "Maintenance Calendar": "रखरखाव कैलेंडर",
+  "Filter by season:": "मौसम के अनुसार फिल्टर करें:",
+  "All": "सभी",
+  "Spring": "वसंत",
+  "Summer": "गर्मी",
+  "Fall": "पतझड़",
+  "Winter": "सर्दी",
+  "Recommended Tasks": "सुझाए गए कार्य",
+  "Spring Window Cleaning": "वसंत विंडो सफाई",
+  "Remove winter grime and salt buildup from windows": "खिड़कियों से सर्दियों की गंदगी और नमक जमाव हटाएं",
+  "Pressure Wash Exterior": "बाहरी प्रेशर वॉश",
+  "Clean siding, driveways, and patios after winter": "सर्दियों के बाद साइडिंग, ड्राइववे और पैटियो की सफाई करें",
+  "Remove debris and check for winter damage": "मलबा हटाएं और सर्दियों के नुकसान की जांच करें",
+  "Schedule Spring Service": "वसंत सेवा शेड्यूल करें",
+  "Summer Window Maintenance": "गर्मी विंडो रखरखाव",
+  "Mid-year window cleaning for optimal clarity": "इष्टतम स्पष्टता के लिए मध्य-वर्ष विंडो सफाई",
+  "Deck & Patio Cleaning": "डेक और पैटियो सफाई",
+  "Prepare outdoor spaces for summer entertaining": "गर्मियों के मनोरंजन के लिए बाहरी स्थान तैयार करें",
+  "Fall Gutter Cleaning": "पतझड़ गटर सफाई",
+  "Remove leaves and prepare for winter": "पत्ते हटाएं और सर्दियों की तैयारी करें",
+  "Roof Cleaning & Inspection": "छत सफाई और निरीक्षण",
+  "Remove moss and check for damage before winter": "सर्दियों से पहले मॉस हटाएं और नुकसान की जांच करें",
+  "Pre-Winter Window Cleaning": "सर्दी से पहले विंडो सफाई",
+  "Final window cleaning before harsh weather": "कठोर मौसम से पहले अंतिम विंडो सफाई",
+  "Winter Maintenance Check": "सर्दी रखरखाव जांच",
+  "Inspect and clean accessible exterior areas": "पहुंच योग्य बाहरी क्षेत्रों का निरीक्षण और सफाई करें",
+  "Need help planning your maintenance schedule? Our experts are here to help!": "अपने रखरखाव शेड्यूल की योजना बनाने में मदद चाहिए? हमारे विशेषज्ञ मदद के लिए यहां हैं!",
+  "Get Custom Maintenance Plan": "कस्टम रखरखाव योजना प्राप्त करें",
+
+  // Screen Cleaning Section
+  "Residential Window Cleaning": "आवासीय विंडो सफाई",
+  "Satisfied Clients": "संतुष्ट ग्राहक",
+  "Experience premium residential window cleaning services that leave your windows sparkling and streak-free. Our professional team uses advanced techniques and high-quality products for exceptional results.": "प्रीमियम आवासीय विंडो सफाई सेवाओं का अनुभव करें जो आपकी खिड़कियों को चमकदार और स्ट्रीक-फ्री बनाती हैं। हमारी पेशेवर टीम असाधारण परिणामों के लिए उन्नत तकनीकों और उच्च-गुणवत्ता के उत्पादों का उपयोग करती है।",
+  "Thorough screen removal and cleaning": "पूर्ण स्क्रीन हटाना और सफाई",
+  "Pressure washing for tough debris": "कठिन मलबे के लिए प्रेशर वॉशिंग",
+  "Frame cleaning and restoration": "फ्रेम सफाई और बहाली",
+  "Streak-free window finishes": "स्ट्रीक-फ्री विंडो फिनिश",
+  "Reinstallation with perfect alignment": "परफेक्ट अलाइनमेंट के साथ पुनः स्थापना",
+  "Complete Package": "संपूर्ण पैकेज",
+  "Windows + Screens = Perfect Finish": "विंडोज + स्क्रीन = परफेक्ट फिनिश",
+
+  // Owner Operated Section
+  "Owner-Operated Excellence": "मालिक-संचालित उत्कृष्टता",
+  "We carry comprehensive liability insurance for your complete peace of mind.": "हम आपकी पूरी मानसिक शांति के लिए व्यापक देयता बीमा रखते हैं।",
+  "Satisfaction Guaranteed": "संतुष्टि की गारंटी",
+  "If you're not 100% satisfied, we'll make it right at no extra cost.": "यदि आप 100% संतुष्ट नहीं हैं, तो हम बिना किसी अतिरिक्त लागत के इसे ठीक कर देंगे।",
+  "Quality Equipment": "गुणवत्ता उपकरण",
+  "We invest in professional-grade tools and eco-friendly cleaning solutions.": "हम पेशेवर-ग्रेड टूल्स और पर्यावरण-अनुकूल सफाई समाधानों में निवेश करते हैं।",
+  "Prompt & Reliable": "तुरंत और विश्वसनीय",
+  "We value your time with punctual service and clear communication.": "हम समय की पाबंदी वाली सेवा और स्पष्ट संचार के साथ आपके समय को महत्व देते हैं।",
+  "We take personal pride in every job we complete. When you hire us, you're getting service directly from the business owner, not a crew of subcontractors.": "हम अपने पूरे किए गए हर काम में व्यक्तिगत गर्व महसूस करते हैं। जब आप हमें किराए पर लेते हैं, तो आप सीधे व्यापार मालिक से सेवा प्राप्त कर रहे हैं, न कि उप-ठेकेदारों के दल से।",
+  "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!": "मैं जिस समुदाय की सेवा करता हूं उसमें दिखाई देने और सुलभ होने में विश्वास करता हूं। जब आप हमारी लाल कार देखें, तो बेझिझक हाथ हिलाएं या बातचीत के लिए रुकें!",
+
+  // Red Car Section
+  "Seen Our Red Car?": "हमारी लाल कार देखी है?",
+  "If you've spotted our distinctive red vehicle along Marine Drive in White Rock, mention it when you contact us to receive a special 10% discount on your service!": "यदि आपने व्हाइट रॉक में मरीन ड्राइव के साथ हमारी विशिष्ट लाल गाड़ी देखी है, तो अपनी सेवा पर विशेष 10% छूट प्राप्त करने के लिए हमसे संपर्क करते समय इसका उल्लेख करें!",
+  "As a locally owned and operated business, we're proud to be an active part of the White Rock and Surrey communities. We're not just a service provider - we're your neighbors, committed to keeping our local properties looking their best.": "स्थानीय स्वामित्व और संचालित व्यापार के रूप में, हम व्हाइट रॉक और सरी समुदायों का एक सक्रिय हिस्सा होने पर गर्व महसूस करते हैं। हम सिर्फ एक सेवा प्रदाता नहीं हैं - हम आपके पड़ोसी हैं, अपनी स्थानीय संपत्तियों को सबसे अच्छा दिखने के लिए प्रतिबद्ध हैं।",
+  "Claim Your Discount": "अपनी छूट का दावा करें",
+
+  // Trusted Customers Section
+  "Trusted by Real Homeowners – Verified Customers": "वास्तविक गृहस्वामियों द्वारा भरोसा - सत्यापित ग्राहक",
+  "Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.": "इनमें से हर एक ग्राहक कोई है जिसकी हमने गर्व से सेवा की है - और वे इसे साबित करने के लिए शर्ट पहने हुए हैं।",
+  "Verified Customer": "सत्यापित ग्राहक",
+
   // Testimonials Section
   "What Our Customers Say": "हमारे ग्राहक क्या कहते हैं",
   "Real Feedback from Satisfied Clients": "संतुष्ट ग्राहकों से वास्तविक प्रतिक्रिया",
   "View All Testimonials": "सभी प्रशंसापत्र देखें",
-  
-  "Get a Free Quote": "निःशुल्क मूल्य पूछें",
-  "Explore Our Services": "हमारी सेवाएं देखें",
-  
-  // Contact Page
-  "Get in Touch": "संपर्क करें",
-  "Contact us today for a free, no-obligation quote": "बिना किसी बाध्यता के मुफ्त मूल्य के लिए आज ही हमसे संपर्क करें",
-  "Your Name": "आपका नाम",
-  "Your Email": "आपका ईमेल",
-  "Your Phone": "आपका फोन",
-  "Service Needed": "आवश्यक सेवा",
-  "Message": "संदेश",
-  "Submit": "जमा करें",
-  "Send Message": "संदेश भेजें",
-  
-  // Banner
-  "Ready to Transform Your Property?": "अपनी संपत्ति को बदलने के लिए तैयार हैं?",
-  "Get in touch today for a free, no-obligation quote and see how we can help you maintain your property's pristine appearance.": "आज ही बिना किसी बाध्यता के मुफ्त मूल्य के लिए संपर्क करें और देखें कि हम आपकी संपत्ति की स्वच्छ उपस्थिति को बनाए रखने में आपकी कैसे मदद कर सकते हैं।",
-  
+  "Compare Our Prices & Packages": "हमारी कीमतों और पैकेजों की तुलना करें",
+
+  // Comparison Section
+  "Why Surrey Homeowners Trust Us More Than Shackshine or Men In Kilts": "सरी के गृहस्वामी शैकशाइन या मेन इन किल्ट्स से ज्यादा हम पर क्यों भरोसा करते हैं",
+  "When it comes to exterior cleaning services, BC Pressure Washing stands above the competition with our personalized service, competitive pricing, and exceptional results.": "जब बाहरी सफाई सेवाओं की बात आती है, तो बीसी प्रेशर वॉशिंग हमारी व्यक्तिगत सेवा, प्रतिस्पर्धी कीमतों और असाधारण परिणामों के साथ प्रतिस्पर्धा से ऊपर खड़ा है।",
+  "Owner Operated": "मालिक संचालित",
+  "Not a franchise - get personal attention from the business owner": "फ्रैंचाइजी नहीं - व्यापार मालिक से व्यक्तिगत ध्यान प्राप्त करें",
+  "Better Value": "बेहतर मूल्य",
+  "Competitive pricing without franchise fees or corporate overhead": "फ्रैंचाइजी फीस या कॉर्पोरेट ओवरहेड के बिना प्रतिस्पर्धी कीमतें",
+  "Superior Results": "श्रेष्ठ परिणाम",
+  "Professional-grade equipment and personalized attention to detail": "पेशेवर-ग्रेड उपकरण और विवरणों के लिए व्यक्तिगत ध्यान",
+  "Local Knowledge": "स्थानीय ज्ञान",
+  "Deep understanding of Surrey & White Rock conditions and properties": "सरी और व्हाइट रॉक की स्थितियों और संपत्तियों की गहरी समझ",
+
+  // FAQ Section
+  "Frequently Asked Questions": "अक्सर पूछे जाने वाले प्रश्न",
+
+  // Service Areas
+  "Areas We Service": "हमारे सेवा क्षेत्र",
+  "Based in White Rock, Serving Metro Vancouver": "व्हाइट रॉक में स्थित, मेट्रो वैंकूवर की सेवा करते हैं",
+
+  // Footer
+  "Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.": "आवासीय और वाणिज्यिक संपत्तियों के लिए पेशेवर प्रेशर वॉशिंग सेवाएं। हम विवरणों के ध्यान के साथ उच्च-गुणवत्ता सफाई समाधान प्रदान करते हैं।",
+  "Driveway Cleaning": "ड्राइववे सफाई",
+  "Contact Information": "संपर्क जानकारी",
+  "Monday-Friday: 8AM - 6PM": "सोमवार-शुक्रवार: 8AM - 6PM",
+  "Saturday: 9AM - 5PM": "शनिवार: 9AM - 5PM",
+  "Sunday: Closed": "रविवार: बंद",
+  "Weather & Service": "मौसम और सेवा",
+  "View All Contact Options": "सभी संपर्क विकल्प देखें",
+  "Mention you've seen our car on Marine Drive for 10% off!": "मरीन ड्राइव पर हमारी कार देखने का उल्लेख करें 10% छूट के लिए!",
+
+  // CTA Section
+  "Ready for a free quote?": "मुफ्त मूल्य के लिए तैयार हैं?",
+  "Get a response within 24 hours": "24 घंटे में जवाब पाएं",
+  "Call": "कॉल",
+  "Get Quote": "मूल्य पूछें",
+
   // Chat Assistant
   "Have a question?": "कोई सवाल है?",
   "Need help with a quote?": "मूल्य के साथ मदद चाहिए?",
@@ -94,27 +309,13 @@ const hindiTranslations = {
   "Operated by Jayden Fisher": "जेडन फिशर द्वारा संचालित",
   "Type your question...": "अपना प्रश्न लिखें...",
   "Talk to a Human": "किसी व्यक्ति से बात करें",
-  "Book Now": "अभी बुक करें",
   "Click to enlarge": "बड़ा करने के लिए क्लिक करें",
   "Refer & Save 50%": "रेफर करें और 50% बचाएं",
   
-  // Additional home page sections
-  "Our Cleaning Packages": "हमारे क्लीनिंग पैकेज",
-  "Affordable Solutions for Every Need": "हर जरूरत के लिए किफायती समाधान",
-  "Satisfaction Guaranteed": "संतुष्टि की गारंटी",
-  "Frequently Asked Questions": "अक्सर पूछे जाने वाले प्रश्न",
-  "Find Answers to Common Questions": "सामान्य प्रश्नों के उत्तर खोजें",
-  "About BC Pressure Washing": "बीसी प्रेशर वॉशिंग के बारे में",
-  "Years of Experience": "अनुभव के वर्ष",
-  "Satisfied Customers": "संतुष्ट ग्राहक",
-  "Completed Projects": "पूरी की गई परियोजनाएँ",
-  "Service Areas": "सेवा क्षेत्र",
-  
-  // Call to action
-  "Call us now: 778 808 7620": "हमें अभी कॉल करें: 778 808 7620",
-  
-  // Additional missing translations
-  "Learn More": "और अधिक जानें"
+  // Guarantee Section
+  "100% Satisfaction Guarantee": "100% संतुष्टि की गारंटी",
+  "If you're not completely satisfied with our work, we'll come back and make it right at no additional cost to you.": "यदि आप हमारे काम से पूरी तरह संतुष्ट नहीं हैं, तो हम आपकी कोई अतिरिक्त लागत के बिना वापस आएंगे और इसे ठीक करेंगे।",
+  "Need urgent service? Check our Express Cleaning option!": "तुरंत सेवा की जरूरत है? हमारे एक्सप्रेस क्लीनिंग विकल्प देखें!"
 };
 
 export default hindiTranslations;
