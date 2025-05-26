@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ReferralButton from './ReferralButton';
+import StickyContactBar from './StickyContactBar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -54,10 +55,11 @@ const Layout = ({
       </Helmet>
       
       <Navbar />
-      <main className="flex-grow w-full">
+      <main className="flex-grow w-full pb-20">
         {children}
       </main>
       <Footer />
+      <StickyContactBar />
     </div>
   );
 };
