@@ -75,7 +75,7 @@ const HeroSection = () => {
       
       {/* Hero Content */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 sm:pt-0">
-        <div className="max-w-4xl mx-auto text-left">
+        <div className="max-w-4xl text-left">
           <div className="inline-block bg-bc-red px-4 py-1 rounded mb-4 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
@@ -94,7 +94,7 @@ const HeroSection = () => {
         </div>
         
         {/* Postal Code Input Section */}
-        <div className="max-w-2xl mx-auto w-full mt-2 mb-4 animate-on-scroll delay-300">
+        <div className="max-w-2xl w-full mt-2 mb-4 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -118,7 +118,7 @@ const HeroSection = () => {
         </div>
 
         {/* Trust indicators */}
-        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500">
+        <div className="max-w-2xl flex flex-col sm:flex-row items-start justify-start gap-4 my-4 animate-on-scroll delay-500">
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
             <span className="text-white text-sm">✓ Fully Insured</span>
           </div>
@@ -131,8 +131,8 @@ const HeroSection = () => {
         </div>
 
         {/* Personal Touch Section */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-700">
-          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-4 animate-on-scroll delay-700">
+          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 
