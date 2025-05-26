@@ -40,20 +40,6 @@ const SmartScheduler = () => {
     }
   };
 
-  // Get weather overlay based on current weather
-  const getWeatherOverlay = () => {
-    if (!weather) return '';
-    
-    const condition = weather.condition.toLowerCase();
-    if (condition.includes('rain') || condition.includes('drizzle')) {
-      return 'rain-overlay';
-    } else if (condition.includes('cloud')) {
-      return 'cloudy-overlay';
-    } else {
-      return 'sunny-overlay';
-    }
-  };
-
   // Generate static optimal days pattern to prevent flashing
   const generateOptimalDays = () => {
     const now = new Date();
@@ -102,35 +88,23 @@ const SmartScheduler = () => {
   }
 
   return (
-    <section className="py-16 relative overflow-hidden">
-      {/* Dynamic Background with Weather Overlay */}
-      <div className="absolute inset-0 transition-all duration-1000">
-        <img 
-          src={weather?.isOptimal ? "/lovable-uploads/6be6d75e-06b5-4dbd-aaf5-7a649ea0cb27.png" : "/lovable-uploads/9ae756c9-5b79-4665-92de-abd8d9181b4d.png"}
-          alt="Window view"
-          className="w-full h-full object-cover"
-        />
-        {/* Weather Overlay */}
-        <div className={`absolute inset-0 transition-opacity duration-500 ${getWeatherOverlay()}`}></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/70"></div>
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-16 bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center p-2 bg-blue-100/90 backdrop-blur-sm rounded-full mb-4">
+          <div className="inline-flex items-center justify-center p-2 bg-blue-100 rounded-full mb-4">
             <CalendarDays className="w-8 h-8 text-blue-600" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-lg">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
             {t("Smart Window Cleaning Scheduler")}
           </h2>
-          <p className="text-xl text-white max-w-2xl mx-auto drop-shadow-md">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             {t("Book on optimal weather days for the best results")}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/* Current Weather */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-md">
+          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="p-2 bg-blue-100 rounded-lg">
@@ -184,118 +158,108 @@ const SmartScheduler = () => {
             </CardContent>
           </Card>
 
-          {/* Combined Calendar and Optimal Days */}
-          <Card className="lg:col-span-2 shadow-lg border-0 bg-white/90 backdrop-blur-md">
+          {/* Optimal Days Calendar */}
+          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="p-2 bg-green-100 rounded-lg">
-                  <CalendarDays className="w-5 h-5 text-green-600" />
+                  <Sun className="w-5 h-5 text-green-600" />
                 </div>
-                {t("Book Your Service")}
+                {t("Optimal Days This Month")}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Calendar */}
-                <div className="space-y-6">
-                  <Calendar
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={setSelectedDate}
-                    className="rounded-lg border shadow-sm mx-auto bg-white"
-                    disabled={(date) => date < new Date()}
-                  />
-                  
-                  {selectedDate && (
-                    <div className="p-4 bg-gradient-to-r from-blue-50 to-bc-red/5 rounded-lg border border-blue-200">
-                      <div className="text-sm text-gray-600 mb-1">{t("Selected Date")}:</div>
-                      <div className="font-bold text-lg text-gray-900">
-                        {format(selectedDate, 'EEEE, MMMM d, yyyy')}
-                      </div>
+              <div className="text-center mb-6">
+                <div className="text-4xl font-bold text-green-600 mb-2">{optimalCount}</div>
+                <div className="text-gray-600">perfect weather days</div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid grid-cols-7 gap-1 text-center mb-2">
+                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                    <div key={index} className="text-sm font-semibold text-gray-500 pb-2">
+                      {day}
                     </div>
-                  )}
+                  ))}
                 </div>
-
-                {/* Optimal Days Info */}
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-green-600 mb-2">{optimalCount}</div>
-                    <div className="text-gray-600">perfect weather days this month</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-7 gap-1">
-                    {optimalDaysData.map(({ day, isOptimal, isToday }) => (
-                      <div
-                        key={day}
-                        className={`
-                          w-8 h-8 flex items-center justify-center text-sm rounded-md font-medium transition-colors
-                          ${isToday 
-                            ? 'bg-blue-600 text-white ring-2 ring-blue-200' 
-                            : isOptimal 
-                              ? 'bg-green-100 text-green-800 hover:bg-green-200' 
-                              : 'bg-red-100 text-red-800'
-                          }
-                        `}
-                      >
-                        {day}
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="flex items-center justify-center gap-4 text-xs">
-                    <div className="flex items-center gap-1">
-                      <div className="w-3 h-3 bg-green-100 rounded"></div>
-                      <span className="text-gray-600">Optimal</span>
+                
+                <div className="grid grid-cols-7 gap-1">
+                  {optimalDaysData.map(({ day, isOptimal, isToday }) => (
+                    <div
+                      key={day}
+                      className={`
+                        w-8 h-8 flex items-center justify-center text-sm rounded-md font-medium transition-colors
+                        ${isToday 
+                          ? 'bg-blue-600 text-white ring-2 ring-blue-200' 
+                          : isOptimal 
+                            ? 'bg-green-100 text-green-800 hover:bg-green-200' 
+                            : 'bg-red-100 text-red-800'
+                        }
+                      `}
+                    >
+                      {day}
                     </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-3 h-3 bg-red-100 rounded"></div>
-                      <span className="text-gray-600">Not ideal</span>
-                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex items-center justify-center gap-4 text-xs">
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 bg-green-100 rounded"></div>
+                    <span className="text-gray-600">Optimal</span>
                   </div>
-                  
-                  <Button 
-                    onClick={handleBooking}
-                    className="w-full bg-bc-red hover:bg-red-700 text-white py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
-                    disabled={!selectedDate}
-                  >
-                    {t("Book Window Cleaning")}
-                  </Button>
-                  
-                  <div className="text-center space-y-1">
-                    <p className="text-sm text-gray-600 font-medium">✓ Free quotes within 24 hours</p>
-                    <p className="text-sm text-gray-600">✓ Fully insured & guaranteed</p>
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 bg-red-100 rounded"></div>
+                    <span className="text-gray-600">Not ideal</span>
                   </div>
                 </div>
               </div>
             </CardContent>
           </Card>
+
+          {/* Booking Calendar */}
+          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-3 text-xl">
+                <div className="p-2 bg-bc-red/10 rounded-lg">
+                  <CalendarDays className="w-5 h-5 text-bc-red" />
+                </div>
+                {t("Book Your Service")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                className="rounded-lg border shadow-sm mx-auto bg-white"
+                disabled={(date) => date < new Date()}
+              />
+              
+              {selectedDate && (
+                <div className="p-4 bg-gradient-to-r from-blue-50 to-bc-red/5 rounded-lg border border-blue-200">
+                  <div className="text-sm text-gray-600 mb-1">{t("Selected Date")}:</div>
+                  <div className="font-bold text-lg text-gray-900">
+                    {format(selectedDate, 'EEEE, MMMM d, yyyy')}
+                  </div>
+                </div>
+              )}
+              
+              <Button 
+                onClick={handleBooking}
+                className="w-full bg-bc-red hover:bg-red-700 text-white py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
+                disabled={!selectedDate}
+              >
+                {t("Book Window Cleaning")}
+              </Button>
+              
+              <div className="text-center space-y-1">
+                <p className="text-sm text-gray-600 font-medium">✓ Free quotes within 24 hours</p>
+                <p className="text-sm text-gray-600">✓ Fully insured & guaranteed</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
-      
-      <style>{`
-        .sunny-overlay {
-          background: radial-gradient(circle at 30% 20%, rgba(255, 255, 0, 0.15) 0%, transparent 50%);
-        }
-        .cloudy-overlay {
-          background: linear-gradient(45deg, rgba(200, 200, 200, 0.3) 0%, rgba(150, 150, 150, 0.2) 100%);
-        }
-        .rain-overlay {
-          background: 
-            linear-gradient(transparent 0%, transparent 95%, rgba(255,255,255,0.1) 95%, rgba(255,255,255,0.1) 100%),
-            repeating-linear-gradient(
-              90deg,
-              transparent,
-              transparent 98px,
-              rgba(255,255,255,0.03) 100px
-            ),
-            linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.05));
-          animation: rainDrop 0.5s linear infinite;
-        }
-        @keyframes rainDrop {
-          0% { background-position: 0% 0%; }
-          100% { background-position: 0% 20px; }
-        }
-      `}</style>
     </section>
   );
 };
