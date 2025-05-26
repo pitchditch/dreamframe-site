@@ -17,7 +17,6 @@ import TrustedCustomersSection from '../components/home/TrustedCustomersSection'
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
-import WeatherService from '../components/WeatherService';
 import ServiceBanner from '../components/ServiceBanner';
 
 const Index = () => {
@@ -95,9 +94,6 @@ const Index = () => {
       
       {/* Service Banner */}
       <ServiceBanner />
-      
-      {/* Weather Service Integration */}
-      <WeatherService />
       
       <div className="bg-white">
         <PremiumSolutionsSection />
