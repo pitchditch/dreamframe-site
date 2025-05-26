@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { Calculator, HelpCircle, Star, ChevronDown } from 'lucide-react';
+import { HelpCircle, Star, ChevronDown } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,12 +22,12 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
     <div className="hidden md:flex items-center justify-between flex-1">
       <div className="flex-1 flex justify-center">
         <NavigationMenu>
-          <NavigationMenuList className="flex items-center justify-center space-x-16">
+          <NavigationMenuList className="flex items-center justify-center space-x-12">
             <NavigationMenuItem>
               <Link 
                 to="/" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg ${
-                  isOverVideo ? 'text-white' : 'text-black'
+                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide ${
+                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('Home')}
@@ -37,8 +37,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/why-us" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg ${
-                  isOverVideo ? 'text-white' : 'text-black'
+                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide ${
+                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('Why Us')}
@@ -47,8 +47,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
-                  isOverVideo ? 'text-white' : 'text-black'
+                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
+                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
@@ -110,8 +110,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg bg-transparent border-none shadow-none p-0 h-auto ${
-                  isOverVideo ? 'text-white' : 'text-black'
+                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
+                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
@@ -165,23 +165,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenu>
       </div>
       
-      <div className="flex items-center space-x-6">
-        <Link 
-          to="/calculator" 
-          className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-all duration-300 hover:scale-105 ${
-            isOverVideo 
-              ? 'border-white text-white hover:bg-white hover:text-black' 
-              : 'border-bc-red text-bc-red hover:bg-bc-red hover:text-white'
-          }`}
-        >
-          <Calculator size={16} />
-          {t('Get a Quote')}
-        </Link>
-        
+      <div className="flex items-center space-x-8">
         <Link 
           to="/contact" 
-          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-lg ${
-            isOverVideo ? 'text-white' : 'text-black'
+          className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide ${
+            isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
           }`}
         >
           {t('Contact')}

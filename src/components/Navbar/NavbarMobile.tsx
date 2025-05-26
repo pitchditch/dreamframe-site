@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Calculator, Home, Box, Star, Wrench } from 'lucide-react';
+import { ChevronDown, ChevronUp, Home, Box, Star, Wrench } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -26,27 +25,27 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
       >
         <div className="container mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
           <nav className="flex flex-col space-y-4">
-            <Link to="/" className="flex items-center gap-2 py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md">
+            <Link to="/" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
               <Home className="w-5 h-5" />
-              <span className="font-medium">{t('Home')}</span>
+              <span>{t('Home')}</span>
             </Link>
             
-            <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md">
+            <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
               <img 
                 src="/lovable-uploads/85f5bd3c-680e-4957-9722-6bc6070f7d51.png" 
                 alt="Logo Icon" 
                 className="w-5 h-5 object-contain animate-spin-slow" 
               />
-              <span className="font-medium">{t('Why Us')}</span>
+              <span>{t('Why Us')}</span>
             </Link>
             
             {/* Services Dropdown */}
             <div className="border-b border-gray-100 pb-2">
               <div 
-                className="flex items-center justify-between py-3 px-2 text-black hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md"
+                className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
                 onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
               >
-                <span className="font-medium">{t('Services')}</span>
+                <span>{t('Services')}</span>
                 {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               
@@ -118,10 +117,10 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             {/* More Menu Dropdown */}
             <div className="border-b border-gray-100 pb-2">
               <div 
-                className="flex items-center justify-between py-3 px-2 text-black hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md"
+                className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
                 onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
               >
-                <span className="font-medium">{t('More')}</span>
+                <span>{t('More')}</span>
                 {isMoreMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               
@@ -162,13 +161,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               </div>
             </div>
             
-            {/* Get a Quote Link */}
-            <Link to="/calculator" className="flex items-center gap-2 py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md">
-              <Calculator size={20} />
-              <span className="font-medium">{t('Get a Quote')}</span>
-            </Link>
-            
-            <Link to="/contact" className="py-3 px-2 text-black hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
+            <Link to="/contact" className="py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
               {t('Contact')}
             </Link>
             

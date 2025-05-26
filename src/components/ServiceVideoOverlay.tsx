@@ -16,7 +16,7 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
     if (isHovering) {
       const timer = setTimeout(() => {
         setShowVideo(true);
-      }, 1500); // Reduced from 3000ms to 1500ms for faster loading
+      }, 1000); // Reduced from 1500ms to 1000ms for faster loading
       setHoverTimer(timer);
     } else {
       if (hoverTimer) {
@@ -47,17 +47,17 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
       case 'lYnXijewxCM': // House washing  
       case 'eQSgdx9ujcc': // Roof cleaning
         return {
-          transform: 'scale(1.3)', // Zoom to remove top/bottom black bars
+          transform: 'scale(1.5)', // Increased zoom to remove black bars
           transformOrigin: 'center center'
         };
       case 'EdMlx1sYJDc': // Gutter cleaning (shorts format)
         return {
-          transform: 'scale(1.8)', // More zoom for vertical video to remove side bars
+          transform: 'scale(2.2)', // More zoom for vertical video to remove side bars
           transformOrigin: 'center center'
         };
       default:
         return {
-          transform: 'scale(1.1)',
+          transform: 'scale(1.3)',
           transformOrigin: 'center center'
         };
     }
@@ -76,7 +76,7 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
       
       <div className="w-full h-full relative overflow-hidden rounded-2xl">
         <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&fs=0&cc_load_policy=0&start=0&end=0&loop=0&disablekb=1&preload=auto`}
           className="w-full h-full object-cover"
           style={{ 
             border: 'none', 
@@ -84,7 +84,9 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
             ...videoSettings
           }}
           allow="autoplay; encrypted-media"
-          allowFullScreen
+          allowFullScreen={false}
+          loading="eager"
+          preload="auto"
         />
       </div>
     </div>
