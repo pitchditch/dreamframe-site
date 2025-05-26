@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
@@ -89,12 +88,12 @@ const PremiumSolutionsSection = () => {
     }
   ];
 
-  // Autoplay functionality - cycle through videos every 8 seconds when not hovering
+  // Autoplay functionality - cycle through videos every 6 seconds when not hovering
   useEffect(() => {
     if (hoveredService === null) {
       const interval = setInterval(() => {
         setAutoplayIndex((prevIndex) => (prevIndex + 1) % services.length);
-      }, 8000);
+      }, 6000); // Reduced from 8 seconds for better engagement
       return () => clearInterval(interval);
     }
   }, [hoveredService, services.length]);

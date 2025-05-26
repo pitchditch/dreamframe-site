@@ -23,12 +23,8 @@ const HeroSection = () => {
       img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
       img.onload = () => setVideoLoaded(true);
     } else {
-      const videoElement = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
-      if (videoElement) {
-        videoElement.onload = () => setVideoLoaded(true);
-      }
-      // Set video as loaded after a short delay even if onload doesn't trigger
-      setTimeout(() => setVideoLoaded(true), 500);
+      // Set video as loaded immediately for desktop
+      setVideoLoaded(true);
     }
     
     // Check if postal code exists in session storage
@@ -66,11 +62,11 @@ const HeroSection = () => {
               className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           ) : (
-            // Desktop YouTube Video
+            // Desktop YouTube Video with optimized settings
             <iframe 
               id="hero-desktop-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
+              className={`absolute w-full h-full top-0 left-0 scale-[1.2] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto&vq=hd1080&quality=hd1080"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
