@@ -25,13 +25,14 @@ const Navbar = () => {
     '/services/commercial-window-cleaning',
     '/services/commercial-pressure-washing',
     '/vancouver-window-cleaning',
-    '/contact'
+    '/contact',
+    '/express-cleaning'
   ];
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.8; // Get 80% of the hero section height
+      const heroHeight = window.innerHeight * 0.6; // Reduced for Express Cleaning page
       
       // Only consider transparent when in the hero section (not scrolled past it)
       const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight;

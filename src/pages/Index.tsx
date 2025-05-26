@@ -16,7 +16,6 @@ import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
-import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import WeatherService from '../components/WeatherService';
 import ServiceBanner from '../components/ServiceBanner';
@@ -99,9 +98,6 @@ const Index = () => {
       
       {/* Weather Service Integration */}
       <WeatherService />
-      
-      {/* Combined Simulators Section */}
-      <CombinedSimulatorsSection />
       
       <div className="bg-white">
         <PremiumSolutionsSection />

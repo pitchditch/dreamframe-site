@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -135,25 +134,24 @@ const ExpressCleaning = () => {
         <meta name="description" content="Need urgent exterior cleaning before a party, home sale, or inspection? Book our Express Cleaning service for same-day or next-day service." />
       </Helmet>
 
-      {/* Hero Section with expanded height */}
-      <section className="relative py-24 md:py-32 overflow-hidden min-h-screen">
+      {/* Hero Section with reduced height and no dark overlay */}
+      <section className="relative py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
             src="/lovable-uploads/fb9b774d-d8de-4955-902f-b9283434313f.png"
             alt="Express Cleaning Service" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/70 z-10"></div>
         </div>
         <div className="container mx-auto px-4 relative z-20 h-full flex items-center">
           <div className="max-w-3xl mx-auto text-center">
             <div className="bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full inline-block mb-4">
               <span className="text-white font-medium">🚨 Urgent Cleaning Needed?</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white text-shadow-lg">
               Express Cleaning Service
             </h1>
-            <p className="text-xl mb-8 text-white">
+            <p className="text-xl mb-8 text-white text-shadow">
               Same-Day or Next-Day Service for Urgent Cleaning Needs
             </p>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -316,7 +314,6 @@ const ExpressCleaning = () => {
                   
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                      {/* All form fields remain the same */}
                       <FormField
                         control={form.control}
                         name="fullName"
