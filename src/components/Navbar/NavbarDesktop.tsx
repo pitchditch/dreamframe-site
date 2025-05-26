@@ -27,7 +27,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/" 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -38,7 +38,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/why-us" 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -48,7 +48,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -111,13 +111,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
+              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
                 <div className="space-y-4">
                   <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
                     <Star className="h-6 w-6 text-yellow-500" />
@@ -169,7 +169,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
       <div className="flex items-center space-x-8">
         <Link 
           to="/contact" 
-          className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide ${
+          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
             isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
           }`}
         >
