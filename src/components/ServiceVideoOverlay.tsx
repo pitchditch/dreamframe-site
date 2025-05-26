@@ -16,7 +16,7 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
     if (isHovering) {
       const timer = setTimeout(() => {
         setShowVideo(true);
-      }, 3000);
+      }, 1500); // Reduced from 3000ms to 1500ms for faster loading
       setHoverTimer(timer);
     } else {
       if (hoverTimer) {
@@ -40,8 +40,33 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
 
   if (!showVideo) return null;
 
+  // Get video dimensions and zoom settings based on video ID
+  const getVideoSettings = (id: string) => {
+    switch (id) {
+      case 'bbHnt4UNPcU': // Window cleaning
+      case 'lYnXijewxCM': // House washing  
+      case 'eQSgdx9ujcc': // Roof cleaning
+        return {
+          transform: 'scale(1.3)', // Zoom to remove top/bottom black bars
+          transformOrigin: 'center center'
+        };
+      case 'EdMlx1sYJDc': // Gutter cleaning (shorts format)
+        return {
+          transform: 'scale(1.8)', // More zoom for vertical video to remove side bars
+          transformOrigin: 'center center'
+        };
+      default:
+        return {
+          transform: 'scale(1.1)',
+          transformOrigin: 'center center'
+        };
+    }
+  };
+
+  const videoSettings = getVideoSettings(videoId);
+
   return (
-    <div className="absolute inset-0 z-50 bg-black/90 flex items-center justify-center rounded-2xl">
+    <div className="absolute inset-0 z-50 bg-black/90 flex items-center justify-center rounded-2xl overflow-hidden">
       <button
         onClick={handleClose}
         className="absolute top-4 right-4 z-60 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
@@ -51,9 +76,13 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
       
       <div className="w-full h-full relative overflow-hidden rounded-2xl">
         <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0`}
           className="w-full h-full object-cover"
-          style={{ border: 'none', outline: 'none' }}
+          style={{ 
+            border: 'none', 
+            outline: 'none',
+            ...videoSettings
+          }}
           allow="autoplay; encrypted-media"
           allowFullScreen
         />
