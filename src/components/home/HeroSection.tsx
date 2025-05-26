@@ -74,7 +74,7 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 sm:pt-0">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-32 sm:pt-16">
         <div className="max-w-4xl text-left">
           <div className="inline-block bg-bc-red px-4 py-1 rounded mb-4 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
@@ -115,19 +115,6 @@ const HeroSection = () => {
               {t("Check Prices & Availability")} <MessageSquare className="ml-2" size={20} />
             </Button>
           </form>
-        </div>
-
-        {/* Trust indicators */}
-        <div className="max-w-2xl flex flex-col sm:flex-row items-start justify-start gap-4 my-4 animate-on-scroll delay-500">
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-            <span className="text-white text-sm">✓ Fully Insured</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-            <span className="text-white text-sm">⭐ 5-Star Service</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-            <span className="text-white text-sm">🏠 Locally Owned</span>
-          </div>
         </div>
 
         {/* Personal Touch Section */}
