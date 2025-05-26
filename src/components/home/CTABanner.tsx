@@ -31,10 +31,10 @@ const CTABanner: React.FC = () => {
         shouldShow = window.scrollY > window.innerHeight * 0.8;
       }
       
-      // Hide banner when satisfaction guarantee section enters viewport
+      // Hide banner when satisfaction guarantee section enters viewport (stop above it)
       if (satisfactionSection && shouldShow) {
         const satisfactionRect = satisfactionSection.getBoundingClientRect();
-        if (satisfactionRect.top <= window.innerHeight) {
+        if (satisfactionRect.top <= window.innerHeight + 100) { // Stop 100px above satisfaction section
           shouldShow = false;
         }
       }
