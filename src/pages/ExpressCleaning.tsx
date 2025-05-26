@@ -11,11 +11,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import { ArrowRight, Clock, CheckCircle2, Calendar } from 'lucide-react';
+import { ArrowRight, Clock, CheckCircle2, Calendar, Shield, Award, ThumbsUp } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { trackFormSubmit } from '@/lib/analytics-client';
 import useFormTracking from '@/hooks/useFormTracking';
 import ReferralButton from '@/components/ReferralButton';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Link } from 'react-router-dom';
 
 interface ExpressCleaningFormData {
   fullName: string;
@@ -133,8 +135,8 @@ const ExpressCleaning = () => {
         <meta name="description" content="Need urgent exterior cleaning before a party, home sale, or inspection? Book our Express Cleaning service for same-day or next-day service." />
       </Helmet>
 
-      {/* Hero Section with updated image */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      {/* Hero Section with expanded height */}
+      <section className="relative py-24 md:py-32 overflow-hidden min-h-screen">
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
             src="/lovable-uploads/fb9b774d-d8de-4955-902f-b9283434313f.png"
@@ -143,7 +145,7 @@ const ExpressCleaning = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/70 z-10"></div>
         </div>
-        <div className="container mx-auto px-4 relative z-20">
+        <div className="container mx-auto px-4 relative z-20 h-full flex items-center">
           <div className="max-w-3xl mx-auto text-center">
             <div className="bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full inline-block mb-4">
               <span className="text-white font-medium">🚨 Urgent Cleaning Needed?</span>
@@ -166,6 +168,101 @@ const ExpressCleaning = () => {
               <div className="flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <Calendar className="text-white mr-2" size={20} />
                 <span className="text-white">Priority Scheduling</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted Owner Operated Section - Replacing Weather Service */}
+      <section className="py-16 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">Trusted, Owner-Operated Express Services</h2>
+              <p className="text-lg text-gray-300 max-w-4xl mx-auto">
+                When you need urgent cleaning, you can trust BC Pressure Washing. Every express job is personally handled or overseen by the owner - no outsourced teams, just reliable expertise when you need it most.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="text-center bg-gray-800 p-6 rounded-lg hover:shadow-md transition-shadow">
+                <div className="mx-auto w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center text-bc-red mb-5">
+                  <Shield className="w-10 h-10" />
+                </div>
+                <h3 className="font-bold text-xl mb-3">Fully Insured</h3>
+                <p className="text-gray-300 text-base">
+                  Rest easy knowing we carry full liability insurance for all express cleaning services.
+                </p>
+              </div>
+              
+              <div className="text-center bg-gray-800 p-6 rounded-lg hover:shadow-md transition-shadow">
+                <div className="mx-auto w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center text-bc-red mb-5">
+                  <Award className="w-10 h-10" />
+                </div>
+                <h3 className="font-bold text-xl mb-3">Express Guarantee</h3>
+                <p className="text-gray-300 text-base">
+                  Your satisfaction is our priority - if you're not 100% satisfied, we'll make it right.
+                </p>
+              </div>
+              
+              <div className="text-center bg-gray-800 p-6 rounded-lg hover:shadow-md transition-shadow">
+                <div className="mx-auto w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center text-bc-red mb-5">
+                  <ThumbsUp className="w-10 h-10" />
+                </div>
+                <h3 className="font-bold text-xl mb-3">Same Day Available</h3>
+                <p className="text-gray-300 text-base">
+                  When urgency matters, we prioritize your cleaning needs with rapid response.
+                </p>
+              </div>
+            </div>
+
+            {/* Red Car Section */}
+            <div className="bg-gradient-to-r from-bc-red to-red-700 text-white rounded-lg overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
+                <div className="p-8 lg:p-12">
+                  <h3 className="text-3xl font-bold mb-4">Seen Our Red Car?</h3>
+                  <p className="mb-6 text-lg">
+                    If you've spotted our distinctive red vehicle along Marine Drive in White Rock, 
+                    mention it when you contact us to receive a special <span className="animate-pulse font-bold text-white text-xl">10% discount</span> on your express service!
+                  </p>
+                  
+                  {/* Owner profile */}
+                  <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg mb-6">
+                    <div className="flex items-center gap-4 mb-4">
+                      <Avatar className="w-16 h-16 border-2 border-white">
+                        <AvatarImage src="/lovable-uploads/72766780-6dc1-42de-8971-3a11add4daad.png" alt="Jayden - Owner" />
+                        <AvatarFallback>JF</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-bold text-white">Jayden - Owner</p>
+                      </div>
+                    </div>
+                    <p className="text-white italic mb-2">
+                      "When you need express cleaning, I personally ensure we meet your urgent timeline with the quality you deserve."
+                    </p>
+                    <p className="font-bold text-white">— Jayden, Owner</p>
+                  </div>
+                  
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="bg-white text-bc-red hover:bg-gray-100 border-white"
+                    asChild
+                  >
+                    <Link to="/contact">
+                      Claim Your 10% Express Discount
+                    </Link>
+                  </Button>
+                </div>
+                
+                <div className="h-full">
+                  <img
+                    src="/lovable-uploads/9dc6484c-91bb-4ae3-994d-f6cfefbf7c63.png" 
+                    alt="BC Pressure Washing Red Car at Marine Drive"
+                    className="w-full h-full object-cover min-h-[400px] lg:min-h-[500px]"
+                  />
+                </div>
               </div>
             </div>
           </div>

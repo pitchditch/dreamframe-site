@@ -32,7 +32,7 @@ const PremiumSolutionsSection = () => {
       title: t('Window Cleaning'),
       description: t('Crystal-clear windows inside and out using eco-friendly solutions.'),
       link: '/services/window-cleaning',
-      image: '/lovable-uploads/d173e141-19f8-4b80-a02e-e2472f49e7fe.png',
+      image: '/lovable-uploads/481b70c0-733d-4cc9-9629-3628731d87e4.png',
       slideImages: windowCleaningImages,
       included: [
         t('Exterior & interior window cleaning'),
@@ -45,7 +45,7 @@ const PremiumSolutionsSection = () => {
       title: t('House Washing'),
       description: t('Gentle soft-washing to remove dirt, mold, and algae without damage.'),
       link: '/services/pressure-washing',
-      image: '/lovable-uploads/e76ecfc1-a3a8-44d8-9a4a-5e1bf7c32282.png',
+      image: '/lovable-uploads/ff861e81-c504-47c8-aae7-5319b9ad2ab4.png',
       slideImages: houseWashingImages,
       included: [
         t('Soft wash siding treatment'),
@@ -58,7 +58,7 @@ const PremiumSolutionsSection = () => {
       title: t('Gutter Cleaning'),
       description: t('Prevent clogs and overflow damage with professional gutter care.'),
       link: '/services/gutter-cleaning',
-      image: '/lovable-uploads/e2607535-f225-440b-8ea4-b3d5db21acfc.png',
+      image: '/lovable-uploads/29932697-b24f-4d93-9212-f1913cd47193.png',
       slideImages: gutterCleaningImages,
       included: [
         t('Interior debris removal'),
@@ -71,7 +71,7 @@ const PremiumSolutionsSection = () => {
       title: t('Roof Cleaning'),
       description: t('Eliminate moss, algae, and stains — extend roof life safely.'),
       link: '/services/roof-cleaning',
-      image: '/lovable-uploads/e7d22891-296d-4f9b-befc-796245f0f540.png',
+      image: '/lovable-uploads/c988cf42-0a35-4032-bcc3-6b9770fbc771.png',
       slideImages: roofCleaningImages,
       included: [
         t('Soft wash or brushing method'),
