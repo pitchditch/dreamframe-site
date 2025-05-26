@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
 import { trackPageView } from '@/utils/analytics';
 import { toast } from '@/hooks/use-toast';
@@ -34,6 +34,15 @@ const PhoneButton = () => {
         
         // Show icon-only when scrolled more than 30% down the page height
         setIconOnly(window.scrollY > window.innerHeight * 0.8);
+        
+        // Hide when contact bar is visible
+        const contactBar = document.querySelector('[class*="fixed"][class*="bottom-0"]');
+        if (contactBar) {
+          const contactBarRect = contactBar.getBoundingClientRect();
+          if (contactBarRect.height > 0) {
+            setIsVisible(false);
+          }
+        }
       } else {
         setIsVisible(false);
         setShowCompact(false);
