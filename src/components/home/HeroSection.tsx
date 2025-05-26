@@ -75,30 +75,20 @@ const HeroSection = () => {
       
       {/* Hero Content */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-16 sm:pt-0">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-bc-red/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4 animate-on-scroll">
-            <span className="text-white font-medium text-sm md:text-base">{t("Professional Exterior Cleaning Services")}</span>
+        <div className="max-w-4xl mx-auto text-left">
+          <div className="inline-block bg-bc-red px-4 py-1 rounded mb-4 animate-on-scroll">
+            <span className="text-white font-medium text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
           
           <div className="mb-6">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll">
-              <span 
-                className="text-white font-bold"
-                style={{
-                  textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
-                }}
-              >
-                {t("Transform Your Property's Appearance")}
+              <span className="text-white">
+                {t("The Ultimate Cleaning")} <span className="text-bc-red">{t("Solution")}</span> {t("for Your Property")}
               </span>
             </h1>
             
-            <p 
-              className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto font-semibold text-white"
-              style={{
-                textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
-              }}
-            >
-              {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
+            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
+              {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
             </p>
           </div>
         </div>
@@ -127,8 +117,21 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Personal Touch Section - Enhanced visibility */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500">
+        {/* Trust indicators */}
+        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500">
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+            <span className="text-white text-sm">✓ Fully Insured</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+            <span className="text-white text-sm">⭐ 5-Star Service</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+            <span className="text-white text-sm">🏠 Locally Owned</span>
+          </div>
+        </div>
+
+        {/* Personal Touch Section */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-700">
           <div className="bg-black/40 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
