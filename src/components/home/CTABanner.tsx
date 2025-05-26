@@ -16,14 +16,30 @@ const CTABanner: React.FC = () => {
                            document.querySelector('h2')?.textContent?.includes('Premium Cleaning Solutions') ? 
                            document.querySelector('h2')?.closest('section') : null;
       
+      // Find the Satisfaction Guarantee section
+      const satisfactionSection = document.querySelector('h2')?.textContent?.includes('100% Satisfaction Guarantee') ? 
+                                 document.querySelector('h2')?.closest('section') : null;
+      
+      let shouldShow = false;
+      
       if (premiumSection) {
-        const rect = premiumSection.getBoundingClientRect();
+        const premiumRect = premiumSection.getBoundingClientRect();
         // Show banner when Premium Solutions section enters viewport
-        setIsVisible(rect.top <= window.innerHeight);
+        shouldShow = premiumRect.top <= window.innerHeight;
       } else {
         // Fallback: show after scrolling 80% of viewport height
-        setIsVisible(window.scrollY > window.innerHeight * 0.8);
+        shouldShow = window.scrollY > window.innerHeight * 0.8;
       }
+      
+      // Hide banner when satisfaction guarantee section enters viewport
+      if (satisfactionSection && shouldShow) {
+        const satisfactionRect = satisfactionSection.getBoundingClientRect();
+        if (satisfactionRect.top <= window.innerHeight) {
+          shouldShow = false;
+        }
+      }
+      
+      setIsVisible(shouldShow);
     };
     
     window.addEventListener('scroll', handleScroll);

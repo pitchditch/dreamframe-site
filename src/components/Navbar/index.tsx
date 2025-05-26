@@ -31,10 +31,10 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.6;
+      const heroHeight = window.innerHeight * 0.8;
       
-      // Only make transparent AFTER passing the hero section on hero pages
-      const shouldBeTransparent = heroPages.includes(location.pathname) && currentScrollY > heroHeight;
+      // Make transparent ONLY when in the hero section (before scrolling past it)
+      const shouldBeTransparent = heroPages.includes(location.pathname) && currentScrollY < heroHeight;
       
       setIsTransparent(shouldBeTransparent);
       setIsScrolled(currentScrollY > 10);
@@ -50,8 +50,9 @@ const Navbar = () => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
     
-    // Reset transparency state when route changes
-    setIsTransparent(false);
+    // Set initial transparency state for hero pages
+    const isHeroPage = heroPages.includes(location.pathname);
+    setIsTransparent(isHeroPage);
   }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -63,10 +64,10 @@ const Navbar = () => {
         : 'bg-white/95 backdrop-blur-sm shadow-md h-28 md:h-32 border-b border-gray-200'
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
-        <Logo isOverVideo={false} />
-        <NavbarDesktop isOverVideo={false} />
+        <Logo isOverVideo={isTransparent} />
+        <NavbarDesktop isOverVideo={isTransparent} />
         <div className="md:hidden">
-          <MobileMenuButton isOverVideo={false} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <MobileMenuButton isOverVideo={isTransparent} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
