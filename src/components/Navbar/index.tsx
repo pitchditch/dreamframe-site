@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Pages with dark backgrounds that need white text
+  // Pages with dark backgrounds that need white text (Express Cleaning removed)
   const darkOverlayPages = [
     '/', 
     '/why-us', 
@@ -25,8 +25,7 @@ const Navbar = () => {
     '/services/commercial-window-cleaning',
     '/services/commercial-pressure-washing',
     '/vancouver-window-cleaning',
-    '/contact',
-    '/express-cleaning'
+    '/contact'
   ];
 
   useEffect(() => {
