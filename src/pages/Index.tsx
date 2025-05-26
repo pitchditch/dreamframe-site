@@ -17,6 +17,8 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
+import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import RedCarSection from '../components/home/RedCarSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -100,6 +102,10 @@ const Index = () => {
             <FeaturedProjectSection />
             
             <PropertySpecificSection />
+            
+            <OwnerOperatedSection />
+            
+            <RedCarSection />
             
             <ScreenCleaningSection />
             <TrustedCustomersSection />
