@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Phone, Calendar } from 'lucide-react';
@@ -7,6 +7,32 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const CTABanner: React.FC = () => {
   const isMobile = useIsMobile();
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      // Find the Premium Solutions section
+      const premiumSection = document.querySelector('[data-section="premium-solutions"]') || 
+                           document.querySelector('h2')?.textContent?.includes('Premium Cleaning Solutions') ? 
+                           document.querySelector('h2')?.closest('section') : null;
+      
+      if (premiumSection) {
+        const rect = premiumSection.getBoundingClientRect();
+        // Show banner when Premium Solutions section enters viewport
+        setIsVisible(rect.top <= window.innerHeight);
+      } else {
+        // Fallback: show after scrolling 80% of viewport height
+        setIsVisible(window.scrollY > window.innerHeight * 0.8);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  if (!isVisible) return null;
   
   return (
     <section className="bg-bc-red py-3 fixed bottom-0 left-0 right-0 z-[1000] shadow-lg">

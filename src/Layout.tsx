@@ -67,6 +67,7 @@ const Layout = ({
       </main>
       <Footer />
       <ChatAssistant />
+      <ReferralButton />
     </div>
   );
 };

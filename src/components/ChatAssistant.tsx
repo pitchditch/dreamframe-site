@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { MessageCircle, X, Send } from 'lucide-react';
@@ -183,14 +182,16 @@ const ChatAssistant = () => {
   if (!isVisible) return null;
   
   return (
-    <div className="fixed bottom-24 right-6 z-20">
+    <div className="fixed bottom-24 left-6 z-20">
       <Button 
         onClick={() => setIsOpen(!isOpen)} 
         className={`chat-button rounded-full p-6 shadow-lg bg-transparent ${isOpen ? 'hover:bg-bc-red/10' : 'hover:bg-transparent'}`} 
         size="lg"
       >
         {isOpen ? (
-          <X className="h-8 w-8 text-bc-red" />
+          <div className="relative bg-white rounded-full p-2 shadow-lg border-2 border-bc-red">
+            <X className="h-6 w-6 text-bc-red" />
+          </div>
         ) : (
           <div className="relative">
             <img 
@@ -206,13 +207,13 @@ const ChatAssistant = () => {
       </Button>
 
       {!isOpen && (
-        <div className="absolute bottom-24 right-0 bg-white rounded-lg shadow-lg p-3 max-w-[250px] animate-fade-in">
+        <div className="absolute bottom-24 left-0 bg-white rounded-lg shadow-lg p-3 max-w-[250px] animate-fade-in">
           <p className="text-sm">{chatMessages[messageIndex]}</p>
         </div>
       )}
 
       {isOpen && (
-        <div className="absolute bottom-24 right-0 w-[350px] bg-white rounded-xl shadow-xl overflow-hidden">
+        <div className="absolute bottom-24 left-0 w-[350px] bg-white rounded-xl shadow-xl overflow-hidden">
           <div className="bg-bc-red p-4">
             <div className="flex items-center gap-3">
               <img 
