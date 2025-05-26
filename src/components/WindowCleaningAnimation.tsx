@@ -16,9 +16,9 @@ const WindowCleaningSimulator = () => {
     const dirtyImg = new Image();
     const cleanImg = new Image();
     
-    // Using the uploaded dirty and clean window images
-    dirtyImg.src = '/lovable-uploads/52c11bb9-3222-434f-9ae0-b3e010ec2ae6.png'; // Dirty window
-    cleanImg.src = '/lovable-uploads/32e9034a-f751-46e7-b9ca-71f8e5956ace.png'; // Clean window
+    // Using the new uploaded window images
+    dirtyImg.src = '/lovable-uploads/6d61cdcf-cec8-483a-8f31-2c02ad8a67f0.png'; // Dirty window with rain
+    cleanImg.src = '/lovable-uploads/300cfc16-3873-40ab-830a-e8dfacfa492f.png'; // Clean window
     
     dirtyImageRef.current = dirtyImg;
     cleanImageRef.current = cleanImg;

@@ -79,8 +79,19 @@ const PropertySpecificSection = () => {
   ];
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4">
+    <section 
+      className="py-12 md:py-16 relative overflow-hidden"
+      style={{
+        backgroundImage: `url('/lovable-uploads/12d4233e-3fc6-4af4-9c06-3f0b56849154.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Overlay for readability */}
+      <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-12 md:mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
@@ -88,11 +99,11 @@ const PropertySpecificSection = () => {
             <span className="text-bc-red font-semibold text-sm uppercase tracking-wide">Trusted Local Experts</span>
             <Star className="w-5 h-5 text-yellow-500 fill-current" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
-            {t("Professional Cleaning Services")}
-            <span className="block text-bc-red">{t("Tailored for Every Property")}</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-gray-900">
+            {t("Ready to Transform Your Property?")}
+            <span className="block text-bc-red">{t("Tailored Services for Every Need")}</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
             {t("From residential homes to commercial buildings, BC Pressure Washing delivers specialized exterior cleaning solutions designed for your specific property needs in Surrey, White Rock & Metro Vancouver.")}
           </p>
         </div>
@@ -102,7 +113,7 @@ const PropertySpecificSection = () => {
           {propertyTypes.map((property, index) => {
             const IconComponent = property.icon;
             return (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-lg overflow-hidden">
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-lg overflow-hidden bg-white/95 backdrop-blur-sm">
                 <div className="relative">
                   <img 
                     src={property.image} 
@@ -124,7 +135,7 @@ const PropertySpecificSection = () => {
                 
                 <CardContent className="p-6 md:p-8">
                   <div className="mb-4">
-                    <h3 className="text-xl md:text-2xl font-bold mb-2">{property.title}</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2 text-gray-900">{property.title}</h3>
                     <p className="text-bc-red font-semibold text-sm md:text-base mb-3">{property.subtitle}</p>
                     <p className="text-gray-600 text-sm md:text-base leading-relaxed">{property.description}</p>
                   </div>
@@ -171,7 +182,7 @@ const PropertySpecificSection = () => {
         </div>
 
         {/* Bottom CTA Section */}
-        <div className="text-center mt-12 md:mt-16 bg-bc-red rounded-2xl p-6 md:p-8 text-white">
+        <div className="text-center mt-12 md:mt-16 bg-bc-red/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 text-white shadow-xl">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
             {t("Ready to Transform Your Property?")}
           </h3>

@@ -74,6 +74,71 @@ const SmartScheduler = () => {
     }
   };
 
+  // Determine background image and weather overlay based on weather condition
+  const getBackgroundStyle = () => {
+    if (!weather) {
+      return {
+        backgroundImage: `url('/lovable-uploads/300cfc16-3873-40ab-830a-e8dfacfa492f.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      };
+    }
+
+    const condition = weather.condition.toLowerCase();
+    let backgroundImage = '';
+    let weatherOverlay = '';
+
+    // Choose background image based on weather optimality
+    if (weather.isOptimal) {
+      backgroundImage = `url('/lovable-uploads/300cfc16-3873-40ab-830a-e8dfacfa492f.png')`; // Clean window view
+    } else {
+      backgroundImage = `url('/lovable-uploads/6d61cdcf-cec8-483a-8f31-2c02ad8a67f0.png')`; // Dirty/rainy window view
+    }
+
+    return {
+      backgroundImage,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    };
+  };
+
+  const getWeatherOverlay = () => {
+    if (!weather) return null;
+
+    const condition = weather.condition.toLowerCase();
+    let overlayStyle = {};
+
+    if (condition.includes('rain') || condition.includes('drizzle')) {
+      overlayStyle = {
+        background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.1) 100%)',
+        backgroundImage: `
+          repeating-linear-gradient(
+            45deg,
+            rgba(59, 130, 246, 0.1) 0px,
+            rgba(59, 130, 246, 0.1) 2px,
+            transparent 2px,
+            transparent 4px
+          )
+        `
+      };
+    } else if (condition.includes('cloud')) {
+      overlayStyle = {
+        background: 'linear-gradient(45deg, rgba(107, 114, 128, 0.2) 0%, rgba(156, 163, 175, 0.1) 100%)'
+      };
+    } else if (condition.includes('clear') || condition.includes('sunny')) {
+      overlayStyle = {
+        background: 'linear-gradient(45deg, rgba(251, 191, 36, 0.2) 0%, rgba(253, 224, 71, 0.1) 100%)'
+      };
+    }
+
+    return (
+      <div 
+        className="absolute inset-0 pointer-events-none z-10"
+        style={overlayStyle}
+      />
+    );
+  };
+
   if (loading) {
     return (
       <section className="py-16 bg-gradient-to-br from-blue-50 via-white to-blue-50">
@@ -88,23 +153,32 @@ const SmartScheduler = () => {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 via-white to-blue-50">
-      <div className="container mx-auto px-4">
+    <section 
+      className="py-16 relative overflow-hidden"
+      style={getBackgroundStyle()}
+    >
+      {/* Weather overlay */}
+      {getWeatherOverlay()}
+      
+      {/* Background overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/90 via-white/80 to-blue-50/90 backdrop-blur-sm z-20"></div>
+      
+      <div className="container mx-auto px-4 relative z-30">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center p-2 bg-blue-100 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center p-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-4">
             <CalendarDays className="w-8 h-8 text-blue-600" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
             {t("Smart Window Cleaning Scheduler")}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
             {t("Book on optimal weather days for the best results")}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/* Current Weather */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="p-2 bg-blue-100 rounded-lg">
@@ -131,7 +205,7 @@ const SmartScheduler = () => {
                     <span className="font-medium">{weather.location}</span>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50/80 backdrop-blur-sm rounded-lg">
                     <div className="text-center">
                       <Wind className="w-5 h-5 text-gray-500 mx-auto mb-1" />
                       <div className="text-lg font-semibold text-gray-900">{weather.windSpeed}</div>
@@ -159,7 +233,7 @@ const SmartScheduler = () => {
           </Card>
 
           {/* Optimal Days Calendar */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="p-2 bg-green-100 rounded-lg">
@@ -217,7 +291,7 @@ const SmartScheduler = () => {
           </Card>
 
           {/* Booking Calendar */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="p-2 bg-bc-red/10 rounded-lg">
@@ -231,7 +305,7 @@ const SmartScheduler = () => {
                 mode="single"
                 selected={selectedDate}
                 onSelect={setSelectedDate}
-                className="rounded-lg border shadow-sm mx-auto bg-white"
+                className="rounded-lg border shadow-sm mx-auto bg-white/80 backdrop-blur-sm"
                 disabled={(date) => date < new Date()}
               />
               
