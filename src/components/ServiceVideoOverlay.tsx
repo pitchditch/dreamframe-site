@@ -16,7 +16,7 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
     if (isHovering) {
       const timer = setTimeout(() => {
         setShowVideo(true);
-      }, 1000);
+      }, 800); // Reduced from 1000ms for faster response
       setHoverTimer(timer);
     } else {
       if (hoverTimer) {
@@ -76,16 +76,17 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
       
       <div className="w-full h-full relative overflow-hidden rounded-2xl">
         <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&fs=0&cc_load_policy=0&loop=1&disablekb=1&playlist=${videoId}`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&fs=0&cc_load_policy=0&loop=1&disablekb=1&playlist=${videoId}&preload=auto&start=0`}
           className="w-full h-full object-cover"
           style={{ 
             border: 'none', 
             outline: 'none',
             ...videoSettings
           }}
-          allow="autoplay; encrypted-media"
+          allow="autoplay; encrypted-media; preload"
           allowFullScreen={false}
           loading="eager"
+          title="Service demonstration video"
         />
       </div>
     </div>
