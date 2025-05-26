@@ -95,12 +95,12 @@ const Index = () => {
       </div>
       
       {/* Content that slides over the hero */}
-      <div className="relative z-10" style={{ marginTop: '100vh' }}>
+      <div className="relative z-50" style={{ marginTop: '100vh' }}>
         {/* Service Banner */}
-        <div className="bg-white rounded-t-3xl shadow-xl relative z-20 -mt-24 md:-mt-32">
+        <div className="bg-white rounded-t-3xl shadow-2xl relative z-50 -mt-24 md:-mt-32 min-h-screen">
           <ServiceBanner />
           
-          <div className="bg-white">
+          <div className="bg-white relative z-50">
             <PremiumSolutionsSection />
             <FeaturedProjectSection />
             
