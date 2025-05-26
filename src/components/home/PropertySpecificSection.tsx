@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -88,22 +87,22 @@ const PropertySpecificSection = () => {
         backgroundAttachment: 'fixed'
       }}
     >
-      {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+      {/* Enhanced overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header Section */}
+        {/* Header Section with improved text contrast */}
         <div className="text-center mb-12 md:mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Star className="w-5 h-5 text-yellow-500 fill-current" />
-            <span className="text-bc-red font-semibold text-sm uppercase tracking-wide">Trusted Local Experts</span>
-            <Star className="w-5 h-5 text-yellow-500 fill-current" />
+            <Star className="w-5 h-5 text-yellow-400 fill-current drop-shadow-lg" />
+            <span className="text-white font-semibold text-sm uppercase tracking-wide drop-shadow-lg">Trusted Local Experts</span>
+            <Star className="w-5 h-5 text-yellow-400 fill-current drop-shadow-lg" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-gray-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-white drop-shadow-lg">
             {t("Ready to Transform Your Property?")}
-            <span className="block text-bc-red">{t("Tailored Services for Every Need")}</span>
+            <span className="block text-yellow-400 drop-shadow-lg">{t("Tailored Services for Every Need")}</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-white max-w-4xl mx-auto leading-relaxed drop-shadow-lg font-medium">
             {t("From residential homes to commercial buildings, BC Pressure Washing delivers specialized exterior cleaning solutions designed for your specific property needs in Surrey, White Rock & Metro Vancouver.")}
           </p>
         </div>
