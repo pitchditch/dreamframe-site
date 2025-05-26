@@ -86,7 +86,6 @@ const SmartScheduler = () => {
 
     const condition = weather.condition.toLowerCase();
     let backgroundImage = '';
-    let weatherOverlay = '';
 
     // Choose background image based on weather optimality
     if (weather.isOptimal) {
@@ -159,9 +158,6 @@ const SmartScheduler = () => {
     >
       {/* Weather overlay */}
       {getWeatherOverlay()}
-      
-      {/* Background overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/90 via-white/80 to-blue-50/90 backdrop-blur-sm z-20"></div>
       
       <div className="container mx-auto px-4 relative z-30">
         <div className="text-center mb-12">

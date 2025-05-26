@@ -9,7 +9,6 @@ import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
 import FAQSection from '@/components/FAQSection';
-import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
@@ -90,41 +89,46 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      <HeroSection />
+      {/* Hero Section - Fixed position for slide effect */}
+      <div className="fixed top-0 left-0 w-full h-screen z-0">
+        <HeroSection />
+      </div>
       
-      {/* Service Banner */}
-      <ServiceBanner />
-      
-      <div className="bg-white">
-        <PremiumSolutionsSection />
-        <FeaturedProjectSection />
-        
-        {/* Add property-specific section */}
-        <PropertySpecificSection />
-        
-        <ScreenCleaningSection />
-        <div data-component="owner-operated">
-          <OwnerOperatedSection />
+      {/* Content that slides over the hero */}
+      <div className="relative z-10" style={{ marginTop: '100vh' }}>
+        {/* Service Banner */}
+        <div className="bg-white rounded-t-3xl shadow-xl relative z-20 -mt-24 md:-mt-32">
+          <ServiceBanner />
+          
+          <div className="bg-white">
+            <PremiumSolutionsSection />
+            <FeaturedProjectSection />
+            
+            {/* Add property-specific section */}
+            <PropertySpecificSection />
+            
+            <ScreenCleaningSection />
+            <TrustedCustomersSection />
+            <CompetitorComparisonSection />
+            <TestimonialsSection />
+            
+            {/* Move Satisfaction Guarantee before Service Areas */}
+            <SatisfactionGuaranteeSection />
+            
+            <ServiceAreasSection />
+            
+            {/* FAQ Section */}
+            <FAQSection 
+              title={t("Frequently Asked Questions")} 
+              subtitle={t("Everything you need to know about our services")}
+              faqs={faqItems}
+              darkMode={true}
+            />
+            
+            {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
+            <div className="h-20"></div>
+          </div>
         </div>
-        <TrustedCustomersSection />
-        <CompetitorComparisonSection />
-        <TestimonialsSection />
-        
-        {/* Move Satisfaction Guarantee before Service Areas */}
-        <SatisfactionGuaranteeSection />
-        
-        {/* FAQ Section */}
-        <FAQSection 
-          title={t("Frequently Asked Questions")} 
-          subtitle={t("Everything you need to know about our services")}
-          faqs={faqItems}
-          darkMode={true}
-        />
-        
-        <ServiceAreasSection />
-        
-        {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
-        <div className="h-20"></div>
       </div>
       
       <CTABanner />
