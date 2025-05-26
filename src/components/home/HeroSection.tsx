@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -17,7 +18,6 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Preload the videos for faster loading
     if (isMobile) {
       const img = new Image();
       img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
@@ -27,29 +27,23 @@ const HeroSection = () => {
       if (videoElement) {
         videoElement.onload = () => setVideoLoaded(true);
       }
-      // Set video as loaded after a short delay even if onload doesn't trigger
       setTimeout(() => setVideoLoaded(true), 500);
     }
     
-    // Check if postal code exists in session storage
     const savedPostalCode = sessionStorage.getItem('postalCode');
     if (savedPostalCode) {
       setPostalCode(savedPostalCode);
     }
-    
   }, [isMobile]);
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Save postal code to session and local storage
     sessionStorage.setItem('postalCode', postalCode);
     localStorage.setItem('postalCode', postalCode);
     
-    // Track the submission
     trackFormSubmission('hero_postal_code', { postalCode });
     
-    // Navigate to calculator page
     navigate('/calculator');
   };
 
@@ -59,14 +53,12 @@ const HeroSection = () => {
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
-            // Mobile Image Background
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
               className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           ) : (
-            // Desktop YouTube Video
             <iframe 
               id="hero-desktop-video"
               className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -88,13 +80,15 @@ const HeroSection = () => {
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Exterior Cleaning Services")}</span>
           </div>
           
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-shadow-lg">
-            <span className="text-white">{t("Transform Your Property's Appearance")}</span>
-          </h1>
-          
-          <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-shadow">
-            {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
-          </p>
+          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll">
+              <span className="text-white drop-shadow-2xl">{t("Transform Your Property's Appearance")}</span>
+            </h1>
+            
+            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto drop-shadow-lg">
+              {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
+            </p>
+          </div>
         </div>
         
         {/* Postal Code Input Section */}
@@ -123,7 +117,7 @@ const HeroSection = () => {
 
         {/* Personal Touch Section - Enhanced visibility */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500">
-          <div className="bg-white/20 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 

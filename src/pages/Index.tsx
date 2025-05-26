@@ -22,10 +22,8 @@ const Index = () => {
   const { language, t } = useTranslation();
 
   useEffect(() => {
-    // Mark body to have video header (for navbar transparency)
     document.body.classList.add('has-video-header');
 
-    // Animation for elements when they enter viewport
     const observerOptions = {
       root: null,
       rootMargin: '0px',
@@ -44,12 +42,10 @@ const Index = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Log current language for debugging
     console.log('Current language on Index page:', language);
     console.log('Translation test:', t("Home"));
 
     return () => {
-      // Clean up
       document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
@@ -89,21 +85,20 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section - Fixed position for slide effect */}
-      <div className="fixed top-0 left-0 w-full h-screen z-0 overflow-hidden">
+      {/* Hero Section - Fixed position for slide effect with proper z-index */}
+      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
         <HeroSection />
       </div>
       
-      {/* Content that slides over the hero */}
-      <div className="relative z-50" style={{ marginTop: '100vh' }}>
-        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen">
+      {/* Content that slides over the hero - Higher z-index to prevent glitching */}
+      <div className="relative z-40" style={{ marginTop: '100vh' }}>
+        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
           <ServiceBanner />
           
           <div className="bg-white relative z-50">
             <PremiumSolutionsSection />
             <FeaturedProjectSection />
             
-            {/* Add property-specific section */}
             <PropertySpecificSection />
             
             <ScreenCleaningSection />
@@ -111,12 +106,10 @@ const Index = () => {
             <CompetitorComparisonSection />
             <TestimonialsSection />
             
-            {/* Move Satisfaction Guarantee before Service Areas */}
             <SatisfactionGuaranteeSection />
             
             <ServiceAreasSection />
             
-            {/* FAQ Section */}
             <FAQSection 
               title={t("Frequently Asked Questions")} 
               subtitle={t("Everything you need to know about our services")}
@@ -124,7 +117,6 @@ const Index = () => {
               darkMode={true}
             />
             
-            {/* Full-width Marine Drive image below FAQ section */}
             <div className="w-full">
               <img 
                 src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
