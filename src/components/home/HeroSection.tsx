@@ -11,25 +11,19 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const [postalCode, setPostalCode] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Preload the background image
-    const img = new Image();
-    img.src = "/lovable-uploads/53b11340-865b-48ea-a20c-b72e8e35ef04.png";
-    img.onload = () => setImageLoaded(true);
-    
     // Check if postal code exists in session storage
     const savedPostalCode = sessionStorage.getItem('postalCode');
     if (savedPostalCode) {
       setPostalCode(savedPostalCode);
     }
-    
-  }, [isMobile]);
+  }, []);
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,14 +41,25 @@ const HeroSection = () => {
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
-      {/* Background - House Image */}
+      {/* Background - Video */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
-          <img 
-            src="/lovable-uploads/53b11340-865b-48ea-a20c-b72e8e35ef04.png"
-            alt="Beautiful house exterior with professional cleaning services"
-            className={`absolute w-full h-full object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute w-full h-full object-cover"
+            onLoadedData={() => setVideoLoaded(true)}
+          >
+            <source src="/lovable-uploads/53b11340-865b-48ea-a20c-b72e8e35ef04.mp4" type="video/mp4" />
+            {/* Fallback image */}
+            <img 
+              src="/lovable-uploads/53b11340-865b-48ea-a20c-b72e8e35ef04.png"
+              alt="Beautiful house exterior with professional cleaning services"
+              className="w-full h-full object-cover"
+            />
+          </video>
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
