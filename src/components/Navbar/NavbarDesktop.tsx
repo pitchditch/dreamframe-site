@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { HelpCircle, Star, ChevronDown } from 'lucide-react';
+import { HelpCircle, Star } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -51,7 +52,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
-                {t('Services')} <ChevronDown className="ml-1 h-4 w-4" />
+                {t('Services')}
               </NavigationMenuTrigger>
               <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
                 <div className="grid grid-cols-2 gap-8">
@@ -114,7 +115,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
-                {t('More')} <ChevronDown className="ml-1 h-4 w-4" />
+                {t('More')}
               </NavigationMenuTrigger>
               <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100 mt-2">
                 <div className="space-y-4">

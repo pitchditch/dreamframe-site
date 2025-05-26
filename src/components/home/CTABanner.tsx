@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -158,6 +157,60 @@ const faqData = [
   }
 ];
 
+const findAnswer = (input: string): string => {
+  const lowerInput = input.toLowerCase();
+  
+  // Simple typo tolerance - remove common typos and normalize
+  const normalizeInput = (str: string) => {
+    return str
+      .replace(/\s+/g, ' ')
+      .replace(/[^\w\s]/g, '')
+      .toLowerCase()
+      .trim();
+  };
+  
+  const normalizedInput = normalizeInput(lowerInput);
+  
+  // Search through all FAQ data with typo tolerance
+  for (const category of faqData) {
+    for (const faq of category.questions) {
+      const normalizedQuestion = normalizeInput(faq.q);
+      const normalizedAnswer = normalizeInput(faq.a);
+      
+      // Check for partial matches and common variations
+      if (normalizedQuestion.includes(normalizedInput) || 
+          normalizedAnswer.includes(normalizedInput) ||
+          normalizedInput.includes(normalizedQuestion.split(' ').slice(0, 3).join(' '))) {
+        return faq.a;
+      }
+    }
+  }
+
+  // Enhanced keyword-based responses with typo tolerance
+  if (normalizedInput.match(/pric|cost|quot|money|pay/)) {
+    return "We offer free quotes! Call or text us at 778-808-7620, or request a quote online and we'll respond within 24 hours.";
+  }
+  
+  if (normalizedInput.match(/area|location|serv|where/)) {
+    return "We serve Surrey, Coquitlam, Vancouver, White Rock, Langley — and surrounding areas in the Lower Mainland.";
+  }
+  
+  if (normalizedInput.match(/servic|what|offer|do/)) {
+    return "We offer pressure washing, soft washing, window cleaning (interior/exterior), gutter cleaning, roof moss removal, siding treatment, and more.";
+  }
+  
+  if (normalizedInput.match(/book|schedul|appoint|when/)) {
+    return "You can book by calling/texting 778-808-7620 or requesting a quote online. We recommend booking 3–7 days in advance.";
+  }
+  
+  if (normalizedInput.match(/insur|licens|safe/)) {
+    return "Yes, we're fully insured and licensed to protect you and your property.";
+  }
+
+  // Default response
+  return "I'd be happy to help! For specific questions, please call us at 778-808-7620 or request a free quote online. Our team will respond within 24 hours with detailed information.";
+};
+
 const CTABanner: React.FC = () => {
   const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
@@ -167,26 +220,23 @@ const CTABanner: React.FC = () => {
   
   useEffect(() => {
     const handleScroll = () => {
-      const premiumSection = document.querySelector('[data-section="premium-solutions"]') || 
-                           document.querySelector('h2')?.textContent?.includes('Premium Cleaning Solutions') ? 
-                           document.querySelector('h2')?.closest('section') : null;
-      
-      const satisfactionSection = Array.from(document.querySelectorAll('h2')).find(h2 => 
-        h2.textContent?.includes('100% Satisfaction Guarantee')
-      )?.closest('section');
+      const premiumSection = document.querySelector('[data-section="premium-solutions"]');
       
       let shouldShow = false;
       
       if (premiumSection) {
         const premiumRect = premiumSection.getBoundingClientRect();
-        shouldShow = premiumRect.top <= window.innerHeight;
+        // Show banner when premium section is fully visible and scrolled past
+        shouldShow = premiumRect.bottom <= window.innerHeight;
       } else {
-        shouldShow = window.scrollY > window.innerHeight * 0.8;
+        shouldShow = window.scrollY > window.innerHeight * 1.2;
       }
       
-      if (satisfactionSection && shouldShow) {
-        const satisfactionRect = satisfactionSection.getBoundingClientRect();
-        if (satisfactionRect.top <= window.innerHeight + 80) {
+      // Hide near footer
+      const footer = document.querySelector('footer');
+      if (footer && shouldShow) {
+        const footerRect = footer.getBoundingClientRect();
+        if (footerRect.top <= window.innerHeight + 100) {
           shouldShow = false;
         }
       }
@@ -199,45 +249,6 @@ const CTABanner: React.FC = () => {
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const findAnswer = (input: string): string => {
-    const lowerInput = input.toLowerCase();
-    
-    // Search through all FAQ data
-    for (const category of faqData) {
-      for (const faq of category.questions) {
-        if (faq.q.toLowerCase().includes(lowerInput) || 
-            faq.a.toLowerCase().includes(lowerInput) ||
-            lowerInput.includes(faq.q.toLowerCase().split(' ').slice(0, 3).join(' '))) {
-          return faq.a;
-        }
-      }
-    }
-
-    // Keyword-based responses
-    if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('quote')) {
-      return "We offer free quotes! Call or text us at 778-808-7620, or request a quote online and we'll respond within 24 hours.";
-    }
-    
-    if (lowerInput.includes('area') || lowerInput.includes('location') || lowerInput.includes('serve')) {
-      return "We serve Surrey, Coquitlam, Vancouver, White Rock, Langley — and surrounding areas in the Lower Mainland.";
-    }
-    
-    if (lowerInput.includes('service') || lowerInput.includes('what') || lowerInput.includes('offer')) {
-      return "We offer pressure washing, soft washing, window cleaning (interior/exterior), gutter cleaning, roof moss removal, siding treatment, and more.";
-    }
-    
-    if (lowerInput.includes('book') || lowerInput.includes('schedule') || lowerInput.includes('appointment')) {
-      return "You can book by calling/texting 778-808-7620 or requesting a quote online. We recommend booking 3–7 days in advance.";
-    }
-    
-    if (lowerInput.includes('insur') || lowerInput.includes('licens')) {
-      return "Yes, we're fully insured and licensed to protect you and your property.";
-    }
-
-    // Default response
-    return "I'd be happy to help! For specific questions, please call us at 778-808-7620 or request a free quote online. Our team will respond within 24 hours with detailed information.";
-  };
 
   const handleSendMessage = () => {
     if (!userInput.trim()) return;
@@ -260,44 +271,44 @@ const CTABanner: React.FC = () => {
   if (!isVisible) return null;
   
   return (
-    <section className="bg-bc-red py-3 fixed bottom-0 left-0 right-0 z-[1000] shadow-lg">
+    <section className="bg-bc-red py-4 fixed bottom-0 left-0 right-0 z-[1000] shadow-lg">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center flex-1">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center flex-1 min-w-0">
             <img 
               src="/lovable-uploads/5f0b8643-4703-4237-9723-b6f07a39a74b.png"
               alt="Jayden Fisher, Owner" 
-              className="w-10 h-10 rounded-full mr-3 border-2 border-white object-cover" 
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-white object-cover flex-shrink-0" 
             />
             
-            <div className="text-white flex-1">
-              <p className="font-bold text-sm sm:text-base">Ready for a free quote?</p>
-              <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
+            <div className="text-white ml-3 min-w-0 flex-1">
+              <p className="font-bold text-sm sm:text-base lg:text-lg truncate">Ready for a free quote?</p>
+              <p className="text-xs sm:text-sm text-white/90 truncate">Get a response within 24 hours</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <Button 
               onClick={() => setChatOpen(true)}
               size="sm" 
               variant="secondary" 
-              className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 whitespace-nowrap"
+              className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 px-3 py-2 h-auto text-xs sm:text-sm font-medium whitespace-nowrap"
             >
-              <MessageCircle className="w-4 h-4" />
-              <span className="text-xs sm:text-sm">Chat</span>
+              <MessageCircle className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden xs:inline">Chat</span>
             </Button>
             
-            <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
-              <a href="tel:+16047860399">
-                <Phone className="w-4 h-4" />
-                <span className="text-xs sm:text-sm">Call</span>
+            <Button asChild size="sm" variant="secondary" className="gap-1 px-3 py-2 h-auto text-xs sm:text-sm font-medium whitespace-nowrap bg-white text-bc-red hover:bg-gray-100">
+              <a href="tel:+17788087620">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span className="hidden xs:inline">Call</span>
               </a>
             </Button>
             
-            <Button asChild size="sm" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 whitespace-nowrap">
+            <Button asChild size="sm" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 px-3 py-2 h-auto text-xs sm:text-sm font-medium whitespace-nowrap">
               <Link to="/contact">
-                <Calendar className="w-4 h-4" />
-                <span className="text-xs sm:text-sm">Quote</span>
+                <Calendar className="w-4 h-4 flex-shrink-0" />
+                <span className="hidden xs:inline">Quote</span>
               </Link>
             </Button>
           </div>
@@ -306,35 +317,40 @@ const CTABanner: React.FC = () => {
 
       {/* Chat Modal */}
       {chatOpen && (
-        <div className="fixed inset-0 bg-black/50 z-[1001] flex items-end justify-center">
-          <div className="bg-white rounded-t-xl w-full max-w-md max-h-[80vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b bg-bc-red text-white rounded-t-xl">
-              <h3 className="font-semibold">BC Pressure Washing Assistant</h3>
+        <div className="fixed inset-0 bg-black/50 z-[1001] flex items-end sm:items-center justify-center p-4">
+          <div className="bg-white rounded-t-xl sm:rounded-xl w-full max-w-md max-h-[85vh] sm:max-h-[80vh] flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b bg-bc-red text-white rounded-t-xl sm:rounded-t-xl relative">
+              <img 
+                src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png"
+                alt="BC Pressure Washing Logo" 
+                className="absolute top-2 left-2 w-8 h-8 object-contain"
+              />
+              <h3 className="font-semibold text-center flex-1 ml-6">BC Pressure Washing Assistant</h3>
               <Button 
                 onClick={() => setChatOpen(false)}
                 size="sm"
                 variant="ghost"
-                className="text-white hover:bg-red-600"
+                className="text-white hover:bg-red-600 flex-shrink-0"
               >
                 <X className="w-4 h-4" />
               </Button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[300px]">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[250px]">
               {conversation.length === 0 && (
                 <div className="text-center text-gray-600 py-8">
                   <MessageCircle className="w-12 h-12 mx-auto mb-4 text-bc-red" />
-                  <p className="mb-2">Hi! I'm here to help answer your questions.</p>
-                  <p className="text-sm">Ask me about our services, pricing, areas we serve, or anything else!</p>
+                  <p className="mb-2 font-medium">Hi! I'm here to help answer your questions.</p>
+                  <p className="text-sm text-gray-500">Ask me about our services, pricing, areas we serve, or anything else!</p>
                 </div>
               )}
               
               {conversation.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-3 rounded-lg ${
+                  <div className={`max-w-[85%] p-3 rounded-lg text-sm ${
                     msg.type === 'user' 
-                      ? 'bg-bc-red text-white' 
-                      : 'bg-gray-100 text-gray-800'
+                      ? 'bg-bc-red text-white rounded-br-sm' 
+                      : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                   }`}>
                     {msg.message}
                   </div>
@@ -342,7 +358,7 @@ const CTABanner: React.FC = () => {
               ))}
             </div>
             
-            <div className="p-4 border-t">
+            <div className="p-4 border-t bg-gray-50">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -350,11 +366,12 @@ const CTABanner: React.FC = () => {
                   onChange={(e) => setUserInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me anything..."
-                  className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-bc-red"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent text-sm"
                 />
                 <Button 
                   onClick={handleSendMessage}
-                  className="bg-bc-red hover:bg-red-700"
+                  className="bg-bc-red hover:bg-red-700 px-3 py-2 flex-shrink-0"
+                  disabled={!userInput.trim()}
                 >
                   <Send className="w-4 h-4" />
                 </Button>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import FooterWeatherService from './FooterWeatherService';
-import ServiceAreaMap from './ServiceAreaMap';
 
 const Footer = () => {
   const location = useLocation();
@@ -12,13 +11,8 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white">
       <div className="container mx-auto px-4 pt-16">
-        {/* Only show FAQs on non-homepage routes */}
-        {!isHomePage}
-        
-        {/* LocationBanner has been removed */}
-        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 mt-16">
-          {/* Logo and social media links */}
+          {/* Logo and company info */}
           <div className="col-span-1">
             <div className="mb-4 flex flex-col items-center">
               <Link to="/">
@@ -27,10 +21,10 @@ const Footer = () => {
               {/* Car image moved below the logo */}
               <img alt="BC Pressure Washing Service Car" className="h-20 mt-2" src="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" />
             </div>
-            <p className="text-gray-300 mb-6 text-base">
+            <p className="text-gray-300 mb-6 text-base text-center">
               Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 justify-center">
               <a href="https://www.facebook.com/BCPressureWashing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
@@ -53,6 +47,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/services/pressure-washing" className="text-gray-300 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> Pressure Washing
+                </Link>
+              </li>
+              <li>
                 <Link to="/services/gutter-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
                   <span className="mr-2">→</span> Gutter Cleaning
                 </Link>
@@ -63,13 +62,13 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/services/house-washing" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> House Washing
+                <Link to="/services/commercial-window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> Commercial Services
                 </Link>
               </li>
               <li>
-                <Link to="/services/driveway-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Driveway Cleaning
+                <Link to="/services" className="text-gray-300 hover:text-white transition-colors flex items-center">
+                  <span className="mr-2">→</span> View All Services
                 </Link>
               </li>
             </ul>
@@ -85,11 +84,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Phone className="text-bc-red mr-3 flex-shrink-0" size={18} />
-                <span className="text-gray-300">778 808 7620</span>
+                <a href="tel:+17788087620" className="text-gray-300 hover:text-white transition-colors">778 808 7620</a>
               </li>
               <li className="flex items-center">
                 <Mail className="text-bc-red mr-3 flex-shrink-0" size={18} />
-                <span className="text-gray-300">bcpressurewashing.ca@gmail.com</span>
+                <a href="mailto:bcpressurewashing.ca@gmail.com" className="text-gray-300 hover:text-white transition-colors">bcpressurewashing.ca@gmail.com</a>
               </li>
               <li className="flex items-start">
                 <Clock className="text-bc-red mr-3 flex-shrink-0 mt-1" size={18} />
@@ -105,6 +104,26 @@ const Footer = () => {
           {/* Footer Weather Service */}
           <div className="col-span-1">
             <FooterWeatherService />
+          </div>
+        </div>
+
+        {/* Copyright and bottom links */}
+        <div className="border-t border-gray-800 pt-8 pb-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 text-sm mb-4 md:mb-0">
+              © 2024 BC Pressure Washing. All rights reserved.
+            </div>
+            <div className="flex space-x-6 text-sm">
+              <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms-of-service" className="text-gray-400 hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+              <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
+                Contact Us
+              </Link>
+            </div>
           </div>
         </div>
       </div>
