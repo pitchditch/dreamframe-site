@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import ChatAssistant from './ChatAssistant';
 import ReferralButton from './ReferralButton';
 
 interface LayoutProps {
@@ -59,7 +58,6 @@ const Layout = ({
         {children}
       </main>
       <Footer />
-      <ChatAssistant />
     </div>
   );
 };

@@ -200,10 +200,39 @@ const CTABanner: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const findAnswer = (input: string): string => {
-    const lowerInput = input.toLowerCase();
+  // Enhanced typo-tolerant search function
+  const levenshteinDistance = (str1: string, str2: string): number => {
+    const matrix = [];
     
-    // Search through all FAQ data
+    for (let i = 0; i <= str2.length; i++) {
+      matrix[i] = [i];
+    }
+    
+    for (let j = 0; j <= str1.length; j++) {
+      matrix[0][j] = j;
+    }
+    
+    for (let i = 1; i <= str2.length; i++) {
+      for (let j = 1; j <= str1.length; j++) {
+        if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
+        }
+      }
+    }
+    
+    return matrix[str2.length][str1.length];
+  };
+
+  const findAnswer = (input: string): string => {
+    const lowerInput = input.toLowerCase().trim();
+    
+    // Direct match first
     for (const category of faqData) {
       for (const faq of category.questions) {
         if (faq.q.toLowerCase().includes(lowerInput) || 
@@ -214,25 +243,63 @@ const CTABanner: React.FC = () => {
       }
     }
 
-    // Keyword-based responses
-    if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('quote')) {
-      return "We offer free quotes! Call or text us at 778-808-7620, or request a quote online and we'll respond within 24 hours.";
-    }
+    // Fuzzy matching for typos
+    let bestMatch = { answer: '', distance: Infinity };
+    const inputWords = lowerInput.split(' ');
     
-    if (lowerInput.includes('area') || lowerInput.includes('location') || lowerInput.includes('serve')) {
-      return "We serve Surrey, Coquitlam, Vancouver, White Rock, Langley — and surrounding areas in the Lower Mainland.";
+    for (const category of faqData) {
+      for (const faq of category.questions) {
+        const questionWords = faq.q.toLowerCase().split(' ');
+        const answerWords = faq.a.toLowerCase().split(' ');
+        
+        // Check each input word against question and answer words
+        for (const inputWord of inputWords) {
+          if (inputWord.length > 2) { // Only check words longer than 2 characters
+            for (const qWord of questionWords) {
+              const distance = levenshteinDistance(inputWord, qWord);
+              if (distance <= 2 && distance < bestMatch.distance) {
+                bestMatch = { answer: faq.a, distance };
+              }
+            }
+            for (const aWord of answerWords) {
+              const distance = levenshteinDistance(inputWord, aWord);
+              if (distance <= 2 && distance < bestMatch.distance) {
+                bestMatch = { answer: faq.a, distance };
+              }
+            }
+          }
+        }
+      }
     }
-    
-    if (lowerInput.includes('service') || lowerInput.includes('what') || lowerInput.includes('offer')) {
-      return "We offer pressure washing, soft washing, window cleaning (interior/exterior), gutter cleaning, roof moss removal, siding treatment, and more.";
+
+    if (bestMatch.answer) {
+      return bestMatch.answer;
     }
-    
-    if (lowerInput.includes('book') || lowerInput.includes('schedule') || lowerInput.includes('appointment')) {
-      return "You can book by calling/texting 778-808-7620 or requesting a quote online. We recommend booking 3–7 days in advance.";
-    }
-    
-    if (lowerInput.includes('insur') || lowerInput.includes('licens')) {
-      return "Yes, we're fully insured and licensed to protect you and your property.";
+
+    // Keyword-based responses with typo tolerance
+    const keywords = {
+      'price|cost|quote|pricing|estimate': "We offer free quotes! Call or text us at 778-808-7620, or request a quote online and we'll respond within 24 hours.",
+      'area|location|serve|service area|where': "We serve Surrey, Coquitlam, Vancouver, White Rock, Langley — and surrounding areas in the Lower Mainland.",
+      'service|services|what|offer|do': "We offer pressure washing, soft washing, window cleaning (interior/exterior), gutter cleaning, roof moss removal, siding treatment, and more.",
+      'book|schedule|appointment|booking': "You can book by calling/texting 778-808-7620 or requesting a quote online. We recommend booking 3–7 days in advance.",
+      'insur|licens|insurance|license': "Yes, we're fully insured and licensed to protect you and your property.",
+      'window|windows|clean': "We offer interior and exterior window cleaning as well as screen and track cleaning using purified water systems for a spotless finish.",
+      'pressure|wash|washing|house': "We offer pressure washing and soft washing for driveways, sidewalks, patios, decks, siding, and more using controlled pressure techniques.",
+      'gutter|gutters|downspout': "We provide complete gutter cleaning including hand-cleaning, flushing downspouts, and can provide before/after photos.",
+      'roof|moss|algae': "Our roof cleaning includes moss removal, algae treatment, debris removal, and optional preventative spray using safe soft washing techniques.",
+      'payment|pay|accept|methods': "We accept credit/debit, e-transfer, and cash. All estimates are free with no obligation.",
+      'time|long|duration|take': "Most jobs take 1–3 hours depending on service type and property size.",
+      'commercial|business|strata': "Yes, we offer commercial services including storefronts, office buildings, apartment complexes, and strata properties with flexible scheduling.",
+      'discount|deal|promotion|save': "Yes! Bundle multiple services and save up to 20%. We also offer seasonal promotions.",
+      'guarantee|satisfaction|not satisfied': "We stand by our work with a 100% satisfaction guarantee. If you're not satisfied, we'll come back and make it right at no charge.",
+      'contact|call|phone|reach': "Call or text us at 778-808-7620, or visit BCPressureWashing.ca. We usually respond within 1 hour during business hours."
+    };
+
+    for (const [pattern, response] of Object.entries(keywords)) {
+      const regex = new RegExp(pattern, 'i');
+      if (regex.test(lowerInput)) {
+        return response;
+      }
     }
 
     // Default response
@@ -288,7 +355,7 @@ const CTABanner: React.FC = () => {
             </Button>
             
             <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
-              <a href="tel:+16047860399">
+              <a href="tel:+17788087620">
                 <Phone className="w-4 h-4" />
                 <span className="text-xs sm:text-sm">Call</span>
               </a>
@@ -308,8 +375,13 @@ const CTABanner: React.FC = () => {
       {chatOpen && (
         <div className="fixed inset-0 bg-black/50 z-[1001] flex items-end justify-center">
           <div className="bg-white rounded-t-xl w-full max-w-md max-h-[80vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b bg-bc-red text-white rounded-t-xl">
-              <h3 className="font-semibold">BC Pressure Washing Assistant</h3>
+            <div className="flex items-center justify-between p-4 border-b bg-bc-red text-white rounded-t-xl relative">
+              <img 
+                src="/lovable-uploads/d8e87e6e-db66-4486-a489-11108ff306fb.png"
+                alt="BC Logo" 
+                className="absolute top-2 left-2 w-8 h-8 object-contain" 
+              />
+              <h3 className="font-semibold ml-10">BC Pressure Washing Assistant</h3>
               <Button 
                 onClick={() => setChatOpen(false)}
                 size="sm"
@@ -326,6 +398,7 @@ const CTABanner: React.FC = () => {
                   <MessageCircle className="w-12 h-12 mx-auto mb-4 text-bc-red" />
                   <p className="mb-2">Hi! I'm here to help answer your questions.</p>
                   <p className="text-sm">Ask me about our services, pricing, areas we serve, or anything else!</p>
+                  <p className="text-xs mt-2 text-gray-500">Don't worry about typos - I'll understand!</p>
                 </div>
               )}
               

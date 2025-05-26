@@ -70,7 +70,8 @@ const HeroSection = () => {
             ></iframe>
           )}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
+        {/* Lighter gradient overlay for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
       </div>
       
       {/* Hero Content */}
@@ -80,12 +81,16 @@ const HeroSection = () => {
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Exterior Cleaning Services")}</span>
           </div>
           
-          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-6">
+          <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-6">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll">
-              <span className="text-white drop-shadow-2xl">{t("Transform Your Property's Appearance")}</span>
+              <span className="text-white" style={{
+                textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.6)'
+              }}>{t("Transform Your Property's Appearance")}</span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto drop-shadow-lg">
+            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto" style={{
+              textShadow: '1px 1px 3px rgba(0,0,0,0.8)'
+            }}>
               {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
             </p>
           </div>
@@ -117,15 +122,19 @@ const HeroSection = () => {
 
         {/* Personal Touch Section - Enhanced visibility */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 my-4 animate-on-scroll delay-500">
-          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+          <div className="bg-black/30 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md mx-auto border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 
               className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md mr-4"
             />
             <div className="text-center sm:text-left">
-              <p className="font-bold text-white text-sm md:text-xl drop-shadow-md">{t("Every Job is Personally Checked by Me.")}</p>
-              <p className="text-white font-medium text-xs md:text-base">— Jayden Fisher, {t("Owner")}</p>
+              <p className="font-bold text-white text-sm md:text-xl" style={{
+                textShadow: '1px 1px 3px rgba(0,0,0,0.8)'
+              }}>{t("Every Job is Personally Checked by Me.")}</p>
+              <p className="text-white font-medium text-xs md:text-base" style={{
+                textShadow: '1px 1px 3px rgba(0,0,0,0.8)'
+              }}>— Jayden Fisher, {t("Owner")}</p>
             </div>
           </div>
         </div>
@@ -133,7 +142,9 @@ const HeroSection = () => {
       
       {/* Enhanced scroll indicator with animation and label */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">{t("Scroll Down")}</span>
+        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full" style={{
+          textShadow: '1px 1px 3px rgba(0,0,0,0.8)'
+        }}>{t("Scroll Down")}</span>
         <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center">
           <div className="h-2 w-1 bg-white rounded-full animate-pulse"></div>
         </div>
