@@ -119,54 +119,38 @@ export const useWeather = () => {
           icon: data.weather[0].icon
         };
       } else {
-        // More realistic weather simulation based on location and season
+        // Fallback to simulated data based on current time and season
         const now = new Date();
         const hour = now.getHours();
         const month = now.getMonth();
-        const dayOfYear = Math.floor((Number(now) - Number(new Date(now.getFullYear(), 0, 0))) / 86400000);
         
-        // Vancouver/BC weather patterns
+        // Simulate seasonal and daily patterns
         const isWinter = month >= 11 || month <= 2;
-        const isSpring = month >= 3 && month <= 5;
-        const isSummer = month >= 6 && month <= 8;
-        const isFall = month >= 9 && month <= 11;
+        const isDaytime = hour >= 6 && hour <= 18;
         
         let condition = 'Clear';
-        let temperature = 15;
-        let humidity = 65;
-        let windSpeed = 10;
+        let temperature = 18;
         
-        // More realistic seasonal patterns for BC
         if (isWinter) {
-          temperature = Math.random() > 0.3 ? Math.floor(Math.random() * 8 + 2) : Math.floor(Math.random() * 6 + 8);
-          condition = Math.random() > 0.4 ? 'Rain' : Math.random() > 0.7 ? 'Cloudy' : 'Clear';
-          humidity = Math.floor(Math.random() * 20 + 70);
-          windSpeed = Math.floor(Math.random() * 15 + 8);
-        } else if (isSpring || isFall) {
-          temperature = Math.random() > 0.2 ? Math.floor(Math.random() * 12 + 12) : Math.floor(Math.random() * 8 + 8);
+          temperature = Math.random() > 0.3 ? Math.floor(Math.random() * 10 + 2) : Math.floor(Math.random() * 8 + 8);
           condition = Math.random() > 0.6 ? 'Cloudy' : Math.random() > 0.8 ? 'Rain' : 'Clear';
-          humidity = Math.floor(Math.random() * 25 + 60);
-          windSpeed = Math.floor(Math.random() * 12 + 6);
-        } else { // Summer
-          temperature = Math.random() > 0.1 ? Math.floor(Math.random() * 10 + 18) : Math.floor(Math.random() * 15 + 15);
-          condition = Math.random() > 0.8 ? 'Cloudy' : 'Clear';
-          humidity = Math.floor(Math.random() * 20 + 45);
-          windSpeed = Math.floor(Math.random() * 10 + 5);
+        } else {
+          temperature = Math.random() > 0.2 ? Math.floor(Math.random() * 15 + 15) : Math.floor(Math.random() * 10 + 10);
+          condition = Math.random() > 0.7 ? 'Cloudy' : 'Clear';
         }
 
-        // Better optimal condition logic
-        const isOptimal = condition === 'Clear' && windSpeed < 15 && humidity < 80;
+        const windSpeed = Math.floor(Math.random() * 20 + 5);
+        const isOptimal = condition === 'Clear' && windSpeed < 15;
 
         weatherData = {
           location: `${locationData.city}, ${locationData.region}`,
           temperature,
           condition,
-          humidity,
+          humidity: Math.floor(Math.random() * 30 + 50),
           windSpeed,
           visibility: Math.floor(Math.random() * 5 + 8),
           isOptimal,
-          icon: condition === 'Clear' ? (hour >= 6 && hour <= 18 ? '01d' : '01n') : 
-                condition === 'Cloudy' ? '02d' : '10d'
+          icon: condition === 'Clear' ? '01d' : condition === 'Cloudy' ? '02d' : '10d'
         };
       }
 
