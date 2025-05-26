@@ -124,8 +124,17 @@ const Index = () => {
               darkMode={true}
             />
             
-            {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
-            <div className="h-20"></div>
+            {/* Full-width Marine Drive image below FAQ section */}
+            <div className="w-full">
+              <img 
+                src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+                alt="White Rock Marine Drive - Local Business" 
+                className="w-full h-auto object-cover" 
+                style={{
+                  maxHeight: "400px"
+                }} 
+              />
+            </div>
           </div>
         </div>
       </div>

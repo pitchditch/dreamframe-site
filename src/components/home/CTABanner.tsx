@@ -16,9 +16,10 @@ const CTABanner: React.FC = () => {
                            document.querySelector('h2')?.textContent?.includes('Premium Cleaning Solutions') ? 
                            document.querySelector('h2')?.closest('section') : null;
       
-      // Find the Satisfaction Guarantee section
-      const satisfactionSection = document.querySelector('h2')?.textContent?.includes('100% Satisfaction Guarantee') ? 
-                                 document.querySelector('h2')?.closest('section') : null;
+      // Find the Satisfaction Guarantee section by its text content
+      const satisfactionSection = Array.from(document.querySelectorAll('h2')).find(h2 => 
+        h2.textContent?.includes('100% Satisfaction Guarantee')
+      )?.closest('section');
       
       let shouldShow = false;
       
@@ -34,7 +35,7 @@ const CTABanner: React.FC = () => {
       // Hide banner when satisfaction guarantee section enters viewport (stop above it)
       if (satisfactionSection && shouldShow) {
         const satisfactionRect = satisfactionSection.getBoundingClientRect();
-        if (satisfactionRect.top <= window.innerHeight + 200) { // Stop 200px above satisfaction section
+        if (satisfactionRect.top <= window.innerHeight + 80) { // Stop 80px above satisfaction section
           shouldShow = false;
         }
       }
