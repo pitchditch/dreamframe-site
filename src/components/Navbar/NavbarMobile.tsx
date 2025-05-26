@@ -19,7 +19,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white border-t border-gray-200 ${
+        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
           isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
         }`}
       >
@@ -40,7 +40,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             </Link>
             
             {/* Services Dropdown */}
-            <div className="border-b border-gray-100 pb-2">
+            <div className="pb-2">
               <div 
                 className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
                 onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
@@ -52,7 +52,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               <div className={`overflow-hidden transition-all duration-300 pl-4 ${
                 isServicesMenuOpen ? 'max-h-[800px] py-2' : 'max-h-0'
               }`}>
-                <div className="flex flex-col space-y-1 border-l-2 border-gray-100 pl-4">
+                <div className="flex flex-col space-y-1 pl-4">
                   <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential</div>
                   
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
@@ -115,7 +115,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             </div>
             
             {/* More Menu Dropdown */}
-            <div className="border-b border-gray-100 pb-2">
+            <div className="pb-2">
               <div 
                 className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
                 onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
@@ -127,7 +127,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               <div className={`overflow-hidden transition-all duration-300 pl-4 ${
                 isMoreMenuOpen ? 'max-h-[500px] py-2' : 'max-h-0'
               }`}>
-                <div className="flex flex-col space-y-4 border-l-2 border-gray-100 pl-4">
+                <div className="flex flex-col space-y-4 pl-4">
                   <Link to="/testimonials" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <Star size={20} className="text-bc-red" />
                     <span>{t('Testimonials')}</span>
@@ -165,7 +165,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               {t('Contact')}
             </Link>
             
-            <div className="pt-4 flex flex-col gap-3 border-t border-gray-100">
+            <div className="pt-4 flex flex-col gap-3">
               <LanguageSelector />
             </div>
           </nav>
