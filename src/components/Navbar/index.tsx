@@ -60,7 +60,7 @@ const Navbar = () => {
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isTransparent 
-        ? 'bg-transparent h-28 md:h-36 border-none' 
+        ? 'bg-transparent h-28 md:h-36' 
         : 'bg-white/95 backdrop-blur-sm shadow-md h-28 md:h-32 border-b border-gray-200'
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">

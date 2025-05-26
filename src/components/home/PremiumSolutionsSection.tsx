@@ -1,13 +1,16 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import HoverImageSlideshow from '../HoverImageSlideshow';
+import ServiceVideoOverlay from '../ServiceVideoOverlay';
 import { testimonials } from '@/data/testimonials';
 import { Button } from '@/components/ui/button';
 
 const PremiumSolutionsSection = () => {
   const { t } = useTranslation();
+  const [hoveredService, setHoveredService] = useState<number | null>(null);
   
   // Filter testimonial images by service type
   const windowCleaningImages = testimonials
@@ -33,6 +36,7 @@ const PremiumSolutionsSection = () => {
       link: '/services/window-cleaning',
       image: '/lovable-uploads/481b70c0-733d-4cc9-9629-3628731d87e4.png',
       slideImages: windowCleaningImages,
+      videoId: 'bbHnt4UNPcU',
       included: [
         t('Exterior & interior window cleaning'),
         t('Screen & sill wipe-down'),
@@ -46,6 +50,7 @@ const PremiumSolutionsSection = () => {
       link: '/services/pressure-washing',
       image: '/lovable-uploads/ff861e81-c504-47c8-aae7-5319b9ad2ab4.png',
       slideImages: houseWashingImages,
+      videoId: 'lYnXijewxCM',
       included: [
         t('Soft wash siding treatment'),
         t('Algae & mildew removal'),
@@ -59,6 +64,7 @@ const PremiumSolutionsSection = () => {
       link: '/services/gutter-cleaning',
       image: '/lovable-uploads/29932697-b24f-4d93-9212-f1913cd47193.png',
       slideImages: gutterCleaningImages,
+      videoId: 'EdMlx1sYJDc',
       included: [
         t('Interior debris removal'),
         t('Downspout flushing'),
@@ -72,6 +78,7 @@ const PremiumSolutionsSection = () => {
       link: '/services/roof-cleaning',
       image: '/lovable-uploads/c988cf42-0a35-4032-bcc3-6b9770fbc771.png',
       slideImages: roofCleaningImages,
+      videoId: 'eQSgdx9ujcc',
       included: [
         t('Soft wash or brushing method'),
         t('Moss & algae treatment'),
@@ -97,7 +104,9 @@ const PremiumSolutionsSection = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col group"
+              className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col group relative"
+              onMouseEnter={() => setHoveredService(index)}
+              onMouseLeave={() => setHoveredService(null)}
             >
               <div className="h-56 relative overflow-hidden">
                 <HoverImageSlideshow 
@@ -112,6 +121,12 @@ const PremiumSolutionsSection = () => {
                   />
                 </HoverImageSlideshow>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <ServiceVideoOverlay
+                  videoId={service.videoId}
+                  isHovering={hoveredService === index}
+                  onClose={() => setHoveredService(null)}
+                />
               </div>
               
               <div className="p-6 flex flex-col flex-grow">
