@@ -81,19 +81,17 @@ const HeroSection = () => {
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Exterior Cleaning Services")}</span>
           </div>
           
-          <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll">
-              <span className="text-white" style={{
-                textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.6)'
-              }}>{t("Transform Your Property's Appearance")}</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto" style={{
-              textShadow: '1px 1px 3px rgba(0,0,0,0.8)'
-            }}>
-              {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
-            </p>
-          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll text-white" style={{
+            textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 16px rgba(0,0,0,0.6), 0 0 32px rgba(0,0,0,0.4)'
+          }}>
+            {t("Transform Your Property's Appearance")}
+          </h1>
+          
+          <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto text-white" style={{
+            textShadow: '2px 2px 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6)'
+          }}>
+            {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
+          </p>
         </div>
         
         {/* Postal Code Input Section */}

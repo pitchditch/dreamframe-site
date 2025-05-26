@@ -85,17 +85,17 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section - Fixed position for slide effect with proper z-index */}
-      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
+      {/* Hero Section - Static positioning to prevent glitching */}
+      <div className="relative w-full h-screen overflow-hidden">
         <HeroSection />
       </div>
       
-      {/* Content that slides over the hero - Higher z-index to prevent glitching */}
-      <div className="relative z-40" style={{ marginTop: '100vh' }}>
-        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
+      {/* Content that follows the hero */}
+      <div className="relative z-20">
+        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-30">
           <ServiceBanner />
           
-          <div className="bg-white relative z-50">
+          <div className="bg-white relative z-30">
             <PremiumSolutionsSection />
             <FeaturedProjectSection />
             

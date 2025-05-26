@@ -172,9 +172,9 @@ const SmartScheduler = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Current Weather */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-sm">
+          <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="p-2 bg-blue-100 rounded-lg">
@@ -228,23 +228,22 @@ const SmartScheduler = () => {
             </CardContent>
           </Card>
 
-          {/* Optimal Days Calendar */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-sm">
+          {/* Combined Optimal Days and Booking Calendar */}
+          <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-3 text-xl">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <Sun className="w-5 h-5 text-green-600" />
+                <div className="p-2 bg-bc-red/10 rounded-lg">
+                  <CalendarDays className="w-5 h-5 text-bc-red" />
                 </div>
-                {t("Optimal Days This Month")}
+                {t("Optimal Days & Booking")}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-center mb-6">
+            <CardContent className="space-y-6">
+              {/* Optimal Days Overview */}
+              <div className="text-center">
                 <div className="text-4xl font-bold text-green-600 mb-2">{optimalCount}</div>
-                <div className="text-gray-600">perfect weather days</div>
-              </div>
-              
-              <div className="space-y-4">
+                <div className="text-gray-600 mb-4">perfect weather days this month</div>
+                
                 <div className="grid grid-cols-7 gap-1 text-center mb-2">
                   {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
                     <div key={index} className="text-sm font-semibold text-gray-500 pb-2">
@@ -253,7 +252,7 @@ const SmartScheduler = () => {
                   ))}
                 </div>
                 
-                <div className="grid grid-cols-7 gap-1">
+                <div className="grid grid-cols-7 gap-1 mb-4">
                   {optimalDaysData.map(({ day, isOptimal, isToday }) => (
                     <div
                       key={day}
@@ -272,7 +271,7 @@ const SmartScheduler = () => {
                   ))}
                 </div>
                 
-                <div className="flex items-center justify-center gap-4 text-xs">
+                <div className="flex items-center justify-center gap-4 text-xs mb-4">
                   <div className="flex items-center gap-1">
                     <div className="w-3 h-3 bg-green-100 rounded"></div>
                     <span className="text-gray-600">Optimal</span>
@@ -283,20 +282,8 @@ const SmartScheduler = () => {
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Booking Calendar */}
-          <Card className="lg:col-span-1 shadow-lg border-0 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3 text-xl">
-                <div className="p-2 bg-bc-red/10 rounded-lg">
-                  <CalendarDays className="w-5 h-5 text-bc-red" />
-                </div>
-                {t("Book Your Service")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
+              {/* Booking Calendar */}
               <Calendar
                 mode="single"
                 selected={selectedDate}

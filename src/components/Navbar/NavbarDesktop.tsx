@@ -19,6 +19,14 @@ interface NavbarDesktopProps {
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
 
+  const navTextClass = `transition-all duration-300 hover:scale-105 hover:text-bc-red font-bold text-lg tracking-wide ${
+    isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
+  }`;
+
+  const dropdownTriggerClass = `transition-all duration-300 hover:scale-105 hover:text-bc-red font-bold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
+    isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
+  }`;
+
   return (
     <div className="hidden md:flex items-center justify-between flex-1">
       <div className="flex-1 flex justify-end">
@@ -27,9 +35,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/" 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-base tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
+                className={navTextClass}
               >
                 {t('Home')}
               </Link>
@@ -38,9 +44,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/why-us" 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-base tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
+                className={navTextClass}
               >
                 {t('Why Us')}
               </Link>
@@ -48,9 +52,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-base tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
+                className={dropdownTriggerClass}
               >
                 {t('Residential')} <ChevronDown className="ml-1 h-4 w-4" />
               </NavigationMenuTrigger>
@@ -78,9 +80,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-base tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
+                className={dropdownTriggerClass}
               >
                 {t('Commercial')} <ChevronDown className="ml-1 h-4 w-4" />
               </NavigationMenuTrigger>
@@ -105,9 +105,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/contact" 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-base tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
+                className={navTextClass}
               >
                 {t('Contact')}
               </Link>
