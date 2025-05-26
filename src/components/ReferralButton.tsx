@@ -21,8 +21,8 @@ const ReferralButton: React.FC = () => {
       </button>
 
       <ReferralProgramDialog 
-        isOpen={isDialogOpen} 
-        onClose={() => setIsDialogOpen(false)} 
+        open={isDialogOpen} 
+        onOpenChange={setIsDialogOpen} 
       />
     </>
   );

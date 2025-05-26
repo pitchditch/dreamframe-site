@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Pages with dark backgrounds that need white text (Express Cleaning removed)
+  // Pages with dark backgrounds that need white text
   const darkOverlayPages = [
     '/', 
     '/why-us', 
@@ -31,7 +31,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.6; // Reduced for Express Cleaning page
+      const heroHeight = window.innerHeight; // Full viewport height for hero section
       
       // Only consider transparent when in the hero section (not scrolled past it)
       const shouldBeTransparent = darkOverlayPages.includes(location.pathname) && currentScrollY < heroHeight;
@@ -59,7 +59,7 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled || !isOverVideo ? 'bg-white/95 backdrop-blur-sm shadow-md h-28 md:h-32' : 'bg-transparent h-28 md:h-36'
+      isOverVideo && !isScrolled ? 'bg-transparent h-28 md:h-36' : 'bg-white/95 backdrop-blur-sm shadow-md h-28 md:h-32'
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo && !isScrolled} />
