@@ -17,7 +17,6 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
-import Footer from '../components/Footer';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -80,11 +79,14 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <Layout
+      image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
+      canonicalUrl="/"
+      title={t("BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock")}
+      description={t("Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.")}
+    >
       <Helmet>
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
-        <title>{t("BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock")}</title>
-        <meta name="description" content={t("Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.")} />
       </Helmet>
       
       {/* Hero Section - Fixed position for slide effect */}
@@ -131,8 +133,7 @@ const Index = () => {
       
       <CTABanner />
       <ReferralButton />
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
