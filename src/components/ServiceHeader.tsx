@@ -1,7 +1,7 @@
 
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ServiceHeaderProps {
@@ -30,16 +30,18 @@ const ServiceHeader = ({
   youtubeDesktopId
 }: ServiceHeaderProps) => {
   const isMobile = useIsMobile();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
   
-  // Use useEffect to add and remove the has-video-header class
+  // Use useEffect to add and remove the has-video-header class only for video headers
   useEffect(() => {
-    if (videoUrl || youtubeId || youtubeDesktopId) {
+    if ((videoUrl || youtubeId || youtubeDesktopId) && !isHomePage) {
       document.body.classList.add('has-video-header');
       return () => {
         document.body.classList.remove('has-video-header');
       };
     }
-  }, [videoUrl, youtubeId, youtubeDesktopId]);
+  }, [videoUrl, youtubeId, youtubeDesktopId, isHomePage]);
 
   // Adjust title text size based on mobile view
   const titleClasses = isMobile
