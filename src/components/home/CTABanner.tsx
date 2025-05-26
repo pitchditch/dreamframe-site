@@ -1,48 +1,76 @@
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
+import { Phone, Calculator } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useTranslation } from '@/hooks/use-translation';
 
 const CTABanner: React.FC = () => {
-  const isMobile = useIsMobile();
-  
+  const { t } = useTranslation();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Find the Premium Solutions section
+      const premiumSection = document.querySelector('[data-component="premium-solutions"]') || 
+                            document.querySelector('section:has-text("Premium Solutions")') ||
+                            document.getElementById('premium-solutions');
+      
+      if (premiumSection) {
+        const rect = premiumSection.getBoundingClientRect();
+        // Show banner when Premium Solutions section comes into view
+        setIsVisible(rect.top <= window.innerHeight);
+      } else {
+        // Fallback: show after scrolling 800px (approximate position of Premium Solutions)
+        setIsVisible(window.scrollY > 800);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!isVisible) return null;
+
   return (
-    <section className="bg-bc-red py-3 fixed bottom-0 left-0 right-0 z-[1000] shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center">
-          <img 
-            src="/lovable-uploads/5f0b8643-4703-4237-9723-b6f07a39a74b.png"
-            alt="Jayden Fisher, Owner" 
-            className="w-10 h-10 rounded-full mr-3 border-2 border-white object-cover" 
-          />
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-lg">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/85f5bd3c-680e-4957-9722-6bc6070f7d51.png" 
+              alt="BC Pressure Washing" 
+              className="w-12 h-12 rounded-full object-cover border-2 border-bc-red"
+            />
+            <div className="hidden sm:block">
+              <h3 className="font-bold text-gray-900 text-sm">{t('Ready to Get Started?')}</h3>
+              <p className="text-xs text-gray-600">{t('Free quotes • Same-day service')}</p>
+            </div>
+          </div>
           
-          <div className="flex-1 flex flex-row items-center justify-between">
-            <div className="text-white">
-              <p className="font-bold text-sm sm:text-base">Ready for a free quote?</p>
-              <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <a 
+              href="tel:+17788815165" 
+              className="flex items-center gap-2 bg-bc-red text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors text-sm"
+            >
+              <Phone size={16} />
+              <span className="hidden sm:inline">{t('Call Now')}</span>
+              <span className="sm:hidden">{t('Call')}</span>
+            </a>
             
-            <div className="flex flex-row gap-2">
-              <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
-                <a href="tel:+16047860399">
-                  <Phone className="w-4 h-4" />
-                  <span className="text-xs sm:text-sm">Call</span>
-                </a>
-              </Button>
-              
-              <Button asChild size="sm" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 whitespace-nowrap">
-                <Link to="/contact">
-                  <Calendar className="w-4 h-4" />
-                  <span className="text-xs sm:text-sm">Get Quote</span>
-                </Link>
-              </Button>
-            </div>
+            <Link 
+              to="/calculator"
+              className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-sm"
+            >
+              <Calculator size={16} />
+              <span className="hidden sm:inline">{t('Get Quote')}</span>
+              <span className="sm:hidden">{t('Quote')}</span>
+            </Link>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white border-t border-gray-200 ${
+        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
           isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
         }`}
       >
