@@ -1,4 +1,3 @@
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -86,12 +85,6 @@
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.01em;
     font-weight: 600; /* Increased from 500 to 600 for better visibility */
-  }
-  
-  /* Remove any borders from header elements */
-  header {
-    border: none !important;
-    border-bottom: none !important;
   }
 }
 
