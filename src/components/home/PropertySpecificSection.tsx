@@ -82,28 +82,28 @@ const PropertySpecificSection = () => {
     <section 
       className="py-12 md:py-16 relative overflow-hidden"
       style={{
-        backgroundImage: `url('/lovable-uploads/12d4233e-3fc6-4af4-9c06-3f0b56849154.png')`,
+        backgroundImage: `url('/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
       }}
     >
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-12 md:mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Star className="w-5 h-5 text-yellow-500 fill-current" />
-            <span className="text-bc-red font-semibold text-sm uppercase tracking-wide">Trusted Local Experts</span>
+            <span className="text-white font-semibold text-sm uppercase tracking-wide">Trusted Local Experts</span>
             <Star className="w-5 h-5 text-yellow-500 fill-current" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-gray-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-white">
             {t("Ready to Transform Your Property?")}
             <span className="block text-bc-red">{t("Tailored Services for Every Need")}</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-white max-w-4xl mx-auto leading-relaxed">
             {t("From residential homes to commercial buildings, BC Pressure Washing delivers specialized exterior cleaning solutions designed for your specific property needs in Surrey, White Rock & Metro Vancouver.")}
           </p>
         </div>

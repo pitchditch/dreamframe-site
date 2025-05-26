@@ -84,22 +84,20 @@ const SmartScheduler = () => {
       };
     }
 
-    const condition = weather.condition.toLowerCase();
-    let backgroundImage = '';
-    let weatherOverlay = '';
-
     // Choose background image based on weather optimality
     if (weather.isOptimal) {
-      backgroundImage = `url('/lovable-uploads/300cfc16-3873-40ab-830a-e8dfacfa492f.png')`; // Clean window view
+      return {
+        backgroundImage: `url('/lovable-uploads/300cfc16-3873-40ab-830a-e8dfacfa492f.png')`, // Clean window view
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      };
     } else {
-      backgroundImage = `url('/lovable-uploads/6d61cdcf-cec8-483a-8f31-2c02ad8a67f0.png')`; // Dirty/rainy window view
+      return {
+        backgroundImage: `url('/lovable-uploads/6d61cdcf-cec8-483a-8f31-2c02ad8a67f0.png')`, // Dirty/rainy window view
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      };
     }
-
-    return {
-      backgroundImage,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    };
   };
 
   const getWeatherOverlay = () => {
@@ -110,24 +108,24 @@ const SmartScheduler = () => {
 
     if (condition.includes('rain') || condition.includes('drizzle')) {
       overlayStyle = {
-        background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.1) 100%)',
+        background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.3) 0%, rgba(147, 197, 253, 0.2) 100%)',
         backgroundImage: `
           repeating-linear-gradient(
             45deg,
             rgba(59, 130, 246, 0.1) 0px,
             rgba(59, 130, 246, 0.1) 2px,
             transparent 2px,
-            transparent 4px
+            transparent 6px
           )
         `
       };
     } else if (condition.includes('cloud')) {
       overlayStyle = {
-        background: 'linear-gradient(45deg, rgba(107, 114, 128, 0.2) 0%, rgba(156, 163, 175, 0.1) 100%)'
+        background: 'linear-gradient(45deg, rgba(107, 114, 128, 0.3) 0%, rgba(156, 163, 175, 0.2) 100%)'
       };
     } else if (condition.includes('clear') || condition.includes('sunny')) {
       overlayStyle = {
-        background: 'linear-gradient(45deg, rgba(251, 191, 36, 0.2) 0%, rgba(253, 224, 71, 0.1) 100%)'
+        background: 'linear-gradient(45deg, rgba(251, 191, 36, 0.3) 0%, rgba(253, 224, 71, 0.2) 100%)'
       };
     }
 
@@ -159,9 +157,6 @@ const SmartScheduler = () => {
     >
       {/* Weather overlay */}
       {getWeatherOverlay()}
-      
-      {/* Background overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/90 via-white/80 to-blue-50/90 backdrop-blur-sm z-20"></div>
       
       <div className="container mx-auto px-4 relative z-30">
         <div className="text-center mb-12">

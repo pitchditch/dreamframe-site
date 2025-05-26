@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -12,6 +13,7 @@ const HeroSection = () => {
   const { t, language } = useTranslation();
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [postalCode, setPostalCode] = useState('');
+  const [scrollY, setScrollY] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
@@ -37,6 +39,11 @@ const HeroSection = () => {
       setPostalCode(savedPostalCode);
     }
     
+    // Add scroll listener for video animation
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
@@ -64,17 +71,19 @@ const HeroSection = () => {
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
               className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              style={{ transform: `translateY(${scrollY * 0.5}px)` }}
             />
           ) : (
-            // Desktop YouTube Video
+            // Desktop YouTube Video with scroll animation
             <iframe 
               id="hero-desktop-video"
               className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               loading="eager"
+              style={{ transform: `translateY(${scrollY * 0.3}px)` }}
             ></iframe>
           )}
         </div>
