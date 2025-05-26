@@ -129,10 +129,7 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
                 alt="White Rock Marine Drive - Local Business" 
-                className="w-full h-auto object-cover" 
-                style={{
-                  maxHeight: "400px"
-                }} 
+                className="w-full h-auto object-cover object-center" 
               />
             </div>
           </div>
