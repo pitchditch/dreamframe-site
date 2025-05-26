@@ -9,8 +9,6 @@ import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
-import LocalCompanySection from '../components/home/LocalCompanySection';
-import GutterFaceCleaningSection from '../components/home/GutterFaceCleaningSection';
 import PackagesSection from '../components/home/PackagesSection';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
 import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
@@ -75,7 +73,6 @@ const Home = () => {
         <meta name="twitter:description" content="Seen our red BC Pressure Washing car? Get 10% off! Window, gutter, and pressure washing in White Rock & Surrey." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-        <script type="application/ld+json">
           {`
           {
             "@context": "https://schema.org",
@@ -130,7 +127,6 @@ const Home = () => {
             ]
           }
           `}
-        </script>
       </Helmet>
 
       <HeroSection />
@@ -147,8 +143,6 @@ const Home = () => {
           <SpringSaleCarousel />
           <TestimonialsSection />
           <PackagesSection />
-          <LocalCompanySection />
-          <GutterFaceCleaningSection />
 
           <section className="py-16 bg-gray-900 text-white">
             <div className="container mx-auto px-4">

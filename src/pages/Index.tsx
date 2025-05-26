@@ -109,13 +109,18 @@ const Index = () => {
         <TrustedCustomersSection />
         <CompetitorComparisonSection />
         <TestimonialsSection />
+        
+        {/* Move Satisfaction Guarantee before Service Areas */}
         <SatisfactionGuaranteeSection />
+        
+        {/* FAQ Section */}
         <FAQSection 
           title={t("Frequently Asked Questions")} 
           subtitle={t("Everything you need to know about our services")}
           faqs={faqItems}
           darkMode={true}
         />
+        
         <ServiceAreasSection />
         
         {/* Add padding at the bottom to ensure content isn't hidden behind the fixed CTA banner */}
