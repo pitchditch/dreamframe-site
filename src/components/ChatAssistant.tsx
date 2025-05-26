@@ -3,13 +3,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
+interface Message {
+  id: number;
+  text: string;
+  sender: 'bot' | 'user';
+  timestamp: Date;
+}
+
 const ChatAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       text: "Hi! I'm here to help you with any questions about our pressure washing and window cleaning services. How can I assist you today?",
-      sender: 'bot' as const,
+      sender: 'bot',
       timestamp: new Date()
     }
   ]);
@@ -27,10 +34,10 @@ const ChatAssistant: React.FC = () => {
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
-      const userMessage = {
+      const userMessage: Message = {
         id: messages.length + 1,
         text: inputValue,
-        sender: 'user' as const,
+        sender: 'user',
         timestamp: new Date()
       };
 
@@ -39,10 +46,10 @@ const ChatAssistant: React.FC = () => {
 
       // Simulate bot response after a delay
       setTimeout(() => {
-        const botResponse = {
+        const botResponse: Message = {
           id: messages.length + 2,
           text: "Thanks for your message! For immediate assistance, please call us at (778) 881-5165 or visit our contact page to schedule a free quote. Our team is ready to help with all your exterior cleaning needs!",
-          sender: 'bot' as const,
+          sender: 'bot',
           timestamp: new Date()
         };
         setMessages(prev => [...prev, botResponse]);
