@@ -7,6 +7,7 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
+import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
 import FAQSection from '@/components/FAQSection';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
@@ -15,6 +16,9 @@ import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import CTABanner from '../components/home/CTABanner';
+import CombinedSimulatorsSection from '@/components/CombinedSimulatorsSection';
+import PropertySpecificSection from '../components/home/PropertySpecificSection';
+import WeatherService from '../components/WeatherService';
 import ServiceBanner from '../components/ServiceBanner';
 
 const Index = () => {
@@ -93,10 +97,20 @@ const Index = () => {
       {/* Service Banner */}
       <ServiceBanner />
       
+      {/* Weather Service Integration */}
+      <WeatherService />
+      
+      {/* Combined Simulators Section */}
+      <CombinedSimulatorsSection />
+      
       <div className="bg-white">
         <PremiumSolutionsSection />
         <FeaturedProjectSection />
         
+        {/* Add property-specific section */}
+        <PropertySpecificSection />
+        
+        <ScreenCleaningSection />
         <div data-component="owner-operated">
           <OwnerOperatedSection />
         </div>
