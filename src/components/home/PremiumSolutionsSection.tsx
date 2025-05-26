@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 const PremiumSolutionsSection = () => {
   const { t } = useTranslation();
   const [hoveredService, setHoveredService] = useState<number | null>(null);
+  const [autoplayIndex, setAutoplayIndex] = useState(0);
   
   // Filter testimonial images by service type
   const windowCleaningImages = testimonials
@@ -88,6 +89,16 @@ const PremiumSolutionsSection = () => {
     }
   ];
 
+  // Autoplay functionality - cycle through videos every 8 seconds when not hovering
+  useEffect(() => {
+    if (hoveredService === null) {
+      const interval = setInterval(() => {
+        setAutoplayIndex((prevIndex) => (prevIndex + 1) % services.length);
+      }, 8000);
+      return () => clearInterval(interval);
+    }
+  }, [hoveredService, services.length]);
+
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100" data-section="premium-solutions">
       <div className="container mx-auto px-6">
@@ -101,68 +112,72 @@ const PremiumSolutionsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col group relative"
-              onMouseEnter={() => setHoveredService(index)}
-              onMouseLeave={() => setHoveredService(null)}
-            >
-              <div className="h-56 relative overflow-hidden">
-                <HoverImageSlideshow 
-                  images={service.slideImages} 
-                  interval={2500}
-                  altText={`${service.title} showcase`}
-                >
-                  <img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </HoverImageSlideshow>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                <ServiceVideoOverlay
-                  videoId={service.videoId}
-                  isHovering={hoveredService === index}
-                  onClose={() => setHoveredService(null)}
-                />
-              </div>
-              
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-bc-red transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed flex-grow text-base">
-                  {service.description}
-                </p>
-                
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-800 mb-3 text-sm uppercase tracking-wide">
-                    {t("Included")}:
-                  </h4>
-                  <ul className="space-y-3">
-                    {service.included.map((item, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-0.5 flex-shrink-0" size={18} />
-                        <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div className="mt-auto">
-                  <Link 
-                    to={service.link} 
-                    className="inline-flex items-center text-bc-red hover:text-red-700 font-semibold transition-all duration-200 group/link"
+          {services.map((service, index) => {
+            const shouldShowVideo = hoveredService === index || (hoveredService === null && autoplayIndex === index);
+            
+            return (
+              <div 
+                key={index} 
+                className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col group relative"
+                onMouseEnter={() => setHoveredService(index)}
+                onMouseLeave={() => setHoveredService(null)}
+              >
+                <div className="h-56 relative overflow-hidden">
+                  <HoverImageSlideshow 
+                    images={service.slideImages} 
+                    interval={2500}
+                    altText={`${service.title} showcase`}
                   >
-                    {t("Learn More")} 
-                    <ArrowRight className="ml-2 group-hover/link:translate-x-1 transition-transform" size={18} />
-                  </Link>
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </HoverImageSlideshow>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <ServiceVideoOverlay
+                    videoId={service.videoId}
+                    isHovering={shouldShowVideo}
+                    onClose={() => setHoveredService(null)}
+                  />
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-bc-red transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed flex-grow text-base">
+                    {service.description}
+                  </p>
+                  
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-800 mb-3 text-sm uppercase tracking-wide">
+                      {t("Included")}:
+                    </h4>
+                    <ul className="space-y-3">
+                      {service.included.map((item, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <Check className="text-green-500 mr-3 mt-0.5 flex-shrink-0" size={18} />
+                          <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="mt-auto">
+                    <Link 
+                      to={service.link} 
+                      className="inline-flex items-center text-bc-red hover:text-red-700 font-semibold transition-all duration-200 group/link"
+                    >
+                      {t("Learn More")} 
+                      <ArrowRight className="ml-2 group-hover/link:translate-x-1 transition-transform" size={18} />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
         <div className="text-center mt-16">

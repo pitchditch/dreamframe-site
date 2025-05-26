@@ -61,7 +61,7 @@ const Navbar = () => {
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isTransparent 
         ? 'bg-transparent h-28 md:h-36' 
-        : 'bg-white/95 backdrop-blur-sm shadow-lg h-28 md:h-32'
+        : 'bg-white/95 backdrop-blur-sm h-28 md:h-32'
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isTransparent} />
