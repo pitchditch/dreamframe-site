@@ -15,7 +15,7 @@ const CTABanner = () => {
           {t("Ready to Transform Your Property?")}
         </h2>
         <p className="text-xl mb-8 text-white/95 drop-shadow-md max-w-2xl mx-auto">
-          {t("Get a quote free online and see why we're the #1 choice for exterior cleaning in Metro Vancouver")}
+          {t("Get your free, no-obligation quote today. Same-day service available!")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link to="/calculator">
@@ -27,7 +27,7 @@ const CTABanner = () => {
           <Link to="/contact">
             <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-bc-red font-bold text-lg px-8 py-4">
               <Phone className="mr-2" size={20} />
-              {t("Call Now: 778-808-7620")}
+              {t("Call (778) 808-7620")}
             </Button>
           </Link>
         </div>
