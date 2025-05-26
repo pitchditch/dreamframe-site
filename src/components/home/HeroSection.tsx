@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -10,26 +11,17 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [postalCode, setPostalCode] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Preload the videos for faster loading
-    if (isMobile) {
-      const img = new Image();
-      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
-      img.onload = () => setVideoLoaded(true);
-    } else {
-      const videoElement = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
-      if (videoElement) {
-        videoElement.onload = () => setVideoLoaded(true);
-      }
-      // Set video as loaded after a short delay even if onload doesn't trigger
-      setTimeout(() => setVideoLoaded(true), 500);
-    }
+    // Preload the background image
+    const img = new Image();
+    img.src = "/lovable-uploads/53b11340-865b-48ea-a20c-b72e8e35ef04.png";
+    img.onload = () => setImageLoaded(true);
     
     // Check if postal code exists in session storage
     const savedPostalCode = sessionStorage.getItem('postalCode');
@@ -55,28 +47,14 @@ const HeroSection = () => {
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
-      {/* Background - Different for mobile and desktop */}
+      {/* Background - House Image */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
-          {isMobile ? (
-            // Mobile Image Background
-            <img 
-              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-              alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-            />
-          ) : (
-            // Desktop YouTube Video
-            <iframe 
-              id="hero-desktop-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
-              title="Pressure Washing Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              loading="eager"
-            ></iframe>
-          )}
+          <img 
+            src="/lovable-uploads/53b11340-865b-48ea-a20c-b72e8e35ef04.png"
+            alt="Beautiful house exterior with professional cleaning services"
+            className={`absolute w-full h-full object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
