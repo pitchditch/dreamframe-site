@@ -48,13 +48,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
+                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('Services')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100">
+              <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
                 <div className="grid grid-cols-2 gap-8">
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential</h3>
@@ -111,13 +111,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto ${
+                className={`transition-all duration-300 hover:scale-105 hover:text-bc-red font-semibold text-lg tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] opacity-100 mt-2">
+              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
                 <div className="space-y-4">
                   <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
                     <Star className="h-6 w-6 text-yellow-500" />

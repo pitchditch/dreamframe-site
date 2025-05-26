@@ -80,12 +80,24 @@ const HeroSection = () => {
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Exterior Cleaning Services")}</span>
           </div>
           
-          <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-6">
+          <div className="mb-6">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll">
-              <span className="text-white drop-shadow-2xl">{t("Transform Your Property's Appearance")}</span>
+              <span 
+                className="text-white font-bold"
+                style={{
+                  textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+                }}
+              >
+                {t("Transform Your Property's Appearance")}
+              </span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto drop-shadow-lg">
+            <p 
+              className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl mx-auto font-semibold text-white"
+              style={{
+                textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+              }}
+            >
               {t("Serving Surrey, White Rock & the Lower Mainland with premium pressure washing and cleaning solutions")}
             </p>
           </div>
