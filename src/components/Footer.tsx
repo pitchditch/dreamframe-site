@@ -109,12 +109,12 @@ const Footer = () => {
         </div>
       </div>
       
-      {/* Full-width Marine Drive image below footer */}
-      <div className="w-full h-auto">
+      {/* Full-width Marine Drive image below footer content */}
+      <div className="w-full">
         <img 
           src="/lovable-uploads/2b1c86bf-f351-48ad-831b-a33b68b7bcdc.png" 
           alt="White Rock Marine Drive" 
-          className="w-full object-cover" 
+          className="w-full h-auto object-cover" 
           style={{
             maxHeight: "400px"
           }} 
