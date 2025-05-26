@@ -76,7 +76,7 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
       
       <div className="w-full h-full relative overflow-hidden rounded-2xl">
         <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&fs=0&cc_load_policy=0&start=0&end=0&loop=0&disablekb=1&preload=auto`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&fs=0&cc_load_policy=0&start=0&end=0&loop=0&disablekb=1`}
           className="w-full h-full object-cover"
           style={{ 
             border: 'none', 
@@ -86,7 +86,6 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
           allow="autoplay; encrypted-media"
           allowFullScreen={false}
           loading="eager"
-          preload="auto"
         />
       </div>
     </div>

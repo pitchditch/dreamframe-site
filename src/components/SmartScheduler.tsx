@@ -272,7 +272,7 @@ const SmartScheduler = () => {
         </div>
       </div>
       
-      <style jsx>{`
+      <style>{`
         .sunny-overlay {
           background: radial-gradient(circle at 30% 20%, rgba(255, 255, 0, 0.15) 0%, transparent 50%);
         }
