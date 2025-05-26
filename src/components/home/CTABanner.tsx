@@ -54,57 +54,44 @@ const CTABanner: React.FC = () => {
   
   return (
     <>
-      <section className="bg-gradient-to-r from-bc-red to-red-700 py-4 fixed bottom-0 left-0 right-0 z-[1000] shadow-2xl border-t-2 border-white/20">
+      <section className="bg-bc-red py-4 fixed bottom-0 left-0 right-0 z-[1000] shadow-lg">
         <div className="container mx-auto px-4">
-          <div className={`flex items-center ${isMobile ? 'flex-col gap-4' : 'flex-row'}`}>
+          <div className={`flex items-center ${isMobile ? 'flex-col gap-3' : 'flex-row'}`}>
             <div className={`flex items-center ${isMobile ? 'w-full justify-center' : ''}`}>
-              <div className="relative">
-                <img 
-                  src="/lovable-uploads/5f0b8643-4703-4237-9723-b6f07a39a74b.png"
-                  alt="Jayden Fisher, Owner" 
-                  className="w-12 h-12 rounded-full mr-4 border-3 border-white object-cover shadow-lg" 
-                />
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
-              </div>
+              <img 
+                src="/lovable-uploads/5f0b8643-4703-4237-9723-b6f07a39a74b.png"
+                alt="Jayden Fisher, Owner" 
+                className="w-10 h-10 rounded-full mr-3 border-2 border-white object-cover" 
+              />
               
               <div className="text-white">
-                <p className="font-bold text-base sm:text-lg mb-1">Ready for a free quote?</p>
-                <p className="text-sm sm:text-base text-white/90">Get a response within 24 hours</p>
+                <p className="font-bold text-sm sm:text-base">Ready for a free quote?</p>
+                <p className="text-xs sm:text-sm">Get a response within 24 hours</p>
               </div>
             </div>
             
-            <div className={`flex gap-3 ${isMobile ? 'w-full justify-center' : 'ml-auto'}`}>
+            <div className={`flex gap-2 ${isMobile ? 'w-full justify-center' : 'ml-auto'}`}>
               <Button 
-                size={isMobile ? "default" : "lg"}
+                size="sm" 
                 variant="secondary" 
-                className="bg-white/10 text-white border border-white/30 hover:bg-white/20 backdrop-blur-sm gap-2 font-medium shadow-lg transition-all duration-200 hover:scale-105"
+                className="gap-1 whitespace-nowrap"
                 onClick={() => setShowChatbot(true)}
               >
                 <MessageCircle className="w-4 h-4" />
-                <span className="text-sm sm:text-base">Chat</span>
+                <span className="text-xs sm:text-sm">Chat</span>
               </Button>
               
-              <Button 
-                asChild 
-                size={isMobile ? "default" : "lg"}
-                variant="secondary" 
-                className="bg-white/10 text-white border border-white/30 hover:bg-white/20 backdrop-blur-sm gap-2 font-medium shadow-lg transition-all duration-200 hover:scale-105"
-              >
+              <Button asChild size="sm" variant="secondary" className="gap-1 whitespace-nowrap">
                 <a href="tel:+16047860399">
                   <Phone className="w-4 h-4" />
-                  <span className="text-sm sm:text-base">Call</span>
+                  <span className="text-xs sm:text-sm">Call</span>
                 </a>
               </Button>
               
-              <Button 
-                asChild 
-                size={isMobile ? "default" : "lg"}
-                variant="secondary" 
-                className="bg-white text-bc-red hover:bg-gray-50 border-2 border-white gap-2 font-bold shadow-lg transition-all duration-200 hover:scale-105"
-              >
+              <Button asChild size="sm" variant="secondary" className="bg-white text-bc-red hover:bg-gray-100 border-none gap-1 whitespace-nowrap">
                 <Link to="/contact">
                   <Calendar className="w-4 h-4" />
-                  <span className="text-sm sm:text-base">Get Quote</span>
+                  <span className="text-xs sm:text-sm">Get Quote</span>
                 </Link>
               </Button>
             </div>
@@ -114,41 +101,36 @@ const CTABanner: React.FC = () => {
 
       {/* Chatbot Modal */}
       {showChatbot && (
-        <div className="fixed inset-0 z-[1001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md h-96 flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between p-6 bg-gradient-to-r from-bc-red to-red-700 text-white">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <MessageCircle className="w-4 h-4" />
-                </div>
-                <h3 className="font-bold text-lg">Chat with BC Pressure Washing!</h3>
-              </div>
+        <div className="fixed inset-0 z-[1001] flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md h-96 flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b bg-bc-red text-white rounded-t-lg">
+              <h3 className="font-semibold">Chat with BC Pressure Washing!</h3>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowChatbot(false)}
-                className="text-white hover:bg-white/20 h-8 w-8 p-0 rounded-full"
+                className="text-white hover:bg-red-600"
               >
                 ×
               </Button>
             </div>
             
-            <div className="flex-1 p-6 overflow-y-auto bg-gray-50">
+            <div className="flex-1 p-4 overflow-y-auto">
               <div className="space-y-4">
-                <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-bc-red">
-                  <p className="text-sm text-gray-700">Hi! I'm here to help you with any questions about our pressure washing services. What can I help you with today?</p>
+                <div className="bg-gray-100 p-3 rounded-lg">
+                  <p className="text-sm">Hi! I'm here to help you with any questions about our pressure washing services. What can I help you with today?</p>
                 </div>
               </div>
             </div>
             
-            <div className="p-4 border-t bg-white">
-              <div className="flex gap-3">
+            <div className="p-4 border-t">
+              <div className="flex gap-2">
                 <input
                   type="text"
                   placeholder="Type your message..."
-                  className="flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-bc-red"
+                  className="flex-1 px-3 py-2 border rounded-md"
                 />
-                <Button size="default" className="bg-bc-red hover:bg-red-700 px-6">
+                <Button size="sm" className="bg-bc-red hover:bg-red-700">
                   Send
                 </Button>
               </div>
