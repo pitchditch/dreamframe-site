@@ -39,9 +39,8 @@ const ServiceVideoOverlay = ({
         src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer`}
         className={`${className} transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
         style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
+          transform: isMobile ? 'scale(1.4)' : 'scale(1.5)',
+          transformOrigin: 'center center',
           border: 'none',
           outline: 'none'
         }}

@@ -74,23 +74,16 @@ const HeroSection = () => {
               style={{ transform: `translateY(${scrollY * 0.5}px)` }}
             />
           ) : (
-            // Desktop YouTube Video with high quality settings
+            // Desktop YouTube Video with scroll animation
             <iframe 
               id="hero-desktop-video"
-              className={`absolute w-full h-full top-0 left-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&hd=1&vq=hd1080"
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8"
               title="Pressure Washing Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               loading="eager"
-              style={{ 
-                transform: `translateY(${scrollY * 0.3}px)`,
-                width: '100vw',
-                height: '56.25vw', // 16:9 aspect ratio
-                minHeight: '100vh',
-                minWidth: '177.78vh', // 16:9 aspect ratio
-                objectFit: 'cover'
-              }}
+              style={{ transform: `translateY(${scrollY * 0.3}px)` }}
             ></iframe>
           )}
         </div>
