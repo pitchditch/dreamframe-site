@@ -137,7 +137,7 @@ const ExpressCleaning = () => {
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/lovable-uploads/3f12496a-a48d-49fe-b614-77435e9bab36.png"
+            src="/lovable-uploads/fb9b774d-d8de-4955-902f-b9283434313f.png"
             alt="Express Cleaning Service" 
             className="w-full h-full object-cover"
           />

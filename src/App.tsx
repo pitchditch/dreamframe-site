@@ -32,6 +32,7 @@ import { initAnalytics } from './lib/analytics-client';
 import ExpressCleaning from './pages/ExpressCleaning';
 import { setupErrorHandlers } from './utils/errorUtils';
 import usePageTracking from './hooks/usePageTracking';
+import SeasonalMaintenanceGuidePage from './pages/blog/SeasonalMaintenanceGuide';
 
 function App() {
   // Track page views
@@ -68,6 +69,7 @@ function App() {
         <Route path="/review" element={<Review />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/blog/seasonal-maintenance-guide" element={<SeasonalMaintenanceGuidePage />} />
         <Route path="/compare-prices" element={<ComparePrices />} />
         <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
         <Route path="/locations/white-rock" element={<WhiteRock />} />
