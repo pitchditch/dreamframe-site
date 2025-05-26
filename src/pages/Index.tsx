@@ -89,12 +89,12 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section - Fixed position for slide effect */}
+      {/* Hero Section - Fixed position for slide effect - Only on home page */}
       <div className="fixed top-0 left-0 w-full h-screen z-0">
         <HeroSection />
       </div>
       
-      {/* Content that slides over the hero */}
+      {/* Content that slides over the hero - Only visible on home page */}
       <div className="relative z-50" style={{ marginTop: '100vh' }}>
         {/* Service Banner */}
         <div className="bg-white rounded-t-3xl shadow-2xl relative z-50 -mt-24 md:-mt-32 min-h-screen">
