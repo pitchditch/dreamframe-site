@@ -1,4 +1,3 @@
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -79,15 +78,13 @@
     @apply bg-background text-foreground;
   }
   
-  /* Enhanced navbar text rendering */
+  /* Improved navbar text rendering */
   nav a, .navbar-text {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    font-weight: 600; /* Increased from 500 to 600 for better visibility */
   }
 }
 
@@ -192,7 +189,7 @@
   }
   
   .text-shadow-sm {
-    text-shadow: 0 2px 3px rgba(0,0,0,0.8);
+    text-shadow: 0 2px 3px rgba(0,0,0,0.8); /* Enhanced shadow for better contrast */
   }
   
   .text-shadow-lg {
@@ -271,7 +268,7 @@
 
 .text-on-light {
   text-shadow: none;
-  font-weight: 700;
+  font-weight: 600; /* Increased from 500 to 600 */
 }
 
 /* Enhanced contrast for better accessibility */
