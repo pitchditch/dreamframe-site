@@ -210,7 +210,7 @@ const PropertySpecificSection = () => {
             }
           </p>
           <div className={`flex ${isMobile ? 'flex-col gap-3' : 'flex-col sm:flex-row gap-4'} justify-center items-center`}>
-            <Button asChild size={isMobile ? "default" : "lg"} variant="secondary" className={`bg-white text-bc-red hover:bg-gray-100 font-semibold ${isMobile ? 'w-full' : ''}`}>
+            <Button asChild size={isMobile ? "default" : "lg"} variant="secondary" className={`bg-white text-bc-red hover:bg-gray-100 font-semibold ${isMobile ? 'w-full' : ''} text-bc-red border-0`}>
               <a href="tel:778-808-7620">
                 <Phone className="mr-2" size={isMobile ? 16 : 20} />
                 {t("Call (778) 808-7620")}

@@ -14,7 +14,7 @@ const ReferralButton: React.FC = () => {
   
   return (
     <>
-      <div className={`fixed ${isMobile ? 'bottom-20 right-2' : 'bottom-28 right-4'} z-[35] flex flex-col items-end gap-2`}>
+      <div className={`fixed ${isMobile ? 'bottom-20 right-2' : 'bottom-28 right-4'} z-[45] flex flex-col items-end gap-2`}>
         <Button
           onClick={() => setDialogOpen(true)}
           variant="secondary"
