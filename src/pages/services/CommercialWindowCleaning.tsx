@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '@/components/ServiceHeader';
 import { Button } from '@/components/ui/button';
@@ -155,10 +154,12 @@ const CommercialWindowCleaning = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -173,13 +174,15 @@ const CommercialWindowCleaning = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {processes.map((process, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center">
+          {processes.map((process, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center">
               <div className="mb-4 flex justify-center">
                 {process.icon}
               </div>
               <h3 className="text-xl font-bold mb-3">{process.title}</h3>
               <p className="text-gray-600">{process.description}</p>
-            </div>)}
+            </div>
+          ))}
         </div>
       </section>
 
@@ -233,14 +236,14 @@ const CommercialWindowCleaning = () => {
       {/* More Services Section with larger images */}
       <MoreServicesSection />
       
-      {/* Service Areas Map and Carousel */}
+      {/* Service Areas Map and Carousel - Full Width */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 mb-8">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
           <ServiceAreaMap />
-          <div className="mt-8">
-            <ServiceAreasCarousel />
-          </div>
+        </div>
+        <div className="w-full">
+          <ServiceAreasCarousel />
         </div>
       </section>
 
