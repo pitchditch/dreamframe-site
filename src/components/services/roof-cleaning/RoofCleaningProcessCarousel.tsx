@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -33,7 +32,7 @@ const RoofCleaningProcessCarousel = () => {
     {
       type: 'process',
       title: '2. Preparation and Protection',
-      image: '/lovable-uploads/11de9343-a9b0-48b8-b747-d18318f16d86.png',
+      image: '/lovable-uploads/465146344425-f00d5f5c8f07.png',
       description: 'We protect your landscaping, plants, and surrounding areas by covering them with tarps and taking precautions to prevent any damage during the cleaning process.'
     },
     {
