@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MapPin, Home, Handshake, Heart } from 'lucide-react';
+import { MapPin, Home, Handshake, Heart, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -17,20 +17,31 @@ const DoorToDoorSection = () => {
           {/* Content */}
           <div className="order-2 lg:order-1">
             <div className="flex items-center gap-2 mb-4">
-              <MapPin className="w-5 h-5 text-bc-red" />
+              <Car className="w-5 h-5 text-bc-red" />
               <span className="text-bc-red font-semibold text-sm uppercase tracking-wide">Local & Personal</span>
             </div>
             
             <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl lg:text-5xl'} font-bold mb-4 md:mb-6 text-gray-900 leading-tight`}>
-              {t("Have You Met Me Door-to-Door?")}
+              {t("Have You Seen Our Red Car or Met Me Door-to-Door?")}
             </h2>
             
             <p className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} text-gray-600 mb-6 leading-relaxed`}>
               {isMobile 
-                ? t("As a White Rock local, I personally visit neighborhoods to meet homeowners and share how BC Pressure Washing can help maintain their properties.")
-                : t("As a proud White Rock resident, I personally visit neighborhoods throughout Surrey, White Rock, and Metro Vancouver to meet homeowners face-to-face and discuss how BC Pressure Washing can help maintain and beautify their properties.")
+                ? t("You've probably spotted our distinctive red vehicle around White Rock! As a local resident, I personally visit neighborhoods to meet homeowners and discuss how BC Pressure Washing can help maintain their properties.")
+                : t("That's us! You've probably spotted our distinctive red company vehicle along Marine Drive or throughout White Rock and Surrey. As a proud local resident, I personally visit neighborhoods throughout the Metro Vancouver area to meet homeowners face-to-face and discuss how BC Pressure Washing can help maintain and beautify their properties.")
               }
             </p>
+
+            {/* Special Red Car Offer */}
+            <div className="bg-gradient-to-r from-bc-red/10 to-red-100 rounded-lg p-6 mb-6 border border-bc-red/20">
+              <div className="flex items-center gap-3 mb-3">
+                <Car className="w-6 h-6 text-bc-red" />
+                <h3 className="font-bold text-lg text-gray-900">{t("🚗 Special Red Car Discount!")}</h3>
+              </div>
+              <p className="text-gray-700 mb-4">
+                {t("Mention you've seen our red car on Marine Drive or around the neighborhood when you contact us and receive 10% OFF your service!")}
+              </p>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               <div className="flex items-start gap-3">
@@ -76,7 +87,7 @@ const DoorToDoorSection = () => {
             
             <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm mb-6">
               <p className="text-gray-700 italic mb-4">
-                "{t("When I knock on your door, it's not just about business—it's about building relationships with my neighbors and ensuring every property in our community looks its best.")}"
+                "{t("When I knock on your door or when you see my red car around town, it's not just about business—it's about building relationships with my neighbors and ensuring every property in our community looks its best.")}"
               </p>
               <div className="flex items-center gap-3">
                 <img 
@@ -94,7 +105,7 @@ const DoorToDoorSection = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg" className="bg-bc-red hover:bg-red-700 text-white">
                 <Link to="/contact">
-                  {t("Get Your Free Quote")}
+                  {t("Claim Your 10% Red Car Discount")}
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
@@ -109,8 +120,8 @@ const DoorToDoorSection = () => {
           <div className="order-1 lg:order-2">
             <div className="relative">
               <img 
-                src="/lovable-uploads/photo-1581091226825-a6a2a5aee158"
-                alt="Door-to-door service consultation"
+                src="/lovable-uploads/9dc6484c-91bb-4ae3-994d-f6cfefbf7c63.png"
+                alt="BC Pressure Washing red car at Marine Drive - door-to-door service"
                 className="w-full h-[400px] md:h-[500px] object-cover rounded-2xl shadow-xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
@@ -120,6 +131,14 @@ const DoorToDoorSection = () => {
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium text-gray-900">{t("Available in Your Area")}</span>
+                </div>
+              </div>
+
+              {/* Red Car Badge */}
+              <div className="absolute bottom-6 right-6 bg-bc-red rounded-full px-4 py-2 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <Car className="w-4 h-4 text-white" />
+                  <span className="text-sm font-medium text-white">{t("10% Off Discount")}</span>
                 </div>
               </div>
             </div>
