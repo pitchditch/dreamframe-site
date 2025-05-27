@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, X, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -10,6 +10,28 @@ const StickyContactBar = () => {
   const { t } = useTranslation();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [showContactBar, setShowContactBar] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const premiumSection = document.querySelector('[data-section="premium-solutions"]') as HTMLElement;
+      const footerImage = document.querySelector('.footer-image') as HTMLElement;
+      const faqSection = document.querySelector('[data-section="faq"]') as HTMLElement;
+      
+      if (premiumSection && footerImage && faqSection) {
+        const scrollY = window.scrollY;
+        const startShow = premiumSection.offsetTop;
+        const stopShow = Math.min(footerImage.offsetTop + footerImage.offsetHeight, faqSection.offsetTop + faqSection.offsetHeight);
+        
+        setShowContactBar(scrollY >= startShow && scrollY <= stopShow);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +40,8 @@ const StickyContactBar = () => {
     console.log('Sending message:', message);
     setMessage('');
   };
+
+  if (!showContactBar) return null;
 
   return (
     <>
@@ -62,41 +86,41 @@ const StickyContactBar = () => {
       )}
 
       {/* Contact Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-bc-red text-white shadow-lg border-t-2 border-red-700">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="text-sm font-semibold">
-                {t("Ready for a Free Quote?")}
-              </div>
-              <div className="hidden sm:block text-xs opacity-90">
-                {t("Same-day service available in Surrey & White Rock")}
-              </div>
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-bc-red via-red-600 to-bc-red text-white shadow-lg border-t-2 border-red-700">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left">
+              <h3 className="text-lg md:text-xl font-bold mb-1">
+                {t("Ready to Transform Your Property?")}
+              </h3>
+              <p className="text-sm md:text-base opacity-90">
+                {t("Get your free, no-obligation quote today. Same-day service available!")}
+              </p>
             </div>
             
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsChatOpen(!isChatOpen)}
-                className="flex items-center gap-2 bg-yellow-400 text-gray-900 px-3 py-2 rounded-full font-semibold text-sm hover:bg-yellow-300 transition-colors"
+                className="flex items-center gap-2 bg-yellow-400 text-gray-900 px-4 py-3 rounded-full font-semibold text-sm hover:bg-yellow-300 transition-colors shadow-lg"
               >
-                <MessageCircle size={16} />
-                <span className="hidden sm:inline">{t("Chat")}</span>
+                <MessageCircle size={18} />
+                <span>{t("Chat")}</span>
               </button>
               
               <a
                 href="tel:778-808-7620"
-                className="flex items-center gap-2 bg-white text-bc-red px-3 py-2 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors"
+                className="flex items-center gap-2 bg-white text-bc-red px-4 py-3 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors shadow-lg"
               >
-                <Phone size={16} />
-                <span className="hidden sm:inline">{t("Call Now")}</span>
+                <Phone size={18} />
+                <span>{t("Call (778) 808-7620")}</span>
               </a>
               
               <Link
                 to="/calculator"
-                className="flex items-center gap-2 bg-green-500 text-white px-3 py-2 rounded-full font-semibold text-sm hover:bg-green-600 transition-colors"
+                className="flex items-center gap-2 bg-green-500 text-white px-4 py-3 rounded-full font-semibold text-sm hover:bg-green-600 transition-colors shadow-lg"
               >
-                <MessageCircle size={16} />
-                <span className="hidden sm:inline">{t("Get Quote")}</span>
+                <MessageCircle size={18} />
+                <span>{t("Get Free Quote Online")}</span>
               </Link>
             </div>
           </div>

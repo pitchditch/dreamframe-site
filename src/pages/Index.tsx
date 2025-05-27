@@ -7,7 +7,6 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
-import ScreenCleaningSection from '../components/post-construction/ScreenCleaningSection';
 import FAQSection from '@/components/FAQSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
@@ -17,6 +16,7 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import WindowCleaningSimulator from '../components/home/WindowCleaningSimulator';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -96,14 +96,16 @@ const Index = () => {
           <ServiceBanner />
           
           <div className="bg-white relative z-50">
-            <PremiumSolutionsSection />
+            <div data-section="premium-solutions">
+              <PremiumSolutionsSection />
+            </div>
+            
             <FeaturedProjectSection />
             
             <PropertySpecificSection />
             
             <OwnerOperatedSection />
             
-            <ScreenCleaningSection />
             <TrustedCustomersSection />
             <CompetitorComparisonSection />
             <TestimonialsSection />
@@ -111,19 +113,32 @@ const Index = () => {
             <SatisfactionGuaranteeSection />
             
             <ServiceAreasSection />
+
+            {/* Window Cleaning Simulator Section */}
+            <section className="py-16 bg-gray-50">
+              <div className="container mx-auto px-4 text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">{t("Window Cleaning Simulator")}</h2>
+                <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                  {t("Experience the difference our professional window cleaning makes. Try our interactive simulator!")}
+                </p>
+                <WindowCleaningSimulator />
+              </div>
+            </section>
             
-            <FAQSection 
-              title={t("Frequently Asked Questions")} 
-              subtitle={t("Everything you need to know about our services")}
-              faqs={faqItems}
-              darkMode={true}
-            />
+            <div data-section="faq">
+              <FAQSection 
+                title={t("Frequently Asked Questions")} 
+                subtitle={t("Everything you need to know about our services")}
+                faqs={faqItems}
+                darkMode={true}
+              />
+            </div>
             
-            <div className="w-full">
+            <div className="w-full footer-image">
               <img 
                 src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
                 alt="White Rock Marine Drive - Local Business" 
-                className="w-full h-auto object-cover object-center" 
+                className="w-full h-auto object-cover object-center rounded-t-3xl" 
               />
             </div>
           </div>

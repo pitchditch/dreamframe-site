@@ -74,27 +74,27 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-32 sm:pt-16">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-40 sm:pt-28 md:pt-32">
         <div className="max-w-4xl text-left">
-          <div className="inline-block bg-bc-red px-4 py-1 rounded mb-4 animate-on-scroll">
+          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-6 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
           
-          <div className="mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-5 animate-on-scroll">
+          <div className="mb-8">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll leading-tight">
               <span className="text-white">
                 {t("The Ultimate Cleaning")} <span className="text-bc-red">{t("Solution")}</span> {t("for Your Property")}
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl mb-5 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
+            <p className="text-lg sm:text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
               {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
             </p>
           </div>
         </div>
         
         {/* Postal Code Input Section */}
-        <div className="max-w-2xl w-full mt-2 mb-4 animate-on-scroll delay-300">
+        <div className="max-w-2xl w-full mt-4 mb-6 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -118,16 +118,16 @@ const HeroSection = () => {
         </div>
 
         {/* Personal Touch Section */}
-        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-4 animate-on-scroll delay-700">
-          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-5 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-6 animate-on-scroll delay-700">
+          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-6 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 
-              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md mr-4"
+              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md mr-4 flex-shrink-0"
             />
-            <div className="text-center sm:text-left">
-              <p className="font-bold text-white text-sm md:text-xl drop-shadow-md">{t("Every Job is Personally Checked by Me.")}</p>
-              <p className="text-white font-medium text-xs md:text-base">— Jayden Fisher, {t("Owner")}</p>
+            <div className="text-left">
+              <p className="font-bold text-white text-sm md:text-lg drop-shadow-md leading-tight">{t("Every Job is Personally Checked by Me.")}</p>
+              <p className="text-white font-medium text-xs md:text-sm mt-1">— Jayden Fisher, {t("Owner")}</p>
             </div>
           </div>
         </div>

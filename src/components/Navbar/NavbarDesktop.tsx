@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { HelpCircle, Star } from 'lucide-react';
+import { HelpCircle, Star, BarChart3 } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -96,8 +96,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     </div>
                     
                     <div className="mt-6 pt-4 border-t border-gray-200">
-                      <Link to="/services/compare" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
-                        <Star className="w-6 h-6 text-bc-red" />
+                      <Link to="/compare-services" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
+                        <BarChart3 className="w-6 h-6 text-bc-red" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium">{t('Compare Services')}</span>
                       </Link>
                       <Link to="/services" className="text-bc-red hover:text-red-700 font-medium text-sm">
@@ -117,7 +117,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[800px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
+              <NavigationMenuContent className="w-[600px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-4">
                 <div className="space-y-4">
                   <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
                     <Star className="h-6 w-6 text-yellow-500" />
