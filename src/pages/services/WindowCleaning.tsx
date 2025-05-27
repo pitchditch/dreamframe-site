@@ -66,8 +66,8 @@ const WindowCleaning = () => {
       <ServiceHeader 
         title="Professional Window Cleaning" 
         description="Crystal clear, streak-free windows using our advanced purified water cleaning system." 
-        youtubeId="qHFNdIllwrk"
-        youtubeDesktopId="qHFNdIllwrk"
+        imagePath="/lovable-uploads/43f837f2-f6f3-404b-85de-ba0901296f83.png"
+        darkOverlay={true}
       />
       
       {/* Streak-Free Window Cleaning Section - Full Width */}
@@ -150,7 +150,7 @@ const WindowCleaning = () => {
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
                 <iframe 
-                  src="https://www.youtube.com/embed/bbHnt4UNPcU" 
+                  src="https://www.youtube.com/embed/03njfGLUDUQ" 
                   title="Water Fed Pole System for Window Cleaning"
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -162,7 +162,7 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* Squeegee Cleaning Technique Video Section */}
+      {/* Traditional Squeegee Cleaning Technique Video Section */}
       <section className="w-full py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -199,7 +199,7 @@ const WindowCleaning = () => {
             <div className="lg:order-1 relative">
               <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
                 <iframe 
-                  src="https://www.youtube.com/embed/lYnXijewxCM" 
+                  src="https://www.youtube.com/embed/bbHnt4UNPcU" 
                   title="Professional Squeegee Window Cleaning Technique"
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

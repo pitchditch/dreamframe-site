@@ -78,7 +78,11 @@ const Navbar = () => {
               <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-bc-red transition-colors font-medium">
                 More <ChevronDown className="ml-1 h-4 w-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg rounded-md mt-1">
+              <DropdownMenuContent 
+                className="bg-white border border-gray-200 shadow-lg rounded-md"
+                align="center"
+                sideOffset={0}
+              >
                 {moreItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
                     <Link
