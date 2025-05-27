@@ -4,7 +4,7 @@ import ServiceHeader from '../ServiceHeader';
 import { Button } from '../ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import CallToAction from '../CallToAction';
+import { Link } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
   const isMobile = useIsMobile();
@@ -34,8 +34,8 @@ const HeroSection: React.FC = () => {
               <li>Adhesive from protective films</li>
             </ul>
             
-            <Button className="bg-bc-red hover:bg-red-700 text-white transition-all hover:scale-105" size="lg">
-              Get Started <ArrowRight className="ml-2" size={20} />
+            <Button asChild className="bg-bc-red hover:bg-red-700 text-white transition-all hover:scale-105" size="lg">
+              <Link to="/calculator">Get Started <ArrowRight className="ml-2" size={20} /></Link>
             </Button>
             
             <div className="mt-4 text-gray-700 font-medium block md:hidden">
