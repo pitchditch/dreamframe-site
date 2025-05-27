@@ -11,6 +11,8 @@ import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import GutterCleaningQuoteOverlay from '@/components/GutterCleaningQuoteOverlay';
+import GutterCleaningProcessCarousel from '@/components/GutterCleaningProcessCarousel';
 
 const GutterCleaning = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -90,90 +92,95 @@ const GutterCleaning = () => {
         youtubeDesktopId="m5wfZZCuFeg"
       />
       
+      {/* Get Your Gutters Cleaned Today - Full Width */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-10">
-            <div>
-              <h2 className="text-3xl font-bold mb-6 heading-text">Get Your Gutters Cleaned Today</h2>
-              <p className="text-lg text-gray-700 mb-4 content-text">
-                Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round.
-              </p>
-
-              <div className="space-y-4 mb-6">
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Shield size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Complete Gutter System Cleaning</h3>
-                    <p className="text-gray-600">
-                      We thoroughly remove all leaves, debris, and buildup from your gutters and downspouts, ensuring proper water flow.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Droplets size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Downspout Flushing</h3>
-                    <p className="text-gray-600">
-                      We test all downspouts to ensure water flows freely and remove any blockages using professional equipment.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Cloud size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Gutter Face Cleaning</h3>
-                    <p className="text-gray-600">
-                      We clean the exterior faces of your gutters to remove black streaks, algae, and dirt, improving your home's appearance.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <CheckCircle size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">100% Satisfaction Guarantee</h3>
-                    <p className="text-gray-600">
-                      We're not happy until you're happy. If you're not completely satisfied with our service, we'll make it right.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg" asChild>
-                  <PriceCalculatorOverlay buttonText="Check Price & Availability" variant="bc-red" />
-                </Button>
-                <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
-                  <a href="tel:7788087620" className="flex items-center justify-center">
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                    </svg>
-                    Call Now: (778) 808-7620
-                  </a>
-                </Button>
-              </div>
-              
-              <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
-                <h3 className="text-xl font-bold mb-2 text-amber-800">Gutter Cleaning Warning!</h3>
-                <p className="text-amber-700">
-                  Neglected gutters can lead to costly water damage to your foundation, roof, and interior walls. Don't wait until it's too late - regular maintenance is much more affordable than repairs.
+        <div className="w-full px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-10">
+              <div>
+                <h2 className="text-3xl font-bold mb-6 heading-text">Get Your Gutters Cleaned Today</h2>
+                <p className="text-lg text-gray-700 mb-4 content-text">
+                  Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round.
                 </p>
+
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-start">
+                    <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                      <Shield size={18} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">Complete Gutter System Cleaning</h3>
+                      <p className="text-gray-600">
+                        We thoroughly remove all leaves, debris, and buildup from your gutters and downspouts, ensuring proper water flow.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                      <Droplets size={18} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">Downspout Flushing</h3>
+                      <p className="text-gray-600">
+                        We test all downspouts to ensure water flows freely and remove any blockages using professional equipment.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                      <Cloud size={18} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">Gutter Face Cleaning</h3>
+                      <p className="text-gray-600">
+                        We clean the exterior faces of your gutters to remove black streaks, algae, and dirt, improving your home's appearance.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                      <CheckCircle size={18} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">100% Satisfaction Guarantee</h3>
+                      <p className="text-gray-600">
+                        We're not happy until you're happy. If you're not completely satisfied with our service, we'll make it right.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                  <GutterCleaningQuoteOverlay>
+                    <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg">
+                      Check Price & Availability
+                    </Button>
+                  </GutterCleaningQuoteOverlay>
+                  <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
+                    <a href="tel:7788087620" className="flex items-center justify-center">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                      </svg>
+                      Call Now: (778) 808-7620
+                    </a>
+                  </Button>
+                </div>
+                
+                <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
+                  <h3 className="text-xl font-bold mb-2 text-amber-800">Gutter Cleaning Warning!</h3>
+                  <p className="text-amber-700">
+                    Neglected gutters can lead to costly water damage to your foundation, roof, and interior walls. Don't wait until it's too late - regular maintenance is much more affordable than repairs.
+                  </p>
+                </div>
               </div>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-xl p-6 border-2 border-gray-100">
-              <h3 className="text-2xl font-bold mb-4 text-center text-bc-red">Get Your Free Quote</h3>
-              <GutterCleaningForm />
+              
+              <div className="bg-white rounded-lg shadow-xl p-6 border-2 border-gray-100">
+                <h3 className="text-2xl font-bold mb-4 text-center text-bc-red">Get Your Free Quote</h3>
+                <GutterCleaningForm />
+              </div>
             </div>
           </div>
         </div>
@@ -188,63 +195,8 @@ const GutterCleaning = () => {
       {/* New Quadrant Section */}
       <GutterQuadrantSection />
       
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">Our Gutter Cleaning Process</h2>
-            
-            <div className="space-y-8">
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-2/5">
-                  <img src="/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png" alt="Gutter Debris Removal" className="rounded-lg shadow-md w-full" />
-                </div>
-                <div className="md:w-3/5">
-                  <h3 className="text-xl font-bold mb-2">1. Debris Removal</h3>
-                  <p className="text-gray-700">
-                    We safely remove all leaves, twigs, and debris from your gutters by hand to ensure a thorough cleaning. All collected debris is bagged and removed from your property, leaving no mess behind.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-3/5 md:order-1 order-2">
-                  <h3 className="text-xl font-bold mb-2">2. Downspout Clearing & Testing</h3>
-                  <p className="text-gray-700">
-                    We check all downspouts for blockages and flush them with water to ensure proper flow. If we encounter stubborn clogs, we use specialized tools to clear them completely.
-                  </p>
-                </div>
-                <div className="md:w-2/5 md:order-2 order-1">
-                  <img src="/lovable-uploads/17615bf7-9c4b-4eea-84a3-791bd34ef4a3.png" alt="Downspout Clearing" className="rounded-lg shadow-md w-full" />
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-2/5">
-                  <img alt="Gutter Face Cleaning" className="rounded-lg shadow-md w-full" src="/lovable-uploads/063bab0f-d6c4-4c42-9610-0aa6307eae88.jpg" />
-                </div>
-                <div className="md:w-3/5">
-                  <h3 className="text-xl font-bold mb-2">3. Gutter Face Cleaning</h3>
-                  <p className="text-gray-700">
-                    We clean the exterior faces of your gutters to remove unsightly black streaks, tiger stripes, and algae growth. This not only improves functionality but also enhances your home's curb appeal.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-3/5 md:order-1 order-2">
-                  <h3 className="text-xl font-bold mb-2">4. Final Inspection & Cleanup</h3>
-                  <p className="text-gray-700">
-                    After allowing the cleaning solution to dwell for the appropriate time, we perform a final water flow test to ensure everything is working properly and clean up any debris that may have fallen during the cleaning process. You'll receive before and after photos showing the work completed.
-                  </p>
-                </div>
-                <div className="md:w-2/5 md:order-2 order-1">
-                  <img alt="Final Inspection" src="/lovable-uploads/572f285b-b3cc-4a5c-93e3-637ee1015659.jpg" className="rounded-lg shadow-md w-full object-cover" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Replace the old process section with the new carousel */}
+      <GutterCleaningProcessCarousel />
       
       {/* Gutter Stick Section */}
       <section className="py-16 bg-gray-50">
