@@ -1,6 +1,5 @@
 
 import React from 'react';
-import WindowCleaningQuoteOverlay from '../../forms/WindowCleaningQuoteOverlay';
 
 const WaterFedPoleSection = () => {
   return (
@@ -59,13 +58,11 @@ const WaterFedPoleSection = () => {
                 </div>
               </div>
             </div>
-            
-            <WindowCleaningQuoteOverlay buttonText="Request Water Fed Pole Cleaning" variant="bc-red" />
           </div>
           
           <div className="relative">
             <img 
-              src="/lovable-uploads/b6ea871e-3644-4cb5-86c0-1da34e4db828.png" 
+              src="/lovable-uploads/2b4856a2-f8cd-42ed-bf7a-111e9cc7086b.png" 
               alt="Water Fed Pole System for Professional Window Cleaning"
               className="w-full h-auto rounded-lg shadow-lg"
             />
