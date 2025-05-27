@@ -74,7 +74,7 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-16 sm:pt-20' : 'pt-24 sm:pt-28 md:pt-32'}`}>
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'}`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 md:mb-6 animate-on-scroll">
             <span className="text-white font-medium text-xs sm:text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
@@ -131,7 +131,7 @@ const HeroSection = () => {
         </div>
 
         {/* Personal Touch Section */}
-        <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 my-4 md:my-6 animate-on-scroll delay-700 ${isMobile ? 'max-w-full' : ''}`}>
+        <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 my-4 md:my-6 animate-on-scroll delay-700 ${isMobile ? 'max-w-full mb-8' : 'mb-16'}`}>
           <div className={`bg-black/40 backdrop-blur-sm ${isMobile ? 'p-4 rounded-xl max-w-full' : 'p-3 md:p-4 lg:p-6 rounded-xl max-w-md'} border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center`}>
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
