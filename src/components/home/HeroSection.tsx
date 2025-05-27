@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
@@ -16,8 +16,14 @@ const HeroSection = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Only load video on home page
+  const isHomePage = location.pathname === '/' || location.pathname === '/home';
   
   useEffect(() => {
+    if (!isHomePage) return; // Don't load video if not on home page
+    
     if (isMobile) {
       const img = new Image();
       img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
@@ -34,7 +40,7 @@ const HeroSection = () => {
     if (savedPostalCode) {
       setPostalCode(savedPostalCode);
     }
-  }, [isMobile]);
+  }, [isMobile, isHomePage]);
 
   const handlePostalCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +52,9 @@ const HeroSection = () => {
     
     navigate('/calculator');
   };
+
+  // Don't render hero section if not on home page
+  if (!isHomePage) return null;
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
