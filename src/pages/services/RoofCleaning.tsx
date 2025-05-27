@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -6,8 +5,7 @@ import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import CallToAction from '../../components/CallToAction';
 import { Shield, Droplets, Leaf } from 'lucide-react';
-import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
-import RoofCleaningForm from '@/components/forms/RoofCleaningForm';
+import RoofCleaningQuoteOverlay from '@/components/forms/RoofCleaningQuoteOverlay';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -55,81 +53,74 @@ const RoofCleaning = () => {
       <ServiceHeader 
         title="Professional Roof Cleaning" 
         description="Protect your investment with our safe and effective roof cleaning service." 
-        youtubeId="twtzf2gRdFU" // Updated Mobile YouTube video ID
-        youtubeDesktopId="eQSgdx9ujcc" // Updated Desktop YouTube video ID
+        youtubeId="twtzf2gRdFU"
+        youtubeDesktopId="eQSgdx9ujcc"
       />
       
-      <section className="py-16 bg-white">
+      {/* Restore Your Roof's Beauty - Full Width */}
+      <section className="w-full py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-10">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Restore Your Roof's Beauty</h2>
-              <p className="text-lg text-gray-700 mb-4">
-                Moss, algae, and lichen can not only make your roof look unsightly but also cause significant damage over time. Our professional roof cleaning service safely removes these growths, extending the life of your roof and enhancing your home's curb appeal.
-              </p>
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold mb-6 heading-text">Restore Your Roof's Beauty</h2>
+            <p className="text-lg text-gray-700 mb-8 content-text">
+              Moss, algae, and lichen can not only make your roof look unsightly but also cause significant damage over time. Our professional roof cleaning service safely removes these growths, extending the life of your roof and enhancing your home's curb appeal.
+            </p>
 
-              <div className="space-y-4 mb-6">
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Shield size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Safe Soft Washing Techniques</h3>
-                    <p className="text-gray-600">
-                      We use low-pressure soft washing to gently remove moss and algae without damaging your roofing materials.
-                    </p>
-                  </div>
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start justify-center">
+                <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                  <Shield size={18} />
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Droplets size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Effective Algae and Moss Removal</h3>
-                    <p className="text-gray-600">
-                      Our specialized cleaning solutions effectively kill and remove moss, algae, and lichen, preventing regrowth for longer-lasting results.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
-                    <Leaf size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Eco-Friendly Cleaning Products</h3>
-                    <p className="text-gray-600">
-                      We use environmentally friendly cleaning solutions that are safe for your family, pets, and landscaping.
-                    </p>
-                  </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-lg">Safe Soft Washing Techniques</h3>
+                  <p className="text-gray-600">
+                    We use low-pressure soft washing to gently remove moss and algae without damaging your roofing materials.
+                  </p>
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg" asChild>
-                  <Link to="/calculator">Check Price & Availability</Link>
-                </Button>
-                <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
-                  <a href="tel:7788087620" className="flex items-center justify-center">
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                    </svg>
-                    Call Now: (778) 808-7620
-                  </a>
-                </Button>
+              <div className="flex items-start justify-center">
+                <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                  <Droplets size={18} />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-lg">Effective Algae and Moss Removal</h3>
+                  <p className="text-gray-600">
+                    Our specialized cleaning solutions effectively kill and remove moss, algae, and lichen, preventing regrowth for longer-lasting results.
+                  </p>
+                </div>
               </div>
               
-              <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
-                <h3 className="text-xl font-bold mb-2 text-amber-800">Roof Cleaning Warning!</h3>
-                <p className="text-amber-700">
-                  Ignoring moss and algae growth can lead to significant roof damage and costly repairs. Protect your investment with regular, professional cleaning.
-                </p>
+              <div className="flex items-start justify-center">
+                <div className="mt-1 bg-green-100 p-1 rounded-full text-green-600 mr-3">
+                  <Leaf size={18} />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-lg">Eco-Friendly Cleaning Products</h3>
+                  <p className="text-gray-600">
+                    We use environmentally friendly cleaning solutions that are safe for your family, pets, and landscaping.
+                  </p>
+                </div>
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-xl p-6 border-2 border-gray-100">
-              <RoofCleaningForm />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <RoofCleaningQuoteOverlay buttonText="Check Price & Availability" variant="bc-red" />
+              <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
+                <a href="tel:7788087620" className="flex items-center justify-center">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                  Call Now: (778) 808-7620
+                </a>
+              </Button>
+            </div>
+            
+            <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200 max-w-2xl mx-auto">
+              <h3 className="text-xl font-bold mb-2 text-amber-800">Roof Cleaning Warning!</h3>
+              <p className="text-amber-700">
+                Ignoring moss and algae growth can lead to significant roof damage and costly repairs. Protect your investment with regular, professional cleaning.
+              </p>
             </div>
           </div>
         </div>
