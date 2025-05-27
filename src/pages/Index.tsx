@@ -14,7 +14,6 @@ import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuarant
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
-import CTABanner from '../components/home/CTABanner';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
@@ -131,7 +130,6 @@ const Index = () => {
         </div>
       </div>
       
-      <CTABanner />
       <ReferralButton />
     </Layout>
   );
