@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -16,6 +15,7 @@ import FAQSection from '@/components/FAQSection';
 import PressureWashingForm from '@/components/forms/PressureWashingForm';
 import { Card } from '@/components/ui/card';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+import SidingCleaningSection from '../../components/services/pressure-washing/SidingCleaningSection';
 
 const PressureWashing = () => {
   const faqs = [
@@ -161,6 +161,8 @@ const PressureWashing = () => {
       </section>
       
       <ServiceProcessSection />
+      
+      <SidingCleaningSection />
       
       <DrivewayCleaning />
       

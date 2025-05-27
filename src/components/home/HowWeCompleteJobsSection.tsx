@@ -12,6 +12,9 @@ interface Service {
   description: string;
   features: string[];
   icon: any;
+  overlayImage?: string;
+  overlayTitle?: string;
+  overlayDescription?: string;
 }
 
 const HowWeCompleteJobsSection = () => {
@@ -31,11 +34,14 @@ const HowWeCompleteJobsSection = () => {
         t("Eco-friendly cleaning solutions"),
         t("Interior and exterior cleaning")
       ],
-      icon: Home
+      icon: Home,
+      overlayImage: "/lovable-uploads/99b31681-3d1a-4e50-bd80-48d57fa01dcb.png",
+      overlayTitle: "Water-Fed Pole System",
+      overlayDescription: "Professional telescopic pole system for reaching high windows safely from ground level"
     },
     {
       id: 2,
-      image: "/lovable-uploads/389a6f18-1725-449e-9461-22e9e46dab29.png",
+      image: "/lovable-uploads/4f0a7bbd-e220-49bd-80ec-c83bb961b38f.png",
       title: t("Gutter Cleaning"),
       description: t("Complete gutter system cleaning and maintenance to protect your property from water damage."),
       features: [
@@ -57,7 +63,10 @@ const HowWeCompleteJobsSection = () => {
         t("Eco-friendly cleaning solutions"),
         t("Roof protection and preservation")
       ],
-      icon: Building
+      icon: Building,
+      overlayImage: "/lovable-uploads/73365ffd-fbd1-45ab-beac-f6a2f696291a.png",
+      overlayTitle: "Sodium Hypochlorite",
+      overlayDescription: "Primary product used in roof cleaning to kill moss and algae growth, preventing regrowth for up to 2 years"
     },
     {
       id: 4,
@@ -70,7 +79,10 @@ const HowWeCompleteJobsSection = () => {
         t("No streaking or zebra marks"),
         t("Perfect for large surface areas")
       ],
-      icon: Sparkles
+      icon: Sparkles,
+      overlayImage: "/lovable-uploads/4af8c28d-371b-4fca-a70e-90e7563198c4.png",
+      overlayTitle: "Surface Cleaner",
+      overlayDescription: "Rotating surface cleaner attachment that provides even pressure distribution for streak-free cleaning of large flat surfaces"
     },
     {
       id: 5,
@@ -83,7 +95,10 @@ const HowWeCompleteJobsSection = () => {
         t("Precise pressure control"),
         t("Ideal for high exterior walls")
       ],
-      icon: Zap
+      icon: Zap,
+      overlayImage: "/lovable-uploads/a3f73a45-5f25-4203-bf0b-27417e2ecc35.png",
+      overlayTitle: "Professional Pressure Washer",
+      overlayDescription: "Industrial-grade pressure washing equipment for powerful and efficient cleaning"
     },
     {
       id: 6,
@@ -161,6 +176,27 @@ const HowWeCompleteJobsSection = () => {
                     alt={service.title}
                     className="w-full h-full object-cover" 
                   />
+                  
+                  {/* Overlay Image in Corner */}
+                  {service.overlayImage && (
+                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg max-w-xs">
+                      <div className="flex items-start gap-3">
+                        <img 
+                          src={service.overlayImage} 
+                          alt={service.overlayTitle}
+                          className="w-16 h-16 object-contain flex-shrink-0"
+                        />
+                        <div>
+                          <h4 className="font-bold text-sm text-gray-900 mb-1">
+                            {service.overlayTitle}
+                          </h4>
+                          <p className="text-xs text-gray-700 leading-tight">
+                            {service.overlayDescription}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Content overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end">
