@@ -141,28 +141,30 @@ const HowWeCompleteJobsSection = () => {
             }
           </p>
         </div>
+      </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <div className="overflow-hidden rounded-2xl shadow-2xl">
-            <div className="relative h-[500px] md:h-[600px]">
-              {services.map((service, index) => {
-                const IconComponent = service.icon;
-                return (
-                  <div 
-                    key={service.id}
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      index === currentIndex ? 'opacity-100 z-10' : 'opacity-0'
-                    }`}
-                  >
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className="w-full h-full object-cover" 
-                    />
-                    
-                    {/* Content overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6 md:p-8">
+      {/* Full-width Carousel */}
+      <div className="relative w-full">
+        <div className="overflow-hidden">
+          <div className="relative h-[500px] md:h-[600px] w-full">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              return (
+                <div 
+                  key={service.id}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    index === currentIndex ? 'opacity-100 z-10' : 'opacity-0'
+                  }`}
+                >
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="w-full h-full object-cover" 
+                  />
+                  
+                  {/* Content overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end">
+                    <div className="container mx-auto px-4 pb-8 md:pb-12">
                       <div className="max-w-4xl">
                         <div className="flex items-center gap-3 mb-4">
                           <div className="w-10 h-10 bg-bc-red rounded-full flex items-center justify-center text-white">
@@ -190,45 +192,48 @@ const HowWeCompleteJobsSection = () => {
                       </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-          
-          {/* Navigation arrows */}
-          <Button 
-            variant="outline" 
-            size="icon" 
-            className="absolute top-1/2 left-4 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg" 
-            onClick={prevSlide}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            size="icon" 
-            className="absolute top-1/2 right-4 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg" 
-            onClick={nextSlide}
-          >
-            <ArrowRight className="h-5 w-5" />
-          </Button>
-          
-          {/* Dots navigation */}
-          <div className="flex justify-center mt-6 gap-2">
-            {services.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex 
-                    ? 'bg-bc-red w-8' 
-                    : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to service ${index + 1}`}
-              />
-            ))}
-          </div>
+        </div>
+        
+        {/* Navigation arrows */}
+        <Button 
+          variant="outline" 
+          size="icon" 
+          className="absolute top-1/2 left-4 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg" 
+          onClick={prevSlide}
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        
+        <Button 
+          variant="outline" 
+          size="icon" 
+          className="absolute top-1/2 right-4 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg" 
+          onClick={nextSlide}
+        >
+          <ArrowRight className="h-5 w-5" />
+        </Button>
+      </div>
+
+      {/* Bottom section with dots and stats */}
+      <div className="container mx-auto px-4">
+        {/* Dots navigation */}
+        <div className="flex justify-center mt-6 gap-2">
+          {services.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-bc-red w-8' 
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+              aria-label={`Go to service ${index + 1}`}
+            />
+          ))}
         </div>
 
         {/* Bottom stats */}

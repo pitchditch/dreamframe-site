@@ -15,11 +15,6 @@ const ServicesSection = () => {
     image: "/lovable-uploads/c349ee7a-bdd4-43c8-a168-a68aa3b007e3.png",
     link: "/services/pressure-washing"
   }, {
-    title: "Gutter Cleaning",
-    description: "Prevent water damage with clean, flowing gutters",
-    image: "/lovable-uploads/0c2175e3-0c77-4b8a-8670-db9aa6ff6e63.png",
-    link: "/services/gutter-cleaning"
-  }, {
     title: "Roof Cleaning",
     description: "Remove moss, algae and debris for longer roof life",
     image: "/lovable-uploads/4da7d34a-a303-4274-ad91-8aeb980fa657.png",
@@ -34,7 +29,7 @@ const ServicesSection = () => {
           Professional exterior cleaning services for residential and commercial properties
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-xl">
               <div className="h-48 overflow-hidden">
