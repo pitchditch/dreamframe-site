@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { MessageSquare, Phone } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
@@ -70,90 +70,70 @@ const HeroSection = () => {
             ></iframe>
           )}
         </div>
-        {/* Enhanced overlay gradient for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
-      {/* Hero Content - Mobile Optimized */}
+      {/* Hero Content */}
       <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-24 sm:pt-28 md:pt-32">
-        <div className="max-w-4xl text-center mx-auto">
-          {/* Service Badge */}
-          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 animate-on-scroll">
-            <span className="text-white font-medium text-xs sm:text-sm">{t("Professional Pressure Washing Services")}</span>
+        <div className="max-w-4xl text-left">
+          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 md:mb-6 animate-on-scroll">
+            <span className="text-white font-medium text-xs sm:text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
           
-          {/* Main Headline - Shortened for mobile */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 animate-on-scroll leading-tight">
-            <span className="text-white">
-              {isMobile ? t("The Ultimate Exterior Cleaning Service") : t("The Ultimate Cleaning")} 
-              {!isMobile && <span className="text-bc-red"> {t("Solution")}</span>}
-              {!isMobile && t(" for Your Property")}
-            </span>
-          </h1>
-          
-          {/* Subtext - Shortened for mobile */}
-          <p className="text-sm sm:text-base md:text-xl lg:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white mx-auto">
-            {isMobile 
-              ? t("Fast, affordable results in Surrey, Langley, and more.")
-              : t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")
-            }
-          </p>
-          
-          {/* Postal Code Input - Full width on mobile */}
-          <div className="w-full mt-6 mb-6 animate-on-scroll delay-300">
-            <form onSubmit={handlePostalCodeSubmit} className="flex flex-col gap-3">
-              <div className="relative w-full">
-                <Input
-                  ref={inputRef}
-                  type="text"
-                  placeholder={t("Enter Your Postal Code")}
-                  value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
-                  className="bg-white border-white text-black h-12 md:h-14 px-4 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-base md:text-lg font-medium w-full"
-                />
-              </div>
-            </form>
+          <div className="mb-6 md:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 animate-on-scroll leading-tight">
+              <span className="text-white">
+                {t("The Ultimate Cleaning")} <span className="text-bc-red">{t("Solution")}</span> {t("for Your Property")}
+              </span>
+            </h1>
+            
+            <p className="text-sm sm:text-base md:text-xl lg:text-2xl mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
+              {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
+            </p>
           </div>
-
-          {/* CTA Buttons - Stacked on mobile */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6 animate-on-scroll delay-500">
+        </div>
+        
+        {/* Postal Code Input Section */}
+        <div className="max-w-2xl w-full mt-2 md:mt-4 mb-4 md:mb-6 animate-on-scroll delay-300">
+          <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-grow">
+              <Input
+                ref={inputRef}
+                type="text"
+                placeholder={t("Enter Your Postal Code")}
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
+                className="bg-white border-white text-black h-12 md:h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-base md:text-xl font-medium w-full"
+              />
+            </div>
             <Button 
-              onClick={handlePostalCodeSubmit}
+              type="submit" 
               variant="bc-red" 
               size="lg" 
-              className="h-12 md:h-14 text-white text-base md:text-lg font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-6 w-full sm:w-auto"
+              className="h-12 md:h-16 text-white text-base md:text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-6 md:px-8 w-full sm:w-auto sm:min-w-[200px] md:sm:min-w-[250px]"
             >
-              🔴 {t("Check Prices & Availability")}
+              {t("Check Prices & Availability")} <MessageSquare className="ml-2" size={16} />
             </Button>
-            <Link to="/calculator" className="w-full sm:w-auto">
-              <Button 
-                variant="secondary" 
-                size="lg" 
-                className="h-12 md:h-14 bg-green-500 hover:bg-green-600 text-white text-base md:text-lg font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-6 w-full"
-              >
-                🟢 {t("Get Free Quote Online")}
-              </Button>
-            </Link>
-          </div>
+          </form>
+        </div>
 
-          {/* Owner Badge - Centered with max width */}
-          <div className="flex justify-center mt-6 animate-on-scroll delay-700">
-            <div className="bg-black/50 backdrop-blur-sm p-3 md:p-4 rounded-xl max-w-[85%] border border-white/30 shadow-lg flex flex-row items-center">
-              <img 
-                src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
-                alt="Jayden Fisher - Owner" 
-                className="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 border-white shadow-md mr-3 flex-shrink-0"
-              />
-              <div className="text-left">
-                <p className="font-bold text-white text-xs sm:text-sm md:text-base drop-shadow-md leading-tight">{t("Every Job is Personally Checked by Me.")}</p>
-                <p className="text-white font-medium text-xs md:text-sm mt-1">— Jayden Fisher, {t("Owner")}</p>
-              </div>
+        {/* Personal Touch Section */}
+        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-4 md:my-6 animate-on-scroll delay-700">
+          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 lg:p-6 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+            <img 
+              src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
+              alt="Jayden Fisher - Owner" 
+              className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full border-2 border-white shadow-md mr-3 md:mr-4 flex-shrink-0"
+            />
+            <div className="text-left">
+              <p className="font-bold text-white text-xs sm:text-sm md:text-base lg:text-lg drop-shadow-md leading-tight">{t("Every Job is Personally Checked by Me.")}</p>
+              <p className="text-white font-medium text-xs md:text-sm mt-1">— Jayden Fisher, {t("Owner")}</p>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Enhanced scroll indicator - Updated text */}
+      {/* Enhanced scroll indicator with animation and label */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
         <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">{t("Scroll Up")}</span>
         <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center">
