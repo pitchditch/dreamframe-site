@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { HelpCircle, Star, BarChart3 } from 'lucide-react';
+import { Star } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -97,7 +97,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     
                     <div className="mt-6 pt-4 border-t border-gray-200">
                       <Link to="/compare-services" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
-                        <BarChart3 className="w-6 h-6 text-bc-red" />
+                        <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Compare Services" className="w-6 h-6 object-contain text-bc-red" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium">{t('Compare Services')}</span>
                       </Link>
                       <Link to="/services" className="text-bc-red hover:text-red-700 font-medium text-sm">
@@ -117,7 +117,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[600px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-4">
+              <NavigationMenuContent className="w-[600px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
                 <div className="space-y-4">
                   <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
                     <Star className="h-6 w-6 text-yellow-500" />
@@ -132,14 +132,6 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     <div>
                       <h4 className="font-medium text-black hover:text-bc-red">{t('Our Equipment')}</h4>
                       <p className="text-sm text-gray-600">Professional-grade cleaning tools</p>
-                    </div>
-                  </Link>
-                  
-                  <Link to="/why-us" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors">
-                    <HelpCircle className="h-6 w-6 text-yellow-600" />
-                    <div>
-                      <h4 className="font-medium text-black hover:text-bc-red">{t('Why Choose Us')}</h4>
-                      <p className="text-sm text-gray-600">Learn about our company values</p>
                     </div>
                   </Link>
                   

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -136,11 +137,6 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   <Link to="/equipment" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <Wrench size={20} className="text-bc-red" />
                     <span>{t('Our Equipment')}</span>
-                  </Link>
-                  
-                  <Link to="/why-us" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <Box size={20} className="text-bc-red" />
-                    <span>{t('Why Choose Us')}</span>
                   </Link>
                   
                   <div className="pt-2 border-t border-gray-100">
