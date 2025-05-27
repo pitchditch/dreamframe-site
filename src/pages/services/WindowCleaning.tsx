@@ -72,7 +72,7 @@ const WindowCleaning = () => {
       
       {/* Streak-Free Window Cleaning Section - Full Width */}
       <section className="w-full py-16 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="w-full px-4">
           <div className="text-center max-w-4xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-6 heading-text">Streak-Free Window Cleaning</h2>
             <p className="text-lg text-gray-700 mb-8 content-text">
@@ -111,25 +111,26 @@ const WindowCleaning = () => {
         </div>
       </section>
       
+      {/* Water Fed Pole System Section */}
+      <WaterFedPoleSection />
+      
       {/* Water Fed Pole System Video Section */}
       <section className="w-full py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6 heading-text">Water Fed Pole System</h2>
+              <h2 className="text-3xl font-bold mb-6 heading-text">Water Fed Pole System in Action</h2>
               <p className="text-lg text-gray-700 mb-6 content-text">
-                Our state-of-the-art water fed pole system revolutionizes window cleaning by using purified water 
-                and extending telescopic poles to reach heights up to 60 feet safely from the ground.
+                Watch our professional window cleaning system in action. Our water fed pole technology allows us to clean high windows safely and efficiently while delivering superior results.
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Purified Water Technology</h3>
+                    <h3 className="font-semibold text-lg mb-1">Zero Ladder Risk</h3>
                     <p className="text-gray-600">
-                      Our system uses deionized water that leaves no spots, streaks, or residue, 
-                      providing crystal-clear results every time.
+                      Our technicians remain safely on the ground while cleaning windows up to 6 stories high.
                     </p>
                   </div>
                 </div>
@@ -137,10 +138,9 @@ const WindowCleaning = () => {
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Enhanced Safety</h3>
+                    <h3 className="font-semibold text-lg mb-1">Faster Service</h3>
                     <p className="text-gray-600">
-                      No ladders required - our technicians stay safely on the ground while 
-                      cleaning windows up to 6 stories high.
+                      Clean more windows in less time without compromising on quality.
                     </p>
                   </div>
                 </div>
