@@ -43,10 +43,10 @@ const ServiceHeader = ({
     }
   }, [videoUrl, youtubeId, youtubeDesktopId, isHomePage]);
 
-  // Adjust title text size and positioning based on mobile view
+  // Adjust title text size and positioning based on mobile view - center vertically
   const titleClasses = isMobile
-    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-24 text-shadow-lg" // Increased padding top for mobile
-    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg pt-20"; // Added padding top for desktop
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white text-shadow-lg" 
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg";
 
   // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
@@ -158,10 +158,10 @@ const ServiceHeader = ({
           />
           
           {darkOverlay && (
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
           )}
           
-          <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
+          <div className="relative h-full w-full flex items-center justify-center flex-col z-10">
             <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
