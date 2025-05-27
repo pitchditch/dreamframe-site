@@ -17,6 +17,7 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -85,47 +86,47 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section - Fixed position for slide effect with proper z-index */}
-      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
+      {/* Hero Section - Properly contained without fixed positioning */}
+      <div className="relative w-full h-screen overflow-hidden">
         <HeroSection />
       </div>
       
-      {/* Content that slides over the hero - Higher z-index to prevent glitching */}
-      <div className="relative z-40" style={{ marginTop: '100vh' }}>
-        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
-          <ServiceBanner />
+      {/* Content sections with proper spacing */}
+      <div className="relative z-20 bg-white">
+        <ServiceBanner />
+        
+        <div className="bg-white">
+          <PremiumSolutionsSection />
+          <FeaturedProjectSection />
           
-          <div className="bg-white relative z-50">
-            <PremiumSolutionsSection />
-            <FeaturedProjectSection />
-            
-            <PropertySpecificSection />
-            
-            <OwnerOperatedSection />
-            
-            <ScreenCleaningSection />
-            <TrustedCustomersSection />
-            <CompetitorComparisonSection />
-            <TestimonialsSection />
-            
-            <SatisfactionGuaranteeSection />
-            
-            <ServiceAreasSection />
-            
-            <FAQSection 
-              title={t("Frequently Asked Questions")} 
-              subtitle={t("Everything you need to know about our services")}
-              faqs={faqItems}
-              darkMode={true}
+          <PropertySpecificSection />
+          
+          <OwnerOperatedSection />
+          
+          <ScreenCleaningSection />
+          <TrustedCustomersSection />
+          <CompetitorComparisonSection />
+          <TestimonialsSection />
+          
+          <SatisfactionGuaranteeSection />
+          
+          <ServiceAreasSection />
+          
+          <CTABanner />
+          
+          <FAQSection 
+            title={t("Frequently Asked Questions")} 
+            subtitle={t("Everything you need to know about our services")}
+            faqs={faqItems}
+            darkMode={true}
+          />
+          
+          <div className="w-full">
+            <img 
+              src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+              alt="White Rock Marine Drive - Local Business" 
+              className="w-full h-auto object-cover object-center" 
             />
-            
-            <div className="w-full">
-              <img 
-                src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
-                alt="White Rock Marine Drive - Local Business" 
-                className="w-full h-auto object-cover object-center" 
-              />
-            </div>
           </div>
         </div>
       </div>

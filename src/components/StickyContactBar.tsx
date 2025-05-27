@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, X, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -10,6 +10,29 @@ const StickyContactBar = () => {
   const { t } = useTranslation();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const premiumSection = document.querySelector('[data-section="premium-solutions"]');
+      const faqSection = document.querySelector('[data-section="faq"]');
+      
+      if (premiumSection && faqSection) {
+        const premiumTop = premiumSection.getBoundingClientRect().top;
+        const faqTop = faqSection.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        // Show when premium section is visible and hide when FAQ section is in view
+        const shouldShow = premiumTop <= windowHeight && faqTop > windowHeight * 0.2;
+        setIsVisible(shouldShow);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +41,8 @@ const StickyContactBar = () => {
     console.log('Sending message:', message);
     setMessage('');
   };
+
+  if (!isVisible) return null;
 
   return (
     <>
@@ -77,7 +102,7 @@ const StickyContactBar = () => {
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setIsChatOpen(!isChatOpen)}
-                className="flex items-center gap-2 bg-yellow-400 text-gray-900 px-3 py-2 rounded-full font-semibold text-sm hover:bg-yellow-300 transition-colors"
+                className="flex items-center gap-1 bg-yellow-400 text-gray-900 px-3 py-2 rounded-full font-semibold text-sm hover:bg-yellow-300 transition-colors"
               >
                 <MessageCircle size={16} />
                 <span className="hidden sm:inline">{t("Chat")}</span>
@@ -85,18 +110,18 @@ const StickyContactBar = () => {
               
               <a
                 href="tel:778-808-7620"
-                className="flex items-center gap-2 bg-white text-bc-red px-3 py-2 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors"
+                className="flex items-center gap-1 bg-white text-bc-red px-3 py-2 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors"
               >
                 <Phone size={16} />
-                <span className="hidden sm:inline">{t("Call Now")}</span>
+                <span className="hidden sm:inline">{t("Call")}</span>
               </a>
               
               <Link
                 to="/calculator"
-                className="flex items-center gap-2 bg-green-500 text-white px-3 py-2 rounded-full font-semibold text-sm hover:bg-green-600 transition-colors"
+                className="flex items-center gap-1 bg-green-500 text-white px-3 py-2 rounded-full font-semibold text-sm hover:bg-green-600 transition-colors"
               >
                 <MessageCircle size={16} />
-                <span className="hidden sm:inline">{t("Get Quote")}</span>
+                <span className="hidden sm:inline">{t("Quote")}</span>
               </Link>
             </div>
           </div>
