@@ -31,10 +31,11 @@ const PropertySpecificSection = () => {
         t("Fast quotes — no hidden fees"),
         t("Available in Surrey, Langley & More")
       ],
-      image: "/lovable-uploads/2aa44443-acb7-47d2-a63d-295c7414a46d.png",
       link: "/services/window-cleaning",
       buttonText: t("Get Free Home Quote"),
-      pricing: t("Starting from $150")
+      pricing: t("Starting from $150"),
+      iconColor: "text-blue-600",
+      iconBg: "bg-blue-100"
     },
     {
       icon: Building2,
@@ -55,10 +56,11 @@ const PropertySpecificSection = () => {
         t("Monthly maintenance plans"),
         t("Fully insured & WCB covered")
       ],
-      image: "/lovable-uploads/44fea6cf-3991-4456-9cd6-04d2a1d836fd.png",
       link: "/services/commercial-window-cleaning",
       buttonText: t("Get Commercial Quote"),
-      pricing: t("Custom pricing available")
+      pricing: t("Custom pricing available"),
+      iconColor: "text-green-600",
+      iconBg: "bg-green-100"
     },
     {
       icon: Building,
@@ -79,10 +81,11 @@ const PropertySpecificSection = () => {
         t("Reach heights safely without scaffolding"),
         t("Volume discounts for multiple units")
       ],
-      image: "/lovable-uploads/14d8f5da-5c4c-4be3-a974-8f34da54186f.png",
       link: "/services/window-cleaning",
       buttonText: t("Request Strata Quote"),
-      pricing: t("Volume discounts available")
+      pricing: t("Volume discounts available"),
+      iconColor: "text-purple-600",
+      iconBg: "bg-purple-100"
     }
   ];
 
@@ -125,17 +128,9 @@ const PropertySpecificSection = () => {
             const IconComponent = property.icon;
             return (
               <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-lg overflow-hidden bg-white/95 backdrop-blur-sm">
-                <div className="relative">
-                  <img 
-                    src={property.image} 
-                    alt={property.title}
-                    className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                  <div className="absolute top-4 left-4">
-                    <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
-                      <IconComponent className="w-6 h-6 text-bc-red" />
-                    </div>
+                <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 h-48 md:h-56 flex items-center justify-center">
+                  <div className={`w-24 h-24 ${property.iconBg} rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className={`w-12 h-12 ${property.iconColor}`} />
                   </div>
                   <div className="absolute bottom-4 right-4">
                     <div className="bg-bc-red text-white px-3 py-1 rounded-full text-sm font-semibold">
