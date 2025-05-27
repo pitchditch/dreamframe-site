@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import CallToAction from '../../components/CallToAction';
@@ -11,9 +12,11 @@ import FAQSection from '../../components/FAQSection';
 import WindowCleaningForm from '@/components/forms/WindowCleaningForm';
 import ServiceAreasList from '@/components/ServiceAreasList';
 import WindowCleaningSimulator from '@/components/home/WindowCleaningSimulator';
+import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 
 const WindowCleaning = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showQuoteOverlay, setShowQuoteOverlay] = useState(false);
 
   useEffect(() => {
     // Set videoLoaded to true after a short delay
@@ -70,7 +73,7 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* Main Content with Form */}
+      {/* See Our Window Cleaning in Action */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">See Our Window Cleaning in Action</h2>
@@ -118,57 +121,121 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* Rest of the content */}
-      
-      {/* Our Process */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-4">
-                <Droplets size={16} className="mr-1" /> Pure Water Technology
+      {/* Water Fed Pole System Section - Full Width */}
+      <section className="py-16 bg-gray-50">
+        <div className="w-full px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-4">
+                  <Droplets size={16} className="mr-1" /> Water Fed Pole System
+                </div>
+                <h2 className="text-3xl font-bold mb-6">Advanced Pure Water Technology</h2>
+                <p className="text-gray-600 mb-6">
+                  Our water-fed pole system represents the cutting edge of window cleaning technology. Using purified water that's been stripped of all minerals and impurities, we can clean your windows up to five stories high without the need for ladders or chemicals.
+                </p>
+                <p className="text-gray-600 mb-6">
+                  The purified water naturally attracts dirt and grime, lifting it away from the glass surface. When the water evaporates, it leaves no mineral deposits or streaks behind – just crystal clear, spotless windows that stay cleaner longer.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>No chemicals or detergents needed</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Reaches up to 5 stories safely from ground</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Environmentally friendly process</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Streak-free, spot-free results</span>
+                  </li>
+                </ul>
               </div>
-              <h2 className="text-3xl font-bold mb-6">Streak-Free Window Cleaning</h2>
-              <p className="text-gray-600 mb-6">
-                Dirty windows can drastically reduce the amount of natural light entering your home or business, and diminish your view of the outside world. Our professional window cleaning service restores clarity and brilliance to your windows, enhancing the appearance and value of your property.
-              </p>
-              <p className="text-gray-600 mb-6">
-                Using our advanced pure water technology and professional-grade equipment, we deliver exceptional results that last longer than traditional cleaning methods. Our process removes all dirt, dust, pollen, water spots, and other contaminants to leave your windows perfectly clean.
-              </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <Check className="text-bc-red mr-2 mt-1" size={20} />
-                  <span>Crystal clear, streak-free results</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-bc-red mr-2 mt-1" size={20} />
-                  <span>Interior and exterior window cleaning</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-bc-red mr-2 mt-1" size={20} />
-                <span>Screen, track, and frame cleaning</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-bc-red mr-2 mt-1" size={20} />
-                  <span>Window sill and ledge detailing</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="text-bc-red mr-2 mt-1" size={20} />
-                  <span>Hard water stain removal options</span>
-                </li>
-              </ul>
-              <img alt="Window cleaning with pure water technology" className="rounded-lg shadow-xl w-full" src="/lovable-uploads/ac4de5e1-110f-43da-9a26-3454d0529608.jpg" />
-            </div>
-            
-            <div>
-              <WindowCleaningForm />
+              
+              <div>
+                <img 
+                  alt="Water fed pole system window cleaning" 
+                  className="rounded-lg shadow-xl w-full" 
+                  src="/lovable-uploads/ac4de5e1-110f-43da-9a26-3454d0529608.jpg" 
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Remaining sections */}
-      
+      {/* Streak-Free Window Cleaning - Full Width */}
+      <section className="py-16">
+        <div className="w-full px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12">
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Streak-Free Window Cleaning</h2>
+                <p className="text-gray-600 mb-6">
+                  Dirty windows can drastically reduce the amount of natural light entering your home or business, and diminish your view of the outside world. Our professional window cleaning service restores clarity and brilliance to your windows, enhancing the appearance and value of your property.
+                </p>
+                <p className="text-gray-600 mb-6">
+                  Using our advanced pure water technology and professional-grade equipment, we deliver exceptional results that last longer than traditional cleaning methods. Our process removes all dirt, dust, pollen, water spots, and other contaminants to leave your windows perfectly clean.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Crystal clear, streak-free results</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Interior and exterior window cleaning</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Screen, track, and frame cleaning</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Window sill and ledge detailing</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Check className="text-bc-red mr-2 mt-1" size={20} />
+                    <span>Hard water stain removal options</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="relative">
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setShowQuoteOverlay(true)}
+                  onMouseLeave={() => setShowQuoteOverlay(false)}
+                >
+                  <WindowCleaningForm />
+                  
+                  {showQuoteOverlay && (
+                    <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center z-10">
+                      <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm">
+                        <h3 className="text-xl font-bold mb-4 text-center">Request Window Cleaning Quote</h3>
+                        <p className="text-gray-600 text-center mb-4">
+                          Get a free, no-obligation quote for professional window cleaning services.
+                        </p>
+                        <PriceCalculatorOverlay 
+                          buttonText="Get Free Quote" 
+                          variant="bc-red"
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Process */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -221,17 +288,14 @@ const WindowCleaning = () => {
 
       <TestimonialsSection />
 
-      {/* Only include ONE FAQ section */}
       <FAQSection 
         title="Window Cleaning FAQs" 
         subtitle="Common questions about our window cleaning services" 
         faqs={windowCleaningFaqs} 
       />
       
-      {/* More Services Section with bigger images */}
       <MoreServicesSection />
       
-      {/* Service Areas Section */}
       <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
@@ -239,7 +303,6 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
       <CallToAction 
         title="Ready for Crystal Clear Windows?" 
         subtitle="Contact us today for a free quote on professional window cleaning for your home or business." 
