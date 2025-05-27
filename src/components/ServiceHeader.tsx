@@ -43,13 +43,10 @@ const ServiceHeader = ({
     }
   }, [videoUrl, youtubeId, youtubeDesktopId, isHomePage]);
 
-  // Check if this is the post-construction page
-  const isPostConstructionPage = location.pathname.includes('post-construction');
-
-  // Adjust title text size and positioning based on mobile view and page type
+  // Adjust title text size and positioning based on mobile view
   const titleClasses = isMobile
-    ? `text-3xl md:text-5xl font-bold mb-4 text-white ${isPostConstructionPage ? 'pt-32' : 'pt-24'} text-shadow-lg`
-    : `text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg ${isPostConstructionPage ? 'pt-32' : 'pt-20'}`;
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-24 text-shadow-lg" // Increased padding top for mobile
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg pt-20"; // Added padding top for desktop
 
   // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
