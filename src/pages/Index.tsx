@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -16,6 +15,7 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import HowWeCompleteJobsSection from '../components/home/HowWeCompleteJobsSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -98,6 +98,8 @@ const Index = () => {
             <div data-section="premium-solutions">
               <PremiumSolutionsSection />
             </div>
+            
+            <HowWeCompleteJobsSection />
             
             <FeaturedProjectSection />
             
