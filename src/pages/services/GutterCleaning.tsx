@@ -4,6 +4,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import CallToAction from '../../components/CallToAction';
+import GutterQuadrantSection from '../../components/services/GutterQuadrantSection';
 import { Shield, Droplets, Cloud, CheckCircle } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import GutterCleaningForm from '@/components/forms/GutterCleaningForm';
@@ -85,8 +86,8 @@ const GutterCleaning = () => {
       <ServiceHeader 
         title="Professional Gutter Cleaning" 
         description="Keep your home protected with our thorough gutter cleaning services." 
-        youtubeId="EdMlx1sYJDc" // Updated mobile YouTube video ID
-        youtubeDesktopId="m5wfZZCuFeg" // Desktop YouTube video ID
+        youtubeId="EdMlx1sYJDc"
+        youtubeDesktopId="m5wfZZCuFeg"
       />
       
       <section className="py-16 bg-white">
@@ -183,6 +184,9 @@ const GutterCleaning = () => {
           <ServiceBenefits title="Benefits of Regular Gutter Cleaning" subtitle="Protect your home's structural integrity and prevent costly damage with our professional gutter cleaning services" benefits={benefits} />
         </div>
       </section>
+      
+      {/* New Quadrant Section */}
+      <GutterQuadrantSection />
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
