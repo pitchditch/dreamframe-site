@@ -21,7 +21,7 @@ import RoofCleaning from "./pages/services/RoofCleaning";
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
-import VancouverWindowCleaning from "./pages/VancouverWindowCleaning";
+import VancouverWindowCleaning from "./pages/locations/VancouverWindowCleaning";
 import Services from "./pages/Services";
 import StickyContactBar from "./components/StickyContactBar";
 
