@@ -16,6 +16,7 @@ import PropertySpecificSection from '../components/home/PropertySpecificSection'
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
 import HowWeCompleteJobsSection from '../components/home/HowWeCompleteJobsSection';
+import DoorToDoorSection from '../components/home/DoorToDoorSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -100,6 +101,8 @@ const Index = () => {
             </div>
             
             <HowWeCompleteJobsSection />
+            
+            <DoorToDoorSection />
             
             <FeaturedProjectSection />
             
