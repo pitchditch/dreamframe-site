@@ -56,7 +56,7 @@ const HeroSection = () => {
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full object-cover object-center transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           ) : (
             <iframe 
@@ -74,27 +74,27 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-40 sm:pt-28 md:pt-32">
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-24 sm:pt-28 md:pt-32">
         <div className="max-w-4xl text-left">
-          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-6 animate-on-scroll">
-            <span className="text-white font-medium text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
+          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 md:mb-6 animate-on-scroll">
+            <span className="text-white font-medium text-xs sm:text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
           
-          <div className="mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll leading-tight">
+          <div className="mb-6 md:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 animate-on-scroll leading-tight">
               <span className="text-white">
                 {t("The Ultimate Cleaning")} <span className="text-bc-red">{t("Solution")}</span> {t("for Your Property")}
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
+            <p className="text-sm sm:text-base md:text-xl lg:text-2xl mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
               {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
             </p>
           </div>
         </div>
         
         {/* Postal Code Input Section */}
-        <div className="max-w-2xl w-full mt-4 mb-6 animate-on-scroll delay-300">
+        <div className="max-w-2xl w-full mt-2 md:mt-4 mb-4 md:mb-6 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -103,30 +103,30 @@ const HeroSection = () => {
                 placeholder={t("Enter Your Postal Code")}
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                className="bg-white border-white text-black h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-xl font-medium w-full"
+                className="bg-white border-white text-black h-12 md:h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-base md:text-xl font-medium w-full"
               />
             </div>
             <Button 
               type="submit" 
               variant="bc-red" 
               size="lg" 
-              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
+              className="h-12 md:h-16 text-white text-base md:text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-6 md:px-8 w-full sm:w-auto sm:min-w-[200px] md:sm:min-w-[250px]"
             >
-              {t("Check Prices & Availability")} <MessageSquare className="ml-2" size={20} />
+              {t("Check Prices & Availability")} <MessageSquare className="ml-2" size={16} />
             </Button>
           </form>
         </div>
 
         {/* Personal Touch Section */}
-        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-6 animate-on-scroll delay-700">
-          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-6 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-4 md:my-6 animate-on-scroll delay-700">
+          <div className="bg-black/40 backdrop-blur-sm p-3 md:p-4 lg:p-6 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 
-              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md mr-4 flex-shrink-0"
+              className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full border-2 border-white shadow-md mr-3 md:mr-4 flex-shrink-0"
             />
             <div className="text-left">
-              <p className="font-bold text-white text-sm md:text-lg drop-shadow-md leading-tight">{t("Every Job is Personally Checked by Me.")}</p>
+              <p className="font-bold text-white text-xs sm:text-sm md:text-base lg:text-lg drop-shadow-md leading-tight">{t("Every Job is Personally Checked by Me.")}</p>
               <p className="text-white font-medium text-xs md:text-sm mt-1">— Jayden Fisher, {t("Owner")}</p>
             </div>
           </div>
@@ -135,7 +135,7 @@ const HeroSection = () => {
       
       {/* Enhanced scroll indicator with animation and label */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">{t("Scroll Down")}</span>
+        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">{t("Scroll Up")}</span>
         <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center">
           <div className="h-2 w-1 bg-white rounded-full animate-pulse"></div>
         </div>

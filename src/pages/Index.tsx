@@ -16,7 +16,6 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
-import WindowCleaningSimulator from '../components/home/WindowCleaningSimulator';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -113,17 +112,6 @@ const Index = () => {
             <SatisfactionGuaranteeSection />
             
             <ServiceAreasSection />
-
-            {/* Window Cleaning Simulator Section */}
-            <section className="py-16 bg-gray-50">
-              <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">{t("Window Cleaning Simulator")}</h2>
-                <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                  {t("Experience the difference our professional window cleaning makes. Try our interactive simulator!")}
-                </p>
-                <WindowCleaningSimulator />
-              </div>
-            </section>
             
             <div data-section="faq">
               <FAQSection 
