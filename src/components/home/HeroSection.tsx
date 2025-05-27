@@ -7,7 +7,6 @@ import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
 import { trackFormSubmission } from '@/utils/analytics';
-import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
@@ -73,28 +72,28 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
-      {/* Hero Content */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-40 sm:pt-24">
+      {/* Hero Content with proper spacing and visibility */}
+      <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white pt-40 sm:pt-32 md:pt-24">
         <div className="max-w-4xl text-left">
-          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-8 animate-on-scroll">
+          <div className="inline-block bg-bc-red px-4 py-2 rounded mb-6 animate-on-scroll">
             <span className="text-white font-medium text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
           
           <div className="mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-on-scroll">
-              <span className="text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-on-scroll leading-tight">
+              <span className="text-white drop-shadow-lg">
                 {t("The Ultimate Cleaning")} <span className="text-bc-red">{t("Solution")}</span> {t("for Your Property")}
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white">
+            <p className="text-lg sm:text-xl md:text-2xl mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white drop-shadow-md">
               {t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")}
             </p>
           </div>
         </div>
         
         {/* Postal Code Input Section */}
-        <div className="max-w-2xl w-full mt-4 mb-6 animate-on-scroll delay-300">
+        <div className="max-w-2xl w-full mb-8 animate-on-scroll delay-300">
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -103,31 +102,31 @@ const HeroSection = () => {
                 placeholder={t("Enter Your Postal Code")}
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                className="bg-white border-white text-black h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-xl font-medium w-full"
+                className="bg-white border-white text-black h-14 md:h-16 pl-4 pr-10 rounded-lg focus:ring-bc-red focus:border-bc-red placeholder-gray-500 text-lg md:text-xl font-medium w-full"
               />
             </div>
             <Button 
               type="submit" 
               variant="bc-red" 
               size="lg" 
-              className="h-16 text-white text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-8 w-full sm:w-auto sm:min-w-[250px]"
+              className="h-14 md:h-16 text-white text-lg md:text-xl font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl px-6 md:px-8 w-full sm:w-auto sm:min-w-[200px] md:min-w-[250px]"
             >
               {t("Check Prices & Availability")} <MessageSquare className="ml-2" size={20} />
             </Button>
           </form>
         </div>
 
-        {/* Personal Touch Section */}
-        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 my-6 animate-on-scroll delay-700">
-          <div className="bg-black/40 backdrop-blur-sm p-4 md:p-6 rounded-xl max-w-md border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
+        {/* Personal Touch Section - Better positioned and visible */}
+        <div className="flex flex-col sm:flex-row items-start justify-start gap-4 mb-8 animate-on-scroll delay-700">
+          <div className="bg-black/50 backdrop-blur-sm p-4 md:p-6 rounded-xl max-w-lg border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center">
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 
               className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white shadow-md mr-4 flex-shrink-0"
             />
             <div className="text-left">
-              <p className="font-bold text-white text-sm md:text-lg drop-shadow-md">{t("Every Job is Personally Checked by Me.")}</p>
-              <p className="text-white font-medium text-xs md:text-base">— Jayden Fisher, {t("Owner")}</p>
+              <p className="font-bold text-white text-sm md:text-lg drop-shadow-lg leading-tight">{t("Every Job is Personally Checked by Me.")}</p>
+              <p className="text-white/90 font-medium text-xs md:text-base mt-1">— Jayden Fisher, {t("Owner")}</p>
             </div>
           </div>
         </div>

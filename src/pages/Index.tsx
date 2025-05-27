@@ -17,15 +17,13 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
-import WindowCleaningSimulatorSection from '../components/WindowCleaningSimulatorSection';
 import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { language, t } = useTranslation();
 
   useEffect(() => {
-    // Remove the has-video-header class to prevent issues with other sections
-    document.body.classList.remove('has-video-header');
+    document.body.classList.add('has-video-header');
 
     const observerOptions = {
       root: null,
@@ -49,6 +47,7 @@ const Index = () => {
     console.log('Translation test:', t("Home"));
 
     return () => {
+      document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [language, t]);
@@ -87,46 +86,48 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section */}
-      <HeroSection />
+      {/* Hero Section - Properly contained without fixed positioning */}
+      <div className="relative w-full h-screen overflow-hidden">
+        <HeroSection />
+      </div>
       
-      {/* Content that follows the hero */}
-      <div className="bg-white">
+      {/* Content sections with proper spacing */}
+      <div className="relative z-20 bg-white">
         <ServiceBanner />
         
-        <PremiumSolutionsSection />
-        <FeaturedProjectSection />
-        
-        <PropertySpecificSection />
-        
-        <OwnerOperatedSection />
-        
-        <ScreenCleaningSection />
-        <TrustedCustomersSection />
-        <CompetitorComparisonSection />
-        <TestimonialsSection />
-        
-        <SatisfactionGuaranteeSection />
-        
-        <ServiceAreasSection />
-        
-        <FAQSection 
-          title={t("Frequently Asked Questions")} 
-          subtitle={t("Everything you need to know about our services")}
-          faqs={faqItems}
-          darkMode={true}
-        />
-        
-        <WindowCleaningSimulatorSection />
-        
-        <CTABanner />
-        
-        <div className="w-full">
-          <img 
-            src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
-            alt="White Rock Marine Drive - Local Business" 
-            className="w-full h-auto object-cover object-center" 
+        <div className="bg-white">
+          <PremiumSolutionsSection />
+          <FeaturedProjectSection />
+          
+          <PropertySpecificSection />
+          
+          <OwnerOperatedSection />
+          
+          <ScreenCleaningSection />
+          <TrustedCustomersSection />
+          <CompetitorComparisonSection />
+          <TestimonialsSection />
+          
+          <SatisfactionGuaranteeSection />
+          
+          <ServiceAreasSection />
+          
+          <CTABanner />
+          
+          <FAQSection 
+            title={t("Frequently Asked Questions")} 
+            subtitle={t("Everything you need to know about our services")}
+            faqs={faqItems}
+            darkMode={true}
           />
+          
+          <div className="w-full">
+            <img 
+              src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+              alt="White Rock Marine Drive - Local Business" 
+              className="w-full h-auto object-cover object-center" 
+            />
+          </div>
         </div>
       </div>
       

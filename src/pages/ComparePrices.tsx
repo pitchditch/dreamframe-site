@@ -1,203 +1,411 @@
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import Layout from '../components/Layout';
+import { ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import CallToAction from '../components/CallToAction';
 import { useTranslation } from '@/hooks/use-translation';
-import { Check, X, Star } from 'lucide-react';
+import ServiceAreasCarousel from '../components/ServiceAreasCarousel';
 
 const ComparePrices = () => {
   const { t } = useTranslation();
 
-  const competitors = [
-    {
-      name: "BC Pressure Washing",
-      isUs: true,
-      features: {
-        quality: true,
-        insurance: true,
-        guarantee: true,
-        equipment: true,
-        experience: true,
-        pricing: true,
-        availability: true,
-        followUp: true
-      },
-      price: "Competitive",
-      rating: 5
-    },
-    {
-      name: "Generic Cleaners",
-      isUs: false,
-      features: {
-        quality: false,
-        insurance: true,
-        guarantee: false,
-        equipment: false,
-        experience: false,
-        pricing: false,
-        availability: false,
-        followUp: false
-      },
-      price: "Variable",
-      rating: 3
-    },
-    {
-      name: "Budget Services",
-      isUs: false,
-      features: {
-        quality: false,
-        insurance: false,
-        guarantee: false,
-        equipment: false,
-        experience: false,
-        pricing: true,
-        availability: true,
-        followUp: false
-      },
-      price: "Low",
-      rating: 2
-    }
-  ];
-
-  const features = [
-    { key: 'quality', label: 'Professional Quality Results' },
-    { key: 'insurance', label: 'Fully Insured & WCB Coverage' },
-    { key: 'guarantee', label: '100% Satisfaction Guarantee' },
-    { key: 'equipment', label: 'Professional Grade Equipment' },
-    { key: 'experience', label: '5+ Years Experience' },
-    { key: 'pricing', label: 'Transparent Pricing' },
-    { key: 'availability', label: 'Same-Day Service Available' },
-    { key: 'followUp', label: 'Personal Follow-Up' }
-  ];
-
   return (
     <Layout
-      title="Compare Pressure Washing Services | BC Pressure Washing"
-      description="Compare BC Pressure Washing with other cleaning services in Surrey & White Rock. See why we're the top choice for professional exterior cleaning."
-      canonicalUrl="/compare-prices"
+      title="Compare Service Prices & Packages | BC Pressure Washing"
+      description="Compare our competitive pricing and service packages with other providers. Transparent pricing and superior value from a local, dedicated team."
     >
-      <Helmet>
-        <meta name="keywords" content="compare pressure washing services, best window cleaning Surrey, professional cleaning comparison, BC pressure washing reviews" />
-      </Helmet>
-
-      <div className="pt-32 pb-16 bg-gray-50">
+      <div className="pt-28 md:pt-36 pb-12">
         <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {t("Compare Our Services")}
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t("See how BC Pressure Washing compares to other cleaning services in the Metro Vancouver area.")}
+          <div className="max-w-5xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-bold text-center mb-6">Compare Our Services & Pricing</h1>
+            <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+              See how our transparent pricing and high-quality service packages compare to other options in the market.
             </p>
-          </div>
 
-          {/* Comparison Table */}
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-900 text-white">
-                  <tr>
-                    <th className="px-6 py-4 text-left font-semibold">Features</th>
-                    {competitors.map((competitor, index) => (
-                      <th key={index} className={`px-6 py-4 text-center font-semibold ${competitor.isUs ? 'bg-bc-red' : ''}`}>
-                        <div className="flex flex-col items-center">
-                          <span className="mb-2">{competitor.name}</span>
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                size={16}
-                                className={`${i < competitor.rating ? 'text-yellow-400 fill-current' : 'text-gray-400'}`}
-                              />
-                            ))}
-                          </div>
+            {/* Service Bundles Section */}
+            <section className="mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Service Bundles & Packages</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Basic Package */}
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 transition-transform hover:shadow-xl hover:-translate-y-1">
+                  <div className="bg-gray-50 p-6 text-center">
+                    <h3 className="text-xl font-bold mb-2">Essential Package</h3>
+                    <p className="text-gray-600 mb-4">Perfect for regular maintenance</p>
+                    <div className="text-4xl font-bold text-bc-red">$199</div>
+                    <p className="text-sm text-gray-500 mt-2">Starting price for most homes</p>
+                  </div>
+                  <div className="p-6">
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Exterior Window Cleaning</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Tracks & Sills Cleaned</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Screen Cleaning</span>
+                      </li>
+                      <li className="flex items-start text-gray-400">
+                        <svg className="w-5 h-5 text-gray-300 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        <span>Interior Windows</span>
+                      </li>
+                      <li className="flex items-start text-gray-400">
+                        <svg className="w-5 h-5 text-gray-300 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        <span>Gutter Cleaning</span>
+                      </li>
+                    </ul>
+                    <Button asChild className="w-full mt-6 bg-bc-red hover:bg-red-700">
+                      <Link to="/calculator">Get a Quote</Link>
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Popular Package */}
+                <div className="bg-white rounded-lg shadow-xl overflow-hidden border-2 border-bc-red transform scale-105 z-10">
+                  <div className="bg-bc-red text-white p-6 text-center relative">
+                    <div className="absolute top-0 right-0 bg-yellow-400 text-black text-xs font-bold px-3 py-1 transform translate-y-2 rotate-45">
+                      POPULAR
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Complete Package</h3>
+                    <p className="text-gray-100 mb-4">Our most popular choice</p>
+                    <div className="text-4xl font-bold">$349</div>
+                    <p className="text-sm text-gray-200 mt-2">Best value for most homes</p>
+                  </div>
+                  <div className="p-6">
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Interior & Exterior Window Cleaning</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Tracks, Sills & Frames Cleaned</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Screen Cleaning & Maintenance</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Gutter Cleaning</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Gutter Face Cleaning</span>
+                      </li>
+                    </ul>
+                    <Button asChild className="w-full mt-6 bg-bc-red hover:bg-red-700">
+                      <Link to="/calculator">Get a Quote</Link>
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Premium Package */}
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 transition-transform hover:shadow-xl hover:-translate-y-1">
+                  <div className="bg-gray-50 p-6 text-center">
+                    <h3 className="text-xl font-bold mb-2">Premium Package</h3>
+                    <p className="text-gray-600 mb-4">Complete exterior care</p>
+                    <div className="text-4xl font-bold text-bc-red">$599</div>
+                    <p className="text-sm text-gray-500 mt-2">Full service for larger homes</p>
+                  </div>
+                  <div className="p-6">
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Interior & Exterior Window Cleaning</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Deep Clean Tracks & Frames</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Gutter Cleaning & Flushing</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>House Washing (Siding/Exterior)</span>
+                      </li>
+                      <li className="flex items-start">
+                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Driveway Pressure Washing</span>
+                      </li>
+                    </ul>
+                    <Button asChild className="w-full mt-6 bg-bc-red hover:bg-red-700">
+                      <Link to="/calculator">Get a Quote</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+            {/* Competitive Pricing Comparison */}
+            <section className="mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">How We Compare</h2>
+              <p className="text-gray-600 mb-8 text-center max-w-3xl mx-auto">
+                We offer higher quality service at competitive prices compared to national franchise operations. Here's why we deliver better value:
+              </p>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="p-4 border text-left w-1/3">Feature</th>
+                      <th className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <img src="/lovable-uploads/85f5bd3c-680e-4957-9722-6bc6070f7d51.png" alt="BC Pressure Washing Logo" className="h-8 w-8 mr-2" />
+                          <span>BC Pressure Washing</span>
                         </div>
                       </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {features.map((feature, featureIndex) => (
-                    <tr key={feature.key} className={featureIndex % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                      <td className="px-6 py-4 font-medium text-gray-900">{feature.label}</td>
-                      {competitors.map((competitor, compIndex) => (
-                        <td key={compIndex} className={`px-6 py-4 text-center ${competitor.isUs ? 'bg-red-50' : ''}`}>
-                          {competitor.features[feature.key as keyof typeof competitor.features] ? (
-                            <Check className="mx-auto text-green-500" size={20} />
-                          ) : (
-                            <X className="mx-auto text-red-500" size={20} />
-                          )}
-                        </td>
-                      ))}
+                      <th className="p-4 border text-center">
+                        <div>Shack Shine</div>
+                        <div className="text-xs text-gray-500">(National Franchise)</div>
+                      </th>
                     </tr>
-                  ))}
-                  <tr className="bg-gray-100 font-semibold">
-                    <td className="px-6 py-4 text-gray-900">Starting Price</td>
-                    {competitors.map((competitor, index) => (
-                      <td key={index} className={`px-6 py-4 text-center ${competitor.isUs ? 'bg-red-100 text-bc-red' : 'text-gray-900'}`}>
-                        {competitor.price}
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-4 border font-medium">Local Ownership</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>100% Locally Owned & Operated</span>
+                        </div>
                       </td>
-                    ))}
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Why Choose Us Section */}
-          <div className="mt-16 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">
-              {t("Why BC Pressure Washing Stands Out")}
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="w-16 h-16 bg-bc-red rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Check className="text-white" size={24} />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{t("Quality Guarantee")}</h3>
-                <p className="text-gray-600">{t("100% satisfaction guarantee on all our services with personal follow-up from the owner.")}</p>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                          <span>Franchise Model</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border font-medium">Quality Priority</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>Quality First Approach</span>
+                        </div>
+                      </td>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-yellow-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                          </svg>
+                          <span>Volume-Based Approach</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border font-medium">Service Time Per Job</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>Thorough, Not Rushed</span>
+                        </div>
+                      </td>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-yellow-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                          </svg>
+                          <span>Often Rushed</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border font-medium">Pricing</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>Competitive & Transparent</span>
+                        </div>
+                      </td>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                          <span>20-30% Higher</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border font-medium">Owner Involvement</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>Owner On-Site for Quality Control</span>
+                        </div>
+                      </td>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                          <span>Corporate Structure</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border font-medium">Franchise Fees Added</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>No Franchise Fees</span>
+                        </div>
+                      </td>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                          <span>Franchise Fees Included in Price</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border font-medium">Equipment Quality</td>
+                      <td className="p-4 border text-center bg-green-50">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>Professional-Grade Tools</span>
+                        </div>
+                      </td>
+                      <td className="p-4 border text-center">
+                        <div className="flex items-center justify-center">
+                          <svg className="w-6 h-6 text-yellow-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                          </svg>
+                          <span>Varies by Franchise</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+            </section>
+            
+            {/* Our Commitment Section */}
+            <section className="mb-16 bg-gray-50 p-8 rounded-lg">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Our Service Commitment</h2>
+              <div className="space-y-4">
+                <p className="text-gray-600">
+                  At BC Pressure Washing, we stand firmly behind our work with a simple promise: <strong>we're not satisfied until you're satisfied</strong>. We're not a franchise operation with corporate quotas to meet. We're your neighbors, locally owned and operated, committed to delivering exceptional quality on every job.
+                </p>
+                <p className="text-gray-600">
+                  Our reputation depends on your satisfaction, which is why we take the time to do the job right. We don't rush through jobs to meet daily quotas or maximize volume. Instead, we focus on thorough, careful work that delivers outstanding results every time.
+                </p>
+                <div className="border-l-4 border-bc-red pl-4 italic text-gray-700 mt-6">
+                  "We don't just clean your windows and exterior – we care for your home as if it were our own."
+                </div>
+              </div>
+            </section>
+            
+            {/* FAQ Section */}
+            <section className="mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Common Questions</h2>
               
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="w-16 h-16 bg-bc-red rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Star className="text-white" size={24} />
+              <div className="space-y-6">
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <button className="flex justify-between items-center w-full p-4 text-left font-medium bg-gray-50 hover:bg-gray-100">
+                    <span>Why are you more affordable than franchise operations?</span>
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  </button>
+                  <div className="p-4 bg-white">
+                    <p className="text-gray-600">
+                      As a local business, we don't have the overhead costs of franchise fees, corporate marketing expenses, or multi-layered management. This allows us to offer competitive pricing while maintaining higher quality standards and spending more time on each job. We pass these savings directly to you while delivering superior results.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{t("Professional Equipment")}</h3>
-                <p className="text-gray-600">{t("State-of-the-art equipment and eco-friendly cleaning solutions for superior results.")}</p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="w-16 h-16 bg-bc-red rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Check className="text-white" size={24} />
+                
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <button className="flex justify-between items-center w-full p-4 text-left font-medium bg-gray-50 hover:bg-gray-100">
+                    <span>Do you offer price matching?</span>
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  </button>
+                  <div className="p-4 bg-white">
+                    <p className="text-gray-600">
+                      We're confident in our pricing structure which reflects the quality of our work. While we may not always be the cheapest option, we provide the best value. That said, we're happy to review competitive quotes and discuss how our services compare. Our focus is on quality and customer satisfaction rather than being the lowest-priced provider.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{t("Local & Trusted")}</h3>
-                <p className="text-gray-600">{t("Family-owned business serving Metro Vancouver with personalized service and community commitment.")}</p>
+                
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <button className="flex justify-between items-center w-full p-4 text-left font-medium bg-gray-50 hover:bg-gray-100">
+                    <span>What if I'm not satisfied with the work?</span>
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  </button>
+                  <div className="p-4 bg-white">
+                    <p className="text-gray-600">
+                      We stand behind our work 100%. If you're not completely satisfied with any aspect of our service, simply let us know within 7 days and we'll return to make it right at no additional cost. Our reputation is built on customer satisfaction, and we take that commitment seriously.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
           </div>
-
-          {/* CTA Section */}
-          <div className="mt-16 bg-bc-red text-white rounded-lg p-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">{t("Ready to Experience the Difference?")}</h2>
-            <p className="text-xl mb-6">{t("Get your free quote today and see why we're the top choice in Metro Vancouver.")}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/calculator"
-                className="bg-white text-bc-red px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                {t("Get Free Quote")}
-              </a>
-              <a
-                href="tel:778-808-7620"
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-bc-red transition-colors"
-              >
-                {t("Call (778) 808-7620")}
-              </a>
-            </div>
-          </div>
+          
+          <ServiceAreasCarousel />
         </div>
       </div>
+      
+      <CallToAction 
+        title="Ready to Experience the Difference?" 
+        subtitle="Contact us today for a free, no-obligation quote and discover why more homeowners choose BC Pressure Washing." 
+      />
     </Layout>
   );
 };
