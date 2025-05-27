@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, X, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -10,6 +10,31 @@ const StickyContactBar = () => {
   const { t } = useTranslation();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const premiumSection = document.querySelector('[data-section="premium-solutions"]');
+      const faqSection = document.querySelector('[data-section="faq"]');
+      const footerImage = document.querySelector('img[alt="White Rock Marine Drive - Local Business"]');
+      
+      if (premiumSection && faqSection && footerImage) {
+        const premiumTop = premiumSection.offsetTop;
+        const faqBottom = faqSection.offsetTop + faqSection.offsetHeight;
+        const footerImageTop = footerImage.offsetTop;
+        const currentScroll = window.scrollY + window.innerHeight;
+        
+        // Show after premium section starts and hide before footer image
+        const shouldShow = window.scrollY > premiumTop && currentScroll < footerImageTop;
+        setIsVisible(shouldShow);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +43,8 @@ const StickyContactBar = () => {
     console.log('Sending message:', message);
     setMessage('');
   };
+
+  if (!isVisible) return null;
 
   return (
     <>
@@ -88,7 +115,8 @@ const StickyContactBar = () => {
                 className="flex items-center gap-2 bg-white text-bc-red px-3 py-2 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors"
               >
                 <Phone size={16} />
-                <span className="hidden sm:inline">{t("Call Now")}</span>
+                <span className="hidden sm:inline">📞</span>
+                <span className="hidden md:inline">{t("Call Now")}</span>
               </a>
               
               <Link
@@ -96,7 +124,7 @@ const StickyContactBar = () => {
                 className="flex items-center gap-2 bg-green-500 text-white px-3 py-2 rounded-full font-semibold text-sm hover:bg-green-600 transition-colors"
               >
                 <MessageCircle size={16} />
-                <span className="hidden sm:inline">{t("Get Quote")}</span>
+                <span className="hidden sm:inline">{t("Quote")}</span>
               </Link>
             </div>
           </div>

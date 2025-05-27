@@ -17,12 +17,15 @@ import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 import PropertySpecificSection from '../components/home/PropertySpecificSection';
 import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import WindowCleaningSimulatorSection from '../components/WindowCleaningSimulatorSection';
+import CTABanner from '../components/home/CTABanner';
 
 const Index = () => {
   const { language, t } = useTranslation();
 
   useEffect(() => {
-    document.body.classList.add('has-video-header');
+    // Remove the has-video-header class to prevent issues with other sections
+    document.body.classList.remove('has-video-header');
 
     const observerOptions = {
       root: null,
@@ -46,7 +49,6 @@ const Index = () => {
     console.log('Translation test:', t("Home"));
 
     return () => {
-      document.body.classList.remove('has-video-header');
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [language, t]);
@@ -85,48 +87,46 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section - Fixed position for slide effect with proper z-index */}
-      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
-        <HeroSection />
-      </div>
+      {/* Hero Section */}
+      <HeroSection />
       
-      {/* Content that slides over the hero - Higher z-index to prevent glitching */}
-      <div className="relative z-40" style={{ marginTop: '100vh' }}>
-        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
-          <ServiceBanner />
-          
-          <div className="bg-white relative z-50">
-            <PremiumSolutionsSection />
-            <FeaturedProjectSection />
-            
-            <PropertySpecificSection />
-            
-            <OwnerOperatedSection />
-            
-            <ScreenCleaningSection />
-            <TrustedCustomersSection />
-            <CompetitorComparisonSection />
-            <TestimonialsSection />
-            
-            <SatisfactionGuaranteeSection />
-            
-            <ServiceAreasSection />
-            
-            <FAQSection 
-              title={t("Frequently Asked Questions")} 
-              subtitle={t("Everything you need to know about our services")}
-              faqs={faqItems}
-              darkMode={true}
-            />
-            
-            <div className="w-full">
-              <img 
-                src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
-                alt="White Rock Marine Drive - Local Business" 
-                className="w-full h-auto object-cover object-center" 
-              />
-            </div>
-          </div>
+      {/* Content that follows the hero */}
+      <div className="bg-white">
+        <ServiceBanner />
+        
+        <PremiumSolutionsSection />
+        <FeaturedProjectSection />
+        
+        <PropertySpecificSection />
+        
+        <OwnerOperatedSection />
+        
+        <ScreenCleaningSection />
+        <TrustedCustomersSection />
+        <CompetitorComparisonSection />
+        <TestimonialsSection />
+        
+        <SatisfactionGuaranteeSection />
+        
+        <ServiceAreasSection />
+        
+        <FAQSection 
+          title={t("Frequently Asked Questions")} 
+          subtitle={t("Everything you need to know about our services")}
+          faqs={faqItems}
+          darkMode={true}
+        />
+        
+        <WindowCleaningSimulatorSection />
+        
+        <CTABanner />
+        
+        <div className="w-full">
+          <img 
+            src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+            alt="White Rock Marine Drive - Local Business" 
+            className="w-full h-auto object-cover object-center" 
+          />
         </div>
       </div>
       

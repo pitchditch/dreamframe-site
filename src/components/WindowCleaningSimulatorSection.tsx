@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
-import SmartWindowCleaningSimulator from './home/SmartWindowCleaningSimulator';
+import WindowCleaningSimulator from './home/WindowCleaningSimulator';
 
 const WindowCleaningSimulatorSection = () => {
   const { t } = useTranslation();
@@ -11,23 +11,23 @@ const WindowCleaningSimulatorSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            {t("Experience Our Professional Window Cleaning")}
+            {t("Try Our Window Cleaning Simulator")}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            {t("Watch our automatic demonstration - see how our professional water-fed pole system transforms dirty windows!")}
+            {t("Experience our interactive window cleaning demonstration - see how our professional techniques transform dirty windows!")}
           </p>
         </div>
 
         <div className="max-w-2xl mx-auto">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
-              {t("Smart Window Cleaning Demo")}
+              {t("Interactive Window Cleaning Demo")}
             </h3>
             <p className="text-gray-600 text-center mb-6 text-sm">
-              {t("Automatic demonstration of our squeegee technique with pure water")}
+              {t("Move your mouse or finger across the dirty window to reveal the clean surface below")}
             </p>
             <div className="flex justify-center mb-6">
-              <SmartWindowCleaningSimulator />
+              <WindowCleaningSimulator />
             </div>
             <div className="space-y-2">
               <h4 className="font-semibold text-gray-800">{t("Professional Features")}</h4>

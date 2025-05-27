@@ -15,7 +15,7 @@ export interface FAQSectionProps {
 
 const FAQSection: React.FC<FAQSectionProps> = ({ title, description, subtitle, faqs, darkMode = false }) => {
   return (
-    <section className={`py-16 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50'}`}>
+    <section data-section="faq" className={`py-16 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{title}</h2>
