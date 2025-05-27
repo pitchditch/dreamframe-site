@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,7 @@ const PropertySpecificSection = () => {
     icon: Home,
     title: t("Residential Homes"),
     subtitle: t("Fast, affordable exterior home cleaning"),
-    shortDescription: isMobile ? t("Complete exterior cleaning for your home with eco-friendly products and flexible scheduling.") : t("Transform your home's appearance with our comprehensive exterior cleaning services. From single-family homes to townhouses, we deliver spotless results that boost curb appeal and property value."),
+    shortDescription: isMobile ? t("Complete exterior cleaning for your home.") : t("Transform your home's appearance with our comprehensive exterior cleaning services."),
     services: [t("House washing (vinyl/siding/brick)"), t("Window & frame cleaning"), t("Driveway & patio power washing"), t("Gutter clearing")],
     benefits: [t("Fully insured & licensed"), t("Soft wash safe on all surfaces"), t("Fast quotes — no hidden fees"), t("Available in Surrey, Langley & More")],
     link: "/services/window-cleaning",
@@ -26,7 +27,7 @@ const PropertySpecificSection = () => {
     icon: Building2,
     title: t("Commercial Buildings"),
     subtitle: t("Impress clients with a spotless exterior"),
-    shortDescription: isMobile ? t("Professional cleaning for offices, retail spaces, and business complexes with flexible scheduling.") : t("Maintain a professional image with our commercial exterior cleaning services. We work with offices, retail spaces, and business complexes to ensure your property makes the right impression."),
+    shortDescription: isMobile ? t("Professional cleaning for offices and retail spaces.") : t("Maintain a professional image with our commercial exterior cleaning services."),
     services: [t("Building facade washing"), t("Storefronts & signage"), t("Concrete paths & walkways"), t("Parking lot cleaning")],
     benefits: [t("Flexible scheduling"), t("After-hours service"), t("Monthly maintenance plans"), t("Fully insured & WCB covered")],
     link: "/services/commercial-window-cleaning",
@@ -38,7 +39,7 @@ const PropertySpecificSection = () => {
     icon: Building,
     title: t("Multi-Story Apartments"),
     subtitle: t("Safe & scalable cleaning for complexes"),
-    shortDescription: isMobile ? t("Expert cleaning for apartment buildings and condos. Work directly with strata councils and property managers.") : t("Expert cleaning services for apartment buildings, condos, and high-rise residential properties. We work directly with strata councils and property managers for hassle-free maintenance."),
+    shortDescription: isMobile ? t("Expert cleaning for apartment buildings and condos.") : t("Expert cleaning services for apartment buildings, condos, and high-rise residential properties."),
     services: [t("Soft wash for siding & balconies"), t("Exterior window cleaning (up to 5 stories)"), t("Common areas & garbage zones"), t("Detailed reporting & before/afters")],
     benefits: [t("Work with strata & property managers"), t("Fast scheduling + strata discounts"), t("Reach heights safely without scaffolding"), t("Volume discounts for multiple units")],
     link: "/services/window-cleaning",
@@ -83,7 +84,7 @@ const PropertySpecificSection = () => {
                     <IconComponent className={`w-12 h-12 ${property.iconColor}`} />
                   </div>
                   <div className="absolute bottom-4 right-4">
-                    <div className="bg-bc-red text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    <div className="bg-white border-2 border-bc-red text-bc-red px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                       {property.pricing}
                     </div>
                   </div>
@@ -94,7 +95,7 @@ const PropertySpecificSection = () => {
                     <h3 className={`${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} font-bold mb-2 text-gray-900`}>{property.title}</h3>
                     <p className={`text-bc-red font-semibold ${isMobile ? 'text-sm' : 'text-sm md:text-base'} mb-3`}>{property.subtitle}</p>
                     <p className={`text-gray-600 ${isMobile ? 'text-sm' : 'text-sm md:text-base'} leading-relaxed`}>
-                      {isMobile ? property.shortDescription : property.shortDescription}
+                      {property.shortDescription}
                     </p>
                   </div>
                   
