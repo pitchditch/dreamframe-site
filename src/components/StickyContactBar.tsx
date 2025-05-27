@@ -18,10 +18,19 @@ const StickyContactBar = () => {
       const footerImage = document.querySelector('.footer-image') as HTMLElement;
       const faqSection = document.querySelector('[data-section="faq"]') as HTMLElement;
       
-      if (premiumSection && footerImage && faqSection) {
+      if (premiumSection) {
         const scrollY = window.scrollY;
-        const startShow = premiumSection.offsetTop;
-        const stopShow = Math.min(footerImage.offsetTop + footerImage.offsetHeight, faqSection.offsetTop + faqSection.offsetHeight);
+        const startShow = premiumSection.offsetTop + premiumSection.offsetHeight;
+        
+        let stopShow = window.innerHeight * 10; // Default large value
+        
+        if (footerImage && faqSection) {
+          stopShow = Math.min(footerImage.offsetTop + footerImage.offsetHeight, faqSection.offsetTop + faqSection.offsetHeight);
+        } else if (footerImage) {
+          stopShow = footerImage.offsetTop + footerImage.offsetHeight;
+        } else if (faqSection) {
+          stopShow = faqSection.offsetTop + faqSection.offsetHeight;
+        }
         
         setShowContactBar(scrollY >= startShow && scrollY <= stopShow);
       }

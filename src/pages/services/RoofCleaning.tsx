@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -7,6 +8,8 @@ import CallToAction from '../../components/CallToAction';
 import { Shield, Droplets, Leaf } from 'lucide-react';
 import RoofCleaningQuoteOverlay from '@/components/forms/RoofCleaningQuoteOverlay';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import RoofCleaningProcessCarousel from '@/components/services/roof-cleaning/RoofCleaningProcessCarousel';
+import RedCarSection from '@/components/home/RedCarSection';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -58,7 +61,7 @@ const RoofCleaning = () => {
       />
       
       {/* Restore Your Roof's Beauty - Full Width */}
-      <section className="w-full py-16 bg-white">
+      <section className="w-full py-16 bg-white" data-section="premium-solutions">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-6 heading-text">Restore Your Roof's Beauty</h2>
@@ -116,7 +119,7 @@ const RoofCleaning = () => {
               </Button>
             </div>
             
-            <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200 max-w-2xl mx-auto">
+            <div className="mt-8 p-6 bg-amber-50 rounded-lg border border-amber-200 max-w-2xl mx-auto">
               <h3 className="text-xl font-bold mb-2 text-amber-800">Roof Cleaning Warning!</h3>
               <p className="text-amber-700">
                 Ignoring moss and algae growth can lead to significant roof damage and costly repairs. Protect your investment with regular, professional cleaning.
@@ -132,114 +135,9 @@ const RoofCleaning = () => {
         </div>
       </section>
       
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">Our Roof Cleaning Process</h2>
-            
-            <div className="space-y-8">
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-2/5">
-                  <img alt="Roof Assessment" className="rounded-lg shadow-md w-full" src="/lovable-uploads/5f628a3f-670b-4ac2-b2b8-f6e15c408c3f.jpg" />
-                </div>
-                <div className="md:w-3/5">
-                  <h3 className="text-xl font-bold mb-2">1. Roof Assessment</h3>
-                  <p className="text-gray-700">
-                    We start with a thorough inspection of your roof to identify the type of growth, assess the condition of your roofing materials, and determine the best cleaning approach.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-3/5 md:order-1 order-2">
-                  <h3 className="text-xl font-bold mb-2">2. Preparation and Protection</h3>
-                  <p className="text-gray-700">
-                    We protect your landscaping, plants, and surrounding areas by covering them with tarps and taking precautions to prevent any damage during the cleaning process.
-                  </p>
-                </div>
-                <div className="md:w-2/5 md:order-2 order-1">
-                  <img src="/lovable-uploads/11de9343-a9b0-48b8-b747-d18318f16d86.png" alt="Area Protection" className="rounded-lg shadow-md w-full" />
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-2/5">
-                  <img alt="Soft Washing Application" className="rounded-lg shadow-md w-full" src="/lovable-uploads/06bbf1e1-0ee0-4176-9417-4af9bf7a4460.jpg" />
-                </div>
-                <div className="md:w-3/5">
-                  <h3 className="text-xl font-bold mb-2">3. Soft Washing Application</h3>
-                  <p className="text-gray-700">
-                    We apply our eco-friendly cleaning solution using a low-pressure soft washing system. This ensures the solution gently penetrates and kills the moss, algae, and lichen without damaging your roofing materials.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="md:w-3/5 md:order-1 order-2">
-                  <h3 className="text-xl font-bold mb-2">4. Rinsing and Cleanup</h3>
-                  <p className="text-gray-700">
-                    After allowing the cleaning solution to dwell for the appropriate time, we gently rinse your roof to remove the dead moss and algae. We then clean up any remaining debris, leaving your property clean and tidy.
-                  </p>
-                </div>
-                <div className="md:w-2/5 md:order-2 order-1">
-                  <img alt="Rinsing and Cleanup" className="rounded-lg shadow-md w-full" src="/lovable-uploads/781082de-7949-4655-bc96-5ef110675262.jpg" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <RoofCleaningProcessCarousel />
       
-      {/* Section about what we remove from roofs */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-10 heading-text">What We Remove From Your Roof</h2>
-            
-            <div className="grid md:grid-cols-2 gap-10">
-              <div className="bg-white p-7 rounded-lg shadow-md">
-                <div className="mb-5 h-72 overflow-hidden rounded-md">
-                  <img 
-                    src="/lovable-uploads/915344bc-d3d8-4352-8b18-c51057dbdd10.png" 
-                    alt="Moss on roof" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Moss Removal</h3>
-                <p className="text-gray-700 text-lg leading-relaxed mb-4">
-                  Moss can be particularly damaging to your roof as it retains moisture against roofing materials. This constant moisture can deteriorate shingles, create openings for leaks, and even lift shingles causing exposure. Our specialized treatment effectively kills and removes moss, preventing regrowth and extending the life of your roof.
-                </p>
-                <div className="mt-4 text-base text-bc-red font-medium p-3 bg-red-50 rounded-md">
-                  * Moss can reduce your roof's lifespan by up to 10 years if left untreated
-                </div>
-              </div>
-              
-              <div className="bg-white p-7 rounded-lg shadow-md">
-                <div className="mb-5 h-72 overflow-hidden rounded-md">
-                  <img 
-                    src="/lovable-uploads/bc8662ae-2020-4268-ada3-deb86d5804df.png" 
-                    alt="Roof stain removal" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Black Streak & Stain Removal</h3>
-                <p className="text-gray-700 text-lg leading-relaxed mb-4">
-                  Those black streaks on your roof aren't just cosmetic issues—they're actually colonies of algae (Gloeocapsa magnifera) that feed on the limestone filler in asphalt shingles. Beyond being unsightly, these organisms gradually break down your roofing materials. Our cleaning solution thoroughly eliminates these stains without damaging your roof's surface.
-                </p>
-                <div className="mt-4 text-base text-bc-red font-medium p-3 bg-red-50 rounded-md">
-                  * Black streaks can reduce your home's value by up to 5% according to real estate professionals
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-12 text-center">
-              <Button className="bg-bc-red hover:bg-red-700 text-white px-8 py-6" size="lg" asChild>
-                <Link to="/calculator">Schedule Your Roof Cleaning</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <RedCarSection />
       
       <TestimonialsSection />
       
