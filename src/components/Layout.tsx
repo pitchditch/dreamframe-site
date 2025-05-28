@@ -3,6 +3,8 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ReferralButton from './ReferralButton';
+import StickyContactBar from './StickyContactBar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,7 +25,7 @@ const Layout = ({
   const fullCanonicalUrl = canonicalUrl ? `${baseUrl}${canonicalUrl}` : baseUrl;
   
   return (
-    <>
+    <div className="flex flex-col min-h-screen w-full">
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -51,14 +53,14 @@ const Layout = ({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
-      </div>
-    </>
+      
+      <Navbar />
+      <main className="flex-grow w-full pb-20">
+        {children}
+      </main>
+      <Footer />
+      <StickyContactBar />
+    </div>
   );
 };
 
