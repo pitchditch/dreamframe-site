@@ -64,7 +64,7 @@ const CommercialWindowCleaning = () => {
       {/* Services Description */}
       <section className="py-16 container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Professional Commercial Window Cleaning</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Expert Commercial Window Cleaning Services</h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
             We provide expert window cleaning services for all types of commercial properties, from small storefronts to multi-story office buildings. 
             Our skilled technicians use professional equipment and techniques to ensure crystal clear, streak-free windows every time.
