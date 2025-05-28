@@ -16,10 +16,9 @@ const HeroSection: React.FC = () => {
         description="We specialize in removing paint, plaster, tape, and dust—leaving your windows spotless and streak-free in Surrey, White Rock & Metro Vancouver." 
         imagePath="/lovable-uploads/1eaed8db-5d8f-4291-b8a6-cf155569badc.png" 
         darkOverlay={false} // Remove dark overlay
-        showButton={false} // Hide the button from ServiceHeader
       />
       
-      <div className="container mx-auto px-4 py-8 -mt-32 md:-mt-40 relative z-10">
+      <div className="container mx-auto px-4 py-8 -mt-24 md:-mt-32 relative z-10">
         <div className="flex flex-col md:flex-row gap-8 items-center justify-between max-w-5xl mx-auto bg-white rounded-lg shadow-xl p-6">
           <div className="md:w-2/3">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Expert Post-Construction Window Cleaning</h2>
