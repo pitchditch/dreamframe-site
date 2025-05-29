@@ -43,19 +43,10 @@ const ServiceHeader = ({
     }
   }, [videoUrl, youtubeId, youtubeDesktopId, isHomePage]);
 
-  // Check if this is the post-construction page or commercial window cleaning page
-  const isPostConstructionPage = location.pathname.includes('post-construction');
-  const isCommercialPage = location.pathname.includes('commercial-window-cleaning');
-
-  // Center content for specific pages
-  const contentCenterClasses = (isPostConstructionPage || isCommercialPage) 
-    ? 'flex items-center justify-center min-h-screen' 
-    : 'flex items-center justify-center h-full';
-
-  // Adjust title text size and positioning based on mobile view and page type
+  // Adjust title text size based on mobile view
   const titleClasses = isMobile
-    ? `text-3xl md:text-5xl font-bold mb-4 text-white text-shadow-lg`
-    : `text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg`;
+    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-16 text-shadow-lg" // Reduced padding top for mobile
+    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg"; // Enhanced text shadow for better readability
 
   // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
@@ -104,7 +95,7 @@ const ServiceHeader = ({
             ></iframe>
             <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Increased opacity for better text contrast */}
           </div>
-          <div className={`absolute inset-0 ${contentCenterClasses}`}>
+          <div className="absolute inset-0 flex items-center justify-center pt-16">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
@@ -136,7 +127,7 @@ const ServiceHeader = ({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className={`absolute inset-0 bg-black bg-opacity-60 ${contentCenterClasses}`}>
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
@@ -170,7 +161,7 @@ const ServiceHeader = ({
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
           )}
           
-          <div className={`relative w-full ${contentCenterClasses} z-10`}>
+          <div className="relative h-full w-full flex items-center justify-center flex-col pb-20 z-10">
             <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}

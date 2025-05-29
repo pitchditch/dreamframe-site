@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import ServiceHeader from '@/components/ServiceHeader';
 import { Button } from '@/components/ui/button';
@@ -8,58 +9,90 @@ import FAQSection from '@/components/FAQSection';
 import MoreServicesSection from '@/components/MoreServicesSection';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
+
 const CommercialWindowCleaning = () => {
-  const benefits = [{
-    title: "Enhance Curb Appeal",
-    description: "Clean windows create a positive first impression for customers, clients, and tenants, enhancing your property's professional appearance."
-  }, {
-    title: "Extend Window Lifespan",
-    description: "Regular cleaning prevents dirt, hard water, and contaminants from etching and damaging glass and frames over time."
-  }, {
-    title: "Improve Natural Lighting",
-    description: "Clean windows allow maximum natural light to enter your building, creating a brighter, more inviting atmosphere and reducing energy costs."
-  }, {
-    title: "Maintain Property Value",
-    description: "Regular window maintenance protects your investment and contributes to the overall upkeep of your commercial property."
-  }, {
-    title: "Specialized Equipment Access",
-    description: "Our professional team has the specialized equipment needed to safely clean windows at any height, from ground level to high-rise."
-  }, {
-    title: "Safety & Liability Protection",
-    description: "Avoid the risks and liability concerns associated with employees or untrained staff attempting to clean high windows."
-  }];
-  const processes = [{
-    title: "Property Assessment",
-    description: "We conduct a thorough evaluation of your property's windows to determine the best cleaning approach and equipment needed.",
-    icon: <CheckCircle size={32} className="text-bc-red" />
-  }, {
-    title: "Pure Water Cleaning",
-    description: "Using our advanced pure water technology, we clean windows without chemicals, leaving a streak-free, crystal clear finish.",
-    icon: <Droplets size={32} className="text-bc-red" />
-  }, {
-    title: "Final Inspection",
-    description: "We conduct a detailed quality check, ensuring every window meets our high standards before considering the job complete.",
-    icon: <SparkleIcon size={32} className="text-bc-red" />
-  }];
-  const commercialFaqs = [{
-    question: "How often should commercial windows be cleaned?",
-    answer: "For most commercial buildings, we recommend professional window cleaning 2-4 times per year. However, this can vary based on your building's location, surrounding environment, and the image you want to maintain. Retail stores, restaurants, and other customer-facing businesses often benefit from more frequent cleaning."
-  }, {
-    question: "Can you clean high-rise building windows?",
-    answer: "Yes, we are equipped to clean windows on buildings of all heights. Our team uses professional water-fed pole systems for buildings up to six stories and can arrange specialized equipment for taller structures. We follow all safety protocols and have the proper insurance for high-rise window cleaning."
-  }, {
-    question: "Do you offer service contracts for regular window cleaning?",
-    answer: "Yes, we provide service contracts with scheduled cleanings at intervals that work for your business. Our contract clients receive priority scheduling, consistent pricing, and the convenience of not having to remember when it's time for their next cleaning."
-  }, {
-    question: "What if it rains soon after the windows are cleaned?",
-    answer: "Our pure water cleaning system leaves no soap residue, so rain that follows a cleaning typically won't leave spots or streaks. If you're concerned about the results after rainfall, contact us and we'll come take a look."
-  }, {
-    question: "Can you clean windows during business hours?",
-    answer: "Yes, our team is trained to work efficiently with minimal disruption to your business operations. However, we also offer after-hours and weekend appointments if you prefer the cleaning to be done when your business is closed."
-  }];
-  return <Layout title="Commercial Window Cleaning Services | BC Pressure Washing" description="Professional window cleaning services for commercial properties in Surrey, White Rock & Metro Vancouver. Keep your business looking its best.">
+  const benefits = [
+    {
+      title: "Enhance Curb Appeal",
+      description: "Clean windows create a positive first impression for customers, clients, and tenants, enhancing your property's professional appearance."
+    }, 
+    {
+      title: "Extend Window Lifespan",
+      description: "Regular cleaning prevents dirt, hard water, and contaminants from etching and damaging glass and frames over time."
+    }, 
+    {
+      title: "Improve Natural Lighting",
+      description: "Clean windows allow maximum natural light to enter your building, creating a brighter, more inviting atmosphere and reducing energy costs."
+    }, 
+    {
+      title: "Maintain Property Value",
+      description: "Regular window maintenance protects your investment and contributes to the overall upkeep of your commercial property."
+    }, 
+    {
+      title: "Specialized Equipment Access",
+      description: "Our professional team has the specialized equipment needed to safely clean windows at any height, from ground level to high-rise."
+    }, 
+    {
+      title: "Safety & Liability Protection",
+      description: "Avoid the risks and liability concerns associated with employees or untrained staff attempting to clean high windows."
+    }
+  ];
+  
+  const processes = [
+    {
+      title: "Property Assessment",
+      description: "We conduct a thorough evaluation of your property's windows to determine the best cleaning approach and equipment needed.",
+      icon: <CheckCircle size={32} className="text-bc-red" />
+    }, 
+    {
+      title: "Pure Water Cleaning",
+      description: "Using our advanced pure water technology, we clean windows without chemicals, leaving a streak-free, crystal clear finish.",
+      icon: <Droplets size={32} className="text-bc-red" />
+    }, 
+    {
+      title: "Final Inspection",
+      description: "We conduct a detailed quality check, ensuring every window meets our high standards before considering the job complete.",
+      icon: <SparkleIcon size={32} className="text-bc-red" />
+    }
+  ];
+  
+  const commercialFaqs = [
+    {
+      question: "How often should commercial windows be cleaned?",
+      answer: "For most commercial buildings, we recommend professional window cleaning 2-4 times per year. However, this can vary based on your building's location, surrounding environment, and the image you want to maintain. Retail stores, restaurants, and other customer-facing businesses often benefit from more frequent cleaning."
+    }, 
+    {
+      question: "Can you clean high-rise building windows?",
+      answer: "Yes, we are equipped to clean windows on buildings of all heights. Our team uses professional water-fed pole systems for buildings up to six stories and can arrange specialized equipment for taller structures. We follow all safety protocols and have the proper insurance for high-rise window cleaning."
+    }, 
+    {
+      question: "Do you offer service contracts for regular window cleaning?",
+      answer: "Yes, we provide service contracts with scheduled cleanings at intervals that work for your business. Our contract clients receive priority scheduling, consistent pricing, and the convenience of not having to remember when it's time for their next cleaning."
+    }, 
+    {
+      question: "What if it rains soon after the windows are cleaned?",
+      answer: "Our pure water cleaning system leaves no soap residue, so rain that follows a cleaning typically won't leave spots or streaks. If you're concerned about the results after rainfall, contact us and we'll come take a look."
+    }, 
+    {
+      question: "Can you clean windows during business hours?",
+      answer: "Yes, our team is trained to work efficiently with minimal disruption to your business operations. However, we also offer after-hours and weekend appointments if you prefer the cleaning to be done when your business is closed."
+    }
+  ];
+
+  return (
+    <Layout 
+      title="Commercial Window Cleaning Services | BC Pressure Washing" 
+      description="Professional window cleaning services for commercial properties in Surrey, White Rock & Metro Vancouver. Keep your business looking its best."
+    >
       {/* Hero Section using ServiceHeader */}
-      <ServiceHeader title="Professional Commercial Window Cleaning" description="Keep your business looking its best with our expert window cleaning services. Serving businesses in Surrey, White Rock & Metro Vancouver." imagePath="/lovable-uploads/598eb62a-290d-41ec-8c69-abae60a5a757.png" icon={<Building size={36} />} showButton={true} darkOverlay={true} />
+      <ServiceHeader 
+        title="Professional Commercial Window Cleaning" 
+        description="Keep your business looking its best with our expert window cleaning services. Serving businesses in Surrey, White Rock & Metro Vancouver." 
+        imagePath="/lovable-uploads/598eb62a-290d-41ec-8c69-abae60a5a757.png" 
+        icon={<Building size={36} />} 
+        showButton={true}
+        darkOverlay={true}
+      />
 
       {/* Services Description */}
       <section className="py-16 container mx-auto px-4">
@@ -185,7 +218,7 @@ const CommercialWindowCleaning = () => {
               </div>
             </div>
             <div className="md:w-1/2">
-              <img alt="Window cleaning maintenance" className="rounded-lg shadow-lg w-full h-auto object-cover" src="/lovable-uploads/93785bff-1b48-46b8-9c66-38f361874300.png" />
+              <img alt="Window cleaning maintenance" className="rounded-lg shadow-lg w-full h-auto object-cover" src="/lovable-uploads/3794e9ea-1675-4129-baec-0aa974323e86.png" />
             </div>
           </div>
         </div>
@@ -200,14 +233,14 @@ const CommercialWindowCleaning = () => {
       {/* More Services Section with larger images */}
       <MoreServicesSection />
       
-      {/* Service Areas Map and Carousel - Full Width */}
+      {/* Service Areas Map and Carousel */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 mb-8">
+        <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
           <ServiceAreaMap />
-        </div>
-        <div className="w-full">
-          <ServiceAreasCarousel />
+          <div className="mt-8">
+            <ServiceAreasCarousel />
+          </div>
         </div>
       </section>
 
@@ -228,6 +261,8 @@ const CommercialWindowCleaning = () => {
           </div>
         </div>
       </section>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default CommercialWindowCleaning;

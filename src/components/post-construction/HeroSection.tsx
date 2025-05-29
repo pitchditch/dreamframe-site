@@ -4,7 +4,7 @@ import ServiceHeader from '../ServiceHeader';
 import { Button } from '../ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Link } from 'react-router-dom';
+import CallToAction from '../CallToAction';
 
 const HeroSection: React.FC = () => {
   const isMobile = useIsMobile();
@@ -15,11 +15,10 @@ const HeroSection: React.FC = () => {
         title="Post-Construction Window Cleaning" 
         description="We specialize in removing paint, plaster, tape, and dust—leaving your windows spotless and streak-free in Surrey, White Rock & Metro Vancouver." 
         imagePath="/lovable-uploads/1eaed8db-5d8f-4291-b8a6-cf155569badc.png" 
-        darkOverlay={true}
-        showButton={false}
+        darkOverlay={false} // Remove dark overlay
       />
       
-      <div className="container mx-auto px-4 py-8 -mt-32 md:-mt-40 relative z-10">
+      <div className="container mx-auto px-4 py-8 -mt-24 md:-mt-32 relative z-10">
         <div className="flex flex-col md:flex-row gap-8 items-center justify-between max-w-5xl mx-auto bg-white rounded-lg shadow-xl p-6">
           <div className="md:w-2/3">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Expert Post-Construction Window Cleaning</h2>
@@ -35,8 +34,8 @@ const HeroSection: React.FC = () => {
               <li>Adhesive from protective films</li>
             </ul>
             
-            <Button asChild className="bg-bc-red hover:bg-red-700 text-white transition-all hover:scale-105" size="lg">
-              <Link to="/calculator">Get Started <ArrowRight className="ml-2" size={20} /></Link>
+            <Button className="bg-bc-red hover:bg-red-700 text-white transition-all hover:scale-105" size="lg">
+              Get Started <ArrowRight className="ml-2" size={20} />
             </Button>
             
             <div className="mt-4 text-gray-700 font-medium block md:hidden">

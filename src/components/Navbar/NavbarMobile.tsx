@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale } from 'lucide-react';
+import { ChevronDown, ChevronUp, Home, Box, Star, Wrench } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -107,9 +107,9 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                     <span>{t('See All Services')}</span>
                   </Link>
                   
-                  <Link to="/compare-services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md font-medium">
-                    <Scale size={20} />
-                    <span>{t('Compare Services')}</span>
+                  <Link to="/compare-prices" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md font-medium">
+                    <Box size={20} />
+                    <span>{t('Compare Prices & Packages')}</span>
                   </Link>
                 </div>
               </div>

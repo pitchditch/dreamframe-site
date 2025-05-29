@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, Droplets, Home, Building, Sparkles, Zap, Wrench 
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Link } from 'react-router-dom';
 
 interface Service {
   id: number;
@@ -22,25 +21,6 @@ const HowWeCompleteJobsSection = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [satisfactionRate, setSatisfactionRate] = useState(0);
-  
-  // Animation for satisfaction rate
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const interval = setInterval(() => {
-        setSatisfactionRate(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 2;
-        });
-      }, 30);
-      return () => clearInterval(interval);
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, []);
   
   const services: Service[] = [
     {
@@ -167,7 +147,7 @@ const HowWeCompleteJobsSection = () => {
             <Sparkles className="w-5 h-5 text-bc-red" />
           </div>
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl lg:text-5xl'} font-bold mb-4 md:mb-6 text-gray-900`}>
-            {t("How We Complete Our Jobs")}
+            {t("Professional Cleaning Services")}
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} text-gray-600 max-w-4xl mx-auto leading-relaxed`}>
             {isMobile 
@@ -274,7 +254,7 @@ const HowWeCompleteJobsSection = () => {
         </Button>
       </div>
 
-      {/* Bottom section with dots, stats, and CTA */}
+      {/* Bottom section with dots and stats */}
       <div className="container mx-auto px-4">
         {/* Dots navigation */}
         <div className="flex justify-center mt-6 gap-2">
@@ -301,32 +281,16 @@ const HowWeCompleteJobsSection = () => {
           </div>
           <div className="flex flex-col items-center">
             <Home className="w-8 h-8 text-bc-red mb-2" />
-            <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-gray-900 mb-1`}>5+</div>
-            <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-600`}>{t("Years Experience")}</p>
+            <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-gray-900 mb-1`}>1000+</div>
+            <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-600`}>{t("Properties Serviced")}</p>
           </div>
           {!isMobile && (
             <div className="flex flex-col items-center">
               <Building className="w-8 h-8 text-bc-red mb-2" />
-              <div className="text-3xl font-bold text-gray-900 mb-1">{satisfactionRate}%</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">100%</div>
               <p className="text-base text-gray-600">{t("Satisfaction Rate")}</p>
             </div>
           )}
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-bc-red to-red-700 text-white p-8 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-bold mb-4">{t("Ready to Transform Your Property?")}</h3>
-            <p className="text-lg mb-6">{t("Get professional exterior cleaning services that deliver exceptional results.")}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="secondary" size="lg">
-                <Link to="/calculator">{t("Get Free Quote")}</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-bc-red">
-                <a href="tel:778-808-7620">{t("Call Now: (778) 808-7620")}</a>
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </section>
