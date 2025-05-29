@@ -43,10 +43,13 @@ const ServiceHeader = ({
     }
   }, [videoUrl, youtubeId, youtubeDesktopId, isHomePage]);
 
-  // Adjust title text size based on mobile view
+  // Check if this is the post-construction page
+  const isPostConstructionPage = location.pathname.includes('post-construction');
+
+  // Adjust title text size and positioning based on mobile view and page type
   const titleClasses = isMobile
-    ? "text-3xl md:text-5xl font-bold mb-4 text-white pt-16 text-shadow-lg" // Reduced padding top for mobile
-    : "text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg"; // Enhanced text shadow for better readability
+    ? `text-3xl md:text-5xl font-bold mb-4 text-white ${isPostConstructionPage ? 'pt-32' : 'pt-24'} text-shadow-lg`
+    : `text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg ${isPostConstructionPage ? 'pt-32' : 'pt-20'}`;
 
   // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
@@ -95,7 +98,7 @@ const ServiceHeader = ({
             ></iframe>
             <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Increased opacity for better text contrast */}
           </div>
-          <div className="absolute inset-0 flex items-center justify-center pt-16">
+          <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { Shield, Star, Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const BookingSection: React.FC = () => {
   return (
@@ -29,13 +30,8 @@ const BookingSection: React.FC = () => {
           </div>
           
           <div className="text-center">
-            <Button 
-              variant="bc-red" 
-              size="lg" 
-              onClick={() => window.location.href = '/contact'}
-              className="text-lg px-8 py-6"
-            >
-              Get Your Free Estimate
+            <Button asChild variant="bc-red" size="lg" className="text-lg px-8 py-6">
+              <Link to="/contact">Get Your Free Estimate</Link>
             </Button>
             <p className="mt-4 text-sm text-gray-500">
               We'll respond within 24 hours to schedule your service.
