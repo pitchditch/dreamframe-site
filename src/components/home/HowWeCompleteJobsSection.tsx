@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Droplets, Home, Building, Sparkles, Zap, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -304,23 +303,27 @@ const HowWeCompleteJobsSection = () => {
           </div>
         </div>
         
-        {/* Navigation arrows */}
+        {/* Navigation arrows - Improved mobile positioning */}
         <Button 
           variant="outline" 
           size="icon" 
-          className="absolute top-1/2 left-4 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg" 
+          className={`absolute top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg ${
+            isMobile ? 'left-2 w-8 h-8' : 'left-4 w-10 h-10'
+          }`} 
           onClick={prevSlide}
         >
-          <ArrowLeft className="h-5 w-5" />
+          <ArrowLeft className={isMobile ? "h-4 w-4" : "h-5 w-5"} />
         </Button>
         
         <Button 
           variant="outline" 
           size="icon" 
-          className="absolute top-1/2 right-4 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg" 
+          className={`absolute top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border-0 shadow-lg ${
+            isMobile ? 'right-2 w-8 h-8' : 'right-4 w-10 h-10'
+          }`} 
           onClick={nextSlide}
         >
-          <ArrowRight className="h-5 w-5" />
+          <ArrowRight className={isMobile ? "h-4 w-4" : "h-5 w-5"} />
         </Button>
       </div>
 
@@ -361,22 +364,6 @@ const HowWeCompleteJobsSection = () => {
               <p className="text-base text-gray-600">{t("Satisfaction Rate")}</p>
             </div>
           )}
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-bc-red to-red-700 text-white p-8 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-bold mb-4">{t("Ready to Transform Your Property?")}</h3>
-            <p className="text-lg mb-6">{t("Get professional exterior cleaning services that deliver exceptional results.")}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="secondary" size="lg">
-                <Link to="/calculator">{t("Get Free Quote")}</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-bc-red">
-                <a href="tel:778-808-7620">{t("Call Now: (778) 808-7620")}</a>
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </section>

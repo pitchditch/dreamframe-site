@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -159,10 +158,12 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Enhanced scroll indicator with animation and label */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-white text-sm mb-1 bg-black/30 px-3 py-1 rounded-full">{t("Scroll Up")}</span>
-        <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center">
+      {/* Enhanced scroll indicator with animation and label - Improved visibility */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-20">
+        <span className="text-white text-sm mb-2 bg-black/50 px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm border border-white/20">
+          {t("Scroll Up")}
+        </span>
+        <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center bg-black/30 backdrop-blur-sm shadow-lg">
           <div className="h-2 w-1 bg-white rounded-full animate-pulse"></div>
         </div>
       </div>
