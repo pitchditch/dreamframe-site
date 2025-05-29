@@ -1,7 +1,6 @@
-
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Navbar from './Navbar';
+import Navbar from './Navbar/index';
 import Footer from './Footer';
 import ReferralButton from './ReferralButton';
 import StickyContactBar from './StickyContactBar';
