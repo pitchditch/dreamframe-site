@@ -79,7 +79,7 @@ const Navbar = () => {
                 More <ChevronDown className="ml-1 h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="bg-white border border-gray-200 shadow-lg rounded-md"
+                className="bg-white border border-gray-200 shadow-lg rounded-md w-56"
                 align="center"
                 sideOffset={0}
               >
@@ -87,7 +87,7 @@ const Navbar = () => {
                   <DropdownMenuItem key={item.name} asChild>
                     <Link
                       to={item.href}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors"
+                      className="block px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full"
                     >
                       {item.name}
                     </Link>

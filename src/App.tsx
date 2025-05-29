@@ -18,6 +18,7 @@ import WindowCleaning from "./pages/services/WindowCleaning";
 import PressureWashing from "./pages/services/PressureWashing";
 import GutterCleaning from "./pages/services/GutterCleaning";
 import RoofCleaning from "./pages/services/RoofCleaning";
+import HouseWashing from "./pages/services/HouseWashing";
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
             <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
             <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+            <Route path="/services/house-washing" element={<HouseWashing />} />
             <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />

@@ -16,6 +16,11 @@ interface Service {
   overlayImage?: string;
   overlayTitle?: string;
   overlayDescription?: string;
+  pricing?: {
+    small: string;
+    medium: string;
+    large: string;
+  };
 }
 
 const HowWeCompleteJobsSection = () => {
@@ -23,24 +28,39 @@ const HowWeCompleteJobsSection = () => {
   const isMobile = useIsMobile();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [satisfactionRate, setSatisfactionRate] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   
-  // Animation for satisfaction rate
+  // Intersection Observer for satisfaction rate animation
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const interval = setInterval(() => {
-        setSatisfactionRate(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 2;
-        });
-      }, 30);
-      return () => clearInterval(interval);
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, []);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+          const timer = setTimeout(() => {
+            const interval = setInterval(() => {
+              setSatisfactionRate(prev => {
+                if (prev >= 100) {
+                  clearInterval(interval);
+                  return 100;
+                }
+                return prev + 2;
+              });
+            }, 30);
+            return () => clearInterval(interval);
+          }, 500);
+          return () => clearTimeout(timer);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const statsElement = document.querySelector('[data-stats-section]');
+    if (statsElement) {
+      observer.observe(statsElement);
+    }
+
+    return () => observer.disconnect();
+  }, [isVisible]);
   
   const services: Service[] = [
     {
@@ -57,7 +77,12 @@ const HowWeCompleteJobsSection = () => {
       icon: Home,
       overlayImage: "/lovable-uploads/99b31681-3d1a-4e50-bd80-48d57fa01dcb.png",
       overlayTitle: "Water-Fed Pole System",
-      overlayDescription: "Professional telescopic pole system for reaching high windows safely from ground level"
+      overlayDescription: "Professional telescopic pole system for reaching high windows safely from ground level",
+      pricing: {
+        small: "$150-250",
+        medium: "$250-400", 
+        large: "$400-650"
+      }
     },
     {
       id: 2,
@@ -70,7 +95,12 @@ const HowWeCompleteJobsSection = () => {
         t("Gutter face exterior cleaning"),
         t("Before and after documentation")
       ],
-      icon: Droplets
+      icon: Droplets,
+      pricing: {
+        small: "$200-300",
+        medium: "$300-500",
+        large: "$500-800"
+      }
     },
     {
       id: 3,
@@ -86,7 +116,12 @@ const HowWeCompleteJobsSection = () => {
       icon: Building,
       overlayImage: "/lovable-uploads/73365ffd-fbd1-45ab-beac-f6a2f696291a.png",
       overlayTitle: "Sodium Hypochlorite",
-      overlayDescription: "Primary product used in roof cleaning to kill moss and algae growth, preventing regrowth for up to 2 years"
+      overlayDescription: "Primary product used in roof cleaning to kill moss and algae growth, preventing regrowth for up to 2 years",
+      pricing: {
+        small: "$400-600",
+        medium: "$600-1000",
+        large: "$1000-1800"
+      }
     },
     {
       id: 4,
@@ -102,7 +137,12 @@ const HowWeCompleteJobsSection = () => {
       icon: Sparkles,
       overlayImage: "/lovable-uploads/4af8c28d-371b-4fca-a70e-90e7563198c4.png",
       overlayTitle: "Surface Cleaner",
-      overlayDescription: "Rotating surface cleaner attachment that provides even pressure distribution for streak-free cleaning of large flat surfaces"
+      overlayDescription: "Rotating surface cleaner attachment that provides even pressure distribution for streak-free cleaning of large flat surfaces",
+      pricing: {
+        small: "$300-500",
+        medium: "$500-800",
+        large: "$800-1500"
+      }
     },
     {
       id: 5,
@@ -118,7 +158,12 @@ const HowWeCompleteJobsSection = () => {
       icon: Zap,
       overlayImage: "/lovable-uploads/a3f73a45-5f25-4203-bf0b-27417e2ecc35.png",
       overlayTitle: "Professional Pressure Washer",
-      overlayDescription: "Industrial-grade pressure washing equipment for powerful and efficient cleaning"
+      overlayDescription: "Industrial-grade pressure washing equipment for powerful and efficient cleaning",
+      pricing: {
+        small: "$250-400",
+        medium: "$400-700",
+        large: "$700-1200"
+      }
     },
     {
       id: 6,
@@ -131,7 +176,12 @@ const HowWeCompleteJobsSection = () => {
         t("Spot-free drying"),
         t("Reaches extreme heights safely")
       ],
-      icon: Wrench
+      icon: Wrench,
+      pricing: {
+        small: "$200-350",
+        medium: "$350-600",
+        large: "$600-1000"
+      }
     }
   ];
   
@@ -196,6 +246,30 @@ const HowWeCompleteJobsSection = () => {
                     alt={service.title}
                     className="w-full h-full object-cover" 
                   />
+                  
+                  {/* Pricing Overlay */}
+                  {service.pricing && (
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+                      <h4 className="font-bold text-sm text-gray-900 mb-2">House Size Pricing</h4>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Small:</span>
+                          <span className="font-semibold text-bc-red">{service.pricing.small}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Medium:</span>
+                          <span className="font-semibold text-bc-red">{service.pricing.medium}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Large:</span>
+                          <span className="font-semibold text-bc-red">{service.pricing.large}</span>
+                        </div>
+                      </div>
+                      <Button asChild size="sm" className="w-full mt-2 bg-bc-red hover:bg-red-700 text-xs">
+                        <Link to="/compare-services">Compare All Services</Link>
+                      </Button>
+                    </div>
+                  )}
                   
                   {/* Overlay Image in Corner */}
                   {service.overlayImage && (
@@ -293,7 +367,7 @@ const HowWeCompleteJobsSection = () => {
         </div>
 
         {/* Bottom stats */}
-        <div className={`${isMobile ? 'mt-8' : 'mt-12'} grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-3 gap-8'} text-center`}>
+        <div className={`${isMobile ? 'mt-8' : 'mt-12'} grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-3 gap-8'} text-center`} data-stats-section>
           <div className="flex flex-col items-center">
             <Sparkles className="w-8 h-8 text-bc-red mb-2" />
             <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-gray-900 mb-1`}>6</div>
