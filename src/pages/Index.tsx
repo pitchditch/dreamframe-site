@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -18,7 +17,6 @@ import ServiceBanner from '../components/ServiceBanner';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
 import HowWeCompleteJobsSection from '../components/home/HowWeCompleteJobsSection';
 import DoorToDoorSection from '../components/home/DoorToDoorSection';
-import CTABanner from '../components/home/CTABanner';
 import QuickContactForm from '../components/home/QuickContactForm';
 
 const Index = () => {
@@ -118,8 +116,6 @@ const Index = () => {
             <TestimonialsSection />
             
             <SatisfactionGuaranteeSection />
-            
-            <CTABanner />
             
             <QuickContactForm />
             
