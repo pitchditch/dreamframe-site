@@ -6,6 +6,7 @@ interface QuadrantDetail {
   title: string;
   description: string;
   features: string[];
+  image: string;
 }
 
 const GutterQuadrantSection = () => {
@@ -21,7 +22,8 @@ const GutterQuadrantSection = () => {
         t("Ladder safety protocols"),
         t("Equipment positioning"),
         t("Weather condition assessment")
-      ]
+      ],
+      image: "/lovable-uploads/572f285b-b3cc-4a5c-93e3-637ee1015659.jpg"
     },
     {
       title: t("Debris Removal Process"),
@@ -31,7 +33,8 @@ const GutterQuadrantSection = () => {
         t("Specialized gutter tools"),
         t("Complete debris bagging"),
         t("Downspout inspection")
-      ]
+      ],
+      image: "/lovable-uploads/3f5a834d-b684-4522-a2a6-e877e036ccd8.png"
     },
     {
       title: t("Water Flow Testing"),
@@ -41,7 +44,8 @@ const GutterQuadrantSection = () => {
         t("Blockage identification"),
         t("Drainage assessment"),
         t("System functionality check")
-      ]
+      ],
+      image: "/lovable-uploads/17615bf7-9c4b-4eea-84a3-791bd34ef4a3.png"
     },
     {
       title: t("Final Cleaning & Inspection"),
@@ -51,7 +55,8 @@ const GutterQuadrantSection = () => {
         t("Streak removal"),
         t("Final quality check"),
         t("Customer walkthrough")
-      ]
+      ],
+      image: "/lovable-uploads/063bab0f-d6c4-4c42-9610-0aa6307eae88.jpg"
     }
   ];
 
@@ -68,36 +73,45 @@ const GutterQuadrantSection = () => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">{t("Our Detailed Gutter Cleaning Process")}</h2>
+          <h2 className="text-3xl font-bold mb-4">{t("Our Recent Gutter Cleaning Project")}</h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
-            {t("Every aspect of our gutter cleaning service is methodical and thorough. Click on any section to learn more about our process.")}
+            {t("Every aspect of our gutter cleaning service is methodical and thorough. Click on any section to see detailed photos from our recent work.")}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Image with quadrant overlay */}
+          {/* Main project image with interactive quadrants */}
           <div className="relative">
             <div className="relative rounded-lg overflow-hidden shadow-xl">
+              {/* Main background image */}
               <img 
-                src="/lovable-uploads/389a6f18-1725-449e-9461-22e9e46dab29.png" 
-                alt="Gutter Cleaning Process"
+                src="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png" 
+                alt="Recent Gutter Cleaning Project"
                 className="w-full h-auto object-cover"
               />
               
-              {/* Quadrant overlays */}
-              <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
+              {/* Interactive quadrant overlays */}
+              <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-1">
                 {/* Top Left */}
                 <div 
-                  className={`cursor-pointer transition-all duration-300 ${
+                  className={`cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out ${
                     activeQuadrant === 0 
-                      ? 'bg-bc-red/30 border-2 border-bc-red' 
-                      : 'bg-black/10 hover:bg-bc-red/20'
+                      ? 'transform scale-105 z-10 border-4 border-bc-red rounded-lg shadow-2xl' 
+                      : 'hover:transform hover:scale-102 hover:z-5'
                   }`}
                   onClick={() => setActiveQuadrant(0)}
+                  style={{
+                    backgroundImage: `url(${quadrants[0].image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
                 >
+                  <div className={`absolute inset-0 transition-all duration-300 ${
+                    activeQuadrant === 0 ? 'bg-bc-red/20' : 'bg-black/40 hover:bg-bc-red/30'
+                  }`} />
                   <div className="absolute top-2 left-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${
-                      activeQuadrant === 0 ? 'bg-bc-red' : 'bg-black/50'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transition-all duration-300 ${
+                      activeQuadrant === 0 ? 'bg-bc-red scale-110' : 'bg-black/70'
                     }`}>
                       1
                     </div>
@@ -106,16 +120,24 @@ const GutterQuadrantSection = () => {
                 
                 {/* Top Right */}
                 <div 
-                  className={`cursor-pointer transition-all duration-300 ${
+                  className={`cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out ${
                     activeQuadrant === 1 
-                      ? 'bg-bc-red/30 border-2 border-bc-red' 
-                      : 'bg-black/10 hover:bg-bc-red/20'
+                      ? 'transform scale-105 z-10 border-4 border-bc-red rounded-lg shadow-2xl' 
+                      : 'hover:transform hover:scale-102 hover:z-5'
                   }`}
                   onClick={() => setActiveQuadrant(1)}
+                  style={{
+                    backgroundImage: `url(${quadrants[1].image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
                 >
+                  <div className={`absolute inset-0 transition-all duration-300 ${
+                    activeQuadrant === 1 ? 'bg-bc-red/20' : 'bg-black/40 hover:bg-bc-red/30'
+                  }`} />
                   <div className="absolute top-2 right-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${
-                      activeQuadrant === 1 ? 'bg-bc-red' : 'bg-black/50'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transition-all duration-300 ${
+                      activeQuadrant === 1 ? 'bg-bc-red scale-110' : 'bg-black/70'
                     }`}>
                       2
                     </div>
@@ -124,16 +146,24 @@ const GutterQuadrantSection = () => {
                 
                 {/* Bottom Left */}
                 <div 
-                  className={`cursor-pointer transition-all duration-300 ${
+                  className={`cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out ${
                     activeQuadrant === 2 
-                      ? 'bg-bc-red/30 border-2 border-bc-red' 
-                      : 'bg-black/10 hover:bg-bc-red/20'
+                      ? 'transform scale-105 z-10 border-4 border-bc-red rounded-lg shadow-2xl' 
+                      : 'hover:transform hover:scale-102 hover:z-5'
                   }`}
                   onClick={() => setActiveQuadrant(2)}
+                  style={{
+                    backgroundImage: `url(${quadrants[2].image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
                 >
+                  <div className={`absolute inset-0 transition-all duration-300 ${
+                    activeQuadrant === 2 ? 'bg-bc-red/20' : 'bg-black/40 hover:bg-bc-red/30'
+                  }`} />
                   <div className="absolute bottom-2 left-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${
-                      activeQuadrant === 2 ? 'bg-bc-red' : 'bg-black/50'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transition-all duration-300 ${
+                      activeQuadrant === 2 ? 'bg-bc-red scale-110' : 'bg-black/70'
                     }`}>
                       3
                     </div>
@@ -142,16 +172,24 @@ const GutterQuadrantSection = () => {
                 
                 {/* Bottom Right */}
                 <div 
-                  className={`cursor-pointer transition-all duration-300 ${
+                  className={`cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out ${
                     activeQuadrant === 3 
-                      ? 'bg-bc-red/30 border-2 border-bc-red' 
-                      : 'bg-black/10 hover:bg-bc-red/20'
+                      ? 'transform scale-105 z-10 border-4 border-bc-red rounded-lg shadow-2xl' 
+                      : 'hover:transform hover:scale-102 hover:z-5'
                   }`}
                   onClick={() => setActiveQuadrant(3)}
+                  style={{
+                    backgroundImage: `url(${quadrants[3].image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
                 >
+                  <div className={`absolute inset-0 transition-all duration-300 ${
+                    activeQuadrant === 3 ? 'bg-bc-red/20' : 'bg-black/40 hover:bg-bc-red/30'
+                  }`} />
                   <div className="absolute bottom-2 right-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${
-                      activeQuadrant === 3 ? 'bg-bc-red' : 'bg-black/50'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transition-all duration-300 ${
+                      activeQuadrant === 3 ? 'bg-bc-red scale-110' : 'bg-black/70'
                     }`}>
                       4
                     </div>
@@ -161,9 +199,9 @@ const GutterQuadrantSection = () => {
             </div>
           </div>
 
-          {/* Content */}
+          {/* Content section */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg p-6 shadow-lg">
+            <div className="bg-white rounded-lg p-6 shadow-lg transform transition-all duration-300">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-bc-red rounded-full flex items-center justify-center text-white font-bold">
                   {activeQuadrant + 1}
@@ -180,7 +218,7 @@ const GutterQuadrantSection = () => {
               <div className="space-y-3">
                 <h4 className="font-semibold text-gray-800 mb-3">{t("Key Focus Areas:")}</h4>
                 {quadrants[activeQuadrant].features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
+                  <div key={idx} className="flex items-start gap-3 transform transition-all duration-200 hover:translate-x-1">
                     <div className="w-2 h-2 bg-bc-red rounded-full mt-2 flex-shrink-0"></div>
                     <span className="text-gray-700">{feature}</span>
                   </div>
@@ -196,7 +234,7 @@ const GutterQuadrantSection = () => {
                   onClick={() => setActiveQuadrant(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === activeQuadrant 
-                      ? 'bg-bc-red w-8' 
+                      ? 'bg-bc-red w-8 transform scale-110' 
                       : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                   aria-label={`View step ${index + 1}`}

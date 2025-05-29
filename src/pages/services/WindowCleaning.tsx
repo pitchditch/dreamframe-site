@@ -68,48 +68,8 @@ const WindowCleaning = () => {
         description="Crystal clear, streak-free windows using our advanced purified water cleaning system." 
         imagePath="/lovable-uploads/43f837f2-f6f3-404b-85de-ba0901296f83.png"
         darkOverlay={true}
+        buttonPosition="center"
       />
-      
-      {/* Streak-Free Window Cleaning Section - Full Width */}
-      <section className="w-full py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold mb-6 heading-text">Streak-Free Window Cleaning</h2>
-            <p className="text-lg text-gray-700 mb-8 content-text">
-              Experience the difference of our professional window cleaning service using cutting-edge purified water technology. 
-              Our system removes all minerals and impurities, leaving your windows crystal clear without streaks or residue.
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              <div className="text-center">
-                <div className="bg-blue-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl">💧</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Purified Water System</h3>
-                <p className="text-gray-600">No chemicals needed - just pure water for perfect results</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl">🏠</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Interior & Exterior</h3>
-                <p className="text-gray-600">Complete window cleaning service inside and out</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="bg-purple-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl">✨</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Streak-Free Guarantee</h3>
-                <p className="text-gray-600">Perfect results every time or we'll return for free</p>
-              </div>
-            </div>
-
-            <WindowCleaningQuoteOverlay buttonText="Request Window Cleaning Quote" variant="bc-red" />
-          </div>
-        </div>
-      </section>
       
       {/* Water Fed Pole System Video Section */}
       <section className="w-full py-16 bg-gray-50">
@@ -144,6 +104,10 @@ const WindowCleaning = () => {
                     </p>
                   </div>
                 </div>
+              </div>
+              
+              <div className="mt-8">
+                <WindowCleaningQuoteOverlay buttonText="Get Your Free Quote" variant="bc-red" />
               </div>
             </div>
             
