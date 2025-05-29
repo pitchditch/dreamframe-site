@@ -247,9 +247,9 @@ const HowWeCompleteJobsSection = () => {
                     className="w-full h-full object-cover" 
                   />
                   
-                  {/* Pricing Overlay */}
+                  {/* Pricing Overlay - moved to bottom left */}
                   {service.pricing && (
-                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+                    <div className="absolute bottom-20 left-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
                       <h4 className="font-bold text-sm text-gray-900 mb-2">House Size Pricing</h4>
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
