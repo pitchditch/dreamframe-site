@@ -247,30 +247,6 @@ const HowWeCompleteJobsSection = () => {
                     className="w-full h-full object-cover" 
                   />
                   
-                  {/* Pricing Overlay - moved to bottom left */}
-                  {service.pricing && (
-                    <div className="absolute bottom-20 left-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-                      <h4 className="font-bold text-sm text-gray-900 mb-2">House Size Pricing</h4>
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Small:</span>
-                          <span className="font-semibold text-bc-red">{service.pricing.small}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Medium:</span>
-                          <span className="font-semibold text-bc-red">{service.pricing.medium}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Large:</span>
-                          <span className="font-semibold text-bc-red">{service.pricing.large}</span>
-                        </div>
-                      </div>
-                      <Button asChild size="sm" className="w-full mt-2 bg-bc-red hover:bg-red-700 text-xs">
-                        <Link to="/compare-services">Compare All Services</Link>
-                      </Button>
-                    </div>
-                  )}
-                  
                   {/* Overlay Image in Corner */}
                   {service.overlayImage && (
                     <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg max-w-xs">
