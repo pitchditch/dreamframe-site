@@ -81,59 +81,59 @@ const ServiceSelectionSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-4 text-gray-900`}>
+        <div className="text-center mb-16">
+          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold mb-6 text-gray-900`}>
             {t("What Do You Need Pressure Washed?")}
           </h2>
-          <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 max-w-2xl mx-auto`}>
+          <p className={`${isMobile ? 'text-lg' : 'text-xl'} text-gray-600 max-w-3xl mx-auto`}>
             {t("Click a service below to request a free estimate")}
           </p>
         </div>
 
-        <div className={`grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-2 md:grid-cols-3 gap-6'} max-w-6xl mx-auto`}>
+        <div className={`grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-2 md:grid-cols-3 gap-8'} max-w-6xl mx-auto`}>
           {services.map((service) => {
             const IconComponent = service.icon;
             return (
               <div
                 key={service.id}
                 onClick={() => handleServiceClick(service.id)}
-                className={`group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
-                  isMobile ? 'p-4' : 'p-6'
+                className={`group cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 ${
+                  isMobile ? 'p-4' : 'p-8'
                 }`}
               >
                 <div className="flex flex-col items-center text-center">
-                  <div className={`relative ${isMobile ? 'mb-3' : 'mb-4'} overflow-hidden rounded-lg`}>
+                  <div className={`relative ${isMobile ? 'mb-4' : 'mb-6'} overflow-hidden rounded-lg`}>
                     <img 
                       src={service.image} 
                       alt={service.title}
-                      className={`${isMobile ? 'w-20 h-20' : 'w-24 h-24'} object-cover transition-transform duration-300 group-hover:scale-110`}
+                      className={`${isMobile ? 'w-24 h-24' : 'w-32 h-32'} object-cover transition-transform duration-300 group-hover:scale-110 rounded-lg`}
                     />
-                    <div className="absolute inset-0 bg-bc-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-bc-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
                       <IconComponent className="w-8 h-8 text-bc-red" />
                     </div>
                   </div>
                   
-                  <h3 className={`${isMobile ? 'text-sm' : 'text-base md:text-lg'} font-semibold text-gray-900 mb-2 group-hover:text-bc-red transition-colors`}>
+                  <h3 className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} font-bold text-gray-900 mb-3 group-hover:text-bc-red transition-colors`}>
                     {service.title}
                   </h3>
                   
                   {!isMobile && (
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-sm text-gray-600 leading-relaxed mb-4">
                       {service.description}
                     </p>
                   )}
                   
-                  <div className={`${isMobile ? 'mt-2' : 'mt-3'} w-8 h-0.5 bg-bc-red transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
+                  <div className={`${isMobile ? 'mt-2' : 'mt-4'} w-12 h-1 bg-bc-red transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full`}></div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        <div className={`text-center ${isMobile ? 'mt-8' : 'mt-12'}`}>
-          <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-600`}>
+        <div className={`text-center ${isMobile ? 'mt-12' : 'mt-16'}`}>
+          <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600`}>
             {t("Need a custom quote?")} 
             <button 
               onClick={() => handleServiceClick('custom')}

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -123,9 +124,12 @@ const Index = () => {
         <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
           <ServiceBanner />
           
+          {/* Service Selection Section - Made more prominent */}
           <div className="bg-white relative z-50">
             <ServiceSelectionSection />
-            
+          </div>
+          
+          <div className="bg-white relative z-50">
             <div data-section="premium-solutions">
               <PremiumSolutionsSection />
             </div>
