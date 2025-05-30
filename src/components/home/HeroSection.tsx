@@ -26,13 +26,24 @@ const HeroSection = () => {
     if (isMobile) {
       const img = new Image();
       img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
-      img.onload = () => setVideoLoaded(true);
+      img.onload = () => {
+        setVideoLoaded(true);
+        // Signal that hero is ready
+        window.dispatchEvent(new CustomEvent('heroLoaded'));
+      };
     } else {
       const videoElement = document.getElementById('hero-desktop-video') as HTMLIFrameElement;
       if (videoElement) {
-        videoElement.onload = () => setVideoLoaded(true);
+        videoElement.onload = () => {
+          setVideoLoaded(true);
+          window.dispatchEvent(new CustomEvent('heroLoaded'));
+        };
       }
-      setTimeout(() => setVideoLoaded(true), 500);
+      // Fallback timer for video loading
+      setTimeout(() => {
+        setVideoLoaded(true);
+        window.dispatchEvent(new CustomEvent('heroLoaded'));
+      }, 1500);
     }
     
     const savedPostalCode = sessionStorage.getItem('postalCode');
@@ -64,12 +75,12 @@ const HeroSection = () => {
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover object-center transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full object-cover object-center transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           ) : (
             <iframe 
               id="hero-desktop-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
               title="Pressure Washing Video"
               frameBorder="0"
@@ -82,7 +93,7 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'}`}>
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'} ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 md:mb-6 animate-on-scroll">
             <span className="text-white font-medium text-xs sm:text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
@@ -159,7 +170,7 @@ const HeroSection = () => {
       </div>
       
       {/* Enhanced scroll indicator with animation and label - Improved visibility */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-20">
+      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-20 ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
         <span className="text-white text-sm mb-2 bg-black/50 px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm border border-white/20">
           {t("Scroll Up")}
         </span>

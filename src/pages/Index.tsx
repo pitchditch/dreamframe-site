@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
@@ -21,9 +22,18 @@ import QuickContactForm from '../components/home/QuickContactForm';
 
 const Index = () => {
   const { language, t } = useTranslation();
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
     document.body.classList.add('has-video-header');
+
+    // Wait for hero to load before showing content
+    const heroLoadTimer = setTimeout(() => {
+      setHeroLoaded(true);
+      // Small delay to ensure smooth transition
+      setTimeout(() => setContentVisible(true), 300);
+    }, 1000);
 
     const observerOptions = {
       root: null,
@@ -33,24 +43,29 @@ const Index = () => {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && contentVisible) {
           entry.target.classList.add('animate');
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    animatedElements.forEach(el => observer.observe(el));
+    // Only observe elements after content is visible
+    if (contentVisible) {
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
+      animatedElements.forEach(el => observer.observe(el));
+    }
 
     console.log('Current language on Index page:', language);
     console.log('Translation test:', t("Home"));
 
     return () => {
       document.body.classList.remove('has-video-header');
+      clearTimeout(heroLoadTimer);
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
       animatedElements.forEach(el => observer.unobserve(el));
     };
-  }, [language, t]);
+  }, [language, t, contentVisible]);
 
   const faqItems = [
     {
@@ -91,8 +106,20 @@ const Index = () => {
         <HeroSection />
       </div>
       
+      {/* Loading overlay to prevent content flash */}
+      {!heroLoaded && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <div className="text-white text-xl">Loading...</div>
+        </div>
+      )}
+      
       {/* Content that slides over the hero - Higher z-index to prevent glitching */}
-      <div className="relative z-40" style={{ marginTop: '100vh' }}>
+      <div 
+        className={`relative z-40 transition-opacity duration-500 ${
+          contentVisible ? 'opacity-100' : 'opacity-0'
+        }`} 
+        style={{ marginTop: '100vh' }}
+      >
         <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
           <ServiceBanner />
           
