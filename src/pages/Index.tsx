@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -19,6 +18,7 @@ import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
 import HowWeCompleteJobsSection from '../components/home/HowWeCompleteJobsSection';
 import DoorToDoorSection from '../components/home/DoorToDoorSection';
 import QuickContactForm from '../components/home/QuickContactForm';
+import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -124,6 +124,8 @@ const Index = () => {
           <ServiceBanner />
           
           <div className="bg-white relative z-50">
+            <ServiceSelectionSection />
+            
             <div data-section="premium-solutions">
               <PremiumSolutionsSection />
             </div>

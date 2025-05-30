@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -16,9 +16,45 @@ const QuickContactForm = () => {
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    service: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Listen for service selection
+  useEffect(() => {
+    const handleServiceSelection = (event: CustomEvent) => {
+      const serviceId = event.detail.serviceId;
+      const serviceNames: Record<string, string> = {
+        'house-washing': 'House Washing',
+        'window-cleaning': 'Window Cleaning',
+        'driveway-cleaning': 'Driveway Cleaning',
+        'roof-cleaning': 'Roof Cleaning',
+        'gutter-cleaning': 'Gutter Cleaning',
+        'commercial': 'Commercial Services',
+        'custom': 'Custom Service'
+      };
+      
+      const serviceName = serviceNames[serviceId] || serviceId;
+      setFormData(prev => ({
+        ...prev,
+        service: serviceName,
+        message: `I'm interested in ${serviceName}. Please provide me with a free quote.`
+      }));
+    };
+
+    // Check for stored service selection
+    const storedService = sessionStorage.getItem('selectedService');
+    if (storedService) {
+      handleServiceSelection({ detail: { serviceId: storedService } } as CustomEvent);
+      sessionStorage.removeItem('selectedService');
+    }
+
+    window.addEventListener('serviceSelected', handleServiceSelection as EventListener);
+    return () => {
+      window.removeEventListener('serviceSelected', handleServiceSelection as EventListener);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +79,8 @@ const QuickContactForm = () => {
       from_email: formData.email,
       from_phone: formData.phone,
       message: formData.message,
-      subject: 'Quick Contact Form - Homepage',
+      service: formData.service,
+      subject: `Quick Contact Form - ${formData.service || 'General Inquiry'}`,
       form_type: 'Homepage Quick Contact'
     };
 
@@ -60,7 +97,7 @@ const QuickContactForm = () => {
         description: "We'll get back to you as soon as possible.",
       });
       
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: '', service: '' });
     } catch (error) {
       console.error("Failed to send email:", error);
       toast({
@@ -78,7 +115,7 @@ const QuickContactForm = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-16 bg-gradient-to-br from-gray-50 to-white" data-contact-form>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
@@ -126,6 +163,14 @@ const QuickContactForm = () => {
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-xl shadow-xl border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-4">
+                {formData.service && (
+                  <div className="bg-bc-red/10 border border-bc-red/20 rounded-lg p-3 mb-4">
+                    <p className="text-sm text-bc-red font-medium">
+                      {t("Selected Service")}: {formData.service}
+                    </p>
+                  </div>
+                )}
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
