@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Droplets, Car, Building, Road, Sparkles } from 'lucide-react';
+import { Home, Droplets, Car, Building, Truck, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -34,7 +34,7 @@ const ServiceSelectionSection = () => {
     {
       id: 'driveway-cleaning',
       title: t('Driveway Cleaning'),
-      icon: Road,
+      icon: Truck,
       image: '/lovable-uploads/80972bf0-3700-43b0-8983-d5861531bf57.png',
       description: t('Remove stains and restore surfaces')
     },
