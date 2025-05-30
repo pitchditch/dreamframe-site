@@ -1,20 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Home, Droplets, Car, Building, Truck, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
+import HoverImageSlideshow from '../HoverImageSlideshow';
+import ServiceVideoOverlay from '../ServiceVideoOverlay';
+import { testimonials } from '@/data/testimonials';
 
 interface Service {
   id: string;
   title: string;
   icon: React.ComponentType<any>;
   image: string;
+  slideImages: string[];
+  videoId: string;
   description: string;
 }
 
 const ServiceSelectionSection = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const [hoveredService, setHoveredService] = useState<number | null>(null);
+
+  // Filter testimonial images by service type
+  const windowCleaningImages = testimonials
+    .filter(t => t.service === 'window-cleaning' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
+  
+  const houseWashingImages = testimonials
+    .filter(t => t.service === 'pressure-washing' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
+  
+  const gutterCleaningImages = testimonials
+    .filter(t => t.service === 'gutter-cleaning' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
+  
+  const roofCleaningImages = testimonials
+    .filter(t => t.service === 'roof-cleaning' && t.beforeAfterImage)
+    .map(t => t.beforeAfterImage as string);
 
   const services: Service[] = [
     {
@@ -22,6 +45,8 @@ const ServiceSelectionSection = () => {
       title: t('House Washing'),
       icon: Home,
       image: '/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png',
+      slideImages: houseWashingImages,
+      videoId: 'lYnXijewxCM',
       description: t('Complete exterior house cleaning')
     },
     {
@@ -29,6 +54,8 @@ const ServiceSelectionSection = () => {
       title: t('Window Cleaning'),
       icon: Sparkles,
       image: '/lovable-uploads/104fb195-8227-4f8c-af68-5406acc5388a.png',
+      slideImages: windowCleaningImages,
+      videoId: 'bbHnt4UNPcU',
       description: t('Crystal clear window cleaning')
     },
     {
@@ -36,6 +63,8 @@ const ServiceSelectionSection = () => {
       title: t('Driveway Cleaning'),
       icon: Truck,
       image: '/lovable-uploads/80972bf0-3700-43b0-8983-d5861531bf57.png',
+      slideImages: ['/lovable-uploads/80972bf0-3700-43b0-8983-d5861531bf57.png', '/lovable-uploads/ff861e81-c504-47c8-aae7-5319b9ad2ab4.png'],
+      videoId: 'lYnXijewxCM',
       description: t('Remove stains and restore surfaces')
     },
     {
@@ -43,6 +72,8 @@ const ServiceSelectionSection = () => {
       title: t('Roof Cleaning'),
       icon: Building,
       image: '/lovable-uploads/0c0d106e-85ea-4490-9176-1d36821732c1.png',
+      slideImages: roofCleaningImages,
+      videoId: 'eQSgdx9ujcc',
       description: t('Safe moss and algae removal')
     },
     {
@@ -50,6 +81,8 @@ const ServiceSelectionSection = () => {
       title: t('Gutter Cleaning'),
       icon: Droplets,
       image: '/lovable-uploads/4f0a7bbd-e220-49bd-80ec-c83bb961b38f.png',
+      slideImages: gutterCleaningImages,
+      videoId: 'EdMlx1sYJDc',
       description: t('Complete gutter system cleaning')
     },
     {
@@ -57,6 +90,8 @@ const ServiceSelectionSection = () => {
       title: t('Commercial Services'),
       icon: Building,
       image: '/lovable-uploads/b5f7b3b1-4a41-4e10-963f-72eef95a03c4.png',
+      slideImages: ['/lovable-uploads/b5f7b3b1-4a41-4e10-963f-72eef95a03c4.png', '/lovable-uploads/481b70c0-733d-4cc9-9629-3628731d87e4.png'],
+      videoId: 'lYnXijewxCM',
       description: t('Professional commercial cleaning')
     }
   ];
@@ -93,26 +128,40 @@ const ServiceSelectionSection = () => {
         </div>
 
         <div className={`grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-2 md:grid-cols-3 gap-8'} max-w-6xl mx-auto`}>
-          {services.map((service) => {
+          {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
               <div
                 key={service.id}
                 onClick={() => handleServiceClick(service.id)}
+                onMouseEnter={() => setHoveredService(index)}
+                onMouseLeave={() => setHoveredService(null)}
                 className={`group cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 ${
                   isMobile ? 'p-4' : 'p-8'
                 }`}
               >
                 <div className="flex flex-col items-center text-center">
                   <div className={`relative ${isMobile ? 'mb-4' : 'mb-6'} overflow-hidden rounded-lg`}>
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className={`${isMobile ? 'w-24 h-24' : 'w-32 h-32'} object-cover transition-transform duration-300 group-hover:scale-110 rounded-lg`}
-                    />
+                    <HoverImageSlideshow 
+                      images={service.slideImages} 
+                      interval={2500}
+                      altText={`${service.title} showcase`}
+                    >
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className={`${isMobile ? 'w-24 h-24' : 'w-32 h-32'} object-cover transition-transform duration-300 group-hover:scale-110 rounded-lg`}
+                      />
+                    </HoverImageSlideshow>
                     <div className="absolute inset-0 bg-bc-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
                       <IconComponent className="w-8 h-8 text-bc-red" />
                     </div>
+                    
+                    <ServiceVideoOverlay
+                      videoId={service.videoId}
+                      isHovering={hoveredService === index}
+                      onClose={() => setHoveredService(null)}
+                    />
                   </div>
                   
                   <h3 className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} font-bold text-gray-900 mb-3 group-hover:text-bc-red transition-colors`}>
