@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -102,19 +101,19 @@ const Index = () => {
         <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
       </Helmet>
       
-      {/* Hero Section - Fixed position for slide effect with proper z-index */}
+      {/* 1. Hero Section with Video + Price Calculator */}
       <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
         <HeroSection />
       </div>
       
-      {/* Loading overlay to prevent content flash */}
+      {/* Loading overlay */}
       {!heroLoaded && (
         <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
           <div className="text-white text-xl">Loading...</div>
         </div>
       )}
       
-      {/* Content that slides over the hero - Higher z-index to prevent glitching */}
+      {/* Content that slides over the hero */}
       <div 
         className={`relative z-40 transition-opacity duration-500 ${
           contentVisible ? 'opacity-100' : 'opacity-0'
@@ -124,36 +123,38 @@ const Index = () => {
         <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
           <ServiceBanner />
           
-          {/* Service Selection Section - Made more prominent */}
+          {/* 2. What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
             <ServiceSelectionSection />
           </div>
           
           <div className="bg-white relative z-50">
-            <div data-section="premium-solutions">
-              <PremiumSolutionsSection />
-            </div>
-            
+            {/* 3. How We Complete Our Jobs */}
             <HowWeCompleteJobsSection />
             
-            <DoorToDoorSection />
-            
+            {/* 4. Featured Project */}
             <FeaturedProjectSection />
             
+            {/* 5. Merged Property Types + Trust Elements */}
             <PropertySpecificSection />
-            
             <OwnerOperatedSection />
             
+            {/* 6. Trusted Customers Slideshow */}
             <TrustedCustomersSection />
+            
+            {/* 7. Competitor Comparison */}
             <CompetitorComparisonSection />
+            
+            {/* 8. Testimonials with Before/After */}
             <TestimonialsSection />
             
-            <SatisfactionGuaranteeSection />
-            
+            {/* 9. Contact Form */}
             <QuickContactForm />
             
+            {/* 10. Service Areas */}
             <ServiceAreasSection />
             
+            {/* 11. FAQ Section */}
             <div data-section="faq">
               <FAQSection 
                 title={t("Frequently Asked Questions")} 
@@ -163,6 +164,7 @@ const Index = () => {
               />
             </div>
             
+            {/* 12. White Rock Footer Image */}
             <div className="w-full footer-image">
               <img 
                 src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 

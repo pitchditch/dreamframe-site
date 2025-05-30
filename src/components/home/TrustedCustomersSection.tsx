@@ -73,58 +73,77 @@ const TrustedCustomersSection = () => {
   }, [api]);
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">Trusted by Real Homeowners – Verified Customers</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+            Trusted by Real Homeowners – Verified Customers
+          </h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-4">
             Every one of these customers is someone we've proudly served – and they're wearing the shirt to prove it.
           </p>
-          <div className="mt-4">
-            <span className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-medium">
-              Spring Shoot Catalog
+          <div className="flex justify-center items-center gap-4">
+            <span className="inline-block bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-medium">
+              🏠 Real Customers
+            </span>
+            <span className="inline-block bg-bc-red text-white px-4 py-2 rounded-full text-sm font-medium">
+              ✓ Verified Reviews
+            </span>
+            <span className="inline-block bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+              📸 Branded Photos
             </span>
           </div>
         </div>
         
-        {/* Carousel View (for all screen sizes) */}
+        {/* Carousel View */}
         <div className="relative max-w-xl mx-auto">
           <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
             <CarouselContent>
               {customers.map((customer, index) => (
                 <CarouselItem key={index} className="basis-full">
                   <div className="flex flex-col items-center text-center p-2">
-                    <div className="mb-4 w-full h-96 overflow-hidden rounded-lg mx-auto">
+                    <div className="mb-6 w-full h-96 overflow-hidden rounded-xl mx-auto shadow-lg">
                       <img 
                         src={customer.image} 
-                        alt={`${customer.name} from ${customer.location}`} 
-                        className="w-full h-full object-cover"
+                        alt={`${customer.name} from ${customer.location} - Verified BC Pressure Washing Customer`} 
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <h4 className="font-semibold text-lg">{customer.name}</h4>
-                    <p className="text-sm text-gray-600">Verified Customer – {customer.location}</p>
-                    <p className="text-sm text-bc-red font-medium">{customer.service}, {customer.date}</p>
-                    {customer.quote && (
-                      <p className="mt-2 italic text-sm">"{customer.quote}"</p>
-                    )}
+                    <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 max-w-md mx-auto">
+                      <h4 className="font-bold text-xl text-gray-900 mb-2">{customer.name}</h4>
+                      <p className="text-sm text-gray-600 mb-1">✓ Verified Customer – {customer.location}</p>
+                      <p className="text-sm text-bc-red font-medium mb-3">{customer.service} • {customer.date}</p>
+                      {customer.quote && (
+                        <p className="italic text-gray-700 bg-gray-50 p-3 rounded-lg">
+                          "{customer.quote}"
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
           </Carousel>
           
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-6">
             {customers.map((_, index) => (
               <button
                 key={index}
                 onClick={() => api?.scrollTo(index)}
-                className={`w-2 h-2 mx-1 rounded-full transition-colors ${
+                className={`w-3 h-3 mx-1 rounded-full transition-colors ${
                   api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
+        </div>
+        
+        <div className="text-center mt-8">
+          <p className="text-gray-600">
+            <span className="font-semibold text-bc-red">100% Real Customers</span> • All photos taken with permission • 
+            <span className="font-medium"> Look for our red car around White Rock!</span>
+          </p>
         </div>
       </div>
     </section>
