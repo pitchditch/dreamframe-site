@@ -180,7 +180,7 @@ const GutterCleaning = () => {
           <div className="text-center max-w-4xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-6 heading-text">Get Your Gutters Cleaned Today</h2>
             <p className="text-lg text-gray-700 mb-8 content-text">
-              Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round. We serve <Link to="/locations/white-rock" className="text-bc-red hover:underline">Surrey</Link>, <Link to="/locations/white-rock" className="text-bc-red hover:underline">White Rock</Link>, and all of Metro Vancouver.
+              Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round. We serve <Link to="/locations/surrey" className="text-bc-red hover:underline">Surrey</Link>, <Link to="/locations/white-rock" className="text-bc-red hover:underline">White Rock</Link>, and all of Metro Vancouver.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -236,6 +236,7 @@ const GutterCleaning = () => {
                 </a>
               </Button>
             </div>
+            <p className="text-gray-600 text-sm mt-2">From just $129 - Fall cleanings fill fast!</p>
             
             <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
               <h3 className="text-xl font-bold mb-2 text-amber-800">Gutter Cleaning Warning!</h3>
@@ -439,7 +440,7 @@ const GutterCleaning = () => {
       
       <CallToAction 
         title="Ready to Book Your Gutter Cleaning?" 
-        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes. We also offer roof cleaning and window cleaning services." 
+        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes. We also offer <Link to='/services/roof-cleaning' className='text-white underline hover:text-gray-200'>roof cleaning</Link> and <Link to='/services/window-cleaning' className='text-white underline hover:text-gray-200'>window cleaning</Link> services." 
         backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png"
       />
     </Layout>
