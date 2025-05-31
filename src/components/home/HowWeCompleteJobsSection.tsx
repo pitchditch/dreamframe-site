@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Droplets, Home, Building, Sparkles, Zap, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -228,7 +227,7 @@ const HowWeCompleteJobsSection = () => {
         </div>
       </div>
 
-      {/* Full-width Carousel - No container padding */}
+      {/* Full-width Carousel with proper image sizing */}
       <div className="relative w-full">
         <div className="overflow-hidden">
           <div className="relative h-[500px] md:h-[600px] w-full">
@@ -241,11 +240,14 @@ const HowWeCompleteJobsSection = () => {
                     index === currentIndex ? 'opacity-100 z-10' : 'opacity-0'
                   }`}
                 >
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className="w-full h-full object-cover object-center" 
-                  />
+                  <div className="relative w-full h-full">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover object-center"
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    />
+                  </div>
                   
                   {/* Overlay Image in Corner - Fixed positioning */}
                   {service.overlayImage && (
