@@ -54,7 +54,7 @@ const Navbar = () => {
             <img 
               src="/lovable-uploads/9773afa1-26cf-4788-ade6-2da27716dd3d.png" 
               alt="BC Pressure Washing Logo" 
-              className="h-10 w-auto"
+              className="h-10 w-auto transition-transform duration-200 hover:scale-110"
             />
             <span className="text-xl font-bold text-gray-900">BC Pressure Washing</span>
           </Link>
@@ -76,7 +76,7 @@ const Navbar = () => {
             {/* More Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-bc-red transition-colors font-medium">
-                More <ChevronDown className="ml-1 h-4 w-4" />
+                More <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 hover:scale-110" />
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 className="bg-white border border-gray-200 shadow-lg rounded-md w-56"
@@ -99,9 +99,9 @@ const Navbar = () => {
             {/* Phone Number */}
             <a
               href="tel:7788087620"
-              className="flex items-center bg-bc-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+              className="flex items-center bg-bc-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all duration-200 hover:scale-105"
             >
-              <Phone size={16} className="mr-2" />
+              <Phone size={16} className="mr-2 transition-transform duration-200 hover:scale-110" />
               (778) 808-7620
             </a>
           </div>
@@ -109,7 +109,7 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700 hover:text-bc-red"
+            className="md:hidden text-gray-700 hover:text-bc-red transition-transform duration-200 hover:scale-110"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

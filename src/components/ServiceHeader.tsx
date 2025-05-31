@@ -1,4 +1,3 @@
-
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
@@ -13,8 +12,8 @@ interface ServiceHeaderProps {
   darkOverlay?: boolean;
   showButton?: boolean;
   buttonPosition?: 'center' | 'bottom';
-  youtubeId?: string; // For mobile YouTube embedding
-  youtubeDesktopId?: string; // For desktop YouTube embedding
+  youtubeId?: string;
+  youtubeDesktopId?: string;
 }
 
 const ServiceHeader = ({
@@ -32,8 +31,8 @@ const ServiceHeader = ({
   const isMobile = useIsMobile();
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
+  const isWindowCleaningPage = location.pathname.includes('window-cleaning');
   
-  // Use useEffect to add and remove the has-video-header class only for video headers
   useEffect(() => {
     if ((videoUrl || youtubeId || youtubeDesktopId) && !isHomePage) {
       document.body.classList.add('has-video-header');
@@ -43,34 +42,28 @@ const ServiceHeader = ({
     }
   }, [videoUrl, youtubeId, youtubeDesktopId, isHomePage]);
 
-  // Check if this is the post-construction page
   const isPostConstructionPage = location.pathname.includes('post-construction');
 
-  // Adjust title text size and positioning based on mobile view and page type
   const titleClasses = isMobile
     ? `text-3xl md:text-5xl font-bold mb-4 text-white text-shadow-lg`
     : `text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg`;
 
-  // Determine YouTube ID based on the device and provided IDs
   const getYouTubeIdForService = () => {
-    // If desktop ID is provided and we're on desktop, use that
     if (!isMobile && youtubeDesktopId) {
       return youtubeDesktopId;
     }
     
-    // For mobile or if no desktop ID provided
     if (youtubeId) return youtubeId;
     
-    // Special cases for specific services when no ID provided
     if (!youtubeId && !youtubeDesktopId && isMobile && title) {
       const titleStr = typeof title === 'string' ? title.toLowerCase() : '';
       
       if (titleStr.includes('pressure washing') || titleStr.includes('house washing')) {
-        return 'HuXyYAxC4Fs'; // Updated Pressure Washing
+        return 'HuXyYAxC4Fs';
       } else if (titleStr.includes('gutter')) {
-        return 'EdMlx1sYJDc'; // Updated Gutter Guards
+        return 'EdMlx1sYJDc';
       } else if (titleStr.includes('roof')) {
-        return 'twtzf2gRdFU'; // Updated Roof Cleaning
+        return 'twtzf2gRdFU';
       }
     }
     
@@ -78,6 +71,11 @@ const ServiceHeader = ({
   };
   
   const effectiveYoutubeId = getYouTubeIdForService();
+
+  // Determine vertical alignment based on page type
+  const verticalAlignment = isWindowCleaningPage 
+    ? 'items-end pb-32' // Lower positioning for window cleaning page
+    : 'items-center';
 
   return (
     <div className="relative w-full min-h-screen">
@@ -90,15 +88,15 @@ const ServiceHeader = ({
               className="absolute inset-0 w-full h-full object-cover"
               style={{ 
                 border: 0, 
-                transform: isMobile ? 'scale(1.4)' : 'scale(1.5)', // Reduced scale for mobile to prevent too much zoom
+                transform: isMobile ? 'scale(1.4)' : 'scale(1.5)',
               }}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Increased opacity for better text contrast */}
+            <div className="absolute inset-0 bg-black bg-opacity-60"></div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className={`absolute inset-0 flex ${verticalAlignment} justify-center`}>
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
@@ -130,7 +128,7 @@ const ServiceHeader = ({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+          <div className={`absolute inset-0 bg-black bg-opacity-60 flex ${verticalAlignment} justify-center`}>
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
@@ -164,7 +162,7 @@ const ServiceHeader = ({
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
           )}
           
-          <div className="relative h-full w-full flex items-center justify-center flex-col z-10">
+          <div className={`relative h-full w-full flex ${verticalAlignment} justify-center flex-col z-10`}>
             <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}

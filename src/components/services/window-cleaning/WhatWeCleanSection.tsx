@@ -9,7 +9,8 @@ const WhatWeCleanSection = () => {
     {
       title: "Residential Windows",
       description: "Interior and exterior window cleaning for homes, condos, and townhouses",
-      image: "/lovable-uploads/104fb195-8227-4f8c-af68-5406acc5388a.png"
+      dirtyImage: "/lovable-uploads/4a9921b9-2dd2-42b8-ade9-61bbeeb18898.png",
+      cleanImage: "/lovable-uploads/e9f99602-dedc-42e2-870e-3c129180af53.png"
     },
     {
       title: "Patio Glass Doors",
@@ -32,7 +33,8 @@ const WhatWeCleanSection = () => {
     {
       title: "Commercial Windows",
       description: "Office buildings, storefronts, and high-rise commercial properties",
-      image: "/lovable-uploads/b5f7b3b1-4a41-4e10-963f-72eef95a03c4.png"
+      dirtyImage: "/lovable-uploads/7631bbef-9460-4f28-bd99-bf2e4e02327e.png",
+      cleanImage: "/lovable-uploads/e46d1af8-4261-488a-bfbe-d7a0e00a1dfa.png"
     },
     {
       title: "Skylights",
