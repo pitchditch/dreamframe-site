@@ -50,36 +50,38 @@ const WindowCleaning = () => {
             alt="Clean sparkling windows"
             className="absolute w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
         </div>
         
         {/* Hero Content - Bottom positioned */}
-        <div className="container mx-auto px-4 h-full flex flex-col justify-end items-center relative z-10 text-white text-center pb-16">
-          <div className="max-w-4xl">
-            <div className="inline-block bg-bc-red px-6 py-3 rounded-lg mb-8 animate-fade-in">
-              <span className="text-white font-semibold text-sm md:text-base">Professional Window Cleaning</span>
-            </div>
-            
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in leading-tight">
-              <span className="text-white">Window Cleaning in </span>
-              <span className="text-bc-red">Surrey, White Rock</span>
-              <span className="text-white"> & Greater Vancouver</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl md:text-2xl mb-8 animate-fade-in delay-100 max-w-3xl mx-auto font-medium text-gray-200">
-              Crystal-clear, streak-free windows using our purified water technology.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-200 mb-8">
-              <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4">
-                <Link to="/calculator">Get Free Quote</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-4 bg-white/10 border-white text-white hover:bg-white hover:text-gray-900">
-                <a href="tel:7788087620">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call (778) 808-7620
-                </a>
-              </Button>
+        <div className="absolute bottom-0 left-0 right-0 z-10">
+          <div className="container mx-auto px-4 pb-16">
+            <div className="text-center text-white max-w-4xl mx-auto">
+              <div className="inline-block bg-bc-red px-6 py-3 rounded-lg mb-8 animate-fade-in">
+                <span className="text-white font-semibold text-sm md:text-base">Professional Window Cleaning</span>
+              </div>
+              
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in leading-tight">
+                <span className="text-white">Window Cleaning in </span>
+                <span className="text-bc-red">Surrey, White Rock</span>
+                <span className="text-white"> & Greater Vancouver</span>
+              </h1>
+              
+              <p className="text-lg sm:text-xl md:text-2xl mb-8 animate-fade-in delay-100 max-w-3xl mx-auto font-medium text-gray-200">
+                Crystal-clear, streak-free windows using our purified water technology.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-200">
+                <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4">
+                  <Link to="/calculator">Get Free Quote</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="text-lg px-8 py-4 bg-white/10 border-white text-white hover:bg-white hover:text-gray-900">
+                  <a href="tel:7788087620">
+                    <Phone className="mr-2 h-5 w-5" />
+                    Call (778) 808-7620
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
