@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { Check, ArrowRight, Phone } from 'lucide-react';
@@ -45,11 +46,11 @@ const WindowCleaning = () => {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="/lovable-uploads/3d97c921-5fdf-4bd9-9167-9432079cd659.png"
-            alt="Modern house with large windows"
+            src="/lovable-uploads/f7abf414-3ad9-4c10-a077-7cbb8881d937.png"
+            alt="Modern house with large windows being cleaned"
             className="absolute w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
         </div>
         
         {/* Hero Content - Centered */}
