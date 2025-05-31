@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -142,7 +141,8 @@ const WhatWeCleanSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         @keyframes shimmer {
           0% {
             transform: translateX(-100%) skewX(-12deg);
@@ -166,7 +166,8 @@ const WhatWeCleanSection = () => {
             filter: brightness(1);
           }
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
