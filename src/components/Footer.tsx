@@ -150,11 +150,10 @@ const Footer = () => {
           <img 
             src="/lovable-uploads/32eacf1b-1b0c-4d77-8a7e-2d495f635e4f.png" 
             alt="White Rock Based Business - Marine Drive" 
-            className="w-full h-auto object-cover object-top" 
+            className="w-full h-auto object-cover"
             style={{
-              height: "300px",
-              objectFit: "cover",
-              objectPosition: "center top"
+              minHeight: "300px",
+              maxHeight: "500px"
             }}
           />
         </div>

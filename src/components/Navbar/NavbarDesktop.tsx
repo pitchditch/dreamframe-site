@@ -117,37 +117,37 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[700px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
-                <div className="space-y-4">
-                  <Link to="/testimonials" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors group">
-                    <Star className="h-6 w-6 text-yellow-500 transition-transform duration-200 group-hover:scale-110" />
+              <NavigationMenuContent className="w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
+                <div className="space-y-6">
+                  <Link to="/testimonials" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
+                    <Star className="h-8 w-8 text-yellow-500 transition-transform duration-200 group-hover:scale-110" />
                     <div>
-                      <h4 className="font-medium text-black hover:text-bc-red">{t('Testimonials')}</h4>
+                      <h4 className="font-medium text-black hover:text-bc-red text-lg">{t('Testimonials')}</h4>
                       <p className="text-sm text-gray-600">Read what our customers say</p>
                     </div>
                   </Link>
                   
-                  <Link to="/equipment" className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-md transition-colors group">
-                    <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Equipment" className="h-6 w-6 object-contain transition-transform duration-200 group-hover:scale-110" />
+                  <Link to="/equipment" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
+                    <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Equipment" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                     <div>
-                      <h4 className="font-medium text-black hover:text-bc-red">{t('Our Equipment')}</h4>
+                      <h4 className="font-medium text-black hover:text-bc-red text-lg">{t('Our Equipment')}</h4>
                       <p className="text-sm text-gray-600">Professional-grade cleaning tools</p>
                     </div>
                   </Link>
                   
-                  <div className="pt-4 border-t border-gray-200">
-                    <h4 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
-                      <Star className="h-5 w-5 text-bc-red" />
+                  <div className="pt-6 border-t border-gray-200">
+                    <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-lg">
+                      <Star className="h-6 w-6 text-bc-red" />
                       {t('Leave a Review')}
                     </h4>
-                    <div className="flex space-x-4">
-                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
-                        <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-6 w-6 object-contain transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-sm font-medium">Google</span>
+                    <div className="flex space-x-6">
+                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
+                        <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-base font-medium">Google</span>
                       </a>
-                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
-                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-6 w-6 object-contain transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-sm font-medium">Yelp</span>
+                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
+                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-base font-medium">Yelp</span>
                       </a>
                     </div>
                   </div>

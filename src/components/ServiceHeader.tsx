@@ -1,3 +1,4 @@
+
 import { ReactNode, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
@@ -31,7 +32,6 @@ const ServiceHeader = ({
   const isMobile = useIsMobile();
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
-  const isWindowCleaningPage = location.pathname.includes('window-cleaning');
   
   useEffect(() => {
     if ((videoUrl || youtubeId || youtubeDesktopId) && !isHomePage) {
@@ -72,11 +72,6 @@ const ServiceHeader = ({
   
   const effectiveYoutubeId = getYouTubeIdForService();
 
-  // Determine vertical alignment based on page type
-  const verticalAlignment = isWindowCleaningPage 
-    ? 'items-end pb-32' // Lower positioning for window cleaning page
-    : 'items-center';
-
   return (
     <div className="relative w-full min-h-screen">
       {effectiveYoutubeId ? (
@@ -96,7 +91,7 @@ const ServiceHeader = ({
             ></iframe>
             <div className="absolute inset-0 bg-black bg-opacity-60"></div>
           </div>
-          <div className={`absolute inset-0 flex ${verticalAlignment} justify-center`}>
+          <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
@@ -128,7 +123,7 @@ const ServiceHeader = ({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className={`absolute inset-0 bg-black bg-opacity-60 flex ${verticalAlignment} justify-center`}>
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
             <div className="text-center p-4 max-w-xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
@@ -162,7 +157,7 @@ const ServiceHeader = ({
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
           )}
           
-          <div className={`relative h-full w-full flex ${verticalAlignment} justify-center flex-col z-10`}>
+          <div className="relative h-full w-full flex items-center justify-center flex-col z-10">
             <div className="text-center max-w-4xl px-4">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
