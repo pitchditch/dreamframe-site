@@ -6,11 +6,38 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import CallToAction from '../components/CallToAction';
 import FAQSection from '../components/FAQSection';
-import TestimonialSection from '../components/TestimonialSection';
+import TestimonialSection from '../components/home/TestimonialsSection';
 import WhatWeCleanSection from '../components/services/window-cleaning/WhatWeCleanSection';
 
 const WindowCleaning = () => {
   const { t } = useTranslation();
+
+  const windowCleaningFAQs = [
+    {
+      question: "How often should I have my windows cleaned?",
+      answer: "For residential properties, we recommend window cleaning every 3-6 months. Commercial properties may need more frequent cleaning depending on location and environmental factors."
+    },
+    {
+      question: "Do you clean windows in winter?",
+      answer: "Yes, we provide year-round window cleaning services. We use specialized techniques and solutions that work effectively even in colder temperatures."
+    },
+    {
+      question: "What is purified water system cleaning?",
+      answer: "Our purified water system removes all minerals and impurities from water, leaving windows spot-free and streak-free. This method is more effective and environmentally friendly than traditional cleaning."
+    },
+    {
+      question: "Do you clean both inside and outside?",
+      answer: "Yes, our standard window cleaning service includes both interior and exterior cleaning for a complete, crystal-clear result."
+    },
+    {
+      question: "Are you insured?",
+      answer: "Absolutely! We are fully insured and bonded for your peace of mind. Our insurance covers both liability and workers' compensation."
+    },
+    {
+      question: "How long does window cleaning take?",
+      answer: "The time depends on the size of your property and number of windows. Most residential homes take 1-3 hours, while larger commercial properties may take longer."
+    }
+  ];
 
   return (
     <Layout>
@@ -169,7 +196,11 @@ const WindowCleaning = () => {
       <TestimonialSection />
 
       {/* FAQ Section */}
-      <FAQSection />
+      <FAQSection 
+        title="Frequently Asked Questions"
+        description="Get answers to common questions about our window cleaning services"
+        faqs={windowCleaningFAQs}
+      />
 
       {/* Call to Action */}
       <CallToAction />

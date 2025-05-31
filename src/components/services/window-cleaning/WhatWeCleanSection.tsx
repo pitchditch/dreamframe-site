@@ -142,31 +142,33 @@ const WhatWeCleanSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%) skewX(-12deg);
+      <style>
+        {`
+          @keyframes shimmer {
+            0% {
+              transform: translateX(-100%) skewX(-12deg);
+            }
+            100% {
+              transform: translateX(300%) skewX(-12deg);
+            }
           }
-          100% {
-            transform: translateX(300%) skewX(-12deg);
+          
+          @keyframes cleanWave {
+            0% {
+              transform: scale(1);
+              filter: brightness(1);
+            }
+            50% {
+              transform: scale(1.02);
+              filter: brightness(1.1);
+            }
+            100% {
+              transform: scale(1);
+              filter: brightness(1);
+            }
           }
-        }
-        
-        @keyframes cleanWave {
-          0% {
-            transform: scale(1);
-            filter: brightness(1);
-          }
-          50% {
-            transform: scale(1.02);
-            filter: brightness(1.1);
-          }
-          100% {
-            transform: scale(1);
-            filter: brightness(1);
-          }
-        }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
