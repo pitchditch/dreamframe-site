@@ -18,16 +18,16 @@ const ServiceSlide = ({ service, isActive }: ServiceSlideProps) => {
         isActive ? 'opacity-100 z-10' : 'opacity-0'
       }`}
     >
-      <div className="relative w-full h-full overflow-hidden">
+      <div className="relative w-full h-full">
         <img 
           src={service.image} 
           alt={service.title}
           className="w-full h-full object-cover"
           style={{ 
             objectFit: 'cover',
-            objectPosition: 'center center',
-            minWidth: '100%',
-            minHeight: '100%'
+            objectPosition: 'center',
+            width: '100%',
+            height: '100%'
           }}
         />
       </div>
