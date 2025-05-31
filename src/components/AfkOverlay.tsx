@@ -26,8 +26,8 @@ const AfkOverlay = () => {
       const now = Date.now();
       const timeSinceLastActivity = now - lastActivity;
       
-      // Show overlay after 2 minutes (120000ms) of inactivity
-      if (timeSinceLastActivity >= 120000 && !isVisible) {
+      // Show overlay after 1 minute (60000ms) of inactivity
+      if (timeSinceLastActivity >= 60000 && !isVisible) {
         setIsVisible(true);
       }
     }, 30000);
