@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -12,6 +13,7 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 import GutterProcessCarousel from '../../components/services/gutter-cleaning/GutterProcessCarousel';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const GutterCleaning = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -81,9 +83,90 @@ const GutterCleaning = () => {
     question: "Do I need to be home during the service?",
     answer: "Not necessarily. As long as we have access to your gutters and exterior water sources, we can perform the cleaning while you're away. Many of our customers prefer this convenience."
   }];
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Gutter Cleaning",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "BC Pressure Washing",
+      "url": "https://bcpressurewashing.ca",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "White Rock",
+        "addressRegion": "BC",
+        "postalCode": "V4B",
+        "addressCountry": "CA"
+      },
+      "telephone": "+1-778-808-7620"
+    },
+    "areaServed": {
+      "@type": "Place",
+      "name": "Metro Vancouver"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Gutter Cleaning Packages",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Complete Gutter Cleaning"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Gutter Face Cleaning"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Downspout Flushing"
+          }
+        }
+      ]
+    }
+  };
+
+  // Filter testimonials to show only gutter-related ones
+  const gutterTestimonials = [
+    {
+      name: "Sarah M.",
+      location: "Surrey, BC",
+      text: "Had my gutters cleaned today, and I couldn't be happier with the results. The team was professional and thorough.",
+      rating: 5
+    },
+    {
+      name: "Mike T.",
+      location: "White Rock, BC", 
+      text: "These guys were awesome. I called them when I noticed my gutters were clogged and they came out the same week.",
+      rating: 5
+    },
+    {
+      name: "Jennifer L.",
+      location: "Langley, BC",
+      text: "Excellent gutter cleaning service! They removed all the debris and even cleaned the gutter faces. Highly recommend!",
+      rating: 5
+    }
+  ];
   
   return (
-    <Layout title="Professional Gutter Cleaning Services | BC Pressure Washing" description="Expert gutter cleaning services in White Rock, Surrey and Metro Vancouver. Prevent water damage and extend the life of your gutters with our thorough cleaning.">
+    <Layout 
+      title="Professional Gutter Cleaning in Surrey & White Rock | BC Pressure Washing" 
+      description="Protect your home from water damage with expert gutter cleaning by BC Pressure Washing. Serving Surrey, White Rock & Metro Vancouver. Free quote today!"
+    >
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
       <ServiceHeader 
         title="Professional Gutter Cleaning" 
         description="Keep your home protected with our thorough gutter cleaning services." 
@@ -97,7 +180,7 @@ const GutterCleaning = () => {
           <div className="text-center max-w-4xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-6 heading-text">Get Your Gutters Cleaned Today</h2>
             <p className="text-lg text-gray-700 mb-8 content-text">
-              Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round.
+              Clogged gutters can cause serious damage to your home's foundation, roof, and exterior. Our professional gutter cleaning service ensures your gutters function properly year-round. We serve <Link to="/locations/white-rock" className="text-bc-red hover:underline">Surrey</Link>, <Link to="/locations/white-rock" className="text-bc-red hover:underline">White Rock</Link>, and all of Metro Vancouver.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -143,7 +226,7 @@ const GutterCleaning = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <GutterCleaningQuoteOverlay buttonText="Get Your Free Quote" variant="bc-red" />
+              <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
               <Button className="bg-green-600 hover:bg-green-700 text-white" size="lg" asChild>
                 <a href="tel:7788087620" className="flex items-center justify-center">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -156,9 +239,12 @@ const GutterCleaning = () => {
             
             <div className="mt-10 p-6 bg-amber-50 rounded-lg border border-amber-200">
               <h3 className="text-xl font-bold mb-2 text-amber-800">Gutter Cleaning Warning!</h3>
-              <p className="text-amber-700">
+              <p className="text-amber-700 mb-4">
                 Neglected gutters can lead to costly water damage to your foundation, roof, and interior walls. Don't wait until it's too late - regular maintenance is much more affordable than repairs.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
+              </div>
             </div>
           </div>
         </div>
@@ -167,6 +253,55 @@ const GutterCleaning = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <ServiceBenefits title="Benefits of Regular Gutter Cleaning" subtitle="Protect your home's structural integrity and prevent costly damage with our professional gutter cleaning services" benefits={benefits} />
+          
+          {/* Add CTA after benefits */}
+          <div className="text-center mt-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
+              <p className="text-gray-600 text-sm mt-2">From just $129 - Get your instant quote!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Our Gutter Cleaning Process - Refined 4-Step Process */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12">Our Gutter Cleaning Process</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+                <h3 className="text-xl font-semibold mb-3">Debris Removal</h3>
+                <p className="text-gray-600">Hand-removal of all leaves, twigs, and debris from gutters and downspouts.</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+                <h3 className="text-xl font-semibold mb-3">Downspout Flushing</h3>
+                <p className="text-gray-600">Water flow tested and blockages cleared to ensure proper drainage.</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+                <h3 className="text-xl font-semibold mb-3">Gutter Face Cleaning</h3>
+                <p className="text-gray-600">Removal of exterior black streaks and grime for improved curb appeal.</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
+                <h3 className="text-xl font-semibold mb-3">Final Inspection</h3>
+                <p className="text-gray-600">Ensure complete flow, spot-check all areas, and thorough cleanup.</p>
+              </div>
+            </div>
+            
+            {/* Add CTA after process */}
+            <div className="text-center mt-12">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       
@@ -175,37 +310,45 @@ const GutterCleaning = () => {
       {/* Replace the old process section with the new carousel */}
       <GutterProcessCarousel />
       
+      {/* Gutter Sticks Section - Enhanced */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">Gutter Sticks: Affordable Gutter Protection</h2>
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div>
-                <h3 className="text-2xl font-bold mb-3">The Budget-Friendly Alternative</h3>
-                <p className="text-gray-700 mb-4">
-                  Not ready to invest in full gutter guards? Gutter Sticks offer an affordable solution that helps keep debris out while allowing water to flow freely through your gutters.
-                </p>
-                <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-                  <li>Simple installation that takes minutes</li>
-                  <li>Prevents leaf buildup while allowing water flow</li>
-                  <li>Easy to remove and clean when needed</li>
-                  <li>More affordable than full gutter guard systems</li>
-                  <li>Works with most standard gutter sizes</li>
-                </ul>
-                <div className="mt-6">
-                  <Link to="/calculator">
-                    <a className="inline-block bg-bc-red hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-all hover:scale-105">
-                      Learn More About Gutter Sticks
-                    </a>
-                  </Link>
+            <h2 className="text-3xl font-bold text-center mb-8">Gutter Protection Options</h2>
+            
+            {/* Comparison Table */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+              <div className="grid md:grid-cols-2 gap-0">
+                <div className="p-6 border-r border-gray-200">
+                  <h3 className="text-2xl font-bold mb-4 text-center">Gutter Sticks</h3>
+                  <img src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" alt="Gutter Stick Installation in Surrey" className="rounded-lg shadow-lg w-full mb-4" />
+                  <ul className="space-y-2">
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Budget-friendly option</li>
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Easy installation</li>
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Prevents leaf buildup</li>
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Removable for cleaning</li>
+                  </ul>
+                </div>
+                
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-4 text-center">Full Gutter Guards</h3>
+                  <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Gutter Guard Installation in White Rock" className="rounded-lg shadow-lg w-full mb-4" />
+                  <ul className="space-y-2">
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Maximum protection</li>
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Reduces cleaning frequency</li>
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Professional installation</li>
+                    <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Long-term investment</li>
+                  </ul>
                 </div>
               </div>
-              <div>
-                <div className="space-y-4">
-                  <img src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" alt="Gutter Stick Installation" className="rounded-lg shadow-lg w-full" />
-                  <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Gutter Stick in Action" className="rounded-lg shadow-lg w-full" />
-                </div>
-              </div>
+            </div>
+            
+            <div className="text-center">
+              <Link to="/calculator">
+                <Button className="bg-bc-red hover:bg-red-700 text-white" size="lg">
+                  Compare Gutter Protection Options
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -214,14 +357,14 @@ const GutterCleaning = () => {
       {/* Gutter Guards Installation Section with larger autoplay video */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto"> {/* Increased width for bigger video */}
-            <h2 className="text-3xl font-bold text-center mb-8">Gutter Guards Installation</h2>
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Guards Installation</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div className="order-2 md:order-1 w-full">
                 <iframe
                   className="w-full h-full aspect-video rounded-lg shadow-lg"
                   src="https://www.youtube.com/embed/OICbIRmx-80?autoplay=1&mute=1&controls=0&loop=1&playlist=OICbIRmx-80&showinfo=0&rel=0"
-                  title="Gutter Guards Installation"
+                  title="Gutter Guards Installation in Metro Vancouver"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -264,13 +407,39 @@ const GutterCleaning = () => {
         </div>
       </section>
       
-      <TestimonialsSection />
+      {/* Relevant Testimonials Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">What Our Gutter Cleaning Customers Say</h2>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {gutterTestimonials.map((testimonial, index) => (
+              <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                <div className="flex mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <span key={i} className="text-yellow-400">★</span>
+                  ))}
+                </div>
+                <p className="text-gray-700 mb-4">"{testimonial.text}"</p>
+                <div className="font-semibold">{testimonial.name}</div>
+                <div className="text-gray-600 text-sm">{testimonial.location}</div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Seasonal Callout */}
+          <div className="text-center mt-12 p-6 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg">
+            <h3 className="text-2xl font-bold mb-2 text-orange-800">Fall Cleanings Fill Fast!</h3>
+            <p className="text-orange-700 mb-4">Book now before the next heavy rain. Don't let clogged gutters damage your home.</p>
+            <GutterCleaningQuoteOverlay buttonText="Book Your Fall Cleaning" variant="bc-red" />
+          </div>
+        </div>
+      </section>
       
       <FAQSection title="Frequently Asked Questions About Gutter Cleaning" subtitle="Get answers to common questions about our gutter cleaning services" faqs={faqs} />
       
       <CallToAction 
         title="Ready to Book Your Gutter Cleaning?" 
-        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes." 
+        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes. We also offer roof cleaning and window cleaning services." 
         backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png"
       />
     </Layout>
