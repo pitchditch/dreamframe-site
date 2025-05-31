@@ -1,5 +1,7 @@
-import { ReactNode } from 'react';
+
+import { ReactNode, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar/index';
 import Footer from './Footer';
 import ReferralButton from './ReferralButton';
@@ -20,8 +22,14 @@ const Layout = ({
   image = "/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png",
   canonicalUrl
 }: LayoutProps) => {
+  const location = useLocation();
   const baseUrl = "https://www.bcpressurewashing.ca";
   const fullCanonicalUrl = canonicalUrl ? `${baseUrl}${canonicalUrl}` : baseUrl;
+  
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   
   return (
     <div className="flex flex-col min-h-screen w-full">
