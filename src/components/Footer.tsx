@@ -148,11 +148,11 @@ const Footer = () => {
       ) : (
         <div className="w-full">
           <img 
-            src="/lovable-uploads/6b164a41-f3e0-4d81-bc62-63520bd4c7c0.png" 
+            src="/lovable-uploads/32eacf1b-1b0c-4d77-8a7e-2d495f635e4f.png" 
             alt="White Rock Based Business - Marine Drive" 
             className="w-full h-auto object-cover object-center" 
             style={{
-              height: "200px",
+              height: "300px",
               objectFit: "cover"
             }}
           />
