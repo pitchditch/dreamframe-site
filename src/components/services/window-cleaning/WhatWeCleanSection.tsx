@@ -60,29 +60,21 @@ const WhatWeCleanSection = () => {
           {cleaningServices.map((service, index) => (
             <div key={index} className="group bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="relative overflow-hidden">
-                {service.dirtyImage && service.cleanImage ? (
-                  <div className="relative">
-                    <img 
-                      src={service.dirtyImage} 
-                      alt={`${service.title} - Before cleaning`}
-                      className={`w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-opacity duration-500 group-hover:opacity-0`}
-                    />
-                    <img 
-                      src={service.cleanImage} 
-                      alt={`${service.title} - After cleaning`}
-                      className={`absolute inset-0 w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100`}
-                    />
-                    <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
-                      Hover to see clean
-                    </div>
-                  </div>
-                ) : (
+                <div className="relative">
                   <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className={`w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-transform duration-300 group-hover:scale-105`}
+                    src={service.dirtyImage} 
+                    alt={`${service.title} - Before cleaning`}
+                    className={`w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-opacity duration-500 group-hover:opacity-0`}
                   />
-                )}
+                  <img 
+                    src={service.cleanImage} 
+                    alt={`${service.title} - After cleaning`}
+                    className={`absolute inset-0 w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100`}
+                  />
+                  <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
+                    Hover to see clean
+                  </div>
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               
