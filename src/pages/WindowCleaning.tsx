@@ -53,8 +53,8 @@ const WindowCleaning = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/50"></div>
         </div>
         
-        {/* Hero Content - Centered */}
-        <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center relative z-10 text-white text-center">
+        {/* Hero Content - Bottom positioned */}
+        <div className="container mx-auto px-4 h-full flex flex-col justify-end items-center relative z-10 text-white text-center pb-16">
           <div className="max-w-4xl">
             <div className="inline-block bg-bc-red px-6 py-3 rounded-lg mb-8 animate-fade-in">
               <span className="text-white font-semibold text-sm md:text-base">Professional Window Cleaning</span>
