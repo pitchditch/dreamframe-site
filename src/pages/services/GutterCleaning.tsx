@@ -13,10 +13,8 @@ import GutterProcessCarousel from '../../components/services/gutter-cleaning/Gut
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-
 const GutterCleaning = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  
   useEffect(() => {
     // Intersection Observer to handle video autoplay when scrolled into view
     const options = {
@@ -24,8 +22,7 @@ const GutterCleaning = () => {
       rootMargin: '0px',
       threshold: 0.1 // Lowered threshold to trigger earlier
     };
-    
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting && videoRef.current) {
           videoRef.current.play().catch(e => console.log('Auto-play prevented:', e));
@@ -34,18 +31,15 @@ const GutterCleaning = () => {
         }
       });
     }, options);
-    
     if (videoRef.current) {
       observer.observe(videoRef.current);
     }
-    
     return () => {
       if (videoRef.current) {
         observer.unobserve(videoRef.current);
       }
     };
   }, []);
-
   const benefits = [{
     title: "Prevent Water Damage",
     description: "Clogged gutters can cause water to overflow and damage your home's foundation, walls, and landscaping."
@@ -65,7 +59,6 @@ const GutterCleaning = () => {
     title: "Maintain Curb Appeal",
     description: "Clean, well-functioning gutters enhance your home's appearance and value."
   }];
-  
   const faqs = [{
     question: "How often should I have my gutters cleaned?",
     answer: "Most homes benefit from gutter cleaning twice per year – once in spring and once in fall. However, if your property has many trees nearby, you may need more frequent cleanings, especially during fall when leaves are dropping."
@@ -82,7 +75,6 @@ const GutterCleaning = () => {
     question: "Do I need to be home during the service?",
     answer: "Not necessarily. As long as we have access to your gutters and exterior water sources, we can perform the cleaning while you're away. Many of our customers prefer this convenience."
   }];
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -107,71 +99,53 @@ const GutterCleaning = () => {
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Gutter Cleaning Packages",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Complete Gutter Cleaning"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Gutter Face Cleaning"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Downspout Flushing"
-          }
+      "itemListElement": [{
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Complete Gutter Cleaning"
         }
-      ]
+      }, {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Gutter Face Cleaning"
+        }
+      }, {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Downspout Flushing"
+        }
+      }]
     }
   };
 
   // Filter testimonials to show only gutter-related ones
-  const gutterTestimonials = [
-    {
-      name: "Sarah M.",
-      location: "Surrey, BC",
-      text: "Had my gutters cleaned today, and I couldn't be happier with the results. The team was professional and thorough.",
-      rating: 5
-    },
-    {
-      name: "Mike T.",
-      location: "White Rock, BC", 
-      text: "These guys were awesome. I called them when I noticed my gutters were clogged and they came out the same week.",
-      rating: 5
-    },
-    {
-      name: "Jennifer L.",
-      location: "Langley, BC",
-      text: "Excellent gutter cleaning service! They removed all the debris and even cleaned the gutter faces. Highly recommend!",
-      rating: 5
-    }
-  ];
-  
-  return (
-    <Layout 
-      title="Professional Gutter Cleaning in Surrey & White Rock | BC Pressure Washing" 
-      description="Protect your home from water damage with expert gutter cleaning by BC Pressure Washing. Serving Surrey, White Rock & Metro Vancouver. Free quote today!"
-    >
+  const gutterTestimonials = [{
+    name: "Sarah M.",
+    location: "Surrey, BC",
+    text: "Had my gutters cleaned today, and I couldn't be happier with the results. The team was professional and thorough.",
+    rating: 5
+  }, {
+    name: "Mike T.",
+    location: "White Rock, BC",
+    text: "These guys were awesome. I called them when I noticed my gutters were clogged and they came out the same week.",
+    rating: 5
+  }, {
+    name: "Jennifer L.",
+    location: "Langley, BC",
+    text: "Excellent gutter cleaning service! They removed all the debris and even cleaned the gutter faces. Highly recommend!",
+    rating: 5
+  }];
+  return <Layout title="Professional Gutter Cleaning in Surrey & White Rock | BC Pressure Washing" description="Protect your home from water damage with expert gutter cleaning by BC Pressure Washing. Serving Surrey, White Rock & Metro Vancouver. Free quote today!">
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
       </Helmet>
 
-      <ServiceHeader 
-        title="Professional Gutter Cleaning" 
-        description="Keep your home protected with our thorough gutter cleaning services." 
-        youtubeId="EdMlx1sYJDc"
-        youtubeDesktopId="m5wfZZCuFeg"
-      />
+      <ServiceHeader title="Professional Gutter Cleaning" description="Keep your home protected with our thorough gutter cleaning services." youtubeId="EdMlx1sYJDc" youtubeDesktopId="m5wfZZCuFeg" />
       
       {/* Get Your Gutters Cleaned Today Section - Full Width */}
       <section className="w-full py-16 bg-white">
@@ -265,45 +239,7 @@ const GutterCleaning = () => {
       </section>
       
       {/* Our Gutter Cleaning Process - Refined 4-Step Process */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Our Gutter Cleaning Process</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
-                <h3 className="text-xl font-semibold mb-3">Debris Removal</h3>
-                <p className="text-gray-600">Hand-removal of all leaves, twigs, and debris from gutters and downspouts.</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
-                <h3 className="text-xl font-semibold mb-3">Downspout Flushing</h3>
-                <p className="text-gray-600">Water flow tested and blockages cleared to ensure proper drainage.</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
-                <h3 className="text-xl font-semibold mb-3">Gutter Face Cleaning</h3>
-                <p className="text-gray-600">Removal of exterior black streaks and grime for improved curb appeal.</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="bg-bc-red text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
-                <h3 className="text-xl font-semibold mb-3">Final Inspection</h3>
-                <p className="text-gray-600">Ensure complete flow, spot-check all areas, and thorough cleanup.</p>
-              </div>
-            </div>
-            
-            {/* Add CTA after process */}
-            <div className="text-center mt-12">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
       
       <GutterQuadrantSection />
       
@@ -355,108 +291,10 @@ const GutterCleaning = () => {
       </section>
       
       {/* Water Fed Pole System Video Section */}
-      <section className="w-full py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-6 heading-text">Water Fed Pole System</h2>
-              <p className="text-lg text-gray-700 mb-6 content-text">
-                Our state-of-the-art water fed pole system revolutionizes window cleaning by using purified water 
-                and extending telescopic poles to reach heights up to 60 feet safely from the ground.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">Purified Water Technology</h3>
-                    <p className="text-gray-600">
-                      Our system uses deionized water that leaves no spots, streaks, or residue, 
-                      providing crystal-clear results every time.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">Enhanced Safety</h3>
-                    <p className="text-gray-600">
-                      No ladders required - our technicians stay safely on the ground while 
-                      cleaning windows up to 6 stories high.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8">
-                <GutterCleaningQuoteOverlay buttonText="Get My Free Quote" variant="bc-red" />
-              </div>
-            </div>
-            
-            <div className="relative">
-              <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
-                <iframe 
-                  src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=1&mute=1" 
-                  title="Water Fed Pole System for Window Cleaning"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Traditional Squeegee Cleaning Technique Video Section */}
-      <section className="w-full py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="lg:order-2">
-              <h2 className="text-3xl font-bold mb-6 heading-text">Traditional Squeegee Cleaning</h2>
-              <p className="text-lg text-gray-700 mb-6 content-text">
-                For interior windows and detailed cleaning work, our skilled technicians use traditional squeegee 
-                techniques combined with eco-friendly cleaning solutions for perfect results.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">Expert Technique</h3>
-                    <p className="text-gray-600">
-                      Our trained professionals use proper squeegee techniques for streak-free results every time.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">Interior Cleaning</h3>
-                    <p className="text-gray-600">
-                      Perfect for interior windows where water fed pole systems aren't suitable.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="lg:order-1 relative">
-              <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
-                <iframe 
-                  src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=1&mute=1" 
-                  title="Professional Squeegee Window Cleaning Technique"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
       
       {/* Gutter Guards Installation Section with larger autoplay video */}
       <section className="py-16 bg-gray-50">
@@ -465,14 +303,7 @@ const GutterCleaning = () => {
             <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Guards Installation</h2>
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div className="order-2 md:order-1 w-full">
-                <iframe
-                  className="w-full h-full aspect-video rounded-lg shadow-lg"
-                  src="https://www.youtube.com/embed/OICbIRmx-80?autoplay=1&mute=1&controls=0&loop=1&playlist=OICbIRmx-80&showinfo=0&rel=0"
-                  title="Gutter Guards Installation in Metro Vancouver"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <iframe className="w-full h-full aspect-video rounded-lg shadow-lg" src="https://www.youtube.com/embed/OICbIRmx-80?autoplay=1&mute=1&controls=0&loop=1&playlist=OICbIRmx-80&showinfo=0&rel=0" title="Gutter Guards Installation in Metro Vancouver" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               </div>
               <div className="order-1 md:order-2">
                 <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
@@ -516,18 +347,14 @@ const GutterCleaning = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">What Our Gutter Cleaning Customers Say</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {gutterTestimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg">
+            {gutterTestimonials.map((testimonial, index) => <div key={index} className="bg-gray-50 p-6 rounded-lg">
                 <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">★</span>
-                  ))}
+                  {[...Array(testimonial.rating)].map((_, i) => <span key={i} className="text-yellow-400">★</span>)}
                 </div>
                 <p className="text-gray-700 mb-4">"{testimonial.text}"</p>
                 <div className="font-semibold">{testimonial.name}</div>
                 <div className="text-gray-600 text-sm">{testimonial.location}</div>
-              </div>
-            ))}
+              </div>)}
           </div>
           
           {/* Seasonal Callout */}
@@ -541,13 +368,7 @@ const GutterCleaning = () => {
       
       <FAQSection title="Frequently Asked Questions About Gutter Cleaning" subtitle="Get answers to common questions about our gutter cleaning services" faqs={faqs} />
       
-      <CallToAction 
-        title="Ready to Book Your Gutter Cleaning?" 
-        subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes. We also offer <Link to='/services/roof-cleaning' className='text-white underline hover:text-gray-200'>roof cleaning</Link> and <Link to='/services/window-cleaning' className='text-white underline hover:text-gray-200'>window cleaning</Link> services." 
-        backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png"
-      />
-    </Layout>
-  );
+      <CallToAction title="Ready to Book Your Gutter Cleaning?" subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes. We also offer <Link to='/services/roof-cleaning' className='text-white underline hover:text-gray-200'>roof cleaning</Link> and <Link to='/services/window-cleaning' className='text-white underline hover:text-gray-200'>window cleaning</Link> services." backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png" />
+    </Layout>;
 };
-
 export default GutterCleaning;
