@@ -46,8 +46,8 @@ const WindowCleaning = () => {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="/lovable-uploads/e9f99602-dedc-42e2-870e-3c129180af53.png"
-            alt="Clean sparkling windows"
+            src="/lovable-uploads/3d97c921-5fdf-4bd9-9167-9432079cd659.png"
+            alt="Modern house with large windows"
             className="absolute w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
@@ -57,10 +57,6 @@ const WindowCleaning = () => {
         <div className="relative z-10 flex-1 flex flex-col justify-end">
           <div className="container mx-auto px-4 pb-16">
             <div className="text-center text-white max-w-4xl mx-auto">
-              <div className="inline-block bg-bc-red px-6 py-3 rounded-lg mb-8 animate-fade-in">
-                <span className="text-white font-semibold text-sm md:text-base">Professional Window Cleaning</span>
-              </div>
-              
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in leading-tight">
                 <span className="text-white">Window Cleaning in </span>
                 <span className="text-bc-red">Surrey, White Rock</span>
@@ -71,15 +67,9 @@ const WindowCleaning = () => {
                 Crystal-clear, streak-free windows using our purified water technology.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-200">
+              <div className="animate-fade-in delay-200">
                 <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4">
-                  <Link to="/calculator">Get Free Quote</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="text-lg px-8 py-4 bg-white/10 border-white text-white hover:bg-white hover:text-gray-900">
-                  <a href="tel:7788087620">
-                    <Phone className="mr-2 h-5 w-5" />
-                    Call (778) 808-7620
-                  </a>
+                  <Link to="/calculator">Check Prices & Availability</Link>
                 </Button>
               </div>
             </div>
