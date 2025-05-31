@@ -42,7 +42,7 @@ const WindowCleaning = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-screen w-full overflow-hidden flex flex-col">
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 
@@ -53,8 +53,8 @@ const WindowCleaning = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
         </div>
         
-        {/* Hero Content - Bottom positioned */}
-        <div className="absolute bottom-0 left-0 right-0 z-10">
+        {/* Hero Content - Bottom positioned with flex-grow spacer */}
+        <div className="relative z-10 flex-1 flex flex-col justify-end">
           <div className="container mx-auto px-4 pb-16">
             <div className="text-center text-white max-w-4xl mx-auto">
               <div className="inline-block bg-bc-red px-6 py-3 rounded-lg mb-8 animate-fade-in">
