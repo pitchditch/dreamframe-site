@@ -42,36 +42,20 @@ const WindowCleaning = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full">
-          <img 
-            src="/lovable-uploads/f7abf414-3ad9-4c10-a077-7cbb8881d937.png"
-            alt="Modern house with large windows being cleaned"
-            className="absolute w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
-        </div>
-        
-        {/* Hero Content - Centered */}
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="text-center text-white max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in leading-tight">
-              <span className="text-white">Window Cleaning in </span>
-              <span className="text-bc-red">Surrey, White Rock</span>
-              <span className="text-white"> & Greater Vancouver</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl md:text-2xl mb-8 animate-fade-in delay-100 max-w-3xl mx-auto font-medium text-gray-200">
-              Crystal-clear, streak-free windows using our purified water technology.
-            </p>
-            
-            <div className="animate-fade-in delay-200">
-              <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4">
-                <Link to="/calculator">Check Prices & Availability</Link>
-              </Button>
-            </div>
-          </div>
+      <section 
+        className="min-h-screen bg-cover bg-center text-white flex flex-col justify-start items-center pt-24"
+        style={{ backgroundImage: "url('/lovable-uploads/f7abf414-3ad9-4c10-a077-7cbb8881d937.png')" }}
+      >
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6">
+            Window Cleaning in Surrey, White Rock & Greater Vancouver
+          </h1>
+          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
+            Crystal-clear, streak-free windows using our purified water technology.
+          </p>
+          <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4">
+            <Link to="/calculator">Check Prices & Availability</Link>
+          </Button>
         </div>
       </section>
 
