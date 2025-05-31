@@ -64,9 +64,9 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="Pressure Washing Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="House Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
-                    <span>{t('Pressure Washing')}</span>
+                    <span>{t('House Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
@@ -80,6 +80,12 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                     </div>
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
+                  <Link to="/services/window-cleaning#solar-panel-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/a21be9c9-78ec-43a8-87d1-143bdec40c29.png" alt="Solar Panel Cleaning Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>Solar Panel Cleaning</span>
+                  </Link>
                   <Link to="/services/pressure-washing#driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
                       <img src="/lovable-uploads/6119d12e-de96-47a5-a17f-8032a2832f33.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
@@ -91,6 +97,12 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                       <img src="/lovable-uploads/ce17b0e9-d79c-490d-82cc-23e4cf73ab15.png" alt="Soft Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>Soft Washing</span>
+                  </Link>
+                  <Link to="/services/pressure-washing#fence-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/91ae4920-9f35-47d2-b331-1abfffbd5471.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>Fence Washing</span>
                   </Link>
                   
                   <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">Commercial</div>

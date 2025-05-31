@@ -43,11 +43,11 @@ const Services = () => {
             />
             <ServiceCard 
               icon={<CloudRain size={24} />} 
-              title={t("Pressure Washing")} 
+              title={t("House Washing")} 
               description={t("Safe, low-pressure house washing that removes dirt, algae, and mildew without damaging your home's exterior.")} 
-              link="/services/pressure-washing" 
+              link="/services/house-washing" 
               image="/lovable-uploads/ef54ad3a-1e61-4d1e-b827-b556187487ef.png" 
-              imageAlt="Pressure Washing in Langley | Low-Pressure Home Cleaning by BC Pressure Washing" 
+              imageAlt="House Washing in Langley | Low-Pressure Home Cleaning by BC Pressure Washing" 
             />
             <ServiceCard 
               icon={<Home size={24} />} 
