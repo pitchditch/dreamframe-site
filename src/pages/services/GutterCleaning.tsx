@@ -267,7 +267,7 @@ const GutterCleaning = () => {
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-4 text-center">Full Gutter Guards</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-center">Gutter Sticks Installed</h3>
                   <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Gutter Guard Installation in White Rock" className="rounded-lg shadow-lg w-full mb-4" />
                   <ul className="space-y-2">
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Maximum protection</li>
