@@ -22,7 +22,7 @@ const ServiceSlide = ({ service, isActive }: ServiceSlideProps) => {
         <img 
           src={service.image} 
           alt={service.title}
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-top"
         />
       </div>
       

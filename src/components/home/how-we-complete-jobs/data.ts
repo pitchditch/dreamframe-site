@@ -5,7 +5,7 @@ import type { Service } from './types';
 export const createServicesData = (t: (key: string) => string): Service[] => [
   {
     id: 1,
-    image: "/lovable-uploads/104fb195-8227-4f8c-af68-5406acc5388a.png",
+    image: "/lovable-uploads/22119baa-45d3-413c-8428-4d12f4f3eb7e.png",
     title: t("Window Cleaning"),
     description: t("Professional window cleaning using advanced water-fed pole systems for crystal clear results."),
     features: [
@@ -26,7 +26,7 @@ export const createServicesData = (t: (key: string) => string): Service[] => [
   },
   {
     id: 2,
-    image: "/lovable-uploads/4f0a7bbd-e220-49bd-80ec-c83bb961b38f.png",
+    image: "/lovable-uploads/d7632e40-fcbf-4871-86cc-d9377ccf301a.png",
     title: t("Gutter Cleaning"),
     description: t("Complete gutter system cleaning and maintenance to protect your property from water damage."),
     features: [
@@ -44,7 +44,7 @@ export const createServicesData = (t: (key: string) => string): Service[] => [
   },
   {
     id: 3,
-    image: "/lovable-uploads/0c0d106e-85ea-4490-9176-1d36821732c1.png",
+    image: "/lovable-uploads/45e58228-57ce-4faf-8406-a1cc77718e98.png",
     title: t("Roof Cleaning"),
     description: t("Safe soft washing techniques to remove moss, algae, and restore your roof's appearance."),
     features: [
@@ -65,7 +65,7 @@ export const createServicesData = (t: (key: string) => string): Service[] => [
   },
   {
     id: 4,
-    image: "/lovable-uploads/80972bf0-3700-43b0-8983-d5861531bf57.png",
+    image: "/lovable-uploads/6927869c-13f2-40f7-bb49-af45df1067d1.png",
     title: t("Pressure Washing with Surface Cleaner"),
     description: t("High-efficiency surface cleaning for driveways, patios, and large commercial areas."),
     features: [

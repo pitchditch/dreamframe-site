@@ -38,7 +38,7 @@ const ServiceCarousel = ({ services }: ServiceCarouselProps) => {
   return (
     <div className="relative w-full">
       <div className="overflow-hidden rounded-lg">
-        <div className="relative h-[500px] md:h-[600px] w-full">
+        <div className="relative h-[500px] md:h-[650px] w-full">
           {services.map((service, index) => (
             <ServiceSlide
               key={service.id}
