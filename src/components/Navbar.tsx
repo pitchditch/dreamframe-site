@@ -65,7 +65,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-gray-700 hover:text-bc-red transition-colors font-medium ${
+                className={`text-gray-700 hover:text-bc-red transition-all duration-200 hover:scale-110 font-medium ${
                   location.pathname === item.href ? 'text-bc-red' : ''
                 }`}
               >
@@ -75,11 +75,11 @@ const Navbar = () => {
             
             {/* More Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-bc-red transition-colors font-medium">
+              <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-bc-red transition-all duration-200 hover:scale-110 font-medium">
                 More <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 hover:scale-110" />
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="bg-white border border-gray-200 shadow-lg rounded-md w-56"
+                className="bg-white border border-gray-200 shadow-lg rounded-md w-72"
                 align="center"
                 sideOffset={0}
               >

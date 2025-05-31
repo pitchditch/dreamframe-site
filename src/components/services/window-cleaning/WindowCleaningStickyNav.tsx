@@ -7,16 +7,38 @@ interface WindowCleaningStickyNavProps {
 
 const WindowCleaningStickyNav = ({ activeSection }: WindowCleaningStickyNavProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const heroHeight = window.innerHeight;
-      setIsVisible(window.scrollY > heroHeight - 100);
+      const shouldBeVisible = window.scrollY > heroHeight - 100;
+      
+      setIsVisible(shouldBeVisible);
+      setIsScrolling(true);
+
+      // Clear existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      // Set new timeout to hide during scroll
+      const newTimeout = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+      
+      setScrollTimeout(newTimeout);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    };
+  }, [scrollTimeout]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -41,7 +63,9 @@ const WindowCleaningStickyNav = ({ activeSection }: WindowCleaningStickyNavProps
   if (!isVisible) return null;
 
   return (
-    <nav className="fixed top-16 left-0 right-0 bg-white shadow-md z-40 border-b">
+    <nav className={`fixed top-16 left-0 right-0 bg-white shadow-md z-40 border-b transition-transform duration-300 ${
+      isScrolling ? '-translate-y-full' : 'translate-y-0'
+    }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center space-x-1 py-3 overflow-x-auto">
           {navItems.map((item) => (
