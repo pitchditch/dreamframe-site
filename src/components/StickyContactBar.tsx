@@ -14,25 +14,22 @@ const StickyContactBar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const premiumSection = document.querySelector('[data-section="premium-solutions"]') as HTMLElement;
-      const footerImage = document.querySelector('.footer-image') as HTMLElement;
-      const faqSection = document.querySelector('[data-section="faq"]') as HTMLElement;
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
       
-      if (premiumSection) {
-        const scrollY = window.scrollY;
-        const startShow = premiumSection.offsetTop + premiumSection.offsetHeight;
-        
-        let stopShow = window.innerHeight * 10; // Default large value
-        
-        if (footerImage && faqSection) {
-          stopShow = Math.min(footerImage.offsetTop + footerImage.offsetHeight, faqSection.offsetTop + faqSection.offsetHeight);
-        } else if (footerImage) {
-          stopShow = footerImage.offsetTop + footerImage.offsetHeight;
-        } else if (faqSection) {
-          stopShow = faqSection.offsetTop + faqSection.offsetHeight;
-        }
-        
-        setShowContactBar(scrollY >= startShow && scrollY <= stopShow);
+      // Show contact bar after scrolling past 50% of viewport height
+      if (scrollY > windowHeight * 0.5) {
+        setShowContactBar(true);
+      } else {
+        setShowContactBar(false);
+      }
+      
+      // Hide when at the very bottom to avoid overlap with footer
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrolledToBottom = scrollY + windowHeight >= documentHeight - 100;
+      
+      if (scrolledToBottom) {
+        setShowContactBar(false);
       }
     };
 
