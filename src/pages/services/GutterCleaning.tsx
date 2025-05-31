@@ -10,7 +10,6 @@ import { Shield, Droplets, Cloud, CheckCircle } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import GutterCleaningQuoteOverlay from '@/components/forms/GutterCleaningQuoteOverlay';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
-import GutterProcessCarousel from '../../components/services/gutter-cleaning/GutterProcessCarousel';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -306,12 +305,7 @@ const GutterCleaning = () => {
         </div>
       </section>
       
-      <GutterQuadrantSection />
-      
-      {/* Replace the old process section with the new carousel */}
-      <GutterProcessCarousel />
-      
-      {/* Gutter Sticks Section - Enhanced */}
+      {/* Gutter Protection Options Section - Enhanced */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -322,7 +316,10 @@ const GutterCleaning = () => {
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="p-6 border-r border-gray-200">
                   <h3 className="text-2xl font-bold mb-4 text-center">Gutter Sticks</h3>
-                  <img src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" alt="Gutter Stick Installation in Surrey" className="rounded-lg shadow-lg w-full mb-4" />
+                  <div className="mb-4 grid grid-cols-2 gap-2">
+                    <img src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" alt="Gutter Stick Installation in Surrey" className="rounded-lg shadow-lg w-full" />
+                    <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Full Gutter Guards Installation in White Rock" className="rounded-lg shadow-lg w-full" />
+                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Budget-friendly option</li>
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Easy installation</li>
@@ -333,7 +330,10 @@ const GutterCleaning = () => {
                 
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-4 text-center">Full Gutter Guards</h3>
-                  <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Gutter Guard Installation in White Rock" className="rounded-lg shadow-lg w-full mb-4" />
+                  <div className="mb-4 grid grid-cols-2 gap-2">
+                    <img src="/lovable-uploads/d6175f79-c579-4b77-95d4-628dce0cbfb0.png" alt="Premium Gutter Guard System in Metro Vancouver" className="rounded-lg shadow-lg w-full" />
+                    <img src="/lovable-uploads/c392a809-0ef2-4dd9-99b8-7e35138d9165.png" alt="Professional Gutter Guard Installation Before and After" className="rounded-lg shadow-lg w-full" />
+                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Maximum protection</li>
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Reduces cleaning frequency</li>
@@ -354,6 +354,8 @@ const GutterCleaning = () => {
           </div>
         </div>
       </section>
+      
+      <GutterQuadrantSection />
       
       {/* Gutter Guards Installation Section with larger autoplay video */}
       <section className="py-16 bg-gray-50">
