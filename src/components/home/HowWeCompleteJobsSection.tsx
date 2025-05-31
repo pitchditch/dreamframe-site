@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Droplets, Home, Building, Sparkles, Zap, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -227,7 +228,7 @@ const HowWeCompleteJobsSection = () => {
         </div>
       </div>
 
-      {/* Full-width Carousel */}
+      {/* Full-width Carousel - No container padding */}
       <div className="relative w-full">
         <div className="overflow-hidden">
           <div className="relative h-[500px] md:h-[600px] w-full">
@@ -243,7 +244,7 @@ const HowWeCompleteJobsSection = () => {
                   <img 
                     src={service.image} 
                     alt={service.title}
-                    className="w-full h-full object-cover" 
+                    className="w-full h-full object-cover object-center" 
                   />
                   
                   {/* Overlay Image in Corner - Fixed positioning */}
@@ -269,7 +270,7 @@ const HowWeCompleteJobsSection = () => {
                   
                   {/* Content overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end">
-                    <div className="container mx-auto px-4 pb-8 md:pb-12">
+                    <div className="px-4 md:px-8 pb-8 md:pb-12">
                       <div className="max-w-4xl">
                         <div className="flex items-center gap-3 mb-4">
                           <div className="w-10 h-10 bg-bc-red rounded-full flex items-center justify-center text-white">
@@ -303,7 +304,7 @@ const HowWeCompleteJobsSection = () => {
           </div>
         </div>
         
-        {/* Navigation arrows - Improved mobile positioning */}
+        {/* Navigation arrows */}
         <Button 
           variant="outline" 
           size="icon" 

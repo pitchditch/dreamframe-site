@@ -7,6 +7,7 @@ import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import WindowCleaningQuoteOverlay from '../../components/forms/WindowCleaningQuoteOverlay';
 import WaterFedPoleSection from '../../components/services/window-cleaning/WaterFedPoleSection';
+import WhatWeCleanSection from '../../components/services/window-cleaning/WhatWeCleanSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import MoreServicesSection from '@/components/MoreServicesSection';
 
@@ -70,6 +71,8 @@ const WindowCleaning = () => {
         darkOverlay={true}
         buttonPosition="center"
       />
+      
+      <WhatWeCleanSection />
       
       {/* Water Fed Pole System Video Section */}
       <section className="w-full py-16 bg-gray-50">
