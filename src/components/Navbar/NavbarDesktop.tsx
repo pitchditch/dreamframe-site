@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -62,49 +63,33 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               >
                 {t('Services')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="min-w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
-                <div className="grid grid-cols-2 gap-8">
+              <NavigationMenuContent className="min-w-[700px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
+                <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential</h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      <Link to="/services/roof-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Roof Cleaning')}</span>
-                      </Link>
-                      <Link to="/services/window-cleaning#solar-panel-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/a21be9c9-78ec-43a8-87d1-143bdec40c29.png" alt="Solar Panel Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Solar Panel Cleaning</span>
-                      </Link>
-                      <Link to="/services/pressure-washing#driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/6119d12e-de96-47a5-a17f-8032a2832f33.png" alt="Driveway Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Driveway Cleaning</span>
-                      </Link>
-                      <Link to="/services/pressure-washing#soft-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/ce17b0e9-d79c-490d-82cc-23e4cf73ab15.png" alt="Soft Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Soft Washing</span>
-                      </Link>
-                      <Link to="/services/pressure-washing#fence-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/91ae4920-9f35-47d2-b331-1abfffbd5471.png" alt="Fence Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Fence Washing</span>
-                      </Link>
-                      <Link to="/services/gutter-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Gutter Cleaning')}</span>
-                      </Link>
+                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential Services</h3>
+                    <div className="grid grid-cols-2 gap-3">
                       <Link to="/services/window-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
                         <img src="/lovable-uploads/c0750156-e7a2-4f23-bffc-fa6aadabc8af.png" alt="Window Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Window Cleaning')}</span>
                       </Link>
                       <Link to="/services/pressure-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="House Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('House Washing')}</span>
+                        <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="Pressure Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Pressure Washing')}</span>
+                      </Link>
+                      <Link to="/services/gutter-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
+                        <img src="/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Gutter Cleaning')}</span>
+                      </Link>
+                      <Link to="/services/roof-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
+                        <img src="/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Roof Cleaning')}</span>
                       </Link>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Commercial</h3>
-                    <div className="space-y-4">
+                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Commercial Services</h3>
+                    <div className="space-y-3">
                       <Link to="/services/commercial-window-cleaning" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
                         <img src="/lovable-uploads/fe9ad8bf-d5d6-415e-9db8-ebbf40ad6fc5.png" alt="Commercial Window Cleaning" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium">{t('Commercial Window Cleaning')}</span>

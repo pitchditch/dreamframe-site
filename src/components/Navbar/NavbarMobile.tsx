@@ -33,9 +33,9 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             
             <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
               <img 
-                src="/lovable-uploads/85f5bd3c-680e-4957-9722-6bc6070f7d51.png" 
+                src="/lovable-uploads/4b1c2d66-50f8-40ca-abe3-c072141788ed.png" 
                 alt="Logo Icon" 
-                className="w-5 h-5 object-contain animate-spin-slow" 
+                className="w-5 h-5 object-contain" 
               />
               <span>{t('Why Us')}</span>
             </Link>
@@ -54,7 +54,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 isServicesMenuOpen ? 'max-h-[800px] py-2' : 'max-h-0'
               }`}>
                 <div className="flex flex-col space-y-1 pl-4">
-                  <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential Services</div>
                   
                   <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
@@ -64,9 +64,9 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="House Washing Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="Pressure Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
-                    <span>{t('House Washing')}</span>
+                    <span>{t('Pressure Washing')}</span>
                   </Link>
                   <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
@@ -80,32 +80,8 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                     </div>
                     <span>{t('Roof Cleaning')}</span>
                   </Link>
-                  <Link to="/services/window-cleaning#solar-panel-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/a21be9c9-78ec-43a8-87d1-143bdec40c29.png" alt="Solar Panel Cleaning Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>Solar Panel Cleaning</span>
-                  </Link>
-                  <Link to="/services/pressure-washing#driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/6119d12e-de96-47a5-a17f-8032a2832f33.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>Driveway Cleaning</span>
-                  </Link>
-                  <Link to="/services/pressure-washing#soft-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/ce17b0e9-d79c-490d-82cc-23e4cf73ab15.png" alt="Soft Washing Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>Soft Washing</span>
-                  </Link>
-                  <Link to="/services/pressure-washing#fence-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/91ae4920-9f35-47d2-b331-1abfffbd5471.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>Fence Washing</span>
-                  </Link>
                   
-                  <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">Commercial</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">Commercial Services</div>
                   
                   <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
