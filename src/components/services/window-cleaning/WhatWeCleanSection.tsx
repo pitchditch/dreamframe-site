@@ -1,9 +1,19 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const WhatWeCleanSection = () => {
   const isMobile = useIsMobile();
+  const [waveActive, setWaveActive] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWaveActive(true);
+      setTimeout(() => setWaveActive(false), 3000);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const cleaningServices = [
     {
@@ -45,8 +55,19 @@ const WhatWeCleanSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="py-16 bg-white relative overflow-hidden">
+      {/* Shimmering wave overlay */}
+      <div 
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${
+          waveActive ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/30 to-transparent transform -skew-x-12 animate-[shimmer_3s_ease-in-out]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12 animate-[shimmer_3s_ease-in-out_0.5s]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-100/20 to-transparent transform -skew-x-12 animate-[shimmer_3s_ease-in-out_1s]" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-4 text-gray-900`}>
             What We Clean
@@ -58,7 +79,15 @@ const WhatWeCleanSection = () => {
         
         <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-2 md:grid-cols-3 gap-8'}`}>
           {cleaningServices.map((service, index) => (
-            <div key={index} className="group bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+            <div 
+              key={index} 
+              className={`group bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ${
+                waveActive ? 'animate-[cleanWave_3s_ease-in-out]' : ''
+              }`}
+              style={{
+                animationDelay: waveActive ? `${index * 0.3}s` : '0s'
+              }}
+            >
               <div className="relative overflow-hidden">
                 <div className="relative">
                   <img 
@@ -74,6 +103,16 @@ const WhatWeCleanSection = () => {
                   <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
                     Hover to see clean
                   </div>
+                  
+                  {/* Individual shimmer effect for each card */}
+                  <div 
+                    className={`absolute inset-0 bg-gradient-to-r from-transparent via-blue-300/60 to-transparent transform -skew-x-12 transition-all duration-1000 ${
+                      waveActive ? 'translate-x-full opacity-100' : '-translate-x-full opacity-0'
+                    }`}
+                    style={{
+                      transitionDelay: waveActive ? `${index * 0.3}s` : '0s'
+                    }}
+                  />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
@@ -102,6 +141,32 @@ const WhatWeCleanSection = () => {
           </a>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%) skewX(-12deg);
+          }
+          100% {
+            transform: translateX(300%) skewX(-12deg);
+          }
+        }
+        
+        @keyframes cleanWave {
+          0% {
+            transform: scale(1);
+            filter: brightness(1);
+          }
+          50% {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+          }
+          100% {
+            transform: scale(1);
+            filter: brightness(1);
+          }
+        }
+      `}</style>
     </section>
   );
 };
