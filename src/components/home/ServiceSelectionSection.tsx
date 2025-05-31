@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Home, Droplets, Car, Building, Truck, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
@@ -44,7 +43,7 @@ const ServiceSelectionSection = () => {
       id: 'house-washing',
       title: t('House Washing'),
       icon: Home,
-      image: '/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png',
+      image: '/lovable-uploads/faa9e3ae-ec74-49c8-bbb5-382b09f44b79.png',
       slideImages: houseWashingImages,
       videoId: 'lYnXijewxCM',
       description: t('Complete exterior house cleaning')

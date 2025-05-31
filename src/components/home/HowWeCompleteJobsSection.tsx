@@ -246,20 +246,20 @@ const HowWeCompleteJobsSection = () => {
                     className="w-full h-full object-cover" 
                   />
                   
-                  {/* Overlay Image in Corner */}
+                  {/* Overlay Image in Corner - Fixed positioning */}
                   {service.overlayImage && (
-                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg max-w-xs">
+                    <div className={`absolute ${isMobile ? 'top-2 right-2' : 'top-6 right-6'} bg-white/95 backdrop-blur-sm rounded-lg ${isMobile ? 'p-2 max-w-[200px]' : 'p-4 max-w-xs'} shadow-lg z-20`}>
                       <div className="flex items-start gap-3">
                         <img 
                           src={service.overlayImage} 
                           alt={service.overlayTitle}
-                          className="w-16 h-16 object-contain flex-shrink-0"
+                          className={`${isMobile ? 'w-12 h-12' : 'w-16 h-16'} object-contain flex-shrink-0`}
                         />
-                        <div>
-                          <h4 className="font-bold text-sm text-gray-900 mb-1">
+                        <div className="flex-1 min-w-0">
+                          <h4 className={`font-bold ${isMobile ? 'text-xs' : 'text-sm'} text-gray-900 mb-1`}>
                             {service.overlayTitle}
                           </h4>
-                          <p className="text-xs text-gray-700 leading-tight">
+                          <p className={`${isMobile ? 'text-xs' : 'text-xs'} text-gray-700 leading-tight`}>
                             {service.overlayDescription}
                           </p>
                         </div>

@@ -9,7 +9,7 @@ import { MobileMenuButton } from './MobileMenuButton';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
-  const [isTransparent, setIsTransparent] = useState(false);
+  const [isOverVideo, setIsOverVideo] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -33,10 +33,10 @@ const Navbar = () => {
       const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight * 0.8;
       
-      // Make transparent ONLY when in the hero section (before scrolling past it)
-      const shouldBeTransparent = heroPages.includes(location.pathname) && currentScrollY < heroHeight;
+      // Check if we're in a hero section area
+      const isInHeroArea = heroPages.includes(location.pathname) && currentScrollY < heroHeight;
       
-      setIsTransparent(shouldBeTransparent);
+      setIsOverVideo(isInHeroArea);
       setIsScrolled(currentScrollY > 10);
     };
     
@@ -50,24 +50,24 @@ const Navbar = () => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
     
-    // Set initial transparency state for hero pages
+    // Set initial state for hero pages
     const isHeroPage = heroPages.includes(location.pathname);
-    setIsTransparent(isHeroPage);
+    setIsOverVideo(isHeroPage);
   }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isTransparent 
+      isOverVideo 
         ? 'bg-transparent h-28 md:h-36' 
         : 'bg-white/95 backdrop-blur-sm h-28 md:h-32'
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
-        <Logo isOverVideo={isTransparent} />
-        <NavbarDesktop isOverVideo={isTransparent} />
+        <Logo isOverVideo={isOverVideo} />
+        <NavbarDesktop isOverVideo={isOverVideo} />
         <div className="md:hidden">
-          <MobileMenuButton isOverVideo={isTransparent} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
