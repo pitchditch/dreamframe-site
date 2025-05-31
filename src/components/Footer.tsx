@@ -42,38 +42,38 @@ const Footer = () => {
             <h4 className="text-xl font-semibold mb-6 text-white">Our Services</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/services/window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Window Cleaning
+                <Link to="/services/window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Window Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/services/pressure-washing" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Pressure Washing
+                <Link to="/services/pressure-washing" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Pressure Washing
                 </Link>
               </li>
               <li>
-                <Link to="/services/gutter-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Gutter Cleaning
+                <Link to="/services/gutter-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Gutter Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/services/roof-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Roof Cleaning
+                <Link to="/services/roof-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Roof Cleaning
                 </Link>
               </li>
               <li>
-                <Link to="/services/commercial-window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Commercial Services
+                <Link to="/services/commercial-window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Commercial Services
                 </Link>
               </li>
               <li>
-                <Link to="/services/compare" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> Compare Services
+                <Link to="/services/compare" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Compare Services
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">→</span> View All Services
+                <Link to="/services" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> View All Services
                 </Link>
               </li>
             </ul>
@@ -133,17 +133,31 @@ const Footer = () => {
         </div>
       </div>
       
-      {/* Full-width Marine Drive image below footer content */}
-      <div className="w-full">
-        <img 
-          src="/lovable-uploads/2b1c86bf-f351-48ad-831b-a33b68b7bcdc.png" 
-          alt="White Rock Marine Drive" 
-          className="w-full h-auto object-cover" 
-          style={{
-            maxHeight: "400px"
-          }} 
-        />
-      </div>
+      {/* Full-width Marine Drive image below footer content - only show on homepage */}
+      {isHomePage ? (
+        <div className="w-full">
+          <img 
+            src="/lovable-uploads/2b1c86bf-f351-48ad-831b-a33b68b7bcdc.png" 
+            alt="White Rock Marine Drive" 
+            className="w-full h-auto object-cover" 
+            style={{
+              maxHeight: "400px"
+            }} 
+          />
+        </div>
+      ) : (
+        <div className="w-full">
+          <img 
+            src="/lovable-uploads/6b164a41-f3e0-4d81-bc62-63520bd4c7c0.png" 
+            alt="White Rock Based Business - Marine Drive" 
+            className="w-full h-auto object-cover object-center" 
+            style={{
+              height: "200px",
+              objectFit: "cover"
+            }}
+          />
+        </div>
+      )}
     </footer>
   );
 };
