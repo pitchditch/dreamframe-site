@@ -6,6 +6,7 @@ import Navbar from './Navbar/index';
 import Footer from './Footer';
 import ReferralButton from './ReferralButton';
 import StickyContactBar from './StickyContactBar';
+import AfkOverlay from './AfkOverlay';
 
 interface LayoutProps {
   children: ReactNode;
@@ -67,6 +68,7 @@ const Layout = ({
       </main>
       <Footer />
       <StickyContactBar />
+      <AfkOverlay />
     </div>
   );
 };

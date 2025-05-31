@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
@@ -50,30 +49,32 @@ const VancouverWindowCleaning = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40" />
         </div>
         
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 max-w-4xl">
-            Professional Window Cleaning in Vancouver
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl">
-            We serve Vancouver with expert commercial and residential window cleaning. From storefronts to skyscrapers — we've got it covered.
-          </p>
-          <div className="flex flex-wrap gap-4 mb-8">
-            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md">
-              <Building className="mr-2" size={20} />
-              <span>Commercial</span>
+        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center items-center text-white" style={{ paddingTop: '10%' }}>
+          <div className="text-center max-w-4xl">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              Professional Window Cleaning in Vancouver
+            </h1>
+            <p className="text-xl md:text-2xl mb-8">
+              We serve Vancouver with expert commercial and residential window cleaning. From storefronts to skyscrapers — we've got it covered.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md">
+                <Building className="mr-2" size={20} />
+                <span>Commercial</span>
+              </div>
+              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md">
+                <Home className="mr-2" size={20} />
+                <span>Residential</span>
+              </div>
+              <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md">
+                <MapPin className="mr-2" size={20} />
+                <span>All Vancouver Areas</span>
+              </div>
             </div>
-            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md">
-              <Home className="mr-2" size={20} />
-              <span>Residential</span>
-            </div>
-            <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-md">
-              <MapPin className="mr-2" size={20} />
-              <span>All Vancouver Areas</span>
-            </div>
+            <Button asChild variant="bc-red" size="lg" className="text-lg">
+              <Link to="/calculator">Get a Quote in Vancouver</Link>
+            </Button>
           </div>
-          <Button asChild variant="bc-red" size="lg" className="text-lg w-fit">
-            <Link to="/calculator">Get a Quote in Vancouver</Link>
-          </Button>
         </div>
       </section>
 

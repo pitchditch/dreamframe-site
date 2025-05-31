@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
 import { Star, Scale } from 'lucide-react';
@@ -18,6 +18,15 @@ interface NavbarDesktopProps {
 
 export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/');
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  };
 
   return (
     <div className="hidden md:flex items-center justify-between flex-1">
@@ -25,14 +34,14 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         <NavigationMenu>
           <NavigationMenuList className="flex items-center justify-center space-x-12">
             <NavigationMenuItem>
-              <Link 
-                to="/" 
+              <button
+                onClick={handleHomeClick}
                 className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
                 {t('Home')}
-              </Link>
+              </button>
             </NavigationMenuItem>
             
             <NavigationMenuItem>
@@ -117,7 +126,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[800px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
+              <NavigationMenuContent className="w-[600px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
                 <div className="space-y-6">
                   <Link to="/testimonials" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
                     <Star className="h-8 w-8 text-yellow-500 transition-transform duration-200 group-hover:scale-110" />
