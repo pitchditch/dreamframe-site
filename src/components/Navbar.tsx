@@ -79,7 +79,7 @@ const Navbar = () => {
                 More <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 hover:scale-110" />
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="bg-white border border-gray-200 shadow-lg rounded-md w-72"
+                className="bg-white border border-gray-200 shadow-lg rounded-md w-80"
                 align="center"
                 sideOffset={0}
               >
