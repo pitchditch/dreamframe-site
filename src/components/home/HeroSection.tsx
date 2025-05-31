@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -93,9 +92,9 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
       
-      {/* Hero Content - Centered */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'} ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-        <div className={`${isMobile ? 'max-w-full text-center' : 'max-w-4xl text-center'}`}>
+      {/* Hero Content */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'} ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 md:mb-6 animate-on-scroll">
             <span className="text-white font-medium text-xs sm:text-sm md:text-base">{t("Professional Pressure Washing Services")}</span>
           </div>
@@ -117,7 +116,7 @@ const HeroSection = () => {
               </span>
             </h1>
             
-            <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-sm sm:text-base md:text-xl lg:text-2xl'} mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white mx-auto`}>
+            <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-sm sm:text-base md:text-xl lg:text-2xl'} mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white`}>
               {isMobile 
                 ? t("Fast, affordable exterior cleaning in Surrey, White Rock & Metro Vancouver.")
                 : t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")
@@ -126,8 +125,8 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Postal Code Input Section - Centered */}
-        <div className={`${isMobile ? 'w-full max-w-md' : 'max-w-2xl w-full'} mt-2 md:mt-4 mb-4 md:mb-6 animate-on-scroll delay-300`}>
+        {/* Postal Code Input Section */}
+        <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} mt-2 md:mt-4 mb-4 md:mb-6 animate-on-scroll delay-300`}>
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
               <Input
@@ -150,15 +149,15 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Personal Touch Section - Centered */}
-        <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 my-4 md:my-6 animate-on-scroll delay-700 ${isMobile ? 'max-w-full mb-8' : 'mb-16'}`}>
-          <div className={`bg-black/40 backdrop-blur-sm ${isMobile ? 'p-4 rounded-xl max-w-full' : 'p-3 md:p-4 lg:p-6 rounded-xl max-w-md'} border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center justify-center`}>
+        {/* Personal Touch Section */}
+        <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 my-4 md:my-6 animate-on-scroll delay-700 ${isMobile ? 'max-w-full mb-8' : 'mb-16'}`}>
+          <div className={`bg-black/40 backdrop-blur-sm ${isMobile ? 'p-4 rounded-xl max-w-full' : 'p-3 md:p-4 lg:p-6 rounded-xl max-w-md'} border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center`}>
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
               alt="Jayden Fisher - Owner" 
               className={`${isMobile ? 'w-14 h-14' : 'w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20'} rounded-full border-2 border-white shadow-md mr-3 md:mr-4 flex-shrink-0`}
             />
-            <div className="text-center sm:text-left">
+            <div className="text-left">
               <p className={`font-bold text-white ${isMobile ? 'text-sm leading-tight' : 'text-xs sm:text-sm md:text-base lg:text-lg'} drop-shadow-md leading-tight`}>
                 {t("Every Job is Personally Checked by Me.")}
               </p>
