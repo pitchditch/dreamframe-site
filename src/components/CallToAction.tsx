@@ -31,7 +31,8 @@ const CallToAction = ({
           <img 
             src={backgroundImage} 
             alt="Call to action background" 
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover"
+            style={{ objectPosition: 'center center', objectFit: 'cover' }} // Ensure full image coverage
           />
         </div>
       )}
