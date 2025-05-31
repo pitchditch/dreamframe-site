@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -10,6 +9,7 @@ import { Shield, Droplets, Cloud, CheckCircle } from 'lucide-react';
 import PriceCalculatorOverlay from '@/components/PriceCalculatorOverlay';
 import GutterCleaningQuoteOverlay from '@/components/forms/GutterCleaningQuoteOverlay';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import GutterProcessCarousel from '../../components/services/gutter-cleaning/GutterProcessCarousel';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -305,7 +305,12 @@ const GutterCleaning = () => {
         </div>
       </section>
       
-      {/* Gutter Protection Options Section - Enhanced */}
+      <GutterQuadrantSection />
+      
+      {/* Replace the old process section with the new carousel */}
+      <GutterProcessCarousel />
+      
+      {/* Gutter Sticks Section - Enhanced */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -316,10 +321,7 @@ const GutterCleaning = () => {
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="p-6 border-r border-gray-200">
                   <h3 className="text-2xl font-bold mb-4 text-center">Gutter Sticks</h3>
-                  <div className="mb-4 grid grid-cols-2 gap-2">
-                    <img src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" alt="Gutter Stick Installation in Surrey" className="rounded-lg shadow-lg w-full" />
-                    <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Full Gutter Guards Installation in White Rock" className="rounded-lg shadow-lg w-full" />
-                  </div>
+                  <img src="/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png" alt="Gutter Stick Installation in Surrey" className="rounded-lg shadow-lg w-full mb-4" />
                   <ul className="space-y-2">
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Budget-friendly option</li>
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Easy installation</li>
@@ -330,10 +332,7 @@ const GutterCleaning = () => {
                 
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-4 text-center">Full Gutter Guards</h3>
-                  <div className="mb-4 grid grid-cols-2 gap-2">
-                    <img src="/lovable-uploads/d6175f79-c579-4b77-95d4-628dce0cbfb0.png" alt="Premium Gutter Guard System in Metro Vancouver" className="rounded-lg shadow-lg w-full" />
-                    <img src="/lovable-uploads/c392a809-0ef2-4dd9-99b8-7e35138d9165.png" alt="Professional Gutter Guard Installation Before and After" className="rounded-lg shadow-lg w-full" />
-                  </div>
+                  <img src="/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png" alt="Gutter Guard Installation in White Rock" className="rounded-lg shadow-lg w-full mb-4" />
                   <ul className="space-y-2">
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Maximum protection</li>
                     <li className="flex items-center"><CheckCircle className="text-green-600 mr-2" size={16} />Reduces cleaning frequency</li>
@@ -355,7 +354,109 @@ const GutterCleaning = () => {
         </div>
       </section>
       
-      <GutterQuadrantSection />
+      {/* Water Fed Pole System Video Section */}
+      <section className="w-full py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6 heading-text">Water Fed Pole System</h2>
+              <p className="text-lg text-gray-700 mb-6 content-text">
+                Our state-of-the-art water fed pole system revolutionizes window cleaning by using purified water 
+                and extending telescopic poles to reach heights up to 60 feet safely from the ground.
+              </p>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Purified Water Technology</h3>
+                    <p className="text-gray-600">
+                      Our system uses deionized water that leaves no spots, streaks, or residue, 
+                      providing crystal-clear results every time.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Enhanced Safety</h3>
+                    <p className="text-gray-600">
+                      No ladders required - our technicians stay safely on the ground while 
+                      cleaning windows up to 6 stories high.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8">
+                <GutterCleaningQuoteOverlay buttonText="Get My Free Quote" variant="bc-red" />
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+                <iframe 
+                  src="https://www.youtube.com/embed/03njfGLUDUQ?autoplay=1&mute=1" 
+                  title="Water Fed Pole System for Window Cleaning"
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Traditional Squeegee Cleaning Technique Video Section */}
+      <section className="w-full py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="lg:order-2">
+              <h2 className="text-3xl font-bold mb-6 heading-text">Traditional Squeegee Cleaning</h2>
+              <p className="text-lg text-gray-700 mb-6 content-text">
+                For interior windows and detailed cleaning work, our skilled technicians use traditional squeegee 
+                techniques combined with eco-friendly cleaning solutions for perfect results.
+              </p>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Expert Technique</h3>
+                    <p className="text-gray-600">
+                      Our trained professionals use proper squeegee techniques for streak-free results every time.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Interior Cleaning</h3>
+                    <p className="text-gray-600">
+                      Perfect for interior windows where water fed pole systems aren't suitable.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="lg:order-1 relative">
+              <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+                <iframe 
+                  src="https://www.youtube.com/embed/bbHnt4UNPcU?autoplay=1&mute=1" 
+                  title="Professional Squeegee Window Cleaning Technique"
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Gutter Guards Installation Section with larger autoplay video */}
       <section className="py-16 bg-gray-50">
