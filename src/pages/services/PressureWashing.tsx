@@ -3,20 +3,15 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
-import { ExternalLink, MessageCircle, AlertCircle } from 'lucide-react';
-import ServiceProcessSection from '../../components/services/pressure-washing/ServiceProcessSection';
-import ServiceBenefitsSection from '../../components/services/pressure-washing/ServiceBenefitsSection';
-import ServiceFeatures from '../../components/services/pressure-washing/ServiceFeatures';
-import DrivewayCleaning from '../../components/services/pressure-washing/DrivewayCleaning';
-import ImageCarousel from '../../components/services/pressure-washing/ImageCarousel';
+import { Check, Shield, Droplets, Home, Car, TreePine } from 'lucide-react';
 import MoreServicesSection from '../../components/MoreServicesSection';
 import CitiesCarousel from '@/components/CitiesCarousel';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
-import PressureWashingForm from '@/components/forms/PressureWashingForm';
 import { Card } from '@/components/ui/card';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
-import SidingCleaningSection from '../../components/services/pressure-washing/SidingCleaningSection';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const PressureWashing = () => {
   const faqs = [
@@ -43,163 +38,198 @@ const PressureWashing = () => {
   ];
   
   return (
-    <Layout title="Professional Pressure Washing Services | Surrey & White Rock" description="Expert pressure washing services for homes and businesses. Remove dirt, grime, and stains with our specialized equipment and eco-friendly solutions.">
+    <Layout 
+      title="Professional Pressure Washing Services | BC Pressure Washing" 
+      description="Get expert pressure washing in Surrey, White Rock & Metro Vancouver. Safe, eco-friendly soft wash & power wash solutions. Request a free quote today!"
+    >
       <ServiceHeader 
-        title="Professional Pressure Washing"
-        description="Restore the beauty of your exterior surfaces with our specialized pressure washing services."
-        youtubeId="HuXyYAxC4Fs" // Updated YouTube ID for mobile
-        youtubeDesktopId="lYnXijewxCM" // Added new desktop YouTube ID
+        title="Revitalize Your Home with Expert Pressure Washing"
+        description="Restore the beauty of your siding, decks, driveways, and more with our safe, eco-friendly pressure and soft washing services."
+        youtubeId="HuXyYAxC4Fs"
+        youtubeDesktopId="lYnXijewxCM"
       />
       
+      {/* Benefits Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 heading-text">Revitalize Your Home's Exterior</h2>
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold mb-6 heading-text">Instantly Improve Curb Appeal</h2>
             <p className="text-lg text-gray-700 mb-8 content-text">
-              Our professional pressure washing services remove years of built-up dirt, grime, mold, and mildew, instantly transforming your property's appearance and protecting your investment.
-            </p>
-            <p className="text-lg text-gray-700 mb-8 content-text">
-              Using state-of-the-art equipment and eco-friendly cleaning solutions, we safely clean all exterior surfaces including:
+              Our pressure washing removes dirt, algae, mold, and stains to reveal your home's true beauty—protecting your investment and boosting value.
             </p>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-4 rounded-lg">
-                <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-20 h-20 object-cover rounded-lg" />
-                <span className="font-medium text-center">Siding & exterior walls</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-6 rounded-lg">
+                <Shield className="w-12 h-12 text-bc-red" />
+                <span className="font-medium text-center">Safe for All Surfaces</span>
               </div>
-              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-4 rounded-lg">
-                <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-20 h-20 object-cover rounded-lg" />
-                <span className="font-medium text-center">Fences & gates</span>
+              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-6 rounded-lg">
+                <Droplets className="w-12 h-12 text-bc-red" />
+                <span className="font-medium text-center">Eco-Friendly & Biodegradable Solutions</span>
               </div>
-              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-4 rounded-lg">
-                <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-20 h-20 object-cover rounded-lg" />
-                <span className="font-medium text-center">Decks & patios</span>
+              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-6 rounded-lg">
+                <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Professional Equipment" className="w-12 h-12 object-contain" />
+                <span className="font-medium text-center">Professional-Grade Equipment</span>
               </div>
-              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-4 rounded-lg">
-                <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-20 h-20 object-cover rounded-lg" />
-                <span className="font-medium text-center">Driveways & walkways</span>
-              </div>
-            </div>
-
-            <div className="relative inline-block group">
-              <button className="bg-bc-red hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                Request Pressure Washing Quote
-              </button>
-              
-              {/* Overlay that appears on hover */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <div className="bg-white rounded-lg shadow-2xl p-6 border-2 border-gray-100 w-96 max-w-screen-sm">
-                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-l-2 border-t-2 border-gray-100 rotate-45"></div>
-                  <PressureWashingForm />
-                </div>
+              <div className="flex flex-col items-center space-y-4 bg-gray-50 p-6 rounded-lg">
+                <Check className="w-12 h-12 text-bc-red" />
+                <span className="font-medium text-center">Fully Insured & Satisfaction Guaranteed</span>
               </div>
             </div>
 
-            <ServiceFeatures />
-
-            {/* Pressure Washing vs Soft Washing Section */}
-            <div className="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-100">
-              <h3 className="text-2xl font-bold mb-4 text-blue-800">Pressure Washing vs. Soft Washing</h3>
-              <div className="flex items-start mb-4">
-                <AlertCircle className="text-blue-700 mr-2 flex-shrink-0 mt-1" size={20} />
-                <p className="text-blue-700">
-                  <strong>We recommend soft washing for most exterior surfaces.</strong> Our professional technicians use specialized equipment and quality products to ensure the best results without damage.
-                </p>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-6 mt-6">
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <h4 className="font-bold text-lg mb-2">Pressure Washing</h4>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Uses high-pressure water spray</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Ideal for concrete, stone, and brick</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Removes tough stains and built-up grime</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Can damage delicate surfaces if not done properly</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white p-4 rounded-lg shadow-sm border-2 border-green-200">
-                  <h4 className="font-bold text-lg mb-2 text-green-700">Soft Washing <span className="text-sm font-normal text-green-600">(Recommended)</span></h4>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Uses low pressure and specialized cleaning solutions</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Safe for all surfaces including vinyl siding, stucco, and roofs</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Kills mold, mildew, and algae at the root</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-gray-700 mr-2">•</span>
-                      <span>Longer-lasting results than pressure washing alone</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-6 bg-green-50 p-4 rounded-lg border border-green-100">
-                <p className="text-green-800">
-                  <strong>Our Approach:</strong> We specialize in quality products and proper application techniques, ensuring your property receives the appropriate cleaning method for each surface. 
-                  Our technicians are trained to assess your specific needs and recommend the safest, most effective solution.
-                </p>
-              </div>
-            </div>
+            <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
+              <Link to="/calculator">Check Prices & Availability</Link>
+            </Button>
           </div>
         </div>
       </section>
       
-      <section className="w-full bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <ServiceBenefitsSection />
-        </div>
-      </section>
-      
-      <ServiceProcessSection />
-      
-      <SidingCleaningSection />
-      
-      <DrivewayCleaning />
-      
+      {/* What We Clean Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-6">Recent Pressure Washing Project</h2>
-          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
-            See the impressive results we've achieved for commercial clients in the South Surrey and White Rock area.
-          </p>
-
+          <h2 className="text-3xl font-bold text-center mb-12">We Professionally Clean All Exterior Surfaces</h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+            <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <span className="font-medium text-center">Siding & Exterior Walls</span>
+            </Link>
+            <Link to="/services/deck-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <span className="font-medium text-center">Decks & Patios</span>
+            </Link>
+            <Link to="/services/driveway-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <span className="font-medium text-center">Driveways & Walkways</span>
+            </Link>
+            <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <span className="font-medium text-center">Fences & Gates</span>
+            </Link>
+            <Link to="/services/roof-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img src="/lovable-uploads/51f10eb0-c939-49d5-8ab5-2235a162169e.png" alt="Roofs & Gutters" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <span className="font-medium text-center">Roofs & Gutters</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+      
+      {/* Soft Wash vs Pressure Wash Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Choosing the Right Method for Your Home</h2>
+          
           <div className="max-w-4xl mx-auto">
-            <div className="overflow-hidden rounded-lg shadow-xl">
-              <img 
-                src="/lovable-uploads/a2a1376b-3da7-4c9d-9a85-60ba24418d4f.png" 
-                alt="South Abbotsford Church Pressure Washing Project"
-                className="w-full h-auto" 
-              />
-              <div className="p-6 bg-white">
-                <h3 className="font-bold text-xl mb-2">South Abbotsford Church</h3>
-                <p className="text-gray-700">Commercial pressure washing service for walkways, entrances and exterior surfaces to remove dirt, grime, and organic growth.</p>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full bg-white rounded-lg shadow-sm border border-gray-200">
+                <thead>
+                  <tr className="bg-gray-50">
+                    <th className="px-6 py-4 text-left font-semibold text-gray-900">Method</th>
+                    <th className="px-6 py-4 text-left font-semibold text-gray-900">Pressure Washing</th>
+                    <th className="px-6 py-4 text-left font-semibold text-gray-900 text-green-700">Soft Washing (Recommended)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-t">
+                    <td className="px-6 py-4 font-medium">Pressure</td>
+                    <td className="px-6 py-4">High-pressure water</td>
+                    <td className="px-6 py-4">Low-pressure with detergents</td>
+                  </tr>
+                  <tr className="border-t bg-gray-50">
+                    <td className="px-6 py-4 font-medium">Best For</td>
+                    <td className="px-6 py-4">Concrete, brick, stone</td>
+                    <td className="px-6 py-4">Siding, roofs, stucco</td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-6 py-4 font-medium">Risks</td>
+                    <td className="px-6 py-4">Can damage delicate materials</td>
+                    <td className="px-6 py-4">Safe for all surfaces</td>
+                  </tr>
+                  <tr className="border-t bg-gray-50">
+                    <td className="px-6 py-4 font-medium">Benefit</td>
+                    <td className="px-6 py-4">Removes tough stains</td>
+                    <td className="px-6 py-4">Kills algae/mildew at the root</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <p className="text-lg text-gray-700">
+                Our technicians are trained to assess your property and apply the safest, most effective cleaning method.
+              </p>
             </div>
           </div>
         </div>
       </section>
       
+      {/* 3-Step Process Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Proven 3-Step Process for a Spotless Exterior</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="text-center bg-white p-8 rounded-lg shadow-sm">
+              <div className="w-16 h-16 bg-bc-red text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+              <h3 className="text-xl font-semibold mb-4">Surface Inspection</h3>
+              <p className="text-gray-600">We assess stains, surface type, and sensitivity.</p>
+            </div>
+            <div className="text-center bg-white p-8 rounded-lg shadow-sm">
+              <div className="w-16 h-16 bg-bc-red text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+              <h3 className="text-xl font-semibold mb-4">Customized Cleaning</h3>
+              <p className="text-gray-600">We apply the right pressure and cleaning solution.</p>
+            </div>
+            <div className="text-center bg-white p-8 rounded-lg shadow-sm">
+              <div className="w-16 h-16 bg-bc-red text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+              <h3 className="text-xl font-semibold mb-4">Final Rinse & Inspection</h3>
+              <p className="text-gray-600">Spot-check and detail clean all surfaces.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Testimonials Section */}
       <TestimonialsSection />
+      
+      {/* Driveway Cleaning Highlight */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-8">
+            <h2 className="text-3xl font-bold text-center mb-6">Driveway Cleaning in South Surrey</h2>
+            <p className="text-lg text-center text-gray-700 mb-8">
+              Oil stains? Moss? Our high-pressure cleaning brings driveways back to life.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <Check className="w-6 h-6 text-green-600 mr-3" />
+                  <span>Removes oil & grease stains</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="w-6 h-6 text-green-600 mr-3" />
+                  <span>Eliminates slippery moss</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="w-6 h-6 text-green-600 mr-3" />
+                  <span>Prevents long-term concrete damage</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="w-6 h-6 text-green-600 mr-3" />
+                  <span>Optional sealing available</span>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <img 
+                  src="/lovable-uploads/b5967047-dddc-47e1-a23c-dd4a5feb9125.png" 
+                  alt="Driveway before and after cleaning"
+                  className="rounded-lg shadow-md max-w-full h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       <FAQSection
         title="Frequently Asked Questions"
@@ -216,11 +246,31 @@ const PressureWashing = () => {
         </div>
       </section>
       
-      <CallToAction 
-        title="Ready to Transform Your Property?"
-        subtitle="Contact us today for a free estimate on our pressure washing services."
-        backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
-      />
+      {/* Final CTA Section */}
+      <section className="py-16 bg-bc-red text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready to Restore Your Home's Beauty?</h2>
+          <p className="text-xl mb-8">Get professional pressure washing that protects and beautifies your property</p>
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+            <Button asChild variant="outline" size="lg" className="bg-white text-bc-red hover:bg-gray-100 border-white">
+              <Link to="/contact">Request Free Quote</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="bg-white text-bc-red hover:bg-gray-100 border-white">
+              <Link to="/calculator">Compare Prices & Packages</Link>
+            </Button>
+          </div>
+          
+          <div className="text-center">
+            <a 
+              href="tel:7788087620" 
+              className="inline-flex items-center justify-center bg-white text-bc-red px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors font-semibold text-lg"
+            >
+              📞 Call (778) 808-7620
+            </a>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };
