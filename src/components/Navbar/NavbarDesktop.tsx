@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -71,10 +72,6 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <img src="/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Roof Cleaning')}</span>
                       </Link>
-                      <Link to="/services/window-cleaning#solar-panel-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/a21be9c9-78ec-43a8-87d1-143bdec40c29.png" alt="Solar Panel Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Solar Panel Cleaning</span>
-                      </Link>
                       <Link to="/services/pressure-washing#driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
                         <img src="/lovable-uploads/6119d12e-de96-47a5-a17f-8032a2832f33.png" alt="Driveway Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Driveway Cleaning</span>
@@ -82,10 +79,6 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                       <Link to="/services/pressure-washing#soft-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
                         <img src="/lovable-uploads/ce17b0e9-d79c-490d-82cc-23e4cf73ab15.png" alt="Soft Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Soft Washing</span>
-                      </Link>
-                      <Link to="/services/pressure-washing#fence-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/91ae4920-9f35-47d2-b331-1abfffbd5471.png" alt="Fence Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">Fence Washing</span>
                       </Link>
                       <Link to="/services/gutter-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
                         <img src="/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
@@ -96,8 +89,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Window Cleaning')}</span>
                       </Link>
                       <Link to="/services/pressure-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="House Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('House Washing')}</span>
+                        <img src="/lovable-uploads/a3c67509-8a65-4059-bf72-2897185203a3.png" alt="Pressure Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-700 group-hover:text-bc-red font-medium text-xs text-center">{t('Pressure Washing')}</span>
                       </Link>
                     </div>
                   </div>
