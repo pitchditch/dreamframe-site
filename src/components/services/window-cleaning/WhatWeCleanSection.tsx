@@ -14,17 +14,20 @@ const WhatWeCleanSection = () => {
     {
       title: "Patio Glass Doors",
       description: "Sliding glass doors, French doors, and patio entrances",
-      image: "/lovable-uploads/7fd77226-1d57-4c52-a870-871532745a3f.png"
+      dirtyImage: "/lovable-uploads/492c7f1a-ebaa-40f0-b518-300e350a4e82.png",
+      cleanImage: "/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png"
     },
     {
       title: "Glass Awnings",
       description: "Glass canopies, awnings, and overhead glass structures",
-      image: "/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
+      dirtyImage: "/lovable-uploads/213a180a-cf25-44e8-b093-62403c1021a0.png",
+      cleanImage: "/lovable-uploads/22c437ec-09b5-4a11-9de6-d62c4f12c2a3.png"
     },
     {
       title: "Glass Railings",
       description: "Balcony glass panels, deck railings, and safety glass barriers",
-      image: "/lovable-uploads/43f837f2-f6f3-404b-85de-ba0901296f83.png"
+      dirtyImage: "/lovable-uploads/2514ad9a-c084-41a9-8a08-40a45a29fdb3.png",
+      cleanImage: "/lovable-uploads/aadf9684-0107-4c55-98c9-6e9291d928bb.png"
     },
     {
       title: "Commercial Windows",
@@ -34,7 +37,8 @@ const WhatWeCleanSection = () => {
     {
       title: "Skylights",
       description: "Roof skylights, glass ceiling panels, and light wells",
-      image: "/lovable-uploads/481b70c0-733d-4cc9-9629-3628731d87e4.png"
+      dirtyImage: "/lovable-uploads/53de49ac-8e5b-4317-a655-abb8dad28dcd.png",
+      cleanImage: "/lovable-uploads/0de2f47b-c954-4288-80e1-89aa79dba9bb.png"
     }
   ];
 
@@ -54,11 +58,29 @@ const WhatWeCleanSection = () => {
           {cleaningServices.map((service, index) => (
             <div key={index} className="group bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="relative overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title}
-                  className={`w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-transform duration-300 group-hover:scale-105`}
-                />
+                {service.dirtyImage && service.cleanImage ? (
+                  <div className="relative">
+                    <img 
+                      src={service.dirtyImage} 
+                      alt={`${service.title} - Before cleaning`}
+                      className={`w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-opacity duration-500 group-hover:opacity-0`}
+                    />
+                    <img 
+                      src={service.cleanImage} 
+                      alt={`${service.title} - After cleaning`}
+                      className={`absolute inset-0 w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100`}
+                    />
+                    <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
+                      Hover to see clean
+                    </div>
+                  </div>
+                ) : (
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className={`w-full ${isMobile ? 'h-48' : 'h-56'} object-cover transition-transform duration-300 group-hover:scale-105`}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               

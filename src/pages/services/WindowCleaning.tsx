@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
@@ -67,23 +68,53 @@ const WindowCleaning = () => {
   const faqs = [
     {
       question: "How often should I have my windows cleaned in Surrey?",
-      answer: "For residential properties in Surrey and White Rock, we recommend quarterly cleanings (4 times per year). Commercial properties may benefit from monthly or bi-monthly service depending on location and foot traffic."
+      answer: "For residential properties in Surrey and White Rock, we recommend quarterly cleanings (4 times per year). Commercial properties may benefit from monthly or bi-monthly service depending on location and foot traffic.",
+      category: "Frequency & Scheduling"
     },
     {
       question: "Do you clean windows in winter in Metro Vancouver?",
-      answer: "Yes, we provide window cleaning services year-round throughout Surrey, White Rock, and Greater Vancouver. However, we may reschedule appointments during severe weather conditions for safety reasons."
+      answer: "Yes, we provide window cleaning services year-round throughout Surrey, White Rock, and Greater Vancouver. However, we may reschedule appointments during severe weather conditions for safety reasons.",
+      category: "Scheduling"
     },
     {
       question: "What's included in your Surrey window cleaning service?",
-      answer: "Our standard service includes cleaning both interior and exterior window surfaces, sills, and frames. We also remove screens when necessary and clean them separately."
+      answer: "Our standard service includes cleaning both interior and exterior window surfaces, sills, and frames. We also remove screens when necessary and clean them separately. For an additional fee, we can clean gutters and pressure wash exterior surfaces.",
+      category: "Service Details"
     },
     {
       question: "Are you insured for window cleaning in White Rock?",
-      answer: "Yes, we are fully insured with general liability and workers' compensation insurance for all our services in Surrey, White Rock, and Metro Vancouver. We can provide proof of insurance upon request."
+      answer: "Yes, we are fully insured with general liability and workers' compensation insurance for all our services in Surrey, White Rock, and Metro Vancouver. We can provide proof of insurance upon request.",
+      category: "Insurance & Safety"
     },
     {
       question: "What if it rains after you clean my windows in Vancouver?",
-      answer: "Rain actually keeps windows cleaner longer when properly cleaned with purified water. However, if you're not satisfied with the results, we'll return to re-clean at no charge."
+      answer: "Rain actually keeps windows cleaner longer when properly cleaned with purified water. However, if you're not satisfied with the results within 24 hours of service, we'll return to re-clean at no charge.",
+      category: "Guarantee"
+    },
+    {
+      question: "How do you clean high windows safely?",
+      answer: "We use professional water-fed pole systems that allow us to clean windows up to 6 stories high while staying safely on the ground. For extremely high windows, we use professional ladder systems with proper safety equipment.",
+      category: "Safety & Equipment"
+    },
+    {
+      question: "Do you use eco-friendly cleaning products?",
+      answer: "Yes, we use biodegradable, eco-friendly cleaning solutions and purified water systems. Our methods are safe for your family, pets, and the environment.",
+      category: "Environmental"
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept cash, check, credit cards (Visa, MasterCard, American Express), and e-transfers. Payment is due upon completion of service unless other arrangements are made in advance.",
+      category: "Payment & Pricing"
+    },
+    {
+      question: "How long does window cleaning take?",
+      answer: "The time varies based on the size of your property and number of windows. A typical residential home takes 1-3 hours, while larger commercial properties may take a full day or more.",
+      category: "Service Details"
+    },
+    {
+      question: "Can you clean windows with hard water stains?",
+      answer: "Yes, we specialize in removing hard water stains, mineral deposits, and other stubborn marks using specialized tools and techniques. Severe cases may require additional treatment at an extra cost.",
+      category: "Specialized Cleaning"
     }
   ];
 
@@ -289,8 +320,9 @@ const WindowCleaning = () => {
       
       <div id="faq">
         <FAQSection
-          title="Frequently Asked Questions"
-          subtitle="Get answers to common questions about our window cleaning services"
+          title="Window Cleaning Frequently Asked Questions"
+          subtitle="Expert answers to your most common window cleaning questions"
+          description="Get detailed information about our window cleaning services, processes, and policies."
           faqs={faqs}
         />
       </div>
