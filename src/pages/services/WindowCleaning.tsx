@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
@@ -27,7 +26,7 @@ const WindowCleaning = () => {
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
+          const { offsetTop, offsetHeight } = element as HTMLElement;
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
@@ -36,8 +35,8 @@ const WindowCleaning = () => {
       }
 
       // Add slide-up effect for content below hero
-      const heroSection = document.querySelector('.hero-section');
-      const contentBelow = document.querySelector('.content-below-hero');
+      const heroSection = document.querySelector('.hero-section') as HTMLElement;
+      const contentBelow = document.querySelector('.content-below-hero') as HTMLElement;
       
       if (heroSection && contentBelow) {
         const heroHeight = heroSection.offsetHeight;
