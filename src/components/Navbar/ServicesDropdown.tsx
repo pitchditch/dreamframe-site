@@ -61,32 +61,6 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
             
             <DropdownMenuItem asChild className="p-0">
               <Link
-                to="/services/gutter-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <Shield className="mr-3 h-5 w-5 text-green-500 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">Gutter Cleaning</div>
-                  <div className="text-sm text-gray-500">Complete care</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
-            <DropdownMenuItem asChild className="p-0">
-              <Link
-                to="/services/roof-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <Zap className="mr-3 h-5 w-5 text-purple-500 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">Roof Cleaning</div>
-                  <div className="text-sm text-gray-500">Safe removal</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
-            <DropdownMenuItem asChild className="p-0">
-              <Link
                 to="/services/driveway-cleaning"
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
               >
@@ -107,6 +81,32 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <div>
                   <div className="font-medium">House Soft Wash</div>
                   <div className="text-sm text-gray-500">Gentle cleaning</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/gutter-cleaning"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <Shield className="mr-3 h-5 w-5 text-green-500 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">Gutter Cleaning</div>
+                  <div className="text-sm text-gray-500">Complete care</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/roof-cleaning"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <Zap className="mr-3 h-5 w-5 text-purple-500 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">Roof Cleaning</div>
+                  <div className="text-sm text-gray-500">Safe removal</div>
                 </div>
               </Link>
             </DropdownMenuItem>

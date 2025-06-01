@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Home, Droplets, Car, Building, Truck, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
@@ -41,12 +42,12 @@ const ServiceSelectionSection = () => {
   const services: Service[] = [
     {
       id: 'house-washing',
-      title: t('House Washing'),
+      title: t('House Soft Wash'),
       icon: Home,
-      image: '/lovable-uploads/faa9e3ae-ec74-49c8-bbb5-382b09f44b79.png',
+      image: '/lovable-uploads/8fd22796-68ae-4cb7-a6f3-4743b0d93a37.png',
       slideImages: houseWashingImages,
       videoId: 'lYnXijewxCM',
-      description: t('Complete exterior house cleaning')
+      description: t('Gentle exterior house cleaning')
     },
     {
       id: 'window-cleaning',
@@ -60,8 +61,8 @@ const ServiceSelectionSection = () => {
     {
       id: 'driveway-cleaning',
       title: t('Driveway Cleaning'),
-      icon: Truck,
-      image: '/lovable-uploads/80972bf0-3700-43b0-8983-d5861531bf57.png',
+      icon: Car,
+      image: '/lovable-uploads/4bc56646-a50c-4c86-aeeb-997bd1c1c579.png',
       slideImages: ['/lovable-uploads/80972bf0-3700-43b0-8983-d5861531bf57.png', '/lovable-uploads/ff861e81-c504-47c8-aae7-5319b9ad2ab4.png'],
       videoId: 'lYnXijewxCM',
       description: t('Remove stains and restore surfaces')
@@ -119,10 +120,10 @@ const ServiceSelectionSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold mb-6 text-gray-900`}>
-            {t("What Do You Need Pressure Washed?")}
+            {t("What Can We Make Shine Today?")}
           </h2>
           <p className={`${isMobile ? 'text-lg' : 'text-xl'} text-gray-600 max-w-3xl mx-auto`}>
-            {t("Click a service below to request a free estimate")}
+            {t("Choose a service to get instant pricing")}
           </p>
         </div>
 
