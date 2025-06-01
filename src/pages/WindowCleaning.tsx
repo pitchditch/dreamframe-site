@@ -41,19 +41,25 @@ const WindowCleaning = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section 
-        className="min-h-screen bg-cover bg-center text-white flex flex-col justify-start items-center pt-24"
-        style={{ backgroundImage: "url('/lovable-uploads/f7abf414-3ad9-4c10-a077-7cbb8881d937.png')" }}
-      >
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6">
+      {/* Hero Section - Completely New */}
+      <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/lovable-uploads/f7abf414-3ad9-4c10-a077-7cbb8881d937.png')" }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        
+        {/* Hero Content - Centered */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
             Window Cleaning in Surrey, White Rock & Greater Vancouver
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-white mb-8 max-w-4xl mx-auto leading-relaxed">
             Crystal-clear, streak-free windows using our purified water technology.
           </p>
-          <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4">
+          <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4 hover:scale-105 transition-transform">
             <Link to="/calculator">Check Prices & Availability</Link>
           </Button>
         </div>

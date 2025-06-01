@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -76,7 +75,7 @@ const PressureWashingForm = () => {
     if (values.addDriveway) additionalServices.push('Driveway Cleaning');
     if (values.addDeck) additionalServices.push('Deck/Patio Cleaning');
     
-    // Prepare the data for email
+    // Prepare the data for email to business
     const templateParams = {
       from_name: values.fullName,
       from_email: values.email,
@@ -90,7 +89,7 @@ const PressureWashingForm = () => {
       subject: 'New Pressure Washing Quote Request'
     };
     
-    // Send email using EmailJS
+    // Send email to business using EmailJS
     emailjs.send(
       'service_xrk4vas',
       'template_cpivz2k',
@@ -98,10 +97,30 @@ const PressureWashingForm = () => {
       'MMzAmk5eWrjFgC_nP'
     )
     .then((response) => {
-      console.log('Email sent successfully:', response);
+      console.log('Business email sent successfully:', response);
+      
+      // Send confirmation email to customer
+      const customerTemplateParams = {
+        to_email: values.email,
+        to_name: values.fullName,
+        service_type: 'Pressure Washing',
+        subject: 'Quote Request Received - BC Pressure Washing',
+        message: `Hi ${values.fullName},\n\nThank you for requesting a pressure washing quote! We've received your request and will contact you shortly with a personalized quote.\n\nService Details:\n- Service: Pressure Washing\n- Surface Type: ${values.surfaceType}\n- Address: ${values.address}\n- Additional Services: ${additionalServices.join(', ') || 'None'}\n\nWe'll be in touch within 24 hours.\n\nBest regards,\nJayden Fisher\nBC Pressure Washing\n(604) 357-2936`,
+        business_email: 'bcpressurewashing.ca@gmail.com'
+      };
+      
+      return emailjs.send(
+        'service_xrk4vas',
+        'template_cpivz2k',
+        customerTemplateParams,
+        'MMzAmk5eWrjFgC_nP'
+      );
+    })
+    .then((response) => {
+      console.log('Customer confirmation email sent successfully:', response);
       toast({
         title: "Request Submitted!",
-        description: "We'll contact you shortly about your pressure washing quote. Final quote confirmed by Jayden.",
+        description: "We'll contact you shortly about your pressure washing quote. Check your email for confirmation.",
       });
       form.reset();
     })
@@ -286,7 +305,7 @@ const PressureWashingForm = () => {
           
           <div className="p-3 bg-gray-50 rounded-lg mb-4 flex items-center gap-2">
             <CheckCircle className="text-green-500 flex-shrink-0" size={16} />
-            <p className="text-sm text-gray-600">Final quote confirmed by Jayden</p>
+            <p className="text-sm text-gray-600">Final quote confirmed by Jayden. You'll receive an email confirmation.</p>
           </div>
           
           <Button 
