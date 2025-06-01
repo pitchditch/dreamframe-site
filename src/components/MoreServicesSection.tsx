@@ -92,39 +92,43 @@ END:VCARD`;
           ))}
         </div>
         
-        {/* Download Contact Card Section */}
-        <div className="mt-16 bg-gradient-to-r from-bc-red to-red-600 rounded-lg p-8 text-white text-center">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Save Our Contact Info</h3>
-            <p className="text-lg mb-6 opacity-90">
-              Download our contact card to your phone for quick access to our services
-            </p>
+        {/* Download Contact Card Section - Made more prominent */}
+        <div className="mt-20 bg-gradient-to-r from-bc-red via-red-600 to-red-700 rounded-2xl p-10 text-white text-center shadow-2xl">
+          <div className="max-w-3xl mx-auto">
+            <div className="mb-6">
+              <Download className="h-16 w-16 mx-auto mb-4 text-white/90" />
+              <h3 className="text-3xl font-bold mb-4">Save Our Contact Info</h3>
+              <p className="text-xl mb-8 text-white/90">
+                Download our contact card to your phone for quick access to our services
+              </p>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <div className="flex items-center justify-center">
-                <Phone className="h-5 w-5 mr-2" />
-                <span>778-808-7620</span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              <div className="flex items-center justify-center bg-white/10 rounded-lg p-4">
+                <Phone className="h-6 w-6 mr-3" />
+                <span className="text-lg font-semibold">778-808-7620</span>
               </div>
-              <div className="flex items-center justify-center">
-                <Mail className="h-5 w-5 mr-2" />
-                <span>Quick Response</span>
+              <div className="flex items-center justify-center bg-white/10 rounded-lg p-4">
+                <Mail className="h-6 w-6 mr-3" />
+                <span className="text-lg font-semibold">Quick Response</span>
               </div>
-              <div className="flex items-center justify-center">
-                <MapPin className="h-5 w-5 mr-2" />
-                <span>Surrey & White Rock</span>
+              <div className="flex items-center justify-center bg-white/10 rounded-lg p-4">
+                <MapPin className="h-6 w-6 mr-3" />
+                <span className="text-lg font-semibold">Surrey & White Rock</span>
               </div>
             </div>
             
             <Button 
               onClick={downloadContactCard}
               variant="outline" 
-              className="bg-white text-bc-red hover:bg-gray-100 border-white"
+              className="bg-white text-bc-red hover:bg-gray-100 border-white text-lg px-8 py-3 font-bold shadow-lg"
+              size="lg"
             >
-              <Download className="h-5 w-5 mr-2" />
+              <Download className="h-6 w-6 mr-3" />
               Download Contact Card
             </Button>
             
-            <p className="text-sm mt-4 opacity-75">
+            <p className="text-base mt-6 text-white/75">
               Compatible with iPhone, Android, and all modern devices
             </p>
           </div>

@@ -29,6 +29,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   const isMobile = useIsMobile();
   const IconComponent = service.icon;
 
+  // Determine icon color and size based on service
+  const getIconStyles = () => {
+    if (service.id === 'commercial') {
+      return "w-8 h-8 text-gray-600"; // Dark gray for commercial
+    } else if (service.id === 'roof-cleaning') {
+      return "w-10 h-10 text-bc-red"; // Larger for roof cleaning
+    } else {
+      return "w-8 h-8 text-bc-red";
+    }
+  };
+
   return (
     <div
       key={service.id}
@@ -57,10 +68,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
               <img 
                 src={service.customIcon} 
                 alt={`${service.title} icon`}
-                className="w-8 h-8"
+                className={service.id === 'roof-cleaning' ? "w-10 h-10" : "w-8 h-8"}
               />
             ) : (
-              <IconComponent className="w-8 h-8 text-bc-red" />
+              <IconComponent className={getIconStyles()} />
             )}
           </div>
           
