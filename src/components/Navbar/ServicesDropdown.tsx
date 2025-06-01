@@ -23,7 +23,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         Services <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        className="bg-white border border-gray-200 shadow-lg rounded-md w-80 p-0"
+        className="bg-white border border-gray-200 shadow-lg rounded-md w-80 p-0 z-50"
         align="center"
         sideOffset={0}
       >
@@ -31,7 +31,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 uppercase px-4 py-2">Residential Services</div>
           
-          {/* Single column layout for all residential services */}
+          {/* All residential services */}
           <div className="space-y-1">
             <DropdownMenuItem asChild className="p-0">
               <Link
@@ -51,7 +51,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 to="/services/pressure-washing"
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
               >
-                <img src="/lovable-uploads/7e4e1197-6f16-44aa-bb6d-aa5eb19f6f8a.png" alt="House Washing" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <img src="/lovable-uploads/7e4e1197-6f16-44aa-bb6d-aa5eb19f6f8a.png" alt="Pressure Washing" className="mr-3 h-5 w-5 flex-shrink-0" />
                 <div>
                   <div className="font-medium">Pressure Washing</div>
                   <div className="text-sm text-gray-500">Deep clean</div>
