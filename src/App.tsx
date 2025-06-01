@@ -25,6 +25,7 @@ import CommercialPressureWashing from "./pages/services/CommercialPressureWashin
 import VancouverWindowCleaning from "./pages/locations/VancouverWindowCleaning";
 import Services from "./pages/Services";
 import StickyContactBar from "./components/StickyContactBar";
+import AfkOverlay from "./components/AfkOverlay";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/vancouver-window-cleaning" element={<VancouverWindowCleaning />} />
           </Routes>
           <StickyContactBar />
+          <AfkOverlay />
         </BrowserRouter>
       </TooltipProvider>
     </HelmetProvider>

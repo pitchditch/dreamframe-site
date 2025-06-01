@@ -19,6 +19,7 @@ import HowWeCompleteJobsSection from '../components/home/HowWeCompleteJobsSectio
 import DoorToDoorSection from '../components/home/DoorToDoorSection';
 import QuickContactForm from '../components/home/QuickContactForm';
 import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import AfkOverlay from '../components/AfkOverlay';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -177,6 +178,7 @@ const Index = () => {
       </div>
       
       <ReferralButton />
+      <AfkOverlay />
     </Layout>
   );
 };
