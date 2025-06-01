@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Droplets, Zap, Shield, Building2 } from 'lucide-react';
+import { ChevronDown, Building2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,17 +31,56 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 uppercase px-4 py-2">Residential Services</div>
           
-          {/* All residential services */}
+          {/* All residential services in a single column */}
           <div className="space-y-1">
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/house-soft-wash"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <img src="/lovable-uploads/00d7b436-b2b5-4231-99d0-df1a09cb68ae.png" alt="House Soft Wash" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">House Soft Wash</div>
+                  <div className="text-sm text-gray-500">Gentle cleaning</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
             <DropdownMenuItem asChild className="p-0">
               <Link
                 to="/services/window-cleaning"
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
               >
-                <Droplets className="mr-3 h-5 w-5 text-blue-500 flex-shrink-0" />
+                <img src="/lovable-uploads/0c6a9ec0-eaa2-4aa8-816e-d9cf88afac7d.png" alt="Window Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
                 <div>
                   <div className="font-medium">Window Cleaning</div>
                   <div className="text-sm text-gray-500">Streak-free results</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/gutter-cleaning"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <img src="/lovable-uploads/af9b8f9c-8fc9-4a88-8768-17283cac5213.png" alt="Gutter Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">Gutter Cleaning</div>
+                  <div className="text-sm text-gray-500">Complete care</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/roof-cleaning"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <img src="/lovable-uploads/e1b8e784-b329-4db1-b413-c3a9abdfee7d.png" alt="Roof Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">Roof Cleaning</div>
+                  <div className="text-sm text-gray-500">Safe removal</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -68,45 +107,6 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <div>
                   <div className="font-medium">Driveway Cleaning</div>
                   <div className="text-sm text-gray-500">Remove stains</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
-            <DropdownMenuItem asChild className="p-0">
-              <Link
-                to="/services/house-soft-wash"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <img src="/lovable-uploads/8fd22796-68ae-4cb7-a6f3-4743b0d93a37.png" alt="House Soft Wash" className="mr-3 h-5 w-5 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">House Soft Wash</div>
-                  <div className="text-sm text-gray-500">Gentle cleaning</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
-            <DropdownMenuItem asChild className="p-0">
-              <Link
-                to="/services/gutter-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <Shield className="mr-3 h-5 w-5 text-green-500 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">Gutter Cleaning</div>
-                  <div className="text-sm text-gray-500">Complete care</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
-            <DropdownMenuItem asChild className="p-0">
-              <Link
-                to="/services/roof-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <Zap className="mr-3 h-5 w-5 text-purple-500 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">Roof Cleaning</div>
-                  <div className="text-sm text-gray-500">Safe removal</div>
                 </div>
               </Link>
             </DropdownMenuItem>
