@@ -31,7 +31,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 uppercase px-4 py-2">Residential Services</div>
           
-          {/* Single column layout for all 4 residential services */}
+          {/* Single column layout for all 6 residential services */}
           <div className="space-y-1">
             <DropdownMenuItem asChild className="p-0">
               <Link
@@ -81,6 +81,32 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <div>
                   <div className="font-medium">Roof Cleaning</div>
                   <div className="text-sm text-gray-500">Safe removal</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/driveway-cleaning"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <img src="/lovable-uploads/187029e6-fe9e-4a30-abbe-c2e3d5df4b66.png" alt="Driveway Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">Driveway Cleaning</div>
+                  <div className="text-sm text-gray-500">Remove stains</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/house-soft-wash"
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+              >
+                <img src="/lovable-uploads/19a40e34-ec1b-4d92-b01d-897069f3a180.png" alt="House Soft Wash" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <div>
+                  <div className="font-medium">House Soft Wash</div>
+                  <div className="text-sm text-gray-500">Gentle cleaning</div>
                 </div>
               </Link>
             </DropdownMenuItem>
