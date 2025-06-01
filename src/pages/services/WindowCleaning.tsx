@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
-import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
 import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
@@ -178,14 +177,6 @@ const WindowCleaning = () => {
         </script>
       </Helmet>
 
-      <ServiceHeader 
-        title="Window Cleaning in Surrey, White Rock & Greater Vancouver" 
-        description="Crystal-clear, streak-free windows using our purified water technology." 
-        imagePath="/lovable-uploads/43f837f2-f6f3-404b-85de-ba0901296f83.png"
-        darkOverlay={true}
-        buttonPosition="center"
-      />
-      
       <WindowCleaningStickyNav activeSection={activeSection} />
       
       <div id="overview">

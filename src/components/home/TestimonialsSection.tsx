@@ -13,10 +13,7 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4">
         <TestimonialsCarousel />
         
-        <div className="text-center mt-10 flex flex-col md:flex-row justify-center gap-4">
-          <Button asChild variant="outline" className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white">
-            <Link to="/testimonials">{t("View All Testimonials")}</Link>
-          </Button>
+        <div className="text-center mt-10">
           <Button asChild className="bg-bc-red hover:bg-red-700">
             <Link to="/compare-prices">{t("Compare Our Prices & Packages")}</Link>
           </Button>
