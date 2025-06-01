@@ -15,6 +15,7 @@ interface Service {
   slideImages: string[];
   videoId: string;
   description: string;
+  customIcon?: string;
 }
 
 const ServiceSelectionSection = () => {
@@ -53,6 +54,7 @@ const ServiceSelectionSection = () => {
       id: 'window-cleaning',
       title: t('Window Cleaning'),
       icon: Sparkles,
+      customIcon: '/lovable-uploads/7d3b55a8-280b-4668-8ab8-eeaa0861eec2.png',
       image: '/lovable-uploads/104fb195-8227-4f8c-af68-5406acc5388a.png',
       slideImages: windowCleaningImages,
       videoId: 'bbHnt4UNPcU',
@@ -71,6 +73,7 @@ const ServiceSelectionSection = () => {
       id: 'roof-cleaning',
       title: t('Roof Cleaning'),
       icon: Building,
+      customIcon: '/lovable-uploads/62be5586-79d1-4d39-a633-9d38f9026170.png',
       image: '/lovable-uploads/0c0d106e-85ea-4490-9176-1d36821732c1.png',
       slideImages: roofCleaningImages,
       videoId: 'eQSgdx9ujcc',
@@ -80,6 +83,7 @@ const ServiceSelectionSection = () => {
       id: 'gutter-cleaning',
       title: t('Gutter Cleaning'),
       icon: Droplets,
+      customIcon: '/lovable-uploads/dcfcefef-7a4b-4c84-8853-dfac2f5eae1d.png',
       image: '/lovable-uploads/4f0a7bbd-e220-49bd-80ec-c83bb961b38f.png',
       slideImages: gutterCleaningImages,
       videoId: 'EdMlx1sYJDc',
@@ -89,6 +93,7 @@ const ServiceSelectionSection = () => {
       id: 'commercial',
       title: t('Commercial Services'),
       icon: Building,
+      customIcon: '/lovable-uploads/6a911f6a-da7a-47ee-a80f-ace836d398fc.png',
       image: '/lovable-uploads/b5f7b3b1-4a41-4e10-963f-72eef95a03c4.png',
       slideImages: ['/lovable-uploads/b5f7b3b1-4a41-4e10-963f-72eef95a03c4.png', '/lovable-uploads/481b70c0-733d-4cc9-9629-3628731d87e4.png'],
       videoId: 'lYnXijewxCM',
@@ -154,7 +159,15 @@ const ServiceSelectionSection = () => {
                       />
                     </HoverImageSlideshow>
                     <div className="absolute inset-0 bg-bc-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
-                      <IconComponent className="w-8 h-8 text-bc-red" />
+                      {service.customIcon ? (
+                        <img 
+                          src={service.customIcon} 
+                          alt={`${service.title} icon`}
+                          className="w-8 h-8"
+                        />
+                      ) : (
+                        <IconComponent className="w-8 h-8 text-bc-red" />
+                      )}
                     </div>
                     
                     <ServiceVideoOverlay
