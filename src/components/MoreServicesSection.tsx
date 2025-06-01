@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
-import { Droplets, Home, Wind } from 'lucide-react';
+import { Droplets, Home, Wind, Download, Phone, Mail, MapPin } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const MoreServicesSection = () => {
@@ -30,6 +30,29 @@ const MoreServicesSection = () => {
     }
   ];
 
+  const downloadContactCard = () => {
+    const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:BC Pressure Washing
+ORG:BC Pressure Washing
+TEL:+1-778-808-7620
+EMAIL:info@bcpressurewashing.ca
+URL:https://bcpressurewashing.ca
+ADR:;;White Rock;BC;;Canada
+NOTE:Professional pressure washing and window cleaning services in Surrey, White Rock & Greater Vancouver
+END:VCARD`;
+
+    const blob = new Blob([vCardData], { type: 'text/vcard' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'BC-Pressure-Washing-Contact.vcf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -43,13 +66,18 @@ const MoreServicesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="bg-gray-50 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                />
-              </div>
+              <Link to={service.link} className="block">
+                <div className="relative h-48 overflow-hidden cursor-pointer group">
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white font-semibold text-lg">Learn More</span>
+                  </div>
+                </div>
+              </Link>
               <div className="p-6">
                 <div className="flex items-center mb-3">
                   <div className="mr-2 bg-white p-2 rounded-full shadow-sm">{service.icon}</div>
@@ -62,6 +90,44 @@ const MoreServicesSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Download Contact Card Section */}
+        <div className="mt-16 bg-gradient-to-r from-bc-red to-red-600 rounded-lg p-8 text-white text-center">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold mb-4">Save Our Contact Info</h3>
+            <p className="text-lg mb-6 opacity-90">
+              Download our contact card to your phone for quick access to our services
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              <div className="flex items-center justify-center">
+                <Phone className="h-5 w-5 mr-2" />
+                <span>778-808-7620</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <Mail className="h-5 w-5 mr-2" />
+                <span>Quick Response</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <MapPin className="h-5 w-5 mr-2" />
+                <span>Surrey & White Rock</span>
+              </div>
+            </div>
+            
+            <Button 
+              onClick={downloadContactCard}
+              variant="outline" 
+              className="bg-white text-bc-red hover:bg-gray-100 border-white"
+            >
+              <Download className="h-5 w-5 mr-2" />
+              Download Contact Card
+            </Button>
+            
+            <p className="text-sm mt-4 opacity-75">
+              Compatible with iPhone, Android, and all modern devices
+            </p>
+          </div>
         </div>
         
         <div className="text-center mt-12">
