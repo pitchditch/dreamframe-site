@@ -122,7 +122,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
               to="/services/commercial-window-cleaning"
               className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
             >
-              <Building2 className="mr-3 h-5 w-5 text-gray-500" />
+              <img src="/lovable-uploads/f80b484b-5931-4960-9e9f-a3dfe308b905.png" alt="Commercial Services" className="mr-3 h-5 w-5 flex-shrink-0" />
               <div>
                 <div className="font-medium">Commercial Services</div>
                 <div className="text-sm text-gray-500">Professional building maintenance</div>
