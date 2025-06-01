@@ -11,12 +11,11 @@ const AfkOverlay = () => {
   useEffect(() => {
     const updateActivity = () => {
       setLastActivity(Date.now());
-      setIsVisible(false);
     };
 
-    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    const events = ['mousedown', 'keypress', 'click'];
     
-    // Add event listeners for user activity
+    // Add event listeners for user activity (removed mousemove, scroll, touchstart)
     events.forEach(event => {
       document.addEventListener(event, updateActivity, true);
     });

@@ -19,6 +19,7 @@ const WindowCleaning = () => {
   const [activeSection, setActiveSection] = useState('overview');
 
   useEffect(() => {
+    // Add scroll behavior for hero section slide effect
     const handleScroll = () => {
       const sections = ['overview', 'how-it-works', 'benefits', 'testimonials', 'faq'];
       const scrollPosition = window.scrollY + 200;
@@ -31,6 +32,21 @@ const WindowCleaning = () => {
             setActiveSection(section);
             break;
           }
+        }
+      }
+
+      // Add slide-up effect for content below hero
+      const heroSection = document.querySelector('.hero-section');
+      const contentBelow = document.querySelector('.content-below-hero');
+      
+      if (heroSection && contentBelow) {
+        const heroHeight = heroSection.offsetHeight;
+        const scrollY = window.scrollY;
+        
+        if (scrollY > heroHeight * 0.7) {
+          contentBelow.classList.add('slide-up-active');
+        } else {
+          contentBelow.classList.remove('slide-up-active');
         }
       }
     };
@@ -177,10 +193,21 @@ const WindowCleaning = () => {
         <script type="application/ld+json">
           {JSON.stringify(schemaMarkup)}
         </script>
+        <style>
+          {`
+            .content-below-hero {
+              transform: translateY(20px);
+              transition: transform 0.6s ease-out;
+            }
+            .content-below-hero.slide-up-active {
+              transform: translateY(0);
+            }
+          `}
+        </style>
       </Helmet>
 
-      {/* New Hero Section */}
-      <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+      {/* Hero Section */}
+      <section className="hero-section relative min-h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -203,155 +230,158 @@ const WindowCleaning = () => {
         </div>
       </section>
 
-      <WindowCleaningStickyNav activeSection={activeSection} />
-      
-      <div id="overview">
-        <WhatWeCleanSection />
-      </div>
-      
-      <div id="how-it-works">
-        {/* Water Fed Pole System Video Section */}
-        <section className="w-full py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-6 heading-text">Water Fed Pole System</h2>
-                <p className="text-lg text-gray-700 mb-6 content-text">
-                  Our state-of-the-art water fed pole system revolutionizes window cleaning by using purified water 
-                  and extending telescopic poles to reach heights up to 60 feet safely from the ground.
-                </p>
-                
-                <div className="space-y-4">
-                  <div className="flex items-start">
-                    <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Purified Water Technology</h3>
-                      <p className="text-gray-600">
-                        Our system uses deionized water that leaves no spots, streaks, or residue, 
-                        providing crystal-clear results every time.
-                      </p>
+      {/* Content below hero with slide-up effect */}
+      <div className="content-below-hero relative z-20 bg-white">
+        <WindowCleaningStickyNav activeSection={activeSection} />
+        
+        <div id="overview">
+          <WhatWeCleanSection />
+        </div>
+        
+        <div id="how-it-works">
+          {/* Water Fed Pole System Video Section */}
+          <section className="w-full py-16 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h2 className="text-3xl font-bold mb-6 heading-text">Water Fed Pole System</h2>
+                  <p className="text-lg text-gray-700 mb-6 content-text">
+                    Our state-of-the-art water fed pole system revolutionizes window cleaning by using purified water 
+                    and extending telescopic poles to reach heights up to 60 feet safely from the ground.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">Purified Water Technology</h3>
+                        <p className="text-gray-600">
+                          Our system uses deionized water that leaves no spots, streaks, or residue, 
+                          providing crystal-clear results every time.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">Enhanced Safety</h3>
+                        <p className="text-gray-600">
+                          No ladders required - our technicians stay safely on the ground while 
+                          cleaning windows up to 6 stories high.
+                        </p>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-start">
-                    <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Enhanced Safety</h3>
-                      <p className="text-gray-600">
-                        No ladders required - our technicians stay safely on the ground while 
-                        cleaning windows up to 6 stories high.
-                      </p>
-                    </div>
+                  <div className="mt-8">
+                    <WindowCleaningQuoteOverlay buttonText="Get My Free Quote" variant="bc-red" />
                   </div>
                 </div>
                 
-                <div className="mt-8">
-                  <WindowCleaningQuoteOverlay buttonText="Get My Free Quote" variant="bc-red" />
-                </div>
-              </div>
-              
-              <div className="relative">
-                <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
-                  <iframe 
-                    src="https://www.youtube.com/embed/03njfGLUDUQ" 
-                    title="Water Fed Pole System for Window Cleaning"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen
-                  />
+                <div className="relative">
+                  <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+                    <iframe 
+                      src="https://www.youtube.com/embed/03njfGLUDUQ" 
+                      title="Water Fed Pole System for Window Cleaning"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowFullScreen
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Traditional Squeegee Cleaning Technique Video Section */}
-        <section className="w-full py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="lg:order-2">
-                <h2 className="text-3xl font-bold mb-6 heading-text">Traditional Squeegee Cleaning</h2>
-                <p className="text-lg text-gray-700 mb-6 content-text">
-                  For interior windows and detailed cleaning work, our skilled technicians use traditional squeegee 
-                  techniques combined with eco-friendly cleaning solutions for perfect results.
-                </p>
-                
-                <div className="space-y-4">
-                  <div className="flex items-start">
-                    <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Expert Technique</h3>
-                      <p className="text-gray-600">
-                        Our trained professionals use proper squeegee techniques for streak-free results every time.
-                      </p>
-                    </div>
-                  </div>
+          {/* Traditional Squeegee Cleaning Technique Video Section */}
+          <section className="w-full py-16 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="lg:order-2">
+                  <h2 className="text-3xl font-bold mb-6 heading-text">Traditional Squeegee Cleaning</h2>
+                  <p className="text-lg text-gray-700 mb-6 content-text">
+                    For interior windows and detailed cleaning work, our skilled technicians use traditional squeegee 
+                    techniques combined with eco-friendly cleaning solutions for perfect results.
+                  </p>
                   
-                  <div className="flex items-start">
-                    <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Interior Cleaning</h3>
-                      <p className="text-gray-600">
-                        Perfect for interior windows where water fed pole systems aren't suitable.
-                      </p>
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">Expert Technique</h3>
+                        <p className="text-gray-600">
+                          Our trained professionals use proper squeegee techniques for streak-free results every time.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-bc-red rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">Interior Cleaning</h3>
+                        <p className="text-gray-600">
+                          Perfect for interior windows where water fed pole systems aren't suitable.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="lg:order-1 relative">
-                <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
-                  <iframe 
-                    src="https://www.youtube.com/embed/bbHnt4UNPcU" 
-                    title="Professional Squeegee Window Cleaning Technique"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen
-                  />
+                
+                <div className="lg:order-1 relative">
+                  <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+                    <iframe 
+                      src="https://www.youtube.com/embed/bbHnt4UNPcU" 
+                      title="Professional Squeegee Window Cleaning Technique"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowFullScreen
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-      
-      <WindowCleaningComparisonTable />
-      
-      <LocalMediaSection />
-      
-      <div id="benefits">
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <ServiceBenefits 
-              title="Benefits of Professional Window Cleaning" 
-              subtitle="Discover why regular professional window cleaning is essential for your property"
-              benefits={benefits} 
-            />
-          </div>
-        </section>
-      </div>
-      
-      <div id="testimonials">
-        <TestimonialsSection />
-      </div>
-      
-      <div id="faq">
-        <FAQSection
-          title="Window Cleaning Frequently Asked Questions"
-          subtitle="Expert answers to your most common window cleaning questions"
-          description="Get detailed information about our window cleaning services, processes, and policies."
-          faqs={faqs}
-        />
-      </div>
-      
-      <MoreServicesSection />
-      
-      <div id="get-quote">
-        <CallToAction 
-          title="Get Your Windows Crystal Clear – Book Today & Get a Response in Minutes!"
-          subtitle="Contact us now for professional window cleaning in Surrey, White Rock & Greater Vancouver."
-          backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
-        />
+          </section>
+        </div>
+        
+        <WindowCleaningComparisonTable />
+        
+        <LocalMediaSection />
+        
+        <div id="benefits">
+          <section className="py-16 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <ServiceBenefits 
+                title="Benefits of Professional Window Cleaning" 
+                subtitle="Discover why regular professional window cleaning is essential for your property"
+                benefits={benefits} 
+              />
+            </div>
+          </section>
+        </div>
+        
+        <div id="testimonials">
+          <TestimonialsSection />
+        </div>
+        
+        <div id="faq">
+          <FAQSection
+            title="Window Cleaning Frequently Asked Questions"
+            subtitle="Expert answers to your most common window cleaning questions"
+            description="Get detailed information about our window cleaning services, processes, and policies."
+            faqs={faqs}
+          />
+        </div>
+        
+        <MoreServicesSection />
+        
+        <div id="get-quote">
+          <CallToAction 
+            title="Get Your Windows Crystal Clear – Book Today & Get a Response in Minutes!"
+            subtitle="Contact us now for professional window cleaning in Surrey, White Rock & Greater Vancouver."
+            backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
+          />
+        </div>
       </div>
     </Layout>
   );

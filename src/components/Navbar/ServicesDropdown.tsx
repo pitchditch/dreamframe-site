@@ -31,7 +31,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 uppercase px-4 py-2">Residential Services</div>
           
-          {/* Single column layout for residential services */}
+          {/* Single column layout for all 4 residential services */}
           <div className="space-y-1">
             <DropdownMenuItem asChild className="p-0">
               <Link
