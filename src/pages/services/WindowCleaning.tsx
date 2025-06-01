@@ -12,6 +12,8 @@ import WindowCleaningStickyNav from '../../components/services/window-cleaning/W
 import LocalMediaSection from '../../components/services/window-cleaning/LocalMediaSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import MoreServicesSection from '@/components/MoreServicesSection';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const WindowCleaning = () => {
   const [activeSection, setActiveSection] = useState('overview');
@@ -176,6 +178,30 @@ const WindowCleaning = () => {
           {JSON.stringify(schemaMarkup)}
         </script>
       </Helmet>
+
+      {/* New Hero Section */}
+      <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/lovable-uploads/422502db-5a21-469c-aa5a-b3b2a43a8647.png')" }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        
+        {/* Hero Content - Centered */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Window Cleaning in Surrey, White Rock & Greater Vancouver
+          </h1>
+          <p className="text-xl md:text-2xl text-white mb-8 max-w-4xl mx-auto leading-relaxed">
+            Crystal-clear, streak-free windows using our purified water technology.
+          </p>
+          <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4 hover:scale-105 transition-transform">
+            <Link to="/calculator">Check Prices & Availability</Link>
+          </Button>
+        </div>
+      </section>
 
       <WindowCleaningStickyNav activeSection={activeSection} />
       
