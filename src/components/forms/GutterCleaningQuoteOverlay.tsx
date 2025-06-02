@@ -3,7 +3,7 @@ import React from 'react';
 import GutterCleaningForm from './GutterCleaningForm';
 
 interface GutterCleaningQuoteOverlayProps {
-  buttonText: string;
+  buttonText: string | React.ReactNode;
   variant?: 'bc-red' | 'default';
 }
 
