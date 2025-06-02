@@ -182,143 +182,146 @@ const GutterCleaning = () => {
         <meta name="keywords" content="gutter cleaning near me, clogged gutters, surrey gutter cleaning, white rock gutter cleaning services, gutter guard installation, downspout flushing, licensed insured gutter cleaners, affordable gutter cleaning" />
       </Helmet>
 
-      {/* Hero Section with Before/After Slider */}
-      <HeroSlider />
-      
-      {/* Trust Bar */}
-      <TrustBar />
-      
-      {/* Sticky Quote Button */}
-      <StickyQuoteButton />
+      {/* Add spacing to account for navbar */}
+      <div className="pt-28 md:pt-32">
+        {/* Hero Section with Before/After Slider */}
+        <HeroSlider />
+        
+        {/* Trust Bar */}
+        <TrustBar />
+        
+        {/* Sticky Quote Button */}
+        <StickyQuoteButton />
 
-      {/* Benefits Section with Icons */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <ServiceBenefits 
-            title="Why Regular Gutter Cleaning is Essential" 
-            subtitle="Protect your home's structural integrity and prevent costly damage with our professional gutter cleaning services" 
-            benefits={benefits} 
-          />
-          
-          <div className="text-center mt-12">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
-              <p className="text-gray-600 text-sm mt-2">From just $129 - Get your instant quote!</p>
+        {/* Benefits Section with Icons */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <ServiceBenefits 
+              title="Why Regular Gutter Cleaning is Essential" 
+              subtitle="Protect your home's structural integrity and prevent costly damage with our professional gutter cleaning services" 
+              benefits={benefits} 
+            />
+            
+            <div className="text-center mt-12">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
+                <p className="text-gray-600 text-sm mt-2">From just $129 - Get your instant quote!</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      
-      {/* Enhanced Comparison Table */}
-      <EnhancedComparisonTable />
-      
-      {/* Service Areas Map */}
-      <ServiceAreasMap />
-      
-      {/* Process Section */}
-      <GutterQuadrantSection />
-      <GutterProcessCarousel />
-      
-      {/* Professional Installation Video */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Guards Installation</h2>
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div className="order-2 md:order-1 w-full">
-                <iframe 
-                  className="w-full h-full aspect-video rounded-lg shadow-lg" 
-                  src="https://www.youtube.com/embed/OICbIRmx-80?autoplay=1&mute=1&controls=0&loop=1&playlist=OICbIRmx-80&showinfo=0&rel=0" 
-                  title="Gutter Guards Installation in Metro Vancouver" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                />
-              </div>
-              <div className="order-1 md:order-2">
-                <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
-                <p className="text-gray-700 mb-4 text-lg">
-                  After cleaning your gutters, consider installing our premium gutter guard systems. These guards prevent leaves, pine needles, and debris from entering your gutters while allowing water to flow freely.
-                </p>
-                <h4 className="font-bold text-lg mb-2">Benefits of Our Gutter Guards:</h4>
-                <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span> 
-                    <span>Reduce cleaning frequency by 90%</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span> 
-                    <span>Prevent clogs and overflow</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span> 
-                    <span>Keep pests and birds out</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span> 
-                    <span>Extend the lifespan of your gutters</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span> 
-                    <span>Prevent ice dams in winter</span>
-                  </li>
-                </ul>
-                <div className="mt-6">
-                  <GutterCleaningQuoteOverlay buttonText="Get a Quote for Gutter Guards" variant="bc-red" />
+        </section>
+        
+        {/* Enhanced Comparison Table */}
+        <EnhancedComparisonTable />
+        
+        {/* Service Areas Map */}
+        <ServiceAreasMap />
+        
+        {/* Process Section */}
+        <GutterQuadrantSection />
+        <GutterProcessCarousel />
+        
+        {/* Professional Installation Video */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Guards Installation</h2>
+              <div className="grid md:grid-cols-2 gap-10 items-center">
+                <div className="order-2 md:order-1 w-full">
+                  <iframe 
+                    className="w-full h-full aspect-video rounded-lg shadow-lg" 
+                    src="https://www.youtube.com/embed/OICbIRmx-80?autoplay=1&mute=1&controls=0&loop=1&playlist=OICbIRmx-80&showinfo=0&rel=0" 
+                    title="Gutter Guards Installation in Metro Vancouver" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                  />
+                </div>
+                <div className="order-1 md:order-2">
+                  <h3 className="text-2xl font-bold mb-3">Protect Your Gutters Year-Round</h3>
+                  <p className="text-gray-700 mb-4 text-lg">
+                    After cleaning your gutters, consider installing our premium gutter guard systems. These guards prevent leaves, pine needles, and debris from entering your gutters while allowing water to flow freely.
+                  </p>
+                  <h4 className="font-bold text-lg mb-2">Benefits of Our Gutter Guards:</h4>
+                  <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Reduce cleaning frequency by 90%</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Prevent clogs and overflow</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Keep pests and birds out</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Extend the lifespan of your gutters</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Prevent ice dams in winter</span>
+                    </li>
+                  </ul>
+                  <div className="mt-6">
+                    <GutterCleaningQuoteOverlay buttonText="Get a Quote for Gutter Guards" variant="bc-red" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      
-      {/* Customer Testimonials Carousel */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">What Our Gutter Cleaning Customers Say</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {gutterTestimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">★</span>
-                  ))}
+        </section>
+        
+        {/* Customer Testimonials Carousel */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">What Our Gutter Cleaning Customers Say</h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {gutterTestimonials.map((testimonial, index) => (
+                <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                  <div className="flex mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i} className="text-yellow-400">★</span>
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-4">"{testimonial.text}"</p>
+                  <div className="font-semibold">{testimonial.name}</div>
+                  <div className="text-gray-600 text-sm">{testimonial.location}</div>
                 </div>
-                <p className="text-gray-700 mb-4">"{testimonial.text}"</p>
-                <div className="font-semibold">{testimonial.name}</div>
-                <div className="text-gray-600 text-sm">{testimonial.location}</div>
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            {/* Seasonal Callout */}
+            <div className="text-center mt-12 p-6 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg">
+              <h3 className="text-2xl font-bold mb-2 text-orange-800">Fall Cleanings Fill Fast!</h3>
+              <p className="text-orange-700 mb-4">Book now before the next heavy rain. Don't let clogged gutters damage your home.</p>
+              <GutterCleaningQuoteOverlay buttonText="Book Your Fall Cleaning" variant="bc-red" />
+            </div>
           </div>
-          
-          {/* Seasonal Callout */}
-          <div className="text-center mt-12 p-6 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg">
-            <h3 className="text-2xl font-bold mb-2 text-orange-800">Fall Cleanings Fill Fast!</h3>
-            <p className="text-orange-700 mb-4">Book now before the next heavy rain. Don't let clogged gutters damage your home.</p>
-            <GutterCleaningQuoteOverlay buttonText="Book Your Fall Cleaning" variant="bc-red" />
-          </div>
-        </div>
-      </section>
-      
-      {/* Enhanced FAQ Section */}
-      <FAQSection 
-        title="Frequently Asked Questions About Gutter Cleaning" 
-        subtitle="Get answers to common questions about our gutter cleaning services in Surrey, White Rock and Metro Vancouver" 
-        faqs={faqs} 
-      />
-      
-      {/* Final CTA with Cross-links */}
-      <CallToAction 
-        title="Ready to Book Your Gutter Cleaning?" 
-        subtitle={
-          <>
-            Contact us today for a free estimate and experience the difference professional gutter maintenance makes. 
-            We also offer <Link to='/services/roof-cleaning' className='text-white underline hover:text-gray-200'>roof cleaning</Link> and{' '}
-            <Link to='/services/window-cleaning' className='text-white underline hover:text-gray-200'>window cleaning</Link> services.
-          </>
-        }
-        backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png" 
-      />
+        </section>
+        
+        {/* Enhanced FAQ Section */}
+        <FAQSection 
+          title="Frequently Asked Questions About Gutter Cleaning" 
+          subtitle="Get answers to common questions about our gutter cleaning services in Surrey, White Rock and Metro Vancouver" 
+          faqs={faqs} 
+        />
+        
+        {/* Final CTA with Cross-links */}
+        <CallToAction 
+          title="Ready to Book Your Gutter Cleaning?" 
+          subtitle={
+            <>
+              Contact us today for a free estimate and experience the difference professional gutter maintenance makes. 
+              We also offer <Link to='/services/roof-cleaning' className='text-white underline hover:text-gray-200'>roof cleaning</Link> and{' '}
+              <Link to='/services/window-cleaning' className='text-white underline hover:text-gray-200'>window cleaning</Link> services.
+            </>
+          }
+          backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png" 
+        />
+      </div>
     </Layout>
   );
 };

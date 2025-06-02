@@ -7,16 +7,27 @@ import GutterCleaningQuoteOverlay from '@/components/forms/GutterCleaningQuoteOv
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Four different angles/sections of clean gutters
   const slides = [
     {
-      before: "/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png",
-      after: "/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png",
-      title: "Clogged to Crystal Clear"
+      image: "/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png",
+      title: "Professional Gutter Cleaning",
+      subtitle: "Top Section View"
     },
     {
-      before: "/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png",
-      after: "/lovable-uploads/4a9921b9-2dd2-42b8-ade9-61bbeeb18898.png",
-      title: "Professional Results"
+      image: "/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png", 
+      title: "Crystal Clear Results",
+      subtitle: "Side Angle View"
+    },
+    {
+      image: "/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png",
+      title: "Spotless Gutters",
+      subtitle: "Detail Close-up"
+    },
+    {
+      image: "/lovable-uploads/4a9921b9-2dd2-42b8-ade9-61bbeeb18898.png",
+      title: "Complete Clean",
+      subtitle: "Full System View"
     }
   ];
 
@@ -90,35 +101,28 @@ const HeroSlider = () => {
             </div>
           </div>
 
-          {/* Before/After Slider Column */}
+          {/* Quadrant Image Rotation */}
           <div className="relative">
             <div className="bg-white p-6 rounded-xl shadow-2xl">
               <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
                 {slides[currentSlide].title}
               </h3>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <p className="text-red-600 font-semibold mb-2">BEFORE</p>
-                  <img 
-                    src={slides[currentSlide].before} 
-                    alt="Before gutter cleaning"
-                    className="w-full h-40 object-cover rounded-lg"
-                  />
-                </div>
-                <div className="text-center">
-                  <p className="text-green-600 font-semibold mb-2">AFTER</p>
-                  <img 
-                    src={slides[currentSlide].after} 
-                    alt="After gutter cleaning"
-                    className="w-full h-40 object-cover rounded-lg"
-                  />
+              {/* Single rotating image */}
+              <div className="relative overflow-hidden rounded-lg">
+                <img 
+                  src={slides[currentSlide].image} 
+                  alt={`Clean gutters - ${slides[currentSlide].subtitle}`}
+                  className="w-full h-64 object-cover transition-all duration-500 ease-in-out"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
+                  <p className="text-white text-sm font-medium">{slides[currentSlide].subtitle}</p>
                 </div>
               </div>
 
               {/* Slider Controls */}
               <div className="flex justify-between items-center mt-4">
-                <button onClick={prevSlide} className="p-2 text-gray-600 hover:text-gray-900">
+                <button onClick={prevSlide} className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <div className="flex gap-2">
@@ -126,13 +130,13 @@ const HeroSlider = () => {
                     <button
                       key={index}
                       onClick={() => setCurrentSlide(index)}
-                      className={`w-3 h-3 rounded-full ${
-                        index === currentSlide ? 'bg-bc-red' : 'bg-gray-300'
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentSlide ? 'w-4 bg-bc-red' : 'bg-gray-300'
                       }`}
                     />
                   ))}
                 </div>
-                <button onClick={nextSlide} className="p-2 text-gray-600 hover:text-gray-900">
+                <button onClick={nextSlide} className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
                   <ChevronRight className="w-6 h-6" />
                 </button>
               </div>
