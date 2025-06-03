@@ -31,30 +31,17 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 uppercase px-4 py-2">Residential Services</div>
           
-          {/* All residential services in a single column */}
-          <div className="space-y-1">
-            <DropdownMenuItem asChild className="p-0">
-              <Link
-                to="/services/house-soft-wash"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <img src="/lovable-uploads/1506ac4e-54db-4e14-b30f-42311bfee2be.png" alt="House Soft Wash" className="mr-3 h-5 w-5 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">House Soft Wash</div>
-                  <div className="text-sm text-gray-500">Gentle cleaning</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
+          {/* All residential services in a 2-column grid */}
+          <div className="grid grid-cols-2 gap-1">
             <DropdownMenuItem asChild className="p-0">
               <Link
                 to="/services/window-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+                className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/889d6b89-1db3-48dd-8f3d-7ef518215095.png" alt="Window Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <div className="font-medium">Window Cleaning</div>
-                  <div className="text-sm text-gray-500">Streak-free results</div>
+                  <div className="font-medium text-xs">Window Cleaning</div>
+                  <div className="text-xs text-gray-500">Streak-free</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -62,12 +49,25 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
             <DropdownMenuItem asChild className="p-0">
               <Link
                 to="/services/gutter-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+                className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/fc77240e-210d-48ab-95b1-279c84686768.png" alt="Gutter Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <div className="font-medium">Gutter Cleaning</div>
-                  <div className="text-sm text-gray-500">Complete care</div>
+                  <div className="font-medium text-xs">Gutter Cleaning</div>
+                  <div className="text-xs text-gray-500">Complete care</div>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem asChild className="p-0">
+              <Link
+                to="/services/house-soft-wash"
+                className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
+              >
+                <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Soft Wash" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <div>
+                  <div className="font-medium text-xs">House Soft Wash</div>
+                  <div className="text-xs text-gray-500">Gentle cleaning</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -75,38 +75,25 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
             <DropdownMenuItem asChild className="p-0">
               <Link
                 to="/services/roof-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+                className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/2156e2bb-05d0-4809-93c4-d6e0d97b96aa.png" alt="Roof Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <div className="font-medium">Roof Cleaning</div>
-                  <div className="text-sm text-gray-500">Safe removal</div>
+                  <div className="font-medium text-xs">Roof Cleaning</div>
+                  <div className="text-xs text-gray-500">Safe removal</div>
                 </div>
               </Link>
             </DropdownMenuItem>
             
-            <DropdownMenuItem asChild className="p-0">
-              <Link
-                to="/services/pressure-washing"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
-              >
-                <img src="/lovable-uploads/7e4e1197-6f16-44aa-bb6d-aa5eb19f6f8a.png" alt="Pressure Washing" className="mr-3 h-5 w-5 flex-shrink-0" />
-                <div>
-                  <div className="font-medium">Pressure Washing</div>
-                  <div className="text-sm text-gray-500">Deep clean</div>
-                </div>
-              </Link>
-            </DropdownMenuItem>
-            
-            <DropdownMenuItem asChild className="p-0">
+            <DropdownMenuItem asChild className="p-0 col-span-2">
               <Link
                 to="/services/driveway-cleaning"
-                className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+                className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/4bc56646-a50c-4c86-aeeb-997bd1c1c579.png" alt="Driveway Cleaning" className="mr-3 h-5 w-5 flex-shrink-0" />
+                <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <div className="font-medium">Driveway Cleaning</div>
-                  <div className="text-sm text-gray-500">Remove stains</div>
+                  <div className="font-medium text-xs">Driveway Cleaning</div>
+                  <div className="text-xs text-gray-500">Remove stains</div>
                 </div>
               </Link>
             </DropdownMenuItem>

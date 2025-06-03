@@ -211,7 +211,7 @@ const WindowCleaning = () => {
         {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/lovable-uploads/7717474a-ced8-40f6-8434-82a313482fee.png')" }}
+          style={{ backgroundImage: "url('/lovable-uploads/001435bd-720d-4245-93b4-8a7a52252646.png')" }}
         >
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
