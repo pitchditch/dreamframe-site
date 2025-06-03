@@ -182,7 +182,12 @@ const GutterCleaning = () => {
         <GutterProcessCarousel />
         
         {/* After Shots of Clean Gutters Section */}
-        
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">After Shots of Clean Gutters</h2>
+            <GutterProcessCarousel />
+          </div>
+        </section>
         
         {/* Gutter Sticks Section */}
         <section className="py-16 bg-gray-50">
@@ -350,4 +355,5 @@ const GutterCleaning = () => {
       </div>
     </Layout>;
 };
+
 export default GutterCleaning;

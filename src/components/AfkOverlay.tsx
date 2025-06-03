@@ -19,13 +19,19 @@ const AfkOverlay = () => {
       setCookiesAccepted(true);
     }
 
+    // Check display count
+    const displayCount = parseInt(localStorage.getItem('afk-overlay-count') || '0');
+    if (displayCount >= 3) {
+      return; // Don't show overlay if already shown 3 times
+    }
+
     const updateActivity = () => {
       setLastActivity(Date.now());
     };
 
     const events = ['mousedown', 'keypress', 'click'];
     
-    // Add event listeners for user activity
+    // Add event listeners for user activity (but not scroll)
     events.forEach(event => {
       document.addEventListener(event, updateActivity, true);
     });
@@ -36,8 +42,10 @@ const AfkOverlay = () => {
       const timeSinceLastActivity = now - lastActivity;
       
       // Show overlay after 1 minute (60000ms) of inactivity
-      if (timeSinceLastActivity >= 60000 && !isVisible) {
+      if (timeSinceLastActivity >= 60000 && !isVisible && displayCount < 3) {
         setIsVisible(true);
+        // Increment display count
+        localStorage.setItem('afk-overlay-count', (displayCount + 1).toString());
       }
     }, 30000);
 

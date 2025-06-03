@@ -41,8 +41,8 @@ const ServiceSelectionSection = () => {
           </p>
         </div>
 
-        {/* Single column layout for all services */}
-        <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'gap-8'} max-w-2xl mx-auto`}>
+        {/* Grid layout: 2 rows of 3 columns */}
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-3 gap-8'} max-w-6xl mx-auto`}>
           {services.map((service, index) => (
             <ServiceCard
               key={service.id}
