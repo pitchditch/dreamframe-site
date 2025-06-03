@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../../components/Layout';
@@ -210,7 +211,7 @@ const WindowCleaning = () => {
         {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/lovable-uploads/422502db-5a21-469c-aa5a-b3b2a43a8647.png')" }}
+          style={{ backgroundImage: "url('/lovable-uploads/7717474a-ced8-40f6-8434-82a313482fee.png')" }}
         >
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
