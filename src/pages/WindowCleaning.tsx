@@ -183,7 +183,10 @@ const WindowCleaning = () => {
       />
 
       {/* Call to Action */}
-      <CallToAction />
+      <CallToAction 
+        title="Ready for Crystal Clear Windows?"
+        subtitle="Contact us today for professional window cleaning in Surrey, White Rock & Greater Vancouver"
+      />
     </Layout>
   );
 };

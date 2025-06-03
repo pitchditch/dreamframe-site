@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight, Phone } from 'lucide-react';
@@ -161,7 +162,10 @@ const WhyUs = () => {
       <EquipmentSection />
       
       {/* Call to Action */}
-      <CallToAction />
+      <CallToAction 
+        title="Ready to Transform Your Property?"
+        subtitle="Get your free quote today and experience the BC Pressure Washing difference"
+      />
     </Layout>;
 };
 
