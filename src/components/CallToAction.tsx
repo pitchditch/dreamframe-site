@@ -5,34 +5,42 @@ import { Link } from 'react-router-dom';
 
 interface CallToActionProps {
   title: string;
-  subtitle: string | React.ReactNode;
+  subtitle: string;
   backgroundImage?: string;
 }
 
 const CallToAction = ({ title, subtitle, backgroundImage }: CallToActionProps) => {
+  // Use the new roof image if no specific background is provided and title contains "Roof"
+  const defaultRoofBackground = title.toLowerCase().includes('roof') 
+    ? '/lovable-uploads/180b21a6-5560-4b80-907a-78280186bc05.png'
+    : backgroundImage;
+
   return (
-    <section 
-      className="py-20 bg-cover bg-center relative"
-      style={{ 
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)' 
-      }}
-    >
-      <div className="absolute inset-0 bg-black/60"></div>
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">{title}</h2>
-          <div className="text-lg md:text-xl mb-8 opacity-90">
-            {subtitle}
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-bc-red hover:bg-gray-100">
-              <Link to="/contact">Get Free Quote</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-bc-red">
-              <a href="tel:7788087620">Call (778) 808-7620</a>
-            </Button>
-          </div>
-        </div>
+    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
+      {/* Background Image with full coverage */}
+      <div 
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ 
+          backgroundImage: `url('${defaultRoofBackground || backgroundImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+      
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-4 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+          {title}
+        </h2>
+        <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed">
+          {subtitle}
+        </p>
+        <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4 hover:scale-105 transition-transform">
+          <Link to="/calculator">Get Your Free Quote Today</Link>
+        </Button>
       </div>
     </section>
   );

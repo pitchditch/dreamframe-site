@@ -41,8 +41,8 @@ const ServiceSelectionSection = () => {
           </p>
         </div>
 
-        {/* Grid layout: 3 rows of 2 columns */}
-        <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-2 gap-8'} max-w-4xl mx-auto`}>
+        {/* Grid layout: 3 columns and 2 rows */}
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-3 gap-8'} max-w-6xl mx-auto`}>
           {services.map((service, index) => (
             <ServiceCard
               key={service.id}
@@ -58,7 +58,7 @@ const ServiceSelectionSection = () => {
         </div>
 
         <div className={`text-center ${isMobile ? 'mt-12' : 'mt-16'}`}>
-          <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600`}>
+          <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 mb-6`}>
             {t("Need a custom quote?")} 
             <button 
               onClick={() => handleServiceClick('custom')}
@@ -67,6 +67,25 @@ const ServiceSelectionSection = () => {
               {t("Contact us directly")}
             </button>
           </p>
+          
+          {/* Enhanced Compare Prices Button */}
+          <div className="mt-8">
+            <button 
+              onClick={() => window.location.href = '/compare-services'}
+              className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-bc-red to-red-600 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-bc-red opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative flex items-center gap-3">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span>Compare Our Prices & Packages</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </section>
