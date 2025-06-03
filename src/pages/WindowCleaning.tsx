@@ -1,9 +1,10 @@
+
 import React from 'react';
-import Layout from '../../components/Layout';
-import ServiceHeader from '../../components/ServiceHeader';
-import FAQSection from '../../components/FAQSection';
-import ServiceBenefits from '../../components/ServiceBenefits';
-import CallToAction from '../../components/CallToAction';
+import Layout from '../components/Layout';
+import ServiceHeader from '../components/ServiceHeader';
+import FAQSection from '../components/FAQSection';
+import ServiceBenefits from '../components/ServiceBenefits';
+import CallToAction from '../components/CallToAction';
 import { Home, Shield, Star, Droplets, Leaf, Zap } from 'lucide-react';
 import WindowCleaningQuoteOverlay from '@/components/forms/WindowCleaningQuoteOverlay';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
