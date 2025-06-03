@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -26,7 +25,7 @@ const HeroSection = () => {
     
     if (isMobile) {
       const img = new Image();
-      img.src = "/lovable-uploads/70b36997-1fdf-4dc2-ac05-6218d2e93c5f.png";
+      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
       img.onload = () => {
         setVideoLoaded(true);
         // Signal that hero is ready
@@ -74,16 +73,20 @@ const HeroSection = () => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/70b36997-1fdf-4dc2-ac05-6218d2e93c5f.png"
+              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
               className={`absolute w-full h-full object-cover object-center transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           ) : (
-            <img 
-              src="/lovable-uploads/70b36997-1fdf-4dc2-ac05-6218d2e93c5f.png"
-              alt="Modern house with professional window cleaning service"
-              className={`absolute w-full h-full object-cover object-center transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-            />
+            <iframe 
+              id="hero-desktop-video"
+              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&si=78zvVAKO5SoskBj8&preload=auto"
+              title="Pressure Washing Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="eager"
+            ></iframe>
           )}
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>

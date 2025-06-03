@@ -94,66 +94,76 @@ export const useWeather = () => {
     }
   };
 
+  const getRealisticWeatherData = (locationData: LocationData): WeatherData => {
+    const now = new Date();
+    const hour = now.getHours();
+    const month = now.getMonth();
+    const day = now.getDate();
+    
+    // Vancouver/White Rock seasonal weather patterns
+    const isWinter = month >= 11 || month <= 2; // Dec-Feb
+    const isSpring = month >= 3 && month <= 5;  // Mar-May
+    const isSummer = month >= 6 && month <= 8;  // Jun-Aug
+    const isFall = month >= 9 && month <= 10;   // Sep-Nov
+    
+    let baseTemp = 12;
+    let condition = 'Clear';
+    let humidity = 65;
+    let windSpeed = 8;
+    
+    // Seasonal adjustments
+    if (isWinter) {
+      baseTemp = Math.floor(Math.random() * 8 + 4); // 4-12°C
+      condition = Math.random() > 0.4 ? 'Rain' : Math.random() > 0.6 ? 'Cloudy' : 'Clear';
+      humidity = Math.floor(Math.random() * 20 + 70); // 70-90%
+      windSpeed = Math.floor(Math.random() * 15 + 10); // 10-25 km/h
+    } else if (isSpring) {
+      baseTemp = Math.floor(Math.random() * 10 + 10); // 10-20°C
+      condition = Math.random() > 0.6 ? 'Cloudy' : Math.random() > 0.8 ? 'Rain' : 'Clear';
+      humidity = Math.floor(Math.random() * 25 + 60); // 60-85%
+      windSpeed = Math.floor(Math.random() * 12 + 5); // 5-17 km/h
+    } else if (isSummer) {
+      baseTemp = Math.floor(Math.random() * 8 + 18); // 18-26°C
+      condition = Math.random() > 0.8 ? 'Cloudy' : 'Clear';
+      humidity = Math.floor(Math.random() * 20 + 50); // 50-70%
+      windSpeed = Math.floor(Math.random() * 10 + 3); // 3-13 km/h
+    } else { // Fall
+      baseTemp = Math.floor(Math.random() * 8 + 8); // 8-16°C
+      condition = Math.random() > 0.5 ? 'Rain' : Math.random() > 0.7 ? 'Cloudy' : 'Clear';
+      humidity = Math.floor(Math.random() * 25 + 65); // 65-90%
+      windSpeed = Math.floor(Math.random() * 18 + 8); // 8-26 km/h
+    }
+    
+    // Time of day adjustments (cooler at night)
+    if (hour < 6 || hour > 20) {
+      baseTemp = Math.max(0, baseTemp - 3);
+    }
+    
+    // Determine if conditions are optimal for cleaning
+    const isOptimal = condition === 'Clear' && windSpeed < 15 && baseTemp > 5;
+    
+    // Get appropriate icon
+    let icon = '01d';
+    if (condition === 'Rain') icon = '10d';
+    else if (condition === 'Cloudy') icon = '02d';
+    else if (hour < 6 || hour > 18) icon = '01n';
+    
+    return {
+      location: `${locationData.city}, ${locationData.region}`,
+      temperature: baseTemp,
+      condition,
+      humidity,
+      windSpeed,
+      visibility: Math.floor(Math.random() * 5 + 8), // 8-13 km
+      isOptimal,
+      icon
+    };
+  };
+
   const fetchWeather = async (locationData: LocationData) => {
     try {
-      // Using OpenWeatherMap API (you would need to replace with a real API key)
-      // For demo purposes, we'll simulate based on current conditions
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${locationData.lat}&lon=${locationData.lon}&appid=demo&units=metric`
-      );
-
-      let weatherData: WeatherData;
-
-      if (response.ok) {
-        const data = await response.json();
-        const isOptimal = ['Clear', 'Sunny'].includes(data.weather[0].main) && data.wind.speed < 15;
-        
-        weatherData = {
-          location: `${locationData.city}, ${locationData.region}`,
-          temperature: Math.round(data.main.temp),
-          condition: data.weather[0].main,
-          humidity: data.main.humidity,
-          windSpeed: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
-          visibility: data.visibility ? Math.round(data.visibility / 1000) : 10,
-          isOptimal,
-          icon: data.weather[0].icon
-        };
-      } else {
-        // Fallback to simulated data based on current time and season
-        const now = new Date();
-        const hour = now.getHours();
-        const month = now.getMonth();
-        
-        // Simulate seasonal and daily patterns
-        const isWinter = month >= 11 || month <= 2;
-        const isDaytime = hour >= 6 && hour <= 18;
-        
-        let condition = 'Clear';
-        let temperature = 18;
-        
-        if (isWinter) {
-          temperature = Math.random() > 0.3 ? Math.floor(Math.random() * 10 + 2) : Math.floor(Math.random() * 8 + 8);
-          condition = Math.random() > 0.6 ? 'Cloudy' : Math.random() > 0.8 ? 'Rain' : 'Clear';
-        } else {
-          temperature = Math.random() > 0.2 ? Math.floor(Math.random() * 15 + 15) : Math.floor(Math.random() * 10 + 10);
-          condition = Math.random() > 0.7 ? 'Cloudy' : 'Clear';
-        }
-
-        const windSpeed = Math.floor(Math.random() * 20 + 5);
-        const isOptimal = condition === 'Clear' && windSpeed < 15;
-
-        weatherData = {
-          location: `${locationData.city}, ${locationData.region}`,
-          temperature,
-          condition,
-          humidity: Math.floor(Math.random() * 30 + 50),
-          windSpeed,
-          visibility: Math.floor(Math.random() * 5 + 8),
-          isOptimal,
-          icon: condition === 'Clear' ? '01d' : condition === 'Cloudy' ? '02d' : '10d'
-        };
-      }
-
+      // For demo, we'll use realistic simulated data
+      const weatherData = getRealisticWeatherData(locationData);
       setWeather(weatherData);
       setError(null);
     } catch (err) {
