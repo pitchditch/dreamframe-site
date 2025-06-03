@@ -3,7 +3,7 @@ import React from 'react';
 import RoofCleaningForm from './RoofCleaningForm';
 
 interface RoofCleaningQuoteOverlayProps {
-  buttonText: string;
+  buttonText: string | React.ReactNode;
   variant?: 'bc-red' | 'default';
 }
 
