@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { ArrowRight, Phone } from 'lucide-react';
@@ -161,7 +162,11 @@ const WhyUs = () => {
       <EquipmentSection />
       
       {/* Call to Action */}
-      <CallToAction />
+      <CallToAction 
+        title="Ready to Experience the BC Pressure Washing Difference?"
+        subtitle="Contact us today for professional exterior cleaning services that exceed your expectations."
+        backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
+      />
     </Layout>;
 };
 
