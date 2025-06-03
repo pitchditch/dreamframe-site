@@ -1,212 +1,189 @@
-import React from 'react';
-import Layout from '../../components/Layout';
-import ServiceHeader from '../../components/ServiceHeader';
-import FAQSection from '../../components/FAQSection';
-import ServiceBenefits from '../../components/ServiceBenefits';
-import CallToAction from '../../components/CallToAction';
-import { Home, Shield, Star, Droplets, Leaf, Zap } from 'lucide-react';
-import WindowCleaningQuoteOverlay from '@/components/forms/WindowCleaningQuoteOverlay';
-import TestimonialsSection from '@/components/home/TestimonialsSection';
+
+import Layout from '../components/Layout';
+import { useTranslation } from '@/hooks/use-translation';
+import { Check, ArrowRight, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
+import CallToAction from '../components/CallToAction';
+import FAQSection from '../components/FAQSection';
+import TestimonialSection from '../components/home/TestimonialsSection';
+import WhatWeCleanSection from '../components/services/window-cleaning/WhatWeCleanSection';
 
 const WindowCleaning = () => {
-  const benefits = [{
-    title: "Enhances Curb Appeal",
-    description: "Clean, streak-free windows dramatically improve your home's appearance and make a great first impression.",
-    icon: <Home className="w-6 h-6" />
-  }, {
-    title: "Extends Window Lifespan",
-    description: "Regular cleaning removes harmful pollutants and hard water stains that can etch and damage glass over time.",
-    icon: <Shield className="w-6 h-6" />
-  }, {
-    title: "Improves Natural Light",
-    description: "Remove dirt and grime buildup to maximize sunlight and brighten your interior spaces.",
-    icon: <Star className="w-6 h-6" />
-  }, {
-    title: "Prevents Damage",
-    description: "Early removal of mineral deposits and mildew prevents permanent staining and costly repairs.",
-    icon: <Droplets className="w-6 h-6" />
-  }, {
-    title: "Eco-Friendly Solutions",
-    description: "We use environmentally safe cleaning products that are gentle on your family, pets, and landscaping.",
-    icon: <Leaf className="w-6 h-6" />
-  }, {
-    title: "Professional Results",
-    description: "Our experienced technicians use specialized equipment and techniques to deliver a spotless, streak-free shine every time.",
-    icon: <Zap className="w-6 h-6" />
-  }];
-  
-  const faqs = [{
-    question: "How often should I have my windows cleaned?",
-    answer: "We recommend professional window cleaning at least twice a year to maintain clarity and prevent damage from dirt and mineral buildup. Homes near the ocean or with heavy tree coverage may benefit from more frequent cleaning."
-  }, {
-    question: "Do I need to be home during the window cleaning service?",
-    answer: "Not necessarily. As long as we have access to all windows, you're welcome to leave us to work. We'll send you before-and-after photos upon completion."
-  }, {
-    question: "Are your cleaning products safe for my family and pets?",
-    answer: "Yes! We use eco-friendly, biodegradable cleaning solutions that are safe for your family, pets, and landscaping. We prioritize your well-being and the environment."
-  }, {
-    question: "What if it rains after my windows are cleaned?",
-    answer: "Don't worry! Our purified water cleaning system leaves windows spotless, even if it rains. We guarantee streak-free results, rain or shine."
-  }, {
-    question: "Do you offer a satisfaction guarantee?",
-    answer: "Absolutely! We're committed to your satisfaction. If you're not completely happy with our service, we'll return to address any issues at no charge."
-  }];
+  const { t } = useTranslation();
+
+  const windowCleaningFAQs = [
+    {
+      question: "How often should I have my windows cleaned?",
+      answer: "For residential properties, we recommend window cleaning every 3-6 months. Commercial properties may need more frequent cleaning depending on location and environmental factors."
+    },
+    {
+      question: "Do you clean windows in winter?",
+      answer: "Yes, we provide year-round window cleaning services. We use specialized techniques and solutions that work effectively even in colder temperatures."
+    },
+    {
+      question: "What is purified water system cleaning?",
+      answer: "Our purified water system removes all minerals and impurities from water, leaving windows spot-free and streak-free. This method is more effective and environmentally friendly than traditional cleaning."
+    },
+    {
+      question: "Do you clean both inside and outside?",
+      answer: "Yes, our standard window cleaning service includes both interior and exterior cleaning for a complete, crystal-clear result."
+    },
+    {
+      question: "Are you insured?",
+      answer: "Absolutely! We are fully insured and bonded for your peace of mind. Our insurance covers both liability and workers' compensation."
+    },
+    {
+      question: "How long does window cleaning take?",
+      answer: "The time depends on the size of your property and number of windows. Most residential homes take 1-3 hours, while larger commercial properties may take longer."
+    }
+  ];
 
   return (
-    <Layout 
-      title="Professional Window Cleaning Services in Surrey & White Rock | BC Pressure Washing" 
-      description="Get spotless, streak-free windows with BC Pressure Washing's professional window cleaning services in Surrey & White Rock. Book your free estimate today!"
-    >
-      {/* Hero Section with Before/After Slider */}
-      <ServiceHeader 
-        title="Professional Window Cleaning" 
-        description="Spotless windows that enhance your home's beauty and let the sunshine in" 
-        youtubeId="MdJ-n2kTgMw"
-        youtubeDesktopId="vhv-WHWJLGc"
-      />
-      
-      {/* Trust Bar */}
-      <section className="bg-blue-50 py-4 border-b border-blue-200">
+    <Layout>
+      {/* Hero Section - Completely New */}
+      <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/lovable-uploads/f7abf414-3ad9-4c10-a077-7cbb8881d937.png')" }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        
+        {/* Hero Content - Centered */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Window Cleaning in Surrey, White Rock & Greater Vancouver
+          </h1>
+          <p className="text-xl md:text-2xl text-white mb-8 max-w-4xl mx-auto leading-relaxed">
+            Crystal-clear, streak-free windows using our purified water technology.
+          </p>
+          <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4 hover:scale-105 transition-transform">
+            <Link to="/calculator">Check Prices & Availability</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* What We Clean Section */}
+      <WhatWeCleanSection />
+
+      {/* Benefits Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center items-center gap-6 text-sm font-medium text-blue-800">
-            <div className="flex items-center">
-              <Shield className="w-4 h-4 mr-2" />
-              Licensed & Insured
-            </div>
-            <div className="flex items-center">
-              <Star className="w-4 h-4 mr-2" />
-              Streak-Free Guarantee
-            </div>
-            <div className="flex items-center">
-              <div className="flex text-yellow-400 mr-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
-                ))}
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Why Choose Our Window Cleaning Service?</h2>
+            
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-bc-red p-2 rounded-full flex-shrink-0">
+                      <Check className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">Purified Water System</h3>
+                      <p className="text-gray-600">Our advanced purified water system ensures spot-free, streak-free results that last longer than traditional cleaning methods.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="bg-bc-red p-2 rounded-full flex-shrink-0">
+                      <Check className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">Eco-Friendly Solutions</h3>
+                      <p className="text-gray-600">We use environmentally safe cleaning products that are safe for your family, pets, and the environment.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="bg-bc-red p-2 rounded-full flex-shrink-0">
+                      <Check className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">Professional Team</h3>
+                      <p className="text-gray-600">Our trained professionals have years of experience and are fully insured for your peace of mind.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="bg-bc-red p-2 rounded-full flex-shrink-0">
+                      <Check className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">100% Satisfaction Guarantee</h3>
+                      <p className="text-gray-600">We're not satisfied until you are. If you're not happy with our work, we'll make it right.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              5-Star Google Rated
+              
+              <div className="relative">
+                <img 
+                  src="/lovable-uploads/4a9921b9-2dd2-42b8-ade9-61bbeeb18898.png" 
+                  alt="Professional window cleaning process" 
+                  className="rounded-lg shadow-xl w-full"
+                />
+                <div className="absolute -top-4 -right-4 bg-bc-red text-white p-4 rounded-lg shadow-lg">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">100%</div>
+                    <div className="text-sm">Satisfaction</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Sticky Quote Button */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <WindowCleaningQuoteOverlay buttonText="Get Quote" variant="bc-red" />
-      </div>
-      
-      {/* Why Choose Professional Window Cleaning Section */}
-      <section className="py-16 bg-white">
+
+      {/* Process Section */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose Professional Window Cleaning?</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Experience the difference of crystal-clear windows and a brighter, more inviting home
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <Card className="border-2 border-blue-200 bg-blue-50">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="bg-blue-600 p-2 rounded-full mr-3">
-                    <Home className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-blue-800">Professional Cleaning</h3>
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Our Window Cleaning Process</h2>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-2xl font-bold text-blue-600">1</span>
                 </div>
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
-                    Streak-free results every time
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
-                    Safe for all window types
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
-                    Eco-friendly cleaning solutions
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
-                    Experienced and insured technicians
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
-                    Convenient and hassle-free service
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-gray-200 bg-gray-50">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="bg-gray-600 p-2 rounded-full mr-3">
-                    <Zap className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">DIY Cleaning</h3>
+                <h3 className="text-xl font-bold mb-4">Assessment & Setup</h3>
+                <p className="text-gray-600">We assess your windows and set up our equipment, including our purified water system and professional tools.</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-2xl font-bold text-blue-600">2</span>
                 </div>
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-start">
-                    <span className="text-gray-600 mr-2">✗</span>
-                    Often leaves streaks and residue
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-gray-600 mr-2">✗</span>
-                    Can damage windows with harsh chemicals
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-gray-600 mr-2">✗</span>
-                    Time-consuming and labor-intensive
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-gray-600 mr-2">✗</span>
-                    Risk of injury from ladder use
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-gray-600 mr-2">✗</span>
-                    Inconsistent results
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="text-center mt-8">
-            <WindowCleaningQuoteOverlay buttonText="Check Price & Availability" variant="bc-red" />
+                <h3 className="text-xl font-bold mb-4">Deep Cleaning</h3>
+                <p className="text-gray-600">We clean your windows inside and out using our advanced techniques and eco-friendly solutions.</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-2xl font-bold text-blue-600">3</span>
+                </div>
+                <h3 className="text-xl font-bold mb-4">Quality Check</h3>
+                <p className="text-gray-600">We perform a thorough quality check to ensure every window is spotless and streak-free.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      
-      {/* Benefits Grid */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <ServiceBenefits 
-            title="The Benefits of Professional Window Cleaning" 
-            subtitle="Enjoy crystal-clear views and a brighter home with our expert window cleaning services" 
-            benefits={benefits} 
-          />
-        </div>
-      </section>
-      
-      {/* Customer Testimonials */}
-      <TestimonialsSection />
-      
+
+      {/* Testimonials Section */}
+      <TestimonialSection />
+
       {/* FAQ Section */}
       <FAQSection 
-        title="Frequently Asked Questions About Window Cleaning" 
-        subtitle="Get answers to common questions about our safe, effective window cleaning process" 
-        faqs={faqs} 
+        title="Frequently Asked Questions"
+        description="Get answers to common questions about our window cleaning services"
+        faqs={windowCleaningFAQs}
       />
-      
-      {/* Final CTA */}
-      <CallToAction 
-        title="Ready for Crystal Clear Windows?" 
-        subtitle="Contact us today for a free estimate and experience the difference professional window cleaning makes for your home or business."
-        backgroundImage="/lovable-uploads/9454f467-d96c-435e-b88d-8a78e379102a.png" 
-      />
+
+      {/* Call to Action */}
+      <CallToAction />
     </Layout>
   );
 };
