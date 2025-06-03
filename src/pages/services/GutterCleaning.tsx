@@ -221,17 +221,17 @@ const GutterCleaning = () => {
         <GutterQuadrantSection />
         <GutterProcessCarousel />
         
-        {/* Gutter Sticks Section with Aerial View */}
+        {/* After Shots of Clean Gutters Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Stick Cleaning</h2>
+              <h2 className="text-3xl font-bold text-center mb-8">After Shots of Clean Gutters</h2>
               <div className="grid md:grid-cols-2 gap-10 items-center">
                 <div className="order-2 md:order-1">
                   <div className="relative overflow-hidden rounded-lg shadow-lg">
                     <img 
                       src="/lovable-uploads/d4b8bd58-58f9-4c12-a772-ba4f86bdc3ac.png"
-                      alt="Aerial view of gutter cleaning process showing debris removal" 
+                      alt="Aerial view of professional gutter cleaning process showing debris removal" 
                       className="w-full h-auto object-cover"
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
@@ -240,7 +240,7 @@ const GutterCleaning = () => {
                   </div>
                 </div>
                 <div className="order-1 md:order-2">
-                  <h3 className="text-2xl font-bold mb-3">Complete Gutter Stick & Debris Removal</h3>
+                  <h3 className="text-2xl font-bold mb-3">Complete Gutter Cleaning Results</h3>
                   <p className="text-gray-700 mb-4 text-lg">
                     Our professional team uses specialized tools to safely remove all debris, including stubborn gutter sticks and accumulated leaves that can cause serious blockages.
                   </p>
@@ -276,8 +276,100 @@ const GutterCleaning = () => {
           </div>
         </section>
         
-        {/* Professional Installation Video */}
+        {/* Gutter Sticks Section */}
         <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">Gutter Sticks - Professional Gutter Guard System</h2>
+              
+              <div className="grid md:grid-cols-2 gap-10 items-center mb-12">
+                <div className="order-1 md:order-1">
+                  <div className="relative overflow-hidden rounded-lg shadow-lg">
+                    <img 
+                      src="/lovable-uploads/baa94eb2-dd5a-4479-b809-801f52009eab.png"
+                      alt="Gutter Stick guard system protecting gutters from debris" 
+                      className="w-full h-auto object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                      <p className="text-white text-sm font-medium">Gutter Stick guard protecting against leaves and debris</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="order-2 md:order-2">
+                  <h3 className="text-2xl font-bold mb-3">Advanced Gutter Protection</h3>
+                  <p className="text-gray-700 mb-4 text-lg">
+                    Our Gutter Stick guard system provides superior protection against leaves, pine needles, and debris while maintaining optimal water flow through your gutters.
+                  </p>
+                  <h4 className="font-bold text-lg mb-2">Key Features:</h4>
+                  <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Perforated design allows water flow while blocking debris</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Durable construction withstands harsh weather</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Easy maintenance and long-lasting protection</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Reduces cleaning frequency by up to 90%</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-10 items-center">
+                <div className="order-2 md:order-1">
+                  <h3 className="text-2xl font-bold mb-3">Professional Installation Process</h3>
+                  <p className="text-gray-700 mb-4 text-lg">
+                    Our certified technicians ensure proper installation of your Gutter Stick guard system with precision and attention to detail.
+                  </p>
+                  <h4 className="font-bold text-lg mb-2">Installation Benefits:</h4>
+                  <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Custom fit for your specific gutter system</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Secure mounting prevents displacement</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Professional warranty on installation</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Maintains gutter integrity and appearance</span>
+                    </li>
+                  </ul>
+                  <div className="mt-6">
+                    <GutterCleaningQuoteOverlay buttonText="Get Quote for Gutter Stick Installation" variant="bc-red" />
+                  </div>
+                </div>
+                <div className="order-1 md:order-2">
+                  <div className="relative overflow-hidden rounded-lg shadow-lg">
+                    <img 
+                      src="/lovable-uploads/bb606d6a-bd92-4fa1-aceb-93bc03c8e231.png"
+                      alt="Professional installation of Gutter Stick guard system" 
+                      className="w-full h-auto object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                      <p className="text-white text-sm font-medium">Expert installation ensuring optimal performance</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Professional Installation Video */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Guards Installation</h2>
@@ -330,12 +422,12 @@ const GutterCleaning = () => {
         </section>
         
         {/* Customer Testimonials Carousel */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">What Our Gutter Cleaning Customers Say</h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {gutterTestimonials.map((testimonial, index) => (
-                <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                <div key={index} className="bg-white p-6 rounded-lg">
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <span key={i} className="text-yellow-400">★</span>
