@@ -221,6 +221,61 @@ const GutterCleaning = () => {
         <GutterQuadrantSection />
         <GutterProcessCarousel />
         
+        {/* Gutter Sticks Section with Aerial View */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-8">Professional Gutter Stick Cleaning</h2>
+              <div className="grid md:grid-cols-2 gap-10 items-center">
+                <div className="order-2 md:order-1">
+                  <div className="relative overflow-hidden rounded-lg shadow-lg">
+                    <img 
+                      src="/lovable-uploads/d4b8bd58-58f9-4c12-a772-ba4f86bdc3ac.png"
+                      alt="Aerial view of gutter cleaning process showing debris removal" 
+                      className="w-full h-auto object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                      <p className="text-white text-sm font-medium">Professional debris removal from aerial perspective</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="order-1 md:order-2">
+                  <h3 className="text-2xl font-bold mb-3">Complete Gutter Stick & Debris Removal</h3>
+                  <p className="text-gray-700 mb-4 text-lg">
+                    Our professional team uses specialized tools to safely remove all debris, including stubborn gutter sticks and accumulated leaves that can cause serious blockages.
+                  </p>
+                  <h4 className="font-bold text-lg mb-2">What We Remove:</h4>
+                  <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Tree branches and large debris</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Accumulated leaves and organic matter</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Sediment and dirt buildup</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Small animal nests and debris</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span> 
+                      <span>Moss and algae growth</span>
+                    </li>
+                  </ul>
+                  <div className="mt-6">
+                    <GutterCleaningQuoteOverlay buttonText="Get a Quote for Complete Cleaning" variant="bc-red" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
         {/* Professional Installation Video */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">

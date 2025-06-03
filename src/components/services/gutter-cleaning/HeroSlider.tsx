@@ -5,41 +5,41 @@ import { Button } from '@/components/ui/button';
 import GutterCleaningQuoteOverlay from '@/components/forms/GutterCleaningQuoteOverlay';
 
 const HeroSlider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentQuadrant, setCurrentQuadrant] = useState(0);
 
-  // Four different angles/sections of clean gutters
-  const slides = [
-    {
-      image: "/lovable-uploads/3312e648-cdca-4c6c-8369-bcf99dd6db02.png",
-      title: "Professional Gutter Cleaning",
-      subtitle: "Top Section View"
+  // Quadrant positions for animation
+  const quadrants = [
+    { 
+      transform: 'scale(2) translate(-25%, -25%)', 
+      title: 'Top Left View',
+      description: 'Detailed inspection of gutter condition'
     },
-    {
-      image: "/lovable-uploads/5ccb5fa4-0911-43f2-9ea9-ad1336cbcbe9.png", 
-      title: "Crystal Clear Results",
-      subtitle: "Side Angle View"
+    { 
+      transform: 'scale(2) translate(25%, -25%)', 
+      title: 'Top Right View',
+      description: 'Professional debris removal process'
     },
-    {
-      image: "/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png",
-      title: "Spotless Gutters",
-      subtitle: "Detail Close-up"
+    { 
+      transform: 'scale(2) translate(-25%, 25%)', 
+      title: 'Bottom Left View',
+      description: 'Complete system assessment'
     },
-    {
-      image: "/lovable-uploads/4a9921b9-2dd2-42b8-ade9-61bbeeb18898.png",
-      title: "Complete Clean",
-      subtitle: "Full System View"
+    { 
+      transform: 'scale(2) translate(25%, 25%)', 
+      title: 'Bottom Right View',
+      description: 'Final quality inspection'
     }
   ];
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
+      setCurrentQuadrant((prev) => (prev + 1) % quadrants.length);
+    }, 3000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const nextQuadrant = () => setCurrentQuadrant((prev) => (prev + 1) % quadrants.length);
+  const prevQuadrant = () => setCurrentQuadrant((prev) => (prev - 1 + quadrants.length) % quadrants.length);
 
   return (
     <div className="relative bg-gradient-to-br from-blue-900 to-gray-900 text-white">
@@ -101,42 +101,49 @@ const HeroSlider = () => {
             </div>
           </div>
 
-          {/* Quadrant Image Rotation */}
+          {/* Animated Quadrant Image */}
           <div className="relative">
             <div className="bg-white p-6 rounded-xl shadow-2xl">
               <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
-                {slides[currentSlide].title}
+                Professional Gutter Cleaning Process
               </h3>
               
-              {/* Single rotating image */}
-              <div className="relative overflow-hidden rounded-lg">
+              {/* Quadrant rotating image */}
+              <div className="relative overflow-hidden rounded-lg h-64">
                 <img 
-                  src={slides[currentSlide].image} 
-                  alt={`Clean gutters - ${slides[currentSlide].subtitle}`}
-                  className="w-full h-64 object-cover transition-all duration-500 ease-in-out"
+                  src="/lovable-uploads/d4b8bd58-58f9-4c12-a772-ba4f86bdc3ac.png"
+                  alt="Aerial view of professional gutter cleaning process"
+                  className="w-full h-full object-cover transition-transform duration-1000 ease-in-out"
+                  style={{ 
+                    transform: quadrants[currentQuadrant].transform,
+                    transformOrigin: 'center'
+                  }}
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
-                  <p className="text-white text-sm font-medium">{slides[currentSlide].subtitle}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                  <div className="text-white">
+                    <p className="text-sm font-medium">{quadrants[currentQuadrant].title}</p>
+                    <p className="text-xs opacity-90">{quadrants[currentQuadrant].description}</p>
+                  </div>
                 </div>
               </div>
 
               {/* Slider Controls */}
               <div className="flex justify-between items-center mt-4">
-                <button onClick={prevSlide} className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <button onClick={prevQuadrant} className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <div className="flex gap-2">
-                  {slides.map((_, index) => (
+                  {quadrants.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentSlide(index)}
+                      onClick={() => setCurrentQuadrant(index)}
                       className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                        index === currentSlide ? 'w-4 bg-bc-red' : 'bg-gray-300'
+                        index === currentQuadrant ? 'w-4 bg-bc-red' : 'bg-gray-300'
                       }`}
                     />
                   ))}
                 </div>
-                <button onClick={nextSlide} className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <button onClick={nextQuadrant} className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
                   <ChevronRight className="w-6 h-6" />
                 </button>
               </div>
