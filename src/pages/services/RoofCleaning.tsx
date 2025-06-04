@@ -228,19 +228,7 @@ const RoofCleaning = () => {
       {/* Final CTA with Internal Links */}
       <CallToAction 
         title="Ready for a Cleaner, Safer Roof?" 
-        subtitle={
-          <>
-            Contact us today for a free estimate and protect your home with our professional soft wash roof cleaning. 
-            Prevent further damage by pairing with{' '}
-            <Link to='/services/gutter-cleaning' className='text-white underline hover:text-gray-200'>
-              gutter cleaning
-            </Link>
-            {' '}and complete your exterior cleanup with{' '}
-            <Link to='/services/window-cleaning' className='text-white underline hover:text-gray-200'>
-              crystal-clear windows
-            </Link>.
-          </>
-        }
+        subtitle="Contact us today for a free estimate and protect your home with our professional soft wash roof cleaning. Prevent further damage by pairing with gutter cleaning and complete your exterior cleanup with crystal-clear windows."
         backgroundImage="/lovable-uploads/9454f467-d96c-435e-b88d-8a78e379102a.png" 
       />
     </Layout>

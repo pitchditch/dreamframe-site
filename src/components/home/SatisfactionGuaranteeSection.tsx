@@ -22,7 +22,7 @@ const SatisfactionGuaranteeSection = () => {
             If you're not completely satisfied with our work, we'll come back and make it right at no additional cost to you.
           </p>
           
-          {/* Express Cleaning CTA Button - Moved here from hero section */}
+          {/* Express Cleaning CTA Button */}
           <div className="mb-6 p-4 bg-yellow-400 rounded-lg inline-block">
             <Link 
               to="/express-cleaning" 
