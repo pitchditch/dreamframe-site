@@ -47,22 +47,22 @@ const GutterCleaning = () => {
     {
       title: t("Inspection"),
       description: t("We inspect your gutter system to identify any issues or areas needing special attention."),
-      icon: "🔍"
+      image: "/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png"
     },
     {
       title: t("Debris Removal"),
       description: t("All leaves, debris, and buildup are carefully removed from gutters and downspouts."),
-      icon: "🍂"
+      image: "/lovable-uploads/fc77240e-210d-48ab-95b1-279c84686768.png"
     },
     {
       title: t("Cleaning"),
       description: t("Gutters are thoroughly cleaned and flushed to ensure proper water flow."),
-      icon: "💧"
+      image: "/lovable-uploads/889d6b89-1db3-48dd-8f3d-7ef518215095.png"
     },
     {
       title: t("Final Check"),
       description: t("We test the system and make minor adjustments to ensure optimal performance."),
-      icon: "✅"
+      image: "/lovable-uploads/1506ac4e-54db-4e14-b30f-42311bfee2be.png"
     }
   ];
 
@@ -79,7 +79,7 @@ const GutterCleaning = () => {
         
         <ServiceHeader
           title={t("Professional Gutter Cleaning Services")}
-          description={t("Protect your home from water damage with our thorough gutter cleaning and maintenance services.")}
+          subtitle={t("Protect your home from water damage with our thorough gutter cleaning and maintenance services.")}
           backgroundImage="/lovable-uploads/fc77240e-210d-48ab-95b1-279c84686768.png"
         />
 
@@ -87,14 +87,10 @@ const GutterCleaning = () => {
         
         <GutterProcessCarousel />
         
-        <div className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-              {t("Our Gutter Cleaning Process")}
-            </h2>
-            <ServiceProcess processes={processSteps} />
-          </div>
-        </div>
+        <ServiceProcess 
+          title={t("Our Gutter Cleaning Process")}
+          steps={processSteps}
+        />
 
         <EnhancedComparisonTable />
 
@@ -165,7 +161,10 @@ const GutterCleaning = () => {
 
         <ServiceAreasMap />
 
-        <TestimonialsCarousel />
+        <TestimonialsCarousel 
+          serviceType="gutter-cleaning"
+          title={t("What Our Customers Say About Our Gutter Cleaning")}
+        />
 
         <CallToAction
           title={t("Ready to Protect Your Home?")}
@@ -174,7 +173,7 @@ const GutterCleaning = () => {
         />
 
         <StickyQuoteButton />
-        <GutterCleaningQuoteOverlay buttonText={t("Get Free Quote")} />
+        <GutterCleaningQuoteOverlay />
       </div>
     </>
   );

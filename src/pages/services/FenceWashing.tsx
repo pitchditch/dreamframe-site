@@ -38,22 +38,22 @@ const FenceWashing = () => {
     {
       title: t("Fence Assessment"),
       description: t("We inspect your fence material and condition to choose the optimal cleaning method."),
-      icon: "🔍"
+      image: "/lovable-uploads/db2d8d0c-21a4-47e8-a7d1-b6a7e95c13e9.png"
     },
     {
       title: t("Pre-Treatment"),
       description: t("We apply specialized cleaners to break down stubborn stains, mildew, and buildup."),
-      icon: "🧴"
+      image: "/lovable-uploads/28c30244-2e20-4f95-8702-35310699deb3.png"
     },
     {
       title: t("Pressure Washing"),
       description: t("Using appropriate pressure settings, we thoroughly clean each section of your fence."),
-      icon: "💧"
+      image: "/lovable-uploads/1506ac4e-54db-4e14-b30f-42311bfee2be.png"
     },
     {
       title: t("Final Rinse"),
       description: t("We complete the process with a thorough rinse, leaving your fence clean and refreshed."),
-      icon: "✅"
+      image: "/lovable-uploads/889d6b89-1db3-48dd-8f3d-7ef518215095.png"
     }
   ];
 
@@ -67,20 +67,16 @@ const FenceWashing = () => {
       <div className="min-h-screen bg-gray-50">
         <ServiceHeader
           title={t("Professional Fence Washing & Cleaning")}
-          description={t("Restore your fence to like-new condition with our specialized cleaning services that remove dirt, mildew, and weathering damage.")}
+          subtitle={t("Restore your fence to like-new condition with our specialized cleaning services that remove dirt, mildew, and weathering damage.")}
           backgroundImage="/lovable-uploads/28c30244-2e20-4f95-8702-35310699deb3.png"
         />
 
         <ServiceBenefits benefits={benefits} />
         
-        <div className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-              {t("Our Fence Washing Process")}
-            </h2>
-            <ServiceProcess processes={processSteps} />
-          </div>
-        </div>
+        <ServiceProcess 
+          title={t("Our Fence Washing Process")}
+          steps={processSteps}
+        />
 
         <div className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -177,7 +173,10 @@ const FenceWashing = () => {
           </div>
         </div>
 
-        <TestimonialsCarousel />
+        <TestimonialsCarousel 
+          serviceType="pressure-washing"
+          title={t("What Our Customers Say About Our Fence Washing")}
+        />
 
         <CallToAction
           title={t("Ready to Restore Your Fence?")}

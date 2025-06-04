@@ -41,22 +41,22 @@ const RoofCleaning = () => {
     {
       title: t("Roof Inspection"),
       description: t("We carefully inspect your roof to identify problem areas and choose the safest cleaning method."),
-      icon: "🔍"
+      image: "/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png"
     },
     {
       title: t("Pre-Treatment"),
       description: t("We apply eco-friendly solutions to break down moss, algae, and organic buildup."),
-      icon: "🧴"
+      image: "/lovable-uploads/2156e2bb-05d0-4809-93c4-d6e0d97b96aa.png"
     },
     {
       title: t("Gentle Cleaning"),
       description: t("Using low-pressure soft wash techniques, we safely remove all buildup without damage."),
-      icon: "💧"
+      image: "/lovable-uploads/180b21a6-5560-4b80-907a-78280186bc05.png"
     },
     {
       title: t("Final Rinse"),
       description: t("We thoroughly rinse the roof and surrounding areas, leaving everything clean and protected."),
-      icon: "✅"
+      image: "/lovable-uploads/1506ac4e-54db-4e14-b30f-42311bfee2be.png"
     }
   ];
 
@@ -70,7 +70,7 @@ const RoofCleaning = () => {
       <div className="min-h-screen bg-gray-50">
         <ServiceHeader
           title={t("Professional Roof Cleaning & Moss Removal")}
-          description={t("Protect your investment with our safe, effective roof cleaning services that remove moss, algae, and organic buildup.")}
+          subtitle={t("Protect your investment with our safe, effective roof cleaning services that remove moss, algae, and organic buildup.")}
           backgroundImage="/lovable-uploads/180b21a6-5560-4b80-907a-78280186bc05.png"
         />
 
@@ -78,14 +78,10 @@ const RoofCleaning = () => {
         
         <RoofCleaningProcessCarousel />
         
-        <div className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-              {t("Our Roof Cleaning Process")}
-            </h2>
-            <ServiceProcess processes={processSteps} />
-          </div>
-        </div>
+        <ServiceProcess 
+          title={t("Our Roof Cleaning Process")}
+          steps={processSteps}
+        />
 
         <div className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -136,7 +132,10 @@ const RoofCleaning = () => {
 
         <RoofCleaningGallery />
 
-        <TestimonialsCarousel />
+        <TestimonialsCarousel 
+          serviceType="roof-cleaning"
+          title={t("What Our Customers Say About Our Roof Cleaning")}
+        />
 
         <CallToAction
           title={t("Ready for a Cleaner, Safer Roof?")}
@@ -144,7 +143,7 @@ const RoofCleaning = () => {
           backgroundImage="/lovable-uploads/180b21a6-5560-4b80-907a-78280186bc05.png"
         />
 
-        <RoofCleaningQuoteOverlay buttonText={t("Get Free Quote")} />
+        <RoofCleaningQuoteOverlay />
       </div>
     </>
   );
