@@ -280,9 +280,15 @@ END:VCARD`;
                         Processing...
                       </>
                     ) : (
-                      <>🧼 {t("Get My Free Quote")} — Response Within 1 Business Day</>
+                      <span className="flex items-center justify-center">
+                        🧼 Get My Free Quote
+                      </span>
                     )}
                   </Button>
+                  
+                  <div className="text-center text-sm text-gray-600 mt-2">
+                    Response within 1 business day
+                  </div>
                 </form>
               </CardContent>
             </Card>
