@@ -20,6 +20,8 @@ import DoorToDoorSection from '../components/home/DoorToDoorSection';
 import QuickContactForm from '../components/home/QuickContactForm';
 import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
 import AfkOverlay from '../components/AfkOverlay';
+import BeforeAfterGallery from '@/components/BeforeAfterGallery';
+import FloatingContact from '@/components/FloatingContact';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -130,32 +132,35 @@ const Index = () => {
           </div>
           
           <div className="bg-white relative z-50">
-            {/* 3. How We Complete Our Jobs */}
+            {/* 3. Before/After Gallery - Added early for visual impact */}
+            <BeforeAfterGallery />
+            
+            {/* 4. Contact Form - Moved up for better conversion */}
+            <QuickContactForm />
+            
+            {/* 5. How We Complete Our Jobs */}
             <HowWeCompleteJobsSection />
             
-            {/* 4. Featured Project */}
+            {/* 6. Featured Project */}
             <FeaturedProjectSection />
             
-            {/* 5. Merged Property Types + Trust Elements */}
+            {/* 7. Testimonials - Moved higher for social proof */}
+            <TestimonialsSection />
+            
+            {/* 8. Merged Property Types + Trust Elements */}
             <PropertySpecificSection />
             <OwnerOperatedSection />
             
-            {/* 6. Trusted Customers Slideshow */}
+            {/* 9. Trusted Customers Slideshow */}
             <TrustedCustomersSection />
             
-            {/* 7. Competitor Comparison */}
+            {/* 10. Competitor Comparison */}
             <CompetitorComparisonSection />
             
-            {/* 8. Testimonials with Before/After */}
-            <TestimonialsSection />
-            
-            {/* 9. Contact Form */}
-            <QuickContactForm />
-            
-            {/* 10. Service Areas */}
+            {/* 11. Service Areas */}
             <ServiceAreasSection />
             
-            {/* 11. FAQ Section */}
+            {/* 12. FAQ Section */}
             <div data-section="faq">
               <FAQSection 
                 title={t("Frequently Asked Questions")} 
@@ -165,7 +170,7 @@ const Index = () => {
               />
             </div>
             
-            {/* 12. White Rock Footer Image */}
+            {/* 13. White Rock Footer Image */}
             <div className="w-full footer-image">
               <img 
                 src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
@@ -178,6 +183,7 @@ const Index = () => {
       </div>
       
       <ReferralButton />
+      <FloatingContact />
       <AfkOverlay />
     </Layout>
   );

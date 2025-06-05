@@ -1,3 +1,4 @@
+import React from 'react';
 
 interface SubmissionRecord {
   timestamp: number;
@@ -83,17 +84,17 @@ export const sanitizeFormData = (data: Record<string, any>): Record<string, any>
   return sanitized;
 };
 
-export const createHoneypot = (): JSX.Element => {
-  return (
-    <div style={{ display: 'none' }}>
-      <input 
-        type="text" 
-        name="website_url" 
-        tabIndex={-1} 
-        autoComplete="off"
-        aria-hidden="true"
-      />
-    </div>
+export const createHoneypot = () => {
+  const honeypotStyle = { display: 'none' };
+  
+  return React.createElement('div', { style: honeypotStyle }, 
+    React.createElement('input', {
+      type: 'text',
+      name: 'website_url',
+      tabIndex: -1,
+      autoComplete: 'off',
+      'aria-hidden': 'true'
+    })
   );
 };
 
