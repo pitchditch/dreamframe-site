@@ -7,7 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/use-translation';
 import { services } from './ServiceSelectionSection/serviceData';
-import { Download, Phone, Mail, MapPin } from 'lucide-react';
+import { Download, Phone, Mail, MapPin, MessageCircle, Star, Shield, Clock } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const QuickContactForm = () => {
   const { toast } = useToast();
@@ -34,7 +35,6 @@ const QuickContactForm = () => {
 
     window.addEventListener('serviceSelected', handleServiceSelected as EventListener);
     
-    // Check for pre-selected service
     const preSelected = sessionStorage.getItem('selectedService');
     if (preSelected) {
       const service = services.find(s => s.id === preSelected);
@@ -54,7 +54,6 @@ const QuickContactForm = () => {
     e.preventDefault();
     
     try {
-      // Here you would typically send the form data to your backend
       console.log('Form submitted:', formData);
       
       toast({
@@ -62,7 +61,6 @@ const QuickContactForm = () => {
         description: t("We'll contact you within 24 hours with your free quote."),
       });
       
-      // Reset form
       setFormData({
         name: '',
         email: '',
@@ -105,145 +103,200 @@ END:VCARD`;
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-bc-red to-red-700 text-white" data-contact-form>
+    <section className="py-20 bg-gray-50" data-contact-form>
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
+          {/* Header Section */}
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">{t("Get Your Free Quote Today")}</h2>
-            <p className="text-xl text-red-100">
-              {t("Fill out the form below and we'll get back to you within 24 hours")}
+            <h2 className="text-4xl font-bold mb-4 text-gray-900">{t("Get Your Free Quote Today")}</h2>
+            <p className="text-xl text-gray-600 mb-6">
+              {t("Professional exterior cleaning in Surrey & White Rock")}
+            </p>
+            <p className="text-lg text-gray-500">
+              {t("We'll text or call you back within 1 business day")}
             </p>
           </div>
 
-          {/* Download Contact Card Section */}
-          <div className="mb-12 bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center">
-            <div className="max-w-2xl mx-auto">
-              <div className="mb-6">
-                <Download className="h-12 w-12 mx-auto mb-4 text-white/90" />
-                <h3 className="text-2xl font-bold mb-3">Save Our Contact Info</h3>
-                <p className="text-lg mb-6 text-white/90">
-                  Download our contact card to your phone for quick access to our services
-                </p>
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center items-center gap-6 mb-12 text-sm font-medium text-gray-700">
+            <div className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+              <Shield className="w-4 h-4 mr-2 text-green-600" />
+              Fully Insured
+            </div>
+            <div className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+              <div className="flex text-yellow-400 mr-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-current" />
+                ))}
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="flex items-center justify-center bg-white/10 rounded-lg p-3">
-                  <Phone className="h-5 w-5 mr-2" />
-                  <span className="font-semibold">778-808-7620</span>
-                </div>
-                <div className="flex items-center justify-center bg-white/10 rounded-lg p-3">
-                  <Mail className="h-5 w-5 mr-2" />
-                  <span className="font-semibold">Quick Response</span>
-                </div>
-                <div className="flex items-center justify-center bg-white/10 rounded-lg p-3">
-                  <MapPin className="h-5 w-5 mr-2" />
-                  <span className="font-semibold">Surrey & White Rock</span>
-                </div>
-              </div>
-              
-              <Button 
-                onClick={downloadContactCard}
-                variant="outline" 
-                className="bg-white text-bc-red hover:bg-gray-100 border-white font-bold shadow-lg"
-                size="lg"
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Download Contact Card
-              </Button>
-              
-              <p className="text-sm mt-4 text-white/75">
-                Compatible with iPhone, Android, and all modern devices
-              </p>
+              5-Star Google Rated
+            </div>
+            <div className="flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+              <Clock className="w-4 h-4 mr-2 text-blue-600" />
+              Same-Day Availability
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-2xl text-gray-900">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">{t("Name")} *</label>
-                <Input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">{t("Email")} *</label>
-                <Input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full"
-                />
-              </div>
-            </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Quote Form */}
+            <Card className="shadow-xl">
+              <CardContent className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                      <Input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        placeholder="Your Name"
+                        className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                      />
+                    </div>
+                    <div className="relative">
+                      <Input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        placeholder="Email Address"
+                        className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                      />
+                      <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    </div>
+                  </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">{t("Phone")} *</label>
-                <Input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full"
-                />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                      <Input
+                        type="tel"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        placeholder="Phone Number"
+                        className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                      />
+                      <Phone className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    </div>
+                    <div>
+                      <Select
+                        value={formData.service}
+                        onValueChange={(value) => setFormData({...formData, service: value})}
+                        required
+                      >
+                        <SelectTrigger className="h-12 border-gray-300 focus:border-bc-red">
+                          <SelectValue placeholder="Select Service Needed" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {services.map((service) => (
+                            <SelectItem key={service.id} value={service.title}>
+                              {t(service.title)}
+                            </SelectItem>
+                          ))}
+                          <SelectItem value="Multiple Services">{t("Multiple Services")}</SelectItem>
+                          <SelectItem value="Other">{t("Other")}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <Input
+                      type="text"
+                      value={formData.address}
+                      onChange={(e) => setFormData({...formData, address: e.target.value})}
+                      placeholder="Property Address (for accurate pricing)"
+                      className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                    />
+                    <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  </div>
+
+                  <div>
+                    <Textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      placeholder="Tell us more about your project..."
+                      className="h-24 border-gray-300 focus:border-bc-red resize-none"
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-bc-red hover:bg-red-700 text-white h-14 text-lg font-semibold rounded-lg shadow-lg"
+                  >
+                    🧼 {t("Get My Free Quote")} — Response Within 1 Business Day
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Contact Options & Trust Elements */}
+            <div className="space-y-8">
+              {/* Primary Contact Methods */}
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Or reach out directly:</h3>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button 
+                    className="bg-bc-red hover:bg-red-700 text-white flex-1 h-14 text-lg font-semibold"
+                    asChild
+                  >
+                    <a href="tel:7788087620">
+                      <Phone className="mr-2 h-5 w-5" />
+                      Call Us Now
+                    </a>
+                  </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="border-bc-red text-bc-red hover:bg-bc-red hover:text-white flex-1 h-14 text-lg font-semibold"
+                    asChild
+                  >
+                    <a href="#chat">
+                      <MessageCircle className="mr-2 h-5 w-5" />
+                      Chat With Us
+                    </a>
+                  </Button>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">{t("Service Needed")} *</label>
-                <Select
-                  value={formData.service}
-                  onValueChange={(value) => setFormData({...formData, service: value})}
-                  required
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("Select a service")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {services.map((service) => (
-                      <SelectItem key={service.id} value={service.title}>
-                        {t(service.title)}
-                      </SelectItem>
+
+              {/* Download Contact Card - Less Prominent */}
+              <div className="bg-white p-6 rounded-lg shadow-sm border">
+                <div className="text-center">
+                  <h4 className="font-semibold text-gray-900 mb-2">Save Our Contact Info</h4>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Download our contact card to your phone for quick access
+                  </p>
+                  <Button 
+                    onClick={downloadContactCard}
+                    variant="outline" 
+                    className="text-gray-700 border-gray-300 hover:bg-gray-50"
+                    size="sm"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download Contact Info
+                  </Button>
+                </div>
+              </div>
+
+              {/* Trust Stats */}
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
+                <div className="text-center">
+                  <p className="text-lg font-semibold text-gray-900 mb-2">
+                    Trusted by 500+ Homeowners in BC
+                  </p>
+                  <div className="flex justify-center items-center text-yellow-500 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-current" />
                     ))}
-                    <SelectItem value="Multiple Services">{t("Multiple Services")}</SelectItem>
-                    <SelectItem value="Other">{t("Other")}</SelectItem>
-                  </SelectContent>
-                </Select>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    Based on Google Reviews & Customer Testimonials
+                  </p>
+                </div>
               </div>
             </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium mb-2">{t("Property Address")}</label>
-              <Input
-                type="text"
-                value={formData.address}
-                onChange={(e) => setFormData({...formData, address: e.target.value})}
-                placeholder={t("Enter your address for accurate pricing")}
-                className="w-full"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium mb-2">{t("Additional Details")}</label>
-              <Textarea
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                placeholder={t("Tell us more about your project...")}
-                className="w-full h-32"
-              />
-            </div>
-
-            <Button type="submit" className="w-full bg-bc-red hover:bg-red-700 text-white py-3 text-lg font-semibold">
-              {t("Get My Free Quote")}
-            </Button>
-
-            <p className="text-center text-sm text-gray-600 mt-4">
-              {t("We'll respond within 24 hours with your personalized quote")}
-            </p>
-          </form>
+          </div>
         </div>
       </div>
     </section>
