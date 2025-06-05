@@ -7,6 +7,7 @@ import { Textarea } from './ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import emailjs from '@emailjs/browser';
 import { trackFormSubmission } from '@/utils/analytics';
+import { RateLimiter, sanitizeFormData, createHoneypot, detectBot, sanitizeLogData } from '@/utils/security';
 import { Link } from 'react-router-dom';
 
 const FooterContactForm = () => {
@@ -17,49 +18,89 @@ const FooterContactForm = () => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Track the form submission
-    trackFormSubmission('footer_contact_form', {
-      form_type: 'quick_contact',
-      service_interest: service
-    });
+    if (isSubmitting) return;
     
-    // Prepare the data for email
-    const templateParams = {
-      from_email: email,
-      service_interest: service,
-      subject: 'Quick Contact Form Submission',
-      form_type: 'Footer Quick Contact'
-    };
-    
-    // Send email using EmailJS
-    emailjs.send(
-      'service_xrk4vas',
-      'template_cpivz2k',
-      templateParams,
-      'MMzAmk5eWrjFgC_nP'
-    )
-    .then((response) => {
-      console.log('Email sent successfully:', response);
-      toast({
-        title: "Message Sent!",
-        description: "We'll get back to you as soon as possible."
+    try {
+      // Rate limiting check
+      const identifier = email || 'anonymous';
+      if (!RateLimiter.canSubmit(identifier)) {
+        const remainingTime = RateLimiter.getRemainingTime(identifier);
+        const minutes = Math.ceil(remainingTime / (1000 * 60));
+        toast({
+          title: "Too Many Requests",
+          description: `Please wait ${minutes} minutes before submitting again.`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Bot detection
+      const formElement = e.target as HTMLFormElement;
+      const formDataObj = new FormData(formElement);
+      if (detectBot(formDataObj)) {
+        console.warn('Bot submission detected and blocked');
+        return;
+      }
+
+      // Sanitize form data
+      const sanitizedData = sanitizeFormData({ email, service });
+      
+      setIsSubmitting(true);
+      
+      // Track the form submission
+      trackFormSubmission('footer_contact_form', {
+        form_type: 'quick_contact',
+        service_interest: sanitizedData.service
       });
-      setEmail('');
-      setService('');
-    })
-    .catch((error) => {
-      console.error('Error sending email:', error);
+      
+      // Prepare the data for email
+      const templateParams = {
+        from_email: sanitizedData.email,
+        service_interest: sanitizedData.service,
+        subject: 'Quick Contact Form Submission',
+        form_type: 'Footer Quick Contact'
+      };
+      
+      // Log sanitized data (no sensitive info)
+      console.log('Footer contact form submission:', sanitizeLogData(sanitizedData));
+      
+      // Send email using EmailJS
+      emailjs.send(
+        'service_xrk4vas',
+        'template_cpivz2k',
+        templateParams,
+        'MMzAmk5eWrjFgC_nP'
+      )
+      .then((response) => {
+        console.log('Email sent successfully');
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you as soon as possible."
+        });
+        setEmail('');
+        setService('');
+      })
+      .catch((error) => {
+        console.error('Error sending email (sanitized):', error?.text || 'Unknown error');
+        toast({
+          title: "Error",
+          description: "There was a problem sending your message. Please try again.",
+          variant: "destructive"
+        });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+    } catch (error) {
+      console.error('Form submission error (sanitized):', error instanceof Error ? error.message : 'Unknown error');
       toast({
         title: "Error",
         description: "There was a problem sending your message. Please try again.",
         variant: "destructive"
       });
-    })
-    .finally(() => {
       setIsSubmitting(false);
-    });
+    }
   };
   
   return (
@@ -69,6 +110,8 @@ const FooterContactForm = () => {
           <Mail className="mr-2" size={20} /> Quick Contact
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {createHoneypot()}
+          
           <div>
             <Input 
               type="email" 
@@ -76,6 +119,7 @@ const FooterContactForm = () => {
               value={email} 
               onChange={e => setEmail(e.target.value)} 
               required 
+              maxLength={100}
               className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
             />
           </div>
@@ -85,17 +129,29 @@ const FooterContactForm = () => {
               value={service} 
               onChange={e => setService(e.target.value)} 
               required 
+              maxLength={500}
               className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
               rows={3} 
             />
           </div>
+          
+          <div className="text-xs text-gray-400">
+            By submitting, you consent to being contacted. View our{' '}
+            <a href="/privacy" className="text-bc-red hover:underline">Privacy Policy</a>.
+          </div>
+          
           <Button 
             type="submit" 
             variant="bc-red" 
             className="w-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Sending...' : (
+            {isSubmitting ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Sending...
+              </>
+            ) : (
               <>
                 Send Message <Send size={16} className="ml-2" />
               </>

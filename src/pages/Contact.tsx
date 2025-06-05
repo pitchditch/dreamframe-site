@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { Helmet } from 'react-helmet';
@@ -6,6 +5,7 @@ import Layout from '../components/Layout';
 import { useToast } from '@/hooks/use-toast';
 import { Phone, Mail, MapPin, Clock, Send, Building } from 'lucide-react';
 import { trackFormSubmission } from '@/utils/analytics';
+import { RateLimiter, sanitizeFormData, createHoneypot, detectBot, sanitizeLogData } from '@/utils/security';
 import ChatAssistant from '@/components/ChatAssistant';
 
 const Contact = () => {
@@ -45,65 +45,105 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    
+    if (isSubmitting) return;
+    
+    try {
+      // Rate limiting check
+      const identifier = formData.email || 'anonymous';
+      if (!RateLimiter.canSubmit(identifier)) {
+        const remainingTime = RateLimiter.getRemainingTime(identifier);
+        const minutes = Math.ceil(remainingTime / (1000 * 60));
+        toast({
+          title: "Too Many Requests",
+          description: `Please wait ${minutes} minutes before submitting again.`,
+          variant: "destructive",
+        });
+        return;
+      }
 
-    trackFormSubmission('contact_form', {
-      form_type: 'contact',
-      service_type: formData.service,
-      saw_red_car: formData.sawRedCar,
-      is_business_inquiry: formData.isBusinessInquiry
-    });
+      // Bot detection
+      const formElement = e.target as HTMLFormElement;
+      const formDataObj = new FormData(formElement);
+      if (detectBot(formDataObj)) {
+        console.warn('Bot submission detected and blocked');
+        return;
+      }
 
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone,
-      service_interest: formData.service,
-      message: formData.message,
-      subject: formData.sawRedCar 
-        ? 'Contact Form Submission (RED CAR DISCOUNT 10%)' 
-        : formData.isBusinessInquiry 
-          ? 'Business Inquiry Contact Form Submission'
-          : 'Contact Form Submission',
-      form_type: formData.isBusinessInquiry ? 'Business Contact Form' : 'Main Contact Form',
-      discount_eligible: formData.sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No',
-      business_inquiry: formData.isBusinessInquiry ? 'YES' : 'No'
-    };
+      // Sanitize form data
+      const sanitizedData = sanitizeFormData(formData);
+      
+      setIsSubmitting(true);
 
-    // Send email using EmailJS with updated template ID
-    emailjs.send(
-      'service_xrk4vas',
-      'template_cpivz2k',
-      templateParams,
-      'MMzAmk5eWrjFgC_nP'
-    )
-    .then(() => {
-      toast({
-        title: "Message Sent!",
-        description: "We've received your message and will get back to you shortly.",
+      trackFormSubmission('contact_form', {
+        form_type: 'contact',
+        service_type: sanitizedData.service,
+        saw_red_car: sanitizedData.sawRedCar,
+        is_business_inquiry: sanitizedData.isBusinessInquiry
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: 'Window Cleaning',
-        message: '',
-        sawRedCar: false,
-        isBusinessInquiry: false
-      });
+      const templateParams = {
+        from_name: sanitizedData.name,
+        from_email: sanitizedData.email,
+        phone: sanitizedData.phone,
+        service_interest: sanitizedData.service,
+        message: sanitizedData.message,
+        subject: sanitizedData.sawRedCar 
+          ? 'Contact Form Submission (RED CAR DISCOUNT 10%)' 
+          : sanitizedData.isBusinessInquiry 
+            ? 'Business Inquiry Contact Form Submission'
+            : 'Contact Form Submission',
+        form_type: sanitizedData.isBusinessInquiry ? 'Business Contact Form' : 'Main Contact Form',
+        discount_eligible: sanitizedData.sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No',
+        business_inquiry: sanitizedData.isBusinessInquiry ? 'YES' : 'No'
+      };
 
-      setIsSubmitting(false);
-    })
-    .catch((error) => {
-      console.error('EmailJS Error:', error);
+      // Log sanitized data (no sensitive info)
+      console.log('Contact form submission:', sanitizeLogData(sanitizedData));
+
+      // Send email using EmailJS with updated template ID
+      emailjs.send(
+        'service_xrk4vas',
+        'template_cpivz2k',
+        templateParams,
+        'MMzAmk5eWrjFgC_nP'
+      )
+      .then(() => {
+        toast({
+          title: "Message Sent!",
+          description: "We've received your message and will get back to you shortly.",
+        });
+
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: 'Window Cleaning',
+          message: '',
+          sawRedCar: false,
+          isBusinessInquiry: false
+        });
+
+        setIsSubmitting(false);
+      })
+      .catch((error) => {
+        console.error('EmailJS Error (sanitized):', error?.text || 'Unknown error');
+        toast({
+          title: "Something went wrong.",
+          description: "Please try again later or contact us directly.",
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
+      });
+    } catch (error) {
+      console.error('Form submission error (sanitized):', error instanceof Error ? error.message : 'Unknown error');
       toast({
         title: "Something went wrong.",
         description: "Please try again later or contact us directly.",
         variant: "destructive"
       });
       setIsSubmitting(false);
-    });
+    }
   };
 
   return (
@@ -152,6 +192,8 @@ const Contact = () => {
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-xl">
+                {createHoneypot()}
+                
                 {formData.isBusinessInquiry && (
                   <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
                     <div className="flex">
@@ -167,6 +209,7 @@ const Contact = () => {
                     </div>
                   </div>
                 )}
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Your Name *</label>
@@ -177,6 +220,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
+                      maxLength={100}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                       placeholder={formData.isBusinessInquiry ? "Your Name / Company Rep" : "John Smith"}
                     />
@@ -190,6 +234,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      maxLength={100}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                       placeholder="john@example.com"
                     />
@@ -205,6 +250,7 @@ const Contact = () => {
                       name="company"
                       onChange={handleChange}
                       required
+                      maxLength={100}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                       placeholder="Your Company Name"
                     />
@@ -220,6 +266,7 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
+                      maxLength={20}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                       placeholder="(123) 456-7890"
                     />
@@ -266,6 +313,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={6}
+                    maxLength={1000}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
                     placeholder={formData.isBusinessInquiry 
                       ? "Please provide details about your company's cleaning needs, facility size, and any specific requirements..." 
@@ -311,6 +359,11 @@ const Contact = () => {
                     </div>
                   </div>
                 )}
+
+                <div className="text-xs text-gray-500">
+                  By submitting this form, you consent to being contacted by BC Pressure Washing. 
+                  View our <a href="/privacy" className="text-bc-red hover:underline">Privacy Policy</a>.
+                </div>
 
                 <div>
                   <button

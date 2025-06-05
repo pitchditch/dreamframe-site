@@ -9,11 +9,13 @@ import { useTranslation } from '@/hooks/use-translation';
 import { services } from './ServiceSelectionSection/serviceData';
 import { Download, Phone, Mail, MapPin, MessageCircle, Star, Shield, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { RateLimiter, sanitizeFormData, createHoneypot, detectBot, sanitizeLogData } from '@/utils/security';
 
 const QuickContactForm = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const [selectedService, setSelectedService] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -53,8 +55,40 @@ const QuickContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (isSubmitting) return;
+    
     try {
-      console.log('Form submitted:', formData);
+      // Rate limiting check
+      const identifier = formData.email || 'anonymous';
+      if (!RateLimiter.canSubmit(identifier)) {
+        const remainingTime = RateLimiter.getRemainingTime(identifier);
+        const minutes = Math.ceil(remainingTime / (1000 * 60));
+        toast({
+          title: t("Too Many Requests"),
+          description: t(`Please wait ${minutes} minutes before submitting again.`),
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Bot detection
+      const formElement = e.target as HTMLFormElement;
+      const formDataObj = new FormData(formElement);
+      if (detectBot(formDataObj)) {
+        console.warn('Bot submission detected and blocked');
+        return;
+      }
+
+      // Sanitize form data
+      const sanitizedData = sanitizeFormData(formData);
+      
+      setIsSubmitting(true);
+      
+      // Log sanitized data (no sensitive info)
+      console.log('Form submission attempt:', sanitizeLogData(sanitizedData));
+      
+      // Simulate form processing
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
         title: t("Quote Request Sent!"),
@@ -71,11 +105,14 @@ const QuickContactForm = () => {
       });
       setSelectedService('');
     } catch (error) {
+      console.error('Form submission error (sanitized):', error instanceof Error ? error.message : 'Unknown error');
       toast({
         title: t("Error"),
         description: t("Failed to send quote request. Please try again."),
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -142,6 +179,8 @@ END:VCARD`;
             <Card className="shadow-xl">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {createHoneypot()}
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="relative">
                       <Input
@@ -151,6 +190,7 @@ END:VCARD`;
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         placeholder="Your Name"
                         className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                        maxLength={100}
                       />
                     </div>
                     <div className="relative">
@@ -161,6 +201,7 @@ END:VCARD`;
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
                         placeholder="Email Address"
                         className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                        maxLength={100}
                       />
                       <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     </div>
@@ -175,6 +216,7 @@ END:VCARD`;
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
                         placeholder="Phone Number"
                         className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                        maxLength={20}
                       />
                       <Phone className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     </div>
@@ -207,6 +249,7 @@ END:VCARD`;
                       onChange={(e) => setFormData({...formData, address: e.target.value})}
                       placeholder="Property Address (for accurate pricing)"
                       className="pl-4 h-12 border-gray-300 focus:border-bc-red"
+                      maxLength={200}
                     />
                     <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   </div>
@@ -217,14 +260,28 @@ END:VCARD`;
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
                       placeholder="Tell us more about your project..."
                       className="h-24 border-gray-300 focus:border-bc-red resize-none"
+                      maxLength={500}
                     />
+                  </div>
+
+                  <div className="text-xs text-gray-500">
+                    By submitting this form, you consent to being contacted by BC Pressure Washing. 
+                    View our <a href="/privacy" className="text-bc-red hover:underline">Privacy Policy</a>.
                   </div>
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-bc-red hover:bg-red-700 text-white h-14 text-lg font-semibold rounded-lg shadow-lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-bc-red hover:bg-red-700 text-white h-14 text-lg font-semibold rounded-lg shadow-lg disabled:opacity-50"
                   >
-                    🧼 {t("Get My Free Quote")} — Response Within 1 Business Day
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Processing...
+                      </>
+                    ) : (
+                      <>🧼 {t("Get My Free Quote")} — Response Within 1 Business Day</>
+                    )}
                   </Button>
                 </form>
               </CardContent>
