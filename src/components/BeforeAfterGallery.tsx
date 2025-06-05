@@ -5,22 +5,34 @@ import { Button } from './ui/button';
 
 const beforeAfterImages = [
   {
-    before: '/lovable-uploads/1ece3dee-f45b-49ef-8798-8c07d97a085a.jpg',
-    after: '/lovable-uploads/781082de-7949-4655-bc96-5ef110675262.jpg',
-    title: 'House Pressure Washing',
-    description: 'Complete exterior house cleaning'
-  },
-  {
-    before: '/lovable-uploads/78b42700-b641-45cf-a11e-fb68f4124509.jpg',
-    after: '/lovable-uploads/970932d4-f8db-4a50-92b1-3fe35f2d06a7.jpg',
+    before: '/lovable-uploads/71774b2f-cb36-4a10-b158-2f0020a06f53.png',
+    after: '/lovable-uploads/fbe20623-3e28-4bfe-a9d4-7c89c9d07b54.png',
     title: 'Window Cleaning',
     description: 'Crystal clear window restoration'
   },
   {
-    before: '/lovable-uploads/620a8898-e5ca-48f4-b13b-518ab06cc30e.jpg',
-    after: '/lovable-uploads/5f628a3f-670b-4ac2-b2b8-f6e15c408c3f.jpg',
-    title: 'Roof & Gutter Cleaning',
-    description: 'Complete roof and gutter restoration'
+    before: '/lovable-uploads/a97882ea-1822-4b97-bef4-2a7f2849c3ef.png',
+    after: '/lovable-uploads/d70857b1-984a-4dce-87fa-690c954e90f6.png',
+    title: 'Roof Cleaning',
+    description: 'Complete roof moss and algae removal'
+  },
+  {
+    before: '/lovable-uploads/0504c9c4-ec85-41e2-a922-fa02e9b21d45.png',
+    after: '/lovable-uploads/0ac145eb-946d-47cc-8d1f-cf0f63a4716c.png',
+    title: 'Driveway Cleaning',
+    description: 'Professional pressure washing for driveways'
+  },
+  {
+    before: '/lovable-uploads/b0a17518-4844-4334-b0ac-0dd62b5baff1.png',
+    after: '/lovable-uploads/63a1c6a7-8585-4825-9b95-aaf922a4fb3b.png',
+    title: 'House Washing',
+    description: 'Complete exterior house cleaning'
+  },
+  {
+    before: '/lovable-uploads/5c37b82a-d3f9-4c54-9c51-1c8c5383f7d2.png',
+    after: '/lovable-uploads/30ed280f-ee6f-48b6-ba03-45fe47441dbf.png',
+    title: 'Gutter Cleaning',
+    description: 'Complete gutter system cleaning and maintenance'
   }
 ];
 
