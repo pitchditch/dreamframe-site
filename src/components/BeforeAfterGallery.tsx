@@ -35,10 +35,16 @@ const beforeAfterImages = [
     description: 'Complete gutter system cleaning and maintenance'
   },
   {
-    before: '/lovable-uploads/c8b063e6-859c-4dbd-91f5-da26c15a89ed.png',
-    after: '/lovable-uploads/63d48562-c556-4a43-b8fc-7f8011f5868f.png',
+    before: '/lovable-uploads/b46aa1d5-6376-4ade-b96b-a8a8377985fa.png',
+    after: '/lovable-uploads/a29727dd-11c5-482a-a93e-44e845717415.png',
     title: 'Glass Railing Cleaning',
     description: 'Professional glass railing restoration'
+  },
+  {
+    before: '/lovable-uploads/f2685cf5-7233-4914-8502-0f00396b5ddf.png',
+    after: '/lovable-uploads/3e150f12-d7a8-4128-9c93-6b834418a378.png',
+    title: 'Patio Glass Awning Cleaning',
+    description: 'Glass awning cleaning and maintenance'
   }
 ];
 
