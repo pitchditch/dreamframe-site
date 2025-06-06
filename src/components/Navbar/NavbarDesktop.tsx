@@ -69,19 +69,19 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential Services</h3>
                     <div className="grid grid-cols-2 gap-3">
                       <Link to="/services/window-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/7953abed-398c-4bf0-af74-01e2136d48f9.png" alt="Window Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/a6e7032c-a90e-4fab-aba5-343f7158067c.png" alt="Window Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Window Cleaning')}</span>
                       </Link>
                       <Link to="/services/gutter-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/3500ca28-2d00-490d-a36f-a357780967ed.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/e431e1cc-6eff-49e8-8193-99ae44dbcf3c.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Gutter Cleaning')}</span>
                       </Link>
                       <Link to="/services/pressure-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/5c1d510e-49fe-495f-8955-30f8be70c60c.png" alt="House Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/d8f7bde1-e346-46b6-bae7-b0f109c70fe5.png" alt="House Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('House Washing')}</span>
                       </Link>
                       <Link to="/services/roof-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/6f995cec-d81a-4f01-8b36-7aee59878ddd.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/e7e8df6f-ad8e-4bdb-902e-ce80d7a015e9.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Roof Cleaning')}</span>
                       </Link>
                       <Link to="/services/driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
