@@ -33,6 +33,12 @@ const beforeAfterImages = [
     after: '/lovable-uploads/30ed280f-ee6f-48b6-ba03-45fe47441dbf.png',
     title: 'Gutter Cleaning',
     description: 'Complete gutter system cleaning and maintenance'
+  },
+  {
+    before: '/lovable-uploads/c8b063e6-859c-4dbd-91f5-da26c15a89ed.png',
+    after: '/lovable-uploads/63d48562-c556-4a43-b8fc-7f8011f5868f.png',
+    title: 'Glass Railing Cleaning',
+    description: 'Professional glass railing restoration'
   }
 ];
 
