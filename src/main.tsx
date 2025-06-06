@@ -7,7 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TranslationProvider } from "./hooks/use-translation.tsx";
 
-// Create query client with default options
+// Create query client with default options - updated for rebuild
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
