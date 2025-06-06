@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import Layout from '@/components/Layout';
@@ -309,7 +310,6 @@ const WhiteRockBC = () => {
           </div>
         </section>
 
-        {/* Other sections remain unchanged */}
         {/* SECTION 5: Where We Work in White Rock */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
