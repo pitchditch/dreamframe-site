@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TranslationProvider } from "./hooks/use-translation.tsx";
 
+// Main application entry point
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
