@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -8,7 +7,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
 import { trackFormSubmission } from '@/utils/analytics';
 import { Link } from 'react-router-dom';
-import FloatingBubbles from '../FloatingBubbles';
 
 const HeroSection = () => {
   const { t, language } = useTranslation();
@@ -93,9 +91,6 @@ const HeroSection = () => {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
       </div>
-
-      {/* Floating Bubbles - Only on mobile */}
-      {isMobile && <FloatingBubbles />}
       
       {/* Hero Content */}
       <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'} ${videoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>

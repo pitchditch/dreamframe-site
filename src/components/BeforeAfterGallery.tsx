@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -33,38 +33,11 @@ const beforeAfterImages = [
     after: '/lovable-uploads/30ed280f-ee6f-48b6-ba03-45fe47441dbf.png',
     title: 'Gutter Cleaning',
     description: 'Complete gutter system cleaning and maintenance'
-  },
-  {
-    before: '/lovable-uploads/b46aa1d5-6376-4ade-b96b-a8a8377985fa.png',
-    after: '/lovable-uploads/a29727dd-11c5-482a-a93e-44e845717415.png',
-    title: 'Glass Railing Cleaning',
-    description: 'Professional glass railing restoration'
-  },
-  {
-    before: '/lovable-uploads/b3e31562-f2a6-4203-bd19-dfbd175459b2.png',
-    after: '/lovable-uploads/86c51525-cf74-422e-9b2a-ba809944fa5c.png',
-    title: 'Glass Railing Cleaning',
-    description: 'Professional glass railing restoration and maintenance'
-  },
-  {
-    before: '/lovable-uploads/f2685cf5-7233-4914-8502-0f00396b5ddf.png',
-    after: '/lovable-uploads/3e150f12-d7a8-4128-9c93-6b834418a378.png',
-    title: 'Patio Glass Awning Cleaning',
-    description: 'Glass awning cleaning and maintenance'
   }
 ];
 
 const BeforeAfterGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Auto-advance carousel every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % beforeAfterImages.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % beforeAfterImages.length);
