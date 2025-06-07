@@ -38,7 +38,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 to="/services/window-cleaning"
                 className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <img src="/lovable-uploads/7a0d94ff-3dea-4fa6-afe4-a8f49e0e220b.png" alt="Window Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-xs">Window Cleaning</div>
                   <div className="text-xs text-gray-500">Streak-free</div>
@@ -51,7 +51,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 to="/services/gutter-cleaning"
                 className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <img src="/lovable-uploads/f88634ea-9711-4868-962f-e27e65866f0d.png" alt="Gutter Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-xs">Gutter Cleaning</div>
                   <div className="text-xs text-gray-500">Complete care</div>
@@ -64,7 +64,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 to="/services/house-soft-wash"
                 className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Soft Wash" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <img src="/lovable-uploads/06564a59-a10e-42cd-94d4-da628dd17fa6.png" alt="House Soft Wash" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-xs">House Soft Wash</div>
                   <div className="text-xs text-gray-500">Gentle cleaning</div>
@@ -77,7 +77,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 to="/services/roof-cleaning"
                 className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <img src="/lovable-uploads/ea700c91-f17c-4daa-bd2f-ef22c893d921.png" alt="Roof Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-xs">Roof Cleaning</div>
                   <div className="text-xs text-gray-500">Safe removal</div>

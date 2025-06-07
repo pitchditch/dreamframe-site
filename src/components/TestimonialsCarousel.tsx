@@ -1,8 +1,6 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { testimonials } from '@/data/testimonials';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import TestimonialCard from './TestimonialCard';
 
 interface TestimonialWithProfile {
@@ -113,12 +111,6 @@ const TestimonialsCarousel = () => {
               />
             ))}
           </div>
-        </div>
-        
-        <div className="text-center">
-          <Button asChild variant="bc-red">
-            <Link to="/testimonials">View All Testimonials</Link>
-          </Button>
         </div>
       </div>
     </section>

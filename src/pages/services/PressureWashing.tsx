@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -113,9 +112,57 @@ const PressureWashing = () => {
           </div>
         </div>
       </section>
+
+      {/* Fence Washing Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Professional Fence Washing Services</h2>
+                <p className="text-lg text-gray-700 mb-6">
+                  Restore your fence to its original beauty with our specialized fence washing services. We safely remove dirt, grime, moss, and weathering stains from all types of fencing materials.
+                </p>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center">
+                    <Check className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
+                    <span>Safe for wood, vinyl, composite, and metal fences</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Check className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
+                    <span>Removes moss, algae, and mildew buildup</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Check className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
+                    <span>Eco-friendly cleaning solutions</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Check className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
+                    <span>Extends fence lifespan and appearance</span>
+                  </div>
+                </div>
+
+                <Button asChild variant="bc-red" size="lg">
+                  <Link to="/calculator">Get Fence Cleaning Quote</Link>
+                </Button>
+              </div>
+              
+              <div className="lg:text-right">
+                <img 
+                  src="/lovable-uploads/96663638-df7a-4bbc-819f-f89853833dcf.png" 
+                  alt="Professional fence pressure washing in action"
+                  className="rounded-lg shadow-lg w-full h-auto"
+                />
+                <p className="text-sm text-gray-500 mt-3">Professional fence cleaning with specialized equipment</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Soft Wash vs Pressure Wash Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Choosing the Right Method for Your Home</h2>
           
