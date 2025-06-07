@@ -23,6 +23,7 @@ import PostConstructionWindowCleaning from "./pages/services/PostConstructionWin
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
 import VancouverWindowCleaning from "./pages/locations/VancouverWindowCleaning";
+import WhiteRockPressureWashing from "./pages/locations/WhiteRockPressureWashing";
 import Services from "./pages/Services";
 import StickyContactBar from "./components/StickyContactBar";
 import AfkOverlay from "./components/AfkOverlay";

@@ -30,21 +30,6 @@ const WhiteRockPressureWashing = () => {
     }
   ];
 
-  const whiteRockTestimonials = [
-    {
-      name: "Sarah Chen",
-      location: "Marine Drive, White Rock",
-      rating: 5,
-      text: "Jayden did an amazing job on our oceanfront condo windows. The salt buildup was terrible, but now we have crystal clear views of the beach again!"
-    },
-    {
-      name: "Mike Thompson", 
-      location: "Hillside Drive, White Rock",
-      rating: 5,
-      text: "Professional service! They understood exactly how to handle the moss on our roof caused by the ocean air. Highly recommend for White Rock residents."
-    }
-  ];
-
   return (
     <Layout 
       title="Professional Pressure Washing Services in White Rock, BC | BC Pressure Washing" 
@@ -56,7 +41,6 @@ const WhiteRockPressureWashing = () => {
         description="Specialized cleaning services for White Rock's unique coastal environment. From Marine Drive to Hillside, we keep your property looking pristine against salt air and ocean elements."
         youtubeId="HuXyYAxC4Fs"
         youtubeDesktopId="lYnXijewxCM"
-        backgroundImage="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png"
       />
       
       {/* Local Service Area Banner */}
@@ -145,7 +129,7 @@ const WhiteRockPressureWashing = () => {
         </div>
       </section>
       
-      <TestimonialsSection testimonials={whiteRockTestimonials} />
+      <TestimonialsSection />
       
       <FAQSection
         title="White Rock Pressure Washing FAQ"
