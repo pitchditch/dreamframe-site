@@ -27,9 +27,6 @@ import WhiteRockBC from "./pages/locations/WhiteRockBC";
 import SouthSurrey from "./pages/locations/SouthSurrey";
 import Langley from "./pages/locations/Langley";
 import Services from "./pages/Services";
-import StickyContactBar from "./components/StickyContactBar";
-import StickyQuoteBar from "./components/StickyQuoteBar";
-import AfkOverlay from "./components/AfkOverlay";
 
 const queryClient = new QueryClient();
 
@@ -64,9 +61,6 @@ const App = () => (
             <Route path="/locations/south-surrey" element={<SouthSurrey />} />
             <Route path="/locations/langley" element={<Langley />} />
           </Routes>
-          <StickyContactBar />
-          <StickyQuoteBar />
-          <AfkOverlay />
         </BrowserRouter>
       </TooltipProvider>
     </HelmetProvider>
