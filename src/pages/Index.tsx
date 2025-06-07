@@ -25,6 +25,7 @@ import FloatingContact from '@/components/FloatingContact';
 import EnhancedBeforeAfterGallery from '@/components/EnhancedBeforeAfterGallery';
 import TrustBadgesSection from '@/components/TrustBadgesSection';
 import StickyQuoteBar from '@/components/StickyQuoteBar';
+import ReferralProgramSection from '@/components/ReferralProgramSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -160,11 +161,11 @@ const Index = () => {
             {/* 9. Trusted Customers Slideshow */}
             <TrustedCustomersSection />
             
-            {/* 10. Competitor Comparison */}
-            <CompetitorComparisonSection />
+            {/* 10. Referral Program Section - New prominent placement */}
+            <ReferralProgramSection />
             
-            {/* 11. Service Areas */}
-            <ServiceAreasSection />
+            {/* 11. Competitor Comparison */}
+            <CompetitorComparisonSection />
             
             {/* 12. FAQ Section */}
             <div data-section="faq">

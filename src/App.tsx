@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +26,8 @@ import WhiteRockPressureWashing from "./pages/locations/WhiteRockPressureWashing
 import Services from "./pages/Services";
 import StickyContactBar from "./components/StickyContactBar";
 import AfkOverlay from "./components/AfkOverlay";
+import SouthSurreyPressureWashing from "./pages/locations/SouthSurreyPressureWashing";
+import LangleyPressureWashing from "./pages/locations/LangleyPressureWashing";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,8 @@ const App = () => (
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/vancouver-window-cleaning" element={<VancouverWindowCleaning />} />
             <Route path="/white-rock-pressure-washing" element={<WhiteRockPressureWashing />} />
+            <Route path="/south-surrey-pressure-washing" element={<SouthSurreyPressureWashing />} />
+            <Route path="/langley-pressure-washing" element={<LangleyPressureWashing />} />
           </Routes>
           <StickyContactBar />
           <AfkOverlay />
