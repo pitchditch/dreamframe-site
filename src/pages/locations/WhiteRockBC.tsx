@@ -350,7 +350,7 @@ const WhiteRockBC = () => {
               </div>
               <div className="relative h-64 md:h-auto rounded-lg overflow-hidden shadow-sm">
                 <img 
-                  src="/lovable-uploads/c7c051d8-a96a-431f-b1ce-0753dc0bddc5.png" 
+                  src="/lovable-uploads/8c89dd09-cd92-4892-a012-595394b9c34c.png" 
                   alt="BC Pressure Washing vehicle in White Rock" 
                   className="w-full h-full object-cover"
                 />

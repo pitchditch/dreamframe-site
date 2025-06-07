@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { testimonials } from '@/data/testimonials';
+import { testimonialsWithImages } from '@/data/testimonials';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface RoofCleaningTestimonial {
@@ -26,7 +26,7 @@ interface RoofCleaningTestimonial {
 }
 
 // Filter roof cleaning testimonials from our main testimonials data
-const roofCleaningTestimonials = testimonials
+const roofCleaningTestimonials = testimonialsWithImages
   .filter(t => t.service === 'roof-cleaning')
   .slice(0, 6)
   .map(t => ({

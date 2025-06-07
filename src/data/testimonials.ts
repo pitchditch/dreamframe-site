@@ -24,7 +24,7 @@ export const testimonials = [
     name: "Jennifer Thompson",
     location: "White Rock, BC",
     rating: 5,
-    beforeAfterImage: "/lovable-uploads/f88d2522-f185-44e9-93ae-7bbd157d3937.png",
+    beforeAfterImage: "/lovable-uploads/8588ecf4-237a-4aef-ac32-32e549c90d3c.png",
     service: "pressure-washing" as const
   },
   {
