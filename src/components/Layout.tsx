@@ -4,6 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar/index';
 import Footer from './Footer';
+import StickyContactBar from './StickyContactBar';
+import StickyQuoteBar from './StickyQuoteBar';
+import AfkOverlay from './AfkOverlay';
 
 interface LayoutProps {
   children: ReactNode;
@@ -64,6 +67,9 @@ const Layout = ({
         {children}
       </main>
       <Footer />
+      <StickyContactBar />
+      <StickyQuoteBar />
+      <AfkOverlay />
     </div>
   );
 };
