@@ -24,8 +24,11 @@ import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning"
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
 import VancouverWindowCleaning from "./pages/locations/VancouverWindowCleaning";
 import WhiteRockBC from "./pages/locations/WhiteRockBC";
+import SouthSurrey from "./pages/locations/SouthSurrey";
+import Langley from "./pages/locations/Langley";
 import Services from "./pages/Services";
 import StickyContactBar from "./components/StickyContactBar";
+import StickyQuoteBar from "./components/StickyQuoteBar";
 import AfkOverlay from "./components/AfkOverlay";
 
 const queryClient = new QueryClient();
@@ -58,8 +61,11 @@ const App = () => (
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/vancouver-window-cleaning" element={<VancouverWindowCleaning />} />
             <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
+            <Route path="/locations/south-surrey" element={<SouthSurrey />} />
+            <Route path="/locations/langley" element={<Langley />} />
           </Routes>
           <StickyContactBar />
+          <StickyQuoteBar />
           <AfkOverlay />
         </BrowserRouter>
       </TooltipProvider>
