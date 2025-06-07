@@ -22,6 +22,9 @@ import ServiceSelectionSection from '../components/home/ServiceSelectionSection'
 import AfkOverlay from '../components/AfkOverlay';
 import BeforeAfterGallery from '@/components/BeforeAfterGallery';
 import FloatingContact from '@/components/FloatingContact';
+import EnhancedBeforeAfterGallery from '@/components/EnhancedBeforeAfterGallery';
+import TrustBadgesSection from '@/components/TrustBadgesSection';
+import StickyQuoteBar from '@/components/StickyQuoteBar';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -132,10 +135,13 @@ const Index = () => {
           </div>
           
           <div className="bg-white relative z-50">
-            {/* 3. Before/After Gallery - Added early for visual impact */}
-            <BeforeAfterGallery />
+            {/* 3. Enhanced Before/After Gallery with filtering */}
+            <EnhancedBeforeAfterGallery />
             
-            {/* 4. Contact Form - Moved up for better conversion */}
+            {/* 4. Trust Badges Section */}
+            <TrustBadgesSection />
+            
+            {/* 5. Contact Form */}
             <QuickContactForm />
             
             {/* 5. How We Complete Our Jobs */}
@@ -184,6 +190,7 @@ const Index = () => {
       
       <ReferralButton />
       <FloatingContact />
+      <StickyQuoteBar />
       <AfkOverlay />
     </Layout>
   );

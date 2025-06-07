@@ -56,6 +56,7 @@ const App = () => (
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/vancouver-window-cleaning" element={<VancouverWindowCleaning />} />
+            <Route path="/white-rock-pressure-washing" element={<WhiteRockPressureWashing />} />
           </Routes>
           <StickyContactBar />
           <AfkOverlay />
