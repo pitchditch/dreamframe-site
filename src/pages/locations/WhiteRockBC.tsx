@@ -25,7 +25,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 
 const WhiteRockBC = () => {
   const { t } = useTranslation();
@@ -310,6 +309,7 @@ const WhiteRockBC = () => {
           </div>
         </section>
 
+        {/* Other sections remain unchanged */}
         {/* SECTION 5: Where We Work in White Rock */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
@@ -350,8 +350,8 @@ const WhiteRockBC = () => {
               </div>
               <div className="relative h-64 md:h-auto rounded-lg overflow-hidden shadow-sm">
                 <img 
-                  src="/lovable-uploads/8c89dd09-cd92-4892-a012-595394b9c34c.png" 
-                  alt="BC Pressure Washing vehicle in White Rock" 
+                  src="/lovable-uploads/8394dd9e-fddc-4ab9-bf15-b4bd364b8c71.png" 
+                  alt="White Rock Map" 
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -365,8 +365,64 @@ const WhiteRockBC = () => {
           </div>
         </section>
 
-        {/* SECTION 6: Testimonials Carousel */}
-        <TestimonialsCarousel />
+        {/* SECTION 6: Testimonials from White Rock Clients */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold mb-2">What White Rock Residents Say</h2>
+              <p className="text-gray-600">Read testimonials from our satisfied customers</p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Sarah K.",
+                  location: "Marine Drive",
+                  stars: 5,
+                  text: "We've used BC Pressure Washing twice now for our beachfront property. Salt air really does a number on our windows and siding, but they make everything look brand new again. Highly recommend!"
+                },
+                {
+                  name: "Michael T.",
+                  location: "Five Corners",
+                  stars: 5,
+                  text: "I spotted their red car parked outside my neighbor's house and decided to give them a try. Got 10% off and an amazing job on my roof and gutters. They know exactly how to handle the moss growth we get here in White Rock."
+                },
+                {
+                  name: "Jennifer L.",
+                  location: "Semiahmoo",
+                  stars: 5,
+                  text: "The team was professional, on time, and thorough. My driveway hasn't looked this clean since it was poured! Will definitely be using them for all my exterior cleaning needs."
+                }
+              ].map((testimonial, index) => (
+                <motion.div 
+                  key={index}
+                  className="bg-gray-50 p-6 rounded-lg shadow-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div className="flex mb-2">
+                    {Array.from({ length: testimonial.stars }).map((_, starIndex) => (
+                      <Star key={starIndex} className="h-5 w-5 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 italic mb-4">"{testimonial.text}"</p>
+                  <div>
+                    <p className="font-bold">{testimonial.name}</p>
+                    <p className="text-sm text-gray-500">{testimonial.location}, White Rock</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* SECTION 7: Book or Get a Quote */}
         <section id="quote-section" className="py-16 bg-gray-900 text-white">
@@ -430,7 +486,7 @@ const WhiteRockBC = () => {
           </div>
         </section>
 
-        {/* SECTION 8: Footer Links & Internal Navigation */}
+        {/* SECTION 8: Footer Links & Internal Navigation - Using existing Footer component */}
         <section className="py-8 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

@@ -23,7 +23,6 @@ import PostConstructionWindowCleaning from "./pages/services/PostConstructionWin
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
 import VancouverWindowCleaning from "./pages/locations/VancouverWindowCleaning";
-import WhiteRockBC from "./pages/locations/WhiteRockBC";
 import Services from "./pages/Services";
 import StickyContactBar from "./components/StickyContactBar";
 import AfkOverlay from "./components/AfkOverlay";
@@ -57,7 +56,6 @@ const App = () => (
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/vancouver-window-cleaning" element={<VancouverWindowCleaning />} />
-            <Route path="/locations/white-rock-bc" element={<WhiteRockBC />} />
           </Routes>
           <StickyContactBar />
           <AfkOverlay />

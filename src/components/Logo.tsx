@@ -1,50 +1,25 @@
 
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface LogoProps {
   isOverVideo: boolean;
 }
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
-  const isMobile = useIsMobile();
-  const [scrolled, setScrolled] = useState(false);
-  
-  // Bigger logo sizes for hero section
-  const mobileLogoHeight = isOverVideo ? 'h-44 w-auto' : 'h-32 w-auto'; 
-  const desktopLogoHeight = isOverVideo ? 'h-48 md:h-52 w-auto' : 'h-36 md:h-40 w-auto';
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      setScrolled(isScrolled);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  
+  // Force logo to show based on state
+  const logoSrc = isOverVideo 
+    ? "/lovable-uploads/00f3f3d9-15e1-46f2-99c3-535d8e667e35.png"
+    : "/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png";
+
   return (
-    <Link to="/" className="flex items-center mr-auto z-20">
-      <div className="relative flex items-center transition-all duration-300 pt-2">
-        {isOverVideo ? (
-          // White logo for hero section with transparent background
-          <img
-            src="/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png"
-            alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[380px] md:max-w-[500px] hover:scale-105 duration-300`}
-            style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
-          />
-        ) : (
-          // Black/red logo for scrolled state with white background
-          <img
-            src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
-            alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[380px] md:max-w-[500px] hover:scale-105 duration-300`}
-          />
-        )}
-      </div>
+    <Link to="/" className="flex items-center space-x-3">
+      <img 
+        src={logoSrc}
+        alt="BC Pressure Washing Logo" 
+        className="h-16 md:h-20 w-auto transition-all duration-300 hover:scale-105"
+        style={{ filter: isOverVideo ? 'brightness(1.1)' : 'none' }}
+      />
     </Link>
   );
 };
