@@ -150,7 +150,7 @@ const PressureWashing = () => {
               
               <div className="lg:text-right">
                 <img 
-                  src="/lovable-uploads/96663638-df7a-4bbc-819f-f89853833dcf.png" 
+                  src="/lovable-uploads/0523b00f-b3b1-4136-97c6-3c2dbb6b1809.png" 
                   alt="Professional fence pressure washing in action"
                   className="rounded-lg shadow-lg w-full h-auto"
                 />
@@ -173,7 +173,7 @@ const PressureWashing = () => {
                   <tr className="bg-gray-50">
                     <th className="px-6 py-4 text-left font-semibold text-gray-900">Method</th>
                     <th className="px-6 py-4 text-left font-semibold text-gray-900">Pressure Washing</th>
-                    <th className="px-6 py-4 text-left font-semibold text-gray-900 text-green-700">Soft Washing (Recommended)</th>
+                    <th className="px-6 py-4 text-left font-semibold text-green-700">Soft Washing (Recommended)</th>
                   </tr>
                 </thead>
                 <tbody>
