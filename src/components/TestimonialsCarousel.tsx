@@ -11,7 +11,7 @@ interface TestimonialWithProfile {
   rating: number;
   beforeAfterImage?: string;
   profileImage?: string;
-  service?: "gutter-cleaning" | "window-cleaning" | "pressure-washing" | "roof-cleaning";
+  service?: "gutter-cleaning" | "window-cleaning" | "pressure-washing" | "roof-cleaning" | "house-washing";
 }
 
 const TestimonialsCarousel = () => {
