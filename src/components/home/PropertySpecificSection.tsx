@@ -38,7 +38,8 @@ const PropertySpecificSection = () => {
       pricing: t("From $189"),
       iconColor: "text-blue-600",
       iconBg: "bg-blue-100",
-      gradient: "from-blue-50 to-blue-100"
+      gradient: "from-blue-50 to-blue-100",
+      emoji: "🏡"
     },
     {
       icon: Building2,
@@ -63,7 +64,8 @@ const PropertySpecificSection = () => {
       pricing: t("Custom pricing"),
       iconColor: "text-green-600",
       iconBg: "bg-green-100",
-      gradient: "from-green-50 to-green-100"
+      gradient: "from-green-50 to-green-100",
+      emoji: "🏢"
     },
     {
       icon: Building,
@@ -88,7 +90,8 @@ const PropertySpecificSection = () => {
       pricing: t("Volume discounts"),
       iconColor: "text-purple-600",
       iconBg: "bg-purple-100",
-      gradient: "from-purple-50 to-purple-100"
+      gradient: "from-purple-50 to-purple-100",
+      emoji: "🏬"
     }
   ];
 
@@ -236,6 +239,9 @@ const PropertySpecificSection = () => {
                   >
                     {/* Card Header */}
                     <div className={`relative bg-gradient-to-br ${property.gradient} h-32 flex items-center justify-center overflow-hidden`}>
+                      <div className="absolute top-4 left-4 text-3xl animate-bounce">
+                        {property.emoji}
+                      </div>
                       <div className={`w-20 h-20 ${property.iconBg} rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         <IconComponent className={`w-10 h-10 ${property.iconColor}`} />
                       </div>

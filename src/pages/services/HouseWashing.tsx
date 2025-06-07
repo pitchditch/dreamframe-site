@@ -181,29 +181,6 @@ const HouseWashing = () => {
           </div>
         </div>
       </section>
-
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-6">Fence Washing Services</h2>
-          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
-            Transform your fence with our professional cleaning services. We remove dirt, grime, mold, and algae to restore your fence's original appearance.
-          </p>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="overflow-hidden rounded-lg shadow-xl">
-              <img 
-                src="/lovable-uploads/488cdad3-0a37-4ceb-bc22-a7ddb7b06f78.png" 
-                alt="Before and After Fence Washing"
-                className="w-full h-auto" 
-              />
-              <div className="p-6 bg-white">
-                <h3 className="font-bold text-xl mb-2">Professional Fence Washing</h3>
-                <p className="text-gray-700">Complete fence restoration using specialized cleaning techniques to remove years of accumulated dirt, mold, and weathering stains.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       
       <TestimonialsSection />
       

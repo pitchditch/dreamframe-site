@@ -21,6 +21,7 @@ import QuickContactForm from '../components/home/QuickContactForm';
 import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
 import AfkOverlay from '../components/AfkOverlay';
 import BeforeAfterGallery from '@/components/BeforeAfterGallery';
+import FloatingContact from '@/components/FloatingContact';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -182,6 +183,7 @@ const Index = () => {
       </div>
       
       <ReferralButton />
+      <FloatingContact />
       <AfkOverlay />
     </Layout>
   );
