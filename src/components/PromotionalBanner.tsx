@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
 
 interface PromotionalBannerProps {
@@ -16,27 +16,33 @@ const PromotionalBanner = ({
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    const calculateTimeLeft = () => {
+  const calculateTimeLeft = useMemo(() => {
+    return () => {
       const difference = endDate.getTime() - new Date().getTime();
       
       if (difference > 0) {
-        setTimeLeft({
+        return {
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
           hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60)
-        });
+        };
       } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 };
       }
     };
+  }, [endDate]);
 
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
+  useEffect(() => {
+    const updateTimer = () => {
+      setTimeLeft(calculateTimeLeft());
+    };
+
+    updateTimer();
+    const timer = setInterval(updateTimer, 1000);
 
     return () => clearInterval(timer);
-  }, [endDate]);
+  }, [calculateTimeLeft]);
 
   const handleClose = () => {
     setIsVisible(false);

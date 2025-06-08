@@ -134,7 +134,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               >
                 {t('More')}
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[600px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-0">
+              <NavigationMenuContent className="w-[600px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2" align="center">
                 <div className="space-y-6">
                   <Link to="/testimonials" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
                     <Star className="h-8 w-8 text-yellow-500 transition-transform duration-200 group-hover:scale-110" />
