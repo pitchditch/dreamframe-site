@@ -53,16 +53,16 @@ const Home = () => {
 
   return (
     <Layout 
-      image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
+      image="/lovable-uploads/9a86acf6-e310-42c3-8da6-befe8ca48496.png"
       canonicalUrl="/"
-      title="BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock"
-      description="Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Top-rated local cleaning experts. Mention our red car for 10% off!"
+      title="BC Pressure Washing - Top-Rated Exterior Cleaning in White Rock & Surrey"
+      description="BC Pressure Washing is your local expert for pressure washing, window cleaning, and gutter cleaning in White Rock, Surrey, and Metro Vancouver. Look for our red car around town!"
     >
       <Helmet>
         <title>BC Pressure Washing - Top-Rated Exterior Cleaning in White Rock & Surrey</title>
         <meta name="description" content="BC Pressure Washing is your local expert for pressure washing, window cleaning, and gutter cleaning in White Rock, Surrey, and Metro Vancouver. Look for our red car around town!" />
         <meta name="keywords" content="BC Pressure Washing, pressure washing White Rock, window cleaning, gutter cleaning, soft washing, exterior cleaning services, red car pressure washing" />
-        <meta property="og:image" content="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png" />
+        <meta property="og:image" content="/lovable-uploads/9a86acf6-e310-42c3-8da6-befe8ca48496.png" />
         <link rel="canonical" href="https://www.bcpressurewashing.ca/" />
         <meta property="og:title" content="BC Pressure Washing - Local Cleaning Experts" />
         <meta property="og:description" content="Pressure washing, window cleaning, and gutter services from BC Pressure Washing. Seen our red car at the beach? Get 10% off!" />
@@ -73,6 +73,7 @@ const Home = () => {
         <meta name="twitter:description" content="Seen our red BC Pressure Washing car? Get 10% off! Window, gutter, and pressure washing in White Rock & Surrey." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
+        <script type="application/ld+json">
           {`
           {
             "@context": "https://schema.org",
@@ -127,6 +128,7 @@ const Home = () => {
             ]
           }
           `}
+        </script>
       </Helmet>
 
       <HeroSection />
