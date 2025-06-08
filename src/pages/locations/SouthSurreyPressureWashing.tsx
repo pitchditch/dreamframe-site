@@ -140,7 +140,7 @@ const SouthSurreyPressureWashing = () => {
       <CallToAction 
         title="Ready to Clean Your South Surrey Property?"
         subtitle="Call us today for premium service that matches your property's standards!"
-        backgroundImage="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png"
+        backgroundImage="/lovable-uploads/8c08e928-8546-49ad-a380-ba9e5641643a.png"
       />
     </Layout>
   );

@@ -16,7 +16,7 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
     if (isHovering) {
       const timer = setTimeout(() => {
         setShowVideo(true);
-      }, 1000); // Reduced from 1500ms to 1000ms for faster loading
+      }, 1000);
       setHoverTimer(timer);
     } else {
       if (hoverTimer) {
@@ -47,17 +47,17 @@ const ServiceVideoOverlay: React.FC<ServiceVideoOverlayProps> = ({ videoId, isHo
       case 'lYnXijewxCM': // House washing  
       case 'eQSgdx9ujcc': // Roof cleaning
         return {
-          transform: 'scale(1.5)', // Increased zoom to remove black bars
+          transform: 'scale(1.8)', // Increased scale to remove black bars
           transformOrigin: 'center center'
         };
       case 'EdMlx1sYJDc': // Gutter cleaning (shorts format)
         return {
-          transform: 'scale(2.2)', // More zoom for vertical video to remove side bars
+          transform: 'scale(2.8)', // Increased scale for vertical video to remove side bars
           transformOrigin: 'center center'
         };
       default:
         return {
-          transform: 'scale(1.3)',
+          transform: 'scale(1.6)', // Increased default scale
           transformOrigin: 'center center'
         };
     }

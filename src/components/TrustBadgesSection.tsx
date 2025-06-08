@@ -44,12 +44,6 @@ const TrustBadgesSection = () => {
             <p className="text-sm text-gray-300">Card & e-transfer</p>
           </div>
         </div>
-        
-        <div className="flex justify-center items-center space-x-6 mt-8 pt-8 border-t border-gray-700">
-          <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google Reviews" className="h-8 opacity-80" />
-          <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB Accredited" className="h-8 opacity-80" />
-          <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp Reviews" className="h-8 opacity-80" />
-        </div>
       </div>
     </section>
   );

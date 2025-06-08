@@ -140,7 +140,7 @@ const LangleyPressureWashing = () => {
       <CallToAction 
         title="Ready to Clean Your Langley Property?"
         subtitle="From downtown to rural properties, we've got you covered. Call today!"
-        backgroundImage="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png"
+        backgroundImage="/lovable-uploads/8c08e928-8546-49ad-a380-ba9e5641643a.png"
       />
     </Layout>
   );

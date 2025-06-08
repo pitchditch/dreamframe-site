@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -21,7 +22,6 @@ import QuickContactForm from '../components/home/QuickContactForm';
 import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
 import AfkOverlay from '../components/AfkOverlay';
 import BeforeAfterGallery from '@/components/BeforeAfterGallery';
-import FloatingContact from '@/components/FloatingContact';
 import EnhancedBeforeAfterGallery from '@/components/EnhancedBeforeAfterGallery';
 import TrustBadgesSection from '@/components/TrustBadgesSection';
 import StickyQuoteBar from '@/components/StickyQuoteBar';
@@ -190,7 +190,6 @@ const Index = () => {
       </div>
       
       <ReferralButton />
-      <FloatingContact />
       <StickyQuoteBar />
       <AfkOverlay />
     </Layout>
