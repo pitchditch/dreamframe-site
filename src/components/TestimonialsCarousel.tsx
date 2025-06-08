@@ -60,14 +60,14 @@ const TestimonialsCarousel = () => {
   }, [allTestimonials.length, currentIndex]);
 
   return (
-    <section className="bg-gray-50 py-20 w-full">
+    <section className="bg-gray-50 py-16 w-full">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4">What Our Clients Say</h2>
-        <p className="text-gray-600 text-center mb-16 max-w-2xl mx-auto text-lg">
+        <h2 className="text-3xl font-bold text-center mb-2">What Our Clients Say</h2>
+        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
           Don't just take our word for it. Here's what our satisfied customers have to say about our services.
         </p>
         
-        <div className="relative max-w-7xl mx-auto mb-16">
+        <div className="relative max-w-6xl mx-auto mb-12">
           <div 
             ref={carouselRef}
             className="flex overflow-x-hidden snap-x snap-mandatory"
@@ -78,7 +78,7 @@ const TestimonialsCarousel = () => {
                 key={testimonial.id} 
                 className="min-w-full snap-center px-4"
               >
-                <div className="max-w-5xl mx-auto">
+                <div className="max-w-4xl mx-auto">
                   <TestimonialCard
                     quote={testimonial.quote}
                     name={testimonial.name}
@@ -92,7 +92,7 @@ const TestimonialsCarousel = () => {
             ))}
           </div>
           
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-6">
             {allTestimonials.map((_, index) => (
               <button
                 key={index}
@@ -106,7 +106,7 @@ const TestimonialsCarousel = () => {
                     });
                   }
                 }}
-                className={`w-4 h-4 mx-1 rounded-full ${
+                className={`w-3 h-3 mx-1 rounded-full ${
                   index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -116,7 +116,7 @@ const TestimonialsCarousel = () => {
         </div>
         
         <div className="text-center">
-          <Button asChild variant="bc-red" size="lg">
+          <Button asChild variant="bc-red">
             <Link to="/testimonials">View All Testimonials</Link>
           </Button>
         </div>

@@ -9,16 +9,27 @@ interface LogoProps {
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
+  const [scrolled, setScrolled] = useState(false);
   
   // Bigger logo sizes for hero section
   const mobileLogoHeight = isOverVideo ? 'h-44 w-auto' : 'h-32 w-auto'; 
   const desktopLogoHeight = isOverVideo ? 'h-48 md:h-52 w-auto' : 'h-36 md:h-40 w-auto';
   
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
   return (
     <Link to="/" className="flex items-center mr-auto z-20">
       <div className="relative flex items-center transition-all duration-300 pt-2">
         {isOverVideo ? (
-          // White logo for hero section with transparent background - show immediately
+          // White logo for hero section with transparent background
           <img
             src="/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png"
             alt="BC Pressure Washing Property Maintenance logo"
