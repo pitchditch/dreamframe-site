@@ -7,6 +7,7 @@ import Footer from './Footer';
 import ReferralButton from './ReferralButton';
 import StickyContactBar from './StickyContactBar';
 import AfkOverlay from './AfkOverlay';
+import PromotionalBanner from './PromotionalBanner';
 
 interface LayoutProps {
   children: ReactNode;
@@ -62,6 +63,7 @@ const Layout = ({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
       
+      <PromotionalBanner />
       <Navbar />
       <main className="flex-grow w-full pb-20">
         {children}
