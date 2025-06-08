@@ -40,7 +40,7 @@ const TestimonialsCarousel = () => {
     setAllTestimonials(sortedTestimonials);
   }, []);
 
-  // Auto-rotate testimonials continuously without stopping on hover
+  // Auto-rotate testimonials continuously
   useEffect(() => {
     if (allTestimonials.length === 0) return;
     
@@ -54,7 +54,7 @@ const TestimonialsCarousel = () => {
           behavior: 'smooth'
         });
       }
-    }, 5000);
+    }, 4000); // Reduced to 4 seconds for automatic carousel
     
     return () => clearInterval(interval);
   }, [allTestimonials.length, currentIndex]);

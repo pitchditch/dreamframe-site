@@ -38,14 +38,14 @@ const TestimonialCard = ({
           <div className="flex items-center">
             {profileImage ? (
               <div className="mr-4">
-                <Avatar className="h-16 w-16 border-2 border-gray-200">
+                <Avatar className="h-20 w-20 border-2 border-gray-200">
                   <AvatarImage src={profileImage} alt={`${name}'s portrait`} />
                   <AvatarFallback>{name.charAt(0)}</AvatarFallback>
                 </Avatar>
               </div>
             ) : (
               <div className="mr-4">
-                <Avatar className="h-16 w-16 bg-bc-red/20 text-bc-red border-2 border-gray-200">
+                <Avatar className="h-20 w-20 bg-bc-red/20 text-bc-red border-2 border-gray-200">
                   <AvatarFallback>{name.charAt(0)}</AvatarFallback>
                 </Avatar>
               </div>
@@ -57,10 +57,10 @@ const TestimonialCard = ({
               {/* Rating stars */}
               <div className="flex mt-1">
                 {[...Array(rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                  <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
                 ))}
                 {[...Array(5 - rating)].map((_, i) => (
-                  <Star key={i + rating} className="w-4 h-4 text-gray-300" />
+                  <Star key={i + rating} className="w-5 h-5 text-gray-300" />
                 ))}
               </div>
             </div>
