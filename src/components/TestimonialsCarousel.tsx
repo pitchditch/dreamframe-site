@@ -57,15 +57,16 @@ const TestimonialsCarousel = () => {
         console.log('TestimonialsCarousel: Auto-rotating to index', nextIndex);
         return nextIndex;
       });
-      
-      if (carouselRef.current) {
-        const scrollAmount = carouselRef.current.clientWidth;
-        carouselRef.current.scrollTo({
-          left: scrollAmount * ((currentIndex + 1) % allTestimonials.length),
-          behavior: 'smooth'
-        });
-      }
     }, 5000);
+    
+    // Update carousel scroll position when currentIndex changes
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.clientWidth;
+      carouselRef.current.scrollTo({
+        left: scrollAmount * currentIndex,
+        behavior: 'smooth'
+      });
+    }
     
     return () => {
       console.log('TestimonialsCarousel: Cleaning up auto-rotation');
