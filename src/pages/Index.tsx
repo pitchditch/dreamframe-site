@@ -99,7 +99,7 @@ const Index = () => {
 
   return (
     <Layout
-      image="/lovable-uploads/9a86acf6-e310-42c3-8da6-befe8ca48496.png"
+      image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
       canonicalUrl="/"
       title={t("BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock")}
       description={t("Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.")}

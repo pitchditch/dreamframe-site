@@ -17,7 +17,6 @@ interface CustomerTestimonial {
 
 const TrustedCustomersSection = () => {
   const [api, setApi] = React.useState<any>();
-  const [current, setCurrent] = React.useState(0);
   
   const customers: CustomerTestimonial[] = [
     {
@@ -66,22 +65,11 @@ const TrustedCustomersSection = () => {
   useEffect(() => {
     if (!api) return;
     
-    // Set up select handler
-    const onSelect = () => {
-      setCurrent(api.selectedScrollSnap());
-    };
-    
-    api.on("select", onSelect);
-    onSelect(); // Set initial value
-    
     const interval = setInterval(() => {
       api.scrollNext();
     }, 3000);
     
-    return () => {
-      clearInterval(interval);
-      api.off("select", onSelect);
-    };
+    return () => clearInterval(interval);
   }, [api]);
 
   return (
@@ -111,8 +99,8 @@ const TrustedCustomersSection = () => {
         <div className="relative max-w-xl mx-auto">
           <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
             <CarouselContent>
-              {customers.map((customer, customerIdx) => (
-                <CarouselItem key={customerIdx} className="basis-full">
+              {customers.map((customer, index) => (
+                <CarouselItem key={index} className="basis-full">
                   <div className="flex flex-col items-center text-center p-2">
                     <div className="mb-6 w-full h-96 overflow-hidden rounded-xl mx-auto shadow-lg">
                       <img 
@@ -138,14 +126,14 @@ const TrustedCustomersSection = () => {
           </Carousel>
           
           <div className="flex justify-center mt-6">
-            {customers.map((_, dotIdx) => (
+            {customers.map((_, index) => (
               <button
-                key={dotIdx}
-                onClick={() => api?.scrollTo(dotIdx)}
+                key={index}
+                onClick={() => api?.scrollTo(index)}
                 className={`w-3 h-3 mx-1 rounded-full transition-colors ${
-                  current === dotIdx ? 'bg-bc-red' : 'bg-gray-300'
+                  api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${dotIdx + 1}`}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
