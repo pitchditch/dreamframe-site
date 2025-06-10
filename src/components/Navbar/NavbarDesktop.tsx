@@ -1,191 +1,261 @@
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from '@/hooks/use-translation';
-import LanguageSelector from '../LanguageSelector';
-import { Star, Scale } from 'lucide-react';
-import {
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Phone, MessageCircle } from 'lucide-react';
+import { 
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu';
+import { Logo } from './Logo';
+import { useTranslation } from '@/hooks/use-translation';
+import { cn } from '@/lib/utils';
 
 interface NavbarDesktopProps {
   isOverVideo: boolean;
 }
 
-export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
+const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
-  const handleHomeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/');
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
-  };
+  const services = [
+    {
+      title: t("Window Cleaning"),
+      href: "/services/window-cleaning",
+      description: "Crystal clear windows inside and out",
+      icon: "/lovable-uploads/c0750156-e7a2-4f23-bffc-fa6aadabc8af.png"
+    },
+    {
+      title: t("Gutter Cleaning"),
+      href: "/services/gutter-cleaning", 
+      description: "Complete gutter cleaning and maintenance",
+      icon: "/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png"
+    },
+    {
+      title: t("Roof Cleaning"),
+      href: "/services/roof-cleaning",
+      description: "Safe moss removal and roof washing", 
+      icon: "/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png"
+    },
+    {
+      title: t("House Washing"),
+      href: "/services/house-washing",
+      description: "Complete exterior house cleaning",
+      icon: "/lovable-uploads/c0750156-e7a2-4f23-bffc-fa6aadabc8af.png"
+    },
+    {
+      title: t("Driveway Pressure Washing"),
+      href: "/services/driveway-pressure-washing",
+      description: "Remove stains and restore your driveway",
+      icon: "/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png"
+    },
+    {
+      title: t("Fence Washing"),
+      href: "/services/fence-washing",
+      description: "Clean and restore all fence types",
+      icon: "/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png"
+    }
+  ];
+
+  const commercialServices = [
+    {
+      title: t("Commercial Window Cleaning"),
+      href: "/services/commercial-window-cleaning",
+      description: "Professional window cleaning for businesses",
+      icon: "/lovable-uploads/c0750156-e7a2-4f23-bffc-fa6aadabc8af.png"
+    },
+    {
+      title: t("Commercial Pressure Washing"),
+      href: "/services/commercial-pressure-washing", 
+      description: "Large-scale pressure washing services",
+      icon: "/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png"
+    },
+    {
+      title: t("Post-Construction Cleaning"),
+      href: "/services/post-construction-cleaning",
+      description: "Complete post-construction cleanup",
+      icon: "/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png"
+    }
+  ];
+
+  const moreLinks = [
+    {
+      title: t("Compare Services"),
+      href: "/compare-prices",
+      description: "Compare our services and pricing",
+      icon: "/lovable-uploads/c0750156-e7a2-4f23-bffc-fa6aadabc8af.png"
+    },
+    {
+      title: t("See All Services"),
+      href: "/services",
+      description: "View our complete service list",
+      icon: "/lovable-uploads/09259a98-7e2b-4244-b338-ffb0d146e979.png"
+    },
+    {
+      title: t("Our Equipment"),
+      href: "/equipment",
+      description: "Professional-grade cleaning equipment",
+      icon: "/lovable-uploads/1365dd51-01ea-4a4a-be27-dadd88cf8a5c.png"
+    },
+    {
+      title: t("Leave a Review"),
+      href: "/testimonials",
+      description: "Share your experience with us",
+      icon: "/lovable-uploads/c0750156-e7a2-4f23-bffc-fa6aadabc8af.png"
+    }
+  ];
+
+  const textColor = isOverVideo ? 'text-white' : 'text-gray-900';
+  const hoverTextColor = isOverVideo ? 'hover:text-gray-200' : 'hover:text-bc-red';
 
   return (
-    <div className="hidden md:flex items-center justify-between flex-1">
-      <div className="flex-1 flex justify-center">
-        <NavigationMenu>
-          <NavigationMenuList className="flex items-center justify-center space-x-12">
-            <NavigationMenuItem>
-              <button
-                onClick={handleHomeClick}
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
-              >
-                {t('Home')}
-              </button>
-            </NavigationMenuItem>
-            
-            <NavigationMenuItem>
-              <Link 
-                to="/why-us" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
-              >
-                {t('Why Us')}
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
-              >
-                {t('Services')}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="min-w-[700px] p-6 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential Services</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <Link to="/services/window-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/1e47b75e-a5f4-48b1-b93d-6dd492b7cc4d.png" alt="Window Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Window Cleaning')}</span>
-                      </Link>
-                      <Link to="/services/gutter-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/afad5391-28ca-4f71-91c5-b0bc42027be8.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Gutter Cleaning')}</span>
-                      </Link>
-                      <Link to="/services/pressure-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/c8cff2b3-1df9-4557-ae85-531f6f60c107.png" alt="House Washing (Soft Washing)" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('House Washing (Soft Washing)')}</span>
-                      </Link>
-                      <Link to="/services/roof-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/0338f0b8-e1e3-4cf4-a836-a2ab3543c664.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Roof Cleaning')}</span>
-                      </Link>
-                      <Link to="/services/driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/5f62bf7c-303e-456d-8438-f69479508411.png" alt="Driveway Pressure Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Driveway Pressure Washing')}</span>
-                      </Link>
-                      <Link to="/services/fence-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/db2d8d0c-21a4-47e8-a7d1-b6a7e95c13e9.png" alt="Fence Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Fence Washing')}</span>
-                      </Link>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Commercial Services</h3>
-                    <div className="space-y-3">
-                      <Link to="/services/commercial-window-cleaning" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/fe9ad8bf-d5d6-415e-9db8-ebbf40ad6fc5.png" alt="Commercial Window Cleaning" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Commercial Window Cleaning')}</span>
-                      </Link>
-                      <Link to="/services/commercial-pressure-washing" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/0cd8002e-089f-4aee-9688-39cf7966604e.png" alt="Commercial Pressure Washing" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Commercial Pressure Washing')}</span>
-                      </Link>
-                      <Link to="/services/post-construction-window-cleaning" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Post-Construction Cleaning')}</span>
-                      </Link>
-                    </div>
-                    
-                    <div className="mt-6 pt-4 border-t border-gray-200">
-                      <Link to="/compare-services" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
-                        <Scale className="w-6 h-6 text-bc-red transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Compare Services')}</span>
-                      </Link>
-                      <Link to="/services" className="text-bc-red hover:text-red-700 font-medium text-sm">
-                        {t('See All Services')} →
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
-              >
-                {t('More')}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="w-[600px] p-8 bg-white shadow-2xl border border-gray-200 z-[9999] mt-2">
-                <div className="space-y-6">
-                  <Link to="/testimonials" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
-                    <Star className="h-8 w-8 text-yellow-500 transition-transform duration-200 group-hover:scale-110" />
-                    <div>
-                      <h4 className="font-medium text-black hover:text-bc-red text-lg">{t('Testimonials')}</h4>
-                      <p className="text-sm text-gray-600">Read what our customers say</p>
-                    </div>
-                  </Link>
-                  
-                  <Link to="/equipment" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
-                    <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Equipment" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
-                    <div>
-                      <h4 className="font-medium text-black hover:text-bc-red text-lg">{t('Our Equipment')}</h4>
-                      <p className="text-sm text-gray-600">Professional-grade cleaning tools</p>
-                    </div>
-                  </Link>
-                  
-                  <div className="pt-6 border-t border-gray-200">
-                    <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-lg">
-                      <Star className="h-6 w-6 text-bc-red" />
-                      {t('Leave a Review')}
-                    </h4>
-                    <div className="flex space-x-6">
-                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
-                        <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-base font-medium">Google</span>
-                      </a>
-                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
-                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-base font-medium">Yelp</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
+    <div className="hidden lg:flex items-center justify-between w-full">
+      <Logo isOverVideo={isOverVideo} />
       
-      <div className="flex items-center space-x-8">
-        <Link 
-          to="/contact" 
-          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
-            isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-          }`}
-        >
-          {t('Contact')}
-        </Link>
-        
-        <LanguageSelector />
+      <NavigationMenu className="z-50">
+        <NavigationMenuList className="space-x-2">
+          <NavigationMenuItem>
+            <Link 
+              to="/" 
+              className={cn(
+                "group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors",
+                textColor,
+                hoverTextColor,
+                "focus:outline-none focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+              )}
+            >
+              {t("Home")}
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link 
+              to="/why-us" 
+              className={cn(
+                "group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors",
+                textColor,
+                hoverTextColor,
+                "focus:outline-none focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+              )}
+            >
+              {t("Why Us")}
+            </Link>
+          </NavigationMenuItem>
+          
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className={cn("bg-transparent", textColor, hoverTextColor)}>
+              {t("Services")}
+            </NavigationMenuTrigger>
+            <NavigationMenuContent className="bg-white border border-gray-200 shadow-lg">
+              <div className="grid w-[800px] gap-3 p-6 md:grid-cols-2">
+                <div>
+                  <h4 className="mb-3 text-sm font-semibold text-gray-900">Residential Services</h4>
+                  <div className="space-y-1">
+                    {services.map((service) => (
+                      <NavigationMenuLink key={service.href} asChild>
+                        <Link
+                          to={service.href}
+                          className="group flex items-center space-x-3 rounded-md p-3 text-sm leading-none text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                        >
+                          <img src={service.icon} alt="" className="w-6 h-6" />
+                          <div>
+                            <div className="font-medium">{service.title}</div>
+                            <div className="text-xs text-gray-500">{service.description}</div>
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="mb-3 text-sm font-semibold text-gray-900">Commercial Services</h4>
+                  <div className="space-y-1">
+                    {commercialServices.map((service) => (
+                      <NavigationMenuLink key={service.href} asChild>
+                        <Link
+                          to={service.href}
+                          className="group flex items-center space-x-3 rounded-md p-3 text-sm leading-none text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                        >
+                          <img src={service.icon} alt="" className="w-6 h-6" />
+                          <div>
+                            <div className="font-medium">{service.title}</div>
+                            <div className="text-xs text-gray-500">{service.description}</div>
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className={cn("bg-transparent", textColor, hoverTextColor)}>
+              {t("More")}
+            </NavigationMenuTrigger>
+            <NavigationMenuContent className="bg-white border border-gray-200 shadow-lg">
+              <div className="w-[400px] p-4">
+                <div className="space-y-1">
+                  {moreLinks.map((link) => (
+                    <NavigationMenuLink key={link.href} asChild>
+                      <Link
+                        to={link.href}
+                        className="group flex items-center space-x-3 rounded-md p-3 text-sm leading-none text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                      >
+                        <img src={link.icon} alt="" className="w-6 h-6" />
+                        <div>
+                          <div className="font-medium">{link.title}</div>
+                          <div className="text-xs text-gray-500">{link.description}</div>
+                        </div>
+                      </Link>
+                    </NavigationMenuLink>
+                  ))}
+                </div>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link 
+              to="/contact" 
+              className={cn(
+                "group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors",
+                textColor,
+                hoverTextColor,
+                "focus:outline-none focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+              )}
+            >
+              {t("Contact")}
+            </Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+
+      <div className="flex items-center space-x-3">
+        <a href="tel:778-808-7620">
+          <Button 
+            variant={isOverVideo ? "secondary" : "outline"} 
+            size="sm"
+            className={cn(
+              "text-sm",
+              isOverVideo ? "bg-white/90 text-gray-900 hover:bg-white" : "border-bc-red text-bc-red hover:bg-bc-red hover:text-white"
+            )}
+          >
+            <Phone className="mr-2 h-4 w-4" />
+            {t("Call (778) 808-7620")}
+          </Button>
+        </a>
+
+        <Button asChild size="sm" variant="bc-red">
+          <Link to="/calculator">
+            {t("Get Free Quote Online")}
+          </Link>
+        </Button>
       </div>
     </div>
   );

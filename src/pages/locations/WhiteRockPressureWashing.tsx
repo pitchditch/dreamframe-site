@@ -32,10 +32,39 @@ const WhiteRockPressureWashing = () => {
 
   return (
     <Layout 
-      title="Professional Pressure Washing Services in White Rock, BC | BC Pressure Washing" 
-      description="Top-rated pressure washing, window cleaning & roof cleaning services in White Rock. Specialized in ocean-facing properties. Licensed, insured & local. Call (778) 808-7620!"
+      title="White Rock Pressure Washing | Local Experts in Window, Roof & Gutter Cleaning" 
+      description="Get professional pressure washing in White Rock. Same-day service for Marine Drive, Hillside, and more. WCB insured & 5-star rated. Call now!"
       canonicalUrl="/white-rock-pressure-washing"
     >
+      <script type="application/ld+json">
+        {`
+        {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "BC Pressure Washing",
+          "image": "https://bcpressurewashing.ca/images/logo.png",
+          "telephone": "+1-778-808-7620",
+          "email": "bcpressurewashing.ca@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Marine Dr",
+            "addressLocality": "White Rock",
+            "addressRegion": "BC",
+            "postalCode": "V4B",
+            "addressCountry": "CA"
+          },
+          "url": "https://bcpressurewashing.ca/",
+          "priceRange": "$$",
+          "openingHours": "Mo-Fr 08:00-18:00, Sa 09:00-17:00",
+          "areaServed": "White Rock",
+          "sameAs": [
+            "https://www.facebook.com/bcpressurewashing",
+            "https://www.instagram.com/bcpressurewashing"
+          ]
+        }
+        `}
+      </script>
+      
       <ServiceHeader 
         title="Professional Pressure Washing in White Rock, BC"
         description="Specialized cleaning services for White Rock's unique coastal environment. From Marine Drive to Hillside, we keep your property looking pristine against salt air and ocean elements."
@@ -140,7 +169,7 @@ const WhiteRockPressureWashing = () => {
       <CallToAction 
         title="Ready to Clean Your White Rock Property?"
         subtitle="Call us today for a free estimate. We know White Rock properties inside and out!"
-        backgroundImage="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png"
+        backgroundImage="/lovable-uploads/373b2358-d2c5-4ae8-b821-1a6c14e83381.png"
       />
     </Layout>
   );
