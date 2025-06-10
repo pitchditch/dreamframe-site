@@ -8,8 +8,6 @@ const ReferralProgramSection = () => {
   const [copiedLink, setCopiedLink] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [friendName, setFriendName] = useState('');
-  const [friendEmail, setFriendEmail] = useState('');
   const { toast } = useToast();
 
   const referralLink = "https://www.bcpressurewashing.ca?ref=customer";
@@ -32,48 +30,19 @@ const ReferralProgramSection = () => {
     }
   };
 
-  const handleSubmitReferral = async (e: React.FormEvent) => {
+  const handleSubmitReferral = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    try {
-      const response = await fetch('https://formspree.io/f/jaydenf3800@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          subject: 'New Referral Submission - BC Pressure Washing',
-          referrerName: name,
-          referrerEmail: email,
-          friendName: friendName,
-          friendEmail: friendEmail,
-          message: `${name} (${email}) is referring ${friendName} (${friendEmail}) for BC Pressure Washing services.`
-        }),
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Referral Submitted!",
-          description: "We'll contact your friend and apply your discount when they book.",
-        });
-        setEmail('');
-        setName('');
-        setFriendName('');
-        setFriendEmail('');
-      } else {
-        throw new Error('Failed to submit');
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to submit referral. Please try calling us instead.",
-        variant: "destructive"
-      });
-    }
+    // Here you would typically send the referral data to your backend
+    toast({
+      title: "Referral Submitted!",
+      description: "We'll contact your friend and apply your discount when they book.",
+    });
+    setEmail('');
+    setName('');
   };
 
   return (
-    <section id="referral-program" className="py-16 bg-gradient-to-br from-bc-red to-red-700 text-white">
+    <section className="py-16 bg-gradient-to-br from-bc-red to-red-700 text-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
@@ -166,42 +135,22 @@ const ReferralProgramSection = () => {
                 Refer Someone Specific
               </h3>
               <form onSubmit={handleSubmitReferral} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-red-200"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-red-200"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Friend's name"
-                    value={friendName}
-                    onChange={(e) => setFriendName(e.target.value)}
-                    className="bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-red-200"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Friend's email"
-                    value={friendEmail}
-                    onChange={(e) => setFriendEmail(e.target.value)}
-                    className="bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-red-200"
-                    required
-                  />
-                </div>
+                <input
+                  type="text"
+                  placeholder="Friend's name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-red-200"
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Friend's email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-red-200"
+                  required
+                />
                 <Button 
                   type="submit"
                   className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 font-semibold"

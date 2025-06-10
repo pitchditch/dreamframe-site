@@ -169,7 +169,7 @@ const WhiteRockPressureWashing = () => {
       <CallToAction 
         title="Ready to Clean Your White Rock Property?"
         subtitle="Call us today for a free estimate. We know White Rock properties inside and out!"
-        backgroundImage="/lovable-uploads/373b2358-d2c5-4ae8-b821-1a6c14e83381.png"
+        backgroundImage="/lovable-uploads/39656bac-19f4-47ee-a939-77309c19eacb.png"
       />
     </Layout>
   );
