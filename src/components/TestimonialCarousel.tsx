@@ -43,6 +43,17 @@ export const TestimonialCarousel = () => {
     }, 500);
   };
 
+  const goToTestimonial = (testimonialIndex: number) => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setActiveIndex(testimonialIndex);
+    
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 500);
+  };
+
   const currentTestimonial = testimonials[activeIndex];
 
   return (
@@ -66,8 +77,8 @@ export const TestimonialCarousel = () => {
               <div className="font-bold text-sm">{currentTestimonial.name}</div>
               <div className="text-gray-500 text-xs">{currentTestimonial.location}</div>
               <div className="flex justify-center mt-2">
-                {[...Array(currentTestimonial.rating)].map((_, i) => (
-                  <svg key={i} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 24 24">
+                {[...Array(currentTestimonial.rating)].map((_, starIndex) => (
+                  <svg key={starIndex} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 24 24">
                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                   </svg>
                 ))}
@@ -76,14 +87,14 @@ export const TestimonialCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-4 space-x-1">
-            {testimonials.map((_, index) => (
+            {testimonials.map((_, dotIndex) => (
               <button
-                key={index}
-                onClick={() => setActiveIndex(index)}
+                key={dotIndex}
+                onClick={() => goToTestimonial(dotIndex)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  index === activeIndex ? 'bg-bc-red scale-125' : 'bg-gray-300'
+                  dotIndex === activeIndex ? 'bg-bc-red scale-125' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to testimonial ${index + 1}`}
+                aria-label={`Go to testimonial ${dotIndex + 1}`}
               />
             ))}
           </div>

@@ -45,19 +45,34 @@ const TestimonialsCarousel = () => {
     if (allTestimonials.length === 0) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % allTestimonials.length);
-      
-      if (carouselRef.current) {
-        const scrollAmount = carouselRef.current.clientWidth;
-        carouselRef.current.scrollTo({
-          left: scrollAmount * ((currentIndex + 1) % allTestimonials.length),
-          behavior: 'smooth'
-        });
-      }
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % allTestimonials.length;
+        
+        if (carouselRef.current) {
+          const scrollAmount = carouselRef.current.clientWidth;
+          carouselRef.current.scrollTo({
+            left: scrollAmount * nextIndex,
+            behavior: 'smooth'
+          });
+        }
+        
+        return nextIndex;
+      });
     }, 5000);
     
     return () => clearInterval(interval);
-  }, [allTestimonials.length, currentIndex]);
+  }, [allTestimonials.length]);
+
+  const handleDotClick = (dotIndex: number) => {
+    setCurrentIndex(dotIndex);
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.clientWidth;
+      carouselRef.current.scrollTo({
+        left: scrollAmount * dotIndex,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <section className="bg-gray-50 py-16 w-full">
@@ -93,23 +108,14 @@ const TestimonialsCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-6">
-            {allTestimonials.map((_, index) => (
+            {allTestimonials.map((_, dotIndex) => (
               <button
-                key={index}
-                onClick={() => {
-                  setCurrentIndex(index);
-                  if (carouselRef.current) {
-                    const scrollAmount = carouselRef.current.clientWidth;
-                    carouselRef.current.scrollTo({
-                      left: scrollAmount * index,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
+                key={dotIndex}
+                onClick={() => handleDotClick(dotIndex)}
                 className={`w-3 h-3 mx-1 rounded-full ${
-                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                  dotIndex === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
+                aria-label={`Go to slide ${dotIndex + 1}`}
               />
             ))}
           </div>
