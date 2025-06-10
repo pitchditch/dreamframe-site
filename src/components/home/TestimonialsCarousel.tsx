@@ -8,15 +8,6 @@ const TestimonialsCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Auto-cycle through testimonials
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      goToNextTestimonial();
-    }, 8000); // Change every 8 seconds
-
-    return () => clearInterval(intervalId);
-  }, [activeIndex]);
-
   const goToPrevTestimonial = () => {
     if (isTransitioning) return;
     
@@ -42,6 +33,15 @@ const TestimonialsCarousel = () => {
       setIsTransitioning(false);
     }, 500); // Match this to your transition duration
   };
+
+  // Auto-cycle through testimonials
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      goToNextTestimonial();
+    }, 8000); // Change every 8 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const currentTestimonial = testimonials[activeIndex];
 
@@ -76,14 +76,14 @@ const TestimonialsCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-8 space-x-2">
-            {testimonials.map((_, index) => (
+            {testimonials.map((_, testimonialIndex) => (
               <button
-                key={index}
-                onClick={() => setActiveIndex(index)}
+                key={testimonialIndex}
+                onClick={() => setActiveIndex(testimonialIndex)}
                 className={`w-2.5 h-2.5 rounded-full transition-all ${
-                  index === activeIndex ? 'bg-bc-red scale-125' : 'bg-gray-300'
+                  testimonialIndex === activeIndex ? 'bg-bc-red scale-125' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to testimonial ${index + 1}`}
+                aria-label={`Go to testimonial ${testimonialIndex + 1}`}
               />
             ))}
           </div>
