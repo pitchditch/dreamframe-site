@@ -48,13 +48,16 @@ const TestimonialsCarousel = () => {
       setCurrentIndex((prevIndex) => {
         const nextIndex = (prevIndex + 1) % allTestimonials.length;
         
-        if (carouselRef.current) {
-          const scrollAmount = carouselRef.current.clientWidth;
-          carouselRef.current.scrollTo({
-            left: scrollAmount * nextIndex,
-            behavior: 'smooth'
-          });
-        }
+        // Use setTimeout to ensure state update is complete before scrolling
+        setTimeout(() => {
+          if (carouselRef.current) {
+            const scrollAmount = carouselRef.current.clientWidth;
+            carouselRef.current.scrollTo({
+              left: scrollAmount * nextIndex,
+              behavior: 'smooth'
+            });
+          }
+        }, 0);
         
         return nextIndex;
       });
@@ -97,23 +100,23 @@ const TestimonialsCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-6">
-            {allTestimonials.map((_, index) => (
+            {allTestimonials.map((_, testimonialIndex) => (
               <button
-                key={index}
+                key={testimonialIndex}
                 onClick={() => {
-                  setCurrentIndex(index);
+                  setCurrentIndex(testimonialIndex);
                   if (carouselRef.current) {
                     const scrollAmount = carouselRef.current.clientWidth;
                     carouselRef.current.scrollTo({
-                      left: scrollAmount * index,
+                      left: scrollAmount * testimonialIndex,
                       behavior: 'smooth'
                     });
                   }
                 }}
                 className={`w-3 h-3 mx-1 rounded-full ${
-                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                  testimonialIndex === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
+                aria-label={`Go to slide ${testimonialIndex + 1}`}
               />
             ))}
           </div>
