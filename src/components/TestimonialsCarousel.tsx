@@ -45,19 +45,23 @@ const TestimonialsCarousel = () => {
     if (allTestimonials.length === 0) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % allTestimonials.length);
-      
-      if (carouselRef.current) {
-        const scrollAmount = carouselRef.current.clientWidth;
-        carouselRef.current.scrollTo({
-          left: scrollAmount * ((currentIndex + 1) % allTestimonials.length),
-          behavior: 'smooth'
-        });
-      }
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % allTestimonials.length;
+        
+        if (carouselRef.current) {
+          const scrollAmount = carouselRef.current.clientWidth;
+          carouselRef.current.scrollTo({
+            left: scrollAmount * nextIndex,
+            behavior: 'smooth'
+          });
+        }
+        
+        return nextIndex;
+      });
     }, 5000);
     
     return () => clearInterval(interval);
-  }, [allTestimonials.length, currentIndex]);
+  }, [allTestimonials.length]);
 
   return (
     <section className="bg-gray-50 py-16 w-full">
