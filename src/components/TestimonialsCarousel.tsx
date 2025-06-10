@@ -45,34 +45,19 @@ const TestimonialsCarousel = () => {
     if (allTestimonials.length === 0) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % allTestimonials.length;
-        
-        if (carouselRef.current) {
-          const scrollAmount = carouselRef.current.clientWidth;
-          carouselRef.current.scrollTo({
-            left: scrollAmount * nextIndex,
-            behavior: 'smooth'
-          });
-        }
-        
-        return nextIndex;
-      });
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % allTestimonials.length);
+      
+      if (carouselRef.current) {
+        const scrollAmount = carouselRef.current.clientWidth;
+        carouselRef.current.scrollTo({
+          left: scrollAmount * ((currentIndex + 1) % allTestimonials.length),
+          behavior: 'smooth'
+        });
+      }
     }, 5000);
     
     return () => clearInterval(interval);
-  }, [allTestimonials.length]);
-
-  const handleDotClick = (dotIndex: number) => {
-    setCurrentIndex(dotIndex);
-    if (carouselRef.current) {
-      const scrollAmount = carouselRef.current.clientWidth;
-      carouselRef.current.scrollTo({
-        left: scrollAmount * dotIndex,
-        behavior: 'smooth'
-      });
-    }
-  };
+  }, [allTestimonials.length, currentIndex]);
 
   return (
     <section className="bg-gray-50 py-16 w-full">
@@ -108,14 +93,23 @@ const TestimonialsCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-6">
-            {allTestimonials.map((_, dotIndex) => (
+            {allTestimonials.map((_, index) => (
               <button
-                key={dotIndex}
-                onClick={() => handleDotClick(dotIndex)}
+                key={index}
+                onClick={() => {
+                  setCurrentIndex(index);
+                  if (carouselRef.current) {
+                    const scrollAmount = carouselRef.current.clientWidth;
+                    carouselRef.current.scrollTo({
+                      left: scrollAmount * index,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
                 className={`w-3 h-3 mx-1 rounded-full ${
-                  dotIndex === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${dotIndex + 1}`}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
