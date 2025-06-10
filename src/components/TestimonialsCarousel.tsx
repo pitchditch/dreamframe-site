@@ -27,7 +27,7 @@ const TestimonialsCarousel = () => {
     const testimonialsWithBeforeAfter = testimonials
       .filter(Boolean)
       .filter(testimonial => testimonial.beforeAfterImage)
-      .sort((a, b) => a.id - b.id); // Sort by ID to maintain consistency
+      .sort((a, b) => a.id - b.id);
       
     // Then get testimonials with profile images (but no before/after)
     const testimonialsWithProfileOnly = testimonials
@@ -54,10 +54,21 @@ const TestimonialsCarousel = () => {
           behavior: 'smooth'
         });
       }
-    }, 4000); // Reduced to 4 seconds for automatic carousel
+    }, 4000);
     
     return () => clearInterval(interval);
   }, [allTestimonials.length, currentIndex]);
+
+  const handleDotClick = (dotIndex: number) => {
+    setCurrentIndex(dotIndex);
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.clientWidth;
+      carouselRef.current.scrollTo({
+        left: scrollAmount * dotIndex,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <section className="bg-gray-50 py-16 w-full">
@@ -93,23 +104,14 @@ const TestimonialsCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-6">
-            {allTestimonials.map((_, index) => (
+            {allTestimonials.map((_, dotIndex) => (
               <button
-                key={index}
-                onClick={() => {
-                  setCurrentIndex(index);
-                  if (carouselRef.current) {
-                    const scrollAmount = carouselRef.current.clientWidth;
-                    carouselRef.current.scrollTo({
-                      left: scrollAmount * index,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
+                key={dotIndex}
+                onClick={() => handleDotClick(dotIndex)}
                 className={`w-3 h-3 mx-1 rounded-full ${
-                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                  dotIndex === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
+                aria-label={`Go to slide ${dotIndex + 1}`}
               />
             ))}
           </div>
