@@ -68,9 +68,12 @@ const SpringSaleCarousel = () => {
   useEffect(() => {
     if (!api) return;
 
-    api.on('select', () => {
+    const onSelect = () => {
       setCurrentSlide(api.selectedScrollSnap());
-    });
+    };
+
+    api.on('select', onSelect);
+    onSelect(); // Set initial value
     
     const autoplayInterval = setInterval(() => {
       if (api.canScrollNext()) {
@@ -82,7 +85,7 @@ const SpringSaleCarousel = () => {
 
     return () => {
       clearInterval(autoplayInterval);
-      api.off('select');
+      api.off('select', onSelect);
     };
   }, [api]);
 
@@ -126,8 +129,8 @@ const SpringSaleCarousel = () => {
           }}
         >
           <CarouselContent>
-            {serviceSlides.map((service, index) => (
-              <CarouselItem key={index} className="w-full relative">
+            {serviceSlides.map((service, slideIndex) => (
+              <CarouselItem key={slideIndex} className="w-full relative">
                 <div 
                   className="w-full h-[80vh] sm:h-[600px] relative overflow-hidden"
                   style={{
@@ -147,8 +150,8 @@ const SpringSaleCarousel = () => {
                       
                       {/* Pricing grid with improved visibility */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                        {service.pricing.map((price, i) => (
-                          <div key={i} className="bg-white/20 backdrop-blur-sm p-4 rounded-lg border border-white/30">
+                        {service.pricing.map((price, priceIndex) => (
+                          <div key={priceIndex} className="bg-white/20 backdrop-blur-sm p-4 rounded-lg border border-white/30">
                             <p className="text-sm font-medium mb-2 text-white">{price.size}</p>
                             <div className="flex items-center gap-2">
                               <p className="text-gray-300 line-through">${price.before.toFixed(2)}</p>
@@ -174,16 +177,16 @@ const SpringSaleCarousel = () => {
           
           {/* Carousel navigation */}
           <div className="absolute z-10 bottom-4 left-0 right-0 flex justify-center gap-2">
-            {serviceSlides.map((_, index) => (
+            {serviceSlides.map((_, dotIndex) => (
               <button
-                key={index}
+                key={dotIndex}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  currentSlide === index 
+                  currentSlide === dotIndex 
                     ? "bg-white scale-125" 
                     : "bg-white/30 hover:bg-white/60"
                 }`}
-                onClick={() => api?.scrollTo(index)}
-                aria-label={`Go to slide ${index + 1}`}
+                onClick={() => api?.scrollTo(dotIndex)}
+                aria-label={`Go to slide ${dotIndex + 1}`}
               />
             ))}
           </div>
