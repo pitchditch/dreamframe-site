@@ -27,7 +27,7 @@ const TestimonialsCarousel = () => {
     const testimonialsWithBeforeAfter = testimonials
       .filter(Boolean)
       .filter(testimonial => testimonial.beforeAfterImage)
-      .sort((a, b) => a.id - b.id);
+      .sort((a, b) => a.id - b.id); // Sort by ID to maintain consistency
       
     // Then get testimonials with profile images (but no before/after)
     const testimonialsWithProfileOnly = testimonials
@@ -40,7 +40,7 @@ const TestimonialsCarousel = () => {
     setAllTestimonials(sortedTestimonials);
   }, []);
 
-  // Auto-rotate testimonials continuously
+  // Auto-rotate testimonials continuously without stopping on hover
   useEffect(() => {
     if (allTestimonials.length === 0) return;
     
@@ -54,31 +54,20 @@ const TestimonialsCarousel = () => {
           behavior: 'smooth'
         });
       }
-    }, 4000);
+    }, 5000);
     
     return () => clearInterval(interval);
   }, [allTestimonials.length, currentIndex]);
 
-  const handleDotClick = (dotIndex: number) => {
-    setCurrentIndex(dotIndex);
-    if (carouselRef.current) {
-      const scrollAmount = carouselRef.current.clientWidth;
-      carouselRef.current.scrollTo({
-        left: scrollAmount * dotIndex,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
-    <section className="bg-gray-50 py-16 w-full">
+    <section className="bg-gray-50 py-20 w-full">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-2">What Our Clients Say</h2>
-        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-4">What Our Clients Say</h2>
+        <p className="text-gray-600 text-center mb-16 max-w-2xl mx-auto text-lg">
           Don't just take our word for it. Here's what our satisfied customers have to say about our services.
         </p>
         
-        <div className="relative max-w-6xl mx-auto mb-12">
+        <div className="relative max-w-7xl mx-auto mb-16">
           <div 
             ref={carouselRef}
             className="flex overflow-x-hidden snap-x snap-mandatory"
@@ -89,7 +78,7 @@ const TestimonialsCarousel = () => {
                 key={testimonial.id} 
                 className="min-w-full snap-center px-4"
               >
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-5xl mx-auto">
                   <TestimonialCard
                     quote={testimonial.quote}
                     name={testimonial.name}
@@ -103,22 +92,31 @@ const TestimonialsCarousel = () => {
             ))}
           </div>
           
-          <div className="flex justify-center mt-6">
-            {allTestimonials.map((_, dotIndex) => (
+          <div className="flex justify-center mt-8">
+            {allTestimonials.map((_, index) => (
               <button
-                key={dotIndex}
-                onClick={() => handleDotClick(dotIndex)}
-                className={`w-3 h-3 mx-1 rounded-full ${
-                  dotIndex === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                key={index}
+                onClick={() => {
+                  setCurrentIndex(index);
+                  if (carouselRef.current) {
+                    const scrollAmount = carouselRef.current.clientWidth;
+                    carouselRef.current.scrollTo({
+                      left: scrollAmount * index,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
+                className={`w-4 h-4 mx-1 rounded-full ${
+                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${dotIndex + 1}`}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
         </div>
         
         <div className="text-center">
-          <Button asChild variant="bc-red">
+          <Button asChild variant="bc-red" size="lg">
             <Link to="/testimonials">View All Testimonials</Link>
           </Button>
         </div>
