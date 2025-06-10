@@ -31,19 +31,19 @@ const ServiceCarousel = ({ services }: ServiceCarouselProps) => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + services.length) % services.length);
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
+  const goToSlide = (slideIndex: number) => {
+    setCurrentIndex(slideIndex);
   };
 
   return (
     <div className="relative w-full">
       <div className="overflow-hidden rounded-lg">
         <div className="relative h-[500px] md:h-[650px] w-full">
-          {services.map((service, index) => (
+          {services.map((service, serviceIndex) => (
             <ServiceSlide
               key={service.id}
               service={service}
-              isActive={index === currentIndex}
+              isActive={serviceIndex === currentIndex}
             />
           ))}
         </div>
@@ -74,16 +74,16 @@ const ServiceCarousel = ({ services }: ServiceCarouselProps) => {
 
       {/* Dots navigation */}
       <div className="flex justify-center mt-6 gap-2">
-        {services.map((_, index) => (
+        {services.map((_, dotIndex) => (
           <button
-            key={index}
-            onClick={() => goToSlide(index)}
+            key={dotIndex}
+            onClick={() => goToSlide(dotIndex)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex 
+              dotIndex === currentIndex 
                 ? 'bg-bc-red w-8' 
                 : 'bg-gray-300 hover:bg-gray-400'
             }`}
-            aria-label={`Go to service ${index + 1}`}
+            aria-label={`Go to service ${dotIndex + 1}`}
           />
         ))}
       </div>
