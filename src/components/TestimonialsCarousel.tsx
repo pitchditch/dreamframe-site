@@ -21,8 +21,12 @@ const TestimonialsCarousel = () => {
   const [allTestimonials, setAllTestimonials] = useState<TestimonialWithProfile[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
   
+  console.log('TestimonialsCarousel: Component rendered');
+  
   // Initialize testimonials with prioritized before/after images
   useEffect(() => {
+    console.log('TestimonialsCarousel: Initializing testimonials');
+    
     // Filter out testimonials with beforeAfterImages first
     const testimonialsWithBeforeAfter = testimonials
       .filter(Boolean)
@@ -37,6 +41,7 @@ const TestimonialsCarousel = () => {
     // Combine them with before/after images first
     const sortedTestimonials = [...testimonialsWithBeforeAfter, ...testimonialsWithProfileOnly];
     
+    console.log('TestimonialsCarousel: Setting testimonials', sortedTestimonials.length);
     setAllTestimonials(sortedTestimonials);
   }, []);
 
@@ -44,8 +49,14 @@ const TestimonialsCarousel = () => {
   useEffect(() => {
     if (allTestimonials.length === 0) return;
     
+    console.log('TestimonialsCarousel: Setting up auto-rotation');
+    
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % allTestimonials.length);
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % allTestimonials.length;
+        console.log('TestimonialsCarousel: Auto-rotating to index', nextIndex);
+        return nextIndex;
+      });
       
       if (carouselRef.current) {
         const scrollAmount = carouselRef.current.clientWidth;
@@ -56,8 +67,24 @@ const TestimonialsCarousel = () => {
       }
     }, 5000);
     
-    return () => clearInterval(interval);
+    return () => {
+      console.log('TestimonialsCarousel: Cleaning up auto-rotation');
+      clearInterval(interval);
+    };
   }, [allTestimonials.length, currentIndex]);
+
+  const handleDotClick = (testimonialIndex: number) => {
+    console.log('TestimonialsCarousel: Dot clicked for index', testimonialIndex);
+    setCurrentIndex(testimonialIndex);
+    
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.clientWidth;
+      carouselRef.current.scrollTo({
+        left: scrollAmount * testimonialIndex,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <section className="bg-gray-50 py-20 w-full">
@@ -93,23 +120,14 @@ const TestimonialsCarousel = () => {
           </div>
           
           <div className="flex justify-center mt-8">
-            {allTestimonials.map((_, index) => (
+            {allTestimonials.map((_, dotIndex) => (
               <button
-                key={index}
-                onClick={() => {
-                  setCurrentIndex(index);
-                  if (carouselRef.current) {
-                    const scrollAmount = carouselRef.current.clientWidth;
-                    carouselRef.current.scrollTo({
-                      left: scrollAmount * index,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
+                key={dotIndex}
+                onClick={() => handleDotClick(dotIndex)}
                 className={`w-4 h-4 mx-1 rounded-full ${
-                  index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
+                  dotIndex === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
+                aria-label={`Go to slide ${dotIndex + 1}`}
               />
             ))}
           </div>
