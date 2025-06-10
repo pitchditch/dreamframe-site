@@ -56,11 +56,11 @@ const TestimonialCard = ({
               
               {/* Rating stars */}
               <div className="flex mt-1">
-                {[...Array(rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
+                {[...Array(rating)].map((_, starIndex) => (
+                  <Star key={starIndex} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
                 ))}
-                {[...Array(5 - rating)].map((_, i) => (
-                  <Star key={i + rating} className="w-5 h-5 text-gray-300" />
+                {[...Array(5 - rating)].map((_, emptyStarIndex) => (
+                  <Star key={emptyStarIndex + rating} className="w-5 h-5 text-gray-300" />
                 ))}
               </div>
             </div>
