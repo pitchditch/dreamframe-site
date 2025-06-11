@@ -99,8 +99,8 @@ const TrustedCustomersSection = () => {
         <div className="relative max-w-xl mx-auto">
           <Carousel className="w-full" setApi={setApi} opts={{ loop: true }}>
             <CarouselContent>
-              {customers.map((customer, index) => (
-                <CarouselItem key={index} className="basis-full">
+              {customers.map((customer, customerIndex) => (
+                <CarouselItem key={customerIndex} className="basis-full">
                   <div className="flex flex-col items-center text-center p-2">
                     <div className="mb-6 w-full h-96 overflow-hidden rounded-xl mx-auto shadow-lg">
                       <img 
@@ -126,14 +126,14 @@ const TrustedCustomersSection = () => {
           </Carousel>
           
           <div className="flex justify-center mt-6">
-            {customers.map((_, index) => (
+            {customers.map((_, dotIndex) => (
               <button
-                key={index}
-                onClick={() => api?.scrollTo(index)}
+                key={dotIndex}
+                onClick={() => api?.scrollTo(dotIndex)}
                 className={`w-3 h-3 mx-1 rounded-full transition-colors ${
-                  api?.selectedScrollSnap() === index ? 'bg-bc-red' : 'bg-gray-300'
+                  api?.selectedScrollSnap() === dotIndex ? 'bg-bc-red' : 'bg-gray-300'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
+                aria-label={`Go to slide ${dotIndex + 1}`}
               />
             ))}
           </div>
