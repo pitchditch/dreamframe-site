@@ -11,8 +11,40 @@ import WindowCleaningStickyNav from '../../components/services/window-cleaning/W
 import LocalMediaSection from '../../components/services/window-cleaning/LocalMediaSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import MoreServicesSection from '@/components/MoreServicesSection';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+
+const schemaMarkup = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "BC Pressure Washing",
+  "image": "https://bcpressurewashing.ca/logo.png",
+  "url": "https://bcpressurewashing.ca/services/window-cleaning",
+  "telephone": "+1-778-808-7620",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "White Rock, BC",
+    "addressLocality": "White Rock",
+    "addressRegion": "BC",
+    "postalCode": "V4B",
+    "addressCountry": "CA"
+  },
+  "description": "Residential window cleaning services in White Rock, BC and South Surrey. Streak-free results using pure-water technology. Get a quote today!",
+  "areaServed": {
+    "@type": "Place",
+    "name": "White Rock, South Surrey, Vancouver"
+  },
+  "sameAs": [
+    "https://www.facebook.com/bcpressurewashing",
+    "https://www.instagram.com/bcpressurewashing"
+  ]
+};
+
+const benefits = [
+  // your benefits array here
+];
+
+const faqs = [
+  // your FAQs array here
+];
 
 const WindowCleaning = () => {
   const [activeSection, setActiveSection] = useState('overview');
@@ -41,66 +73,25 @@ const WindowCleaning = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // your existing benefits, faqs, schemaMarkup...
-
   return (
-    <Layout title="Window Cleaning Surrey, White Rock & Vancouver | BC Pressure Washing"
-            description="Professional window cleaning…">
-      {/* SEO Schema & slide-up styles */}
+    <Layout
+      title="Residential Window Cleaning White Rock, BC | BC Pressure Washing"
+      description="Professional residential window cleaning in White Rock, South Surrey & Vancouver. Using purified water-fed pole systems for safe, streak-free shine. Book a free quote today.">
+      
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(schemaMarkup)}
         </script>
         <style>{`
-          .content-below-hero { transform: translateY(20px); transition: transform 0.6s ease-out; }
-          .content-below-hero.slide-up-active { transform: translateY(0); }
+          .content-below-hero {
+            transform: translateY(20px);
+            transition: transform 0.6s ease-out;
+          }
+          .content-below-hero.slide-up-active {
+            transform: translateY(0);
+          }
         `}</style>
       </Helmet>
 
       {/* HERO */}
-      <section className="hero-section …">
-        {/* retains existing hero markup */}
-      </section>
-
-      {/* Main content below hero */}
-      <div className="content-below-hero relative z-20 bg-white">
-        <WindowCleaningStickyNav activeSection={activeSection} />
-
-        <div id="overview">
-          <WhatWeCleanSection />
-        </div>
-
-        <div id="how-it-works">{/* your existing two video sections */}</div>
-
-        <WindowCleaningComparisonTable />
-
-        <LocalMediaSection />
-
-        <div id="benefits">
-          <ServiceBenefits title="Benefits…" subtitle="Discover why..." benefits={benefits} />
-        </div>
-
-        <div id="testimonials">
-          <TestimonialsSection />
-        </div>
-
-        <div id="faq">
-          <FAQSection title="Window Cleaning FAQs"
-            subtitle="Expert answers…"
-            description="Detailed information…"
-            faqs={faqs} />
-        </div>
-
-        <MoreServicesSection />
-
-        <div id="get-quote">
-          <CallToAction title="Get Your Windows Crystal Clear…"
-            subtitle="Contact us now…"
-            backgroundImage="/lovable-uploads/...png" />
-        </div>
-      </div>
-    </Layout>
-  );
-};
-
-export default WindowCleaning;
+      <section className="hero-section bg-cover bg-center
