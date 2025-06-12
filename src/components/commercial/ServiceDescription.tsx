@@ -9,14 +9,14 @@ const ServiceDescription = () => {
     <section className="container mx-auto px-4 py-16">
       <div className="flex flex-col md:flex-row gap-12 items-center">
         <div className="md:w-1/2">
-          <h2 className="text-3xl font-bold mb-6">Professional Window Cleaning for Commercial Properties</h2>
-          <p className="text-gray-600 mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">Professional Window Cleaning for Commercial Properties</h2>
+          <p className="text-gray-600 mb-6 text-center md:text-left">
             Our commercial window cleaning services are designed to meet the unique needs of businesses, office buildings, retail stores, and multi-story properties. Using specialized equipment and techniques, we deliver spotless, streak-free results that enhance your property's appearance and professionalism.
           </p>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 text-center md:text-left">
             We understand that clean windows make a significant difference in how customers perceive your business. Our services help you maintain a polished, professional appearance while extending the life of your windows and maximizing natural light in your commercial space.
           </p>
-          <div className="flex items-center space-x-8 mb-8">
+          <div className="flex items-center justify-center md:justify-start space-x-8 mb-8">
             <div className="flex items-center">
               <Shield className="text-bc-red mr-2" size={24} />
               <span className="font-medium">Fully Insured</span>
@@ -26,9 +26,11 @@ const ServiceDescription = () => {
               <span className="font-medium">Flexible Scheduling</span>
             </div>
           </div>
-          <Button asChild variant="bc-red">
-            <Link to="/calculator">Get a Free Quote</Link>
-          </Button>
+          <div className="text-center md:text-left">
+            <Button asChild variant="bc-red">
+              <Link to="/calculator">Get a Free Quote</Link>
+            </Button>
+          </div>
         </div>
         <div className="md:w-1/2">
           <img 

@@ -45,8 +45,8 @@ const ServiceHeader = ({
   const isPostConstructionPage = location.pathname.includes('post-construction');
 
   const titleClasses = isMobile
-    ? `text-3xl md:text-5xl font-bold mb-4 text-white text-shadow-lg`
-    : `text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg`;
+    ? `text-3xl md:text-5xl font-bold mb-4 text-white text-shadow-lg text-center`
+    : `text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-lg text-center`;
 
   const getYouTubeIdForService = () => {
     if (!isMobile && youtubeDesktopId) {
@@ -91,11 +91,11 @@ const ServiceHeader = ({
             ></iframe>
             <div className="absolute inset-0 bg-black bg-opacity-60"></div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center p-4 max-w-xl mx-auto z-10">
+          <div className="absolute inset-0 flex items-center justify-center px-4">
+            <div className="text-center max-w-4xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
-              {description && <p className="text-lg md:text-xl text-white text-shadow-sm">{description}</p>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm text-center">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
                   <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
@@ -123,11 +123,11 @@ const ServiceHeader = ({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-            <div className="text-center p-4 max-w-xl mx-auto z-10">
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center px-4">
+            <div className="text-center max-w-4xl mx-auto z-10">
               {icon && title && <div className="inline-block text-bc-red mb-2">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
-              {description && <p className="text-lg md:text-xl text-white text-shadow-sm">{description}</p>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm text-center">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <div className="mt-8">
                   <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
@@ -157,11 +157,11 @@ const ServiceHeader = ({
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60" />
           )}
           
-          <div className="relative h-full w-full flex items-center justify-center flex-col z-10">
-            <div className="text-center max-w-4xl px-4">
+          <div className="relative h-full w-full flex items-center justify-center flex-col z-10 px-4">
+            <div className="text-center max-w-4xl mx-auto">
               {icon && title && <div className="inline-block text-bc-red mb-4">{icon}</div>}
               {title && <h1 className={titleClasses}>{title}</h1>}
-              {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8">{description}</p>}
+              {description && <p className="text-lg md:text-xl text-white text-shadow-sm mb-8 text-center">{description}</p>}
               {showButton && buttonPosition === 'center' && (
                 <Button asChild variant="bc-red" size="lg" className="text-lg font-semibold">
                   <Link to="/calculator">Check Prices & Availability</Link>
