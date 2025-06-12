@@ -62,7 +62,7 @@ const RoofCleaning = () => {
       title="Soft Wash Roof Cleaning Surrey & White Rock | Safe Moss Removal Experts | BC Pressure Washing" 
       description="Protect your home with soft wash roof cleaning from BC Pressure Washing. Safe moss removal in Surrey & White Rock — Book today from just $199."
     >
-      {/* Hero Section with Before/After Slider */}
+      {/* Hero Section with Before/After Slider and Video */}
       <ServiceHeader 
         title="Soft Wash Roof Cleaning" 
         description="Safe, effective moss removal that protects your roof and increases your home's value" 
