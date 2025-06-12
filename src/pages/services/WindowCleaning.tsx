@@ -1,13 +1,12 @@
-
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { Check, ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import CallToAction from '../components/CallToAction';
-import FAQSection from '../components/FAQSection';
-import TestimonialSection from '../components/home/TestimonialsSection';
-import WhatWeCleanSection from '../components/services/window-cleaning/WhatWeCleanSection';
+import CallToAction from '../../components/CallToAction';
+import FAQSection from '../../components/FAQSection';
+import TestimonialSection from '../../components/home/TestimonialsSection';
+import WhatWeCleanSection from '../../components/services/window-cleaning/WhatWeCleanSection';
 
 const WindowCleaning = () => {
   const { t } = useTranslation();
