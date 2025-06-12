@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -101,11 +100,41 @@ const Index = () => {
     <Layout
       image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
       canonicalUrl="/"
-      title={t("BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock")}
-      description={t("Professional pressure washing, window cleaning, roof & gutter cleaning services in Surrey, White Rock & Metro Vancouver. Family-owned local cleaning experts.")}
+      title={t("BC Pressure Washing - White Rock Window, House & Pressure Washing")}
+      description={t("Family-owned BC Pressure Washing provides pressure washing, window cleaning, house washing & gutter cleaning in White Rock, Surrey & Metro Vancouver.")}
     >
       <Helmet>
-        <meta name="keywords" content="pressure washing Surrey, window cleaning White Rock, roof cleaning BC, gutter cleaning services, exterior cleaning, house washing, driveway cleaning, commercial pressure washing" />
+        {/* Updated keywords reflecting local services */}
+        <meta 
+          name="keywords" 
+          content="pressure washing White Rock, house washing White Rock, window cleaning White Rock, roof cleaning Surrey, gutter cleaning Vancouver, exterior cleaning Surrey" 
+        />
+        {/* LocalBusiness schema with address and services */}
+        <script 
+          type="application/ld+json" 
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "BC Pressure Washing",
+            "description": "Exterior cleaning services including window cleaning, pressure washing, house washing, roof & gutter cleaning in White Rock, Surrey & Metro Vancouver.",
+            "url": "https://bcpressurewashing.ca",
+            "telephone": "(778) 808-7620",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "1-15501 Marine Drive",
+              "addressLocality": "White Rock",
+              "addressRegion": "BC",
+              "postalCode": "V4B 1C9",
+              "addressCountry": "CA"
+            },
+            "areaServed": ["White Rock, BC", "Surrey, BC", "Langley, BC", "Metro Vancouver"],
+            "image": [
+              "https://bcpressurewashing.ca/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png",
+              "https://bcpressurewashing.ca/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png"
+            ],
+            "serviceType": ["Pressure Washing", "Window Cleaning", "House Washing", "Roof Cleaning", "Gutter Cleaning"]
+          })}} 
+        />
       </Helmet>
       
       {/* 1. Hero Section with Video + Price Calculator */}
@@ -145,29 +174,29 @@ const Index = () => {
             {/* 5. Contact Form */}
             <QuickContactForm />
             
-            {/* 5. How We Complete Our Jobs */}
+            {/* 6. How We Complete Our Jobs */}
             <HowWeCompleteJobsSection />
             
-            {/* 6. Featured Project */}
+            {/* 7. Featured Project */}
             <FeaturedProjectSection />
             
-            {/* 7. Testimonials - Moved higher for social proof */}
+            {/* 8. Testimonials - Moved higher for social proof */}
             <TestimonialsSection />
             
-            {/* 8. Merged Property Types + Trust Elements */}
+            {/* 9. Merged Property Types + Trust Elements */}
             <PropertySpecificSection />
             <OwnerOperatedSection />
             
-            {/* 9. Trusted Customers Slideshow */}
+            {/* 10. Trusted Customers Slideshow */}
             <TrustedCustomersSection />
             
-            {/* 10. Referral Program Section - New prominent placement */}
+            {/* 11. Referral Program Section - New prominent placement */}
             <ReferralProgramSection />
             
-            {/* 11. Competitor Comparison */}
+            {/* 12. Competitor Comparison */}
             <CompetitorComparisonSection />
             
-            {/* 12. FAQ Section */}
+            {/* 13. FAQ Section */}
             <div data-section="faq">
               <FAQSection 
                 title={t("Frequently Asked Questions")} 
@@ -177,7 +206,7 @@ const Index = () => {
               />
             </div>
             
-            {/* 13. White Rock Footer Image */}
+            {/* 14. White Rock Footer Image */}
             <div className="w-full footer-image">
               <img 
                 src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
