@@ -687,6 +687,7 @@ const HouseTracking = () => {
   };
 
   const openStreetView = (pin: HousePin) => {
+    console.log('Opening Street View for:', pin.address);
     setSelectedPin(pin);
     setShowStreetView(true);
   };
@@ -1147,19 +1148,35 @@ const HouseTracking = () => {
                 </DialogTitle>
               </DialogHeader>
               <div className="flex-1 w-full h-full">
-                {selectedPin && (
-                  <iframe
-                    src={`https://www.google.com/maps/embed/v1/streetview?key=YOUR_API_KEY&location=${selectedPin.lat},${selectedPin.lng}&heading=0&pitch=0&fov=90`}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0, borderRadius: '8px' }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title={`Street View: ${selectedPin.address}`}
-                  />
-                )}
-                {!selectedPin && (
+                {selectedPin ? (
+                  <div className="w-full h-full">
+                    {/* Google Street View Embed - Using the public embed API which doesn't require an API key */}
+                    <iframe
+                      src={`https://www.google.com/maps/embed?pb=!4v1234567890!6m8!1m7!1s${selectedPin.lat},${selectedPin.lng}!2m2!1d${selectedPin.lat}!2d${selectedPin.lng}!3f0!4f0!5f0.7820865974627469`}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0, borderRadius: '8px' }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title={`Street View: ${selectedPin.address}`}
+                      onError={() => {
+                        console.log('Street View failed to load, trying alternative...');
+                      }}
+                    />
+                    {/* Fallback: Google Maps link if Street View doesn't work */}
+                    <div className="mt-2 text-center">
+                      <a
+                        href={`https://www.google.com/maps/@${selectedPin.lat},${selectedPin.lng},19z`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline text-sm"
+                      >
+                        Open in Google Maps
+                      </a>
+                    </div>
+                  </div>
+                ) : (
                   <div className="flex items-center justify-center h-full text-gray-500">
                     <p>No location selected</p>
                   </div>
