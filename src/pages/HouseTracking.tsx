@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
 import { MapPin, Plus, Edit, Trash2, Save, X, Map } from 'lucide-react';
@@ -6,16 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
-// Fix for default markers in Leaflet
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+// Dynamically import Leaflet to avoid SSR issues
+let L: any = null;
 
 interface HousePin {
   id: string;
@@ -34,9 +28,10 @@ const HouseTracking = () => {
   const [searchAddress, setSearchAddress] = useState('');
   const [selectedLocation, setSelectedLocation] = useState<{lat: number, lng: number} | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const markersRef = useRef<{[key: string]: L.Marker}>({});
+  const mapInstanceRef = useRef<any>(null);
+  const markersRef = useRef<{[key: string]: any}>({});
 
   // Load pins from localStorage on component mount
   useEffect(() => {
@@ -51,9 +46,39 @@ const HouseTracking = () => {
     localStorage.setItem('houseTrackingPins', JSON.stringify(pins));
   }, [pins]);
 
+  // Load Leaflet dynamically
+  useEffect(() => {
+    const loadLeaflet = async () => {
+      try {
+        const leaflet = await import('leaflet');
+        L = leaflet.default;
+        
+        // Fix for default markers in Leaflet
+        delete (L.Icon.Default.prototype as any)._getIconUrl;
+        L.Icon.Default.mergeOptions({
+          iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+          iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+        });
+
+        // Load CSS
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+        document.head.appendChild(link);
+
+        setMapLoaded(true);
+      } catch (error) {
+        console.error('Failed to load Leaflet:', error);
+      }
+    };
+
+    loadLeaflet();
+  }, []);
+
   // Initialize map
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
+    if (!mapRef.current || mapInstanceRef.current || !mapLoaded || !L) return;
 
     // Create map centered on White Rock/Surrey area
     const map = L.map(mapRef.current).setView([49.0504, -122.8048], 13);
@@ -64,7 +89,7 @@ const HouseTracking = () => {
     }).addTo(map);
 
     // Handle map clicks
-    map.on('click', (e: L.LeafletMouseEvent) => {
+    map.on('click', (e: any) => {
       const { lat, lng } = e.latlng;
       setSelectedLocation({ lat, lng });
       setShowAddForm(true);
@@ -78,11 +103,11 @@ const HouseTracking = () => {
         mapInstanceRef.current = null;
       }
     };
-  }, []);
+  }, [mapLoaded]);
 
   // Update markers when pins change
   useEffect(() => {
-    if (!mapInstanceRef.current) return;
+    if (!mapInstanceRef.current || !L) return;
 
     // Clear existing markers
     Object.values(markersRef.current).forEach(marker => {
@@ -114,11 +139,11 @@ const HouseTracking = () => {
 
       markersRef.current[pin.id] = marker;
     });
-  }, [pins]);
+  }, [pins, mapLoaded]);
 
   // Add selected location marker
   useEffect(() => {
-    if (!mapInstanceRef.current) return;
+    if (!mapInstanceRef.current || !L) return;
 
     // Remove previous selection marker
     const existingMarker = mapInstanceRef.current.getPane('markerPane')?.querySelector('.selected-location');
@@ -137,7 +162,7 @@ const HouseTracking = () => {
       L.marker([selectedLocation.lat, selectedLocation.lng], { icon: tempIcon })
         .addTo(mapInstanceRef.current!);
     }
-  }, [selectedLocation]);
+  }, [selectedLocation, mapLoaded]);
 
   const addPin = async (status: HousePin['status'], notes: string, contactInfo: string) => {
     if (selectedLocation) {
@@ -270,6 +295,7 @@ const HouseTracking = () => {
             <CardContent>
               <div className="mb-4">
                 <p className="text-sm text-gray-600 mb-2">Click anywhere on the map below to add a house pin</p>
+                {!mapLoaded && <p className="text-sm text-gray-500">Loading map...</p>}
               </div>
               
               {/* Real Leaflet Map */}
