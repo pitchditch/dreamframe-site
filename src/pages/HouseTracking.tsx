@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import { MapPin, Plus, Edit, Trash2, Save, X, Map } from 'lucide-react';
+import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -25,10 +25,12 @@ const HouseTracking = () => {
   const [pins, setPins] = useState<HousePin[]>([]);
   const [editingPin, setEditingPin] = useState<string | null>(null);
   const [searchAddress, setSearchAddress] = useState('');
+  const [addressSearchQuery, setAddressSearchQuery] = useState('');
   const [selectedLocation, setSelectedLocation] = useState<{lat: number, lng: number} | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<{[key: string]: any}>({});
@@ -200,6 +202,43 @@ const HouseTracking = () => {
     }
   }, [selectedLocation, mapLoaded]);
 
+  const searchForAddress = async () => {
+    if (!addressSearchQuery.trim()) return;
+    
+    setIsSearching(true);
+    try {
+      console.log('Searching for address:', addressSearchQuery);
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(addressSearchQuery)}&addressdetails=1&limit=1`
+      );
+      const data = await response.json();
+      
+      if (data.length > 0) {
+        const result = data[0];
+        const lat = parseFloat(result.lat);
+        const lng = parseFloat(result.lon);
+        
+        console.log('Found location:', { lat, lng, address: result.display_name });
+        
+        // Center map on found location
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.setView([lat, lng], 16);
+        }
+        
+        // Set as selected location
+        setSelectedLocation({ lat, lng });
+        setShowAddForm(true);
+      } else {
+        alert('Address not found. Please try a different search.');
+      }
+    } catch (error) {
+      console.error('Error searching for address:', error);
+      alert('Error searching for address. Please try again.');
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   const addPin = async (status: HousePin['status'], notes: string, contactInfo: string) => {
     if (selectedLocation) {
       // Try to get address from coordinates (reverse geocoding)
@@ -230,6 +269,7 @@ const HouseTracking = () => {
       setPins([...pins, pin]);
       setSelectedLocation(null);
       setShowAddForm(false);
+      setAddressSearchQuery('');
     }
   };
 
@@ -320,6 +360,34 @@ const HouseTracking = () => {
             </Card>
           </div>
 
+          {/* Address Search Section */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Search className="w-5 h-5" />
+                Search Address
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Enter address to search and add pin..."
+                  value={addressSearchQuery}
+                  onChange={(e) => setAddressSearchQuery(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && searchForAddress()}
+                  className="flex-1"
+                />
+                <Button 
+                  onClick={searchForAddress} 
+                  disabled={isSearching || !addressSearchQuery.trim()}
+                  className="bg-bc-red hover:bg-red-700"
+                >
+                  {isSearching ? 'Searching...' : 'Search'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Interactive Map Section */}
           <Card className="mb-6">
             <CardHeader>
@@ -330,7 +398,7 @@ const HouseTracking = () => {
             </CardHeader>
             <CardContent>
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">Click anywhere on the map below to add a house pin</p>
+                <p className="text-sm text-gray-600 mb-2">Click anywhere on the map to add a house pin, or search for an address above</p>
                 {!mapLoaded && !mapError && <p className="text-sm text-gray-500">Loading map...</p>}
                 {mapError && <p className="text-sm text-red-500">Error: {mapError}</p>}
               </div>
@@ -356,6 +424,7 @@ const HouseTracking = () => {
                   onCancel={() => {
                     setShowAddForm(false);
                     setSelectedLocation(null);
+                    setAddressSearchQuery('');
                   }}
                 />
               </CardContent>
@@ -382,7 +451,7 @@ const HouseTracking = () => {
               <Card>
                 <CardContent className="p-8 text-center">
                   <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">No houses tracked yet. Click on the map to start tracking!</p>
+                  <p className="text-gray-600">No houses tracked yet. Click on the map or search for an address to start tracking!</p>
                 </CardContent>
               </Card>
             ) : (
@@ -437,6 +506,7 @@ const HouseTracking = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm text-gray-600">
+                <p>• Search for specific addresses using the search bar above the map</p>
                 <p>• Click anywhere on the map to add house pins</p>
                 <p>• Different colored dots represent different statuses: Blue (Visited), Green (Interested), Red (Not Interested), Purple (Completed)</p>
                 <p>• Add notes about customer interactions, property details, or follow-up requirements</p>
