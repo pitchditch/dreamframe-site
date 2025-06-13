@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown, Play, Square, History, Navigation } from 'lucide-react';
+import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown, Play, Square, History, Navigation, Calendar, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -35,6 +35,16 @@ const statusConfig = {
 
 const routeColors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98d8c8', '#fd79a8'];
 
+const noteTemplates = [
+  "No answer",
+  "Requested quote", 
+  "Asked to call back next week",
+  "Wants roof + window quote",
+  "Not interested at this time",
+  "Already has service provider",
+  "Wants spring cleaning quote"
+];
+
 const HouseTracking = () => {
   const [pins, setPins] = useState<HousePin[]>([]);
   const [routes, setRoutes] = useState<RouteSession[]>([]);
@@ -59,13 +69,17 @@ const HouseTracking = () => {
   const [showRouteHistory, setShowRouteHistory] = useState(false);
   const [userPosition, setUserPosition] = useState<{lat: number, lng: number} | null>(null);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
+  const [showRouteNameDialog, setShowRouteNameDialog] = useState(false);
+  const [pendingRouteName, setPendingRouteName] = useState('');
+  const [filterByRoute, setFilterByRoute] = useState<string>('');
+  const [filterByDate, setFilterByDate] = useState<string>('');
   
   const watchIdRef = useRef<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const routeStartPositionRef = useRef<{lat: number, lng: number} | null>(null);
   
   const { toast } = useToast();
 
-  // Load data from localStorage on component mount
   useEffect(() => {
     const savedPins = localStorage.getItem('houseTrackingPins');
     if (savedPins) {
@@ -78,7 +92,6 @@ const HouseTracking = () => {
     }
   }, []);
 
-  // Save data to localStorage whenever pins or routes change
   useEffect(() => {
     localStorage.setItem('houseTrackingPins', JSON.stringify(pins));
   }, [pins]);
@@ -87,7 +100,6 @@ const HouseTracking = () => {
     localStorage.setItem('houseTrackingRoutes', JSON.stringify(routes));
   }, [routes]);
 
-  // Timer effect for tracking duration
   useEffect(() => {
     if (isTracking && trackingStartTime) {
       timerRef.current = setInterval(() => {
@@ -112,6 +124,35 @@ const HouseTracking = () => {
   useEffect(() => {
     setMapLoaded(true);
   }, []);
+
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const R = 6371e3; // Earth's radius in meters
+    const φ1 = lat1 * Math.PI/180;
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c; // Distance in meters
+  };
+
+  const calculateRouteDistance = (path: Array<{lat: number, lng: number}>) => {
+    if (path.length < 2) return 0;
+    
+    let totalDistance = 0;
+    for (let i = 1; i < path.length; i++) {
+      totalDistance += calculateDistance(
+        path[i-1].lat, path[i-1].lng,
+        path[i].lat, path[i].lng
+      );
+    }
+    
+    return totalDistance / 1000; // Convert to kilometers
+  };
 
   const handlePinClick = (pin: HousePin) => {
     console.log('Pin clicked:', pin.address);
@@ -147,12 +188,20 @@ const HouseTracking = () => {
       return;
     }
 
+    // Show route naming dialog
+    setShowRouteNameDialog(true);
+  };
+
+  const confirmStartRoute = () => {
     const routeId = Date.now().toString();
     const now = new Date();
     const colorIndex = routes.length % routeColors.length;
     
+    const routeName = pendingRouteName.trim() || `Route ${new Date().toLocaleDateString()}`;
+    
     const newRoute: RouteSession = {
       id: routeId,
+      name: routeName,
       startTime: now.toISOString(),
       path: [],
       homesVisited: 0,
@@ -164,12 +213,19 @@ const HouseTracking = () => {
     setIsTracking(true);
     setTrackingStartTime(now);
     setTrackingDuration(0);
+    setShowRouteNameDialog(false);
+    setPendingRouteName('');
 
     // Start GPS tracking
     watchIdRef.current = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         const newPosition = { lat: latitude, lng: longitude };
+        
+        // Store initial position for distance calculation
+        if (!routeStartPositionRef.current) {
+          routeStartPositionRef.current = newPosition;
+        }
         
         setUserPosition(newPosition);
         
@@ -207,7 +263,7 @@ const HouseTracking = () => {
 
     toast({
       title: "Route Tracking Started",
-      description: "GPS tracking is now active. Walk your route!",
+      description: `GPS tracking is now active for "${routeName}". Walk your route!`,
     });
   };
 
@@ -220,11 +276,13 @@ const HouseTracking = () => {
     if (currentRoute) {
       const endTime = new Date();
       const duration = trackingStartTime ? Math.floor((endTime.getTime() - trackingStartTime.getTime()) / 1000) : 0;
+      const distance = calculateRouteDistance(currentRoute.path);
       
       const completedRoute: RouteSession = {
         ...currentRoute,
         endTime: endTime.toISOString(),
         duration,
+        distance,
         isActive: false
       };
 
@@ -236,6 +294,7 @@ const HouseTracking = () => {
     setTrackingStartTime(null);
     setTrackingDuration(0);
     setUserPosition(null);
+    routeStartPositionRef.current = null;
 
     toast({
       title: "Route Tracking Stopped",
@@ -282,21 +341,6 @@ const HouseTracking = () => {
     });
   };
 
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
-    const R = 6371e3; // Earth's radius in meters
-    const φ1 = lat1 * Math.PI/180;
-    const φ2 = lat2 * Math.PI/180;
-    const Δφ = (lat2-lat1) * Math.PI/180;
-    const Δλ = (lon2-lon1) * Math.PI/180;
-
-    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-    return R * c; // Distance in meters
-  };
-
   const formatDuration = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -336,7 +380,7 @@ const HouseTracking = () => {
     }
   };
 
-  const addPin = async (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string) => {
+  const addPin = async (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string, followUpDate?: string, followUpNote?: string, leadScore?: 'low' | 'medium' | 'high') => {
     if (selectedLocation) {
       const pin: HousePin = {
         id: Date.now().toString(),
@@ -352,6 +396,9 @@ const HouseTracking = () => {
         email,
         beforePhoto,
         afterPhoto,
+        followUpDate,
+        followUpNote,
+        leadScore,
         routeId: currentRoute?.id,
         routeTimestamp: currentRoute ? new Date().toISOString() : undefined,
         routeOrder: currentRoute ? currentRoute.homesVisited + 1 : undefined
@@ -392,7 +439,7 @@ const HouseTracking = () => {
 
   const exportData = () => {
     const csvContent = [
-      ['ID', 'Address', 'Status', 'Customer Name', 'Phone', 'Email', 'Notes', 'Contact Info', 'Date Added', 'Route ID', 'Route Order', 'Route Timestamp', 'Latitude', 'Longitude'],
+      ['ID', 'Address', 'Status', 'Customer Name', 'Phone', 'Email', 'Notes', 'Contact Info', 'Date Added', 'Follow Up Date', 'Follow Up Note', 'Lead Score', 'Route ID', 'Route Order', 'Route Timestamp', 'Latitude', 'Longitude'],
       ...pins.map(pin => [
         pin.id,
         pin.address,
@@ -403,6 +450,9 @@ const HouseTracking = () => {
         pin.notes,
         pin.contactInfo || '',
         pin.dateAdded,
+        pin.followUpDate || '',
+        pin.followUpNote || '',
+        pin.leadScore || '',
         pin.routeId || '',
         pin.routeOrder?.toString() || '',
         pin.routeTimestamp || '',
@@ -430,6 +480,27 @@ const HouseTracking = () => {
 
   const statusCounts = getStatusCounts();
 
+  const getFilteredPins = () => {
+    let filtered = pins.filter(pin => 
+      statusFilters.has(pin.status) && (
+        pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
+        pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
+        (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()))
+      )
+    );
+
+    if (filterByRoute) {
+      filtered = filtered.filter(pin => pin.routeId === filterByRoute);
+    }
+
+    if (filterByDate) {
+      const filterDate = new Date(filterByDate).toLocaleDateString();
+      filtered = filtered.filter(pin => pin.dateAdded === filterDate);
+    }
+
+    return filtered;
+  };
+
   const clients = pins
     .filter(pin => pin.customerName)
     .sort((a, b) => (a.customerName || '').localeCompare(b.customerName || ''))
@@ -443,6 +514,8 @@ const HouseTracking = () => {
     setHighlightedPinId(pin.id);
     setClientSearch('');
   };
+
+  const filteredPins = getFilteredPins();
 
   return (
     <Layout 
@@ -485,14 +558,14 @@ const HouseTracking = () => {
                   </Button>
                 </div>
                 
-                {isTracking && (
+                {isTracking && currentRoute && (
                   <div className="flex flex-col sm:flex-row gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                      <span>Duration: {formatDuration(trackingDuration)}</span>
+                      <span>"{currentRoute.name}" - {formatDuration(trackingDuration)}</span>
                     </div>
                     <div>
-                      <span>Homes Visited: {currentRoute?.homesVisited || 0}</span>
+                      <span>Homes Visited: {currentRoute.homesVisited || 0}</span>
                     </div>
                     {userPosition && (
                       <div className="flex items-center gap-2">
@@ -520,13 +593,13 @@ const HouseTracking = () => {
             ))}
           </div>
 
-          {/* Status Filter Bar */}
+          {/* Enhanced Filters */}
           <Card className="mb-4 sm:mb-6">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Filter className="w-4 h-4" />
-                  Filter by Status
+                  Filters & Search
                 </CardTitle>
                 <Button
                   size="sm"
@@ -538,27 +611,57 @@ const HouseTracking = () => {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className={`${showFilters ? 'block' : 'hidden'} md:block`}>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                {Object.entries(statusConfig).map(([status, config]) => (
-                  <Button
-                    key={status}
-                    size="sm"
-                    variant={statusFilters.has(status) ? "default" : "outline"}
-                    onClick={() => toggleStatusFilter(status)}
-                    className="text-xs sm:text-sm justify-start"
-                    style={statusFilters.has(status) ? { 
-                      backgroundColor: config.color, 
-                      borderColor: config.color 
-                    } : {}}
+            <CardContent className={`${showFilters ? 'block' : 'hidden'} md:block space-y-4`}>
+              {/* Status Filters */}
+              <div>
+                <Label className="text-sm font-medium mb-2 block">Filter by Status:</Label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                  {Object.entries(statusConfig).map(([status, config]) => (
+                    <Button
+                      key={status}
+                      size="sm"
+                      variant={statusFilters.has(status) ? "default" : "outline"}
+                      onClick={() => toggleStatusFilter(status)}
+                      className="text-xs sm:text-sm justify-start"
+                      style={statusFilters.has(status) ? { 
+                        backgroundColor: config.color, 
+                        borderColor: config.color 
+                      } : {}}
+                    >
+                      <div 
+                        className="w-3 h-3 rounded-full mr-2" 
+                        style={{ backgroundColor: config.color }}
+                      />
+                      {config.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Route and Date Filters */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Filter by Route:</Label>
+                  <select
+                    value={filterByRoute}
+                    onChange={(e) => setFilterByRoute(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md text-sm"
                   >
-                    <div 
-                      className="w-3 h-3 rounded-full mr-2" 
-                      style={{ backgroundColor: config.color }}
-                    />
-                    {config.label}
-                  </Button>
-                ))}
+                    <option value="">All Routes</option>
+                    {routes.map(route => (
+                      <option key={route.id} value={route.id}>{route.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Filter by Date:</Label>
+                  <Input
+                    type="date"
+                    value={filterByDate}
+                    onChange={(e) => setFilterByDate(e.target.value)}
+                    className="text-sm"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -719,17 +822,11 @@ const HouseTracking = () => {
           {/* House Pins List */}
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-              Tracked Houses ({pins.filter(pin => 
-                statusFilters.has(pin.status) && (
-                  pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
-                  pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
-                  (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()))
-                )
-              ).length})
+              Tracked Houses ({filteredPins.length})
             </h2>
             
             <PinList
-              pins={pins}
+              pins={filteredPins}
               highlightedPinId={highlightedPinId}
               editingPin={editingPin}
               statusFilters={statusFilters}
@@ -744,9 +841,38 @@ const HouseTracking = () => {
             />
           </div>
 
+          {/* Route Name Dialog */}
+          <Dialog open={showRouteNameDialog} onOpenChange={setShowRouteNameDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Name Your Route</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="routeName">Route Name</Label>
+                  <Input
+                    id="routeName"
+                    placeholder="e.g. White Rock - Marine Dr, June 13"
+                    value={pendingRouteName}
+                    onChange={(e) => setPendingRouteName(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && confirmStartRoute()}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={confirmStartRoute} className="bg-green-600 hover:bg-green-700">
+                    Start Tracking
+                  </Button>
+                  <Button variant="outline" onClick={() => setShowRouteNameDialog(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           {/* Route History Dialog */}
           <Dialog open={showRouteHistory} onOpenChange={setShowRouteHistory}>
-            <DialogContent className="max-w-3xl">
+            <DialogContent className="max-w-4xl">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
                   <History className="w-5 h-5" />
@@ -768,22 +894,25 @@ const HouseTracking = () => {
                                 style={{ backgroundColor: route.color }}
                               />
                               <div>
-                                <p className="font-medium">
-                                  Route {new Date(route.startTime).toLocaleDateString()}
-                                </p>
+                                <p className="font-medium text-base">{route.name}</p>
                                 <p className="text-sm text-gray-500">
-                                  {new Date(route.startTime).toLocaleTimeString()}
+                                  {new Date(route.startTime).toLocaleDateString()} • {new Date(route.startTime).toLocaleTimeString()}
                                   {route.endTime && ` - ${new Date(route.endTime).toLocaleTimeString()}`}
                                 </p>
                               </div>
                             </div>
                             <div className="text-right">
                               <p className="text-sm">
-                                <strong>{route.homesVisited}</strong> homes
+                                <strong>{route.homesVisited}</strong> homes visited
                               </p>
                               <p className="text-sm text-gray-500">
                                 {route.duration ? formatDuration(route.duration) : 'In Progress'}
                               </p>
+                              {route.distance && (
+                                <p className="text-sm text-gray-500">
+                                  {route.distance.toFixed(2)} km walked
+                                </p>
+                              )}
                             </div>
                           </div>
                         </CardContent>
@@ -808,21 +937,20 @@ const HouseTracking = () => {
           {/* Instructions */}
           <Card className="mt-6 sm:mt-8">
             <CardHeader>
-              <CardTitle className="text-lg">How to Use</CardTitle>
+              <CardTitle className="text-lg">How to Use - Enhanced Features</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-xs sm:text-sm text-gray-600">
-                <p>• <strong>Live Route Tracking:</strong> Start route tracking to automatically mark homes you pass within 10 meters</p>
-                <p>• <strong>Manual Add:</strong> Click on the map or search addresses to manually add house pins</p>
-                <p>• <strong>Auto-Detection:</strong> When route tracking is active, houses are auto-marked as "Visited" when you walk past them</p>
-                <p>• <strong>Route History:</strong> View all your past routes with different colors, durations, and home counts</p>
-                <p>• <strong>Status Tracking:</strong> Use filters to show/hide different pin types on the map</p>
-                <p>• <strong>Customer Management:</strong> Add contact details, notes, and before/after photos</p>
+                <p>• <strong>Named Routes:</strong> Give each route a custom name like "White Rock - Marine Dr" for easy identification</p>
+                <p>• <strong>Route Duration & Distance:</strong> Automatically tracks how long routes take and distance walked</p>
+                <p>• <strong>Follow-up Reminders:</strong> Set follow-up dates to revisit interested customers</p>
+                <p>• <strong>Lead Scoring:</strong> Rate prospects as Low/Medium/High priority for better follow-up planning</p>
+                <p>• <strong>One-Click Contact:</strong> Tap phone numbers to call or email addresses to send emails directly</p>
+                <p>• <strong>Enhanced Photos:</strong> Click photos to view full-size, attach before/after shots for each property</p>
+                <p>• <strong>Advanced Filtering:</strong> Filter houses by route, date, status, or search terms</p>
+                <p>• <strong>Quick Note Templates:</strong> Use pre-filled common responses when editing pins</p>
                 <p>• <strong>Client Directory:</strong> Quickly find and navigate to specific customers</p>
-                <p>• <strong>Data Export:</strong> Export all data including route information to CSV</p>
-                <p>• <strong>Street View:</strong> Click the eye icon or click on pins to view properties in Google Street View</p>
-                <p>• <strong>House Highlighting:</strong> Selected houses are highlighted with a yellow ring on the map and in the list</p>
-                <p>• All data is stored locally in your browser</p>
+                <p>• All data is stored locally in your browser and can be exported to CSV</p>
               </div>
             </CardContent>
           </Card>
@@ -832,9 +960,9 @@ const HouseTracking = () => {
   );
 };
 
-// Enhanced Quick Add Form Component with Photo Upload
+// Enhanced Quick Add Form Component with all new features
 const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
-  onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string) => void;
+  onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string, followUpDate?: string, followUpNote?: string, leadScore?: 'low' | 'medium' | 'high') => void;
   onCancel: () => void;
   prefilledAddress?: string;
 }) => {
@@ -846,6 +974,9 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
   const [email, setEmail] = useState('');
   const [beforePhoto, setBeforePhoto] = useState<string>('');
   const [afterPhoto, setAfterPhoto] = useState<string>('');
+  const [followUpDate, setFollowUpDate] = useState('');
+  const [followUpNote, setFollowUpNote] = useState('');
+  const [leadScore, setLeadScore] = useState<'low' | 'medium' | 'high'>('medium');
 
   const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
     const reader = new FileReader();
@@ -858,6 +989,10 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
       }
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleQuickNote = (template: string) => {
+    setNotes(template);
   };
 
   return (
@@ -885,6 +1020,25 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
           </select>
         </div>
         <div>
+          <Label htmlFor="leadScore" className="flex items-center gap-2">
+            <Star className="w-4 h-4" />
+            Lead Score
+          </Label>
+          <select
+            id="leadScore"
+            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+            value={leadScore}
+            onChange={(e) => setLeadScore(e.target.value as 'low' | 'medium' | 'high')}
+          >
+            <option value="low">Low Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="high">High Priority</option>
+          </select>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <Label htmlFor="customerName">Customer Name</Label>
           <Input
             id="customerName"
@@ -894,9 +1048,6 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
             className="text-sm"
           />
         </div>
-      </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="phone">Phone Number</Label>
           <Input
@@ -907,16 +1058,17 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
             className="text-sm"
           />
         </div>
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            placeholder="customer@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="text-sm"
-          />
-        </div>
+      </div>
+      
+      <div>
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          placeholder="customer@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="text-sm"
+        />
       </div>
       
       <div>
@@ -928,6 +1080,19 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
           onChange={(e) => setNotes(e.target.value)}
           className="text-sm"
         />
+        <div className="mt-2 flex flex-wrap gap-1">
+          {noteTemplates.map((template) => (
+            <Button
+              key={template}
+              size="sm"
+              variant="outline"
+              onClick={() => handleQuickNote(template)}
+              className="text-xs"
+            >
+              {template}
+            </Button>
+          ))}
+        </div>
       </div>
       
       <div>
@@ -939,6 +1104,32 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
           onChange={(e) => setContactInfo(e.target.value)}
           className="text-sm"
         />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="followUpDate" className="flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            Follow-up Date
+          </Label>
+          <Input
+            id="followUpDate"
+            type="date"
+            value={followUpDate}
+            onChange={(e) => setFollowUpDate(e.target.value)}
+            className="text-sm"
+          />
+        </div>
+        <div>
+          <Label htmlFor="followUpNote">Follow-up Note</Label>
+          <Input
+            id="followUpNote"
+            placeholder="Reason for follow-up"
+            value={followUpNote}
+            onChange={(e) => setFollowUpNote(e.target.value)}
+            className="text-sm"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -984,7 +1175,7 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
       
       <div className="flex flex-col sm:flex-row gap-2">
         <Button 
-          onClick={() => onAdd(status, notes, contactInfo, customerName, phoneNumber, email, beforePhoto, afterPhoto)} 
+          onClick={() => onAdd(status, notes, contactInfo, customerName, phoneNumber, email, beforePhoto, afterPhoto, followUpDate, followUpNote, leadScore)} 
           className="bg-bc-red hover:bg-red-700 w-full sm:w-auto"
         >
           <Save className="w-4 h-4 mr-2" />
@@ -999,7 +1190,7 @@ const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
   );
 };
 
-// Enhanced Edit Pin Form Component with Photo Upload
+// Enhanced Edit Pin Form Component with all new features
 const EditPinForm = ({ pin, onSave, onCancel }: {
   pin: HousePin;
   onSave: (updates: Partial<HousePin>) => void;
@@ -1014,7 +1205,10 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
     phoneNumber: pin.phoneNumber,
     email: pin.email,
     beforePhoto: pin.beforePhoto,
-    afterPhoto: pin.afterPhoto
+    afterPhoto: pin.afterPhoto,
+    followUpDate: pin.followUpDate,
+    followUpNote: pin.followUpNote,
+    leadScore: pin.leadScore || 'medium'
   });
 
   const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
@@ -1028,6 +1222,10 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
       }
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleQuickNote = (template: string) => {
+    setUpdates({...updates, notes: template});
   };
 
   return (
@@ -1068,6 +1266,25 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
           />
         </div>
         <div>
+          <Label htmlFor="edit-leadScore" className="flex items-center gap-2">
+            <Star className="w-4 h-4" />
+            Lead Score
+          </Label>
+          <select
+            id="edit-leadScore"
+            className="w-full p-2 border border-gray-300 rounded-md text-sm"
+            value={updates.leadScore || 'medium'}
+            onChange={(e) => setUpdates({...updates, leadScore: e.target.value as 'low' | 'medium' | 'high'})}
+          >
+            <option value="low">Low Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="high">High Priority</option>
+          </select>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <Label htmlFor="edit-phone">Phone Number</Label>
           <Input
             id="edit-phone"
@@ -1076,16 +1293,15 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
             className="text-sm"
           />
         </div>
-      </div>
-      
-      <div>
-        <Label htmlFor="edit-email">Email</Label>
-        <Input
-          id="edit-email"
-          value={updates.email || ''}
-          onChange={(e) => setUpdates({...updates, email: e.target.value})}
-          className="text-sm"
-        />
+        <div>
+          <Label htmlFor="edit-email">Email</Label>
+          <Input
+            id="edit-email"
+            value={updates.email || ''}
+            onChange={(e) => setUpdates({...updates, email: e.target.value})}
+            className="text-sm"
+          />
+        </div>
       </div>
       
       <div>
@@ -1096,6 +1312,19 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
           onChange={(e) => setUpdates({...updates, notes: e.target.value})}
           className="text-sm"
         />
+        <div className="mt-2 flex flex-wrap gap-1">
+          {noteTemplates.map((template) => (
+            <Button
+              key={template}
+              size="sm"
+              variant="outline"
+              onClick={() => handleQuickNote(template)}
+              className="text-xs"
+            >
+              {template}
+            </Button>
+          ))}
+        </div>
       </div>
       
       <div>
@@ -1106,6 +1335,31 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
           onChange={(e) => setUpdates({...updates, contactInfo: e.target.value})}
           className="text-sm"
         />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="edit-followUpDate" className="flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            Follow-up Date
+          </Label>
+          <Input
+            id="edit-followUpDate"
+            type="date"
+            value={updates.followUpDate || ''}
+            onChange={(e) => setUpdates({...updates, followUpDate: e.target.value})}
+            className="text-sm"
+          />
+        </div>
+        <div>
+          <Label htmlFor="edit-followUpNote">Follow-up Note</Label>
+          <Input
+            id="edit-followUpNote"
+            value={updates.followUpNote || ''}
+            onChange={(e) => setUpdates({...updates, followUpNote: e.target.value})}
+            className="text-sm"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

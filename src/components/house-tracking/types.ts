@@ -16,13 +16,18 @@ export interface HousePin {
   routeId?: string;
   routeTimestamp?: string;
   routeOrder?: number;
+  followUpDate?: string;
+  followUpNote?: string;
+  leadScore?: 'low' | 'medium' | 'high';
 }
 
 export interface RouteSession {
   id: string;
+  name: string;
   startTime: string;
   endTime?: string;
   duration?: number;
+  distance?: number;
   path: Array<{lat: number, lng: number, timestamp: string}>;
   homesVisited: number;
   color: string;
