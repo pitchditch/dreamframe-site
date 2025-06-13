@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
 import { MapPin, Plus, Edit, Trash2, Save, X, Map } from 'lucide-react';
@@ -29,6 +28,7 @@ const HouseTracking = () => {
   const [selectedLocation, setSelectedLocation] = useState<{lat: number, lng: number} | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapError, setMapError] = useState<string | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<{[key: string]: any}>({});
@@ -50,26 +50,45 @@ const HouseTracking = () => {
   useEffect(() => {
     const loadLeaflet = async () => {
       try {
-        const leaflet = await import('leaflet');
-        L = leaflet.default;
+        console.log('Starting to load Leaflet...');
+        
+        // Load CSS first
+        if (!document.querySelector('link[href*="leaflet.css"]')) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+          link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+          link.crossOrigin = '';
+          document.head.appendChild(link);
+          
+          // Wait for CSS to load
+          await new Promise((resolve) => {
+            link.onload = resolve;
+            setTimeout(resolve, 1000); // fallback timeout
+          });
+        }
+
+        // Import Leaflet
+        const leafletModule = await import('leaflet');
+        L = leafletModule.default || leafletModule;
+        
+        console.log('Leaflet loaded:', L);
         
         // Fix for default markers in Leaflet
-        delete (L.Icon.Default.prototype as any)._getIconUrl;
-        L.Icon.Default.mergeOptions({
-          iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-          iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-        });
-
-        // Load CSS
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
-        document.head.appendChild(link);
+        if (L.Icon && L.Icon.Default) {
+          delete (L.Icon.Default.prototype as any)._getIconUrl;
+          L.Icon.Default.mergeOptions({
+            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+          });
+        }
 
         setMapLoaded(true);
+        console.log('Map ready to initialize');
       } catch (error) {
         console.error('Failed to load Leaflet:', error);
+        setMapError(`Failed to load map: ${error}`);
       }
     };
 
@@ -78,31 +97,48 @@ const HouseTracking = () => {
 
   // Initialize map
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current || !mapLoaded || !L) return;
+    if (!mapRef.current || mapInstanceRef.current || !mapLoaded || !L) {
+      console.log('Map init conditions not met:', { 
+        hasMapRef: !!mapRef.current, 
+        hasMapInstance: !!mapInstanceRef.current, 
+        mapLoaded, 
+        hasL: !!L 
+      });
+      return;
+    }
 
-    // Create map centered on White Rock/Surrey area
-    const map = L.map(mapRef.current).setView([49.0504, -122.8048], 13);
+    try {
+      console.log('Initializing map...');
+      
+      // Create map centered on White Rock/Surrey area
+      const map = L.map(mapRef.current).setView([49.0504, -122.8048], 13);
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
 
-    // Handle map clicks
-    map.on('click', (e: any) => {
-      const { lat, lng } = e.latlng;
-      setSelectedLocation({ lat, lng });
-      setShowAddForm(true);
-    });
+      // Handle map clicks
+      map.on('click', (e: any) => {
+        const { lat, lng } = e.latlng;
+        console.log('Map clicked at:', lat, lng);
+        setSelectedLocation({ lat, lng });
+        setShowAddForm(true);
+      });
 
-    mapInstanceRef.current = map;
+      mapInstanceRef.current = map;
+      console.log('Map initialized successfully');
 
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
+      return () => {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.remove();
+          mapInstanceRef.current = null;
+        }
+      };
+    } catch (error) {
+      console.error('Error initializing map:', error);
+      setMapError(`Error initializing map: ${error}`);
+    }
   }, [mapLoaded]);
 
   // Update markers when pins change
@@ -295,7 +331,8 @@ const HouseTracking = () => {
             <CardContent>
               <div className="mb-4">
                 <p className="text-sm text-gray-600 mb-2">Click anywhere on the map below to add a house pin</p>
-                {!mapLoaded && <p className="text-sm text-gray-500">Loading map...</p>}
+                {!mapLoaded && !mapError && <p className="text-sm text-gray-500">Loading map...</p>}
+                {mapError && <p className="text-sm text-red-500">Error: {mapError}</p>}
               </div>
               
               {/* Real Leaflet Map */}
