@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown, Eye, Play, Square, History, Navigation } from 'lucide-react';
+import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown, Play, Square, History, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,42 +17,12 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from '@/hooks/use-toast';
-
-// Dynamically import Leaflet to avoid SSR issues
-let L: any = null;
-
-interface HousePin {
-  id: string;
-  lat: number;
-  lng: number;
-  address: string;
-  status: 'visited' | 'interested' | 'not-interested' | 'completed' | 'revisit-later' | 'needs-quote';
-  notes: string;
-  dateAdded: string;
-  contactInfo?: string;
-  beforePhoto?: string;
-  afterPhoto?: string;
-  customerName?: string;
-  phoneNumber?: string;
-  email?: string;
-  routeId?: string;
-  routeTimestamp?: string;
-  routeOrder?: number;
-}
-
-interface RouteSession {
-  id: string;
-  startTime: string;
-  endTime?: string;
-  duration?: number;
-  path: Array<{lat: number, lng: number, timestamp: string}>;
-  homesVisited: number;
-  color: string;
-  isActive: boolean;
-}
+import MapComponent from '../components/house-tracking/MapComponent';
+import PinList from '../components/house-tracking/PinList';
+import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
+import { HousePin, RouteSession } from '../components/house-tracking/types';
 
 const statusConfig = {
   'visited': { color: '#3b82f6', label: 'Visited' },
@@ -90,12 +60,6 @@ const HouseTracking = () => {
   const [userPosition, setUserPosition] = useState<{lat: number, lng: number} | null>(null);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
   
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-  const markersRef = useRef<{[key: string]: any}>({});
-  const routeLayersRef = useRef<{[key: string]: any}>({});
-  const currentRouteLayerRef = useRef<any>(null);
-  const userMarkerRef = useRef<any>(null);
   const watchIdRef = useRef<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -145,185 +109,33 @@ const HouseTracking = () => {
     };
   }, [isTracking, trackingStartTime]);
 
-  // Load Leaflet dynamically
   useEffect(() => {
-    const loadLeaflet = async () => {
-      try {
-        console.log('Starting to load Leaflet...');
-        
-        // Load CSS first
-        if (!document.querySelector('link[href*="leaflet.css"]')) {
-          const link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-          link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
-          link.crossOrigin = '';
-          document.head.appendChild(link);
-          
-          await new Promise((resolve) => {
-            link.onload = resolve;
-            setTimeout(resolve, 1000);
-          });
-        }
-
-        const leafletModule = await import('leaflet');
-        L = leafletModule.default || leafletModule;
-        
-        console.log('Leaflet loaded:', L);
-        
-        if (L.Icon && L.Icon.Default) {
-          delete (L.Icon.Default.prototype as any)._getIconUrl;
-          L.Icon.Default.mergeOptions({
-            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-          });
-        }
-
-        setMapLoaded(true);
-        console.log('Map ready to initialize');
-      } catch (error) {
-        console.error('Failed to load Leaflet:', error);
-        setMapError(`Failed to load map: ${error}`);
-      }
-    };
-
-    loadLeaflet();
+    setMapLoaded(true);
   }, []);
 
-  // Initialize map
-  useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current || !mapLoaded || !L) {
-      return;
-    }
+  const handlePinClick = (pin: HousePin) => {
+    console.log('Pin clicked:', pin.address);
+    setHighlightedPinId(pin.id);
+    setSelectedPin(pin);
+    setShowStreetView(true);
+  };
 
-    try {
-      console.log('Initializing map...');
-      
-      const map = L.map(mapRef.current).setView([49.0504, -122.8048], 13);
+  const handleMapClick = (lat: number, lng: number, address: string) => {
+    setSelectedLocation({ lat, lng });
+    setSelectedLocationAddress(address);
+    setShowAddForm(true);
+  };
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
+  const selectPinFromList = (pin: HousePin) => {
+    setHighlightedPinId(pin.id);
+  };
 
-      map.on('click', async (e: any) => {
-        const { lat, lng } = e.latlng;
-        console.log('Map clicked at:', lat, lng);
-        
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
-          );
-          const data = await response.json();
-          const address = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-          console.log('Found address:', address);
-          setSelectedLocationAddress(address);
-        } catch (error) {
-          console.log('Could not fetch address, using coordinates');
-          setSelectedLocationAddress(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
-        }
-        
-        setSelectedLocation({ lat, lng });
-        setShowAddForm(true);
-      });
-
-      mapInstanceRef.current = map;
-      console.log('Map initialized successfully');
-
-      return () => {
-        if (mapInstanceRef.current) {
-          mapInstanceRef.current.remove();
-          mapInstanceRef.current = null;
-        }
-      };
-    } catch (error) {
-      console.error('Error initializing map:', error);
-      setMapError(`Error initializing map: ${error}`);
-    }
-  }, [mapLoaded]);
-
-  // Update markers when pins or filters change
-  useEffect(() => {
-    if (!mapInstanceRef.current || !L) return;
-
-    Object.values(markersRef.current).forEach(marker => {
-      mapInstanceRef.current?.removeLayer(marker);
-    });
-    markersRef.current = {};
-
-    const filteredPins = pins.filter(pin => statusFilters.has(pin.status));
-
-    filteredPins.forEach(pin => {
-      const markerColor = statusConfig[pin.status].color;
-      const isHighlighted = highlightedPinId === pin.id;
-      
-      const customIcon = L.divIcon({
-        html: `<div style="background-color: ${markerColor}; width: ${isHighlighted ? '24px' : '20px'}; height: ${isHighlighted ? '24px' : '20px'}; border-radius: 50%; border: ${isHighlighted ? '3px solid #ffff00' : '2px solid white'}; box-shadow: 0 2px 4px rgba(0,0,0,0.3); ${isHighlighted ? 'animation: pulse 2s infinite;' : ''}"></div>`,
-        iconSize: [isHighlighted ? 24 : 20, isHighlighted ? 24 : 20],
-        iconAnchor: [isHighlighted ? 12 : 10, isHighlighted ? 12 : 10],
-        className: 'custom-pin'
-      });
-
-      const marker = L.marker([pin.lat, pin.lng], { icon: customIcon })
-        .addTo(mapInstanceRef.current!)
-        .bindPopup(`
-          <div class="p-2">
-            <strong>${statusConfig[pin.status].label}</strong><br>
-            <div class="text-sm">${pin.address}</div>
-            ${pin.notes ? `<div class="text-sm text-gray-600 mt-1">${pin.notes}</div>` : ''}
-            ${pin.customerName ? `<div class="text-sm"><strong>Customer:</strong> ${pin.customerName}</div>` : ''}
-            ${pin.phoneNumber ? `<div class="text-sm"><strong>Phone:</strong> ${pin.phoneNumber}</div>` : ''}
-            <div class="text-xs text-gray-400 mt-1">${pin.dateAdded}</div>
-          </div>
-        `);
-
-      marker.on('click', () => {
-        console.log('Pin clicked:', pin.address);
-        setHighlightedPinId(pin.id);
-        setSelectedPin(pin);
-        setShowStreetView(true);
-      });
-
-      markersRef.current[pin.id] = marker;
-    });
-  }, [pins, mapLoaded, statusFilters, highlightedPinId]);
-
-  // Update route layers
-  useEffect(() => {
-    if (!mapInstanceRef.current || !L) return;
-
-    // Clear existing route layers
-    Object.values(routeLayersRef.current).forEach(layer => {
-      mapInstanceRef.current?.removeLayer(layer);
-    });
-    routeLayersRef.current = {};
-
-    // Add route layers for completed routes
-    routes.filter(route => !route.isActive && route.path.length > 1).forEach(route => {
-      const latLngs = route.path.map(point => [point.lat, point.lng]);
-      const polyline = L.polyline(latLngs, { 
-        color: route.color, 
-        weight: 4, 
-        opacity: 0.7 
-      }).addTo(mapInstanceRef.current!);
-      
-      routeLayersRef.current[route.id] = polyline;
-    });
-
-    // Add current route layer if tracking
-    if (currentRoute && currentRoute.path.length > 1) {
-      const latLngs = currentRoute.path.map(point => [point.lat, point.lng]);
-      if (currentRouteLayerRef.current) {
-        mapInstanceRef.current?.removeLayer(currentRouteLayerRef.current);
-      }
-      currentRouteLayerRef.current = L.polyline(latLngs, { 
-        color: currentRoute.color, 
-        weight: 5, 
-        opacity: 0.9,
-        dashArray: '10, 5'
-      }).addTo(mapInstanceRef.current!);
-    }
-  }, [routes, currentRoute, mapLoaded]);
+  const openStreetView = (pin: HousePin) => {
+    console.log('Opening Street View for:', pin.address);
+    setSelectedPin(pin);
+    setHighlightedPinId(pin.id);
+    setShowStreetView(true);
+  };
 
   const startRouteTracking = () => {
     if (!navigator.geolocation) {
@@ -375,37 +187,6 @@ const HouseTracking = () => {
           return updatedRoute;
         });
 
-        // Update user marker on map
-        if (mapInstanceRef.current && L) {
-          if (userMarkerRef.current) {
-            mapInstanceRef.current.removeLayer(userMarkerRef.current);
-          }
-          
-          const userIcon = L.divIcon({
-            html: `<div style="background: linear-gradient(45deg, #3b82f6, #1d4ed8); width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); position: relative;">
-              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 6px; height: 6px; background: white; border-radius: 50%;"></div>
-            </div>`,
-            iconSize: [22, 22],
-            iconAnchor: [11, 11],
-            className: 'user-location-marker'
-          });
-          
-          userMarkerRef.current = L.marker([latitude, longitude], { icon: userIcon })
-            .addTo(mapInstanceRef.current)
-            .bindPopup(`
-              <div class="p-2 text-center">
-                <div class="text-sm font-medium text-blue-600">📍 Your Location</div>
-                <div class="text-xs text-gray-500 mt-1">Live GPS Tracking</div>
-                <div class="text-xs text-gray-400">${latitude.toFixed(6)}, ${longitude.toFixed(6)}</div>
-              </div>
-            `);
-
-          // Center map on user location on first position update
-          if (currentRoute && currentRoute.path.length === 1) {
-            mapInstanceRef.current.setView([latitude, longitude], 16);
-          }
-        }
-
         // Check for nearby houses
         checkNearbyHouses(latitude, longitude);
       },
@@ -455,18 +236,6 @@ const HouseTracking = () => {
     setTrackingStartTime(null);
     setTrackingDuration(0);
     setUserPosition(null);
-
-    // Remove user marker
-    if (userMarkerRef.current && mapInstanceRef.current) {
-      mapInstanceRef.current.removeLayer(userMarkerRef.current);
-      userMarkerRef.current = null;
-    }
-
-    // Remove current route layer
-    if (currentRouteLayerRef.current && mapInstanceRef.current) {
-      mapInstanceRef.current.removeLayer(currentRouteLayerRef.current);
-      currentRouteLayerRef.current = null;
-    }
 
     toast({
       title: "Route Tracking Stopped",
@@ -552,10 +321,6 @@ const HouseTracking = () => {
         const lng = parseFloat(result.lon);
         
         console.log('Found location:', { lat, lng, address: result.display_name });
-        
-        if (mapInstanceRef.current) {
-          mapInstanceRef.current.setView([lat, lng], 16);
-        }
         
         setSelectedLocation({ lat, lng });
         setSelectedLocationAddress(result.display_name);
@@ -655,14 +420,6 @@ const HouseTracking = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  const filteredPins = pins.filter(pin => 
-    statusFilters.has(pin.status) && (
-      pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
-      pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
-      (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()))
-    )
-  );
-
   const getStatusCounts = () => {
     const counts: {[key: string]: number} = {};
     Object.keys(statusConfig).forEach(status => {
@@ -683,25 +440,8 @@ const HouseTracking = () => {
     );
 
   const selectClient = (pin: HousePin) => {
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.setView([pin.lat, pin.lng], 16);
-    }
     setHighlightedPinId(pin.id);
     setClientSearch('');
-  };
-
-  const openStreetView = (pin: HousePin) => {
-    console.log('Opening Street View for:', pin.address);
-    setSelectedPin(pin);
-    setHighlightedPinId(pin.id);
-    setShowStreetView(true);
-  };
-
-  const selectPinFromList = (pin: HousePin) => {
-    setHighlightedPinId(pin.id);
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.setView([pin.lat, pin.lng], 16);
-    }
   };
 
   return (
@@ -872,14 +612,19 @@ const HouseTracking = () => {
                     : "Click anywhere on the map to add a house pin, or search for an address above. Click on pins to view Street View."
                   }
                 </p>
-                {!mapLoaded && !mapError && <p className="text-sm text-gray-500">Loading map...</p>}
-                {mapError && <p className="text-sm text-red-500">Error: {mapError}</p>}
               </div>
               
-              <div 
-                ref={mapRef}
-                className="w-full h-64 sm:h-96 border-2 border-gray-300 rounded-lg overflow-hidden"
-                style={{ minHeight: '300px' }}
+              <MapComponent
+                pins={pins}
+                statusFilters={statusFilters}
+                highlightedPinId={highlightedPinId}
+                userPosition={userPosition}
+                currentRoute={currentRoute}
+                routes={routes}
+                onPinClick={handlePinClick}
+                onMapClick={handleMapClick}
+                mapLoaded={mapLoaded}
+                mapError={mapError}
               />
             </CardContent>
           </Card>
@@ -974,132 +719,29 @@ const HouseTracking = () => {
           {/* House Pins List */}
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-              Tracked Houses ({filteredPins.length})
+              Tracked Houses ({pins.filter(pin => 
+                statusFilters.has(pin.status) && (
+                  pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
+                  pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
+                  (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()))
+                )
+              ).length})
             </h2>
-            {filteredPins.length === 0 ? (
-              <Card>
-                <CardContent className="p-6 sm:p-8 text-center">
-                  <MapPin className="w-8 sm:w-12 h-8 sm:h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-sm sm:text-base text-gray-600">
-                    No houses tracked yet. Click on the map or search for an address to start tracking!
-                  </p>
-                </CardContent>
-              </Card>
-            ) : (
-              filteredPins.map((pin) => (
-                <Card 
-                  key={pin.id}
-                  className={`transition-all ${highlightedPinId === pin.id ? 'ring-2 ring-yellow-400 shadow-lg' : ''}`}
-                >
-                  <CardContent className="p-3 sm:p-4">
-                    {editingPin === pin.id ? (
-                      <EditPinForm 
-                        pin={pin} 
-                        onSave={(updates) => updatePin(pin.id, updates)}
-                        onCancel={() => setEditingPin(null)}
-                      />
-                    ) : (
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <MapPin className="w-4 h-4 text-bc-red flex-shrink-0" />
-                            <h3 
-                              className="font-semibold text-gray-900 text-sm sm:text-base truncate cursor-pointer hover:text-blue-600 hover:underline"
-                              onClick={() => selectPinFromList(pin)}
-                            >
-                              {pin.address}
-                            </h3>
-                            <Badge 
-                              style={{ 
-                                backgroundColor: statusConfig[pin.status].color, 
-                                color: 'white' 
-                              }}
-                              className="text-xs"
-                            >
-                              {statusConfig[pin.status].label}
-                            </Badge>
-                            {pin.routeId && (
-                              <Badge variant="outline" className="text-xs">
-                                Route #{pin.routeOrder}
-                              </Badge>
-                            )}
-                          </div>
-                          {pin.customerName && (
-                            <p className="text-sm text-gray-700 mb-1">
-                              <strong>Customer:</strong> {pin.customerName}
-                            </p>
-                          )}
-                          {pin.phoneNumber && (
-                            <p className="text-sm text-gray-700 mb-1">
-                              <strong>Phone:</strong> {pin.phoneNumber}
-                            </p>
-                          )}
-                          {pin.email && (
-                            <p className="text-sm text-gray-700 mb-1">
-                              <strong>Email:</strong> {pin.email}
-                            </p>
-                          )}
-                          {pin.notes && (
-                            <p className="text-sm text-gray-600 mb-2">{pin.notes}</p>
-                          )}
-                          {pin.contactInfo && (
-                            <p className="text-sm text-gray-500 mb-1">Contact: {pin.contactInfo}</p>
-                          )}
-                          
-                          {(pin.beforePhoto || pin.afterPhoto) && (
-                            <div className="flex gap-2 mb-2">
-                              {pin.beforePhoto && (
-                                <div className="flex flex-col">
-                                  <span className="text-xs text-gray-500 mb-1">Before</span>
-                                  <img 
-                                    src={pin.beforePhoto} 
-                                    alt="Before" 
-                                    className="w-16 h-16 object-cover rounded border"
-                                  />
-                                </div>
-                              )}
-                              {pin.afterPhoto && (
-                                <div className="flex flex-col">
-                                  <span className="text-xs text-gray-500 mb-1">After</span>
-                                  <img 
-                                    src={pin.afterPhoto} 
-                                    alt="After" 
-                                    className="w-16 h-16 object-cover rounded border"
-                                  />
-                                </div>
-                              )}
-                            </div>
-                          )}
-                          
-                          <div className="flex flex-wrap gap-2 text-xs text-gray-400">
-                            <span>Added: {pin.dateAdded}</span>
-                            <span>•</span>
-                            <span>Coordinates: {pin.lat.toFixed(6)}, {pin.lng.toFixed(6)}</span>
-                            {pin.routeTimestamp && (
-                              <>
-                                <span>•</span>
-                                <span>Route: {new Date(pin.routeTimestamp).toLocaleString()}</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex gap-2 flex-shrink-0">
-                          <Button size="sm" variant="outline" onClick={() => openStreetView(pin)} title="View in Street View">
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={() => setEditingPin(pin.id)} title="Edit">
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={() => deletePin(pin.id)} title="Delete">
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))
-            )}
+            
+            <PinList
+              pins={pins}
+              highlightedPinId={highlightedPinId}
+              editingPin={editingPin}
+              statusFilters={statusFilters}
+              searchAddress={searchAddress}
+              onSelectPin={selectPinFromList}
+              onEditPin={setEditingPin}
+              onDeletePin={deletePin}
+              onOpenStreetView={openStreetView}
+              EditPinForm={EditPinForm}
+              onSavePin={updatePin}
+              onCancelEdit={() => setEditingPin(null)}
+            />
           </div>
 
           {/* Route History Dialog */}
@@ -1153,70 +795,15 @@ const HouseTracking = () => {
             </DialogContent>
           </Dialog>
 
-          {/* Google Street View Dialog */}
-          <Dialog open={showStreetView} onOpenChange={(open) => {
-            setShowStreetView(open);
-            if (!open) {
+          {/* Street View Dialog */}
+          <StreetViewDialog
+            isOpen={showStreetView}
+            onClose={() => {
+              setShowStreetView(false);
               setHighlightedPinId(null);
-            }
-          }}>
-            <DialogContent className="max-w-4xl w-full h-[80vh]">
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
-                  <Eye className="w-5 h-5" />
-                  Street View: {selectedPin?.address}
-                </DialogTitle>
-              </DialogHeader>
-              <div className="flex-1 w-full h-full">
-                {selectedPin ? (
-                  <div className="w-full h-full">
-                    {/* Google Street View Embed - Using the public embed API which doesn't require an API key */}
-                    <iframe
-                      src={`https://www.google.com/maps/embed?pb=!4v1234567890!6m8!1m7!1s${selectedPin.lat},${selectedPin.lng}!2m2!1d${selectedPin.lat}!2d${selectedPin.lng}!3f0!4f0!5f0.7820865974627469`}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0, borderRadius: '8px' }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title={`Street View: ${selectedPin.address}`}
-                      onError={() => {
-                        console.log('Street View failed to load, trying alternative...');
-                      }}
-                    />
-                    {/* Fallback: Google Maps link if Street View doesn't work */}
-                    <div className="mt-2 text-center">
-                      <a
-                        href={`https://www.google.com/maps/@${selectedPin.lat},${selectedPin.lng},19z`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline text-sm"
-                      >
-                        Open in Google Maps
-                      </a>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center h-full text-gray-500">
-                    <p>No location selected</p>
-                  </div>
-                )}
-              </div>
-              <div className="flex justify-between items-center pt-4">
-                <div className="text-sm text-gray-600">
-                  {selectedPin && (
-                    <>
-                      Coordinates: {selectedPin.lat.toFixed(6)}, {selectedPin.lng.toFixed(6)}
-                      {selectedPin.customerName && (
-                        <span className="ml-4">Customer: {selectedPin.customerName}</span>
-                      )}
-                    </>
-                  )}
-                </div>
-                <Button onClick={() => setShowStreetView(false)}>Close</Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+            }}
+            selectedPin={selectedPin}
+          />
 
           {/* Instructions */}
           <Card className="mt-6 sm:mt-8">

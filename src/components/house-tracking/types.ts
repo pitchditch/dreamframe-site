@@ -1,0 +1,30 @@
+
+export interface HousePin {
+  id: string;
+  lat: number;
+  lng: number;
+  address: string;
+  status: 'visited' | 'interested' | 'not-interested' | 'completed' | 'revisit-later' | 'needs-quote';
+  notes: string;
+  dateAdded: string;
+  contactInfo?: string;
+  beforePhoto?: string;
+  afterPhoto?: string;
+  customerName?: string;
+  phoneNumber?: string;
+  email?: string;
+  routeId?: string;
+  routeTimestamp?: string;
+  routeOrder?: number;
+}
+
+export interface RouteSession {
+  id: string;
+  startTime: string;
+  endTime?: string;
+  duration?: number;
+  path: Array<{lat: number, lng: number, timestamp: string}>;
+  homesVisited: number;
+  color: string;
+  isActive: boolean;
+}
