@@ -30,6 +30,7 @@ import StickyContactBar from "./components/StickyContactBar";
 import AfkOverlay from "./components/AfkOverlay";
 import SouthSurreyPressureWashing from "./pages/locations/SouthSurreyPressureWashing";
 import LangleyPressureWashing from "./pages/locations/LangleyPressureWashing";
+import HouseTracking from "./pages/HouseTracking";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/white-rock-pressure-washing" element={<WhiteRockPressureWashing />} />
             <Route path="/south-surrey-pressure-washing" element={<SouthSurreyPressureWashing />} />
             <Route path="/langley-pressure-washing" element={<LangleyPressureWashing />} />
+            <Route path="/house-tracking" element={<HouseTracking />} />
           </Routes>
           <StickyContactBar />
           <AfkOverlay />
