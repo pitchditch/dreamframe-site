@@ -136,6 +136,62 @@ const HouseWashing = () => {
         </div>
       </section>
       
+      {/* Fence Washing Section */}
+      <section id="fence-washing" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Professional Fence Washing Services</h2>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Restore Your Fence to Like-New Condition</h3>
+              <p className="text-gray-700 mb-6">
+                Over time, fences accumulate dirt, algae, mold, and weathering that can make them look old and worn. Our professional fence washing service uses specialized techniques to safely clean all types of fencing materials including wood, vinyl, composite, and metal.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start">
+                  <span className="bg-bc-red/10 rounded-full p-1 mr-3 mt-1">
+                    <svg className="w-4 h-4 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </span>
+                  <span>Safe for all fence materials - wood, vinyl, composite, aluminum</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-bc-red/10 rounded-full p-1 mr-3 mt-1">
+                    <svg className="w-4 h-4 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </span>
+                  <span>Removes mold, mildew, algae, and years of dirt buildup</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-bc-red/10 rounded-full p-1 mr-3 mt-1">
+                    <svg className="w-4 h-4 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </span>
+                  <span>Extends the life of your fence and protects your investment</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-bc-red/10 rounded-full p-1 mr-3 mt-1">
+                    <svg className="w-4 h-4 text-bc-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </span>
+                  <span>Eco-friendly cleaning solutions safe for plants and pets</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <img 
+                src="/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png" 
+                alt="Professional Fence Washing Before and After"
+                className="rounded-lg shadow-lg w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Our Soft Washing Process</h2>
