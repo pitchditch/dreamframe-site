@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +19,7 @@ import PressureWashing from "./pages/services/PressureWashing";
 import GutterCleaning from "./pages/services/GutterCleaning";
 import RoofCleaning from "./pages/services/RoofCleaning";
 import HouseWashing from "./pages/services/HouseWashing";
+import FenceWashing from "./pages/services/FenceWashing";
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
@@ -54,6 +56,7 @@ const App = () => (
             <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
             <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
             <Route path="/services/house-washing" element={<HouseWashing />} />
+            <Route path="/services/fence-washing" element={<FenceWashing />} />
             <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
