@@ -88,6 +88,7 @@ const HouseTracking = () => {
   const [showStreetView, setShowStreetView] = useState(false);
   const [showRouteHistory, setShowRouteHistory] = useState(false);
   const [userPosition, setUserPosition] = useState<{lat: number, lng: number} | null>(null);
+  const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
   
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -254,11 +255,12 @@ const HouseTracking = () => {
 
     filteredPins.forEach(pin => {
       const markerColor = statusConfig[pin.status].color;
+      const isHighlighted = highlightedPinId === pin.id;
       
       const customIcon = L.divIcon({
-        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
+        html: `<div style="background-color: ${markerColor}; width: ${isHighlighted ? '24px' : '20px'}; height: ${isHighlighted ? '24px' : '20px'}; border-radius: 50%; border: ${isHighlighted ? '3px solid #ffff00' : '2px solid white'}; box-shadow: 0 2px 4px rgba(0,0,0,0.3); ${isHighlighted ? 'animation: pulse 2s infinite;' : ''}"></div>`,
+        iconSize: [isHighlighted ? 24 : 20, isHighlighted ? 24 : 20],
+        iconAnchor: [isHighlighted ? 12 : 10, isHighlighted ? 12 : 10],
         className: 'custom-pin'
       });
 
@@ -276,14 +278,15 @@ const HouseTracking = () => {
         `);
 
       marker.on('click', () => {
-        setSelectedLocation({ lat: pin.lat, lng: pin.lng });
-        setSelectedLocationAddress(pin.address);
-        setShowAddForm(true);
+        console.log('Pin clicked:', pin.address);
+        setHighlightedPinId(pin.id);
+        setSelectedPin(pin);
+        setShowStreetView(true);
       });
 
       markersRef.current[pin.id] = marker;
     });
-  }, [pins, mapLoaded, statusFilters]);
+  }, [pins, mapLoaded, statusFilters, highlightedPinId]);
 
   // Update route layers
   useEffect(() => {
@@ -683,13 +686,22 @@ const HouseTracking = () => {
     if (mapInstanceRef.current) {
       mapInstanceRef.current.setView([pin.lat, pin.lng], 16);
     }
+    setHighlightedPinId(pin.id);
     setClientSearch('');
   };
 
   const openStreetView = (pin: HousePin) => {
     console.log('Opening Street View for:', pin.address);
     setSelectedPin(pin);
+    setHighlightedPinId(pin.id);
     setShowStreetView(true);
+  };
+
+  const selectPinFromList = (pin: HousePin) => {
+    setHighlightedPinId(pin.id);
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.setView([pin.lat, pin.lng], 16);
+    }
   };
 
   return (
@@ -857,7 +869,7 @@ const HouseTracking = () => {
                 <p className="text-xs sm:text-sm text-gray-600 mb-2">
                   {isTracking 
                     ? "Your live route is being tracked. Walk past houses to auto-mark them as visited!"
-                    : "Click anywhere on the map to add a house pin, or search for an address above"
+                    : "Click anywhere on the map to add a house pin, or search for an address above. Click on pins to view Street View."
                   }
                 </p>
                 {!mapLoaded && !mapError && <p className="text-sm text-gray-500">Loading map...</p>}
@@ -975,7 +987,10 @@ const HouseTracking = () => {
               </Card>
             ) : (
               filteredPins.map((pin) => (
-                <Card key={pin.id}>
+                <Card 
+                  key={pin.id}
+                  className={`transition-all ${highlightedPinId === pin.id ? 'ring-2 ring-yellow-400 shadow-lg' : ''}`}
+                >
                   <CardContent className="p-3 sm:p-4">
                     {editingPin === pin.id ? (
                       <EditPinForm 
@@ -990,7 +1005,7 @@ const HouseTracking = () => {
                             <MapPin className="w-4 h-4 text-bc-red flex-shrink-0" />
                             <h3 
                               className="font-semibold text-gray-900 text-sm sm:text-base truncate cursor-pointer hover:text-blue-600 hover:underline"
-                              onClick={() => openStreetView(pin)}
+                              onClick={() => selectPinFromList(pin)}
                             >
                               {pin.address}
                             </h3>
@@ -1069,13 +1084,13 @@ const HouseTracking = () => {
                           </div>
                         </div>
                         <div className="flex gap-2 flex-shrink-0">
-                          <Button size="sm" variant="outline" onClick={() => openStreetView(pin)}>
+                          <Button size="sm" variant="outline" onClick={() => openStreetView(pin)} title="View in Street View">
                             <Eye className="w-4 h-4" />
                           </Button>
-                          <Button size="sm" variant="outline" onClick={() => setEditingPin(pin.id)}>
+                          <Button size="sm" variant="outline" onClick={() => setEditingPin(pin.id)} title="Edit">
                             <Edit className="w-4 h-4" />
                           </Button>
-                          <Button size="sm" variant="outline" onClick={() => deletePin(pin.id)}>
+                          <Button size="sm" variant="outline" onClick={() => deletePin(pin.id)} title="Delete">
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
@@ -1139,7 +1154,12 @@ const HouseTracking = () => {
           </Dialog>
 
           {/* Google Street View Dialog */}
-          <Dialog open={showStreetView} onOpenChange={setShowStreetView}>
+          <Dialog open={showStreetView} onOpenChange={(open) => {
+            setShowStreetView(open);
+            if (!open) {
+              setHighlightedPinId(null);
+            }
+          }}>
             <DialogContent className="max-w-4xl w-full h-[80vh]">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
@@ -1213,7 +1233,8 @@ const HouseTracking = () => {
                 <p>• <strong>Customer Management:</strong> Add contact details, notes, and before/after photos</p>
                 <p>• <strong>Client Directory:</strong> Quickly find and navigate to specific customers</p>
                 <p>• <strong>Data Export:</strong> Export all data including route information to CSV</p>
-                <p>• <strong>Street View:</strong> Click the eye icon to view properties in Google Street View</p>
+                <p>• <strong>Street View:</strong> Click the eye icon or click on pins to view properties in Google Street View</p>
+                <p>• <strong>House Highlighting:</strong> Selected houses are highlighted with a yellow ring on the map and in the list</p>
                 <p>• All data is stored locally in your browser</p>
               </div>
             </CardContent>
