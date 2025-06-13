@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download } from 'lucide-react';
+import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Dynamically import Leaflet to avoid SSR issues
 let L: any = null;
@@ -41,12 +47,14 @@ const HouseTracking = () => {
   const [searchAddress, setSearchAddress] = useState('');
   const [addressSearchQuery, setAddressSearchQuery] = useState('');
   const [selectedLocation, setSelectedLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [selectedLocationAddress, setSelectedLocationAddress] = useState<string>('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [statusFilters, setStatusFilters] = useState<Set<string>>(new Set(Object.keys(statusConfig)));
   const [showFilters, setShowFilters] = useState(false);
+  const [clientSearch, setClientSearch] = useState('');
   
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -150,8 +158,10 @@ const HouseTracking = () => {
           const data = await response.json();
           const address = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
           console.log('Found address:', address);
+          setSelectedLocationAddress(address);
         } catch (error) {
           console.log('Could not fetch address, using coordinates');
+          setSelectedLocationAddress(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
         }
         
         setSelectedLocation({ lat, lng });
@@ -211,6 +221,13 @@ const HouseTracking = () => {
           </div>
         `);
 
+      // Add click handler to auto-fill form when clicking on existing pin
+      marker.on('click', () => {
+        setSelectedLocation({ lat: pin.lat, lng: pin.lng });
+        setSelectedLocationAddress(pin.address);
+        setShowAddForm(true);
+      });
+
       markersRef.current[pin.id] = marker;
     });
   }, [pins, mapLoaded, statusFilters]);
@@ -261,8 +278,9 @@ const HouseTracking = () => {
           mapInstanceRef.current.setView([lat, lng], 16);
         }
         
-        // Set as selected location
+        // Set as selected location with the found address
         setSelectedLocation({ lat, lng });
+        setSelectedLocationAddress(result.display_name);
         setShowAddForm(true);
       } else {
         alert('Address not found. Please try a different search.');
@@ -275,38 +293,26 @@ const HouseTracking = () => {
     }
   };
 
-  const addPin = async (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string) => {
+  const addPin = async (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string) => {
     if (selectedLocation) {
-      // Try to get address from coordinates (reverse geocoding)
-      let address = `${selectedLocation.lat.toFixed(6)}, ${selectedLocation.lng.toFixed(6)}`;
-      
-      try {
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${selectedLocation.lat}&lon=${selectedLocation.lng}&addressdetails=1`
-        );
-        const data = await response.json();
-        if (data.display_name) {
-          address = data.display_name;
-        }
-      } catch (error) {
-        console.log('Could not fetch address, using coordinates');
-      }
-
       const pin: HousePin = {
         id: Date.now().toString(),
         lat: selectedLocation.lat,
         lng: selectedLocation.lng,
-        address,
+        address: selectedLocationAddress,
         status,
         notes,
         dateAdded: new Date().toLocaleDateString(),
         contactInfo,
         customerName,
         phoneNumber,
-        email
+        email,
+        beforePhoto,
+        afterPhoto
       };
       setPins([...pins, pin]);
       setSelectedLocation(null);
+      setSelectedLocationAddress('');
       setShowAddForm(false);
       setAddressSearchQuery('');
     }
@@ -375,6 +381,23 @@ const HouseTracking = () => {
   };
 
   const statusCounts = getStatusCounts();
+
+  // Client directory functionality
+  const clients = pins
+    .filter(pin => pin.customerName)
+    .sort((a, b) => (a.customerName || '').localeCompare(b.customerName || ''))
+    .filter(pin => 
+      !clientSearch || 
+      (pin.customerName && pin.customerName.toLowerCase().includes(clientSearch.toLowerCase())) ||
+      pin.address.toLowerCase().includes(clientSearch.toLowerCase())
+    );
+
+  const selectClient = (pin: HousePin) => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.setView([pin.lat, pin.lng], 16);
+    }
+    setClientSearch('');
+  };
 
   return (
     <Layout 
@@ -502,6 +525,7 @@ const HouseTracking = () => {
             <Card className="mb-4 sm:mb-6">
               <CardHeader>
                 <CardTitle className="text-lg">Add House Pin</CardTitle>
+                <p className="text-sm text-gray-600">Address: {selectedLocationAddress}</p>
               </CardHeader>
               <CardContent>
                 <QuickAddForm 
@@ -509,8 +533,10 @@ const HouseTracking = () => {
                   onCancel={() => {
                     setShowAddForm(false);
                     setSelectedLocation(null);
+                    setSelectedLocationAddress('');
                     setAddressSearchQuery('');
                   }}
+                  prefilledAddress={selectedLocationAddress}
                 />
               </CardContent>
             </Card>
@@ -524,6 +550,58 @@ const HouseTracking = () => {
               onChange={(e) => setSearchAddress(e.target.value)}
               className="flex-1 text-sm sm:text-base"
             />
+            
+            {/* Client Directory Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full sm:w-auto">
+                  <Users className="w-4 h-4 mr-2" />
+                  Client Directory
+                  <ChevronDown className="w-4 h-4 ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-80 max-h-96 overflow-y-auto bg-white border shadow-lg">
+                <div className="p-2 border-b">
+                  <Input
+                    placeholder="Search clients..."
+                    value={clientSearch}
+                    onChange={(e) => setClientSearch(e.target.value)}
+                    className="text-sm"
+                  />
+                </div>
+                {clients.length === 0 ? (
+                  <div className="p-4 text-center text-gray-500 text-sm">
+                    {clientSearch ? 'No clients found' : 'No clients added yet'}
+                  </div>
+                ) : (
+                  clients.map((pin) => (
+                    <DropdownMenuItem
+                      key={pin.id}
+                      onClick={() => selectClient(pin)}
+                      className="flex flex-col items-start p-3 cursor-pointer hover:bg-gray-50"
+                    >
+                      <div className="font-medium text-sm">{pin.customerName}</div>
+                      <div className="text-xs text-gray-500 truncate w-full">{pin.address}</div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Badge 
+                          style={{ 
+                            backgroundColor: statusConfig[pin.status].color, 
+                            color: 'white' 
+                          }}
+                          className="text-xs"
+                        >
+                          {statusConfig[pin.status].label}
+                        </Badge>
+                        {pin.phoneNumber && (
+                          <span className="text-xs text-gray-400">{pin.phoneNumber}</span>
+                        )}
+                      </div>
+                    </DropdownMenuItem>
+                  ))
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button onClick={exportData} variant="outline" className="w-full sm:w-auto">
               <Download className="w-4 h-4 mr-2" />
               Export CSV
@@ -593,6 +671,33 @@ const HouseTracking = () => {
                           {pin.contactInfo && (
                             <p className="text-sm text-gray-500 mb-1">Contact: {pin.contactInfo}</p>
                           )}
+                          
+                          {/* Photo display */}
+                          {(pin.beforePhoto || pin.afterPhoto) && (
+                            <div className="flex gap-2 mb-2">
+                              {pin.beforePhoto && (
+                                <div className="flex flex-col">
+                                  <span className="text-xs text-gray-500 mb-1">Before</span>
+                                  <img 
+                                    src={pin.beforePhoto} 
+                                    alt="Before" 
+                                    className="w-16 h-16 object-cover rounded border"
+                                  />
+                                </div>
+                              )}
+                              {pin.afterPhoto && (
+                                <div className="flex flex-col">
+                                  <span className="text-xs text-gray-500 mb-1">After</span>
+                                  <img 
+                                    src={pin.afterPhoto} 
+                                    alt="After" 
+                                    className="w-16 h-16 object-cover rounded border"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          
                           <div className="flex flex-wrap gap-2 text-xs text-gray-400">
                             <span>Added: {pin.dateAdded}</span>
                             <span>•</span>
@@ -627,6 +732,8 @@ const HouseTracking = () => {
                 <p>• Use status filters to show/hide different types of pins on the map</p>
                 <p>• Different colored dots represent different statuses - see the legend above</p>
                 <p>• Add customer details, notes, and contact information for follow-ups</p>
+                <p>• Upload before/after photos for each job</p>
+                <p>• Use the Client Directory to quickly find and navigate to specific customers</p>
                 <p>• Export your data as CSV for further analysis or backup</p>
                 <p>• All data is stored locally in your browser</p>
                 <p>• The interface is optimized for mobile use while canvassing</p>
@@ -639,10 +746,11 @@ const HouseTracking = () => {
   );
 };
 
-// Enhanced Quick Add Form Component
-const QuickAddForm = ({ onAdd, onCancel }: {
-  onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string) => void;
+// Enhanced Quick Add Form Component with Photo Upload
+const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
+  onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string) => void;
   onCancel: () => void;
+  prefilledAddress?: string;
 }) => {
   const [status, setStatus] = useState<HousePin['status']>('visited');
   const [notes, setNotes] = useState('');
@@ -650,9 +758,32 @@ const QuickAddForm = ({ onAdd, onCancel }: {
   const [customerName, setCustomerName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
+  const [beforePhoto, setBeforePhoto] = useState<string>('');
+  const [afterPhoto, setAfterPhoto] = useState<string>('');
+
+  const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      if (type === 'before') {
+        setBeforePhoto(result);
+      } else {
+        setAfterPhoto(result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="space-y-4">
+      {prefilledAddress && (
+        <div className="p-3 bg-blue-50 rounded-md">
+          <p className="text-sm text-blue-800">
+            <strong>Address:</strong> {prefilledAddress}
+          </p>
+        </div>
+      )}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="status">Status</Label>
@@ -723,10 +854,52 @@ const QuickAddForm = ({ onAdd, onCancel }: {
           className="text-sm"
         />
       </div>
+
+      {/* Photo Upload Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="beforePhoto" className="flex items-center gap-2">
+            <Camera className="w-4 h-4" />
+            Before Photo
+          </Label>
+          <Input
+            id="beforePhoto"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handlePhotoUpload(file, 'before');
+            }}
+            className="text-sm"
+          />
+          {beforePhoto && (
+            <img src={beforePhoto} alt="Before preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+          )}
+        </div>
+        <div>
+          <Label htmlFor="afterPhoto" className="flex items-center gap-2">
+            <Camera className="w-4 h-4" />
+            After Photo
+          </Label>
+          <Input
+            id="afterPhoto"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handlePhotoUpload(file, 'after');
+            }}
+            className="text-sm"
+          />
+          {afterPhoto && (
+            <img src={afterPhoto} alt="After preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+          )}
+        </div>
+      </div>
       
       <div className="flex flex-col sm:flex-row gap-2">
         <Button 
-          onClick={() => onAdd(status, notes, contactInfo, customerName, phoneNumber, email)} 
+          onClick={() => onAdd(status, notes, contactInfo, customerName, phoneNumber, email, beforePhoto, afterPhoto)} 
           className="bg-bc-red hover:bg-red-700 w-full sm:w-auto"
         >
           <Save className="w-4 h-4 mr-2" />
@@ -741,7 +914,7 @@ const QuickAddForm = ({ onAdd, onCancel }: {
   );
 };
 
-// Enhanced Edit Pin Form Component
+// Enhanced Edit Pin Form Component with Photo Upload
 const EditPinForm = ({ pin, onSave, onCancel }: {
   pin: HousePin;
   onSave: (updates: Partial<HousePin>) => void;
@@ -754,8 +927,23 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
     contactInfo: pin.contactInfo,
     customerName: pin.customerName,
     phoneNumber: pin.phoneNumber,
-    email: pin.email
+    email: pin.email,
+    beforePhoto: pin.beforePhoto,
+    afterPhoto: pin.afterPhoto
   });
+
+  const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      if (type === 'before') {
+        setUpdates({...updates, beforePhoto: result});
+      } else {
+        setUpdates({...updates, afterPhoto: result});
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="space-y-4">
@@ -833,6 +1021,48 @@ const EditPinForm = ({ pin, onSave, onCancel }: {
           onChange={(e) => setUpdates({...updates, contactInfo: e.target.value})}
           className="text-sm"
         />
+      </div>
+
+      {/* Photo Upload Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="edit-beforePhoto" className="flex items-center gap-2">
+            <Camera className="w-4 h-4" />
+            Before Photo
+          </Label>
+          <Input
+            id="edit-beforePhoto"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handlePhotoUpload(file, 'before');
+            }}
+            className="text-sm"
+          />
+          {updates.beforePhoto && (
+            <img src={updates.beforePhoto} alt="Before preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+          )}
+        </div>
+        <div>
+          <Label htmlFor="edit-afterPhoto" className="flex items-center gap-2">
+            <Camera className="w-4 h-4" />
+            After Photo
+          </Label>
+          <Input
+            id="edit-afterPhoto"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handlePhotoUpload(file, 'after');
+            }}
+            className="text-sm"
+          />
+          {updates.afterPhoto && (
+            <img src={updates.afterPhoto} alt="After preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+          )}
+        </div>
       </div>
       
       <div className="flex flex-col sm:flex-row gap-2">
