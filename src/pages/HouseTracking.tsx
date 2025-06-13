@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown } from 'lucide-react';
+import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,6 +12,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // Dynamically import Leaflet to avoid SSR issues
 let L: any = null;
@@ -55,6 +62,8 @@ const HouseTracking = () => {
   const [statusFilters, setStatusFilters] = useState<Set<string>>(new Set(Object.keys(statusConfig)));
   const [showFilters, setShowFilters] = useState(false);
   const [clientSearch, setClientSearch] = useState('');
+  const [selectedPin, setSelectedPin] = useState<HousePin | null>(null);
+  const [showStreetView, setShowStreetView] = useState(false);
   
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -399,6 +408,11 @@ const HouseTracking = () => {
     setClientSearch('');
   };
 
+  const openStreetView = (pin: HousePin) => {
+    setSelectedPin(pin);
+    setShowStreetView(true);
+  };
+
   return (
     <Layout 
       title="House Tracking - BC Pressure Washing"
@@ -705,6 +719,9 @@ const HouseTracking = () => {
                           </div>
                         </div>
                         <div className="flex gap-2 flex-shrink-0">
+                          <Button size="sm" variant="outline" onClick={() => openStreetView(pin)}>
+                            <Eye className="w-4 h-4" />
+                          </Button>
                           <Button size="sm" variant="outline" onClick={() => setEditingPin(pin.id)}>
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -719,6 +736,50 @@ const HouseTracking = () => {
               ))
             )}
           </div>
+
+          {/* Google Street View Dialog */}
+          <Dialog open={showStreetView} onOpenChange={setShowStreetView}>
+            <DialogContent className="max-w-4xl w-full h-[80vh]">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <Eye className="w-5 h-5" />
+                  Street View: {selectedPin?.address}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex-1 w-full h-full">
+                {selectedPin && (
+                  <iframe
+                    src={`https://www.google.com/maps/embed/v1/streetview?key=YOUR_API_KEY&location=${selectedPin.lat},${selectedPin.lng}&heading=0&pitch=0&fov=90`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, borderRadius: '8px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`Street View: ${selectedPin.address}`}
+                  />
+                )}
+                {!selectedPin && (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    <p>No location selected</p>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-between items-center pt-4">
+                <div className="text-sm text-gray-600">
+                  {selectedPin && (
+                    <>
+                      Coordinates: {selectedPin.lat.toFixed(6)}, {selectedPin.lng.toFixed(6)}
+                      {selectedPin.customerName && (
+                        <span className="ml-4">Customer: {selectedPin.customerName}</span>
+                      )}
+                    </>
+                  )}
+                </div>
+                <Button onClick={() => setShowStreetView(false)}>Close</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           {/* Instructions */}
           <Card className="mt-6 sm:mt-8">
