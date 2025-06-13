@@ -379,14 +379,28 @@ const HouseTracking = () => {
           }
           
           const userIcon = L.divIcon({
-            html: `<div style="background-color: #3b82f6; width: 15px; height: 15px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);"></div>`,
-            iconSize: [15, 15],
-            iconAnchor: [7.5, 7.5],
+            html: `<div style="background: linear-gradient(45deg, #3b82f6, #1d4ed8); width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); position: relative;">
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 6px; height: 6px; background: white; border-radius: 50%;"></div>
+            </div>`,
+            iconSize: [22, 22],
+            iconAnchor: [11, 11],
             className: 'user-location-marker'
           });
           
           userMarkerRef.current = L.marker([latitude, longitude], { icon: userIcon })
-            .addTo(mapInstanceRef.current);
+            .addTo(mapInstanceRef.current)
+            .bindPopup(`
+              <div class="p-2 text-center">
+                <div class="text-sm font-medium text-blue-600">📍 Your Location</div>
+                <div class="text-xs text-gray-500 mt-1">Live GPS Tracking</div>
+                <div class="text-xs text-gray-400">${latitude.toFixed(6)}, ${longitude.toFixed(6)}</div>
+              </div>
+            `);
+
+          // Center map on user location on first position update
+          if (currentRoute && currentRoute.path.length === 1) {
+            mapInstanceRef.current.setView([latitude, longitude], 16);
+          }
         }
 
         // Check for nearby houses
@@ -727,6 +741,12 @@ const HouseTracking = () => {
                     <div>
                       <span>Homes Visited: {currentRoute?.homesVisited || 0}</span>
                     </div>
+                    {userPosition && (
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span>GPS Active</span>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
