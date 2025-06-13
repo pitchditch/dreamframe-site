@@ -987,7 +987,10 @@ const HouseTracking = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-wrap items-center gap-2 mb-2">
                             <MapPin className="w-4 h-4 text-bc-red flex-shrink-0" />
-                            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
+                            <h3 
+                              className="font-semibold text-gray-900 text-sm sm:text-base truncate cursor-pointer hover:text-blue-600 hover:underline"
+                              onClick={() => openStreetView(pin)}
+                            >
                               {pin.address}
                             </h3>
                             <Badge 
