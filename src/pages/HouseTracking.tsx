@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
-import { MapPin, Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { MapPin, Plus, Edit, Trash2, Save, X, Map } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,10 +21,11 @@ interface HousePin {
 
 const HouseTracking = () => {
   const [pins, setPins] = useState<HousePin[]>([]);
-  const [isAddingPin, setIsAddingPin] = useState(false);
   const [editingPin, setEditingPin] = useState<string | null>(null);
-  const [newPin, setNewPin] = useState<Partial<HousePin>>({});
   const [searchAddress, setSearchAddress] = useState('');
+  const [mapMode, setMapMode] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   // Load pins from localStorage on component mount
   useEffect(() => {
@@ -39,21 +40,38 @@ const HouseTracking = () => {
     localStorage.setItem('houseTrackingPins', JSON.stringify(pins));
   }, [pins]);
 
-  const addPin = () => {
-    if (newPin.address && newPin.lat && newPin.lng) {
+  const handleMapClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!mapMode) return;
+    
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    
+    // Convert click position to approximate coordinates (simplified for demo)
+    // In a real implementation, you'd use proper map libraries like Leaflet or Mapbox
+    const lat = 49.0504 - (y / rect.height) * 0.1; // White Rock area
+    const lng = -122.8048 + (x / rect.width) * 0.1;
+    
+    setSelectedLocation({ lat, lng });
+    setShowAddForm(true);
+  };
+
+  const addPin = (status: HousePin['status'], notes: string, contactInfo: string) => {
+    if (selectedLocation) {
       const pin: HousePin = {
         id: Date.now().toString(),
-        lat: newPin.lat,
-        lng: newPin.lng,
-        address: newPin.address,
-        status: newPin.status || 'visited',
-        notes: newPin.notes || '',
+        lat: selectedLocation.lat,
+        lng: selectedLocation.lng,
+        address: `${selectedLocation.lat.toFixed(6)}, ${selectedLocation.lng.toFixed(6)}`, // Temporary address
+        status,
+        notes,
         dateAdded: new Date().toLocaleDateString(),
-        contactInfo: newPin.contactInfo || ''
+        contactInfo
       };
       setPins([...pins, pin]);
-      setNewPin({});
-      setIsAddingPin(false);
+      setSelectedLocation(null);
+      setShowAddForm(false);
+      setMapMode(false);
     }
   };
 
@@ -113,7 +131,7 @@ const HouseTracking = () => {
         <div className="container mx-auto px-4">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">House Tracking Dashboard</h1>
-            <p className="text-gray-600">Track houses you've visited during canvassing in White Rock and Surrey</p>
+            <p className="text-gray-600">Click on houses on the map to track your canvassing progress in White Rock and Surrey</p>
           </div>
 
           {/* Stats Overview */}
@@ -144,6 +162,108 @@ const HouseTracking = () => {
             </Card>
           </div>
 
+          {/* Interactive Map Section */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Map className="w-5 h-5" />
+                Interactive Map - White Rock & Surrey Area
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4">
+                <Button 
+                  onClick={() => setMapMode(!mapMode)}
+                  className={`${mapMode ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'}`}
+                >
+                  {mapMode ? 'Exit Map Mode' : 'Enable Map Mode - Click to Add Houses'}
+                </Button>
+                {mapMode && (
+                  <p className="text-sm text-gray-600 mt-2">Click anywhere on the map below to add a house pin</p>
+                )}
+              </div>
+              
+              {/* Simplified Map Area */}
+              <div 
+                className={`relative w-full h-96 bg-gradient-to-br from-green-100 to-blue-100 border-2 border-gray-300 rounded-lg overflow-hidden ${mapMode ? 'cursor-crosshair' : 'cursor-default'}`}
+                onClick={handleMapClick}
+              >
+                {/* Map background with area labels */}
+                <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded shadow text-sm font-semibold">
+                  White Rock
+                </div>
+                <div className="absolute bottom-4 right-4 bg-white px-3 py-1 rounded shadow text-sm font-semibold">
+                  Surrey
+                </div>
+                
+                {/* Show existing pins on the map */}
+                {pins.map((pin) => {
+                  const x = ((pin.lng + 122.8048) / 0.1) * 100;
+                  const y = ((49.0504 - pin.lat) / 0.1) * 100;
+                  return (
+                    <div
+                      key={pin.id}
+                      className={`absolute w-4 h-4 rounded-full border-2 border-white ${getStatusColor(pin.status)} transform -translate-x-1/2 -translate-y-1/2`}
+                      style={{ left: `${x}%`, top: `${y}%` }}
+                      title={`${pin.status} - ${pin.notes}`}
+                    />
+                  );
+                })}
+                
+                {/* Show selected location */}
+                {selectedLocation && (
+                  <div
+                    className="absolute w-6 h-6 bg-yellow-400 border-2 border-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
+                    style={{ 
+                      left: `${((selectedLocation.lng + 122.8048) / 0.1) * 100}%`, 
+                      top: `${((49.0504 - selectedLocation.lat) / 0.1) * 100}%` 
+                    }}
+                  />
+                )}
+                
+                {/* Grid overlay for better visual reference */}
+                <div className="absolute inset-0 opacity-20">
+                  {[...Array(10)].map((_, i) => (
+                    <div key={i} className="absolute border-gray-400" style={{
+                      left: `${i * 10}%`,
+                      top: 0,
+                      width: '1px',
+                      height: '100%',
+                      borderLeft: '1px dashed'
+                    }} />
+                  ))}
+                  {[...Array(10)].map((_, i) => (
+                    <div key={i} className="absolute border-gray-400" style={{
+                      top: `${i * 10}%`,
+                      left: 0,
+                      height: '1px',
+                      width: '100%',
+                      borderTop: '1px dashed'
+                    }} />
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quick Add Form for Map Clicks */}
+          {showAddForm && selectedLocation && (
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>Add House Pin</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <QuickAddForm 
+                  onAdd={addPin}
+                  onCancel={() => {
+                    setShowAddForm(false);
+                    setSelectedLocation(null);
+                  }}
+                />
+              </CardContent>
+            </Card>
+          )}
+
           {/* Controls */}
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <Input
@@ -152,102 +272,10 @@ const HouseTracking = () => {
               onChange={(e) => setSearchAddress(e.target.value)}
               className="flex-1"
             />
-            <Button onClick={() => setIsAddingPin(true)} className="bg-bc-red hover:bg-red-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Add House Pin
-            </Button>
             <Button onClick={exportData} variant="outline">
               Export CSV
             </Button>
           </div>
-
-          {/* Add Pin Form */}
-          {isAddingPin && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle>Add New House Pin</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="address">Address</Label>
-                    <Input
-                      id="address"
-                      placeholder="123 Main St, White Rock, BC"
-                      value={newPin.address || ''}
-                      onChange={(e) => setNewPin({...newPin, address: e.target.value})}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="status">Status</Label>
-                    <select
-                      id="status"
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                      value={newPin.status || 'visited'}
-                      onChange={(e) => setNewPin({...newPin, status: e.target.value as HousePin['status']})}
-                    >
-                      <option value="visited">Visited</option>
-                      <option value="interested">Interested</option>
-                      <option value="not-interested">Not Interested</option>
-                      <option value="completed">Completed</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="lat">Latitude</Label>
-                    <Input
-                      id="lat"
-                      type="number"
-                      step="any"
-                      placeholder="49.0504"
-                      value={newPin.lat || ''}
-                      onChange={(e) => setNewPin({...newPin, lat: parseFloat(e.target.value)})}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="lng">Longitude</Label>
-                    <Input
-                      id="lng"
-                      type="number"
-                      step="any"
-                      placeholder="-122.8048"
-                      value={newPin.lng || ''}
-                      onChange={(e) => setNewPin({...newPin, lng: parseFloat(e.target.value)})}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="notes">Notes</Label>
-                  <Input
-                    id="notes"
-                    placeholder="Customer feedback, contact details, etc."
-                    value={newPin.notes || ''}
-                    onChange={(e) => setNewPin({...newPin, notes: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="contact">Contact Info</Label>
-                  <Input
-                    id="contact"
-                    placeholder="Phone number or email"
-                    value={newPin.contactInfo || ''}
-                    onChange={(e) => setNewPin({...newPin, contactInfo: e.target.value})}
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <Button onClick={addPin} className="bg-bc-red hover:bg-red-700">
-                    <Save className="w-4 h-4 mr-2" />
-                    Save Pin
-                  </Button>
-                  <Button onClick={() => {setIsAddingPin(false); setNewPin({});}} variant="outline">
-                    <X className="w-4 h-4 mr-2" />
-                    Cancel
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
 
           {/* House Pins List */}
           <div className="space-y-4">
@@ -256,7 +284,7 @@ const HouseTracking = () => {
               <Card>
                 <CardContent className="p-8 text-center">
                   <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">No houses tracked yet. Start adding pins to track your canvassing progress!</p>
+                  <p className="text-gray-600">No houses tracked yet. Enable map mode and click on houses to start tracking!</p>
                 </CardContent>
               </Card>
             ) : (
@@ -311,18 +339,77 @@ const HouseTracking = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm text-gray-600">
-                <p>• Click "Add House Pin" to manually add houses you've visited</p>
-                <p>• Use Google Maps to find coordinates: Right-click on a location → "What's here?" → Copy coordinates</p>
-                <p>• Track different statuses: Visited, Interested, Not Interested, Completed</p>
+                <p>• Click "Enable Map Mode" and then click anywhere on the map to add house pins</p>
+                <p>• Different colored dots represent different statuses: Blue (Visited), Green (Interested), Red (Not Interested), Purple (Completed)</p>
                 <p>• Add notes about customer interactions, property details, or follow-up requirements</p>
                 <p>• Export your data as CSV for further analysis or backup</p>
                 <p>• All data is stored locally in your browser</p>
+                <p>• Future update: Will integrate with Google Maps for real addresses</p>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
     </Layout>
+  );
+};
+
+// Quick Add Form Component for Map Clicks
+const QuickAddForm = ({ onAdd, onCancel }: {
+  onAdd: (status: HousePin['status'], notes: string, contactInfo: string) => void;
+  onCancel: () => void;
+}) => {
+  const [status, setStatus] = useState<HousePin['status']>('visited');
+  const [notes, setNotes] = useState('');
+  const [contactInfo, setContactInfo] = useState('');
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="status">Status</Label>
+          <select
+            id="status"
+            className="w-full p-2 border border-gray-300 rounded-md"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as HousePin['status'])}
+          >
+            <option value="visited">Visited</option>
+            <option value="interested">Interested</option>
+            <option value="not-interested">Not Interested</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div>
+          <Label htmlFor="contact">Contact Info</Label>
+          <Input
+            id="contact"
+            placeholder="Phone or email"
+            value={contactInfo}
+            onChange={(e) => setContactInfo(e.target.value)}
+          />
+        </div>
+      </div>
+      <div>
+        <Label htmlFor="notes">Notes</Label>
+        <Input
+          id="notes"
+          placeholder="Customer feedback, follow-up needed, etc."
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+        />
+      </div>
+      <div className="flex gap-2">
+        <Button onClick={() => onAdd(status, notes, contactInfo)} className="bg-bc-red hover:bg-red-700">
+          <Save className="w-4 h-4 mr-2" />
+          Add Pin
+        </Button>
+        <Button onClick={onCancel} variant="outline">
+          <X className="w-4 h-4 mr-2" />
+          Cancel
+        </Button>
+      </div>
+    </div>
   );
 };
 
