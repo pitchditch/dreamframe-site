@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { HousePin } from './types';
 
@@ -9,6 +8,7 @@ interface MapComponentProps {
   userPosition: {lat: number, lng: number} | null;
   currentRoute: any;
   routes: any[];
+  selectedLocation: {lat: number, lng: number} | null;
   onPinClick: (pin: HousePin) => void;
   onMapClick: (lat: number, lng: number, address: string) => void;
   mapLoaded: boolean;
@@ -31,6 +31,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   userPosition,
   currentRoute,
   routes,
+  selectedLocation,
   onPinClick,
   onMapClick,
   mapLoaded,
@@ -42,6 +43,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const routeLayersRef = useRef<{[key: string]: any}>({});
   const currentRouteLayerRef = useRef<any>(null);
   const userMarkerRef = useRef<any>(null);
+  const selectedLocationMarkerRef = useRef<any>(null);
 
   // Load Leaflet dynamically
   useEffect(() => {
@@ -123,6 +125,48 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
     loadLeaflet();
   }, [onMapClick]);
+
+  // Update selected location marker
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+
+    const L = (window as any).L;
+    if (!L) return;
+
+    // Remove existing selected location marker
+    if (selectedLocationMarkerRef.current) {
+      mapInstanceRef.current.removeLayer(selectedLocationMarkerRef.current);
+      selectedLocationMarkerRef.current = null;
+    }
+
+    // Add new selected location marker if there's a selected location
+    if (selectedLocation) {
+      const selectedIcon = L.divIcon({
+        html: `<div style="background: linear-gradient(45deg, #ff6b6b, #ff8e8e); width: 28px; height: 28px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); position: relative; animation: pulse 2s infinite;">
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: white; border-radius: 50%;"></div>
+        </div>
+        <style>
+          @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+            50% { box-shadow: 0 0 30px rgba(255, 107, 107, 1); }
+            100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+          }
+        </style>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
+        className: 'selected-location-marker'
+      });
+      
+      selectedLocationMarkerRef.current = L.marker([selectedLocation.lat, selectedLocation.lng], { icon: selectedIcon })
+        .addTo(mapInstanceRef.current)
+        .bindPopup(`
+          <div class="p-2 text-center">
+            <div class="text-sm font-medium text-red-600">📍 Selected Location</div>
+            <div class="text-xs text-gray-500 mt-1">Adding new house pin...</div>
+          </div>
+        `);
+    }
+  }, [selectedLocation]);
 
   // Update markers when pins or filters change
   useEffect(() => {

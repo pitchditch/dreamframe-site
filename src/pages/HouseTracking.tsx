@@ -724,6 +724,7 @@ const HouseTracking = () => {
                 userPosition={userPosition}
                 currentRoute={currentRoute}
                 routes={routes}
+                selectedLocation={selectedLocation}
                 onPinClick={handlePinClick}
                 onMapClick={handleMapClick}
                 mapLoaded={mapLoaded}
