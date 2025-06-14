@@ -54,9 +54,9 @@ const QuickContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isSubmitting) return;
-    
+
     try {
       // Rate limiting check
       const identifier = formData.email || 'anonymous';
@@ -81,31 +81,43 @@ const QuickContactForm = () => {
 
       // Sanitize form data
       const sanitizedData = sanitizeFormData(formData);
-      
+
       setIsSubmitting(true);
-      
-      // Log sanitized data (no sensitive info)
-      console.log('Form submission attempt:', sanitizeLogData(sanitizedData));
-      
-      // Simulate form processing
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: t("Quote Request Sent!"),
-        description: t("We'll contact you within 24 hours with your free quote."),
-      });
-      
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        service: '',
-        message: ''
-      });
-      setSelectedService('');
+
+      // Call Supabase Edge Function for forwarding
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...sanitizedData,
+            subject: "Website Quote Request",
+            form: "QuickContactForm",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast({
+          title: t("Quote Request Sent!"),
+          description: t("We'll contact you within 24 hours with your free quote."),
+        });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          service: "",
+          message: "",
+        });
+        setSelectedService("");
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to submit form");
+      }
     } catch (error) {
-      console.error('Form submission error (sanitized):', error instanceof Error ? error.message : 'Unknown error');
+      console.error("Form submission error (sanitized):", error instanceof Error ? error.message : "Unknown error");
       toast({
         title: t("Error"),
         description: t("Failed to send quote request. Please try again."),

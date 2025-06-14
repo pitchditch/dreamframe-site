@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import emailjs from '@emailjs/browser';
 import { trackFormSubmission } from '@/utils/analytics';
 import { RateLimiter, sanitizeFormData, createHoneypot, detectBot, sanitizeLogData } from '@/utils/security';
 import { Link } from 'react-router-dom';
@@ -16,11 +14,11 @@ const FooterContactForm = () => {
   const [service, setService] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isSubmitting) return;
-    
+
     try {
       // Rate limiting check
       const identifier = email || 'anonymous';
@@ -45,53 +43,43 @@ const FooterContactForm = () => {
 
       // Sanitize form data
       const sanitizedData = sanitizeFormData({ email, service });
-      
+
       setIsSubmitting(true);
-      
+
       // Track the form submission
       trackFormSubmission('footer_contact_form', {
         form_type: 'quick_contact',
         service_interest: sanitizedData.service
       });
-      
-      // Prepare the data for email
-      const templateParams = {
-        from_email: sanitizedData.email,
-        service_interest: sanitizedData.service,
-        subject: 'Quick Contact Form Submission',
-        form_type: 'Footer Quick Contact'
-      };
-      
+
       // Log sanitized data (no sensitive info)
       console.log('Footer contact form submission:', sanitizeLogData(sanitizedData));
-      
-      // Send email using EmailJS
-      emailjs.send(
-        'service_xrk4vas',
-        'template_cpivz2k',
-        templateParams,
-        'MMzAmk5eWrjFgC_nP'
-      )
-      .then((response) => {
-        console.log('Email sent successfully');
+
+      // Send email using Supabase Edge Function + Resend
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...sanitizedData,
+            subject: "Website Footer Quick Contact",
+            form: "FooterContactForm",
+          }),
+        }
+      );
+
+      if (response.ok) {
         toast({
           title: "Message Sent!",
-          description: "We'll get back to you as soon as possible."
+          description: "We'll get back to you as soon as possible.",
         });
         setEmail('');
         setService('');
-      })
-      .catch((error) => {
-        console.error('Error sending email (sanitized):', error?.text || 'Unknown error');
-        toast({
-          title: "Error",
-          description: "There was a problem sending your message. Please try again.",
-          variant: "destructive"
-        });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to send message");
+      }
     } catch (error) {
       console.error('Form submission error (sanitized):', error instanceof Error ? error.message : 'Unknown error');
       toast({
@@ -99,6 +87,7 @@ const FooterContactForm = () => {
         description: "There was a problem sending your message. Please try again.",
         variant: "destructive"
       });
+    } finally {
       setIsSubmitting(false);
     }
   };

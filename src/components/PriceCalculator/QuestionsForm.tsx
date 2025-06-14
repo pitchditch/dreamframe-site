@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,7 +5,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { trackFormSubmission, trackFormFieldInteraction } from '@/utils/analytics';
-import emailjs from '@emailjs/browser';
 
 const QuestionsForm = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +15,7 @@ const QuestionsForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !question) {
       toast({
         title: "Error",
@@ -26,9 +24,9 @@ const QuestionsForm = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     // Track submission and send email
     trackFormSubmission('question_form', { 
       email, 
@@ -36,49 +34,38 @@ const QuestionsForm = () => {
       form_type: 'question',
       saw_red_car: sawRedCar
     });
-    
-    // Prepare the data for email
-    const templateParams = {
-      from_email: email,
+
+    // Prepare data to send to Edge Function
+    const body = {
+      email,
       message: question,
-      subject: sawRedCar ? 'New Question About Services (10% RED CAR DISCOUNT)' : 'New Question About Services',
-      form_type: 'Calculator Questions Form',
-      discount_eligible: sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No'
+      subject: sawRedCar ? "New Question About Services (10% RED CAR DISCOUNT)" : "New Question About Services",
+      form: "QuestionsForm",
+      discount_eligible: sawRedCar ? "YES - 10% RED CAR DISCOUNT" : "No"
     };
 
-    // Send email using EmailJS with updated template ID
     try {
-      console.log("Sending question to BC Pressure Washing");
-      await emailjs.send(
-        'service_xrk4vas', 
-        'template_cpivz2k', 
-        templateParams, 
-        'MMzAmk5eWrjFgC_nP'
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
       );
-      
-      // Send confirmation email to customer
-      const confirmationParams = {
-        to_email: email,
-        subject: 'Your Question Has Been Received - BC Pressure Washing',
-        message: `Thank you for contacting BC Pressure Washing! We have received your question and will get back to you as soon as possible. For reference, here's a copy of your message:\n\n"${question}"\n\nBest regards,\nJayden Fisher\nBC Pressure Washing`,
-        business_email: 'bcpressurewashing.ca@gmail.com'
-      };
-      
-      await emailjs.send(
-        'service_xrk4vas',
-        'template_cpivz2k',
-        confirmationParams,
-        'MMzAmk5eWrjFgC_nP'
-      );
-      
-      toast({
-        title: "Question Submitted",
-        description: "We'll get back to you as soon as possible! Final quote confirmed by Jayden.",
-      });
-      
-      setEmail('');
-      setQuestion('');
-      setSawRedCar(false);
+
+      if (response.ok) {
+        toast({
+          title: "Question Submitted",
+          description: "We'll get back to you as soon as possible! Final quote confirmed by Jayden.",
+        });
+        setEmail('');
+        setQuestion('');
+        setSawRedCar(false);
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to submit your question");
+      }
     } catch (error) {
       console.error("Failed to send email:", error);
       toast({
