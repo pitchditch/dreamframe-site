@@ -85,15 +85,16 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
               </Link>
             </DropdownMenuItem>
             
+            {/* REPLACED DRIVEWAY CLEANING WITH FENCE WASHING */}
             <DropdownMenuItem asChild className="p-0 col-span-2">
               <Link
-                to="/services/driveway-cleaning"
+                to="/services/fence-washing"
                 className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <img src="/lovable-uploads/b18323e2-db3c-4f96-af15-171ee39301bc.png" alt="Fence Washing" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
-                  <div className="font-medium text-xs">Driveway Cleaning</div>
-                  <div className="text-xs text-gray-500">Remove stains</div>
+                  <div className="font-medium text-xs">Fence Washing</div>
+                  <div className="text-xs text-gray-500">Restore curb appeal</div>
                 </div>
               </Link>
             </DropdownMenuItem>
