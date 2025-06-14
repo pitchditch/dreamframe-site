@@ -9,9 +9,15 @@ import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
 const Calculator = () => {
   // Check if user was referred with form data
-  const savedPostalCode = localStorage.getItem('calculatorPostalCode');
+  const savedPostalCode = localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
   const savedHouseSize = localStorage.getItem('calculatorHouseSize');
   
+  // Build an initial address value if we have a postal code
+  let prefillAddress = '';
+  if (savedPostalCode) {
+    prefillAddress = `White Rock, BC ${savedPostalCode}`;
+  }
+
   // Determine initial step based on available data
   const determineInitialStep = () => {
     if (savedPostalCode) {
@@ -20,10 +26,8 @@ const Calculator = () => {
     return undefined;
   };
   
-  // Clean up localStorage after retrieving the values
   useEffect(() => {
-    // We don't clear localStorage here to allow for page refreshes
-    // The form component will handle this after successful submission
+    // No localStorage clearing here
   }, []);
 
   return (
@@ -51,7 +55,8 @@ const Calculator = () => {
               initialStep={determineInitialStep()} 
               prefillData={{
                 postalCode: savedPostalCode || '',
-                houseSize: savedHouseSize || 'medium'
+                houseSize: savedHouseSize || 'medium',
+                address: prefillAddress // pass constructed address to the calculator
               }}
             />
             

@@ -10,6 +10,7 @@ interface PriceCalculatorFormProps {
   prefillData?: {
     postalCode?: string;
     houseSize?: string;
+    address?: string;
   };
 }
 
@@ -26,6 +27,9 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     else if (initialStep === 'address') return 1;
     else return 0;
   };
+
+  // If prefillData.address is present, use it; otherwise, default to empty string
+  const defaultAddress = prefillData.address || '';
 
   const {
     step,
@@ -48,12 +52,11 @@ const PriceCalculatorForm: React.FC<PriceCalculatorFormProps> = ({
     estimateTotal,
     handleFormSubmit,
     resetForm
-  } = usePriceCalculatorForm(getInitialStep(), onComplete, prefillData);
+  } = usePriceCalculatorForm(getInitialStep(), onComplete, { ...prefillData, address: defaultAddress });
 
   const handleNextStep = (nextStep: number) => setStep(nextStep);
   const handlePrevStep = (prevStep: number) => setStep(prevStep);
 
-  // Function to pass as prop that returns the current estimate total
   const getEstimateTotal = () => estimateTotal;
 
   return (
