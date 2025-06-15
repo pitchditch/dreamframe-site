@@ -575,6 +575,7 @@ const HouseTracking = () => {
     const pin = selectedPin as HousePin | null;
     const [editSqft, setEditSqft] = useState(pin?.squareFootage ?? 0);
 
+    // Update editSqft if pin changes
     React.useEffect(() => {
       setEditSqft(pin?.squareFootage ?? 0);
     }, [pin]);
@@ -594,6 +595,7 @@ const HouseTracking = () => {
       if (!personalStart.trim() || !pin) return;
       try {
         const from = await getLatLngFromAddress(personalStart.trim());
+        // Use haversine() to calculate distance in km
         const dist = haversine(from.lat, from.lng, pin.lat, pin.lng);
         setPersonalTravelKms(dist);
       } catch (e) {
