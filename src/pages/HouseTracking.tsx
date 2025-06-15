@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Layout from '../components/Layout';
 import { MapPin, Plus, Edit, Trash2, Save, X, Map, Search, Camera, Filter, Download, Users, ChevronDown, Play, Square, History, Navigation, Calendar, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,8 @@ import { useToast } from '@/hooks/use-toast';
 import MapComponent from '../components/house-tracking/MapComponent';
 import PinList from '../components/house-tracking/PinList';
 import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
-import { HousePin, RouteSession } from '../components/house-tracking/types';
+import type { HousePin as _HousePin, RouteSession } from '../components/house-tracking/types';
+type HousePin = _HousePin & { squareFootage?: number }; // patch in squareFootage
 
 const statusConfig = {
   'visited': { color: '#3b82f6', label: 'Visited' },
@@ -44,6 +45,27 @@ const noteTemplates = [
   "Already has service provider",
   "Wants spring cleaning quote"
 ];
+
+const getLatLngFromAddress = async (address: string) => {
+  // Use Nominatim (OpenStreetMap) to geocode an address (returns { lat, lng })
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
+  const resp = await fetch(url);
+  const data = await resp.json();
+  if (data && data.length) {
+    return { lat: +data[0].lat, lng: +data[0].lon };
+  }
+  throw new Error('Address not found');
+};
+
+const haversine = (lat1: number, lng1: number, lat2: number, lng2: number) => {
+  // Returns distance in km
+  const toRad = (v: number) => v * Math.PI / 180;
+  const R = 6371; // earth radius km
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat/2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng/2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+};
 
 const HouseTracking = () => {
   const [pins, setPins] = useState<HousePin[]>([]);
@@ -79,6 +101,14 @@ const HouseTracking = () => {
   const routeStartPositionRef = useRef<{lat: number, lng: number} | null>(null);
   
   const { toast } = useToast();
+
+  // Personal Price Calculator state and helpers
+  const [personalSqftRate, setPersonalSqftRate] = useState(0.18); // default per sqft
+  const [personalStart, setPersonalStart] = useState('White Rock, BC');
+  const [personalKmRate, setPersonalKmRate] = useState(0.7); // default per km
+  const [personalTravelKms, setPersonalTravelKms] = useState<number|null>(null);
+  const [personalTravelErr, setPersonalTravelErr] = useState<string>('');
+  const [showPersonalCalculator, setShowPersonalCalculator] = useState(false);
 
   useEffect(() => {
     const savedPins = localStorage.getItem('houseTrackingPins');
@@ -380,7 +410,20 @@ const HouseTracking = () => {
     }
   };
 
-  const addPin = async (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string, followUpDate?: string, followUpNote?: string, leadScore?: 'low' | 'medium' | 'high') => {
+  const addPin = async (
+    status: HousePin['status'], 
+    notes: string, 
+    contactInfo: string, 
+    customerName: string, 
+    phoneNumber: string, 
+    email: string, 
+    beforePhoto?: string, 
+    afterPhoto?: string, 
+    followUpDate?: string, 
+    followUpNote?: string, 
+    leadScore?: 'low' | 'medium' | 'high',
+    squareFootage?: number
+  ) => {
     if (selectedLocation) {
       const pin: HousePin = {
         id: Date.now().toString(),
@@ -399,6 +442,7 @@ const HouseTracking = () => {
         followUpDate,
         followUpNote,
         leadScore,
+        squareFootage,
         routeId: currentRoute?.id,
         routeTimestamp: currentRoute ? new Date().toISOString() : undefined,
         routeOrder: currentRoute ? currentRoute.homesVisited + 1 : undefined
@@ -439,7 +483,7 @@ const HouseTracking = () => {
 
   const exportData = () => {
     const csvContent = [
-      ['ID', 'Address', 'Status', 'Customer Name', 'Phone', 'Email', 'Notes', 'Contact Info', 'Date Added', 'Follow Up Date', 'Follow Up Note', 'Lead Score', 'Route ID', 'Route Order', 'Route Timestamp', 'Latitude', 'Longitude'],
+      ['ID', 'Address', 'Status', 'Customer Name', 'Phone', 'Email', 'Notes', 'Contact Info', 'Date Added', 'Follow Up Date', 'Follow Up Note', 'Lead Score', 'Square Footage', 'Route ID', 'Route Order', 'Route Timestamp', 'Latitude', 'Longitude'],
       ...pins.map(pin => [
         pin.id,
         pin.address,
@@ -453,6 +497,7 @@ const HouseTracking = () => {
         pin.followUpDate || '',
         pin.followUpNote || '',
         pin.leadScore || '',
+        pin.squareFootage !== undefined ? pin.squareFootage.toString() : '',
         pin.routeId || '',
         pin.routeOrder?.toString() || '',
         pin.routeTimestamp || '',
@@ -516,6 +561,611 @@ const HouseTracking = () => {
   };
 
   const filteredPins = getFilteredPins();
+
+  // Personal Calculator handlers
+  const handleSelectPinPersonalCalc = (pin: HousePin) => {
+    setSelectedPin(pin);
+    setShowPersonalCalculator(true);
+    setPersonalTravelKms(null);
+    setPersonalTravelErr('');
+  };
+
+  // Personal Calculator Sidebar Component
+  const CalcSidebar = () => {
+    const pin = selectedPin as HousePin | null;
+    const [editSqft, setEditSqft] = useState(pin?.squareFootage ?? 0);
+
+    React.useEffect(() => {
+      setEditSqft(pin?.squareFootage ?? 0);
+    }, [pin]);
+
+    const estimate = Math.round((editSqft || 0) * personalSqftRate * 100) / 100;
+    const travelCost = personalTravelKms !== null ? Math.round(personalTravelKms * personalKmRate * 100) / 100 : 0;
+
+    const handleSaveSqft = () => {
+      if (pin && editSqft !== pin.squareFootage) {
+        updatePin(pin.id, { squareFootage: +editSqft });
+      }
+    };
+
+    const handleCalcTravel = async () => {
+      setPersonalTravelErr('');
+      setPersonalTravelKms(null);
+      if (!personalStart.trim() || !pin) return;
+      try {
+        const from = await getLatLngFromAddress(personalStart.trim());
+        const dist = haversine(from.lat, from.lng, pin.lat, pin.lng);
+        setPersonalTravelKms(dist);
+      } catch (e) {
+        setPersonalTravelErr('Could not geocode start address');
+      }
+    };
+
+    if (!showPersonalCalculator || !pin) return null;
+    return (
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-40 px-8 py-6 border-l-2 overflow-y-auto">
+        <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-800" onClick={()=>setShowPersonalCalculator(false)}>×</button>
+        <h3 className="text-2xl font-bold mb-4">Personal Estimate Calculator</h3>
+        <div className="mb-2">
+          <div className="font-semibold text-lg">{pin.address}</div>
+          <div className="text-xs text-gray-500">({pin.lat.toFixed(5)}, {pin.lng.toFixed(5)})</div>
+        </div>
+        <div className="mb-6">
+          <label className="block mb-1 font-medium text-gray-700">Square Footage</label>
+          <div className="flex gap-2">
+            <input
+              type="number"
+              value={editSqft}
+              min={0}
+              className="border rounded px-2 py-1 w-32"
+              onChange={e => setEditSqft(+e.target.value)}
+            />
+            <button
+              onClick={handleSaveSqft}
+              className="bg-blue-600 text-white px-3 py-1 rounded font-bold hover:bg-blue-700"
+              disabled={editSqft === (pin.squareFootage ?? 0)}
+              title="Save sqft to this pin"
+            >Save</button>
+          </div>
+        </div>
+        <div className="mb-6">
+          <label className="block mb-1 font-medium text-gray-700">Your Per Sqft Rate ($)</label>
+          <input
+            type="number"
+            value={personalSqftRate}
+            min={0}
+            step="0.01"
+            className="border rounded px-2 py-1 w-32"
+            onChange={e => setPersonalSqftRate(+e.target.value)}
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block mb-1 font-semibold text-lg">Estimate</label>
+          <div className="text-2xl font-mono font-bold">${estimate?.toLocaleString()}</div>
+        </div>
+        <hr className="mb-6"/>
+        <h4 className="font-semibold mb-2">Travel Cost Calculator</h4>
+        <label className="block mb-1">From (start address or postal code)</label>
+        <input
+          type="text"
+          value={personalStart}
+          className="border rounded px-2 py-1 w-full mb-2"
+          onChange={e => setPersonalStart(e.target.value)}
+        />
+        <label className="block mb-1">Travel Rate ($/km)</label>
+        <input
+          type="number"
+          value={personalKmRate}
+          step="0.01"
+          min={0}
+          className="border rounded px-2 py-1 w-32 mb-2"
+          onChange={e => setPersonalKmRate(+e.target.value)}
+        />
+        <button 
+          onClick={handleCalcTravel} 
+          className="bg-green-600 text-white px-3 py-1 rounded font-semibold hover:bg-green-700 mb-2"
+        >Calculate Distance</button>
+        {personalTravelKms!==null && (
+          <div className="mb-2">
+            <div className="text-xs text-gray-500">Distance: <span className="font-bold">{personalTravelKms.toFixed(2)} km</span></div>
+            <div className="text-xl font-bold">${travelCost.toLocaleString()} <span className="text-xs text-gray-500 font-normal">(travel)</span></div>
+          </div>
+        )}
+        {personalTravelErr && <div className="text-red-600 text-xs">{personalTravelErr}</div>}
+        <hr className="my-4"/>
+        <div className="flex gap-2">
+          <button className="bg-gray-100 px-4 py-2 rounded" onClick={()=>setShowPersonalCalculator(false)}>Close</button>
+        </div>
+      </div>
+    );
+  };
+
+  // QuickAddForm component with squareFootage added
+  const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
+    onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string, followUpDate?: string, followUpNote?: string, leadScore?: 'low' | 'medium' | 'high', squareFootage?: number) => void;
+    onCancel: () => void;
+    prefilledAddress?: string;
+  }) => {
+    const [status, setStatus] = useState<HousePin['status']>('visited');
+    const [notes, setNotes] = useState('');
+    const [contactInfo, setContactInfo] = useState('');
+    const [customerName, setCustomerName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [beforePhoto, setBeforePhoto] = useState<string>('');
+    const [afterPhoto, setAfterPhoto] = useState<string>('');
+    const [followUpDate, setFollowUpDate] = useState('');
+    const [followUpNote, setFollowUpNote] = useState('');
+    const [leadScore, setLeadScore] = useState<'low' | 'medium' | 'high'>('medium');
+    const [squareFootage, setSquareFootage] = useState<number>(0);
+
+    const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        if (type === 'before') {
+          setBeforePhoto(result);
+        } else {
+          setAfterPhoto(result);
+        }
+      };
+      reader.readAsDataURL(file);
+    };
+
+    const handleQuickNote = (template: string) => {
+      setNotes(template);
+    };
+
+    return (
+      <div className="space-y-4">
+        {prefilledAddress && (
+          <div className="p-3 bg-blue-50 rounded-md">
+            <p className="text-sm text-blue-800">
+              <strong>Address:</strong> {prefilledAddress}
+            </p>
+          </div>
+        )}
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="status">Status</Label>
+            <select
+              id="status"
+              className="w-full p-2 border border-gray-300 rounded-md text-sm"
+              value={status}
+              onChange={(e) => setStatus(e.target.value as HousePin['status'])}
+            >
+              {Object.entries(statusConfig).map(([value, config]) => (
+                <option key={value} value={value}>{config.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <Label htmlFor="leadScore" className="flex items-center gap-2">
+              <Star className="w-4 h-4" />
+              Lead Score
+            </Label>
+            <select
+              id="leadScore"
+              className="w-full p-2 border border-gray-300 rounded-md text-sm"
+              value={leadScore}
+              onChange={(e) => setLeadScore(e.target.value as 'low' | 'medium' | 'high')}
+            >
+              <option value="low">Low Priority</option>
+              <option value="medium">Medium Priority</option>
+              <option value="high">High Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <Label htmlFor="squareFootage">Square Footage</Label>
+          <Input
+            id="squareFootage"
+            type="number"
+            min={0}
+            placeholder="e.g. 2200"
+            value={squareFootage}
+            onChange={(e) => setSquareFootage(Number(e.target.value))}
+            className="text-sm"
+          />
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="customerName">Customer Name</Label>
+            <Input
+              id="customerName"
+              placeholder="John Smith"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              className="text-sm"
+            />
+          </div>
+          <div>
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
+              placeholder="(604) 555-0123"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="text-sm"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            placeholder="customer@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="text-sm"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="notes">Notes</Label>
+          <Input
+            id="notes"
+            placeholder="Customer feedback, follow-up needed, etc."
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            className="text-sm"
+          />
+          <div className="mt-2 flex flex-wrap gap-1">
+            {noteTemplates.map((template) => (
+              <Button
+                key={template}
+                size="sm"
+                variant="outline"
+                onClick={() => handleQuickNote(template)}
+                className="text-xs"
+              >
+                {template}
+              </Button>
+            ))}
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="contact">Additional Contact Info</Label>
+          <Input
+            id="contact"
+            placeholder="Best time to call, special instructions"
+            value={contactInfo}
+            onChange={(e) => setContactInfo(e.target.value)}
+            className="text-sm"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="followUpDate" className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              Follow-up Date
+            </Label>
+            <Input
+              id="followUpDate"
+              type="date"
+              value={followUpDate}
+              onChange={(e) => setFollowUpDate(e.target.value)}
+              className="text-sm"
+            />
+          </div>
+          <div>
+            <Label htmlFor="followUpNote">Follow-up Note</Label>
+            <Input
+              id="followUpNote"
+              placeholder="Reason for follow-up"
+              value={followUpNote}
+              onChange={(e) => setFollowUpNote(e.target.value)}
+              className="text-sm"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="beforePhoto" className="flex items-center gap-2">
+              <Camera className="w-4 h-4" />
+              Before Photo
+            </Label>
+            <Input
+              id="beforePhoto"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handlePhotoUpload(file, 'before');
+              }}
+              className="text-sm"
+            />
+            {beforePhoto && (
+              <img src={beforePhoto} alt="Before preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+            )}
+          </div>
+          <div>
+            <Label htmlFor="afterPhoto" className="flex items-center gap-2">
+              <Camera className="w-4 h-4" />
+              After Photo
+            </Label>
+            <Input
+              id="afterPhoto"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handlePhotoUpload(file, 'after');
+              }}
+              className="text-sm"
+            />
+            {afterPhoto && (
+              <img src={afterPhoto} alt="After preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+            )}
+          </div>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button 
+            onClick={() => onAdd(status, notes, contactInfo, customerName, phoneNumber, email, beforePhoto, afterPhoto, followUpDate, followUpNote, leadScore, squareFootage)} 
+            className="bg-bc-red hover:bg-red-700 w-full sm:w-auto"
+          >
+            <Save className="w-4 h-4 mr-2" />
+            Add Pin
+          </Button>
+          <Button onClick={onCancel} variant="outline" className="w-full sm:w-auto">
+            <X className="w-4 h-4 mr-2" />
+            Cancel
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  // EditPinForm component with squareFootage added
+  const EditPinForm = ({ pin, onSave, onCancel }: {
+    pin: HousePin;
+    onSave: (updates: Partial<HousePin>) => void;
+    onCancel: () => void;
+  }) => {
+    const [updates, setUpdates] = useState<Partial<HousePin>>({
+      address: pin.address,
+      status: pin.status,
+      notes: pin.notes,
+      contactInfo: pin.contactInfo,
+      customerName: pin.customerName,
+      phoneNumber: pin.phoneNumber,
+      email: pin.email,
+      beforePhoto: pin.beforePhoto,
+      afterPhoto: pin.afterPhoto,
+      followUpDate: pin.followUpDate,
+      followUpNote: pin.followUpNote,
+      leadScore: pin.leadScore || 'medium',
+      squareFootage: pin.squareFootage
+    });
+
+    const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        if (type === 'before') {
+          setUpdates({...updates, beforePhoto: result});
+        } else {
+          setUpdates({...updates, afterPhoto: result});
+        }
+      };
+      reader.readAsDataURL(file);
+    };
+
+    const handleQuickNote = (template: string) => {
+      setUpdates({...updates, notes: template});
+    };
+
+    return (
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="edit-address">Address</Label>
+            <Input
+              id="edit-address"
+              value={updates.address || ''}
+              onChange={(e) => setUpdates({...updates, address: e.target.value})}
+              className="text-sm"
+            />
+          </div>
+          <div>
+            <Label htmlFor="edit-status">Status</Label>
+            <select
+              id="edit-status"
+              className="w-full p-2 border border-gray-300 rounded-md text-sm"
+              value={updates.status || pin.status}
+              onChange={(e) => setUpdates({...updates, status: e.target.value as HousePin['status']})}
+            >
+              {Object.entries(statusConfig).map(([value, config]) => (
+                <option key={value} value={value}>{config.label}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <Label htmlFor="edit-squareFootage">Square Footage</Label>
+          <Input
+            id="edit-squareFootage"
+            type="number"
+            min={0}
+            value={updates.squareFootage ?? ''}
+            onChange={e => setUpdates({...updates, squareFootage: Number(e.target.value)})}
+            className="text-sm"
+          />
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="edit-customerName">Customer Name</Label>
+            <Input
+              id="edit-customerName"
+              value={updates.customerName || ''}
+              onChange={(e) => setUpdates({...updates, customerName: e.target.value})}
+              className="text-sm"
+            />
+          </div>
+          <div>
+            <Label htmlFor="edit-leadScore" className="flex items-center gap-2">
+              <Star className="w-4 h-4" />
+              Lead Score
+            </Label>
+            <select
+              id="edit-leadScore"
+              className="w-full p-2 border border-gray-300 rounded-md text-sm"
+              value={updates.leadScore || 'medium'}
+              onChange={(e) => setUpdates({...updates, leadScore: e.target.value as 'low' | 'medium' | 'high'})}
+            >
+              <option value="low">Low Priority</option>
+              <option value="medium">Medium Priority</option>
+              <option value="high">High Priority</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="edit-phone">Phone Number</Label>
+            <Input
+              id="edit-phone"
+              value={updates.phoneNumber || ''}
+              onChange={(e) => setUpdates({...updates, phoneNumber: e.target.value})}
+              className="text-sm"
+            />
+          </div>
+          <div>
+            <Label htmlFor="edit-email">Email</Label>
+            <Input
+              id="edit-email"
+              value={updates.email || ''}
+              onChange={(e) => setUpdates({...updates, email: e.target.value})}
+              className="text-sm"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="edit-notes">Notes</Label>
+          <Input
+            id="edit-notes"
+            value={updates.notes || ''}
+            onChange={(e) => setUpdates({...updates, notes: e.target.value})}
+            className="text-sm"
+          />
+          <div className="mt-2 flex flex-wrap gap-1">
+            {noteTemplates.map((template) => (
+              <Button
+                key={template}
+                size="sm"
+                variant="outline"
+                onClick={() => handleQuickNote(template)}
+                className="text-xs"
+              >
+                {template}
+              </Button>
+            ))}
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="edit-contact">Additional Contact Info</Label>
+          <Input
+            id="edit-contact"
+            value={updates.contactInfo || ''}
+            onChange={(e) => setUpdates({...updates, contactInfo: e.target.value})}
+            className="text-sm"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="edit-followUpDate" className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              Follow-up Date
+            </Label>
+            <Input
+              id="edit-followUpDate"
+              type="date"
+              value={updates.followUpDate || ''}
+              onChange={(e) => setUpdates({...updates, followUpDate: e.target.value})}
+              className="text-sm"
+            />
+          </div>
+          <div>
+            <Label htmlFor="edit-followUpNote">Follow-up Note</Label>
+            <Input
+              id="edit-followUpNote"
+              value={updates.followUpNote || ''}
+              onChange={(e) => setUpdates({...updates, followUpNote: e.target.value})}
+              className="text-sm"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="edit-beforePhoto" className="flex items-center gap-2">
+              <Camera className="w-4 h-4" />
+              Before Photo
+            </Label>
+            <Input
+              id="edit-beforePhoto"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handlePhotoUpload(file, 'before');
+              }}
+              className="text-sm"
+            />
+            {updates.beforePhoto && (
+              <img src={updates.beforePhoto} alt="Before preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+            )}
+          </div>
+          <div>
+            <Label htmlFor="edit-afterPhoto" className="flex items-center gap-2">
+              <Camera className="w-4 h-4" />
+              After Photo
+            </Label>
+            <Input
+              id="edit-afterPhoto"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handlePhotoUpload(file, 'after');
+              }}
+              className="text-sm"
+            />
+            {updates.afterPhoto && (
+              <img src={updates.afterPhoto} alt="After preview" className="mt-2 w-16 h-16 object-cover rounded border" />
+            )}
+          </div>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button 
+            onClick={() => onSave(updates)} 
+            className="bg-bc-red hover:bg-red-700 w-full sm:w-auto"
+          >
+            <Save className="w-4 h-4 mr-2" />
+            Save Changes
+          </Button>
+          <Button onClick={onCancel} variant="outline" className="w-full sm:w-auto">
+            <X className="w-4 h-4 mr-2" />
+            Cancel
+          </Button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Layout 
@@ -839,6 +1489,7 @@ const HouseTracking = () => {
               EditPinForm={EditPinForm}
               onSavePin={updatePin}
               onCancelEdit={() => setEditingPin(null)}
+              onSelectPersonalCalc={handleSelectPinPersonalCalc}
             />
           </div>
 
@@ -935,6 +1586,9 @@ const HouseTracking = () => {
             selectedPin={selectedPin}
           />
 
+          {/* Personal Estimate Calculator Sidebar */}
+          <CalcSidebar />
+
           {/* Instructions */}
           <Card className="mt-6 sm:mt-8">
             <CardHeader>
@@ -951,6 +1605,7 @@ const HouseTracking = () => {
                 <p>• <strong>Advanced Filtering:</strong> Filter houses by route, date, status, or search terms</p>
                 <p>• <strong>Quick Note Templates:</strong> Use pre-filled common responses when editing pins</p>
                 <p>• <strong>Client Directory:</strong> Quickly find and navigate to specific customers</p>
+                <p>• <strong>Personal Price Calculator:</strong> Select a house to estimate price by square footage and calculate travel costs</p>
                 <p>• All data is stored locally in your browser and can be exported to CSV</p>
               </div>
             </CardContent>
@@ -958,466 +1613,6 @@ const HouseTracking = () => {
         </div>
       </div>
     </Layout>
-  );
-};
-
-// Enhanced Quick Add Form Component with all new features
-const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
-  onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string, followUpDate?: string, followUpNote?: string, leadScore?: 'low' | 'medium' | 'high') => void;
-  onCancel: () => void;
-  prefilledAddress?: string;
-}) => {
-  const [status, setStatus] = useState<HousePin['status']>('visited');
-  const [notes, setNotes] = useState('');
-  const [contactInfo, setContactInfo] = useState('');
-  const [customerName, setCustomerName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [beforePhoto, setBeforePhoto] = useState<string>('');
-  const [afterPhoto, setAfterPhoto] = useState<string>('');
-  const [followUpDate, setFollowUpDate] = useState('');
-  const [followUpNote, setFollowUpNote] = useState('');
-  const [leadScore, setLeadScore] = useState<'low' | 'medium' | 'high'>('medium');
-
-  const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      if (type === 'before') {
-        setBeforePhoto(result);
-      } else {
-        setAfterPhoto(result);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleQuickNote = (template: string) => {
-    setNotes(template);
-  };
-
-  return (
-    <div className="space-y-4">
-      {prefilledAddress && (
-        <div className="p-3 bg-blue-50 rounded-md">
-          <p className="text-sm text-blue-800">
-            <strong>Address:</strong> {prefilledAddress}
-          </p>
-        </div>
-      )}
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="status">Status</Label>
-          <select
-            id="status"
-            className="w-full p-2 border border-gray-300 rounded-md text-sm"
-            value={status}
-            onChange={(e) => setStatus(e.target.value as HousePin['status'])}
-          >
-            {Object.entries(statusConfig).map(([value, config]) => (
-              <option key={value} value={value}>{config.label}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <Label htmlFor="leadScore" className="flex items-center gap-2">
-            <Star className="w-4 h-4" />
-            Lead Score
-          </Label>
-          <select
-            id="leadScore"
-            className="w-full p-2 border border-gray-300 rounded-md text-sm"
-            value={leadScore}
-            onChange={(e) => setLeadScore(e.target.value as 'low' | 'medium' | 'high')}
-          >
-            <option value="low">Low Priority</option>
-            <option value="medium">Medium Priority</option>
-            <option value="high">High Priority</option>
-          </select>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="customerName">Customer Name</Label>
-          <Input
-            id="customerName"
-            placeholder="John Smith"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            className="text-sm"
-          />
-        </div>
-        <div>
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input
-            id="phone"
-            placeholder="(604) 555-0123"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="text-sm"
-          />
-        </div>
-      </div>
-      
-      <div>
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          placeholder="customer@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="text-sm"
-        />
-      </div>
-      
-      <div>
-        <Label htmlFor="notes">Notes</Label>
-        <Input
-          id="notes"
-          placeholder="Customer feedback, follow-up needed, etc."
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          className="text-sm"
-        />
-        <div className="mt-2 flex flex-wrap gap-1">
-          {noteTemplates.map((template) => (
-            <Button
-              key={template}
-              size="sm"
-              variant="outline"
-              onClick={() => handleQuickNote(template)}
-              className="text-xs"
-            >
-              {template}
-            </Button>
-          ))}
-        </div>
-      </div>
-      
-      <div>
-        <Label htmlFor="contact">Additional Contact Info</Label>
-        <Input
-          id="contact"
-          placeholder="Best time to call, special instructions"
-          value={contactInfo}
-          onChange={(e) => setContactInfo(e.target.value)}
-          className="text-sm"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="followUpDate" className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            Follow-up Date
-          </Label>
-          <Input
-            id="followUpDate"
-            type="date"
-            value={followUpDate}
-            onChange={(e) => setFollowUpDate(e.target.value)}
-            className="text-sm"
-          />
-        </div>
-        <div>
-          <Label htmlFor="followUpNote">Follow-up Note</Label>
-          <Input
-            id="followUpNote"
-            placeholder="Reason for follow-up"
-            value={followUpNote}
-            onChange={(e) => setFollowUpNote(e.target.value)}
-            className="text-sm"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="beforePhoto" className="flex items-center gap-2">
-            <Camera className="w-4 h-4" />
-            Before Photo
-          </Label>
-          <Input
-            id="beforePhoto"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handlePhotoUpload(file, 'before');
-            }}
-            className="text-sm"
-          />
-          {beforePhoto && (
-            <img src={beforePhoto} alt="Before preview" className="mt-2 w-16 h-16 object-cover rounded border" />
-          )}
-        </div>
-        <div>
-          <Label htmlFor="afterPhoto" className="flex items-center gap-2">
-            <Camera className="w-4 h-4" />
-            After Photo
-          </Label>
-          <Input
-            id="afterPhoto"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handlePhotoUpload(file, 'after');
-            }}
-            className="text-sm"
-          />
-          {afterPhoto && (
-            <img src={afterPhoto} alt="After preview" className="mt-2 w-16 h-16 object-cover rounded border" />
-          )}
-        </div>
-      </div>
-      
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Button 
-          onClick={() => onAdd(status, notes, contactInfo, customerName, phoneNumber, email, beforePhoto, afterPhoto, followUpDate, followUpNote, leadScore)} 
-          className="bg-bc-red hover:bg-red-700 w-full sm:w-auto"
-        >
-          <Save className="w-4 h-4 mr-2" />
-          Add Pin
-        </Button>
-        <Button onClick={onCancel} variant="outline" className="w-full sm:w-auto">
-          <X className="w-4 h-4 mr-2" />
-          Cancel
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-// Enhanced Edit Pin Form Component with all new features
-const EditPinForm = ({ pin, onSave, onCancel }: {
-  pin: HousePin;
-  onSave: (updates: Partial<HousePin>) => void;
-  onCancel: () => void;
-}) => {
-  const [updates, setUpdates] = useState<Partial<HousePin>>({
-    address: pin.address,
-    status: pin.status,
-    notes: pin.notes,
-    contactInfo: pin.contactInfo,
-    customerName: pin.customerName,
-    phoneNumber: pin.phoneNumber,
-    email: pin.email,
-    beforePhoto: pin.beforePhoto,
-    afterPhoto: pin.afterPhoto,
-    followUpDate: pin.followUpDate,
-    followUpNote: pin.followUpNote,
-    leadScore: pin.leadScore || 'medium'
-  });
-
-  const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      if (type === 'before') {
-        setUpdates({...updates, beforePhoto: result});
-      } else {
-        setUpdates({...updates, afterPhoto: result});
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleQuickNote = (template: string) => {
-    setUpdates({...updates, notes: template});
-  };
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="edit-address">Address</Label>
-          <Input
-            id="edit-address"
-            value={updates.address || ''}
-            onChange={(e) => setUpdates({...updates, address: e.target.value})}
-            className="text-sm"
-          />
-        </div>
-        <div>
-          <Label htmlFor="edit-status">Status</Label>
-          <select
-            id="edit-status"
-            className="w-full p-2 border border-gray-300 rounded-md text-sm"
-            value={updates.status || pin.status}
-            onChange={(e) => setUpdates({...updates, status: e.target.value as HousePin['status']})}
-          >
-            {Object.entries(statusConfig).map(([value, config]) => (
-              <option key={value} value={value}>{config.label}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="edit-customerName">Customer Name</Label>
-          <Input
-            id="edit-customerName"
-            value={updates.customerName || ''}
-            onChange={(e) => setUpdates({...updates, customerName: e.target.value})}
-            className="text-sm"
-          />
-        </div>
-        <div>
-          <Label htmlFor="edit-leadScore" className="flex items-center gap-2">
-            <Star className="w-4 h-4" />
-            Lead Score
-          </Label>
-          <select
-            id="edit-leadScore"
-            className="w-full p-2 border border-gray-300 rounded-md text-sm"
-            value={updates.leadScore || 'medium'}
-            onChange={(e) => setUpdates({...updates, leadScore: e.target.value as 'low' | 'medium' | 'high'})}
-          >
-            <option value="low">Low Priority</option>
-            <option value="medium">Medium Priority</option>
-            <option value="high">High Priority</option>
-          </select>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="edit-phone">Phone Number</Label>
-          <Input
-            id="edit-phone"
-            value={updates.phoneNumber || ''}
-            onChange={(e) => setUpdates({...updates, phoneNumber: e.target.value})}
-            className="text-sm"
-          />
-        </div>
-        <div>
-          <Label htmlFor="edit-email">Email</Label>
-          <Input
-            id="edit-email"
-            value={updates.email || ''}
-            onChange={(e) => setUpdates({...updates, email: e.target.value})}
-            className="text-sm"
-          />
-        </div>
-      </div>
-      
-      <div>
-        <Label htmlFor="edit-notes">Notes</Label>
-        <Input
-          id="edit-notes"
-          value={updates.notes || ''}
-          onChange={(e) => setUpdates({...updates, notes: e.target.value})}
-          className="text-sm"
-        />
-        <div className="mt-2 flex flex-wrap gap-1">
-          {noteTemplates.map((template) => (
-            <Button
-              key={template}
-              size="sm"
-              variant="outline"
-              onClick={() => handleQuickNote(template)}
-              className="text-xs"
-            >
-              {template}
-            </Button>
-          ))}
-        </div>
-      </div>
-      
-      <div>
-        <Label htmlFor="edit-contact">Additional Contact Info</Label>
-        <Input
-          id="edit-contact"
-          value={updates.contactInfo || ''}
-          onChange={(e) => setUpdates({...updates, contactInfo: e.target.value})}
-          className="text-sm"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="edit-followUpDate" className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            Follow-up Date
-          </Label>
-          <Input
-            id="edit-followUpDate"
-            type="date"
-            value={updates.followUpDate || ''}
-            onChange={(e) => setUpdates({...updates, followUpDate: e.target.value})}
-            className="text-sm"
-          />
-        </div>
-        <div>
-          <Label htmlFor="edit-followUpNote">Follow-up Note</Label>
-          <Input
-            id="edit-followUpNote"
-            value={updates.followUpNote || ''}
-            onChange={(e) => setUpdates({...updates, followUpNote: e.target.value})}
-            className="text-sm"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="edit-beforePhoto" className="flex items-center gap-2">
-            <Camera className="w-4 h-4" />
-            Before Photo
-          </Label>
-          <Input
-            id="edit-beforePhoto"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handlePhotoUpload(file, 'before');
-            }}
-            className="text-sm"
-          />
-          {updates.beforePhoto && (
-            <img src={updates.beforePhoto} alt="Before preview" className="mt-2 w-16 h-16 object-cover rounded border" />
-          )}
-        </div>
-        <div>
-          <Label htmlFor="edit-afterPhoto" className="flex items-center gap-2">
-            <Camera className="w-4 h-4" />
-            After Photo
-          </Label>
-          <Input
-            id="edit-afterPhoto"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handlePhotoUpload(file, 'after');
-            }}
-            className="text-sm"
-          />
-          {updates.afterPhoto && (
-            <img src={updates.afterPhoto} alt="After preview" className="mt-2 w-16 h-16 object-cover rounded border" />
-          )}
-        </div>
-      </div>
-      
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Button 
-          onClick={() => onSave(updates)} 
-          className="bg-bc-red hover:bg-red-700 w-full sm:w-auto"
-        >
-          <Save className="w-4 h-4 mr-2" />
-          Save Changes
-        </Button>
-        <Button onClick={onCancel} variant="outline" className="w-full sm:w-auto">
-          <X className="w-4 h-4 mr-2" />
-          Cancel
-        </Button>
-      </div>
-    </div>
   );
 };
 
