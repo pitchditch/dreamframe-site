@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, Polyline, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import { v4 as uuidv4 } from 'uuid';
-import { Search, Filter, MapPin, X, Plus, Route, Play, Stop, Clock, Download, Upload, RotateCw } from 'lucide-react';
+import { Search, Filter, MapPin, X, Plus, Route, Play, SquareStop, Clock, Download, Upload, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -912,7 +912,7 @@ export default function HouseTracking() {
                   size="sm" 
                   onClick={handleStopRouteTracking}
                 >
-                  <Stop className="w-4 h-4 mr-1" />
+                  <SquareStop className="w-4 h-4 mr-1" />
                   Stop Tracking
                 </Button>
               ) : (
@@ -985,7 +985,7 @@ export default function HouseTracking() {
               center={mapCenter} 
               zoom={mapZoom} 
               style={{ height: '100%', width: '100%' }}
-              whenCreated={(map) => { mapRef.current = map; }}
+              whenReady={(map) => { mapRef.current = map; }}
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
