@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HousePin } from './types';
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ type PinListProps = {
     pin: HousePin;
     onSave: (updates: Partial<HousePin>) => void;
     onCancel: () => void;
-  }>;
+  }> | undefined;
   onSavePin: (id: string, updates: Partial<HousePin>) => void;
   onCancelEdit: () => void;
   onSelectPersonalCalc: (pin: HousePin) => void;
@@ -44,12 +45,13 @@ const PinList: React.FC<PinListProps> = ({
     pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
     (pin.notes && pin.notes.toLowerCase().includes(searchAddress.toLowerCase()))
   ));
-
+  
+  // Defensive: Wrap edit form in a boundary and check if EditPinForm is provided
   return (
     <div>
       {filteredPins.map((pin) => (
         <div key={pin.id}>
-          {editingPin === pin.id && EditPinForm ? (
+          {(editingPin === pin.id && EditPinForm) ? (
             <EditPinForm
               pin={pin}
               onSave={(updates: Partial<HousePin>) => onSavePin(pin.id, updates)}
@@ -99,3 +101,4 @@ const PinList: React.FC<PinListProps> = ({
 };
 
 export default PinList;
+

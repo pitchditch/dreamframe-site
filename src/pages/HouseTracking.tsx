@@ -565,8 +565,12 @@ export default function HouseTracking() {
     }
   };
 
-  // Edit Pin Form component
-  const EditPinForm = ({ pin, onSave, onCancel }: { pin: HousePin, onSave: (updates: Partial<HousePin>) => void, onCancel: () => void }) => {
+  // Edit Pin Form component -- ensure this is a true React component!
+  const EditPinForm: React.FC<{
+    pin: HousePin;
+    onSave: (updates: Partial<HousePin>) => void;
+    onCancel: () => void;
+  }> = ({ pin, onSave, onCancel }) => {
     const [address, setAddress] = useState(pin.address);
     const [status, setStatus] = useState<HousePin['status']>(pin.status);
     const [notes, setNotes] = useState(pin.notes);
