@@ -23,6 +23,8 @@ import MapComponent from '../components/house-tracking/MapComponent';
 import PinList from '../components/house-tracking/PinList';
 import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
 import type { HousePin as _HousePin, RouteSession } from '../components/house-tracking/types';
+import { useFetchSquareFootage } from "../hooks/useFetchSquareFootage";
+
 type HousePin = _HousePin & { squareFootage?: number }; // patch in squareFootage
 
 const statusConfig = {
@@ -47,7 +49,6 @@ const noteTemplates = [
 ];
 
 const getLatLngFromAddress = async (address: string) => {
-  // Use Nominatim (OpenStreetMap) to geocode an address (returns { lat, lng })
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
   const resp = await fetch(url);
   const data = await resp.json();
@@ -58,7 +59,6 @@ const getLatLngFromAddress = async (address: string) => {
 };
 
 const haversine = (lat1: number, lng1: number, lat2: number, lng2: number) => {
-  // Returns distance in km
   const toRad = (v: number) => v * Math.PI / 180;
   const R = 6371; // earth radius km
   const dLat = toRad(lat2 - lat1);
@@ -109,6 +109,9 @@ const HouseTracking = () => {
   const [personalTravelKms, setPersonalTravelKms] = useState<number|null>(null);
   const [personalTravelErr, setPersonalTravelErr] = useState<string>('');
   const [showPersonalCalculator, setShowPersonalCalculator] = useState(false);
+
+  // Add the fetch square footage hook
+  const { getSquareFootage, loading: fetchingSqft, error: sqftError } = useFetchSquareFootage();
 
   useEffect(() => {
     const savedPins = localStorage.getItem('houseTrackingPins');
@@ -562,6 +565,26 @@ const HouseTracking = () => {
 
   const filteredPins = getFilteredPins();
 
+  // Helper: Auto-fetch & update pin when selectedPin changes and squareFootage is missing
+  useEffect(() => {
+    const fetchSqftIfNeeded = async () => {
+      // Only fetch if we have a selectedPin and sqft missing or 0
+      if (
+        selectedPin &&
+        (!selectedPin.squareFootage || selectedPin.squareFootage <= 0) &&
+        selectedPin.address
+      ) {
+        const sqft = await getSquareFootage(selectedPin.address);
+        if (sqft && sqft > 0) {
+          updatePin(selectedPin.id, { squareFootage: sqft });
+        }
+      }
+    };
+    fetchSqftIfNeeded();
+    // Only when pin id/address changes!
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPin?.id, selectedPin?.address]);
+
   // Personal Calculator handlers
   const handleSelectPinPersonalCalc = (pin: HousePin) => {
     setSelectedPin(pin);
@@ -576,7 +599,7 @@ const HouseTracking = () => {
     const [editSqft, setEditSqft] = useState(pin?.squareFootage ?? 0);
 
     // Update editSqft if pin changes
-    React.useEffect(() => {
+    useEffect(() => {
       setEditSqft(pin?.squareFootage ?? 0);
     }, [pin]);
 
@@ -614,20 +637,27 @@ const HouseTracking = () => {
         </div>
         <div className="mb-6">
           <label className="block mb-1 font-medium text-gray-700">Square Footage</label>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <input
               type="number"
               value={editSqft}
               min={0}
               className="border rounded px-2 py-1 w-32"
               onChange={e => setEditSqft(+e.target.value)}
+              disabled={fetchingSqft}
             />
             <button
               onClick={handleSaveSqft}
               className="bg-blue-600 text-white px-3 py-1 rounded font-bold hover:bg-blue-700"
-              disabled={editSqft === (pin.squareFootage ?? 0)}
+              disabled={editSqft === (pin.squareFootage ?? 0) || fetchingSqft}
               title="Save sqft to this pin"
             >Save</button>
+            {fetchingSqft &&
+              <span className="ml-2 animate-pulse text-blue-500 text-xs">Getting sqft…</span>
+            }
+            {sqftError && (
+              <span className="ml-2 text-red-500 text-xs">{sqftError}</span>
+            )}
           </div>
         </div>
         <div className="mb-6">
