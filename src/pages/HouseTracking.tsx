@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, Polyline, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import { v4 as uuidv4 } from 'uuid';
-import { Search, Filter, MapPin, X, Plus, Route, Play, SquareStop, Clock, Download, Upload, RotateCw } from 'lucide-react';
+import { Search, Filter, MapPin, X, Plus, Route, Play, SquarePi, Clock, Download, Upload, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -142,6 +142,14 @@ const RouteTracker = ({
     };
   }, [isTracking, map, onLocationUpdate]);
 
+  return null;
+};
+
+const SetMapRef = ({ mapRef }: { mapRef: React.MutableRefObject<L.Map | null> }) => {
+  const map = useMap();
+  useEffect(() => {
+    mapRef.current = map;
+  }, [map, mapRef]);
   return null;
 };
 
@@ -912,7 +920,7 @@ export default function HouseTracking() {
                   size="sm" 
                   onClick={handleStopRouteTracking}
                 >
-                  <SquareStop className="w-4 h-4 mr-1" />
+                  <SquarePi className="w-4 h-4 mr-1" />
                   Stop Tracking
                 </Button>
               ) : (
@@ -985,7 +993,7 @@ export default function HouseTracking() {
               center={mapCenter} 
               zoom={mapZoom} 
               style={{ height: '100%', width: '100%' }}
-              whenReady={(map) => { mapRef.current = map; }}
+              whenReady={() => { /* Optionally, handle logic here if needed */ }}
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -1128,6 +1136,8 @@ export default function HouseTracking() {
                   onLocationUpdate={handleLocationUpdate} 
                 />
               )}
+
+              <SetMapRef mapRef={mapRef} />
             </MapContainer>
             
             {/* Search overlay */}
