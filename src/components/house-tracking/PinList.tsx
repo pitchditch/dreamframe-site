@@ -258,6 +258,7 @@ const PinList: React.FC<PinListProps> = ({
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
+                  {/* Personal Calculator Button */}
                   {onSelectPersonalCalc && (
                     <Button
                       size="sm"

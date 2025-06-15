@@ -102,10 +102,10 @@ const HouseTracking = () => {
   
   const { toast } = useToast();
 
-  // Personal Price Calculator state and helpers
-  const [personalSqftRate, setPersonalSqftRate] = useState(0.18); // default per sqft
+  // --- Personal Price Calculator State ---
+  const [personalSqftRate, setPersonalSqftRate] = useState(0.18); // $/sqft
   const [personalStart, setPersonalStart] = useState('White Rock, BC');
-  const [personalKmRate, setPersonalKmRate] = useState(0.7); // default per km
+  const [personalKmRate, setPersonalKmRate] = useState(0.7); // $/km
   const [personalTravelKms, setPersonalTravelKms] = useState<number|null>(null);
   const [personalTravelErr, setPersonalTravelErr] = useState<string>('');
   const [showPersonalCalculator, setShowPersonalCalculator] = useState(false);
@@ -570,7 +570,7 @@ const HouseTracking = () => {
     setPersonalTravelErr('');
   };
 
-  // Personal Calculator Sidebar Component
+  // --- Personal Calculator Sidebar Component ---
   const CalcSidebar = () => {
     const pin = selectedPin as HousePin | null;
     const [editSqft, setEditSqft] = useState(pin?.squareFootage ?? 0);
