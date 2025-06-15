@@ -712,7 +712,7 @@ const HouseTracking = () => {
     );
   };
 
-  // QuickAddForm component with squareFootage added
+  // QuickAddForm component with squareFootage fetching for prefilled addresses
   const QuickAddForm = ({ onAdd, onCancel, prefilledAddress }: {
     onAdd: (status: HousePin['status'], notes: string, contactInfo: string, customerName: string, phoneNumber: string, email: string, beforePhoto?: string, afterPhoto?: string, followUpDate?: string, followUpNote?: string, leadScore?: 'low' | 'medium' | 'high', squareFootage?: number) => void;
     onCancel: () => void;
@@ -730,6 +730,21 @@ const HouseTracking = () => {
     const [followUpNote, setFollowUpNote] = useState('');
     const [leadScore, setLeadScore] = useState<'low' | 'medium' | 'high'>('medium');
     const [squareFootage, setSquareFootage] = useState<number>(0);
+
+    // Fetch square footage for prefilled address
+    const { getSquareFootage, loading: fetchingSqft, error: sqftError } = useFetchSquareFootage();
+
+    useEffect(() => {
+      // When the form opens, if we have a prefilledAddress, fetch sqft
+      if (prefilledAddress) {
+        setSquareFootage(0); // reset before fetching
+        (async () => {
+          const sqft = await getSquareFootage(prefilledAddress);
+          if (sqft && sqft > 0) setSquareFootage(sqft);
+        })();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [prefilledAddress]);
 
     const handlePhotoUpload = (file: File, type: 'before' | 'after') => {
       const reader = new FileReader();
@@ -792,15 +807,25 @@ const HouseTracking = () => {
 
         <div>
           <Label htmlFor="squareFootage">Square Footage</Label>
-          <Input
-            id="squareFootage"
-            type="number"
-            min={0}
-            placeholder="e.g. 2200"
-            value={squareFootage}
-            onChange={(e) => setSquareFootage(Number(e.target.value))}
-            className="text-sm"
-          />
+          <div className="flex items-center gap-2">
+            <Input
+              id="squareFootage"
+              type="number"
+              min={0}
+              placeholder="e.g. 2200"
+              value={squareFootage}
+              onChange={(e) => setSquareFootage(Number(e.target.value))}
+              className="text-sm"
+              disabled={fetchingSqft}
+            />
+            {fetchingSqft && <span className="text-xs text-blue-600 ml-1 animate-pulse">Fetching...</span>}
+            {(!fetchingSqft && prefilledAddress && squareFootage > 0) && (
+              <span className="text-xs text-green-600 ml-1">Auto-filled</span>
+            )}
+            {!fetchingSqft && sqftError && (
+              <span className="text-xs text-red-600 ml-1">{sqftError}</span>
+            )}
+          </div>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
