@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-// REMOVED: import { useRouter } from 'next/router';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, Polyline, CircleMarker } from 'react-leaflet';
+import { useRouter } from 'next/router';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { v4 as uuidv4 } from 'uuid';
-import { Search, Filter, MapPin, X, Plus, Route, Play, SquarePi, Clock, Download, Upload, RotateCw } from 'lucide-react';
+import { Search, Filter, MapPin, X, Plus, Route, Play, Stop, Clock, Download, Upload, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,29 +14,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-// import { useLocalStorage } from '@/hooks/use-local-storage';  // Remove, handle with useState for demo.
+import { useLocalStorage } from '@/hooks/use-local-storage';
 import { HousePin, RouteSession } from '@/components/house-tracking/types';
 import PinList from '@/components/house-tracking/PinList';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from '@/components/ui/sidebar';
 import PersonalHouseEstimatorSidebar from "@/components/house-tracking/PersonalHouseEstimatorSidebar";
-
-// LocalStorage: Simple fallback if custom hook is missing
-function useLocalStorageFallback<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [value, setValue] = useState<T>(() => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : initial;
-    } catch {
-      return initial;
-    }
-  });
-  useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch {}
-  }, [key, value]);
-  return [value, setValue];
-}
 
 // Define pin status colors
 const statusColors = {
@@ -145,17 +127,9 @@ const RouteTracker = ({
   return null;
 };
 
-const SetMapRef = ({ mapRef }: { mapRef: React.MutableRefObject<L.Map | null> }) => {
-  const map = useMap();
-  useEffect(() => {
-    mapRef.current = map;
-  }, [map, mapRef]);
-  return null;
-};
-
 export default function HouseTracking() {
   // State for pins
-  const [pins, setPins] = useLocalStorageFallback<HousePin[]>('house-tracking-pins', []);
+  const [pins, setPins] = useLocalStorage<HousePin[]>('house-tracking-pins', []);
   const [selectedPin, setSelectedPin] = useState<HousePin | null>(null);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
   const [editingPin, setEditingPin] = useState<string | null>(null);
@@ -184,7 +158,7 @@ export default function HouseTracking() {
   ]));
 
   // State for route tracking
-  const [routes, setRoutes] = useLocalStorageFallback<RouteSession[]>('house-tracking-routes', []);
+  const [routes, setRoutes] = useLocalStorage<RouteSession[]>('house-tracking-routes', []);
   const [isTracking, setIsTracking] = useState(false);
   const [currentRoute, setCurrentRoute] = useState<RouteSession | null>(null);
   const [showRouteDialog, setShowRouteDialog] = useState(false);
@@ -198,6 +172,9 @@ export default function HouseTracking() {
   // Refs
   const mapRef = useRef<L.Map | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Router
+  const router = useRouter();
 
   // Handle map click
   const handleMapClick = (lat: number, lng: number) => {
@@ -565,12 +542,8 @@ export default function HouseTracking() {
     }
   };
 
-  // Edit Pin Form component -- ensure this is a true React component!
-  const EditPinForm: React.FC<{
-    pin: HousePin;
-    onSave: (updates: Partial<HousePin>) => void;
-    onCancel: () => void;
-  }> = ({ pin, onSave, onCancel }) => {
+  // Edit Pin Form component
+  const EditPinForm = ({ pin, onSave, onCancel }: { pin: HousePin, onSave: (updates: Partial<HousePin>) => void, onCancel: () => void }) => {
     const [address, setAddress] = useState(pin.address);
     const [status, setStatus] = useState<HousePin['status']>(pin.status);
     const [notes, setNotes] = useState(pin.notes);
@@ -924,7 +897,7 @@ export default function HouseTracking() {
                   size="sm" 
                   onClick={handleStopRouteTracking}
                 >
-                  <SquarePi className="w-4 h-4 mr-1" />
+                  <Stop className="w-4 h-4 mr-1" />
                   Stop Tracking
                 </Button>
               ) : (
@@ -997,7 +970,7 @@ export default function HouseTracking() {
               center={mapCenter} 
               zoom={mapZoom} 
               style={{ height: '100%', width: '100%' }}
-              whenReady={() => { /* Optionally, handle logic here if needed */ }}
+              whenCreated={(map) => { mapRef.current = map; }}
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -1049,22 +1022,27 @@ export default function HouseTracking() {
               {/* Display route paths if enabled */}
               {showRoutesOnMap && routes.map(route => {
                 if (route.path.length < 2) return null;
-
+                
                 const positions = route.path.map(point => [point.lat, point.lng] as [number, number]);
-
+                
                 return (
                   <React.Fragment key={route.id}>
                     {/* Route line */}
-                    <Polyline
+                    <L.Polyline 
                       positions={positions}
-                      pathOptions={{ color: route.color, weight: 4, opacity: 0.7 }}
+                      color={route.color}
+                      weight={4}
+                      opacity={0.7}
                     />
-
+                    
                     {/* Start marker */}
-                    <CircleMarker
+                    <L.CircleMarker 
                       center={positions[0]}
                       radius={5}
-                      pathOptions={{ color: "white", fillColor: "green", fillOpacity: 1, weight: 2 }}
+                      color="white"
+                      fillColor="green"
+                      fillOpacity={1}
+                      weight={2}
                     >
                       <Popup>
                         <div className="text-sm">
@@ -1074,14 +1052,17 @@ export default function HouseTracking() {
                           </div>
                         </div>
                       </Popup>
-                    </CircleMarker>
-
+                    </L.CircleMarker>
+                    
                     {/* End marker (if route is completed) */}
                     {route.endTime && (
-                      <CircleMarker
+                      <L.CircleMarker 
                         center={positions[positions.length - 1]}
                         radius={5}
-                        pathOptions={{ color: "white", fillColor: "red", fillOpacity: 1, weight: 2 }}
+                        color="white"
+                        fillColor="red"
+                        fillOpacity={1}
+                        weight={2}
                       >
                         <Popup>
                           <div className="text-sm">
@@ -1101,7 +1082,7 @@ export default function HouseTracking() {
                             )}
                           </div>
                         </Popup>
-                      </CircleMarker>
+                      </L.CircleMarker>
                     )}
                   </React.Fragment>
                 );
@@ -1140,8 +1121,6 @@ export default function HouseTracking() {
                   onLocationUpdate={handleLocationUpdate} 
                 />
               )}
-
-              <SetMapRef mapRef={mapRef} />
             </MapContainer>
             
             {/* Search overlay */}

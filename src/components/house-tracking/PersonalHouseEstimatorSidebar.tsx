@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { HousePin } from "./types";
 import { Button } from "@/components/ui/button";
@@ -43,9 +44,6 @@ const PersonalHouseEstimatorSidebar: React.FC<Props> = ({
   onClose,
   isOpen,
 }) => {
-  // Guard against pin being null
-  if (!pin || !isOpen) return null;
-
   // UI state
   const [editSqft, setEditSqft] = useState<number>(pin.squareFootage ?? 0);
   const [rate, setRate] = useState(DEFAULT_RATE);
@@ -82,6 +80,8 @@ const PersonalHouseEstimatorSidebar: React.FC<Props> = ({
     }
     setTravelLoading(false);
   };
+
+  if (!isOpen) return null;
 
   return (
     <aside
@@ -159,7 +159,7 @@ const PersonalHouseEstimatorSidebar: React.FC<Props> = ({
                 onChange={e => setStartAddress(e.target.value)}
                 className="flex-1"
               />
-              <Button onClick={handleTravelCalc} className="h-8">
+              <Button onClick={handleTravelCalc} loading={travelLoading} className="h-8">
                 Calc
               </Button>
             </div>
