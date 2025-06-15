@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, CircleMarker, useMap, useMapEvents } from 'react-leaflet';
 import { v4 as uuidv4 } from 'uuid';
-import { Search, Filter, MapPin, X, Plus, Route, Play, SquareStop, Clock, Download, Upload, RotateCw } from 'lucide-react';
+import { Search, Filter, MapPin, X, Plus, Route, Play, SquarePi, Clock, Download, Upload, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -892,7 +892,7 @@ export default function HouseTracking() {
                   size="sm" 
                   onClick={handleStopRouteTracking}
                 >
-                  <SquareStop className="w-4 h-4 mr-1" />
+                  <SquarePi className="w-4 h-4 mr-1" />
                   Stop Tracking
                 </Button>
               ) : (
