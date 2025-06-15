@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MapPin, Edit, Trash2, Eye, Phone, Mail, Calendar, Star, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,6 +18,7 @@ interface PinListProps {
   EditPinForm: React.ComponentType<any>;
   onSavePin: (pinId: string, updates: Partial<HousePin>) => void;
   onCancelEdit: () => void;
+  onSelectPersonalCalc?: (pin: HousePin) => void;
 }
 
 const statusConfig = {
@@ -48,7 +48,8 @@ const PinList: React.FC<PinListProps> = ({
   onOpenStreetView,
   EditPinForm,
   onSavePin,
-  onCancelEdit
+  onCancelEdit,
+  onSelectPersonalCalc
 }) => {
   const filteredPins = pins.filter(pin => 
     statusFilters.has(pin.status) && (
@@ -227,6 +228,11 @@ const PinList: React.FC<PinListProps> = ({
                       )}
                     </div>
                   )}
+
+                  {/* ADDED: Show square footage if present */}
+                  {pin.squareFootage !== undefined && pin.squareFootage !== null && pin.squareFootage > 0 && (
+                    <p className="text-xs text-gray-500 mb-1"><strong>Sqft:</strong> {pin.squareFootage.toLocaleString()}</p>
+                  )}
                   
                   <div className="flex flex-wrap gap-2 text-xs text-gray-400">
                     <span>Added: {pin.dateAdded}</span>
@@ -240,16 +246,29 @@ const PinList: React.FC<PinListProps> = ({
                     )}
                   </div>
                 </div>
-                <div className="flex gap-2 flex-shrink-0">
-                  <Button size="sm" variant="outline" onClick={() => onOpenStreetView(pin)} title="View in Street View">
-                    <Eye className="w-4 h-4" />
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => onEditPin(pin.id)} title="Edit">
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => onDeletePin(pin.id)} title="Delete">
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                <div className="flex flex-col gap-2 flex-shrink-0">
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline" onClick={() => onOpenStreetView(pin)} title="View in Street View">
+                      <Eye className="w-4 h-4" />
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => onEditPin(pin.id)} title="Edit">
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => onDeletePin(pin.id)} title="Delete">
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  {onSelectPersonalCalc && (
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="bg-amber-200 text-amber-800 hover:bg-amber-300"
+                      onClick={() => onSelectPersonalCalc(pin)}
+                      title="Open Personal Calculator"
+                    >
+                      💸 Estimate
+                    </Button>
+                  )}
                 </div>
               </div>
             )}
