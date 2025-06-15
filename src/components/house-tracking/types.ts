@@ -1,4 +1,3 @@
-
 export interface HousePin {
   id: string;
   lat: number;
@@ -19,6 +18,7 @@ export interface HousePin {
   followUpDate?: string;
   followUpNote?: string;
   leadScore?: 'low' | 'medium' | 'high';
+  squareFootage?: number; // <-- Added to fix build error and for calculator
 }
 
 export interface RouteSession {
