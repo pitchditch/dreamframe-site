@@ -43,6 +43,9 @@ const PersonalHouseEstimatorSidebar: React.FC<Props> = ({
   onClose,
   isOpen,
 }) => {
+  // Guard against pin being null
+  if (!pin || !isOpen) return null;
+
   // UI state
   const [editSqft, setEditSqft] = useState<number>(pin.squareFootage ?? 0);
   const [rate, setRate] = useState(DEFAULT_RATE);
@@ -79,8 +82,6 @@ const PersonalHouseEstimatorSidebar: React.FC<Props> = ({
     }
     setTravelLoading(false);
   };
-
-  if (!isOpen) return null;
 
   return (
     <aside
