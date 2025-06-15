@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+// REMOVED: import { useRouter } from 'next/router';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, Polyline, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import { v4 as uuidv4 } from 'uuid';
 import { Search, Filter, MapPin, X, Plus, Route, Play, Stop, Clock, Download, Upload, RotateCw } from 'lucide-react';
@@ -14,11 +14,29 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { useLocalStorage } from '@/hooks/use-local-storage';
+// import { useLocalStorage } from '@/hooks/use-local-storage';  // Remove, handle with useState for demo.
 import { HousePin, RouteSession } from '@/components/house-tracking/types';
 import PinList from '@/components/house-tracking/PinList';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from '@/components/ui/sidebar';
 import PersonalHouseEstimatorSidebar from "@/components/house-tracking/PersonalHouseEstimatorSidebar";
+
+// LocalStorage: Simple fallback if custom hook is missing
+function useLocalStorageFallback<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const [value, setValue] = useState<T>(() => {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : initial;
+    } catch {
+      return initial;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {}
+  }, [key, value]);
+  return [value, setValue];
+}
 
 // Define pin status colors
 const statusColors = {
@@ -129,7 +147,7 @@ const RouteTracker = ({
 
 export default function HouseTracking() {
   // State for pins
-  const [pins, setPins] = useLocalStorage<HousePin[]>('house-tracking-pins', []);
+  const [pins, setPins] = useLocalStorageFallback<HousePin[]>('house-tracking-pins', []);
   const [selectedPin, setSelectedPin] = useState<HousePin | null>(null);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
   const [editingPin, setEditingPin] = useState<string | null>(null);
@@ -158,7 +176,7 @@ export default function HouseTracking() {
   ]));
 
   // State for route tracking
-  const [routes, setRoutes] = useLocalStorage<RouteSession[]>('house-tracking-routes', []);
+  const [routes, setRoutes] = useLocalStorageFallback<RouteSession[]>('house-tracking-routes', []);
   const [isTracking, setIsTracking] = useState(false);
   const [currentRoute, setCurrentRoute] = useState<RouteSession | null>(null);
   const [showRouteDialog, setShowRouteDialog] = useState(false);
@@ -172,9 +190,6 @@ export default function HouseTracking() {
   // Refs
   const mapRef = useRef<L.Map | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Router
-  const router = useRouter();
 
   // Handle map click
   const handleMapClick = (lat: number, lng: number) => {
@@ -1022,27 +1037,22 @@ export default function HouseTracking() {
               {/* Display route paths if enabled */}
               {showRoutesOnMap && routes.map(route => {
                 if (route.path.length < 2) return null;
-                
+
                 const positions = route.path.map(point => [point.lat, point.lng] as [number, number]);
-                
+
                 return (
                   <React.Fragment key={route.id}>
                     {/* Route line */}
-                    <L.Polyline 
+                    <Polyline
                       positions={positions}
-                      color={route.color}
-                      weight={4}
-                      opacity={0.7}
+                      pathOptions={{ color: route.color, weight: 4, opacity: 0.7 }}
                     />
-                    
+
                     {/* Start marker */}
-                    <L.CircleMarker 
+                    <CircleMarker
                       center={positions[0]}
                       radius={5}
-                      color="white"
-                      fillColor="green"
-                      fillOpacity={1}
-                      weight={2}
+                      pathOptions={{ color: "white", fillColor: "green", fillOpacity: 1, weight: 2 }}
                     >
                       <Popup>
                         <div className="text-sm">
@@ -1052,17 +1062,14 @@ export default function HouseTracking() {
                           </div>
                         </div>
                       </Popup>
-                    </L.CircleMarker>
-                    
+                    </CircleMarker>
+
                     {/* End marker (if route is completed) */}
                     {route.endTime && (
-                      <L.CircleMarker 
+                      <CircleMarker
                         center={positions[positions.length - 1]}
                         radius={5}
-                        color="white"
-                        fillColor="red"
-                        fillOpacity={1}
-                        weight={2}
+                        pathOptions={{ color: "white", fillColor: "red", fillOpacity: 1, weight: 2 }}
                       >
                         <Popup>
                           <div className="text-sm">
@@ -1082,7 +1089,7 @@ export default function HouseTracking() {
                             )}
                           </div>
                         </Popup>
-                      </L.CircleMarker>
+                      </CircleMarker>
                     )}
                   </React.Fragment>
                 );
