@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { HousePin } from "./types";
 import { Button } from "@/components/ui/button";
@@ -159,7 +158,7 @@ const PersonalHouseEstimatorSidebar: React.FC<Props> = ({
                 onChange={e => setStartAddress(e.target.value)}
                 className="flex-1"
               />
-              <Button onClick={handleTravelCalc} loading={travelLoading} className="h-8">
+              <Button onClick={handleTravelCalc} className="h-8">
                 Calc
               </Button>
             </div>

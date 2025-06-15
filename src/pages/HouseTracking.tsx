@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
-import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, CircleMarker, useMap, useMapEvents } from 'react-leaflet';
 import { v4 as uuidv4 } from 'uuid';
-import { Search, Filter, MapPin, X, Plus, Route, Play, Stop, Clock, Download, Upload, RotateCw } from 'lucide-react';
+import { Search, Filter, MapPin, X, Plus, Route, Play, SquareStop, Clock, Download, Upload, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -172,9 +170,6 @@ export default function HouseTracking() {
   // Refs
   const mapRef = useRef<L.Map | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Router
-  const router = useRouter();
 
   // Handle map click
   const handleMapClick = (lat: number, lng: number) => {
@@ -897,7 +892,7 @@ export default function HouseTracking() {
                   size="sm" 
                   onClick={handleStopRouteTracking}
                 >
-                  <Stop className="w-4 h-4 mr-1" />
+                  <SquareStop className="w-4 h-4 mr-1" />
                   Stop Tracking
                 </Button>
               ) : (
@@ -1028,21 +1023,25 @@ export default function HouseTracking() {
                 return (
                   <React.Fragment key={route.id}>
                     {/* Route line */}
-                    <L.Polyline 
+                    <Polyline 
                       positions={positions}
-                      color={route.color}
-                      weight={4}
-                      opacity={0.7}
+                      pathOptions={{
+                        color: route.color,
+                        weight: 4,
+                        opacity: 0.7,
+                      }}
                     />
                     
                     {/* Start marker */}
-                    <L.CircleMarker 
+                    <CircleMarker 
                       center={positions[0]}
                       radius={5}
-                      color="white"
-                      fillColor="green"
-                      fillOpacity={1}
-                      weight={2}
+                      pathOptions={{
+                        color: "white",
+                        fillColor: "green",
+                        fillOpacity: 1,
+                        weight: 2,
+                      }}
                     >
                       <Popup>
                         <div className="text-sm">
@@ -1052,17 +1051,19 @@ export default function HouseTracking() {
                           </div>
                         </div>
                       </Popup>
-                    </L.CircleMarker>
+                    </CircleMarker>
                     
                     {/* End marker (if route is completed) */}
                     {route.endTime && (
-                      <L.CircleMarker 
+                      <CircleMarker 
                         center={positions[positions.length - 1]}
                         radius={5}
-                        color="white"
-                        fillColor="red"
-                        fillOpacity={1}
-                        weight={2}
+                        pathOptions={{
+                          color: "white",
+                          fillColor: "red",
+                          fillOpacity: 1,
+                          weight: 2,
+                        }}
                       >
                         <Popup>
                           <div className="text-sm">
@@ -1082,7 +1083,7 @@ export default function HouseTracking() {
                             )}
                           </div>
                         </Popup>
-                      </L.CircleMarker>
+                      </CircleMarker>
                     )}
                   </React.Fragment>
                 );
