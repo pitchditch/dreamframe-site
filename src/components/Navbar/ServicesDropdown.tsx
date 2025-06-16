@@ -77,7 +77,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 to="/services/roof-cleaning"
                 className="flex flex-col items-center px-2 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md text-center"
               >
-                <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
+                <img src="/lovable-uploads/c3789024-080d-4399-b348-ac2d5a1b744f.png" alt="Roof Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-xs">Roof Cleaning</div>
                   <div className="text-xs text-gray-500">Safe removal</div>

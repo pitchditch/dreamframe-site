@@ -65,7 +65,7 @@ export const services: Service[] = [
     id: 'roof-cleaning',
     title: 'Roof Cleaning',
     icon: Building,
-    customIcon: '/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png',
+    customIcon: '/lovable-uploads/c3789024-080d-4399-b348-ac2d5a1b744f.png',
     image: '/lovable-uploads/2156e2bb-05d0-4809-93c4-d6e0d97b96aa.png',
     slideImages: roofCleaningImages,
     videoId: 'eQSgdx9ujcc',
