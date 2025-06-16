@@ -22,10 +22,11 @@ import { useToast } from '@/hooks/use-toast';
 import MapComponent from '../components/house-tracking/MapComponent';
 import PinList from '../components/house-tracking/PinList';
 import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
+import PersonalCalculator from '../components/house-tracking/PersonalCalculator';
 import type { HousePin as _HousePin, RouteSession } from '../components/house-tracking/types';
 import { useFetchSquareFootage } from "../hooks/useFetchSquareFootage";
 
-type HousePin = _HousePin & { squareFootage?: number }; // patch in squareFootage
+type HousePin = _HousePin & { squareFootage?: number };
 
 const statusConfig = {
   'visited': { color: '#3b82f6', label: 'Visited' },
@@ -103,11 +104,6 @@ const HouseTracking = () => {
   const { toast } = useToast();
 
   // --- Personal Price Calculator State ---
-  const [personalSqftRate, setPersonalSqftRate] = useState(0.18); // $/sqft
-  const [personalStart, setPersonalStart] = useState('White Rock, BC');
-  const [personalKmRate, setPersonalKmRate] = useState(0.7); // $/km
-  const [personalTravelKms, setPersonalTravelKms] = useState<number|null>(null);
-  const [personalTravelErr, setPersonalTravelErr] = useState<string>('');
   const [showPersonalCalculator, setShowPersonalCalculator] = useState(false);
 
   // Add the fetch square footage hook
@@ -568,7 +564,6 @@ const HouseTracking = () => {
   // Helper: Auto-fetch & update pin when selectedPin changes and squareFootage is missing
   useEffect(() => {
     const fetchSqftIfNeeded = async () => {
-      // Only fetch if we have a selectedPin and sqft missing or 0
       if (
         selectedPin &&
         (!selectedPin.squareFootage || selectedPin.squareFootage <= 0) &&
@@ -581,135 +576,12 @@ const HouseTracking = () => {
       }
     };
     fetchSqftIfNeeded();
-    // Only when pin id/address changes!
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPin?.id, selectedPin?.address]);
 
   // Personal Calculator handlers
   const handleSelectPinPersonalCalc = (pin: HousePin) => {
     setSelectedPin(pin);
     setShowPersonalCalculator(true);
-    setPersonalTravelKms(null);
-    setPersonalTravelErr('');
-  };
-
-  // --- Personal Calculator Sidebar Component ---
-  const CalcSidebar = () => {
-    const pin = selectedPin as HousePin | null;
-    const [editSqft, setEditSqft] = useState(pin?.squareFootage ?? 0);
-
-    // Update editSqft if pin changes
-    useEffect(() => {
-      setEditSqft(pin?.squareFootage ?? 0);
-    }, [pin]);
-
-    const estimate = Math.round((editSqft || 0) * personalSqftRate * 100) / 100;
-    const travelCost = personalTravelKms !== null ? Math.round(personalTravelKms * personalKmRate * 100) / 100 : 0;
-
-    const handleSaveSqft = () => {
-      if (pin && editSqft !== pin.squareFootage) {
-        updatePin(pin.id, { squareFootage: +editSqft });
-      }
-    };
-
-    const handleCalcTravel = async () => {
-      setPersonalTravelErr('');
-      setPersonalTravelKms(null);
-      if (!personalStart.trim() || !pin) return;
-      try {
-        const from = await getLatLngFromAddress(personalStart.trim());
-        // Use haversine() to calculate distance in km
-        const dist = haversine(from.lat, from.lng, pin.lat, pin.lng);
-        setPersonalTravelKms(dist);
-      } catch (e) {
-        setPersonalTravelErr('Could not geocode start address');
-      }
-    };
-
-    if (!showPersonalCalculator || !pin) return null;
-    return (
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-40 px-8 py-6 border-l-2 overflow-y-auto">
-        <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-800" onClick={()=>setShowPersonalCalculator(false)}>×</button>
-        <h3 className="text-2xl font-bold mb-4">Personal Estimate Calculator</h3>
-        <div className="mb-2">
-          <div className="font-semibold text-lg">{pin.address}</div>
-          <div className="text-xs text-gray-500">({pin.lat.toFixed(5)}, {pin.lng.toFixed(5)})</div>
-        </div>
-        <div className="mb-6">
-          <label className="block mb-1 font-medium text-gray-700">Square Footage</label>
-          <div className="flex gap-2 items-center">
-            <input
-              type="number"
-              value={editSqft}
-              min={0}
-              className="border rounded px-2 py-1 w-32"
-              onChange={e => setEditSqft(+e.target.value)}
-              disabled={fetchingSqft}
-            />
-            <button
-              onClick={handleSaveSqft}
-              className="bg-blue-600 text-white px-3 py-1 rounded font-bold hover:bg-blue-700"
-              disabled={editSqft === (pin.squareFootage ?? 0) || fetchingSqft}
-              title="Save sqft to this pin"
-            >Save</button>
-            {fetchingSqft &&
-              <span className="ml-2 animate-pulse text-blue-500 text-xs">Getting sqft…</span>
-            }
-            {sqftError && (
-              <span className="ml-2 text-red-500 text-xs">{sqftError}</span>
-            )}
-          </div>
-        </div>
-        <div className="mb-6">
-          <label className="block mb-1 font-medium text-gray-700">Your Per Sqft Rate ($)</label>
-          <input
-            type="number"
-            value={personalSqftRate}
-            min={0}
-            step="0.01"
-            className="border rounded px-2 py-1 w-32"
-            onChange={e => setPersonalSqftRate(+e.target.value)}
-          />
-        </div>
-        <div className="mb-6">
-          <label className="block mb-1 font-semibold text-lg">Estimate</label>
-          <div className="text-2xl font-mono font-bold">${estimate?.toLocaleString()}</div>
-        </div>
-        <hr className="mb-6"/>
-        <h4 className="font-semibold mb-2">Travel Cost Calculator</h4>
-        <label className="block mb-1">From (start address or postal code)</label>
-        <input
-          type="text"
-          value={personalStart}
-          className="border rounded px-2 py-1 w-full mb-2"
-          onChange={e => setPersonalStart(e.target.value)}
-        />
-        <label className="block mb-1">Travel Rate ($/km)</label>
-        <input
-          type="number"
-          value={personalKmRate}
-          step="0.01"
-          min={0}
-          className="border rounded px-2 py-1 w-32 mb-2"
-          onChange={e => setPersonalKmRate(+e.target.value)}
-        />
-        <button 
-          onClick={handleCalcTravel} 
-          className="bg-green-600 text-white px-3 py-1 rounded font-semibold hover:bg-green-700 mb-2"
-        >Calculate Distance</button>
-        {personalTravelKms!==null && (
-          <div className="mb-2">
-            <div className="text-xs text-gray-500">Distance: <span className="font-bold">{personalTravelKms.toFixed(2)} km</span></div>
-            <div className="text-xl font-bold">${travelCost.toLocaleString()} <span className="text-xs text-gray-500 font-normal">(travel)</span></div>
-          </div>
-        )}
-        {personalTravelErr && <div className="text-red-600 text-xs">{personalTravelErr}</div>}
-        <hr className="my-4"/>
-        <div className="flex gap-2">
-          <button className="bg-gray-100 px-4 py-2 rounded" onClick={()=>setShowPersonalCalculator(false)}>Close</button>
-        </div>
-      </div>
-    );
   };
 
   // QuickAddForm component with squareFootage fetching for prefilled addresses
@@ -1644,7 +1516,12 @@ const HouseTracking = () => {
           />
 
           {/* Personal Estimate Calculator Sidebar */}
-          <CalcSidebar />
+          <PersonalCalculator
+            selectedPin={selectedPin}
+            isOpen={showPersonalCalculator}
+            onClose={() => setShowPersonalCalculator(false)}
+            onUpdatePin={updatePin}
+          />
 
           {/* Instructions */}
           <Card className="mt-6 sm:mt-8">

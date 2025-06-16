@@ -1,32 +1,26 @@
 
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-// Real API fetch function using Estated API
+// Server-side fetch function using Supabase Edge Function
 async function fetchSquareFootageFromAPI(address: string): Promise<number | null> {
-  const API_KEY = "079c00ac95576cb21af1e0b13ee914aa";
-  
   try {
-    // First, we need to get property data from Estated
-    const response = await fetch(
-      `https://apis.estated.com/v4/property?token=${API_KEY}&address=${encodeURIComponent(address)}`
-    );
+    console.log('Calling edge function for address:', address);
     
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+    const { data, error } = await supabase.functions.invoke('fetch-square-footage', {
+      body: { address }
+    });
+    
+    if (error) {
+      console.error('Edge function error:', error);
+      throw error;
     }
     
-    const data = await response.json();
+    console.log('Edge function response:', data);
+    return data?.squareFootage || null;
     
-    // Extract square footage from the response
-    // Estated returns building_area or living_area in their property data
-    const squareFootage = data?.data?.building_area || 
-                         data?.data?.living_area || 
-                         data?.data?.structure?.building_area ||
-                         data?.data?.structure?.living_area;
-    
-    return squareFootage ? parseInt(squareFootage) : null;
   } catch (error) {
-    console.error('Error fetching square footage from Estated:', error);
+    console.error('Error calling square footage edge function:', error);
     return null;
   }
 }
