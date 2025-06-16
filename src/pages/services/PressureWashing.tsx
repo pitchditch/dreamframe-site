@@ -91,23 +91,23 @@ const PressureWashing = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
             <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-24 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Siding & Exterior Walls</span>
             </Link>
             <Link to="/services/deck-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-24 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Decks & Patios</span>
             </Link>
             <Link to="/services/driveway-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-24 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Driveways & Walkways</span>
             </Link>
             <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-24 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Fences & Gates</span>
             </Link>
             <Link to="/services/roof-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/51f10eb0-c939-49d5-8ab5-2235a162169e.png" alt="Roofs & Gutters" className="w-20 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img src="/lovable-uploads/f0a0ce40-19b0-45e9-90a2-a2794f220df3.png" alt="Roofs & Gutters" className="w-24 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Roofs & Gutters</span>
             </Link>
           </div>
