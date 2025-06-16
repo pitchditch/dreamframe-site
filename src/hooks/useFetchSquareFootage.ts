@@ -3,7 +3,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 // Server-side fetch function using Supabase Edge Function
-async function fetchSquareFootageFromAPI(address: string): Promise<number | null> {
+async function fetchSquareFootageFromAPI(address: string): Promise<{squareFootage: number | null, isEstimate?: boolean, message?: string}> {
   try {
     console.log('Calling edge function for address:', address);
     
@@ -18,15 +18,15 @@ async function fetchSquareFootageFromAPI(address: string): Promise<number | null
     
     console.log('Edge function response:', data);
     
-    if (data?.message) {
-      console.log('API message:', data.message);
-    }
-    
-    return data?.squareFootage || null;
+    return {
+      squareFootage: data?.squareFootage || null,
+      isEstimate: data?.isEstimate || false,
+      message: data?.message || null
+    };
     
   } catch (error) {
     console.error('Error calling square footage edge function:', error);
-    return null;
+    return { squareFootage: null };
   }
 }
 
@@ -45,16 +45,21 @@ export function useFetchSquareFootage() {
     
     try {
       console.log('Fetching square footage for:', address);
-      const sqft = await fetchSquareFootageFromAPI(address);
+      const result = await fetchSquareFootageFromAPI(address);
       
-      if (sqft === null) {
+      if (result.squareFootage === null) {
         setError("Square footage data not available for this property");
       } else {
-        console.log('Successfully fetched square footage:', sqft);
+        console.log('Successfully fetched square footage:', result.squareFootage);
+        if (result.isEstimate) {
+          setError(`Using estimated value: ${result.message}`);
+        } else if (result.message) {
+          console.log('API message:', result.message);
+        }
       }
       
       setLoading(false);
-      return sqft;
+      return result.squareFootage;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
       console.error('Error in getSquareFootage:', errorMessage);
