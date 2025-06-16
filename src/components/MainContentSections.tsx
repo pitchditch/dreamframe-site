@@ -10,6 +10,7 @@ import TestimonialsSection from './home/TestimonialsSection';
 import PropertySpecificSection from './home/PropertySpecificSection';
 import OwnerOperatedSection from './home/OwnerOperatedSection';
 import TrustedCustomersSection from './home/TrustedCustomersSection';
+import SoftWashingVsPressureSection from './home/SoftWashingVsPressureSection';
 import ReferralProgramSection from './ReferralProgramSection';
 import CompetitorComparisonSection from './home/CompetitorComparisonSection';
 import FAQSection from './FAQSection';
@@ -59,6 +60,9 @@ const MainContentSections = ({ faqItems }: MainContentSectionsProps) => {
         
         {/* Trusted Customers Slideshow */}
         <TrustedCustomersSection />
+        
+        {/* Soft Washing vs Pressure Washing Section */}
+        <SoftWashingVsPressureSection />
         
         {/* Referral Program Section - New prominent placement */}
         <ReferralProgramSection />
