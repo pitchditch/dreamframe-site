@@ -50,21 +50,7 @@ const SoftWashingVsPressureSection = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="h-64 rounded-lg overflow-hidden order-1 lg:order-1">
-                  <HoverImageSlideshow 
-                    images={pressureWashingImages} 
-                    altText="Pressure washing in action"
-                    interval={2500}
-                  >
-                    <img
-                      src={pressureWashingImages[0]}
-                      alt="Pressure washing examples"
-                      className="w-full h-full object-cover"
-                    />
-                  </HoverImageSlideshow>
-                </div>
-
-                <div className="space-y-4 order-2 lg:order-2">
+                <div className="space-y-4">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <CheckCircle className="h-5 w-5 text-green-600" />
@@ -97,6 +83,20 @@ const SoftWashingVsPressureSection = () => {
                     <p className="text-gray-700 ml-7">Only where safe for hard surfaces</p>
                   </div>
                 </div>
+
+                <div className="h-64 rounded-lg overflow-hidden">
+                  <HoverImageSlideshow 
+                    images={pressureWashingImages} 
+                    altText="Pressure washing in action"
+                    interval={2500}
+                  >
+                    <img
+                      src={pressureWashingImages[0]}
+                      alt="Pressure washing examples"
+                      className="w-full h-full object-cover"
+                    />
+                  </HoverImageSlideshow>
+                </div>
               </div>
 
               <div className="mt-6 p-4 bg-orange-50 rounded-lg">
@@ -119,7 +119,7 @@ const SoftWashingVsPressureSection = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4 order-2 lg:order-1">
+                <div className="space-y-4">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <CheckCircle className="h-5 w-5 text-green-600" />
@@ -153,7 +153,7 @@ const SoftWashingVsPressureSection = () => {
                   </div>
                 </div>
 
-                <div className="h-64 rounded-lg overflow-hidden order-1 lg:order-2">
+                <div className="h-64 rounded-lg overflow-hidden">
                   <HoverImageSlideshow 
                     images={softWashingImages} 
                     altText="Soft washing in action"
