@@ -40,14 +40,38 @@ const englishTranslations = {
   "English": "English",
   "Punjabi": "Punjabi",
 
-  // Hero Section
+  // Hero Section with city-specific optimization
   "Professional Pressure Washing Services": "Professional Pressure Washing Services",
   "The Ultimate Cleaning": "The Ultimate Cleaning",
   "Solution": "Solution",
   "for Your Property": "for Your Property",
+  "The Ultimate": "The Ultimate",
+  "Cleaning Solution": "Cleaning Solution",
+  "Fast, affordable exterior cleaning in Surrey, White Rock & Metro Vancouver.": "Fast, affordable exterior cleaning in Surrey, White Rock & Metro Vancouver.",
   "We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.": "We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.",
   "Get a Free Quote": "Get a Free Quote",
   "Explore Our Services": "Explore Our Services",
+  "Enter Your Postal Code": "Enter Your Postal Code",
+  "Check Prices": "Check Prices",
+  "Check Prices & Availability": "Check Prices & Availability",
+  "Every Job is Personally Checked by Me.": "Every Job is Personally Checked by Me.",
+  "Owner": "Owner",
+  "Scroll Up": "Scroll Up",
+
+  // Service-specific content with city targeting
+  "What Can We Make Shine Today?": "What Can We Make Shine Today?",
+  "Choose a service to get instant pricing": "Choose a service to get instant pricing",
+  "Need a custom quote?": "Need a custom quote?",
+  "Contact us directly": "Contact us directly",
+  "Crystal clear window cleaning": "Crystal clear window cleaning",
+  "Complete gutter system cleaning": "Complete gutter system cleaning",
+  "House Soft Wash": "House Soft Wash",
+  "Gentle exterior house cleaning": "Gentle exterior house cleaning",
+  "Safe moss and algae removal": "Safe moss and algae removal",
+  "Driveway Cleaning": "Driveway Cleaning", 
+  "Remove stains and restore surfaces": "Remove stains and restore surfaces",
+  "Commercial Services": "Commercial Services",
+  "Professional commercial cleaning": "Professional commercial cleaning",
 
   // Services Section
   "Our Professional Services": "Our Professional Services",
@@ -103,6 +127,11 @@ const englishTranslations = {
   "Completed Projects": "Completed Projects",
   "Service Areas": "Service Areas",
 
+  // How We Complete Our Jobs Section
+  "How We Complete Our Jobs": "How We Complete Our Jobs",
+  "See our complete range of exterior cleaning services.": "See our complete range of exterior cleaning services.",
+  "From windows to roofs, we provide comprehensive exterior cleaning solutions using the latest equipment and techniques for exceptional results.": "From windows to roofs, we provide comprehensive exterior cleaning solutions using the latest equipment and techniques for exceptional results.",
+
   // Packages Section
   "Our Cleaning Packages": "Our Cleaning Packages",
   "Affordable Solutions for Every Need": "Affordable Solutions for Every Need",
@@ -117,16 +146,28 @@ const englishTranslations = {
   "Tailored to Your Needs": "Tailored to Your Needs",
   "Contact for Pricing": "Contact for Pricing",
 
-  // FAQ Section
+  // FAQ Section - Enhanced with local content
   "Frequently Asked Questions": "Frequently Asked Questions",
+  "Everything you need to know about our services": "Everything you need to know about our services",
   "Find Answers to Common Questions": "Find Answers to Common Questions",
   "Have more questions? Contact us directly and we'll be happy to help.": "Have more questions? Contact us directly and we'll be happy to help.",
+  "What areas do you service?": "What areas do you service?",
+  "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, South Surrey, Langley, Delta, Vancouver and surrounding areas.": "We are based in White Rock and service the entire Metro Vancouver region, including Surrey, South Surrey, Langley, Delta, Richmond, Vancouver, Burnaby, Coquitlam, Port Moody, New Westminster and surrounding areas.",
+  "Are you fully insured?": "Are you fully insured?",
+  "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.": "Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.",
+  "How often should I have my windows cleaned?": "How often should I have my windows cleaned?",
+  "Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.": "Most homeowners in White Rock, Surrey and Metro Vancouver benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.",
+  "Do you offer any guarantees?": "Do you offer any guarantees?",
+  "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.": "Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.",
+  "How do you price your services?": "How do you price your services?",
+  "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.": "Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.",
 
   // Call to Action
   "Ready to Transform Your Property?": "Ready to Transform Your Property?",
+  "Get your free quote today. Same-day service available!": "Get your free quote today. Same-day service available!",
   "Contact us today to schedule a service or request a free, no-obligation quote.": "Contact us today to schedule a service or request a free, no-obligation quote.",
 
-  // Footer
+  // Footer with enhanced city coverage
   "Quick Links": "Quick Links",
   "Connect With Us": "Connect With Us",
   "Vancouver": "Vancouver",
@@ -233,7 +274,11 @@ const englishTranslations = {
   // Additional translations for new features
   "Residential": "Residential",
   "Commercial": "Commercial",
-  "French": "French"
+  "French": "French",
+  "Chat": "Chat",
+  "Call (778) 808-7620": "Call (778) 808-7620",
+  "Get Free Quote Online": "Get Free Quote Online",
+  "Quote": "Quote"
 };
 
 export default englishTranslations;
