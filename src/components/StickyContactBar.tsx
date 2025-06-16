@@ -91,8 +91,8 @@ const StickyContactBar = () => {
         </div>
       )}
 
-      {/* Contact Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-bc-red via-red-600 to-bc-red text-white shadow-lg border-t-2 border-red-700">
+      {/* Contact Bar - Only show on desktop (md and above) */}
+      <div className="hidden md:block fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-bc-red via-red-600 to-bc-red text-white shadow-lg border-t-2 border-red-700">
         <div className="container mx-auto px-4 py-2 md:py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4">
             <div className="text-center md:text-left">
