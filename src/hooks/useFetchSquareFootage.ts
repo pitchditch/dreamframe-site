@@ -2,8 +2,18 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
+// Cache to store fetched square footage by address to avoid refetching
+const sqftCache = new Map<string, {squareFootage: number | null, isEstimate?: boolean, message?: string}>();
+
 // Server-side fetch function using Supabase Edge Function
 async function fetchSquareFootageFromAPI(address: string): Promise<{squareFootage: number | null, isEstimate?: boolean, message?: string}> {
+  // Check cache first
+  const cacheKey = address.toLowerCase().trim();
+  if (sqftCache.has(cacheKey)) {
+    console.log('Using cached square footage for:', address);
+    return sqftCache.get(cacheKey)!;
+  }
+
   try {
     console.log('Calling edge function for address:', address);
     
@@ -18,15 +28,22 @@ async function fetchSquareFootageFromAPI(address: string): Promise<{squareFootag
     
     console.log('Edge function response:', data);
     
-    return {
+    const result = {
       squareFootage: data?.squareFootage || null,
       isEstimate: data?.isEstimate || false,
       message: data?.message || null
     };
+
+    // Cache the result
+    sqftCache.set(cacheKey, result);
+    
+    return result;
     
   } catch (error) {
     console.error('Error calling square footage edge function:', error);
-    return { squareFootage: null };
+    const fallbackResult = { squareFootage: null };
+    sqftCache.set(cacheKey, fallbackResult);
+    return fallbackResult;
   }
 }
 
@@ -52,7 +69,7 @@ export function useFetchSquareFootage() {
       } else {
         console.log('Successfully fetched square footage:', result.squareFootage);
         if (result.isEstimate) {
-          setError(`Using estimated value: ${result.message}`);
+          setError(`Using consistent estimate: ${result.message}`);
         } else if (result.message) {
           console.log('API message:', result.message);
         }

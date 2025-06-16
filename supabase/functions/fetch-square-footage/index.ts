@@ -26,21 +26,27 @@ serve(async (req) => {
 
     const API_KEY = "079c00ac95576cb21af1e0b13ee914aa";
     
-    // Clean and format the address for better API matching
+    // More comprehensive address cleaning for Canadian addresses
     const cleanAddress = address
       .replace(/,\s*(Canada|British Columbia|BC|Metro Vancouver Regional District)\s*,?/gi, '')
       .replace(/,\s*V\d[A-Z]\s*\d[A-Z]\d\s*,?/gi, '') // Remove postal codes
+      .replace(/\s+/g, ' ')
       .trim();
     
     console.log('Cleaned address for API:', cleanAddress);
     
-    // Try multiple search approaches
+    // Enhanced search strategies for Canadian properties
     const searchQueries = [
       address, // Original full address
       cleanAddress, // Cleaned address
-      address.split(',')[0] + ', Surrey, BC', // Just street + city
-      address.split(',')[0] + ', White Rock, BC' // Alternative city
+      address.split(',')[0] + ', BC', // Just street + province
+      address.split(',')[0] + ', Surrey, BC', // Street + Surrey
+      address.split(',')[0] + ', White Rock, BC', // Street + White Rock
+      cleanAddress + ', Canada', // Cleaned + country
+      address.replace(/,.*$/, '') + ', British Columbia', // Street + full province name
     ];
+    
+    let foundData = null;
     
     for (const query of searchQueries) {
       console.log('Trying search query:', query);
@@ -61,84 +67,59 @@ serve(async (req) => {
         if (data?.data && Object.keys(data.data).length > 0) {
           const propertyData = data.data;
           
-          // Try to extract square footage from various possible locations
+          // Comprehensive search for square footage in all possible locations
           let squareFootage = null;
           
-          // Check all possible square footage fields
+          // All possible square footage field names
           const sqftFields = [
             'building_area',
             'living_area', 
             'total_building_area',
             'gross_building_area',
             'finished_area',
-            'total_living_area'
+            'total_living_area',
+            'floor_area',
+            'interior_area',
+            'heated_area',
+            'total_area',
+            'building_size',
+            'structure_area'
           ];
           
-          // Check main property data
+          // Search in main property data
           for (const field of sqftFields) {
             if (propertyData[field] && propertyData[field] > 0) {
               squareFootage = propertyData[field];
-              console.log(`Found square footage in ${field}:`, squareFootage);
+              console.log(`Found square footage in main.${field}:`, squareFootage);
               break;
             }
           }
           
-          // Check structure data
-          if (!squareFootage && propertyData.structure) {
-            for (const field of sqftFields) {
-              if (propertyData.structure[field] && propertyData.structure[field] > 0) {
-                squareFootage = propertyData.structure[field];
-                console.log(`Found square footage in structure.${field}:`, squareFootage);
-                break;
-              }
-            }
-          }
+          // Search in nested objects if not found in main
+          const nestedObjects = ['structure', 'assessor', 'deed', 'parcel', 'building', 'property', 'details'];
           
-          // Check assessor data
-          if (!squareFootage && propertyData.assessor) {
-            for (const field of sqftFields) {
-              if (propertyData.assessor[field] && propertyData.assessor[field] > 0) {
-                squareFootage = propertyData.assessor[field];
-                console.log(`Found square footage in assessor.${field}:`, squareFootage);
-                break;
-              }
-            }
-          }
-          
-          // Check deed data
-          if (!squareFootage && propertyData.deed) {
-            for (const field of sqftFields) {
-              if (propertyData.deed[field] && propertyData.deed[field] > 0) {
-                squareFootage = propertyData.deed[field];
-                console.log(`Found square footage in deed.${field}:`, squareFootage);
-                break;
-              }
-            }
-          }
-          
-          // Check parcel data
-          if (!squareFootage && propertyData.parcel) {
-            for (const field of sqftFields) {
-              if (propertyData.parcel[field] && propertyData.parcel[field] > 0) {
-                squareFootage = propertyData.parcel[field];
-                console.log(`Found square footage in parcel.${field}:`, squareFootage);
-                break;
+          if (!squareFootage) {
+            for (const objName of nestedObjects) {
+              if (propertyData[objName] && typeof propertyData[objName] === 'object') {
+                for (const field of sqftFields) {
+                  if (propertyData[objName][field] && propertyData[objName][field] > 0) {
+                    squareFootage = propertyData[objName][field];
+                    console.log(`Found square footage in ${objName}.${field}:`, squareFootage);
+                    break;
+                  }
+                }
+                if (squareFootage) break;
               }
             }
           }
           
           if (squareFootage && squareFootage > 0) {
-            const result = parseInt(squareFootage);
-            console.log('Successfully found square footage:', result, 'for query:', query);
-            
-            return new Response(
-              JSON.stringify({ 
-                squareFootage: result,
-                source: query,
-                message: `Found ${result} sq ft`
-              }),
-              { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-            );
+            foundData = {
+              squareFootage: parseInt(squareFootage),
+              source: query,
+              message: `Found ${parseInt(squareFootage)} sq ft from property records`
+            };
+            break;
           }
         }
       } catch (err) {
@@ -147,17 +128,32 @@ serve(async (req) => {
       }
     }
     
-    // If no data found after all attempts, try a generic estimate based on Canadian housing averages
-    console.log('No square footage data found, providing estimate');
+    if (foundData) {
+      console.log('Successfully found square footage:', foundData.squareFootage, 'for query:', foundData.source);
+      
+      return new Response(
+        JSON.stringify(foundData),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     
-    // Basic estimation for Canadian homes (very rough)
-    const estimatedSqft = Math.floor(Math.random() * (2500 - 1200) + 1200);
+    // If no real data found, create a consistent estimate based on address characteristics
+    console.log('No square footage data found, creating consistent estimate');
+    
+    // Create a hash from the address to ensure consistent estimates
+    const addressHash = address.split('').reduce((hash, char) => {
+      return ((hash << 5) - hash + char.charCodeAt(0)) & 0xffffffff;
+    }, 0);
+    
+    // Use hash to generate consistent estimate within realistic ranges
+    const baseEstimate = 1200 + (Math.abs(addressHash) % 1800); // Range: 1200-3000 sq ft
+    const roundedEstimate = Math.round(baseEstimate / 50) * 50; // Round to nearest 50
     
     return new Response(
       JSON.stringify({ 
-        squareFootage: estimatedSqft,
+        squareFootage: roundedEstimate,
         isEstimate: true,
-        message: `Estimated ${estimatedSqft} sq ft (property data not available)` 
+        message: `Estimated ${roundedEstimate} sq ft (property data not available)` 
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
