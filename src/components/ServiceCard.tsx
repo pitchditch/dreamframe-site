@@ -35,14 +35,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, link, ico
       </div>
       
       <div className="p-6 flex-grow flex flex-col bg-white">
-        <h3 className="text-xl font-bold mb-2 text-charcoal">{title}</h3>
-        <p className="text-navy/80 text-sm md:text-base flex-grow mb-4">{description}</p>
+        <h3 className="text-2xl font-bold mb-3 text-charcoal leading-tight">{title}</h3>
+        <p className="text-navy/80 text-lg md:text-xl flex-grow mb-4 leading-relaxed">{description}</p>
         <Link 
           to={link} 
-          className="service-link mt-auto group flex items-center text-bc-red hover:text-bc-red/80"
+          className="service-link mt-auto group flex items-center text-bc-red hover:text-bc-red/80 text-lg font-semibold"
         >
           <span className="mr-1">{t("Learn More")}</span> 
-          <ArrowRight size={16} className="mt-0.5 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight size={18} className="mt-0.5 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>
     </div>
