@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -7,7 +6,23 @@ import StickyQuoteBar from '@/components/StickyQuoteBar';
 import AfkOverlay from '../components/AfkOverlay';
 import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
-import MainContentSections from '../components/MainContentSections';
+
+// Import optimized sections
+import OptimizedServicesSection from '../components/home/OptimizedServicesSection';
+import OptimizedQuoteForm from '../components/home/OptimizedQuoteForm';
+import OptimizedBeforeAfter from '../components/home/OptimizedBeforeAfter';
+import OptimizedTestimonials from '../components/home/OptimizedTestimonials';
+import OptimizedSoftWashSection from '../components/home/OptimizedSoftWashSection';
+import OptimizedReferralSection from '../components/home/OptimizedReferralSection';
+import OptimizedFooterCTA from '../components/home/OptimizedFooterCTA';
+
+// Keep important existing sections
+import TrustBadgesSection from '../components/TrustBadgesSection';
+import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
+import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
+import FAQSection from '../components/FAQSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -56,7 +71,59 @@ const Index = () => {
       <SEOContent faqItems={faqItems} />
       
       <HeroWithContent>
-        <MainContentSections faqItems={faqItems} />
+        <div className="bg-white rounded-t-3xl shadow-xl -mt-24 md:-mt-32 min-h-screen relative z-50">
+          {/* Optimized Services Section with Hero Elements */}
+          <OptimizedServicesSection />
+          
+          {/* Quote Form - Moved up per requirements */}
+          <OptimizedQuoteForm />
+          
+          {/* Before/After Gallery */}
+          <OptimizedBeforeAfter />
+          
+          {/* Testimonials */}
+          <OptimizedTestimonials />
+          
+          {/* Featured Project - Keep this high-performing section */}
+          <FeaturedProjectSection />
+          
+          {/* Owner Operated Section - Important trust builder */}
+          <OwnerOperatedSection />
+          
+          {/* Trusted Customers with Photos */}
+          <TrustedCustomersSection />
+          
+          {/* Soft Wash vs Pressure Wash - Condensed */}
+          <OptimizedSoftWashSection />
+          
+          {/* Referral Program - Condensed */}
+          <OptimizedReferralSection />
+          
+          {/* Competitor Comparison - Keep for competitive advantage */}
+          <CompetitorComparisonSection />
+          
+          {/* FAQ Section */}
+          <div data-section="faq">
+            <FAQSection 
+              title={t("Frequently Asked Questions")} 
+              subtitle={t("Everything you need to know about our services")}
+              faqs={faqItems}
+              darkMode={true}
+            />
+          </div>
+          
+          {/* Footer CTA */}
+          <OptimizedFooterCTA />
+          
+          {/* White Rock Footer Image */}
+          <div className="w-full footer-image">
+            <img 
+              src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+              alt="White Rock Marine Drive - Local Business" 
+              className="w-full h-auto object-cover object-center rounded-t-3xl" 
+            />
+          </div>
+        </div>
       </HeroWithContent>
       
       <ReferralButton />
