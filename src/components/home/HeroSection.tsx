@@ -35,7 +35,7 @@ const HeroSection = () => {
         window.dispatchEvent(new CustomEvent('heroLoaded'));
       };
     } else {
-      // For desktop, create iframe with better loading
+      // For desktop, create iframe with poster image and better loading
       const iframe = document.createElement('iframe');
       iframe.src = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=auto";
       iframe.style.opacity = '0';
@@ -45,15 +45,15 @@ const HeroSection = () => {
           setVideoLoaded(true);
           setIsLoading(false);
           window.dispatchEvent(new CustomEvent('heroLoaded'));
-        }, 1000); // Give video time to start playing
+        }, 800); // Reduced from 1000ms for faster loading
       };
       
-      // Fallback timer
+      // Fallback timer reduced for better UX
       setTimeout(() => {
         setVideoLoaded(true);
         setIsLoading(false);
         window.dispatchEvent(new CustomEvent('heroLoaded'));
-      }, 2000);
+      }, 1500); // Reduced from 2000ms
     }
     
     const savedPostalCode = sessionStorage.getItem('postalCode');
@@ -99,15 +99,24 @@ const HeroSection = () => {
               loading="eager"
             />
           ) : (
-            <iframe 
-              id="hero-desktop-video"
-              className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=auto"
-              title="Pressure Washing Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              loading="eager"
-            ></iframe>
+            <>
+              {/* Poster image for faster loading */}
+              <img 
+                src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+                alt="BC Pressure Washing Service"
+                className={`absolute w-full h-full object-cover object-center transition-opacity duration-500 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
+                loading="eager"
+              />
+              <iframe 
+                id="hero-desktop-video"
+                className={`absolute w-full h-full top-0 left-0 scale-[1.5] transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=auto"
+                title="Pressure Washing Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="eager"
+              ></iframe>
+            </>
           )}
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
@@ -125,20 +134,20 @@ const HeroSection = () => {
               <span className="text-white">
                 {isMobile ? (
                   <>
-                    {t("Make Your Home")} <span className="text-bc-red">{t("Shine Instantly")}</span>
+                    {t("Make Your Home")} <span className="text-bc-red drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1)' }}>{t("Shine Instantly")}</span>
                   </>
                 ) : (
                   <>
-                    {t("Make Your Home")} <span className="text-bc-red">{t("Shine Instantly")}</span>
+                    {t("Make Your Home")} <span className="text-bc-red drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1)' }}>{t("Shine Instantly")}</span>
                   </>
                 )}
               </span>
             </h1>
             
-            <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-sm sm:text-base md:text-xl lg:text-2xl'} mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white`}>
+            <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-sm sm:text-base md:text-xl lg:text-2xl'} mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
               {isMobile 
                 ? t("Fast, friendly pressure washing for homes & businesses in White Rock, Surrey & Metro Vancouver. We'll blast away dirt, mold & grime!")
-                : t("Professional pressure washing for houses, driveways, decks & storefronts. Fast, insured service with satisfaction guarantee - we'll make it sparkle!")
+                : t("Fast, fully insured service backed by a satisfaction guarantee. We'll make your property sparkle!")
               }
             </p>
           </div>
@@ -177,10 +186,10 @@ const HeroSection = () => {
               className={`${isMobile ? 'w-14 h-14' : 'w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20'} rounded-full border-2 border-white shadow-md mr-3 md:mr-4 flex-shrink-0`}
             />
             <div className="text-left">
-              <p className={`font-bold text-white ${isMobile ? 'text-sm leading-tight' : 'text-xs sm:text-sm md:text-base lg:text-lg'} drop-shadow-md leading-tight`}>
+              <p className={`font-bold text-white ${isMobile ? 'text-sm leading-tight' : 'text-xs sm:text-sm md:text-base lg:text-lg'} drop-shadow-md leading-tight`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                 {t("Every Job is Personally Checked by Me.")}
               </p>
-              <p className={`text-white font-medium ${isMobile ? 'text-xs mt-1' : 'text-xs md:text-sm mt-1'}`}>
+              <p className={`text-white font-medium ${isMobile ? 'text-xs mt-1' : 'text-xs md:text-sm mt-1'}`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                 — Jayden Fisher, {t("Owner")}
               </p>
             </div>
@@ -190,7 +199,7 @@ const HeroSection = () => {
       
       {/* Enhanced scroll indicator with animation and label */}
       <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-20 ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-        <span className="text-white text-sm mb-2 bg-black/50 px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm border border-white/20">
+        <span className="text-white text-sm mb-2 bg-black/50 px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm border border-white/20" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
           {t("Scroll Up")}
         </span>
         <div className="h-10 w-6 border-2 border-white rounded-full flex items-center justify-center bg-black/30 backdrop-blur-sm shadow-lg">
