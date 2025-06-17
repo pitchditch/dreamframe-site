@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import MapComponent from '../components/house-tracking/MapComponent';
@@ -277,7 +278,7 @@ const HouseTracking: React.FC = () => {
                         <Checkbox
                           id="previousClients"
                           checked={showPreviousClientsOnly}
-                          onCheckedChange={setShowPreviousClientsOnly}
+                          onCheckedChange={(checked) => setShowPreviousClientsOnly(checked as boolean)}
                         />
                         <label
                           htmlFor="previousClients"
