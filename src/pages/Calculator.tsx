@@ -1,8 +1,9 @@
+
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import StreamlinedCalculatorForm from '../components/StreamlinedCalculator/StreamlinedCalculatorForm';
 import { Helmet } from 'react-helmet-async';
-import { Percent, Shield, Star, Clock, Users } from 'lucide-react';
+import { Percent, Shield, Star, Clock, Users, CheckCircle } from 'lucide-react';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 import { Card, CardContent } from '@/components/ui/card';
