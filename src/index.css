@@ -76,9 +76,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-size: 18px; /* Increased base font size from default 16px */
-    font-weight: 500; /* Made body text medium weight */
-    line-height: 1.7; /* Improved line height for readability */
+    font-size: 20px; /* Increased from 18px to 20px */
+    font-weight: 600; /* Increased from 500 to 600 */
+    line-height: 1.8; /* Improved line height for readability */
   }
   
   /* Improved navbar text rendering */
@@ -87,8 +87,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.01em;
-    font-weight: 700; /* Increased from 600 to 700 for better visibility */
-    font-size: 1.1rem; /* Made navbar text larger */
+    font-weight: 800; /* Increased from 700 to 800 for better visibility */
+    font-size: 1.25rem; /* Made navbar text even larger */
   }
 }
 
@@ -123,7 +123,8 @@
 @layer components {
   .btn-primary {
     @apply bg-bc-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-300;
-    font-size: 1.125rem; /* Made buttons larger */
+    font-size: 1.375rem; /* Increased button text size */
+    font-weight: 800; /* Made buttons extra bold */
   }
   
   /* Ghost writer typing animation */
@@ -207,34 +208,34 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-weight: 800; /* Made headings bolder */
+    font-weight: 900; /* Made headings extra bold */
   }
   
-  /* Increased text sizes for better readability */
+  /* Significantly increased text sizes for better readability */
   h1 {
-    font-size: 3rem; /* Increased from default */
+    font-size: 4rem; /* Increased from 3rem */
     font-weight: 900;
   }
   
   h2 {
-    font-size: 2.5rem; /* Increased from default */
-    font-weight: 800;
+    font-size: 3.25rem; /* Increased from 2.5rem */
+    font-weight: 900;
   }
   
   h3 {
-    font-size: 2rem; /* Increased from default */
-    font-weight: 800;
+    font-size: 2.75rem; /* Increased from 2rem */
+    font-weight: 900;
   }
   
   h4 {
-    font-size: 1.5rem; /* Increased from default */
-    font-weight: 700;
+    font-size: 2rem; /* Increased from 1.5rem */
+    font-weight: 800;
   }
   
   p {
-    font-size: 1.125rem; /* Made paragraphs larger */
-    font-weight: 500;
-    line-height: 1.8;
+    font-size: 1.375rem; /* Increased from 1.125rem */
+    font-weight: 600; /* Increased from 500 */
+    line-height: 1.9;
   }
 }
 
@@ -274,45 +275,44 @@
 
 /* Text enhancements for readability */
 .content-text {
-  line-height: 1.8; /* Increased line height */
-  letter-spacing: 0.015em; /* Slightly increased letter spacing */
-  font-size: 1.125rem; /* Made content text larger */
-  font-weight: 500;
+  line-height: 1.9; /* Increased line height */
+  letter-spacing: 0.02em; /* Increased letter spacing */
+  font-size: 1.375rem; /* Made content text larger */
+  font-weight: 600; /* Increased font weight */
 }
 
 .heading-text {
   letter-spacing: -0.01em;
-  font-weight: 800; /* Made headings bolder */
-  font-size: 2.25rem; /* Made heading text larger */
+  font-weight: 900; /* Made headings extra bold */
+  font-size: 3rem; /* Increased heading text size */
 }
 
 /* Improved section header readability */
 .section-title {
-  @apply text-4xl md:text-5xl font-bold relative; /* Increased size */
+  @apply text-5xl md:text-6xl font-bold relative; /* Significantly increased size */
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   font-weight: 900; /* Made section titles extra bold */
 }
 
 .section-subtitle {
-  @apply text-xl text-gray-600 max-w-3xl mx-auto; /* Increased from lg to xl */
-  line-height: 1.7;
-  font-weight: 500;
+  @apply text-2xl text-gray-600 max-w-3xl mx-auto; /* Increased from xl to 2xl */
+  line-height: 1.8;
+  font-weight: 600; /* Increased font weight */
 }
 
 /* Ensure text is readable over all backgrounds */
 .text-on-dark {
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  font-weight: 700; /* Made text on dark backgrounds bolder */
+  font-weight: 800; /* Made text on dark backgrounds extra bold */
 }
 
 .text-on-light {
   text-shadow: none;
-  font-weight: 700; /* Increased from 600 to 700 */
+  font-weight: 800; /* Increased from 700 to 800 */
 }
 
 /* Enhanced contrast for better accessibility */
 .high-contrast-text {
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  font-weight: 600;
+  font-weight: 700; /* Increased font weight */
 }
-
