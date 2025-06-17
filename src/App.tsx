@@ -31,6 +31,7 @@ import AfkOverlay from "./components/AfkOverlay";
 import SouthSurreyPressureWashing from "./pages/locations/SouthSurreyPressureWashing";
 import LangleyPressureWashing from "./pages/locations/LangleyPressureWashing";
 import HouseTracking from "./pages/HouseTracking";
+import BusinessPlan from "./pages/BusinessPlan";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
             <Route path="/south-surrey-pressure-washing" element={<SouthSurreyPressureWashing />} />
             <Route path="/langley-pressure-washing" element={<LangleyPressureWashing />} />
             <Route path="/house-tracking" element={<HouseTracking />} />
+            <Route path="/business-plan" element={<BusinessPlan />} />
           </Routes>
           <StickyContactBar />
           <AfkOverlay />
