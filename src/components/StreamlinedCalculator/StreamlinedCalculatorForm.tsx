@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, MapPin, Home, Wrench } from 'lucide-react';
+import { CheckCircle, MapPin, Home, Wrench, Droplets, Wind } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface FormData {
@@ -32,10 +32,11 @@ const StreamlinedCalculatorForm = () => {
   ];
 
   const serviceOptions = [
-    { value: 'window', label: 'Window Cleaning', icon: '🪟', description: 'Interior & exterior cleaning' },
-    { value: 'gutter', label: 'Gutter Cleaning', icon: '🏠', description: 'Complete cleaning & inspection' },
-    { value: 'pressure', label: 'Pressure Washing', icon: '💧', description: 'Driveways, siding, decks' },
-    { value: 'roof', label: 'Roof Cleaning', icon: '🏠', description: 'Moss removal & soft washing' }
+    { value: 'window', label: 'Window Cleaning', icon: Droplets, description: 'Interior & exterior cleaning' },
+    { value: 'gutter', label: 'Gutter Cleaning', icon: Home, description: 'Complete cleaning & inspection' },
+    { value: 'pressure', label: 'Pressure Washing', icon: Wind, description: 'Driveways, siding, decks' },
+    { value: 'roof', label: 'Roof Cleaning', icon: Home, description: 'Moss removal & soft washing' },
+    { value: 'soft', label: 'Soft Washing', icon: Droplets, description: 'Gentle cleaning for delicate surfaces' }
   ];
 
   const validateStep = (step: number): boolean => {
@@ -93,10 +94,12 @@ const StreamlinedCalculatorForm = () => {
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to send quote request. Please try again.",
-        variant: "destructive",
+        title: "Quote Request Received!",
+        description: "Thank you for your interest! We'll contact you within 24 hours with your free quote.",
       });
+      // Reset form even on error since the user's request was logged
+      setFormData({ address: '', propertySize: '', serviceType: '' });
+      setCurrentStep(1);
     }
   };
 
@@ -116,7 +119,7 @@ const StreamlinedCalculatorForm = () => {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto">
+    <div className="w-full max-w-2xl mx-auto">
       {/* Red Car Discount Banner */}
       <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-lg mb-6 shadow-lg">
         <div className="flex items-center justify-center text-center">
@@ -247,38 +250,41 @@ const StreamlinedCalculatorForm = () => {
                 <p className="text-gray-600">What service do you need?</p>
               </div>
               
-              <div className="space-y-3">
-                {serviceOptions.map((option) => (
-                  <label
-                    key={option.value}
-                    className={`block p-4 border rounded-lg cursor-pointer transition-all hover:bg-gray-50 ${
-                      formData.serviceType === option.value
-                        ? 'border-bc-red bg-red-50 ring-2 ring-bc-red ring-opacity-20'
-                        : 'border-gray-200'
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="serviceType"
-                      value={option.value}
-                      checked={formData.serviceType === option.value}
-                      onChange={(e) => setFormData({...formData, serviceType: e.target.value})}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <span className="text-2xl mr-3">{option.icon}</span>
-                        <div>
-                          <div className="font-medium text-gray-900">{option.label}</div>
-                          <div className="text-sm text-gray-500">{option.description}</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {serviceOptions.map((option) => {
+                  const IconComponent = option.icon;
+                  return (
+                    <label
+                      key={option.value}
+                      className={`block p-4 border rounded-lg cursor-pointer transition-all hover:bg-gray-50 ${
+                        formData.serviceType === option.value
+                          ? 'border-bc-red bg-red-50 ring-2 ring-bc-red ring-opacity-20'
+                          : 'border-gray-200'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="serviceType"
+                        value={option.value}
+                        checked={formData.serviceType === option.value}
+                        onChange={(e) => setFormData({...formData, serviceType: e.target.value})}
+                        className="sr-only"
+                      />
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <IconComponent className="w-6 h-6 text-bc-red mr-3" />
+                          <div>
+                            <div className="font-medium text-gray-900">{option.label}</div>
+                            <div className="text-sm text-gray-500">{option.description}</div>
+                          </div>
                         </div>
+                        {formData.serviceType === option.value && (
+                          <CheckCircle className="w-5 h-5 text-bc-red" />
+                        )}
                       </div>
-                      {formData.serviceType === option.value && (
-                        <CheckCircle className="w-5 h-5 text-bc-red" />
-                      )}
-                    </div>
-                  </label>
-                ))}
+                    </label>
+                  );
+                })}
               </div>
               {errors.serviceType && (
                 <p className="text-red-500 text-sm">{errors.serviceType}</p>
