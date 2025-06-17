@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import WhyUs from "./pages/WhyUs";
 import Contact from "./pages/Contact";
 import Calculator from "./pages/Calculator";
+import StreamlinedCalculator from "./pages/StreamlinedCalculator";
 import Testimonials from "./pages/Testimonials";
 import Equipment from "./pages/Equipment";
 import ComparePrices from "./pages/ComparePrices";
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/why-us" element={<WhyUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/calculator" element={<Calculator />} />
+            <Route path="/streamlined-calculator" element={<StreamlinedCalculator />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/compare-prices" element={<ComparePrices />} />
