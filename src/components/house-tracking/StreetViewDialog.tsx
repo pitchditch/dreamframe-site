@@ -11,16 +11,16 @@ import {
 import { HousePin } from './types';
 
 interface StreetViewDialogProps {
-  isOpen: boolean;
+  pin: HousePin | null;
   onClose: () => void;
-  selectedPin: HousePin | null;
 }
 
 const StreetViewDialog: React.FC<StreetViewDialogProps> = ({
-  isOpen,
-  onClose,
-  selectedPin
+  pin,
+  onClose
 }) => {
+  const isOpen = !!pin;
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => {
       if (!open) onClose();
@@ -29,25 +29,25 @@ const StreetViewDialog: React.FC<StreetViewDialogProps> = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Eye className="w-5 h-5" />
-            Street View: {selectedPin?.address}
+            Street View: {pin?.address}
           </DialogTitle>
         </DialogHeader>
         <div className="flex-1 w-full h-full">
-          {selectedPin ? (
+          {pin ? (
             <div className="w-full h-full">
               <iframe
-                src={`https://www.google.com/maps/embed?pb=!4v1234567890!6m8!1m7!1s${selectedPin.lat},${selectedPin.lng}!2m2!1d${selectedPin.lat}!2d${selectedPin.lng}!3f0!4f0!5f0.7820865974627469`}
+                src={`https://www.google.com/maps/embed?pb=!4v1234567890!6m8!1m7!1s${pin.lat},${pin.lng}!2m2!1d${pin.lat}!2d${pin.lng}!3f0!4f0!5f0.7820865974627469`}
                 width="100%"
                 height="100%"
                 style={{ border: 0, borderRadius: '8px' }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title={`Street View: ${selectedPin.address}`}
+                title={`Street View: ${pin.address}`}
               />
               <div className="mt-2 text-center">
                 <a
-                  href={`https://www.google.com/maps/@${selectedPin.lat},${selectedPin.lng},19z`}
+                  href={`https://www.google.com/maps/@${pin.lat},${pin.lng},19z`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline text-sm"
@@ -64,11 +64,11 @@ const StreetViewDialog: React.FC<StreetViewDialogProps> = ({
         </div>
         <div className="flex justify-between items-center pt-4">
           <div className="text-sm text-gray-600">
-            {selectedPin && (
+            {pin && (
               <>
-                Coordinates: {selectedPin.lat.toFixed(6)}, {selectedPin.lng.toFixed(6)}
-                {selectedPin.customerName && (
-                  <span className="ml-4">Customer: {selectedPin.customerName}</span>
+                Coordinates: {pin.lat.toFixed(6)}, {pin.lng.toFixed(6)}
+                {pin.customerName && (
+                  <span className="ml-4">Customer: {pin.customerName}</span>
                 )}
               </>
             )}
