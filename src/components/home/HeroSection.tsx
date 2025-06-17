@@ -117,7 +117,7 @@ const HeroSection = () => {
       <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'} ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <div className="inline-block bg-bc-red px-4 py-2 rounded mb-4 md:mb-6 animate-on-scroll">
-            <span className="text-white font-medium text-lg sm:text-xl md:text-2xl">{t("Professional Pressure Washing Services")}</span>
+            <span className="text-white font-medium text-lg sm:text-xl md:text-2xl">{t("Tired of Dirty Siding & Grimy Driveways?")}</span>
           </div>
           
           <div className="mb-6 md:mb-8">
@@ -125,13 +125,11 @@ const HeroSection = () => {
               <span className="text-white">
                 {isMobile ? (
                   <>
-                    {t("The Ultimate")} <span className="text-bc-red">{t("Cleaning Solution")}</span>
-                    <br />
-                    {t("for Your Property")}
+                    {t("Make Your Home")} <span className="text-bc-red">{t("Shine Instantly")}</span>
                   </>
                 ) : (
                   <>
-                    {t("The Ultimate Cleaning")} <span className="text-bc-red">{t("Solution")}</span> {t("for Your Property")}
+                    {t("Make Your Home")} <span className="text-bc-red">{t("Shine Instantly")}</span>
                   </>
                 )}
               </span>
@@ -139,8 +137,8 @@ const HeroSection = () => {
             
             <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-sm sm:text-base md:text-xl lg:text-2xl'} mb-4 md:mb-6 animate-on-scroll delay-100 max-w-3xl font-medium text-white`}>
               {isMobile 
-                ? t("Fast, affordable exterior cleaning in Surrey, White Rock & Metro Vancouver.")
-                : t("We deliver exceptional cleaning results for residential and commercial properties with our state-of-the-art equipment and professional techniques.")
+                ? t("Fast, friendly pressure washing for homes & businesses in White Rock, Surrey & Metro Vancouver. We'll blast away dirt, mold & grime!")
+                : t("Professional pressure washing for houses, driveways, decks & storefronts. Fast, insured service with satisfaction guarantee - we'll make it sparkle!")
               }
             </p>
           </div>
@@ -165,7 +163,7 @@ const HeroSection = () => {
               size="lg" 
               className={`${isMobile ? 'h-14 text-lg rounded-xl px-6' : 'h-12 md:h-16 text-base md:text-xl rounded-lg px-6 md:px-8'} text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto sm:min-w-[200px] md:sm:min-w-[250px]`}
             >
-              {isMobile ? t("Check Prices") : t("Check Prices & Availability")} <MessageSquare className="ml-2" size={16} />
+              {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-2" size={16} />
             </Button>
           </form>
         </div>
