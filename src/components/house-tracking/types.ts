@@ -1,3 +1,4 @@
+
 export interface HousePin {
   id: string;
   lat: number;
@@ -18,7 +19,13 @@ export interface HousePin {
   followUpDate?: string;
   followUpNote?: string;
   leadScore?: 'low' | 'medium' | 'high';
-  squareFootage?: number; // <-- Added to fix build error and for calculator
+  squareFootage?: number;
+  // Facebook leads specific fields
+  leadSource?: 'door-to-door' | 'facebook' | 'google' | 'referral' | 'website' | 'other';
+  facebookProfileUrl?: string;
+  facebookLeadId?: string;
+  facebookCampaignName?: string;
+  facebookAdSetName?: string;
 }
 
 export interface RouteSession {
