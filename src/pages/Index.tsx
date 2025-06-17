@@ -7,7 +7,17 @@ import StickyQuoteBar from '@/components/StickyQuoteBar';
 import AfkOverlay from '../components/AfkOverlay';
 import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
-import MainContentSections from '../components/MainContentSections';
+import ServiceBanner from '../components/ServiceBanner';
+import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
+import TrustBadgesSection from '../components/TrustBadgesSection';
+import QuickContactForm from '../components/home/QuickContactForm';
+import TestimonialsSection from '../components/home/TestimonialsSection';
+import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import ReferralProgramSection from '../components/ReferralProgramSection';
+import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
+import FAQSection from '../components/FAQSection';
+import RedCarSection from '../components/home/RedCarSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -56,7 +66,59 @@ const Index = () => {
       <SEOContent faqItems={faqItems} />
       
       <HeroWithContent>
-        <MainContentSections faqItems={faqItems} />
+        <>
+          <ServiceBanner />
+          
+          {/* What Do You Need Pressure Washed */}
+          <div className="bg-white relative z-50">
+            <ServiceSelectionSection />
+          </div>
+          
+          <div className="bg-white relative z-50">
+            {/* Enhanced Before/After Gallery with filtering */}
+            <EnhancedBeforeAfterGallery />
+            
+            {/* Trust Badges Section */}
+            <TrustBadgesSection />
+            
+            {/* Contact Form */}
+            <QuickContactForm />
+            
+            {/* Testimonials */}
+            <TestimonialsSection />
+            
+            {/* Red Car Section */}
+            <RedCarSection />
+            
+            {/* Trusted Customers Slideshow */}
+            <TrustedCustomersSection />
+            
+            {/* Referral Program Section */}
+            <ReferralProgramSection />
+            
+            {/* Competitor Comparison */}
+            <CompetitorComparisonSection />
+            
+            {/* FAQ Section */}
+            <div data-section="faq">
+              <FAQSection 
+                title={t("Frequently Asked Questions")} 
+                subtitle={t("Everything you need to know about our services")}
+                faqs={faqItems}
+                darkMode={true}
+              />
+            </div>
+            
+            {/* White Rock Footer Image */}
+            <div className="w-full footer-image">
+              <img 
+                src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+                alt="White Rock Marine Drive - Local Business" 
+                className="w-full h-auto object-cover object-center rounded-t-3xl" 
+              />
+            </div>
+          </div>
+        </>
       </HeroWithContent>
       
       <ReferralButton />
