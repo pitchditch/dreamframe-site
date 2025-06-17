@@ -65,7 +65,7 @@ const ReferralProgramSection = () => {
             </h3>
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                <div className="bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
                   1
                 </div>
                 <div>
@@ -75,7 +75,7 @@ const ReferralProgramSection = () => {
               </div>
               
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                <div className="bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
                   2
                 </div>
                 <div>
@@ -85,7 +85,7 @@ const ReferralProgramSection = () => {
               </div>
               
               <div className="flex items-start space-x-4">
-                <div className="bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+                <div className="bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
                   3
                 </div>
                 <div>
@@ -121,7 +121,7 @@ const ReferralProgramSection = () => {
                 <Button 
                   onClick={handleCopyLink}
                   variant="secondary"
-                  className="bg-yellow-400 text-gray-900 hover:bg-yellow-300"
+                  className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 flex-shrink-0"
                 >
                   {copiedLink ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </Button>
