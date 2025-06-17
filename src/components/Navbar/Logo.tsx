@@ -11,6 +11,12 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const [lastActivity, setLastActivity] = useState(Date.now());
 
   useEffect(() => {
+    // Preload both logo images
+    const whiteLogoImg = new Image();
+    const blackLogoImg = new Image();
+    whiteLogoImg.src = "/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png";
+    blackLogoImg.src = "/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png";
+
     // Track user activity
     const handleActivity = () => {
       setIsSpinning(false);

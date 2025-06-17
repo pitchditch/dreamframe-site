@@ -27,7 +27,7 @@ const TestimonialsCarousel = () => {
     
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 500); // Match this to your transition duration
+    }, 500);
   };
 
   const goToNextTestimonial = () => {
@@ -40,7 +40,7 @@ const TestimonialsCarousel = () => {
     
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 500); // Match this to your transition duration
+    }, 500);
   };
 
   const currentTestimonial = testimonials[activeIndex];
@@ -49,7 +49,7 @@ const TestimonialsCarousel = () => {
     <div className="max-w-4xl mx-auto">
       <div className="relative bg-white rounded-xl shadow-lg p-8 md:p-12">
         <div className="flex flex-col items-center">
-          <div className="w-20 h-20 rounded-full overflow-hidden mb-6 border-4 border-gray-100 shadow">
+          <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-gray-100 shadow-lg">
             <img
               src={currentTestimonial.profileImage || '/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png'}
               alt={`${currentTestimonial.name}'s avatar`}

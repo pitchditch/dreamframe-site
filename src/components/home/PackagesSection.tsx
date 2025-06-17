@@ -1,164 +1,132 @@
 
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Check, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
-const PackageCard = ({ 
-  title, 
-  price, 
-  size, 
-  features, 
-  isPrimary = false,
-  onSelectPackage,
-  savings
-}: { 
-  title: string; 
-  price: string; 
-  size: string; 
-  features: { name: string; included: boolean }[];
-  isPrimary?: boolean;
-  onSelectPackage: () => void;
-  savings: number;
-}) => {
-  return (
-    <div 
-      className={`${isPrimary ? 'bg-bc-red text-white' : 'bg-white'} p-8 rounded-lg shadow-md ${!isPrimary && 'border border-gray-100'} relative transform transition-transform duration-300 hover:scale-105 cursor-pointer`}
-      onClick={onSelectPackage}
-    >
-      {isPrimary && (
-        <div className="absolute -top-3 right-6 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">
-          POPULAR
-        </div>
-      )}
-      <h3 className="text-2xl font-bold mb-2">{title}</h3>
-      <p className="text-3xl font-bold mb-2">{price}</p>
-      <p className={`${isPrimary ? 'text-gray-200' : 'text-gray-500'} text-sm mb-6`}>{size}</p>
-      
-      {savings > 0 && (
-        <div className={`text-sm ${isPrimary ? 'text-white/90' : 'text-green-600'} font-medium mb-4 bg-green-100/20 p-2 rounded-md`}>
-          Save ${savings} with this package!
-        </div>
-      )}
-      
-      <ul className="space-y-3 mb-8">
-        {features.map((feature, index) => (
-          <li key={index} className={`flex items-center ${!isPrimary && (feature.included ? 'text-gray-700' : 'text-gray-400')}`}>
-            <svg 
-              className={`w-5 h-5 mr-2 ${
-                isPrimary 
-                  ? 'text-white' 
-                  : feature.included ? 'text-bc-red' : 'text-gray-300'
-              }`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24" 
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            {feature.name}
-          </li>
-        ))}
-      </ul>
-      
-      <button 
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent the parent div's onClick from firing
-          onSelectPackage();
-        }}
-        className={isPrimary 
-          ? "bg-white text-bc-red px-6 py-3 rounded-md font-medium w-full hover:bg-gray-100 transition-colors"
-          : "btn-primary w-full"
-        }>
-        Get Started
-      </button>
-    </div>
-  );
-};
+import { useTranslation } from '@/hooks/use-translation';
 
 const PackagesSection = () => {
-  const navigate = useNavigate();
-  
-  const features = [
-    "Window Cleaning",
-    "Gutter Cleaning",
-    "Exterior House Wash",
-    "Roof Soft Wash",
-    "Driveway Power Wash"
-  ];
+  const { t } = useTranslation();
 
   const packages = [
     {
-      title: "Starter Package",
-      price: "$700",
-      size: "Based on a 1800 SQFT. House",
-      features: features.map((name, i) => ({ name, included: i < 2 })),
-      services: ["window-cleaning", "gutter-cleaning"],
-      discountPercent: 5,
-      savings: 105
+      name: "Basic Clean",
+      price: "$150",
+      description: "Perfect for regular maintenance",
+      features: [
+        "Exterior window cleaning",
+        "Basic pressure washing",
+        "Gutter cleaning inspection",
+        "30-day satisfaction guarantee"
+      ],
+      popular: false
     },
     {
-      title: "Upgraded Package",
-      price: "$1,200",
-      size: "Based on a 1900 SQFT. House",
-      // Explicitly mark "Roof Soft Wash" as not included
-      features: features.map((name) => ({ 
-        name, 
-        included: name !== "Roof Soft Wash" 
-      })),
-      services: ["window-cleaning", "gutter-cleaning", "pressure-washing"],
-      isPrimary: true,
-      discountPercent: 10,
-      savings: 240
+      name: "Premium Service",
+      price: "$300",
+      description: "Our most popular package",
+      features: [
+        "Complete window cleaning (inside & out)",
+        "Full pressure washing service",
+        "Gutter cleaning & minor repairs",
+        "Soft washing for delicate surfaces",
+        "Post-service quality check",
+        "60-day satisfaction guarantee"
+      ],
+      popular: true
     },
     {
-      title: "Premium Package",
-      price: "$1,600",
-      size: "Based on a 1900 SQFT+ House",
-      features: features.map(name => ({ name, included: true })),
-      services: ["window-cleaning", "gutter-cleaning", "pressure-washing", "roof-cleaning"],
-      discountPercent: 15,
-      savings: 434
+      name: "Complete Property",
+      price: "$500",
+      description: "The ultimate cleaning experience",
+      features: [
+        "Everything in Premium Service",
+        "Roof cleaning & moss removal",
+        "Driveway & walkway deep clean",
+        "Deck/patio restoration",
+        "Window screen cleaning",
+        "90-day satisfaction guarantee",
+        "Priority scheduling"
+      ],
+      popular: false
     }
   ];
-  
-  const handleSelectPackage = (pkg: any) => {
-    // Store package selection in sessionStorage
-    sessionStorage.setItem('selectedPackage', JSON.stringify({
-      title: pkg.title,
-      services: pkg.services,
-      discountApplied: true,
-      discountPercent: pkg.discountPercent || 10,
-      savings: pkg.savings
-    }));
-    
-    // Open calculator overlay instead of navigating
-    const calculatorOverlay = document.querySelector('.special-offers-button') as HTMLButtonElement;
-    if (calculatorOverlay) {
-      calculatorOverlay.click();
-    } else {
-      // Fallback to navigating to calculator page
-      navigate('/calculator');
-    }
-  };
 
   return (
-    <section className="section-padding bg-white">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="badge-pill mx-auto w-fit animate-on-scroll">Yearly Maintenance</div>
-        <h2 className="section-title animate-on-scroll">Choose the Right Package for Your Home</h2>
-        <p className="section-subtitle animate-on-scroll">
-          Our subscription packages are designed to keep your property looking its best year-round with regular maintenance.
-        </p>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Choose Your Perfect Package
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            From basic maintenance to complete property transformation, 
+            we have the right solution for your cleaning needs.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {packages.map((pkg, index) => (
-            <div key={index} className="animate-on-scroll">
-              <PackageCard 
-                {...pkg} 
-                onSelectPackage={() => handleSelectPackage(pkg)}
-              />
+            <div 
+              key={index}
+              className={`relative rounded-2xl p-8 ${
+                pkg.popular 
+                  ? 'bg-gradient-to-b from-bc-red to-red-600 text-white border-4 border-yellow-400 transform scale-105' 
+                  : 'bg-gray-50 border-2 border-gray-200'
+              }`}
+            >
+              {pkg.popular && (
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold flex items-center">
+                    <Star className="w-4 h-4 mr-1" />
+                    Most Popular
+                  </div>
+                </div>
+              )}
+              
+              <div className="text-center mb-6">
+                <h3 className={`text-2xl font-bold mb-2 ${pkg.popular ? 'text-white' : 'text-gray-900'}`}>
+                  {pkg.name}
+                </h3>
+                <div className={`text-4xl font-bold mb-2 ${pkg.popular ? 'text-white' : 'text-bc-red'}`}>
+                  {pkg.price}
+                </div>
+                <p className={`${pkg.popular ? 'text-white/90' : 'text-gray-600'}`}>
+                  {pkg.description}
+                </p>
+              </div>
+
+              <ul className="space-y-3 mb-8">
+                {pkg.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-start">
+                    <Check className={`w-5 h-5 mr-3 mt-0.5 flex-shrink-0 ${
+                      pkg.popular ? 'text-white' : 'text-green-500'
+                    }`} />
+                    <span className={`${pkg.popular ? 'text-white' : 'text-gray-700'}`}>
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button 
+                asChild
+                className={`w-full ${
+                  pkg.popular 
+                    ? 'bg-white text-bc-red hover:bg-gray-100' 
+                    : 'bg-bc-red text-white hover:bg-red-700'
+                }`}
+              >
+                <Link to="/calculator">Get Started</Link>
+              </Button>
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Button asChild className="bg-bc-red hover:bg-red-700" size="lg">
+            <Link to="/compare-prices">{t("Compare Our Prices & Packages")}</Link>
+          </Button>
         </div>
       </div>
     </section>
