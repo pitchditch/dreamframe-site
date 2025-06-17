@@ -1,4 +1,3 @@
-
 export interface HousePin {
   id: string;
   lat: number;
@@ -26,6 +25,14 @@ export interface HousePin {
   facebookLeadId?: string;
   facebookCampaignName?: string;
   facebookAdSetName?: string;
+  // Job completion fields
+  jobCompletedDate?: string;
+  jobDetails?: string;
+  serviceType?: string;
+  jobValue?: number;
+  isPreviousClient?: boolean;
+  lastServiceDate?: string;
+  serviceReminder?: boolean; // Alert for yearly service
 }
 
 export interface RouteSession {

@@ -27,6 +27,8 @@ const HouseTracking: React.FC = () => {
   const [searchAddress, setSearchAddress] = useState('');
   const [statusFilters, setStatusFilters] = useState<Set<string>>(new Set(['visited', 'interested', 'not-interested', 'completed', 'revisit-later', 'needs-quote']));
   const [activeTab, setActiveTab] = useState('map');
+  const [showPreviousClientsOnly, setShowPreviousClientsOnly] = useState(false);
+  const [serviceReminders, setServiceReminders] = useState<HousePin[]>([]);
 
   useEffect(() => {
     const savedPins = localStorage.getItem('housePins');
@@ -114,12 +116,64 @@ const HouseTracking: React.FC = () => {
     { value: 'needs-quote', label: 'Needs Quote', color: '#f97316' }
   ];
 
+  // Check for service reminders (yearly alerts)
+  useEffect(() => {
+    const checkServiceReminders = () => {
+      const today = new Date();
+      const reminders = pins.filter(pin => {
+        if (!pin.serviceReminder || !pin.lastServiceDate) return false;
+        
+        const lastService = new Date(pin.lastServiceDate);
+        const yearsSinceService = (today.getTime() - lastService.getTime()) / (1000 * 60 * 60 * 24 * 365);
+        
+        return yearsSinceService >= 1;
+      });
+      
+      setServiceReminders(reminders);
+    };
+
+    checkServiceReminders();
+  }, [pins]);
+
+  // Enhanced filtering to include previous clients
+  const filteredPins = pins.filter(pin => {
+    const matchesStatus = statusFilters.has(pin.status);
+    const matchesSearch = pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
+                         pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
+                         (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()));
+    const matchesPreviousClient = showPreviousClientsOnly ? pin.isPreviousClient : true;
+    
+    return matchesStatus && matchesSearch && matchesPreviousClient;
+  });
+
   return (
     <Layout title="House Tracking System | BC Pressure Washing">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">House Tracking System</h1>
           <p className="text-gray-600">Track visited houses, manage leads, and analyze your business performance.</p>
+          
+          {/* Service Reminders Alert */}
+          {serviceReminders.length > 0 && (
+            <div className="mt-4 p-4 bg-orange-100 border border-orange-400 rounded-lg">
+              <h3 className="font-semibold text-orange-800 mb-2">🔔 Service Reminders</h3>
+              <p className="text-orange-700 mb-2">
+                {serviceReminders.length} client(s) are due for yearly service:
+              </p>
+              <div className="space-y-1">
+                {serviceReminders.slice(0, 3).map(pin => (
+                  <div key={pin.id} className="text-sm text-orange-600">
+                    • {pin.customerName || pin.address} - Last service: {pin.lastServiceDate ? new Date(pin.lastServiceDate).toLocaleDateString() : 'Unknown'}
+                  </div>
+                ))}
+                {serviceReminders.length > 3 && (
+                  <div className="text-sm text-orange-600">
+                    ... and {serviceReminders.length - 3} more
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -217,16 +271,29 @@ const HouseTracking: React.FC = () => {
                       </div>
                     </div>
                     
+                    {/* Previous Client Filter */}
+                    <div className="pt-4 border-t">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="previousClients"
+                          checked={showPreviousClientsOnly}
+                          onCheckedChange={setShowPreviousClientsOnly}
+                        />
+                        <label
+                          htmlFor="previousClients"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Show Previous Clients Only
+                        </label>
+                      </div>
+                    </div>
+                    
                     <div className="pt-4 border-t">
                       <div className="text-sm text-gray-600">
                         <p><strong>Total Pins:</strong> {pins.length}</p>
-                        <p><strong>Filtered:</strong> {pins.filter(pin => 
-                          statusFilters.has(pin.status) && (
-                            pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
-                            pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
-                            (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()))
-                          )
-                        ).length}</p>
+                        <p><strong>Filtered:</strong> {filteredPins.length}</p>
+                        <p><strong>Previous Clients:</strong> {pins.filter(p => p.isPreviousClient).length}</p>
+                        <p><strong>Service Reminders:</strong> {serviceReminders.length}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -237,7 +304,7 @@ const HouseTracking: React.FC = () => {
 
           <TabsContent value="list">
             <PinList
-              pins={pins}
+              pins={filteredPins}
               highlightedPinId={highlightedPinId}
               editingPin={editingPin}
               statusFilters={statusFilters}

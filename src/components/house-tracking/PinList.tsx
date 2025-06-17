@@ -74,6 +74,16 @@ const PinList: React.FC<PinListProps> = ({
     return followUp <= today;
   };
 
+  const isServiceReminderDue = (pin: HousePin) => {
+    if (!pin.serviceReminder || !pin.lastServiceDate) return false;
+    
+    const today = new Date();
+    const lastService = new Date(pin.lastServiceDate);
+    const yearsSinceService = (today.getTime() - lastService.getTime()) / (1000 * 60 * 60 * 24 * 365);
+    
+    return yearsSinceService >= 1;
+  };
+
   if (filteredPins.length === 0) {
     return (
       <Card>
@@ -121,6 +131,22 @@ const PinList: React.FC<PinListProps> = ({
                     >
                       {statusConfig[pin.status].label}
                     </Badge>
+                    
+                    {/* Previous Client Badge */}
+                    {pin.isPreviousClient && (
+                      <Badge className="bg-blue-500 text-white text-xs">
+                        Previous Client
+                      </Badge>
+                    )}
+                    
+                    {/* Service Reminder Alert */}
+                    {isServiceReminderDue(pin) && (
+                      <Badge className="bg-orange-500 text-white text-xs flex items-center gap-1">
+                        <Bell className="w-3 h-3" />
+                        Service Due
+                      </Badge>
+                    )}
+                    
                     {pin.routeId && (
                       <Badge variant="outline" className="text-xs">
                         Route #{pin.routeOrder}
@@ -232,6 +258,27 @@ const PinList: React.FC<PinListProps> = ({
                   {/* ADDED: Show square footage if present */}
                   {pin.squareFootage !== undefined && pin.squareFootage !== null && pin.squareFootage > 0 && (
                     <p className="text-xs text-gray-500 mb-1"><strong>Sqft:</strong> {pin.squareFootage.toLocaleString()}</p>
+                  )}
+                  
+                  {/* Job Completion Information */}
+                  {pin.jobCompletedDate && (
+                    <p className="text-sm text-gray-700 mb-1">
+                      <strong>Job Completed:</strong> {new Date(pin.jobCompletedDate).toLocaleDateString()}
+                      {pin.serviceType && <span> - {pin.serviceType}</span>}
+                      {pin.jobValue && <span> - ${pin.jobValue.toLocaleString()}</span>}
+                    </p>
+                  )}
+                  
+                  {pin.jobDetails && (
+                    <p className="text-sm text-gray-600 mb-2">
+                      <strong>Job Details:</strong> {pin.jobDetails}
+                    </p>
+                  )}
+                  
+                  {pin.lastServiceDate && (
+                    <p className="text-sm text-gray-700 mb-1">
+                      <strong>Last Service:</strong> {new Date(pin.lastServiceDate).toLocaleDateString()}
+                    </p>
                   )}
                   
                   <div className="flex flex-wrap gap-2 text-xs text-gray-400">

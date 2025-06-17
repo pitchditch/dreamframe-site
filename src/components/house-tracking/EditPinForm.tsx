@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { HousePin } from './types';
 
 interface EditPinFormProps {
@@ -28,7 +28,15 @@ const EditPinForm: React.FC<EditPinFormProps> = ({ pin, onSave, onCancel }) => {
     facebookCampaignName: pin.facebookCampaignName || '',
     followUpDate: pin.followUpDate || '',
     followUpNote: pin.followUpNote || '',
-    squareFootage: pin.squareFootage || ''
+    squareFootage: pin.squareFootage || '',
+    // New job completion fields
+    jobCompletedDate: pin.jobCompletedDate || '',
+    jobDetails: pin.jobDetails || '',
+    serviceType: pin.serviceType || '',
+    jobValue: pin.jobValue || '',
+    isPreviousClient: pin.isPreviousClient || false,
+    lastServiceDate: pin.lastServiceDate || '',
+    serviceReminder: pin.serviceReminder || false
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,7 +56,15 @@ const EditPinForm: React.FC<EditPinFormProps> = ({ pin, onSave, onCancel }) => {
       facebookCampaignName: formData.facebookCampaignName || undefined,
       followUpDate: formData.followUpDate || undefined,
       followUpNote: formData.followUpNote || undefined,
-      squareFootage: formData.squareFootage ? Number(formData.squareFootage) : undefined
+      squareFootage: formData.squareFootage ? Number(formData.squareFootage) : undefined,
+      // New job completion fields
+      jobCompletedDate: formData.jobCompletedDate || undefined,
+      jobDetails: formData.jobDetails || undefined,
+      serviceType: formData.serviceType || undefined,
+      jobValue: formData.jobValue ? Number(formData.jobValue) : undefined,
+      isPreviousClient: formData.isPreviousClient,
+      lastServiceDate: formData.lastServiceDate || undefined,
+      serviceReminder: formData.serviceReminder
     };
     
     onSave(updates);
@@ -191,6 +207,66 @@ const EditPinForm: React.FC<EditPinFormProps> = ({ pin, onSave, onCancel }) => {
           </>
         )}
         
+        {/* Job Completion Section */}
+        <div>
+          <Label htmlFor="jobCompletedDate">Job Completed Date</Label>
+          <Input
+            id="jobCompletedDate"
+            type="date"
+            value={formData.jobCompletedDate}
+            onChange={(e) => setFormData({ ...formData, jobCompletedDate: e.target.value })}
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="serviceType">Service Type</Label>
+          <Input
+            id="serviceType"
+            value={formData.serviceType}
+            onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
+            placeholder="e.g., House Wash, Driveway Clean, Roof Clean"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="jobValue">Job Value ($)</Label>
+          <Input
+            id="jobValue"
+            type="number"
+            value={formData.jobValue}
+            onChange={(e) => setFormData({ ...formData, jobValue: e.target.value })}
+            placeholder="Enter job value"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="lastServiceDate">Last Service Date</Label>
+          <Input
+            id="lastServiceDate"
+            type="date"
+            value={formData.lastServiceDate}
+            onChange={(e) => setFormData({ ...formData, lastServiceDate: e.target.value })}
+          />
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="isPreviousClient"
+            checked={formData.isPreviousClient}
+            onCheckedChange={(checked) => setFormData({ ...formData, isPreviousClient: checked as boolean })}
+          />
+          <Label htmlFor="isPreviousClient">Previous Client</Label>
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="serviceReminder"
+            checked={formData.serviceReminder}
+            onCheckedChange={(checked) => setFormData({ ...formData, serviceReminder: checked as boolean })}
+          />
+          <Label htmlFor="serviceReminder">Set Yearly Service Reminder</Label>
+        </div>
+        
         <div>
           <Label htmlFor="followUpDate">Follow-up Date</Label>
           <Input
@@ -210,6 +286,17 @@ const EditPinForm: React.FC<EditPinFormProps> = ({ pin, onSave, onCancel }) => {
             placeholder="Follow-up note"
           />
         </div>
+      </div>
+      
+      <div>
+        <Label htmlFor="jobDetails">Job Details</Label>
+        <Textarea
+          id="jobDetails"
+          value={formData.jobDetails}
+          onChange={(e) => setFormData({ ...formData, jobDetails: e.target.value })}
+          placeholder="Detailed description of the work completed..."
+          rows={3}
+        />
       </div>
       
       <div>
