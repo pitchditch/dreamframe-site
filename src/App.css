@@ -9,50 +9,50 @@
 /* General typography and base styles */
 body {
   font-family: 'Inter', sans-serif;
-  line-height: 1.8; /* Increased line height */
+  line-height: 1.7; /* Increased line height */
   color: #333;
   background: #f9f9f9;
-  font-size: 20px; /* Increased from 18px */
-  font-weight: 600; /* Increased from 500 */
+  font-size: 18px; /* Increased base font size */
+  font-weight: 500; /* Made body text medium weight */
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
   color: #222;
-  margin-bottom: 1rem; /* Increased margin */
-  font-weight: 900; /* Made all headings extra bold */
+  margin-bottom: 0.75rem; /* Increased margin */
+  font-weight: 800; /* Made all headings bolder */
 }
 
-/* Specific heading sizes - significantly larger */
+/* Specific heading sizes */
 h1 {
-  font-size: 4.5rem; /* Increased significantly from 3.5rem */
-  font-weight: 900;
-  line-height: 1.1;
-}
-
-h2 {
-  font-size: 3.5rem; /* Increased significantly from 2.75rem */
+  font-size: 3.5rem; /* Increased significantly */
   font-weight: 900;
   line-height: 1.2;
 }
 
-h3 {
-  font-size: 3rem; /* Increased significantly from 2.25rem */
-  font-weight: 900;
+h2 {
+  font-size: 2.75rem; /* Increased significantly */
+  font-weight: 800;
   line-height: 1.3;
 }
 
-h4 {
-  font-size: 2.25rem; /* Increased significantly from 1.75rem */
+h3 {
+  font-size: 2.25rem; /* Increased significantly */
   font-weight: 800;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.75rem; /* Increased significantly */
+  font-weight: 700;
 }
 
 a {
   color: #007bff;
   text-decoration: none;
   transition: color 0.3s ease;
-  font-weight: 700; /* Increased from 600 */
-  font-size: 1.375rem; /* Increased from 1.125rem */
+  font-weight: 600; /* Made links bolder */
+  font-size: 1.125rem; /* Made links larger */
 }
 
 a:hover {
@@ -75,11 +75,11 @@ a:hover {
 .btn-primary {
   background-color: #dc3545;
   color: white;
-  padding: 1.25rem 2.5rem; /* Increased padding */
+  padding: 1rem 2rem; /* Increased padding */
   border-radius: 0.25rem;
   transition: background-color 0.3s ease;
-  font-size: 1.5rem; /* Increased from 1.25rem */
-  font-weight: 800; /* Made button text extra bold */
+  font-size: 1.25rem; /* Made buttons larger */
+  font-weight: 700; /* Made button text bolder */
 }
 
 .btn-primary:hover {
@@ -113,19 +113,19 @@ a:hover {
   z-index: 2;
 }
 
-/* Hero text improvements - much larger */
+/* Hero text improvements */
 .hero-section h1 {
-  font-size: 5rem !important; /* Increased from 4rem */
+  font-size: 4rem !important; /* Made hero titles much larger */
   font-weight: 900 !important;
   text-shadow: 0 4px 8px rgba(0,0,0,0.8);
-  line-height: 1.0;
+  line-height: 1.1;
 }
 
 .hero-section p {
-  font-size: 2rem !important; /* Increased from 1.5rem */
-  font-weight: 700 !important; /* Increased from 600 */
+  font-size: 1.5rem !important; /* Made hero paragraphs larger */
+  font-weight: 600 !important;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* YouTube video fix */
@@ -168,7 +168,7 @@ iframe#hero-video {
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
-  padding: 2.5rem; /* Increased padding */
+  padding: 2rem; /* Increased padding */
   margin-bottom: 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -179,14 +179,14 @@ iframe#hero-video {
 }
 
 .service-card h3 {
-  font-size: 2.25rem; /* Increased from 1.75rem */
-  font-weight: 900; /* Increased from 800 */
+  font-size: 1.75rem; /* Made service card titles larger */
+  font-weight: 800;
 }
 
 .service-card p {
-  font-size: 1.375rem; /* Increased from 1.125rem */
-  font-weight: 600; /* Increased from 500 */
-  line-height: 1.8;
+  font-size: 1.125rem; /* Made service card text larger */
+  font-weight: 500;
+  line-height: 1.7;
 }
 
 /* Footer Styles */
@@ -195,8 +195,8 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem 0;
-  font-size: 1.375rem; /* Increased from 1.125rem */
-  font-weight: 600; /* Increased from 500 */
+  font-size: 1.125rem; /* Made footer text larger */
+  font-weight: 500;
 }
 
 /* Responsive adjustments */
@@ -256,74 +256,74 @@ footer {
   margin-bottom: 1rem;
 }
 
-/* Mobile-specific improvements for readability - much larger text */
+/* Mobile-specific improvements for readability */
 @media (max-width: 768px) {
   .section-title {
-    font-size: 3.5rem !important; /* Increased from 2.5rem */
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    font-size: 2.5rem !important; /* Increased mobile title size */
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
     font-weight: 900; /* Made mobile titles extra bold */
   }
   
   .section-subtitle {
-    font-size: 1.75rem; /* Increased from 1.25rem */
-    line-height: 1.4;
-    margin-bottom: 2rem;
-    font-weight: 700; /* Made mobile subtitles extra bold */
+    font-size: 1.25rem; /* Increased mobile subtitle size */
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    font-weight: 600; /* Made mobile subtitles bolder */
   }
   
   .service-card h3 {
-    font-size: 2rem; /* Increased from 1.5rem */
-    font-weight: 900;
+    font-size: 1.5rem; /* Increased mobile service title size */
+    font-weight: 800;
   }
   
   .service-card p {
-    font-size: 1.375rem; /* Increased from 1.125rem */
-    line-height: 1.7;
-    font-weight: 600;
+    font-size: 1.125rem; /* Increased mobile service text size */
+    line-height: 1.6;
+    font-weight: 500;
   }
   
   .hero-section h1 {
-    font-size: 3.5rem !important; /* Increased from 2.75rem */
-    line-height: 1.1;
+    font-size: 2.75rem !important; /* Increased mobile hero title */
+    line-height: 1.2;
     font-weight: 900;
   }
   
   .hero-section p {
-    font-size: 1.75rem !important; /* Increased from 1.25rem */
-    line-height: 1.4;
-    font-weight: 700;
+    font-size: 1.25rem !important; /* Increased mobile hero text */
+    line-height: 1.5;
+    font-weight: 600;
   }
   
   /* Improved mobile readability for White Rock section */
   .badge-pill {
-    font-size: 1.25rem; /* Increased from 1rem */
-    padding: 0.75rem 1.25rem; /* Increased padding */
-    font-weight: 700; /* Increased font weight */
+    font-size: 1rem; /* Increased badge text size */
+    padding: 0.5rem 1rem; /* Increased badge padding */
+    font-weight: 600;
   }
   
   /* Improve readability of location banner on mobile */
   .location-banner h3 {
-    font-size: 2rem !important; /* Increased from 1.5rem */
-    line-height: 1.2;
-    font-weight: 900;
+    font-size: 1.5rem !important; /* Increased location banner title */
+    line-height: 1.3;
+    font-weight: 800;
   }
   
   .location-banner a {
-    font-size: 1.25rem !important; /* Increased from 1rem */
-    line-height: 1.2;
-    padding: 0.75rem;
-    font-weight: 800;
+    font-size: 1rem !important; /* Increased location banner link size */
+    line-height: 1.3;
+    padding: 0.5rem;
+    font-weight: 700;
   }
   
   /* Make body text larger on mobile */
   body {
-    font-size: 19px; /* Increased from 17px */
+    font-size: 17px; /* Slightly larger on mobile */
   }
   
   p {
-    font-size: 1.375rem; /* Increased from 1.125rem */
-    font-weight: 600; /* Increased from 500 */
+    font-size: 1.125rem; /* Larger paragraphs on mobile */
+    font-weight: 500;
   }
 }
 

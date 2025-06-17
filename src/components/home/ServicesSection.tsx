@@ -24,14 +24,14 @@ const ServicesSection = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">Our Services</h2>
-        <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto leading-relaxed">
+        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">Our Services</h2>
+        <p className="text-gray-600 text-center mb-12 max-w-3xl mx-auto">
           Professional exterior cleaning services for residential and commercial properties
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-xl h-full flex flex-col">
+            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-xl">
               <div className="h-48 overflow-hidden">
                 <img 
                   src={service.image} 
@@ -39,11 +39,11 @@ const ServicesSection = () => {
                   className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
               </div>
-              <div className="p-6 flex-grow flex flex-col">
-                <h3 className="font-bold text-2xl mb-3 leading-tight">{service.title}</h3>
-                <p className="text-gray-600 mb-4 text-lg leading-relaxed flex-grow">{service.description}</p>
-                <Link to={service.link} className="text-bc-red font-medium flex items-center hover:text-red-700 transition-colors text-lg">
-                  Learn more <ArrowRight className="ml-2" size={18} />
+              <div className="p-6">
+                <h3 className="font-bold text-xl mb-2">{service.title}</h3>
+                <p className="text-gray-600 mb-4">{service.description}</p>
+                <Link to={service.link} className="text-bc-red font-medium flex items-center hover:text-red-700 transition-colors">
+                  Learn more <ArrowRight className="ml-2" size={16} />
                 </Link>
               </div>
             </div>
@@ -51,7 +51,7 @@ const ServicesSection = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Button asChild variant="bc-red" size="lg" className="rounded-full px-8 text-xl">
+          <Button asChild variant="bc-red" size="lg" className="rounded-full px-8">
             <Link to="/services">View All Services</Link>
           </Button>
         </div>

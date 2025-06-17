@@ -56,9 +56,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       onMouseLeave={onMouseLeave}
       className={`group cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 ${
         isMobile ? 'p-4' : 'p-6'
-      } h-full flex flex-col`}
+      }`}
     >
-      <div className="flex flex-col items-center text-center h-full">
+      <div className="flex flex-col items-center text-center">
         {/* Image container */}
         <div className={`relative ${isMobile ? 'mb-4' : 'mb-6'} overflow-hidden rounded-lg flex-shrink-0`}>
           <HoverImageSlideshow 
@@ -91,17 +91,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           />
         </div>
         
-        {/* Content container - now takes remaining space */}
-        <div className="flex-1 flex flex-col justify-between">
-          <div>
-            <h3 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold text-gray-900 mb-3 group-hover:text-bc-red transition-colors leading-tight`}>
-              {t(service.title)}
-            </h3>
-            
-            <p className={`text-base ${isMobile ? '' : 'md:text-lg'} text-gray-600 leading-relaxed mb-4`}>
-              {t(service.description)}
-            </p>
-          </div>
+        {/* Content container */}
+        <div className="flex-1">
+          <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold text-gray-900 mb-3 group-hover:text-bc-red transition-colors`}>
+            {t(service.title)}
+          </h3>
+          
+          <p className={`text-sm ${isMobile ? '' : 'md:text-base'} text-gray-600 leading-relaxed mb-4`}>
+            {t(service.description)}
+          </p>
           
           <div className={`${isMobile ? 'mt-2' : 'mt-4'} w-12 h-1 bg-bc-red transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full mx-auto`}></div>
         </div>
