@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import StreamlinedCalculatorForm from '../components/StreamlinedCalculator/StreamlinedCalculatorForm';
@@ -93,24 +92,6 @@ const Calculator = () => {
                       </div>
                     </div>
                   </div>
-
-                  {/* 100% Satisfaction Guarantee Card */}
-                  <Card className="bg-gradient-to-r from-gray-900 to-gray-800 text-white border-0">
-                    <CardContent className="p-6 text-center">
-                      <div className="mb-4">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3">
-                          <Shield className="w-8 h-8 text-gray-900" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">100% SATISFACTION GUARANTEED</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          We stand behind our work – or your money back! If you're not completely satisfied, we'll return to fix any issues at no cost.
-                        </p>
-                      </div>
-                      <div className="text-sm text-gray-400 border-t border-gray-700 pt-4">
-                        Proudly serving White Rock & Surrey
-                      </div>
-                    </CardContent>
-                  </Card>
                 </div>
               </div>
             </div>

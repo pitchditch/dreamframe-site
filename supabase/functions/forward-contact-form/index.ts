@@ -10,7 +10,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const BUSINESS_EMAIL = "bcpressurewashing.ca@gmail.com";
+const BUSINESS_EMAIL = "jaydenf3800@gmail.com";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
