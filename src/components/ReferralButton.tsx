@@ -41,38 +41,44 @@ const ReferralButton = () => {
               </DialogHeader>
               
               <div className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="text-center flex flex-col items-center">
                     <div className="w-16 h-16 bg-bc-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                       1
                     </div>
-                    <Users className="w-8 h-8 text-bc-red mb-3" />
-                    <h3 className="font-semibold text-lg mb-2">Tell Your Friend</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      Share our contact info with someone who needs exterior cleaning services
-                    </p>
+                    <Users className="w-8 h-8 text-bc-red mb-4" />
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-lg">Tell Your Friend</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Share our contact info with someone who needs exterior cleaning services
+                      </p>
+                    </div>
                   </div>
                   
                   <div className="text-center flex flex-col items-center">
                     <div className="w-16 h-16 bg-bc-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                       2
                     </div>
-                    <Star className="w-8 h-8 text-bc-red mb-3" />
-                    <h3 className="font-semibold text-lg mb-2">They Book Service</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      Your friend mentions your name when booking their first service with us
-                    </p>
+                    <Star className="w-8 h-8 text-bc-red mb-4" />
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-lg">They Book Service</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Your friend mentions your name when booking their first service with us
+                      </p>
+                    </div>
                   </div>
                   
                   <div className="text-center flex flex-col items-center">
                     <div className="w-16 h-16 bg-bc-red text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                       3
                     </div>
-                    <DollarSign className="w-8 h-8 text-bc-red mb-3" />
-                    <h3 className="font-semibold text-lg mb-2">You Both Save</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      Both you and your friend get $50 off your next service - it's a win-win!
-                    </p>
+                    <DollarSign className="w-8 h-8 text-bc-red mb-4" />
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-lg">You Both Save</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Both you and your friend get $50 off your next service - it's a win-win!
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
