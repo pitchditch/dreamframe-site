@@ -20,13 +20,12 @@ const Layout = ({
   children, 
   title = "BC Pressure Washing | #1 Pressure Washing in Surrey & White Rock", 
   description = "Trusted pressure washing, window & roof cleaning in Surrey & White Rock. ⭐ 5-Star Rated | ✅ Free Quotes | 🏠 Same-Day Service. Book now & save!",
-  image = "/lovable-uploads/c8557df9-8f3d-4104-bbe4-e0df6f8a4c2e.png",
+  image = "/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png",
   canonicalUrl
 }: LayoutProps) => {
   const location = useLocation();
   const baseUrl = "https://www.bcpressurewashing.ca";
   const fullCanonicalUrl = canonicalUrl ? `${baseUrl}${canonicalUrl}` : baseUrl;
-  const fullImageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`;
   
   // Scroll to top when route changes
   useEffect(() => {
@@ -45,14 +44,14 @@ const Layout = ({
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={fullImageUrl} />
+        <meta property="og:image" content={image} />
         <meta property="og:url" content={fullCanonicalUrl} />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={fullImageUrl} />
+        <meta property="twitter:image" content={image} />
         
         {/* Indexing directives */}
         <meta name="robots" content="index, follow" />

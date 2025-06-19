@@ -69,56 +69,56 @@ const WhyUs = () => {
         </div>
       </section>
 
-      {/* Values Section - FIXED */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      {/* Values Section */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-20 text-gray-900">Our Core Values</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Our Core Values</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Quality Service</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <h3 className="text-xl font-bold mb-3">Quality Service</h3>
+              <p className="text-gray-600">
                 We never compromise on quality. Our team is trained to deliver exceptional results on every project.
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Reliability</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <h3 className="text-xl font-bold mb-3">Reliability</h3>
+              <p className="text-gray-600">
                 We show up on time, every time, and complete projects within the promised timeframe.
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Innovation</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <h3 className="text-xl font-bold mb-3">Innovation</h3>
+              <p className="text-gray-600">
                 We utilize the latest technology and techniques to deliver superior cleaning results.
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Customer Focus</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <h3 className="text-xl font-bold mb-3">Customer Focus</h3>
+              <p className="text-gray-600">
                 Your satisfaction is our priority. We listen to your needs and exceed expectations.
               </p>
             </div>
@@ -127,17 +127,17 @@ const WhyUs = () => {
       </section>
       
       {/* My Car Section */}
-      <section className="py-20 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-gray-900">Have You Seen Our Red Car?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Have You Seen Our Red Car?</h2>
             
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <img alt="BC Pressure Washing Red Car" className="rounded-lg shadow-xl w-full" src="/lovable-uploads/e7b51501-d13b-45ad-889c-383298d75f6f.png" />
               </div>
-              <div className="space-y-8">
-                <h3 className="text-3xl font-bold text-gray-900">That's Me! Your Local Exterior Cleaning Expert</h3>
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold">That's Me! Your Local Exterior Cleaning Expert</h3>
                 <p className="text-lg leading-relaxed text-gray-700">
                   If you've spotted a bright red car with "BC Pressure Washing" around White Rock Beach or driving through Surrey, you've seen us in action! 
                   As a local business owner, I take pride in personally serving our community and ensuring every job meets our high standards.
@@ -146,17 +146,17 @@ const WhyUs = () => {
                   Our distinctive vehicle is fully equipped with professional cleaning equipment, ready to transform your property. We're not just a faceless 
                   company - we're your neighbors, committed to making our community look its best.
                 </p>
-                <div className="bg-gray-50 p-6 rounded-lg shadow-md border-l-4 border-bc-red flex items-center">
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-bc-red flex items-center">
                   <img 
                     src="/lovable-uploads/5ab1b520-40ad-4e25-b0d6-6292266b90ea.png" 
                     alt="Jayden, Owner" 
                     className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-bc-red"
                   />
                   <div>
-                    <p className="italic text-gray-600 text-lg">
+                    <p className="italic text-gray-600">
                       "I believe in being visible and approachable in the community I serve. When you see our red car, feel free to wave or stop for a chat!"
                     </p>
-                    <p className="font-medium mt-2 text-gray-900">— Jayden, Owner</p>
+                    <p className="font-medium mt-2">— Jayden, Owner</p>
                   </div>
                 </div>
               </div>
