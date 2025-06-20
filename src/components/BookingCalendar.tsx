@@ -65,27 +65,53 @@ const BookingCalendar: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Store the complete booking information
-      const completeBooking = {
-        ...bookingData,
-        date: format(selectedDate, 'yyyy-MM-dd'),
-        time: selectedTime,
-        customer: customerInfo,
-        timestamp: Date.now()
+      // Prepare booking data for submission
+      const bookingSubmissionData = {
+        name: customerInfo.name,
+        email: customerInfo.email,
+        phone: customerInfo.phone,
+        service: bookingData?.service || 'Service Booking',
+        message: `Booking Request Details:
+- Service: ${bookingData?.service || 'Not specified'}
+- Address: ${bookingData?.address || 'Not provided'}
+- Preferred Date: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}
+- Preferred Time: ${selectedTime}
+- Property Size: ${bookingData?.squareFootage ? `${bookingData.squareFootage.toLocaleString()} sq ft` : 'Not specified'}
+- Quote: ${bookingData?.quote ? `$${bookingData.quote}` : 'Not provided'}
+- Additional Notes: ${customerInfo.notes || 'None'}`,
+        subject: "New Service Booking Request",
+        form: "BookingForm",
+        save_to_tracking: true,
+        // Include booking-specific data
+        booking_date: format(selectedDate, 'yyyy-MM-dd'),
+        booking_time: selectedTime,
+        property_address: bookingData?.address || '',
+        property_size: bookingData?.squareFootage || 0,
+        estimated_quote: bookingData?.quote || 0
       };
 
-      localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
-      
-      // Clear the original booking data
-      localStorage.removeItem('bookingData');
+      // Submit to the same endpoint as contact form
+      await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingSubmissionData),
+        }
+      );
 
       toast({
         title: "Booking Request Submitted!",
-        description: "We'll contact you within 24 hours to confirm your appointment.",
+        description: "We'll contact you within 24 hours to confirm your appointment. A confirmation email has been sent to you.",
       });
 
-      // Navigate to contact page with booking confirmation
-      navigate('/contact');
+      // Clear the booking data
+      localStorage.removeItem('bookingData');
+      
+      // Redirect to homepage after 2 seconds
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
       
     } catch (error) {
       console.error('Error submitting booking:', error);
