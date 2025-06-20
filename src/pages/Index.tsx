@@ -8,7 +8,7 @@ import AfkOverlay from '../components/AfkOverlay';
 import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
 import ServiceBanner from '../components/ServiceBanner';
-import WhatWeCleanSection from '../components/home/WhatWeCleanSection';
+import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
 import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
 import TrustBadgesSection from '../components/TrustBadgesSection';
 import QuickContactForm from '../components/home/QuickContactForm';
@@ -69,9 +69,9 @@ const Index = () => {
         <>
           <ServiceBanner />
           
-          {/* What We Clean Section */}
+          {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
-            <WhatWeCleanSection />
+            <ServiceSelectionSection />
           </div>
           
           <div className="bg-white relative z-50">
