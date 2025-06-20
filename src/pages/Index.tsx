@@ -8,14 +8,15 @@ import AfkOverlay from '../components/AfkOverlay';
 import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
 import ServiceBanner from '../components/ServiceBanner';
-import WhatWeCleanSection from '../components/home/WhatWeCleanSection';
-import WhyChooseUsSection from '../components/home/WhyChooseUsSection';
+import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
+import TrustBadgesSection from '../components/TrustBadgesSection';
+import QuickContactForm from '../components/home/QuickContactForm';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import ReferralProgramSection from '../components/ReferralProgramSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import FAQSection from '../components/FAQSection';
-import FinalCTASection from '../components/home/FinalCTASection';
 import RedCarSection from '../components/home/RedCarSection';
 
 const Index = () => {
@@ -59,8 +60,8 @@ const Index = () => {
     <Layout
       image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
       canonicalUrl="/"
-      title="White Rock BC Pressure Washing & Window Cleaning - BC Pressure Washing"
-      description="BC Pressure Washing offers professional pressure washing and window cleaning in White Rock, South Surrey and the Lower Mainland. Call now for a free quote!"
+      title="BC Pressure Washing - #1 White Rock, Surrey & Metro Vancouver Exterior Cleaning"
+      description="Professional pressure washing, window cleaning & house washing in White Rock, Surrey, Langley & Metro Vancouver. ⭐ 5-Star Local Service | Free Quotes | Same-Day Availability"
     >
       <SEOContent faqItems={faqItems} />
       
@@ -68,14 +69,20 @@ const Index = () => {
         <>
           <ServiceBanner />
           
-          {/* What We Clean Section */}
+          {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
-            <WhatWeCleanSection />
+            <ServiceSelectionSection />
           </div>
           
           <div className="bg-white relative z-50">
-            {/* Why Choose Us Section */}
-            <WhyChooseUsSection />
+            {/* Enhanced Before/After Gallery with filtering */}
+            <EnhancedBeforeAfterGallery />
+            
+            {/* Trust Badges Section */}
+            <TrustBadgesSection />
+            
+            {/* Contact Form */}
+            <QuickContactForm />
             
             {/* Testimonials */}
             <TestimonialsSection />
@@ -101,9 +108,6 @@ const Index = () => {
                 darkMode={true}
               />
             </div>
-            
-            {/* Final CTA Section */}
-            <FinalCTASection />
             
             {/* White Rock Footer Image */}
             <div className="w-full footer-image">
