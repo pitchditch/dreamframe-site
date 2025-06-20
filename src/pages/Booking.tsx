@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import BookingCalendar from '../components/BookingCalendar';
 import { Helmet } from 'react-helmet-async';
 
-const Booking: React.FC = () => {
+const Booking = () => {
   return (
     <Layout>
       <Helmet>
