@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Phone, Mail, MapPin, Clock, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -21,6 +21,7 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   // Auto-fill form with booking data if available
   useEffect(() => {
@@ -36,7 +37,6 @@ const Contact = () => {
           message: prefilledMessage
         }));
         
-        // Clear the booking data after using it
         localStorage.removeItem('bookingData');
       } catch (error) {
         console.error('Error parsing booking data:', error);
@@ -47,38 +47,45 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus('idle');
 
     try {
-      console.log('Submitting form with data:', formData);
-      
-      // Send to business owner and customer, save to house tracking
+      // Validate required fields
+      if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+        throw new Error('Please fill in all required fields');
+      }
+
+      // Send to Supabase edge function
       const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5eXVkc2pxd3NwYXBtdWp2em1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4Nzc4MDQsImV4cCI6MjA2NTQ1MzgwNH0.Fwq059rw1BlfRk_Qr-NdbTmo140o-YLzN6Qt0HupSlA'}`
+          },
           body: JSON.stringify({
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
             service: formData.service,
             message: formData.message,
-            subject: "New Contact Form Submission - Quote Request",
+            subject: `New Contact Form Submission from ${formData.name}`,
             form: "ContactForm",
-            // Add flag to indicate this should be saved to house tracking
             save_to_tracking: true
           }),
         }
       );
 
-      console.log('Response status:', response.status);
-      const result = await response.json();
-      console.log('Response data:', result);
-
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message');
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Server error: ${response.status}`);
       }
 
+      const result = await response.json();
+      
+      setSubmitStatus('success');
+      
       toast({
         title: "Message sent successfully!",
         description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
@@ -93,18 +100,19 @@ const Contact = () => {
         message: ''
       });
 
-      // Show success message for a bit longer before redirect
+      // Redirect to homepage after 2 seconds
       setTimeout(() => {
-        console.log('Redirecting to homepage...');
         navigate('/', { replace: true });
-      }, 3000);
+      }, 2000);
 
     } catch (error) {
       console.error('Error sending email:', error);
+      setSubmitStatus('error');
+      
       toast({
         variant: "destructive",
         title: "Error sending message",
-        description: "Please try again or call us directly.",
+        description: error instanceof Error ? error.message : "Please try again or call us directly at (778) 808-7620",
       });
     } finally {
       setIsSubmitting(false);
@@ -143,6 +151,18 @@ const Contact = () => {
                 <CardTitle className="text-2xl font-bold text-gray-900">
                   Send us a message
                 </CardTitle>
+                {submitStatus === 'success' && (
+                  <div className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-md">
+                    <CheckCircle className="w-5 h-5" />
+                    <span>Message sent! Redirecting to homepage...</span>
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="flex items-center gap-2 text-red-600 bg-red-50 p-3 rounded-md">
+                    <AlertCircle className="w-5 h-5" />
+                    <span>Failed to send message. Please try again or call us directly.</span>
+                  </div>
+                )}
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -158,6 +178,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         className="w-full"
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -171,6 +192,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         className="w-full"
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -186,6 +208,7 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       className="w-full"
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -197,6 +220,7 @@ const Contact = () => {
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
+                      disabled={isSubmitting}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select a service</option>
@@ -222,18 +246,24 @@ const Contact = () => {
                       rows={5}
                       placeholder="Tell us about your project, property size, and any specific requirements..."
                       className="w-full"
+                      disabled={isSubmitting}
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
+                    disabled={isSubmitting || submitStatus === 'success'}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                         Sending...
+                      </>
+                    ) : submitStatus === 'success' ? (
+                      <>
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Sent Successfully!
                       </>
                     ) : (
                       'Send Message'
@@ -319,7 +349,6 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              {/* Service Areas */}
               <Card className="shadow-lg">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Service Areas</h3>
