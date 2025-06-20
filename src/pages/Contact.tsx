@@ -49,8 +49,10 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      console.log('Submitting form with data:', formData);
+      
       // Send to business owner and customer, save to house tracking
-      await fetch(
+      const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
           method: "POST",
@@ -69,6 +71,14 @@ const Contact = () => {
         }
       );
 
+      console.log('Response status:', response.status);
+      const result = await response.json();
+      console.log('Response data:', result);
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
       toast({
         title: "Message sent successfully!",
         description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
@@ -83,10 +93,11 @@ const Contact = () => {
         message: ''
       });
 
-      // Redirect to homepage after 2 seconds
+      // Show success message for a bit longer before redirect
       setTimeout(() => {
-        navigate('/');
-      }, 2000);
+        console.log('Redirecting to homepage...');
+        navigate('/', { replace: true });
+      }, 3000);
 
     } catch (error) {
       console.error('Error sending email:', error);

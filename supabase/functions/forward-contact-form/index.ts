@@ -19,6 +19,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
+    console.log('Received form submission:', body);
 
     // Send email to business owner
     const businessHtmlFields = Object.entries(body)
@@ -43,8 +44,10 @@ serve(async (req) => {
       body.subject ||
       `New Contact Form Submission from ${body.name || body.email || "Visitor"}`;
 
+    console.log('Sending email to business owner:', BUSINESS_EMAIL);
+    
     // Send email to business owner
-    await resend.emails.send({
+    const businessEmailResult = await resend.emails.send({
       from: `BC Pressure Washing Site <website@bcpressurewashing.ca>`,
       to: [BUSINESS_EMAIL],
       subject: businessSubject,
@@ -52,8 +55,12 @@ serve(async (req) => {
       reply_to: body.email,
     });
 
+    console.log('Business email sent:', businessEmailResult);
+
     // Send confirmation email to customer if email is provided
     if (body.email && body.name) {
+      console.log('Sending confirmation email to customer:', body.email);
+      
       const customerHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #f8f9fa; padding: 20px; text-align: center;">
@@ -67,13 +74,14 @@ serve(async (req) => {
             <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
               <h3 style="color: #333; margin-top: 0;">Your Request Details:</h3>
               <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
+              <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
               <p><strong>Message:</strong> ${body.message}</p>
             </div>
             
             <p>In the meantime, feel free to contact us directly:</p>
             <ul>
               <li><strong>Phone:</strong> (778) 808-7620</li>
-              <li><strong>Email:</strong> bcpressurewashing.ca@gmail.com</li>
+              <li><strong>Email:</strong> info@bcpressurewashing.ca</li>
             </ul>
             
             <p>We look forward to helping you with your cleaning needs!</p>
@@ -81,24 +89,28 @@ serve(async (req) => {
             <p>Best regards,<br>
             The BC Pressure Washing Team</p>
           </div>
-          <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
+          <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; font-size: 12px;">
             <p>BC Pressure Washing - Professional Cleaning Services</p>
             <p>White Rock & Surrey, BC | Serving Metro Vancouver</p>
           </div>
         </div>
       `;
 
-      await resend.emails.send({
+      const customerEmailResult = await resend.emails.send({
         from: "BC Pressure Washing <info@bcpressurewashing.ca>",
         to: [body.email],
         subject: "Thank you for your quote request - BC Pressure Washing",
         html: customerHtml,
       });
+
+      console.log('Customer confirmation email sent:', customerEmailResult);
     }
 
     // Save to house tracking system if requested
     if (body.save_to_tracking && body.name && body.email) {
       try {
+        console.log('Saving customer data for house tracking...');
+        
         // Get existing house pins from localStorage (this would typically be in a database)
         // For now, we'll create a new entry that can be imported into the house tracking system
         const trackingData = {
@@ -125,7 +137,12 @@ serve(async (req) => {
       }
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    console.log('Form submission processed successfully');
+
+    return new Response(JSON.stringify({ 
+      success: true,
+      message: 'Form submitted successfully. Confirmation email sent.'
+    }), {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error) {
