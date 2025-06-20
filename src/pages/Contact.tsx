@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -48,7 +49,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Send to business owner and save to house tracking
+      // Send to business owner and customer, save to house tracking
       await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
