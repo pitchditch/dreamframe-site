@@ -34,8 +34,8 @@ const HeroForm = () => {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} ${isMobile ? 'mt-4 mb-6' : 'mt-6 mb-8'} animate-on-scroll delay-300`}>
-      <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-4">
+    <div className={`${isMobile ? 'w-full' : 'max-w-xl w-full'} ${isMobile ? 'mt-4 mb-4' : 'mt-4 mb-6'} animate-on-scroll delay-300`}>
+      <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-grow">
           <Input
             ref={inputRef}
@@ -43,16 +43,16 @@ const HeroForm = () => {
             placeholder={t("Enter Your Postal Code")}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
-            className={`bg-white border-white text-black ${isMobile ? 'h-16 text-xl rounded-xl' : 'h-14 md:h-18 text-lg md:text-2xl rounded-lg'} pl-4 pr-10 focus:ring-bc-red focus:border-bc-red placeholder-gray-500 font-medium w-full`}
+            className={`bg-white border-white text-black ${isMobile ? 'h-12 text-lg rounded-lg' : 'h-12 md:h-14 text-base md:text-lg rounded-lg'} pl-4 pr-10 focus:ring-bc-red focus:border-bc-red placeholder-gray-500 font-medium w-full`}
           />
         </div>
         <Button 
           type="submit" 
           variant="bc-red" 
           size="lg" 
-          className={`${isMobile ? 'h-16 text-xl rounded-xl px-8' : 'h-14 md:h-18 text-lg md:text-2xl rounded-lg px-8 md:px-10'} text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto sm:min-w-[250px] md:sm:min-w-[300px]`}
+          className={`${isMobile ? 'h-12 text-lg rounded-lg px-6' : 'h-12 md:h-14 text-base md:text-lg rounded-lg px-6 md:px-8'} text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto sm:min-w-[200px] md:min-w-[240px]`}
         >
-          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-2" size={20} />
+          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-2" size={18} />
         </Button>
       </form>
     </div>

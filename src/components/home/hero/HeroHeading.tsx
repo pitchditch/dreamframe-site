@@ -7,9 +7,9 @@ const HeroHeading = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={`${isMobile ? 'mb-8' : 'mb-10 md:mb-12'}`}>
+    <div className={`${isMobile ? 'mb-6' : 'mb-6 md:mb-8'}`}>
       {/* Main heading */}
-      <h1 className={`${isMobile ? 'text-3xl leading-tight' : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl'} font-bold ${isMobile ? 'mb-6' : 'mb-8 md:mb-10'} animate-on-scroll leading-tight`}>
+      <h1 className={`${isMobile ? 'text-3xl leading-tight' : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'} font-bold ${isMobile ? 'mb-4' : 'mb-4 md:mb-6'} animate-on-scroll leading-tight`}>
         <span className="text-white">
           {isMobile ? (
             <>
@@ -24,7 +24,7 @@ const HeroHeading = () => {
       </h1>
       
       {/* Subtitle */}
-      <p className={`${isMobile ? 'text-lg leading-relaxed mb-6' : 'text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 md:mb-10'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
+      <p className={`${isMobile ? 'text-base leading-relaxed mb-4' : 'text-base sm:text-lg md:text-xl mb-4 md:mb-6'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
         {isMobile 
           ? t("Fast, friendly pressure washing for homes & businesses in White Rock, Surrey & Metro Vancouver. We'll blast away dirt, mold & grime!")
           : t("Fast, fully insured service backed by a satisfaction guarantee. We'll make your property sparkle!")
