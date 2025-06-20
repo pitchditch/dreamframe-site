@@ -134,16 +134,16 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-16 sm:pt-20 md:pt-24'} ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-8 sm:pt-12' : 'pt-32 sm:pt-36 md:pt-40'} ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
-          {/* Updated banner with better sizing and positioning */}
-          <div className="inline-block bg-bc-red px-6 py-3 rounded-lg mb-6 md:mb-8 animate-on-scroll">
+          {/* Banner with proper desktop spacing */}
+          <div className={`inline-block bg-bc-red px-6 py-3 rounded-lg ${isMobile ? 'mb-6' : 'mb-12 md:mb-16'} animate-on-scroll`}>
             <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl leading-tight">{t("Tired of Dirty Siding & Grimy Driveways?")}</span>
           </div>
           
-          <div className="mb-8 md:mb-10">
-            {/* Increased text sizes significantly */}
-            <h1 className={`${isMobile ? 'text-3xl leading-tight' : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl'} font-bold mb-6 md:mb-8 animate-on-scroll leading-tight`}>
+          <div className={`${isMobile ? 'mb-8' : 'mb-12 md:mb-16'}`}>
+            {/* Main heading with better sizing */}
+            <h1 className={`${isMobile ? 'text-3xl leading-tight' : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl'} font-bold ${isMobile ? 'mb-6' : 'mb-8 md:mb-12'} animate-on-scroll leading-tight`}>
               <span className="text-white">
                 {isMobile ? (
                   <>
@@ -157,8 +157,8 @@ const HeroSection = () => {
               </span>
             </h1>
             
-            {/* Increased subtitle text size */}
-            <p className={`${isMobile ? 'text-lg leading-relaxed' : 'text-lg sm:text-xl md:text-2xl lg:text-3xl'} mb-6 md:mb-8 animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
+            {/* Subtitle with better sizing */}
+            <p className={`${isMobile ? 'text-lg leading-relaxed mb-6' : 'text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 md:mb-12'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
               {isMobile 
                 ? t("Fast, friendly pressure washing for homes & businesses in White Rock, Surrey & Metro Vancouver. We'll blast away dirt, mold & grime!")
                 : t("Fast, fully insured service backed by a satisfaction guarantee. We'll make your property sparkle!")
@@ -167,8 +167,8 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Postal Code Input Section */}
-        <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} mt-4 md:mt-6 mb-6 md:mb-8 animate-on-scroll delay-300`}>
+        {/* Postal Code Input Section - Fixed positioning */}
+        <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} ${isMobile ? 'mt-4 mb-6' : 'mt-8 mb-12'} animate-on-scroll delay-300`}>
           <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-grow">
               <Input
@@ -191,8 +191,8 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Personal Touch Section */}
-        <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 my-6 md:my-8 animate-on-scroll delay-700 ${isMobile ? 'max-w-full mb-10' : 'mb-20'}`}>
+        {/* Personal Touch Section - Fixed spacing to avoid overlap */}
+        <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 ${isMobile ? 'my-6 mb-10' : 'my-8 mb-32'} animate-on-scroll delay-700 ${isMobile ? 'max-w-full' : ''}`}>
           <div className={`bg-black/40 backdrop-blur-sm ${isMobile ? 'p-5 rounded-xl max-w-full' : 'p-4 md:p-5 lg:p-7 rounded-xl max-w-lg'} border border-white/30 shadow-lg w-full sm:w-auto flex flex-row items-center`}>
             <img 
               src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
