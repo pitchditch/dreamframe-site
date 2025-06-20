@@ -1,3 +1,4 @@
+
 import Layout from '../../components/Layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { Check, ArrowRight, Phone } from 'lucide-react';
@@ -177,7 +178,7 @@ const WindowCleaning = () => {
       {/* FAQ Section */}
       <FAQSection 
         title="Frequently Asked Questions"
-        description="Get answers to common questions about our window cleaning services"
+        subtitle="Get answers to common questions about our window cleaning services"
         faqs={windowCleaningFAQs}
       />
 
