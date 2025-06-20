@@ -45,11 +45,11 @@ const CompetitorComparisonSection = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'yes':
-        return <Check className="w-5 h-5 text-green-600" />;
+        return <Check className="w-4 h-4 text-green-600" />;
       case 'no':
-        return <X className="w-5 h-5 text-red-600" />;
+        return <X className="w-4 h-4 text-red-600" />;
       case 'sometimes':
-        return <AlertTriangle className="w-5 h-5 text-yellow-600" />;
+        return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
       default:
         return null;
     }
@@ -69,14 +69,14 @@ const CompetitorComparisonSection = () => {
   };
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-12 md:py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-4xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-            Why White Rock Homeowners Choose BC Pressure Washing Over the Competition
+        <div className="text-center max-w-4xl mx-auto mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900">
+            Why White Rock Homeowners Choose BC Pressure Washing
           </h2>
-          <p className="text-lg text-gray-600">
-            Compare our professional services with other providers in White Rock and Surrey
+          <p className="text-base md:text-lg text-gray-600">
+            Compare our services with other providers in White Rock and Surrey
           </p>
         </div>
         
@@ -100,19 +100,19 @@ const CompetitorComparisonSection = () => {
                       <td className={`py-4 px-6 text-center ${row.bcPressureWashing.status === 'yes' ? 'bg-red-50' : ''}`}>
                         <div className="flex items-center justify-center gap-2">
                           {getStatusIcon(row.bcPressureWashing.status)}
-                          <span className="font-medium">{row.bcPressureWashing.text}</span>
+                          <span className="font-medium text-sm">{row.bcPressureWashing.text}</span>
                         </div>
                       </td>
                       <td className="py-4 px-6 text-center">
                         <div className="flex items-center justify-center gap-2">
                           {getStatusIcon(row.shackShine.status)}
-                          <span>{row.shackShine.text}</span>
+                          <span className="text-sm">{row.shackShine.text}</span>
                         </div>
                       </td>
                       <td className="py-4 px-6 text-center">
                         <div className="flex items-center justify-center gap-2">
                           {getStatusIcon(row.menInKilts.status)}
-                          <span>{row.menInKilts.text}</span>
+                          <span className="text-sm">{row.menInKilts.text}</span>
                         </div>
                       </td>
                     </tr>
@@ -122,33 +122,33 @@ const CompetitorComparisonSection = () => {
             </div>
           </div>
 
-          {/* Mobile Card View */}
-          <div className="md:hidden space-y-4">
+          {/* Mobile Card View - Improved */}
+          <div className="md:hidden space-y-3">
             {comparisonData.map((row, index) => (
               <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-                <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                  <h3 className="font-semibold text-gray-900">{row.feature}</h3>
+                <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
+                  <h3 className="font-semibold text-gray-900 text-sm">{row.feature}</h3>
                 </div>
-                <div className="p-4 space-y-3">
-                  <div className={`flex items-center justify-between p-3 rounded-lg ${getStatusColor(row.bcPressureWashing.status)}`}>
-                    <span className="font-medium">BC Pressure Washing</span>
-                    <div className="flex items-center gap-2">
+                <div className="p-3 space-y-2">
+                  <div className={`flex items-center justify-between p-2 rounded-lg ${getStatusColor(row.bcPressureWashing.status)}`}>
+                    <span className="font-medium text-xs">BC Pressure Washing</span>
+                    <div className="flex items-center gap-1">
                       {getStatusIcon(row.bcPressureWashing.status)}
-                      <span className="text-sm font-medium">{row.bcPressureWashing.text}</span>
+                      <span className="text-xs font-medium">{row.bcPressureWashing.text}</span>
                     </div>
                   </div>
-                  <div className={`flex items-center justify-between p-3 rounded-lg ${getStatusColor(row.shackShine.status)}`}>
-                    <span className="font-medium">Shack Shine</span>
-                    <div className="flex items-center gap-2">
+                  <div className={`flex items-center justify-between p-2 rounded-lg ${getStatusColor(row.shackShine.status)}`}>
+                    <span className="font-medium text-xs">Shack Shine</span>
+                    <div className="flex items-center gap-1">
                       {getStatusIcon(row.shackShine.status)}
-                      <span className="text-sm">{row.shackShine.text}</span>
+                      <span className="text-xs">{row.shackShine.text}</span>
                     </div>
                   </div>
-                  <div className={`flex items-center justify-between p-3 rounded-lg ${getStatusColor(row.menInKilts.status)}`}>
-                    <span className="font-medium">Men In Kilts</span>
-                    <div className="flex items-center gap-2">
+                  <div className={`flex items-center justify-between p-2 rounded-lg ${getStatusColor(row.menInKilts.status)}`}>
+                    <span className="font-medium text-xs">Men In Kilts</span>
+                    <div className="flex items-center gap-1">
                       {getStatusIcon(row.menInKilts.status)}
-                      <span className="text-sm">{row.menInKilts.text}</span>
+                      <span className="text-xs">{row.menInKilts.text}</span>
                     </div>
                   </div>
                 </div>
@@ -156,12 +156,12 @@ const CompetitorComparisonSection = () => {
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6 max-w-2xl mx-auto">
-              <p className="text-green-800 font-medium italic">
+          <div className="text-center mt-6 md:mt-8">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 md:p-6 mb-4 md:mb-6 max-w-2xl mx-auto">
+              <p className="text-green-800 font-medium italic text-sm md:text-base">
                 "We compared BC Pressure Washing with Shack Shine and chose BC for their personal service and better equipment. Best decision ever!"
               </p>
-              <p className="text-green-700 text-sm mt-2">— Sarah M., White Rock</p>
+              <p className="text-green-700 text-xs md:text-sm mt-2">— Sarah M., White Rock</p>
             </div>
           </div>
         </div>
