@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,11 +7,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Phone, Mail, MapPin, Clock, CheckCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import emailjs from 'emailjs-com';
 import { useToast } from '@/components/ui/use-toast';
 
 const Contact = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,24 +48,32 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      await emailjs.send(
-        'service_bc_pressure',
-        'template_contact',
+      // Send to business owner and save to house tracking
+      await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone,
-          service: formData.service,
-          message: formData.message,
-        },
-        'YOUR_PUBLIC_KEY'
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            service: formData.service,
+            message: formData.message,
+            subject: "New Contact Form Submission - Quote Request",
+            form: "ContactForm",
+            // Add flag to indicate this should be saved to house tracking
+            save_to_tracking: true
+          }),
+        }
       );
 
       toast({
         title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
+        description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
       });
 
+      // Clear form
       setFormData({
         name: '',
         email: '',
@@ -73,6 +81,12 @@ const Contact = () => {
         service: '',
         message: ''
       });
+
+      // Redirect to homepage after 2 seconds
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+
     } catch (error) {
       console.error('Error sending email:', error);
       toast({
@@ -99,7 +113,7 @@ const Contact = () => {
         <meta name="description" content="Get your free quote today! Contact BC Pressure Washing for professional cleaning services in White Rock, Surrey, and Metro Vancouver. Call (778) 808-7620." />
       </Helmet>
       
-      <div className="min-h-screen bg-gray-50 pt-20 pb-12">
+      <div className="min-h-screen bg-gray-50 pt-28 pb-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">

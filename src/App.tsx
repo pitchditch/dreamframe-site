@@ -20,6 +20,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
+const HouseTracking = lazy(() => import('./pages/HouseTracking'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/booking" element={<Booking />} />
+                <Route path="/house-tracking" element={<HouseTracking />} />
 
                 {/* Service Routes */}
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />
