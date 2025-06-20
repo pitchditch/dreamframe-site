@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -38,6 +38,15 @@ const beforeAfterImages = [
 
 const BeforeAfterGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-advance carousel every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % beforeAfterImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % beforeAfterImages.length);
