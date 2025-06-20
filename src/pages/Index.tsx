@@ -18,6 +18,7 @@ import ReferralProgramSection from '../components/ReferralProgramSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
+import ServiceAreasSection from '../components/home/ServiceAreasSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -99,13 +100,18 @@ const Index = () => {
             {/* Competitor Comparison */}
             <CompetitorComparisonSection />
             
-            {/* FAQ Section */}
-            <div data-section="faq">
+            {/* Service Areas Section with Interactive Map */}
+            <ServiceAreasSection />
+            
+            {/* FAQ Section - Full width with bigger buttons */}
+            <div data-section="faq" className="w-full">
               <FAQSection 
-                title={t("Frequently Asked Questions")} 
+                title={t("Still Have Questions?")} 
                 subtitle={t("Everything you need to know about our services")}
                 faqs={faqItems}
                 darkMode={true}
+                fullWidth={true}
+                largeButtons={true}
               />
             </div>
             
