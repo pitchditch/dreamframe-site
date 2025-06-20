@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -97,7 +96,7 @@ export const SmartPriceCalculator: React.FC = () => {
   };
 
   const handleBookService = () => {
-    // Store the quote information for the contact form
+    // Store the quote information for the booking calendar
     const bookingData = {
       service: serviceType,
       address: selectedAddress?.formatted_address,
@@ -107,7 +106,7 @@ export const SmartPriceCalculator: React.FC = () => {
     };
     
     localStorage.setItem('bookingData', JSON.stringify(bookingData));
-    navigate('/contact');
+    navigate('/booking');
   };
 
   const handleGetMoreDetails = () => {
