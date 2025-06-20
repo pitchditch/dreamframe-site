@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,10 +13,10 @@ import Services from "./pages/Services";
 import Testimonials from "./pages/Testimonials";
 import WindowCleaning from "./pages/WindowCleaning";
 import PressureWashing from "./pages/PressureWashing";
-import SoftWash from "./pages/SoftWash";
-import RoofCleaning from "./pages/RoofCleaning";
-import GutterCleaning from "./pages/GutterCleaning";
-import HouseWash from "./pages/HouseWash";
+import SoftWash from "./pages/services/SoftWash";
+import RoofCleaning from "./pages/services/RoofCleaning";
+import GutterCleaning from "./pages/services/GutterCleaning";
+import HouseWash from "./pages/services/HouseWashing";
 import Equipment from "./pages/Equipment";
 import ComparePrices from "./pages/ComparePrices";
 import CompareServices from "./pages/CompareServices";
