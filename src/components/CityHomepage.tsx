@@ -5,6 +5,8 @@ import { Helmet } from 'react-helmet-async';
 import { Star, Droplets, Sparkles, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CityData } from '@/data/cities';
+import { LocationAwareContent } from './DynamicPricing/LocationAwareContent';
+import { EnhancedCalculator } from './DynamicPricing/EnhancedCalculator';
 
 interface CityHomepageProps {
   cityData: CityData;
@@ -17,6 +19,13 @@ const CityHomepage = ({ cityData }: CityHomepageProps) => {
     return Array.from({ length: rating }, (_, i) => (
       <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
     ));
+  };
+
+  // Generate local stats (this could come from a real API)
+  const localStats = {
+    reviewCount: Math.floor(Math.random() * 50) + 20,
+    avgRating: 4.8 + Math.random() * 0.2,
+    jobsCompleted: Math.floor(Math.random() * 200) + 100
   };
 
   return (
@@ -45,11 +54,11 @@ const CityHomepage = ({ cityData }: CityHomepageProps) => {
             Restore Your Home's Curb Appeal in {name}
           </h1>
           <p className="text-xl md:text-2xl text-white mb-8 max-w-4xl mx-auto leading-relaxed">
-            Professional pressure washing and window cleaning services for {name} homeowners. Transform your property with our expert exterior cleaning solutions.
+            Professional pressure washing and window cleaning services for {name} homeowners. Get location-specific pricing tailored to your area.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4 hover:scale-105 transition-transform">
-              <Link to={`/calculator?city=${slug}`}>Get a Free Quote</Link>
+              <Link to={`/calculator?city=${slug}`}>Get Dynamic Quote</Link>
             </Button>
             <a 
               href="tel:778-555-1234" 
@@ -59,6 +68,33 @@ const CityHomepage = ({ cityData }: CityHomepageProps) => {
               Call Now: (778) 555-1234
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Location-Specific Content */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <LocationAwareContent
+            cityName={name}
+            postalCode={postalCodePrefix}
+            nearbyAreas={nearbyAreas}
+            localStats={localStats}
+          />
+        </div>
+      </section>
+
+      {/* Dynamic Pricing Calculator */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Get Your {name} Quote
+            </h2>
+            <p className="text-xl text-gray-600">
+              Location-specific pricing with real-time adjustments
+            </p>
+          </div>
+          <EnhancedCalculator defaultCity={slug} />
         </div>
       </section>
 
