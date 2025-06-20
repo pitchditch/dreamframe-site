@@ -5,6 +5,7 @@ import ServiceHeader from '../../components/ServiceHeader';
 import ServiceProcess from '../../components/ServiceProcess';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import CallToAction from '../../components/CallToAction';
+import { Droplets, Shield, Leaf, Clock } from 'lucide-react';
 
 const SoftWash = () => {
   const benefits = [
@@ -26,22 +27,26 @@ const SoftWash = () => {
     }
   ];
 
-  const processSteps = [
+  const processes = [
     {
       title: "Property Assessment",
-      description: "We evaluate your property to determine the best soft wash approach and identify any special considerations."
+      description: "We evaluate your property to determine the best soft wash approach and identify any special considerations.",
+      icon: <Shield size={48} />
     },
     {
       title: "Surface Preparation",
-      description: "We protect landscaping and prepare the area, ensuring a safe and controlled cleaning environment."
+      description: "We protect landscaping and prepare the area, ensuring a safe and controlled cleaning environment.",
+      icon: <Leaf size={48} />
     },
     {
       title: "Soft Wash Application",
-      description: "Our specialized cleaning solution is applied using low-pressure equipment to gently clean all surfaces."
+      description: "Our specialized cleaning solution is applied using low-pressure equipment to gently clean all surfaces.",
+      icon: <Droplets size={48} />
     },
     {
       title: "Final Rinse & Inspection",
-      description: "We thoroughly rinse all surfaces and conduct a final inspection to ensure exceptional results."
+      description: "We thoroughly rinse all surfaces and conduct a final inspection to ensure exceptional results.",
+      icon: <Clock size={48} />
     }
   ];
 
@@ -53,9 +58,8 @@ const SoftWash = () => {
     >
       <ServiceHeader
         title="Soft Wash Cleaning Services"
-        subtitle="Gentle, effective cleaning for your home's exterior"
-        description="Our soft wash system provides thorough cleaning without the risks associated with high-pressure washing. Perfect for roofs, siding, stucco, and other delicate surfaces."
-        image="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+        description="Gentle, effective cleaning for your home's exterior. Our soft wash system provides thorough cleaning without the risks associated with high-pressure washing. Perfect for roofs, siding, stucco, and other delicate surfaces."
+        imagePath="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
       />
 
       <section className="py-16 bg-white">
@@ -94,8 +98,24 @@ const SoftWash = () => {
       </section>
 
       <ServiceBenefits benefits={benefits} />
-      <ServiceProcess steps={processSteps} />
-      <CallToAction />
+      
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Our Soft Wash Process</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Our systematic approach ensures safe, effective cleaning that protects your property while delivering exceptional results.
+            </p>
+          </div>
+          <ServiceProcess processes={processes} />
+        </div>
+      </section>
+
+      <CallToAction 
+        title="Ready for Gentle, Effective Cleaning?"
+        subtitle="Get a free quote for our soft wash services and see the difference gentle cleaning can make for your property."
+        backgroundImage="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+      />
     </Layout>
   );
 };
