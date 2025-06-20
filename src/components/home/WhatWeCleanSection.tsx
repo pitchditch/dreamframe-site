@@ -72,7 +72,7 @@ const WhatWeCleanSection = () => {
         {/* Section Header */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-4 text-gray-900`}>
-            Exterior Cleaning Services in White Rock, BC
+            What Can We Make Shine Today?
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 max-w-3xl mx-auto mb-8`}>
             Our White Rock pressure washing team can remove mold, dirt and grime from driveways, sidewalks, patios, deck railings, fences and more. 
