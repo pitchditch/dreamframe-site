@@ -1,85 +1,72 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const BeforeAfterSection: React.FC = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  const images = [
+  const services = [
     {
-      src: "/lovable-uploads/1eaed8db-5d8f-4291-b8a6-cf155569badc.png",
-      alt: "Before: Tape and debris stuck to every pane",
-      caption: "Before: Tape and debris"
+      title: "Window Cleaning",
+      beforeImage: "/lovable-uploads/1eaed8db-5d8f-4291-b8a6-cf155569badc.png",
+      afterImage: "/lovable-uploads/3af05628-d275-4679-9546-12fcc6178d94.png",
+      beforeAlt: "Dirty windows with tape and debris",
+      afterAlt: "Clean, sparkling windows"
     },
     {
-      src: "/lovable-uploads/8bfa7c48-74fb-490c-89e1-e15d87fdcc6d.png",
-      alt: "During: Careful removal using specialized techniques",
-      caption: "During: Careful removal"
+      title: "Pressure Washing",
+      beforeImage: "/lovable-uploads/8bfa7c48-74fb-490c-89e1-e15d87fdcc6d.png",
+      afterImage: "/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png",
+      beforeAlt: "Dirty driveway before pressure washing",
+      afterAlt: "Clean driveway after pressure washing"
     },
     {
-      src: "/lovable-uploads/a237ac38-d3a7-42b4-853b-65512e02a031.png",
-      alt: "Cleaning Windows: Professional window cleaning in progress",
-      caption: "Cleaning Windows"
-    },
-    {
-      src: "/lovable-uploads/3af05628-d275-4679-9546-12fcc6178d94.png",
-      alt: "After: Sparkling, streak-free windows",
-      caption: "After: Sparkling clean"
+      title: "Gutter Cleaning",
+      beforeImage: "/lovable-uploads/1eaed8db-5d8f-4291-b8a6-cf155569badc.png",
+      afterImage: "/lovable-uploads/3af05628-d275-4679-9546-12fcc6178d94.png",
+      beforeAlt: "Clogged gutters with debris",
+      afterAlt: "Clean, flowing gutters"
     }
   ];
-
-  // Auto-rotate images every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
 
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12 text-center">See The Difference</h2>
+        <h2 className="text-3xl font-bold mb-12 text-center">What We Clean</h2>
         
-        {/* Automatic Carousel */}
-        <div className="relative max-w-4xl mx-auto mb-8">
-          <div className="relative h-96 overflow-hidden rounded-lg shadow-lg">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-500 ${
-                  index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {services.map((service, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <h3 className="text-xl font-semibold text-center py-4 bg-bc-red text-white">
+                {service.title}
+              </h3>
+              
+              {/* Before Image */}
+              <div className="relative">
                 <img 
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover"
+                  src={service.beforeImage}
+                  alt={service.beforeAlt}
+                  className="w-full h-48 object-cover"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-4">
-                  <p className="text-white font-medium text-lg">{image.caption}</p>
+                <div className="absolute top-2 left-2 bg-red-500 text-white px-3 py-1 rounded text-sm font-medium">
+                  Before
                 </div>
               </div>
-            ))}
-          </div>
-          
-          {/* Carousel Indicators */}
-          <div className="flex justify-center mt-4 space-x-2">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImageIndex(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentImageIndex ? 'bg-bc-red' : 'bg-gray-300'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
+              
+              {/* After Image */}
+              <div className="relative">
+                <img 
+                  src={service.afterImage}
+                  alt={service.afterAlt}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 rounded text-sm font-medium">
+                  After
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
         
         <div className="mt-12 text-center">
-          <h3 className="text-2xl font-semibold mb-4">Ready to make your windows shine?</h3>
+          <h3 className="text-2xl font-semibold mb-4">Ready to make your property shine?</h3>
           <a 
             href="#booking-section" 
             className="inline-block bg-bc-red text-white px-8 py-4 rounded-md font-medium text-lg hover:bg-red-700 transition-colors"
