@@ -25,8 +25,8 @@ const HeroHeading = () => {
         </span>
       </h1>
       
-      {/* Subtitle */}
-      <p className={`${isMobile ? 'text-base leading-relaxed mb-3' : 'text-base sm:text-lg md:text-xl mb-3 md:mb-4'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
+      {/* Subtitle - Made bigger */}
+      <p className={`${isMobile ? 'text-lg leading-relaxed mb-3' : 'text-xl sm:text-2xl md:text-3xl mb-3 md:mb-4'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
         {isMobile 
           ? t("Fast, friendly pressure washing for homes & businesses in White Rock, Surrey & Metro Vancouver. We'll blast away dirt, mold & grime!")
           : t("Fast, fully insured service backed by a satisfaction guarantee. We'll make your property sparkle!")
