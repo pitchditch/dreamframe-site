@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -61,7 +60,7 @@ const HeroSection = () => {
       }, 800); // Reduced from 1500ms
     }
   }, [isMobile, isHomePage]);
-
+  
   // Don't render hero section if not on home page
   if (!isHomePage) return null;
 
@@ -69,8 +68,8 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-16 sm:pt-20' : 'pt-20 sm:pt-24 md:pt-28'} ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
+      {/* Hero Content - Centered vertically */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
