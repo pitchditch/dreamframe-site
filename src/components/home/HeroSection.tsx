@@ -70,7 +70,7 @@ const HeroSection = () => {
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Hero Content */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-4 sm:pt-6' : 'pt-6 sm:pt-8 md:pt-12'} ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center relative z-10 text-white ${isMobile ? 'pt-16 sm:pt-20' : 'pt-20 sm:pt-24 md:pt-28'} ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
