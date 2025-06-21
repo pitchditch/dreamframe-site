@@ -55,6 +55,8 @@ const Contact = () => {
         throw new Error('Please fill in all required fields');
       }
 
+      console.log('Submitting form with data:', formData);
+
       // Send to Supabase edge function
       const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
@@ -77,33 +79,48 @@ const Contact = () => {
         }
       );
 
+      console.log('Response status:', response.status);
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
+
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = JSON.parse(responseText);
+        } catch {
+          errorData = { error: `Server error: ${response.status}` };
+        }
         throw new Error(errorData.error || `Server error: ${response.status}`);
       }
 
-      const result = await response.json();
+      const result = JSON.parse(responseText);
+      console.log('Parsed result:', result);
       
-      setSubmitStatus('success');
-      
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
-      });
+      if (result.success) {
+        setSubmitStatus('success');
+        
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
+        });
 
-      // Clear form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: ''
-      });
+        // Clear form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
 
-      // Redirect to homepage after 2 seconds
-      setTimeout(() => {
-        navigate('/', { replace: true });
-      }, 2000);
+        // Redirect to homepage after 3 seconds
+        setTimeout(() => {
+          console.log('Redirecting to homepage...');
+          navigate('/', { replace: true });
+        }, 3000);
+      } else {
+        throw new Error(result.error || 'Failed to send message');
+      }
 
     } catch (error) {
       console.error('Error sending email:', error);

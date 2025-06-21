@@ -77,62 +77,59 @@ serve(async (req) => {
       throw new Error(`Failed to send business notification: ${businessEmailResult.error.message}`);
     }
 
-    // Send confirmation email to customer
-    let customerEmailResult = null;
-    if (body.email && body.name) {
-      console.log('Sending confirmation email to customer:', body.email);
-      
-      const customerHtml = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center;">
-            <h1 style="color: white; margin: 0;">BC Pressure Washing</h1>
-            <p style="color: white; margin: 10px 0 0 0;">Professional Cleaning Services</p>
-          </div>
-          <div style="padding: 30px 20px; background-color: white;">
-            <h2 style="color: #333; margin-top: 0;">Thank you for your quote request!</h2>
-            <p>Hi ${body.name},</p>
-            <p>We've received your message and will get back to you within 24 hours with a personalized quote.</p>
-            
-            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #1e40af;">
-              <h3 style="color: #333; margin-top: 0;">Your Request Details:</h3>
-              <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
-              <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
-              <p><strong>Message:</strong> ${body.message}</p>
-            </div>
-            
-            <div style="background-color: #e1f5fe; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="color: #333; margin-top: 0;">Contact Us Directly:</h3>
-              <p style="margin: 5px 0;"><strong>📞 Phone:</strong> (778) 808-7620</p>
-              <p style="margin: 5px 0;"><strong>📧 Email:</strong> info@bcpressurewashing.ca</p>
-              <p style="margin: 5px 0;"><strong>🕒 Hours:</strong> Mon-Sat: 7AM-7PM</p>
-            </div>
-            
-            <p>We look forward to helping you with your cleaning needs!</p>
-            
-            <p>Best regards,<br>
-            <strong>The BC Pressure Washing Team</strong></p>
-          </div>
-          <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; font-size: 12px;">
-            <p style="margin: 5px 0; color: white;">BC Pressure Washing - Professional Cleaning Services</p>
-            <p style="margin: 5px 0; color: white;">White Rock & Surrey, BC | Serving Metro Vancouver</p>
-            <p style="margin: 5px 0; color: white;">(778) 808-7620 | info@bcpressurewashing.ca</p>
-          </div>
+    // Always send confirmation email to customer
+    console.log('Sending confirmation email to customer:', body.email);
+    
+    const customerHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">BC Pressure Washing</h1>
+          <p style="color: white; margin: 10px 0 0 0;">Professional Cleaning Services</p>
         </div>
-      `;
+        <div style="padding: 30px 20px; background-color: white;">
+          <h2 style="color: #333; margin-top: 0;">Thank you for your quote request!</h2>
+          <p>Hi ${body.name},</p>
+          <p>We've received your message and will get back to you within 24 hours with a personalized quote.</p>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #1e40af;">
+            <h3 style="color: #333; margin-top: 0;">Your Request Details:</h3>
+            <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
+            <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
+            <p><strong>Message:</strong> ${body.message}</p>
+          </div>
+          
+          <div style="background-color: #e1f5fe; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">Contact Us Directly:</h3>
+            <p style="margin: 5px 0;"><strong>📞 Phone:</strong> (778) 808-7620</p>
+            <p style="margin: 5px 0;"><strong>📧 Email:</strong> info@bcpressurewashing.ca</p>
+            <p style="margin: 5px 0;"><strong>🕒 Hours:</strong> Mon-Sat: 7AM-7PM</p>
+          </div>
+          
+          <p>We look forward to helping you with your cleaning needs!</p>
+          
+          <p>Best regards,<br>
+          <strong>The BC Pressure Washing Team</strong></p>
+        </div>
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; font-size: 12px;">
+          <p style="margin: 5px 0; color: white;">BC Pressure Washing - Professional Cleaning Services</p>
+          <p style="margin: 5px 0; color: white;">White Rock & Surrey, BC | Serving Metro Vancouver</p>
+          <p style="margin: 5px 0; color: white;">(778) 808-7620 | info@bcpressurewashing.ca</p>
+        </div>
+      </div>
+    `;
 
-      customerEmailResult = await resend.emails.send({
-        from: "BC Pressure Washing <info@bcpressurewashing.ca>",
-        to: [body.email],
-        subject: "Thank you for your quote request - BC Pressure Washing",
-        html: customerHtml,
-      });
+    const customerEmailResult = await resend.emails.send({
+      from: "BC Pressure Washing <info@bcpressurewashing.ca>",
+      to: [body.email],
+      subject: "Thank you for your quote request - BC Pressure Washing",
+      html: customerHtml,
+    });
 
-      console.log('Customer confirmation email result:', customerEmailResult);
+    console.log('Customer confirmation email result:', customerEmailResult);
 
-      if (customerEmailResult.error) {
-        console.error('Customer email failed:', customerEmailResult.error);
-        // Don't throw error for customer email failure, just log it
-      }
+    if (customerEmailResult.error) {
+      console.error('Customer email failed:', customerEmailResult.error);
+      throw new Error(`Failed to send customer confirmation: ${customerEmailResult.error.message}`);
     }
 
     // Save to house tracking system if requested
@@ -170,9 +167,9 @@ serve(async (req) => {
       success: true,
       message: 'Form submitted successfully',
       businessEmailSent: !businessEmailResult.error,
-      customerEmailSent: customerEmailResult ? !customerEmailResult.error : false,
+      customerEmailSent: !customerEmailResult.error,
       businessEmailId: businessEmailResult.data?.id,
-      customerEmailId: customerEmailResult?.data?.id
+      customerEmailId: customerEmailResult.data?.id
     };
 
     console.log('Sending response:', response);
