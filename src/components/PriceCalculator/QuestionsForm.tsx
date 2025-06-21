@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Send } from 'lucide-react';
+import { Send, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { trackFormSubmission, trackFormFieldInteraction } from '@/utils/analytics';
 
@@ -11,6 +12,7 @@ const QuestionsForm = () => {
   const [question, setQuestion] = useState('');
   const [sawRedCar, setSawRedCar] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +40,7 @@ const QuestionsForm = () => {
     // Prepare data to send to Edge Function
     const body = {
       email,
+      name: 'Question Submitter',
       message: question,
       subject: sawRedCar ? "New Question About Services (10% RED CAR DISCOUNT)" : "New Question About Services",
       form: "QuestionsForm",
@@ -55,13 +58,19 @@ const QuestionsForm = () => {
       );
 
       if (response.ok) {
+        setIsSubmitted(true);
         toast({
-          title: "Question Submitted",
-          description: "We'll get back to you as soon as possible! Final quote confirmed by Jayden.",
+          title: "Question Submitted Successfully!",
+          description: "We've sent you a confirmation email and will get back to you as soon as possible!",
         });
-        setEmail('');
-        setQuestion('');
-        setSawRedCar(false);
+        
+        // Reset form after showing success
+        setTimeout(() => {
+          setEmail('');
+          setQuestion('');
+          setSawRedCar(false);
+          setIsSubmitted(false);
+        }, 3000);
       } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to submit your question");
@@ -88,6 +97,24 @@ const QuestionsForm = () => {
     // Track field interaction
     trackFormFieldInteraction('question_form', fieldName, 'change');
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="bg-green-50 p-6 rounded-lg shadow-md border border-green-200">
+        <div className="text-center">
+          <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-green-800 mb-2">Question Submitted!</h2>
+          <p className="text-green-700 mb-4">
+            Thank you for your question! We've sent you a confirmation email and will get back to you shortly.
+          </p>
+          <p className="text-sm text-green-600">
+            ✓ Confirmation email sent<br/>
+            ✓ We'll respond within 24 hours
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -152,8 +179,17 @@ const QuestionsForm = () => {
           className="w-full bg-bc-red hover:bg-red-700"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Submitting...' : 'Submit Question'}
-          <Send className="ml-2 h-4 w-4" />
+          {isSubmitting ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              Submitting...
+            </>
+          ) : (
+            <>
+              Submit Question
+              <Send className="ml-2 h-4 w-4" />
+            </>
+          )}
         </Button>
       </form>
     </div>
