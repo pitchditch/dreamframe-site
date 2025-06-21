@@ -7,7 +7,7 @@ import { Percent, Shield, Star, Clock, Users, CheckCircle } from 'lucide-react';
 import TestimonialCarousel from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
-const Calculator = () => {
+const Calculator: React.FC = () => {
   // Check if user was referred with form data
   const savedPostalCode = localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
   const savedHouseSize = localStorage.getItem('calculatorHouseSize');
