@@ -3,6 +3,9 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const twilioAccountSid = "AC81550a4a679b9a58bbdab855c63f1a8";
+const twilioAuthToken = Deno.env.get("twillio key");
+const twilioPhoneNumber = "+13183929394";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -12,6 +15,64 @@ const corsHeaders = {
 
 const BUSINESS_EMAIL = "jaydenf3800@gmail.com";
 
+// Function to format phone number for SMS
+function formatPhoneNumber(phone: string): string {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, '');
+  
+  // Add +1 if it's a 10-digit North American number
+  if (digits.length === 10) {
+    return `+1${digits}`;
+  }
+  
+  // Add + if it doesn't have it but is international format
+  if (digits.length > 10 && !phone.startsWith('+')) {
+    return `+${digits}`;
+  }
+  
+  // Return as-is if already formatted
+  return phone.startsWith('+') ? phone : `+${digits}`;
+}
+
+// Function to send SMS via Twilio
+async function sendSMS(to: string, message: string) {
+  try {
+    const formattedTo = formatPhoneNumber(to);
+    console.log(`Attempting to send SMS to: ${formattedTo}`);
+    
+    const body = new URLSearchParams({
+      To: formattedTo,
+      From: twilioPhoneNumber,
+      Body: message,
+    });
+
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Basic ${btoa(`${twilioAccountSid}:${twilioAuthToken}`)}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: body.toString(),
+      }
+    );
+
+    const result = await response.json();
+    
+    if (response.ok) {
+      console.log("SMS sent successfully:", result.sid);
+      return { success: true, sid: result.sid };
+    } else {
+      console.error("Failed to send SMS:", result);
+      return { success: false, error: result };
+    }
+  } catch (error) {
+    console.error("SMS sending error:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -19,6 +80,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
+    console.log("Form submission received:", body);
 
     // Compose a simple HTML email body with form info
     const htmlFields = Object.entries(body)
@@ -41,14 +103,14 @@ serve(async (req) => {
 
     const subject =
       body.subject ||
-      `New Contact Form Submission from ${body.name || body.email || "Visitor"}`;
+      `New Contact Form Submission from ${body.name || body.contactName || body.email || "Visitor"}`;
 
     const from =
       body.email && typeof body.email === "string"
         ? `${body.email}`
         : "website@bcpressurewashing.ca";
 
-    // Send the email!
+    // Send the business notification email
     const emailRes = await resend.emails.send({
       from: `BC Pressure Washing Site <${from}>`,
       to: [BUSINESS_EMAIL],
@@ -57,7 +119,54 @@ serve(async (req) => {
       reply_to: body.email,
     });
 
-    return new Response(JSON.stringify({ success: true, emailRes }), {
+    console.log("Business email sent:", emailRes);
+
+    // Send customer confirmation email if email is provided
+    let customerEmailRes = null;
+    if (body.email) {
+      const customerHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #dc2626;">Thank you for contacting BC Pressure Washing!</h2>
+          <p>Hi ${body.name || body.contactName || 'there'},</p>
+          <p>We've received your inquiry and will get back to you within 24 hours.</p>
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0;">Your Request Details:</h3>
+            <p><strong>Service:</strong> ${body.service || body.form || 'General Inquiry'}</p>
+            ${body.businessName ? `<p><strong>Business:</strong> ${body.businessName}</p>` : ''}
+            ${body.address ? `<p><strong>Address:</strong> ${body.address}</p>` : ''}
+            ${body.preferredTime ? `<p><strong>Preferred Time:</strong> ${body.preferredTime}</p>` : ''}
+          </div>
+          <p>Questions? Call us at <strong>(778) 808-7620</strong></p>
+          <p>Best regards,<br>BC Pressure Washing Team</p>
+        </div>
+      `;
+
+      customerEmailRes = await resend.emails.send({
+        from: "BC Pressure Washing <no-reply@bcpressurewashing.ca>",
+        to: [body.email],
+        subject: "Thanks for your inquiry - BC Pressure Washing",
+        html: customerHtml,
+      });
+
+      console.log("Customer email sent:", customerEmailRes);
+    }
+
+    // Send SMS confirmation if phone number is provided
+    let smsRes = null;
+    if (body.phone) {
+      const customerName = body.name || body.contactName || 'there';
+      const smsMessage = `Hi ${customerName}! Thanks for contacting BC Pressure Washing. We've received your inquiry and will call you back within 24 hours. Questions? Call (778) 808-7620`;
+      
+      smsRes = await sendSMS(body.phone, smsMessage);
+      console.log("SMS result:", smsRes);
+    }
+
+    return new Response(JSON.stringify({ 
+      success: true, 
+      emailRes, 
+      customerEmailRes,
+      smsRes 
+    }), {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error) {

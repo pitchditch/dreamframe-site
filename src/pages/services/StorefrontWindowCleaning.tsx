@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '@/components/ServiceHeader';
 import { Button } from '@/components/ui/button';
@@ -21,20 +20,47 @@ const StorefrontWindowCleaning = () => {
     message: ''
   });
 
-  const handleConsultSubmit = (e: React.FormEvent) => {
+  const handleConsultSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Consultation Request Sent!",
-      description: "We'll contact you within 2 hours to schedule your free consultation.",
-    });
-    setConsultForm({
-      businessName: '',
-      contactName: '',
-      phone: '',
-      email: '',
-      preferredTime: '',
-      message: ''
-    });
+    
+    try {
+      // Send to Supabase Edge Function for email and SMS
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...consultForm,
+            subject: "Storefront Window Cleaning Consultation Request",
+            form: "StorefrontConsultation",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast({
+          title: "Consultation Request Sent!",
+          description: "We'll contact you within 2 hours to schedule your free consultation. Check your phone for confirmation.",
+        });
+        setConsultForm({
+          businessName: '',
+          contactName: '',
+          phone: '',
+          email: '',
+          preferredTime: '',
+          message: ''
+        });
+      } else {
+        throw new Error("Failed to submit form");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your request. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const benefits = [
@@ -299,7 +325,7 @@ const StorefrontWindowCleaning = () => {
                         </div>
                       </a>
                     </div>
-                  </Card>
+                  </CardContent>
                 </Card>
 
                 <Card className="shadow-lg">
