@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -11,17 +12,11 @@ import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import PackagesSection from '../components/home/PackagesSection';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
-import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
-import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 
 const Home = () => {
-  // Explicitly getting language related functions to ensure they're available
   const { language, setLanguage } = useTranslation();
 
   useEffect(() => {
-    // We don't force English as default anymore to allow language selection
-    // Leave existing preferred language if set
-    
     document.body.classList.add('has-video-header');
 
     const observerOptions = {
@@ -42,7 +37,6 @@ const Home = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Log current language for debugging
     console.log('Current language on Home page:', language);
 
     return () => {
@@ -72,7 +66,7 @@ const Home = () => {
         <meta name="twitter:title" content="BC Pressure Washing - Exterior Cleaning Services" />
         <meta name="twitter:description" content="Seen our red BC Pressure Washing car? Get 10% off! Window, gutter, and pressure washing in White Rock & Surrey." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
+        <script type="application/ld+json">
           {`
           {
             "@context": "https://schema.org",
@@ -127,19 +121,17 @@ const Home = () => {
             ]
           }
           `}
+        </script>
       </Helmet>
 
       <HeroSection />
       
       <div className="relative z-20 -mt-24 md:-mt-32">
         <div className="bg-white rounded-t-3xl shadow-xl">
-          <FeaturedProjectSection />
           <PremiumSolutionsSection />
-          {/* Add data-component attribute to help with visibility detection */}
           <div data-component="owner-operated">
             <OwnerOperatedSection />
           </div>
-          <SatisfactionGuaranteeSection />
           <SpringSaleCarousel />
           <TestimonialsSection />
           <PackagesSection />
