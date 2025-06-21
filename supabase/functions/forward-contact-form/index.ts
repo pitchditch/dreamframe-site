@@ -29,7 +29,7 @@ serve(async (req) => {
       throw new Error('Missing required fields: name, email, and message are required');
     }
 
-    // Send email to business owner first
+    // Send email to business owner
     const businessHtmlFields = Object.entries(body)
       .filter(([key]) => !['save_to_tracking', 'form'].includes(key))
       .map(
@@ -61,6 +61,7 @@ serve(async (req) => {
 
     console.log('Sending email to business owner:', BUSINESS_EMAIL);
     
+    // Send email to business owner
     const businessEmailResult = await resend.emails.send({
       from: `BC Pressure Washing <noreply@bcpressurewashing.ca>`,
       to: [BUSINESS_EMAIL],
@@ -71,7 +72,12 @@ serve(async (req) => {
 
     console.log('Business email result:', businessEmailResult);
 
-    // Send confirmation email to customer
+    if (businessEmailResult.error) {
+      console.error('Business email failed:', businessEmailResult.error);
+      throw new Error(`Failed to send business notification: ${businessEmailResult.error.message}`);
+    }
+
+    // Always send confirmation email to customer
     console.log('Sending confirmation email to customer:', body.email);
     
     const customerHtml = `
@@ -81,12 +87,12 @@ serve(async (req) => {
           <p style="color: white; margin: 10px 0 0 0;">Professional Cleaning Services</p>
         </div>
         <div style="padding: 30px 20px; background-color: white;">
-          <h2 style="color: #333; margin-top: 0;">Thank you for your message!</h2>
+          <h2 style="color: #333; margin-top: 0;">Thank you for your quote request!</h2>
           <p>Hi ${body.name},</p>
-          <p>We've received your message and will get back to you within 24 hours with a personalized response.</p>
+          <p>We've received your message and will get back to you within 24 hours with a personalized quote.</p>
           
           <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #1e40af;">
-            <h3 style="color: #333; margin-top: 0;">Your Message Details:</h3>
+            <h3 style="color: #333; margin-top: 0;">Your Request Details:</h3>
             <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
             <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
             <p><strong>Message:</strong> ${body.message}</p>
@@ -115,22 +121,15 @@ serve(async (req) => {
     const customerEmailResult = await resend.emails.send({
       from: "BC Pressure Washing <info@bcpressurewashing.ca>",
       to: [body.email],
-      subject: "Thank you for contacting BC Pressure Washing!",
+      subject: "Thank you for your quote request - BC Pressure Washing",
       html: customerHtml,
     });
 
     console.log('Customer confirmation email result:', customerEmailResult);
 
-    // Check if both emails were sent successfully
-    const businessEmailSuccess = businessEmailResult && !businessEmailResult.error;
-    const customerEmailSuccess = customerEmailResult && !customerEmailResult.error;
-
-    if (!businessEmailSuccess) {
-      console.error('Business email failed:', businessEmailResult?.error);
-    }
-
-    if (!customerEmailSuccess) {
-      console.error('Customer email failed:', customerEmailResult?.error);
+    if (customerEmailResult.error) {
+      console.error('Customer email failed:', customerEmailResult.error);
+      throw new Error(`Failed to send customer confirmation: ${customerEmailResult.error.message}`);
     }
 
     // Save to house tracking system if requested
@@ -143,7 +142,7 @@ serve(async (req) => {
           customerName: body.name,
           email: body.email,
           phone: body.phone || '',
-          address: '',
+          address: '', // Will need to be filled in later
           status: 'needs-quote',
           serviceInterest: body.service || '',
           notes: `Contact form submission: ${body.message}`,
@@ -153,8 +152,12 @@ serve(async (req) => {
         };
 
         console.log('Customer data prepared for house tracking:', trackingData);
+        
+        // In a real implementation, this would be saved to a database
+        // For now, it's logged and can be manually added to the house tracking system
       } catch (trackingError) {
         console.error('Error preparing house tracking data:', trackingError);
+        // Don't fail the whole request if tracking fails
       }
     }
 
@@ -163,10 +166,10 @@ serve(async (req) => {
     const response = {
       success: true,
       message: 'Form submitted successfully',
-      businessEmailSent: businessEmailSuccess,
-      customerEmailSent: customerEmailSuccess,
-      businessEmailId: businessEmailResult?.data?.id,
-      customerEmailId: customerEmailResult?.data?.id
+      businessEmailSent: !businessEmailResult.error,
+      customerEmailSent: !customerEmailResult.error,
+      businessEmailId: businessEmailResult.data?.id,
+      customerEmailId: customerEmailResult.data?.id
     };
 
     console.log('Sending response:', response);
