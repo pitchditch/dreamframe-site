@@ -1,4 +1,3 @@
-
 import Layout from '../../components/Layout';
 import ServiceHeader from '@/components/ServiceHeader';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Building, CheckCircle, Star, Phone, Clock, Users, Calendar, Mail } from 'lucide-react';
 import { useState } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 const StorefrontWindowCleaning = () => {
   const { toast } = useToast();
@@ -20,21 +19,60 @@ const StorefrontWindowCleaning = () => {
     preferredTime: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleConsultSubmit = (e: React.FormEvent) => {
+  const handleConsultSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Consultation Request Sent!",
-      description: "We'll contact you within 2 hours to schedule your free consultation.",
-    });
-    setConsultForm({
-      businessName: '',
-      contactName: '',
-      phone: '',
-      email: '',
-      preferredTime: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+
+    try {
+      // Send form data to edge function
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...consultForm,
+            subject: "Storefront Window Cleaning Consultation Request",
+            form: "StorefrontConsultation",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast({
+          title: "Consultation Request Sent!",
+          description: "We'll contact you within 2 hours to schedule your free consultation.",
+        });
+        
+        // Reset form
+        setConsultForm({
+          businessName: '',
+          contactName: '',
+          phone: '',
+          email: '',
+          preferredTime: '',
+          message: ''
+        });
+
+        // Redirect to homepage after 2 seconds
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+      } else {
+        throw new Error('Failed to submit form');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send consultation request. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const benefits = [
@@ -264,8 +302,12 @@ const StorefrontWindowCleaning = () => {
                       />
                     </div>
 
-                    <Button type="submit" className="w-full bg-bc-red hover:bg-red-700 text-white py-3">
-                      Book Free Consultation
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-bc-red hover:bg-red-700 text-white py-3"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Book Free Consultation'}
                     </Button>
                   </form>
                 </CardContent>
@@ -299,7 +341,7 @@ const StorefrontWindowCleaning = () => {
                         </div>
                       </a>
                     </div>
-                  </Card>
+                  </CardContent>
                 </Card>
 
                 <Card className="shadow-lg">
