@@ -41,7 +41,7 @@ function App() {
           </div>
         </Router>
       </QueryClientProvider>
-    </HelmelProvider>
+    </HelmetProvider>
   );
 }
 
