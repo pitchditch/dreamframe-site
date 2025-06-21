@@ -89,6 +89,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
+    console.log("Form submission received:", body);
 
     // Compose a simple HTML email body with form info
     const htmlFields = Object.entries(body)
@@ -133,6 +134,7 @@ serve(async (req) => {
     let smsResult = null;
     if (body.phone) {
       const formattedPhone = formatPhoneNumber(body.phone);
+      console.log("Original phone:", body.phone, "Formatted:", formattedPhone);
       
       if (formattedPhone) {
         const smsMessage = `Hi ${body.name || 'there'}! Thanks for contacting BC Pressure Washing. We received your quote request and will get back to you within 24 hours. Call us at (778) 808-7620 for immediate assistance.`;
@@ -154,7 +156,7 @@ serve(async (req) => {
           <p>We've received your quote request and will get back to you within 24 hours with a personalized estimate.</p>
           <p><strong>Your submission details:</strong></p>
           <ul>
-            ${body.service ? `<li><strong>Service:</strong> ${body.service}</li>` : ''}
+            ${body.serviceType ? `<li><strong>Service:</strong> ${body.serviceType}</li>` : ''}
             ${body.address ? `<li><strong>Address:</strong> ${body.address}</li>` : ''}
             ${body.phone ? `<li><strong>Phone:</strong> ${body.phone}</li>` : ''}
           </ul>
