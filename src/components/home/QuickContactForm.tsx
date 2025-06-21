@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/use-translation';
 import { services } from './ServiceSelectionSection/serviceData';
-import { Download, Phone, Mail, MapPin, MessageCircle, Star, Shield, Clock, CheckCircle } from 'lucide-react';
+import { Download, Phone, Mail, MapPin, MessageCircle, Star, Shield, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { RateLimiter, sanitizeFormData, createHoneypot, detectBot, sanitizeLogData } from '@/utils/security';
 
@@ -16,7 +16,6 @@ const QuickContactForm = () => {
   const { t } = useTranslation();
   const [selectedService, setSelectedService] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -100,26 +99,19 @@ const QuickContactForm = () => {
       );
 
       if (response.ok) {
-        setIsSubmitted(true);
         toast({
-          title: t("Quote Request Sent Successfully!"),
-          description: t("We've sent you a confirmation email and will contact you within 24 hours with your free quote."),
+          title: t("Quote Request Sent!"),
+          description: t("We'll contact you within 24 hours with your free quote."),
         });
-        
-        // Reset form after 5 seconds and redirect to homepage
-        setTimeout(() => {
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            address: "",
-            service: "",
-            message: "",
-          });
-          setSelectedService("");
-          setIsSubmitted(false);
-          window.location.href = '/';
-        }, 5000);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          service: "",
+          message: "",
+        });
+        setSelectedService("");
       } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to submit form");
@@ -158,48 +150,6 @@ END:VCARD`;
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
   };
-
-  if (isSubmitted) {
-    return (
-      <section className="py-20 bg-gray-50" data-contact-form>
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <Card className="shadow-xl bg-green-50 border-green-200">
-              <CardContent className="p-12 text-center">
-                <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-6" />
-                <h2 className="text-3xl font-bold text-green-800 mb-4">
-                  Quote Request Submitted Successfully!
-                </h2>
-                <p className="text-lg text-green-700 mb-6">
-                  Thank you for choosing BC Pressure Washing! We've received your request and sent you a confirmation email.
-                </p>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="font-semibold text-gray-900 mb-4">What happens next?</h3>
-                  <div className="space-y-3 text-left">
-                    <div className="flex items-center text-green-700">
-                      <CheckCircle className="w-5 h-5 mr-3" />
-                      <span>Confirmation email sent to your inbox</span>
-                    </div>
-                    <div className="flex items-center text-green-700">
-                      <CheckCircle className="w-5 h-5 mr-3" />
-                      <span>We'll call or text you within 24 hours</span>
-                    </div>
-                    <div className="flex items-center text-green-700">
-                      <CheckCircle className="w-5 h-5 mr-3" />
-                      <span>Free quote and service scheduling</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-sm text-gray-600 mt-6">
-                  Redirecting to homepage in a few seconds...
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="py-20 bg-gray-50" data-contact-form>
