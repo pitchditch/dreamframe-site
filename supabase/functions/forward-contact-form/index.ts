@@ -2,7 +2,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend("re_aQbr4WSJ_9f2uADJtFenWH2XWSC5XgVXM");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -106,7 +106,7 @@ serve(async (req) => {
               <h4 style='color: #92400e; margin: 0 0 10px 0;'>What happens next?</h4>
               <ul style='color: #374151; margin: 0; padding-left: 20px;'>
                 <li>We'll review your request and prepare a detailed quote</li>
-                <li>One of our team members will call you within 24 hours</li>
+                <li>One of our team members will call or text you within 24 hours</li>
                 <li>We'll schedule a convenient time for your service</li>
                 <li>You'll receive confirmation via email and text</li>
               </ul>
@@ -145,18 +145,27 @@ serve(async (req) => {
       console.log('Customer confirmation email result:', customerEmailRes);
     }
 
+    // Send SMS notification if phone number is provided
+    let smsRes = null;
+    if (body.phone && typeof body.phone === "string") {
+      console.log('Phone number provided, but SMS service not configured:', body.phone);
+      // Note: SMS would require Twilio integration - not currently set up
+    }
+
     // Log the successful submission
     console.log('Form submission processed successfully:', {
       businessEmailSent: !!businessEmailRes?.data,
       customerEmailSent: !!customerEmailRes?.data,
-      customerEmail: body.email
+      customerEmail: body.email,
+      phoneProvided: !!body.phone
     });
 
     return new Response(JSON.stringify({ 
       success: true, 
       businessEmailRes,
       customerEmailRes,
-      message: "Your request has been sent successfully! Check your email for confirmation."
+      smsRes,
+      message: "Your request has been sent successfully! Check your email for confirmation. We'll also call or text you within 24 hours."
     }), {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
