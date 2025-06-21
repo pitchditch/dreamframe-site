@@ -299,7 +299,7 @@ const StorefrontWindowCleaning = () => {
                         </div>
                       </a>
                     </div>
-                  </CardContent>
+                  </Card>
                 </Card>
 
                 <Card className="shadow-lg">

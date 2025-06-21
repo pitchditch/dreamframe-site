@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Youtube, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import FooterWeatherService from './FooterWeatherService';
 
@@ -24,36 +24,16 @@ const Footer = () => {
             <p className="text-gray-300 mb-6 text-base text-center">
               Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.
             </p>
-            
-            {/* Enhanced Social Media Section */}
-            <div className="text-center mb-6">
-              <h4 className="text-lg font-semibold mb-4 text-white">Follow Us</h4>
-              <div className="flex space-x-4 justify-center mb-4">
-                <a href="https://www.facebook.com/BCPressureWashing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-all duration-200 hover:scale-125">
-                  <Facebook size={28} />
-                </a>
-                <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-all duration-200 hover:scale-125">
-                  <Instagram size={28} />
-                </a>
-                <a href="https://www.youtube.com/@bcpressurewashing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-all duration-200 hover:scale-125">
-                  <Youtube size={28} />
-                </a>
-              </div>
-            </div>
-
-            {/* Enhanced Contact Section */}
-            <div className="text-center">
-              <h4 className="text-lg font-semibold mb-4 text-white">Contact Us</h4>
-              <div className="space-y-3">
-                <a href="tel:+17788087620" className="flex items-center justify-center text-lg font-semibold text-white hover:text-bc-red transition-colors">
-                  <Phone className="mr-2" size={20} />
-                  778 808 7620
-                </a>
-                <a href="mailto:bcpressurewashing.ca@gmail.com" className="flex items-center justify-center text-lg font-semibold text-white hover:text-bc-red transition-colors">
-                  <Mail className="mr-2" size={20} />
-                  bcpressurewashing.ca@gmail.com
-                </a>
-              </div>
+            <div className="flex space-x-4 justify-center">
+              <a href="https://www.facebook.com/BCPressureWashing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-all duration-200 hover:scale-125">
+                <Facebook size={20} />
+              </a>
+              <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-all duration-200 hover:scale-125">
+                <Instagram size={20} />
+              </a>
+              <a href="#" className="text-gray-300 hover:text-white transition-all duration-200 hover:scale-125">
+                <Twitter size={20} />
+              </a>
             </div>
           </div>
 
@@ -99,13 +79,21 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Business Information */}
+          {/* Contact Information */}
           <div className="col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">Business Information</h4>
+            <h4 className="text-xl font-semibold mb-6 text-white">Contact Information</h4>
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="text-bc-red mr-3 flex-shrink-0 mt-1 transition-transform duration-200 hover:scale-125" size={18} />
                 <span className="text-gray-300">Marine Dr, White Rock, BC</span>
+              </li>
+              <li className="flex items-center">
+                <Phone className="text-bc-red mr-3 flex-shrink-0 transition-transform duration-200 hover:scale-125" size={18} />
+                <a href="tel:+17788087620" className="text-gray-300 hover:text-white transition-colors">778 808 7620</a>
+              </li>
+              <li className="flex items-center">
+                <Mail className="text-bc-red mr-3 flex-shrink-0 transition-transform duration-200 hover:scale-125" size={18} />
+                <a href="mailto:bcpressurewashing.ca@gmail.com" className="text-gray-300 hover:text-white transition-colors">bcpressurewashing.ca@gmail.com</a>
               </li>
               <li className="flex items-start">
                 <Clock className="text-bc-red mr-3 flex-shrink-0 mt-1 transition-transform duration-200 hover:scale-125" size={18} />
