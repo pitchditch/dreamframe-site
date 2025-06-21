@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -56,6 +57,7 @@ const Contact = () => {
 
       console.log('Submitting form with data:', formData);
 
+      // Send to Supabase edge function
       const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
@@ -78,22 +80,29 @@ const Contact = () => {
       );
 
       console.log('Response status:', response.status);
-      const responseData = await response.json();
-      console.log('Response data:', responseData);
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
 
       if (!response.ok) {
-        throw new Error(responseData.error || `Server error: ${response.status}`);
+        let errorData;
+        try {
+          errorData = JSON.parse(responseText);
+        } catch {
+          errorData = { error: `Server error: ${response.status}` };
+        }
+        throw new Error(errorData.error || `Server error: ${response.status}`);
       }
+
+      const result = JSON.parse(responseText);
+      console.log('Parsed result:', result);
       
-      if (responseData.success) {
+      if (result.success) {
         setSubmitStatus('success');
         
         toast({
           title: "Message sent successfully!",
-          description: "Thank you for contacting us! We'll get back to you within 24 hours. A confirmation email has been sent to you.",
+          description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
         });
-
-        console.log('Form submitted successfully, clearing form and redirecting...');
 
         // Clear form
         setFormData({
@@ -106,11 +115,11 @@ const Contact = () => {
 
         // Redirect to homepage after 3 seconds
         setTimeout(() => {
-          console.log('Navigating to homepage...');
+          console.log('Redirecting to homepage...');
           navigate('/', { replace: true });
         }, 3000);
       } else {
-        throw new Error(responseData.error || 'Failed to send message');
+        throw new Error(result.error || 'Failed to send message');
       }
 
     } catch (error) {
@@ -162,7 +171,7 @@ const Contact = () => {
                 {submitStatus === 'success' && (
                   <div className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-md">
                     <CheckCircle className="w-5 h-5" />
-                    <span>Message sent! Check your email for confirmation. Redirecting to homepage...</span>
+                    <span>Message sent! Redirecting to homepage...</span>
                   </div>
                 )}
                 {submitStatus === 'error' && (
