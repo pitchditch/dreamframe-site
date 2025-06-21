@@ -3,15 +3,17 @@ import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
-import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
-import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
-import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
-import PackagesSection from '../components/home/PackagesSection';
-import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import CityNavigation from '../components/home/CityNavigation';
+import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import BeforeAfterGallery from '../components/BeforeAfterGallery';
+import RedCarSection from '../components/home/RedCarSection';
+import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import ReferralProgramSection from '../components/ReferralProgramSection';
 
 const Home = () => {
   const { language, setLanguage } = useTranslation();
@@ -128,14 +130,28 @@ const Home = () => {
       
       <div className="relative z-20 -mt-24 md:-mt-32">
         <div className="bg-white rounded-t-3xl shadow-xl">
-          <PremiumSolutionsSection />
-          <div data-component="owner-operated">
-            <OwnerOperatedSection />
-          </div>
-          <SpringSaleCarousel />
+          {/* Service Locations */}
+          <CityNavigation />
+          
+          {/* Service Selection */}
+          <ServiceSelectionSection />
+          
+          {/* Before/After Gallery */}
+          <BeforeAfterGallery />
+          
+          {/* Testimonials */}
           <TestimonialsSection />
-          <PackagesSection />
+          
+          {/* Red Car Section */}
+          <RedCarSection />
+          
+          {/* Trusted Customers */}
+          <TrustedCustomersSection />
+          
+          {/* Referral Program */}
+          <ReferralProgramSection />
 
+          {/* Service Areas */}
           <section className="py-16 bg-gray-900 text-white">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
