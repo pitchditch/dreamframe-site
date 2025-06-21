@@ -11,7 +11,50 @@ const corsHeaders = {
 };
 
 const BUSINESS_EMAIL = "jaydenf3800@gmail.com";
-const BUSINESS_PHONE = "7788087620"; // Your business phone number for notifications
+const BUSINESS_PHONE = "7788087620";
+
+// Twilio configuration
+const TWILIO_ACCOUNT_SID = "e81550a4a679b9a58bbdab855c63f1a8";
+const TWILIO_FROM_NUMBER = "+13183929394";
+
+const sendSMS = async (to: string, message: string) => {
+  try {
+    const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
+    if (!twilioAuthToken) {
+      console.log("Twilio auth token not configured, SMS not sent");
+      return null;
+    }
+
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Basic ${btoa(`${TWILIO_ACCOUNT_SID}:${twilioAuthToken}`)}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          From: TWILIO_FROM_NUMBER,
+          To: to,
+          Body: message,
+        }).toString(),
+      }
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("SMS sent successfully:", result.sid);
+      return result;
+    } else {
+      const error = await response.text();
+      console.error("Failed to send SMS:", error);
+      return null;
+    }
+  } catch (error) {
+    console.error("SMS sending error:", error);
+    return null;
+  }
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -96,15 +139,14 @@ serve(async (req) => {
       console.log("Customer confirmation email sent:", customerEmailRes);
     }
 
-    // Send SMS notification (using a simple SMS service or placeholder)
-    // Note: For SMS, you would typically use Twilio, but since you haven't provided Twilio credentials,
-    // I'm logging this as a placeholder. You can integrate Twilio later if needed.
+    // Send SMS notification to customer if phone provided
+    let smsResult = null;
     if (body.phone) {
-      console.log(`SMS would be sent to ${body.phone}: "Thank you for your quote request! We'll contact you within 2 hours. - BC Pressure Washing (778) 808-7620"`);
+      const cleanPhone = body.phone.replace(/\D/g, '');
+      const formattedPhone = cleanPhone.startsWith('1') ? `+${cleanPhone}` : `+1${cleanPhone}`;
       
-      // Placeholder for future SMS integration
-      // const smsMessage = `Thank you for your quote request! We'll contact you within 2 hours. - BC Pressure Washing (778) 808-7620`;
-      // await sendSMS(body.phone, smsMessage);
+      const smsMessage = `Thank you for your quote request! We'll contact you within 2 hours. - BC Pressure Washing (778) 808-7620`;
+      smsResult = await sendSMS(formattedPhone, smsMessage);
     }
 
     return new Response(
@@ -112,7 +154,7 @@ serve(async (req) => {
         success: true, 
         businessEmail: businessEmailRes,
         customerEmail: customerEmailRes,
-        smsNote: body.phone ? "SMS notification logged (integration pending)" : null
+        sms: smsResult ? "SMS sent successfully" : "SMS not sent (auth token required)"
       }), 
       {
         headers: { "Content-Type": "application/json", ...corsHeaders },
