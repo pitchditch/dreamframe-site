@@ -21,8 +21,14 @@ serve(async (req) => {
     const body = await req.json();
     console.log('Received form submission:', body);
 
+    // Validate required fields
+    if (!body.name || !body.email || !body.message) {
+      throw new Error('Missing required fields: name, email, or message');
+    }
+
     // Send email to business owner
     const businessHtmlFields = Object.entries(body)
+      .filter(([key, value]) => key !== 'save_to_tracking' && value)
       .map(
         ([key, value]) =>
           `<tr><td style='padding:6px 0'><strong>${key}:</strong></td><td>${value ?? ""}</td></tr>`
@@ -57,62 +63,58 @@ serve(async (req) => {
 
     console.log('Business email sent:', businessEmailResult);
 
-    // Send confirmation email to customer if email is provided
-    if (body.email && body.name) {
-      console.log('Sending confirmation email to customer:', body.email);
-      
-      const customerHtml = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background-color: #f8f9fa; padding: 20px; text-align: center;">
-            <h1 style="color: #333; margin: 0;">BC Pressure Washing</h1>
-          </div>
-          <div style="padding: 30px 20px;">
-            <h2 style="color: #333;">Thank you for your quote request!</h2>
-            <p>Hi ${body.name},</p>
-            <p>We've received your message and will get back to you within 24 hours with a personalized quote.</p>
-            
-            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
-              <h3 style="color: #333; margin-top: 0;">Your Request Details:</h3>
-              <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
-              <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
-              <p><strong>Message:</strong> ${body.message}</p>
-            </div>
-            
-            <p>In the meantime, feel free to contact us directly:</p>
-            <ul>
-              <li><strong>Phone:</strong> (778) 808-7620</li>
-              <li><strong>Email:</strong> info@bcpressurewashing.ca</li>
-            </ul>
-            
-            <p>We look forward to helping you with your cleaning needs!</p>
-            
-            <p>Best regards,<br>
-            The BC Pressure Washing Team</p>
-          </div>
-          <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; font-size: 12px;">
-            <p>BC Pressure Washing - Professional Cleaning Services</p>
-            <p>White Rock & Surrey, BC | Serving Metro Vancouver</p>
-          </div>
+    // ALWAYS send confirmation email to customer
+    console.log('Sending confirmation email to customer:', body.email);
+    
+    const customerHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">BC Pressure Washing</h1>
         </div>
-      `;
+        <div style="padding: 30px 20px;">
+          <h2 style="color: #333;">Thank you for your quote request!</h2>
+          <p>Hi ${body.name},</p>
+          <p>We've received your message and will get back to you within 24 hours with a personalized quote.</p>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">Your Request Details:</h3>
+            <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
+            <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
+            <p><strong>Message:</strong> ${body.message}</p>
+          </div>
+          
+          <p>In the meantime, feel free to contact us directly:</p>
+          <ul>
+            <li><strong>Phone:</strong> (778) 808-7620</li>
+            <li><strong>Email:</strong> info@bcpressurewashing.ca</li>
+          </ul>
+          
+          <p>We look forward to helping you with your cleaning needs!</p>
+          
+          <p>Best regards,<br>
+          The BC Pressure Washing Team</p>
+        </div>
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; font-size: 12px;">
+          <p style="color: white; margin: 0;">BC Pressure Washing - Professional Cleaning Services</p>
+          <p style="color: white; margin: 0;">White Rock & Surrey, BC | Serving Metro Vancouver</p>
+        </div>
+      </div>
+    `;
 
-      const customerEmailResult = await resend.emails.send({
-        from: "BC Pressure Washing <info@bcpressurewashing.ca>",
-        to: [body.email],
-        subject: "Thank you for your quote request - BC Pressure Washing",
-        html: customerHtml,
-      });
+    const customerEmailResult = await resend.emails.send({
+      from: "BC Pressure Washing <info@bcpressurewashing.ca>",
+      to: [body.email],
+      subject: "Thank you for your quote request - BC Pressure Washing",
+      html: customerHtml,
+    });
 
-      console.log('Customer confirmation email sent:', customerEmailResult);
-    }
+    console.log('Customer confirmation email sent:', customerEmailResult);
 
     // Save to house tracking system if requested
     if (body.save_to_tracking && body.name && body.email) {
       try {
         console.log('Saving customer data for house tracking...');
         
-        // Get existing house pins from localStorage (this would typically be in a database)
-        // For now, we'll create a new entry that can be imported into the house tracking system
         const trackingData = {
           id: `contact-${Date.now()}`,
           customerName: body.name,
@@ -129,11 +131,8 @@ serve(async (req) => {
 
         console.log('New customer data for house tracking:', trackingData);
         
-        // In a real implementation, this would be saved to a database
-        // For now, it's logged and can be manually added to the house tracking system
       } catch (trackingError) {
         console.error('Error saving to house tracking:', trackingError);
-        // Don't fail the whole request if tracking fails
       }
     }
 
@@ -141,14 +140,19 @@ serve(async (req) => {
 
     return new Response(JSON.stringify({ 
       success: true,
-      message: 'Form submitted successfully. Confirmation email sent.'
+      message: 'Form submitted successfully. Confirmation email sent.',
+      businessEmailId: businessEmailResult.data?.id,
+      customerEmailId: customerEmailResult.data?.id
     }), {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error) {
-    console.error("Forwarding error:", error);
+    console.error("Contact form error:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: 'Please check that all required fields are filled out correctly.'
+      }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }

@@ -21,6 +21,7 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Auto-fill form with booking data if available
   useEffect(() => {
@@ -51,7 +52,6 @@ const Contact = () => {
     try {
       console.log('Submitting form with data:', formData);
       
-      // Send to business owner and customer, save to house tracking
       const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
@@ -65,7 +65,6 @@ const Contact = () => {
             message: formData.message,
             subject: "New Contact Form Submission - Quote Request",
             form: "ContactForm",
-            // Add flag to indicate this should be saved to house tracking
             save_to_tracking: true
           }),
         }
@@ -79,6 +78,8 @@ const Contact = () => {
         throw new Error(result.error || 'Failed to send message');
       }
 
+      setIsSuccess(true);
+      
       toast({
         title: "Message sent successfully!",
         description: "We'll get back to you within 24 hours. A confirmation email has been sent to you.",
@@ -93,11 +94,11 @@ const Contact = () => {
         message: ''
       });
 
-      // Show success message for a bit longer before redirect
+      // Redirect to homepage after 2 seconds
       setTimeout(() => {
         console.log('Redirecting to homepage...');
         navigate('/', { replace: true });
-      }, 3000);
+      }, 2000);
 
     } catch (error) {
       console.error('Error sending email:', error);
@@ -117,6 +118,28 @@ const Contact = () => {
       [e.target.name]: e.target.value
     });
   };
+
+  // Show success message
+  if (isSuccess) {
+    return (
+      <Layout>
+        <div className="min-h-screen bg-gray-50 pt-28 pb-12 flex items-center justify-center">
+          <Card className="shadow-lg max-w-md w-full">
+            <CardContent className="p-8 text-center">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Message Sent!</h2>
+              <p className="text-gray-600 mb-4">
+                Thank you for contacting us. We'll get back to you within 24 hours.
+              </p>
+              <p className="text-sm text-gray-500">
+                A confirmation email has been sent to your inbox. Redirecting to homepage...
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -319,7 +342,6 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              {/* Service Areas */}
               <Card className="shadow-lg">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Service Areas</h3>
