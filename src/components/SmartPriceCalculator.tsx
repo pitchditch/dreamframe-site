@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -17,7 +17,6 @@ interface AddressDetails {
 }
 
 export const SmartPriceCalculator: React.FC = () => {
-  const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState<AddressDetails | null>(null);
   const [squareFootage, setSquareFootage] = useState<number | null>(null);
   const [serviceType, setServiceType] = useState<string>('');
@@ -26,25 +25,6 @@ export const SmartPriceCalculator: React.FC = () => {
   const [calculatingPrice, setCalculatingPrice] = useState(false);
   
   const { getSquareFootage, loading: fetchingSquareFootage, error: squareFootageError } = useFetchSquareFootage();
-
-  // Auto-fill postal code from homepage if available
-  useEffect(() => {
-    const savedPostalCode = localStorage.getItem('postalCode') || 
-                           localStorage.getItem('calculatorPostalCode') || 
-                           sessionStorage.getItem('postalCode');
-    
-    if (savedPostalCode && !selectedAddress) {
-      // Create a mock address object with the saved postal code
-      const mockAddress: AddressDetails = {
-        formatted_address: `${savedPostalCode}, BC`,
-        latitude: 49.2827,
-        longitude: -123.1207,
-        city: 'Vancouver',
-        postalCode: savedPostalCode
-      };
-      setSelectedAddress(mockAddress);
-    }
-  }, []);
 
   const handleAddressSelect = async (address: AddressDetails) => {
     setSelectedAddress(address);
@@ -92,41 +72,6 @@ export const SmartPriceCalculator: React.FC = () => {
       console.error('Error calculating price:', error);
     } finally {
       setCalculatingPrice(false);
-    }
-  };
-
-  const handleBookService = () => {
-    // Store the quote information for the booking calendar
-    const bookingData = {
-      service: serviceType,
-      address: selectedAddress?.formatted_address,
-      squareFootage,
-      quote: quote?.adjustedPrice,
-      timestamp: Date.now()
-    };
-    
-    localStorage.setItem('bookingData', JSON.stringify(bookingData));
-    navigate('/booking');
-  };
-
-  const handleGetMoreDetails = () => {
-    if (!serviceType) return;
-    
-    // Map service types to their corresponding routes
-    const serviceRoutes: { [key: string]: string } = {
-      'Window Cleaning': '/services/window-cleaning',
-      'House Washing': '/services/house-wash',
-      'Driveway Washing': '/services/pressure-washing',
-      'Deck Washing': '/services/deck-cleaning',
-      'Gutter Cleaning': '/services/gutter-cleaning'
-    };
-
-    const route = serviceRoutes[serviceType];
-    if (route) {
-      navigate(route);
-    } else {
-      // Fallback to general services page
-      navigate('/services');
     }
   };
 
@@ -322,17 +267,10 @@ export const SmartPriceCalculator: React.FC = () => {
                 </div>
 
                 <div className="mt-6 flex gap-3">
-                  <Button 
-                    className="flex-1 bg-green-600 hover:bg-green-700"
-                    onClick={handleBookService}
-                  >
+                  <Button className="flex-1 bg-green-600 hover:bg-green-700">
                     Book This Service
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    className="flex-1"
-                    onClick={handleGetMoreDetails}
-                  >
+                  <Button variant="outline" className="flex-1">
                     Get More Details
                   </Button>
                 </div>
