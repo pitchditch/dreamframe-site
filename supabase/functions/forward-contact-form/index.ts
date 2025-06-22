@@ -133,12 +133,12 @@ serve(async (req) => {
         ? `${body.email}`
         : "website@bcpressurewashing.ca";
 
-    // Send the business notification email only if resend is available
+    // Send the business notification email
     let emailRes = null;
     if (resend) {
       try {
         emailRes = await resend.emails.send({
-          from: `BC Pressure Washing Site <${from}>`,
+          from: `BC Pressure Washing Site <noreply@bcpressurewashing.ca>`,
           to: [BUSINESS_EMAIL],
           subject,
           html,
@@ -154,7 +154,7 @@ serve(async (req) => {
       emailRes = { skipped: "No API key" };
     }
 
-    // Send customer confirmation email if email is provided and resend is available
+    // Send customer confirmation email
     let customerEmailRes = null;
     if (body.email && resend) {
       try {
@@ -176,7 +176,7 @@ serve(async (req) => {
         `;
 
         customerEmailRes = await resend.emails.send({
-          from: "BC Pressure Washing <no-reply@bcpressurewashing.ca>",
+          from: "BC Pressure Washing <noreply@bcpressurewashing.ca>",
           to: [body.email],
           subject: "Thanks for your inquiry - BC Pressure Washing",
           html: customerHtml,
