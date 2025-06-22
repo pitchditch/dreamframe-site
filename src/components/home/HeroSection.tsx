@@ -15,11 +15,14 @@ const HeroSection = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
   
-  // Only load on home page
+  // Show on home page and city pages
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
+  const isCityPage = location.pathname !== '/' && location.pathname !== '/home' && !location.pathname.includes('/services') && !location.pathname.includes('/about') && !location.pathname.includes('/contact') && !location.pathname.includes('/why-us') && !location.pathname.includes('/calculator') && !location.pathname.includes('/booking') && !location.pathname.includes('/admin');
+  
+  const shouldShowHero = isHomePage || isCityPage;
   
   useEffect(() => {
-    if (!isHomePage) return;
+    if (!shouldShowHero) return;
     
     // Preload the new hero image
     const img = new Image();
@@ -38,10 +41,10 @@ const HeroSection = () => {
       setIsLoading(false);
       window.dispatchEvent(new CustomEvent('heroLoaded'));
     }, 500);
-  }, [isMobile, isHomePage]);
+  }, [isMobile, shouldShowHero]);
   
-  // Don't render hero section if not on home page
-  if (!isHomePage) return null;
+  // Don't render hero section if not on home page or city page
+  if (!shouldShowHero) return null;
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">
