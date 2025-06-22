@@ -21,7 +21,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         </div>
       )}
 
-      {/* Background - Adjusted positioning to show bottom corners */}
+      {/* Background - Positioned to show bottom corners */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           <img 
@@ -31,7 +31,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             loading="eager"
             fetchPriority="high"
             style={{ 
-              objectPosition: isMobile ? '50% 20%' : '50% 25%'
+              objectPosition: isMobile ? '50% 10%' : '50% 15%'
             }}
           />
         </div>
