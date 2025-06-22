@@ -15,16 +15,17 @@ const WhyUs = () => {
   } = useTranslation();
   
   return <Layout>
-      <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
-        {/* YouTube Video Background */}
+      <section className="relative w-full h-screen overflow-hidden">
+        {/* YouTube Video Background - Full Screen */}
         <div className="absolute inset-0 w-full h-full">
           <iframe
             src="https://www.youtube.com/embed/GJZpuELGJpI?si=uAM9sVcFwtyjrlKt&autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
-            className="w-full h-full object-cover"
+            className="absolute top-1/2 left-1/2 w-screen h-screen"
             style={{ 
-              minWidth: '100%', 
-              minHeight: '100%',
-              transform: 'scale(1.1)' // Slightly scale to avoid black bars
+              minWidth: '100vw', 
+              minHeight: '100vh',
+              transform: 'translate(-50%, -50%) scale(1.2)',
+              border: 'none'
             }}
             allow="autoplay; encrypted-media"
             allowFullScreen
@@ -33,12 +34,14 @@ const WhyUs = () => {
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
-            <p className="text-xl text-gray-300 mb-8">
-              We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
-            </p>
+        <div className="relative z-10 flex items-center justify-center h-full">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center text-white">
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
+              <p className="text-xl text-gray-300 mb-8">
+                We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
+              </p>
+            </div>
           </div>
         </div>
       </section>
