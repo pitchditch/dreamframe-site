@@ -60,7 +60,7 @@ const Contact = () => {
           body: JSON.stringify({
             name: formData.name,
             email: formData.email,
-            phone: formData.phone, // Make sure phone is included
+            phone: formData.phone,
             service: formData.service,
             message: formData.message,
             subject: "Contact Form Submission",
@@ -75,7 +75,7 @@ const Contact = () => {
         
         toast({
           title: "Message sent successfully!",
-          description: "We'll get back to you within 24 hours.",
+          description: "We'll get back to you within 24 hours. Check your phone for a confirmation text!",
         });
 
         // Clear form
@@ -87,9 +87,9 @@ const Contact = () => {
           message: ''
         });
 
-        // Redirect to homepage after 2 seconds
+        // Redirect to homepage after showing success message
         setTimeout(() => {
-          navigate('/');
+          window.location.href = '/';
         }, 2000);
       } else {
         const error = await response.json();

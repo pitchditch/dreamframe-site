@@ -46,6 +46,13 @@ function formatPhoneNumber(phone: string): string {
 // Function to send SMS via Twilio
 async function sendSMS(to: string, message: string) {
   try {
+    console.log(`Twilio auth token available: ${twilioAuthToken ? 'Yes' : 'No'}`);
+    
+    if (!twilioAuthToken) {
+      console.error("Twilio auth token is missing");
+      return { success: false, error: "Twilio auth token not configured" };
+    }
+
     const formattedTo = formatPhoneNumber(to);
     console.log(`Attempting to send SMS to: ${formattedTo}`);
     console.log(`SMS message: ${message}`);
@@ -124,20 +131,24 @@ serve(async (req) => {
         ? `${body.email}`
         : "website@bcpressurewashing.ca";
 
-    // Send the business notification email
-    const emailRes = await resend.emails.send({
-      from: `BC Pressure Washing Site <${from}>`,
-      to: [BUSINESS_EMAIL],
-      subject,
-      html,
-      reply_to: body.email,
-    });
+    // Send the business notification email only if RESEND_API_KEY is available
+    let emailRes = null;
+    if (Deno.env.get("RESEND_API_KEY")) {
+      emailRes = await resend.emails.send({
+        from: `BC Pressure Washing Site <${from}>`,
+        to: [BUSINESS_EMAIL],
+        subject,
+        html,
+        reply_to: body.email,
+      });
+      console.log("Business email sent:", emailRes);
+    } else {
+      console.log("RESEND_API_KEY not available, skipping email");
+    }
 
-    console.log("Business email sent:", emailRes);
-
-    // Send customer confirmation email if email is provided
+    // Send customer confirmation email if email is provided and RESEND_API_KEY is available
     let customerEmailRes = null;
-    if (body.email) {
+    if (body.email && Deno.env.get("RESEND_API_KEY")) {
       const customerHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #dc2626;">Thank you for contacting BC Pressure Washing!</h2>
@@ -168,6 +179,8 @@ serve(async (req) => {
     // Send SMS confirmation if phone number is provided
     let smsRes = null;
     const phoneField = body.phone || body.contactPhone;
+    
+    console.log(`Checking for phone field. body.phone: ${body.phone}, body.contactPhone: ${body.contactPhone}`);
     
     if (phoneField) {
       console.log(`Phone field found: ${phoneField}`);
