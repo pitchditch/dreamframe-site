@@ -128,11 +128,6 @@ serve(async (req) => {
       body.subject ||
       `New Contact Form Submission from ${body.name || body.contactName || body.email || "Visitor"}`;
 
-    const from =
-      body.email && typeof body.email === "string"
-        ? `${body.email}`
-        : "website@bcpressurewashing.ca";
-
     // Send the business notification email
     let emailRes = null;
     if (resend) {
@@ -189,7 +184,7 @@ serve(async (req) => {
       }
     }
 
-    // Send SMS confirmation - improved phone field detection
+    // Send SMS confirmation without trial account prefix
     let smsRes = null;
     const phoneField = body.phone || body.contactPhone || body.phoneNumber;
     
@@ -208,6 +203,7 @@ serve(async (req) => {
     if (finalPhoneNumber) {
       console.log(`Phone number found: ${finalPhoneNumber}`);
       const customerName = body.name || body.contactName || body.customer?.name || 'there';
+      // Clean message without any trial prefixes
       const smsMessage = `Hi ${customerName}! Thanks for contacting BC Pressure Washing. We've received your inquiry and will call you back within 24 hours. Questions? Call (778) 808-7620`;
       
       smsRes = await sendSMS(finalPhoneNumber, smsMessage);
