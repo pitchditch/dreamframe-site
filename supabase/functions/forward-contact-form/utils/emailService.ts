@@ -29,7 +29,7 @@ export async function sendBusinessEmail(resend: Resend, body: any) {
 
   try {
     const emailRes = await resend.emails.send({
-      from: `BC Pressure Washing Site <noreply@bcpressurewashing.ca>`,
+      from: `BC Pressure Washing <onboarding@resend.dev>`,
       to: [BUSINESS_EMAIL],
       subject,
       html,
@@ -67,7 +67,7 @@ export async function sendCustomerEmail(resend: Resend, body: any) {
 
   try {
     const customerEmailRes = await resend.emails.send({
-      from: "BC Pressure Washing <noreply@bcpressurewashing.ca>",
+      from: "BC Pressure Washing <onboarding@resend.dev>",
       to: [body.email],
       subject: "Thanks for your inquiry - BC Pressure Washing",
       html: customerHtml,
