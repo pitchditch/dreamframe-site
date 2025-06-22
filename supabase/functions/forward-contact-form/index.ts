@@ -1,10 +1,9 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const twilioAccountSid = "AC81550a4a679b9a58bbdab855c63f1a8";
-const twilioAuthToken = Deno.env.get("twilio key");
+const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN"); // Changed from "twilio key"
 const twilioPhoneNumber = "+13183929394";
 
 const corsHeaders = {
@@ -47,9 +46,10 @@ function formatPhoneNumber(phone: string): string {
 async function sendSMS(to: string, message: string) {
   try {
     console.log(`Twilio auth token available: ${twilioAuthToken ? 'Yes' : 'No'}`);
+    console.log(`Twilio auth token value: ${twilioAuthToken ? twilioAuthToken.substring(0, 10) + '...' : 'undefined'}`);
     
     if (!twilioAuthToken) {
-      console.error("Twilio auth token is missing");
+      console.error("Twilio auth token is missing - check secret name");
       return { success: false, error: "Twilio auth token not configured" };
     }
 
@@ -102,6 +102,7 @@ serve(async (req) => {
   try {
     const body = await req.json();
     console.log("Form submission received:", body);
+    console.log("All form fields:", Object.keys(body));
 
     // Compose a simple HTML email body with form info
     const htmlFields = Object.entries(body)
@@ -176,15 +177,20 @@ serve(async (req) => {
       console.log("Customer email sent:", customerEmailRes);
     }
 
-    // Send SMS confirmation if phone number is provided
+    // Send SMS confirmation - check multiple possible phone field names
     let smsRes = null;
-    const phoneField = body.phone || body.contactPhone;
+    const phoneField = body.phone || body.contactPhone || body.phoneNumber || body.customer?.phone;
     
-    console.log(`Checking for phone field. body.phone: ${body.phone}, body.contactPhone: ${body.contactPhone}`);
+    console.log(`Checking for phone field in body:`, {
+      phone: body.phone,
+      contactPhone: body.contactPhone,
+      phoneNumber: body.phoneNumber,
+      customerPhone: body.customer?.phone
+    });
     
     if (phoneField) {
       console.log(`Phone field found: ${phoneField}`);
-      const customerName = body.name || body.contactName || 'there';
+      const customerName = body.name || body.contactName || body.customer?.name || 'there';
       const smsMessage = `Hi ${customerName}! Thanks for contacting BC Pressure Washing. We've received your inquiry and will call you back within 24 hours. Questions? Call (778) 808-7620`;
       
       smsRes = await sendSMS(phoneField, smsMessage);

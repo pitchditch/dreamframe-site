@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -65,28 +64,58 @@ const BookingCalendar: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Store the complete booking information
-      const completeBooking = {
-        ...bookingData,
-        date: format(selectedDate, 'yyyy-MM-dd'),
-        time: selectedTime,
-        customer: customerInfo,
-        timestamp: Date.now()
-      };
+      console.log('Submitting booking with customer info:', customerInfo);
 
-      localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
-      
-      // Clear the original booking data
-      localStorage.removeItem('bookingData');
+      // Send booking confirmation via the same edge function
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: customerInfo.name,
+            email: customerInfo.email,
+            phone: customerInfo.phone,
+            service: bookingData?.service || 'Service Booking',
+            message: `Booking Request:\n\nDate: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}\nTime: ${selectedTime}\nService: ${bookingData?.service}\nAddress: ${bookingData?.address}\n${bookingData?.squareFootage ? `Property Size: ${bookingData.squareFootage.toLocaleString()} sq ft\n` : ''}${bookingData?.quote ? `Quote: $${bookingData.quote}\n` : ''}${customerInfo.notes ? `Notes: ${customerInfo.notes}` : ''}`,
+            subject: "Service Booking Request",
+            form: "BookingCalendar",
+            address: bookingData?.address,
+            preferredTime: `${format(selectedDate, 'yyyy-MM-dd')} at ${selectedTime}`,
+            customer: customerInfo
+          }),
+        }
+      );
 
-      toast({
-        title: "Booking Request Submitted!",
-        description: "We'll contact you within 24 hours to confirm your appointment.",
-      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Booking submission successful:', result);
+        
+        toast({
+          title: "Booking Request Submitted!",
+          description: "We'll contact you within 24 hours to confirm your appointment. Check your phone for a confirmation text!",
+        });
 
-      // Navigate to contact page with booking confirmation
-      navigate('/contact');
-      
+        // Store the complete booking information
+        const completeBooking = {
+          ...bookingData,
+          date: format(selectedDate, 'yyyy-MM-dd'),
+          time: selectedTime,
+          customer: customerInfo,
+          timestamp: Date.now()
+        };
+
+        localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
+        localStorage.removeItem('bookingData');
+
+        // Navigate to homepage after showing success message
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to submit booking");
+      }
     } catch (error) {
       console.error('Error submitting booking:', error);
       toast({
@@ -275,6 +304,7 @@ const BookingCalendar: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full"
+                    placeholder="(778) 123-4567"
                   />
                 </div>
 
