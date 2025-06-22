@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,11 +8,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Phone, Mail, MapPin, Clock, CheckCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import emailjs from 'emailjs-com';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,33 +49,54 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      await emailjs.send(
-        'service_bc_pressure',
-        'template_contact',
+      console.log('Submitting contact form with data:', formData);
+
+      // Send to Supabase Edge Function
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone,
-          service: formData.service,
-          message: formData.message,
-        },
-        'YOUR_PUBLIC_KEY'
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone, // Make sure phone is included
+            service: formData.service,
+            message: formData.message,
+            subject: "Contact Form Submission",
+            form: "ContactPage",
+          }),
+        }
       );
 
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
-      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Form submission successful:', result);
+        
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+        });
 
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: ''
-      });
+        // Clear form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
+
+        // Redirect to homepage after 2 seconds
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to send message");
+      }
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Form submission error:', error);
       toast({
         variant: "destructive",
         title: "Error sending message",
@@ -145,6 +167,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         className="w-full"
+                        placeholder="(778) 123-4567"
                       />
                     </div>
                   </div>
