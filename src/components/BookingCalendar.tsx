@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, MapPin, DollarSign, User, Phone, Mail, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface BookingData {
   service: string;
@@ -66,56 +67,49 @@ const BookingCalendar: React.FC = () => {
     try {
       console.log('Submitting booking with customer info:', customerInfo);
 
-      // Send booking confirmation via the same edge function
-      const response = await fetch(
-        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: customerInfo.name,
-            email: customerInfo.email,
-            phone: customerInfo.phone,
-            service: bookingData?.service || 'Service Booking',
-            message: `Booking Request:\n\nDate: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}\nTime: ${selectedTime}\nService: ${bookingData?.service}\nAddress: ${bookingData?.address}\n${bookingData?.squareFootage ? `Property Size: ${bookingData.squareFootage.toLocaleString()} sq ft\n` : ''}${bookingData?.quote ? `Quote: $${bookingData.quote}\n` : ''}${customerInfo.notes ? `Notes: ${customerInfo.notes}` : ''}`,
-            subject: "Service Booking Request",
-            form: "BookingCalendar",
-            address: bookingData?.address,
-            preferredTime: `${format(selectedDate, 'yyyy-MM-dd')} at ${selectedTime}`,
-            customer: customerInfo
-          }),
+      // Use Supabase client to call the edge function instead of direct fetch
+      const { data, error } = await supabase.functions.invoke('forward-contact-form', {
+        body: {
+          name: customerInfo.name,
+          email: customerInfo.email,
+          phone: customerInfo.phone,
+          service: bookingData?.service || 'Service Booking',
+          message: `Booking Request:\n\nDate: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}\nTime: ${selectedTime}\nService: ${bookingData?.service}\nAddress: ${bookingData?.address}\n${bookingData?.squareFootage ? `Property Size: ${bookingData.squareFootage.toLocaleString()} sq ft\n` : ''}${bookingData?.quote ? `Quote: $${bookingData.quote}\n` : ''}${customerInfo.notes ? `Notes: ${customerInfo.notes}` : ''}`,
+          subject: "Service Booking Request",
+          form: "BookingCalendar",
+          address: bookingData?.address,
+          preferredTime: `${format(selectedDate, 'yyyy-MM-dd')} at ${selectedTime}`,
+          customer: customerInfo
         }
-      );
+      });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Booking submission successful:', result);
-        
-        toast({
-          title: "Booking Request Submitted!",
-          description: "We'll contact you within 24 hours to confirm your appointment. Check your phone for a confirmation text!",
-        });
-
-        // Store the complete booking information
-        const completeBooking = {
-          ...bookingData,
-          date: format(selectedDate, 'yyyy-MM-dd'),
-          time: selectedTime,
-          customer: customerInfo,
-          timestamp: Date.now()
-        };
-
-        localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
-        localStorage.removeItem('bookingData');
-
-        // Navigate to homepage after showing success message
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 2000);
-      } else {
-        const error = await response.json();
-        throw new Error(error.error || "Failed to submit booking");
+      if (error) {
+        throw new Error(error.message || "Failed to submit booking");
       }
+
+      console.log('Booking submission successful:', data);
+      
+      toast({
+        title: "Booking Request Submitted!",
+        description: "We'll contact you within 24 hours to confirm your appointment. Check your phone for a confirmation text!",
+      });
+
+      // Store the complete booking information
+      const completeBooking = {
+        ...bookingData,
+        date: format(selectedDate, 'yyyy-MM-dd'),
+        time: selectedTime,
+        customer: customerInfo,
+        timestamp: Date.now()
+      };
+
+      localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
+      localStorage.removeItem('bookingData');
+
+      // Navigate to homepage after showing success message
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
     } catch (error) {
       console.error('Error submitting booking:', error);
       toast({
