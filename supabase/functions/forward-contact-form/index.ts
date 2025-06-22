@@ -4,7 +4,7 @@ import { Resend } from "npm:resend@2.0.0";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
-const twilioAccountSid = "AC81550a4a679b9a58bbdab855c63f1a8";
+const twilioAccountSid = "AC137df830ca1a154ba8f82d06da9e40f1";
 const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
 const twilioPhoneNumber = "+13183929394";
 
