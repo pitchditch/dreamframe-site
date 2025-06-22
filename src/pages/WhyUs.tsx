@@ -15,21 +15,24 @@ const WhyUs = () => {
   } = useTranslation();
   
   return <Layout>
-      <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="absolute inset-0 opacity-30">
-          {/* Use different images for mobile and desktop */}
-          <img 
-            src="/lovable-uploads/c445485c-8dd6-4dcf-8896-5c61eee4d27f.png" 
-            alt="House exterior cleaning" 
-            className="w-full h-full object-cover md:hidden" 
+      <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
+        {/* YouTube Video Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <iframe
+            src="https://www.youtube.com/embed/GJZpuELGJpI?si=uAM9sVcFwtyjrlKt&autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
+            className="w-full h-full object-cover"
+            style={{ 
+              minWidth: '100%', 
+              minHeight: '100%',
+              transform: 'scale(1.1)' // Slightly scale to avoid black bars
+            }}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="BC Pressure Washing Background Video"
           />
-          <img 
-            src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" 
-            alt="House exterior cleaning" 
-            className="w-full h-full object-cover hidden md:block" 
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/60"></div>
         </div>
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
