@@ -31,7 +31,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             loading="eager"
             fetchPriority="high"
             style={{ 
-              objectPosition: isMobile ? '50% 80%' : '50% 75%'
+              objectPosition: isMobile ? '50% 90%' : '50% 85%'
             }}
           />
         </div>
