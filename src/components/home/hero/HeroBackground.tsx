@@ -1,4 +1,5 @@
 
+
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HeroBackgroundProps {
@@ -31,7 +32,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             loading="eager"
             fetchPriority="high"
             style={{ 
-              objectPosition: isMobile ? '50% 60%' : '50% 55%'
+              objectPosition: isMobile ? '50% 40%' : '50% 35%'
             }}
           />
         </div>
@@ -42,3 +43,4 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
 };
 
 export default HeroBackground;
+
