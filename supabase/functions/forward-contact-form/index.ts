@@ -4,7 +4,7 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const twilioAccountSid = "AC81550a4a679b9a58bbdab855c63f1a8";
-const twilioAuthToken = Deno.env.get("twillio key");
+const twilioAuthToken = Deno.env.get("twilio key");
 const twilioPhoneNumber = "+13183929394";
 
 const corsHeaders = {
@@ -17,21 +17,30 @@ const BUSINESS_EMAIL = "jaydenf3800@gmail.com";
 
 // Function to format phone number for SMS
 function formatPhoneNumber(phone: string): string {
+  console.log(`Original phone number: ${phone}`);
+  
   // Remove all non-digit characters
   const digits = phone.replace(/\D/g, '');
+  console.log(`Digits only: ${digits}`);
   
   // Add +1 if it's a 10-digit North American number
   if (digits.length === 10) {
-    return `+1${digits}`;
+    const formatted = `+1${digits}`;
+    console.log(`Formatted 10-digit number: ${formatted}`);
+    return formatted;
   }
   
   // Add + if it doesn't have it but is international format
   if (digits.length > 10 && !phone.startsWith('+')) {
-    return `+${digits}`;
+    const formatted = `+${digits}`;
+    console.log(`Formatted international number: ${formatted}`);
+    return formatted;
   }
   
   // Return as-is if already formatted
-  return phone.startsWith('+') ? phone : `+${digits}`;
+  const formatted = phone.startsWith('+') ? phone : `+${digits}`;
+  console.log(`Final formatted number: ${formatted}`);
+  return formatted;
 }
 
 // Function to send SMS via Twilio
@@ -39,12 +48,15 @@ async function sendSMS(to: string, message: string) {
   try {
     const formattedTo = formatPhoneNumber(to);
     console.log(`Attempting to send SMS to: ${formattedTo}`);
+    console.log(`SMS message: ${message}`);
     
     const body = new URLSearchParams({
       To: formattedTo,
       From: twilioPhoneNumber,
       Body: message,
     });
+
+    console.log(`Twilio request body: ${body.toString()}`);
 
     const response = await fetch(
       `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
@@ -59,6 +71,8 @@ async function sendSMS(to: string, message: string) {
     );
 
     const result = await response.json();
+    console.log(`Twilio response status: ${response.status}`);
+    console.log(`Twilio response:`, result);
     
     if (response.ok) {
       console.log("SMS sent successfully:", result.sid);
@@ -153,12 +167,18 @@ serve(async (req) => {
 
     // Send SMS confirmation if phone number is provided
     let smsRes = null;
-    if (body.phone) {
+    const phoneField = body.phone || body.contactPhone;
+    
+    if (phoneField) {
+      console.log(`Phone field found: ${phoneField}`);
       const customerName = body.name || body.contactName || 'there';
       const smsMessage = `Hi ${customerName}! Thanks for contacting BC Pressure Washing. We've received your inquiry and will call you back within 24 hours. Questions? Call (778) 808-7620`;
       
-      smsRes = await sendSMS(body.phone, smsMessage);
+      smsRes = await sendSMS(phoneField, smsMessage);
       console.log("SMS result:", smsRes);
+    } else {
+      console.log("No phone number provided in form data");
+      console.log("Available fields:", Object.keys(body));
     }
 
     return new Response(JSON.stringify({ 
