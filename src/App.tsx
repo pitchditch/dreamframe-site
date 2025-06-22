@@ -22,6 +22,12 @@ const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
 const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
 
+// Admin pages
+const AdminQuotes = lazy(() => import('./pages/AdminQuotes'));
+
+// City pages
+const CityPages = lazy(() => import('./pages/CityPages'));
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -45,6 +51,12 @@ function App() {
               {/* Specific Service Pages */}
               <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
               <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
+
+              {/* Admin Routes */}
+              <Route path="/admin-quotes" element={<AdminQuotes />} />
+
+              {/* City Routes */}
+              <Route path="/:citySlug" element={<CityPages />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
