@@ -36,7 +36,7 @@ const RedCarSection = () => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="border-white text-white hover:bg-white hover:text-bc-red text-lg font-bold px-8 py-4"
+                  className="border-white text-bc-red hover:bg-white hover:text-bc-red text-lg font-bold px-8 py-4 bg-white"
                   onClick={() => setIsReferralDialogOpen(true)}
                 >
                   Start Referring Friends
@@ -66,8 +66,8 @@ const RedCarSection = () => {
             <div className="lg:w-1/2">
               <div className="relative">
                 <img
-                  src="/lovable-uploads/3774dac7-a537-41d3-b86b-eee5ae6dfd89.png"
-                  alt="BC Pressure Washing red car with owner"
+                  src="/lovable-uploads/958a85db-bdfc-469f-be71-ab79ed06ddd9.png"
+                  alt="BC Pressure Washing red car at the beach"
                   className="rounded-lg shadow-2xl w-full h-auto transform hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
