@@ -91,6 +91,25 @@ const Calculator: React.FC = () => {
                         <div className="text-sm text-yellow-600">White Rock & Surrey</div>
                       </div>
                     </div>
+
+                    {/* Review Badges with Fixed Square Images */}
+                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                      <h4 className="font-semibold text-gray-800 mb-3 text-center">Leave Us a Review</h4>
+                      <div className="flex justify-center space-x-3">
+                        <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="w-8 h-8 object-contain" />
+                        </a>
+                        <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="w-8 h-8 object-contain" />
+                        </a>
+                        <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="w-8 h-8 object-contain" />
+                        </a>
+                        <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="w-8 h-8 object-contain" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
