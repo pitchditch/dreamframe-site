@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import { SmartPriceCalculator } from '../components/SmartPriceCalculator';
@@ -5,6 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { Percent, Shield, Star, Clock, Users, CheckCircle } from 'lucide-react';
 import TestimonialCarousel from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
+import ReferralButton from '@/components/ReferralButton';
 
 const Calculator: React.FC = () => {
   // Check if user was referred with form data
@@ -144,6 +146,9 @@ const Calculator: React.FC = () => {
             </div>
           </div>
           
+          {/* Referral Button Section */}
+          <ReferralButton />
+
           {/* Questions Form */}
           <div className="mt-16">
             <QuestionsForm />
