@@ -41,7 +41,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-sm">Window Cleaning</div>
-                  <div className="text-sm text-gray-500">Streak-free</div>
+                  <div className="text-xs text-gray-500">Streak-free</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -54,7 +54,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-sm">Gutter Cleaning</div>
-                  <div className="text-sm text-gray-500">Complete care</div>
+                  <div className="text-xs text-gray-500">Complete care</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -67,7 +67,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Soft Wash" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-sm">House Soft Wash</div>
-                  <div className="text-sm text-gray-500">Gentle cleaning</div>
+                  <div className="text-xs text-gray-500">Gentle cleaning</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -80,7 +80,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <img src="/lovable-uploads/c3789024-080d-4399-b348-ac2d5a1b744f.png" alt="Roof Cleaning" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-sm">Roof Cleaning</div>
-                  <div className="text-sm text-gray-500">Safe removal</div>
+                  <div className="text-xs text-gray-500">Safe removal</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -93,7 +93,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
                 <img src="/lovable-uploads/b18323e2-db3c-4f96-af15-171ee39301bc.png" alt="Fence Washing" className="mb-2 h-8 w-8 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-sm">Fence Washing</div>
-                  <div className="text-sm text-gray-500">Restore curb appeal</div>
+                  <div className="text-xs text-gray-500">Restore curb appeal</div>
                 </div>
               </Link>
             </DropdownMenuItem>
@@ -112,7 +112,7 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
               <img src="/lovable-uploads/5b1d271e-15e2-4bf4-87ce-4ad9e9aadc75.png" alt="Commercial Services" className="mr-3 h-5 w-5 flex-shrink-0" />
               <div>
                 <div className="font-medium text-sm">Commercial Services</div>
-                <div className="text-sm text-gray-500">Professional building maintenance</div>
+                <div className="text-xs text-gray-500">Professional building maintenance</div>
               </div>
             </Link>
           </DropdownMenuItem>
