@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -167,7 +166,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-base font-medium">Yelp</span>
                       </a>
                       <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group" style={{backgroundColor: 'transparent !important'}}>
-                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" border="0" />
+                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110"  />
                         <span className="text-base font-medium">TrustedPros</span>
                       </a>
                     </div>
