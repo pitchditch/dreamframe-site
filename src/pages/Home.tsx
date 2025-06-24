@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -13,6 +14,7 @@ import RedCarSection from '../components/home/RedCarSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import ReferralProgramSection from '../components/ReferralProgramSection';
 import ServiceBanner from '@/components/ServiceBanner';
+import TrustBadgesSection from '@/components/TrustBadgesSection';
 
 const Home = () => {
   const { language, setLanguage } = useTranslation();
@@ -101,8 +103,8 @@ const Home = () => {
       </Helmet>
 
       <HeroWithContent>
-        {/* Trust Badges - Moved right after hero */}
-        <ServiceBanner />
+        {/* Trust Badges - Restored below hero */}
+        <TrustBadgesSection />
         
         {/* Service Locations */}
         <CityNavigation />
