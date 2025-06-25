@@ -93,27 +93,6 @@ const Navbar = () => {
                     </Link>
                   </DropdownMenuItem>
                 ))}
-                
-                {/* Review Links Section */}
-                <div className="border-t border-gray-100 pt-2 mt-2">
-                  <div className="px-6 py-2">
-                    <h4 className="font-medium text-gray-900 text-sm">Leave a Review</h4>
-                    <div className="flex items-center space-x-3 mt-2">
-                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                        <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
-                      </a>
-                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                        <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
-                      </a>
-                      <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-6 w-6 object-contain" />
-                      </a>
-                      <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
-                        <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
               </DropdownMenuContent>
             </DropdownMenu>
 
