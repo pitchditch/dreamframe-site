@@ -4,6 +4,16 @@ export interface City {
   slug: string;
 }
 
+export interface CityData extends City {
+  postalCodePrefix: string;
+  nearbyAreas: string[];
+  testimonials: Array<{
+    author: string;
+    text: string;
+    rating: number;
+  }>;
+}
+
 export const cities: City[] = [
   { name: 'Surrey', slug: 'surrey' },
   { name: 'White Rock', slug: 'white-rock' },
