@@ -10,7 +10,7 @@ const RedCarSection = () => {
     <section className="relative py-20 overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-red-700 to-red-900">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"></div>
       </div>
 
@@ -41,7 +41,7 @@ const RedCarSection = () => {
                   <h3 className="text-2xl font-bold text-white">Special Offer!</h3>
                 </div>
                 <p className="text-white/90 text-lg leading-relaxed mb-6">
-                  If you've spotted our distinctive red vehicle along Marine Drive in White Rock, 
+                  If you&apos;ve spotted our distinctive red vehicle along Marine Drive in White Rock, 
                   mention it when you contact us to receive a special{' '}
                   <span className="font-bold text-yellow-300 text-xl bg-white/20 px-3 py-1 rounded-full animate-pulse">
                     10% discount
@@ -52,8 +52,8 @@ const RedCarSection = () => {
                 {/* Community connection */}
                 <div className="bg-white/5 rounded-xl p-6 border border-white/10">
                   <p className="text-white/80 text-base leading-relaxed">
-                    As a locally owned and operated business, we're proud to be an active part of the 
-                    White Rock and Surrey communities. We're not just a service provider - we're your 
+                    As a locally owned and operated business, we&apos;re proud to be an active part of the 
+                    White Rock and Surrey communities. We&apos;re not just a service provider - we&apos;re your 
                     neighbors, committed to keeping our local properties looking their best.
                   </p>
                 </div>
@@ -81,8 +81,8 @@ const RedCarSection = () => {
                     </div>
                     
                     <blockquote className="text-white/90 italic text-lg leading-relaxed mb-4">
-                      "I'm committed to providing high-quality service with a personal touch. 
-                      If you see my red car around town, feel free to wave or stop for a chat!"
+                      &ldquo;I&apos;m committed to providing high-quality service with a personal touch. 
+                      If you see my red car around town, feel free to wave or stop for a chat!&rdquo;
                     </blockquote>
                     
                     <div className="flex items-center gap-2 text-yellow-300 font-medium">
