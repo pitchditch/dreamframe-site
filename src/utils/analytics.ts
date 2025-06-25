@@ -1,5 +1,6 @@
 
 
+
 export const trackPageView = (path: string) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'page_view', {
@@ -43,9 +44,3 @@ export const trackFormStep = (formName: string, stepData?: Record<string, any>) 
     });
   }
 };
-
-declare global {
-  interface Window {
-    gtag: (command: string, eventName: string, parameters?: Record<string, any>) => void;
-  }
-}
