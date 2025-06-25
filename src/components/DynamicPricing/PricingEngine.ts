@@ -1,70 +1,186 @@
 
+export interface PricingZone {
+  id: string;
+  name: string;
+  postalCodePrefixes: string[];
+  priceMultiplier: number; // 1.0 = base price, 1.1 = 10% premium, 0.9 = 10% discount
+  serviceFees: {
+    [key: string]: number; // Additional fees by service type
+  };
+  activePromotions?: Promotion[];
+}
+
+export interface Promotion {
+  id: string;
+  name: string;
+  discountPercent: number;
+  validUntil: string;
+  applicableServices: string[];
+  minOrderValue?: number;
+}
+
 export interface PricingRequest {
   postalCode: string;
   serviceType: string;
   houseSize: string;
   squareFootage?: number;
+  additionalServices?: string[];
 }
 
-export interface PricingResult {
+export interface PricingResponse {
+  basePrice: number;
   adjustedPrice: number;
+  zoneMultiplier: number;
   zoneName: string;
+  applicablePromotions: Promotion[];
   breakdown: {
     baseService: number;
     zoneAdjustment: number;
-    additionalFees: number;
     promotionDiscount: number;
+    additionalFees: number;
     total: number;
   };
 }
 
-export class PricingEngine {
-  private static baseServicePrices = {
-    'Window Cleaning': 150,
-    'House Washing': 300,
+// Pricing zones based on your city data
+export const PRICING_ZONES: PricingZone[] = [
+  {
+    id: 'vancouver-premium',
+    name: 'Vancouver Premium',
+    postalCodePrefixes: ['V5', 'V6'],
+    priceMultiplier: 1.15,
+    serviceFees: {
+      'House Washing': 25,
+      'Window Cleaning': 15
+    }
+  },
+  {
+    id: 'surrey-standard',
+    name: 'Surrey',
+    postalCodePrefixes: ['V3R', 'V3S', 'V3T', 'V3V', 'V3W', 'V3X', 'V4A', 'V4N', 'V4P'],
+    priceMultiplier: 1.0,
+    serviceFees: {}
+  },
+  {
+    id: 'white-rock-premium',
+    name: 'White Rock',
+    postalCodePrefixes: ['V4B'],
+    priceMultiplier: 1.1,
+    serviceFees: {
+      'Window Cleaning': 20
+    }
+  },
+  {
+    id: 'richmond-standard',
+    name: 'Richmond',
+    postalCodePrefixes: ['V6V', 'V6W', 'V6X', 'V6Y', 'V7A', 'V7B', 'V7C', 'V7E'],
+    priceMultiplier: 1.05,
+    serviceFees: {}
+  },
+  {
+    id: 'burnaby-standard',
+    name: 'Burnaby',
+    postalCodePrefixes: ['V5A', 'V5B', 'V5C', 'V5E', 'V5G', 'V5H', 'V5J'],
+    priceMultiplier: 1.0,
+    serviceFees: {}
+  }
+];
+
+// Base pricing matrix
+const BASE_PRICING = {
+  small: {
+    'Window Cleaning': 250,
+    'House Washing': 350,
     'Driveway Washing': 200,
     'Deck Washing': 180,
-    'Gutter Cleaning': 250
-  };
+    'Gutter Cleaning': 150
+  },
+  medium: {
+    'Window Cleaning': 350,
+    'House Washing': 500,
+    'Driveway Washing': 280,
+    'Deck Washing': 250,
+    'Gutter Cleaning': 200
+  },
+  large: {
+    'Window Cleaning': 450,
+    'House Washing': 700,
+    'Driveway Washing': 350,
+    'Deck Washing': 320,
+    'Gutter Cleaning': 280
+  },
+  xlarge: {
+    'Window Cleaning': 600,
+    'House Washing': 950,
+    'Driveway Washing': 450,
+    'Deck Washing': 400,
+    'Gutter Cleaning': 350
+  }
+};
 
-  private static houseSizeMultipliers = {
-    'small': 0.8,
-    'medium': 1.0,
-    'large': 1.3,
-    'xlarge': 1.6
-  };
-
-  private static zones = {
-    'V4B': { name: 'White Rock', multiplier: 1.0 },
-    'V3R': { name: 'Surrey Central', multiplier: 1.1 },
-    'V3T': { name: 'Surrey', multiplier: 1.05 },
-    'V3S': { name: 'Surrey South', multiplier: 1.0 },
-    'V6B': { name: 'Vancouver', multiplier: 1.2 },
-    'default': { name: 'Metro Vancouver', multiplier: 1.15 }
-  };
-
-  static calculatePrice(request: PricingRequest): PricingResult {
-    const basePrice = this.baseServicePrices[request.serviceType as keyof typeof this.baseServicePrices] || 200;
-    const sizeMultiplier = this.houseSizeMultipliers[request.houseSize as keyof typeof this.houseSizeMultipliers] || 1.0;
-    const postalPrefix = request.postalCode.substring(0, 3);
-    const zone = this.zones[postalPrefix as keyof typeof this.zones] || this.zones.default;
+export class PricingEngine {
+  static findZoneByPostalCode(postalCode: string): PricingZone | null {
+    const cleanPostal = postalCode.replace(/\s+/g, '').toUpperCase();
     
-    const baseService = basePrice * sizeMultiplier;
-    const zoneAdjustment = baseService * (zone.multiplier - 1);
-    const additionalFees = 0;
-    const promotionDiscount = 0;
-    const total = baseService + zoneAdjustment + additionalFees - promotionDiscount;
+    for (const zone of PRICING_ZONES) {
+      for (const prefix of zone.postalCodePrefixes) {
+        if (cleanPostal.startsWith(prefix)) {
+          return zone;
+        }
+      }
+    }
+    
+    // Default to Surrey pricing if no match
+    return PRICING_ZONES.find(z => z.id === 'surrey-standard') || null;
+  }
+
+  static calculatePrice(request: PricingRequest): PricingResponse {
+    const zone = this.findZoneByPostalCode(request.postalCode);
+    const basePrice = BASE_PRICING[request.houseSize as keyof typeof BASE_PRICING]?.[request.serviceType] || 0;
+    
+    if (!zone || !basePrice) {
+      throw new Error('Invalid pricing request');
+    }
+
+    // Apply zone multiplier
+    const zoneAdjustment = basePrice * (zone.priceMultiplier - 1);
+    const serviceFee = zone.serviceFees[request.serviceType] || 0;
+    
+    // Calculate promotions
+    const applicablePromotions = zone.activePromotions?.filter(promo => 
+      promo.applicableServices.includes(request.serviceType) &&
+      new Date(promo.validUntil) > new Date()
+    ) || [];
+    
+    const bestPromotion = applicablePromotions.reduce((best, current) => 
+      current.discountPercent > (best?.discountPercent || 0) ? current : best, 
+      null as Promotion | null
+    );
+    
+    const adjustedPrice = basePrice + zoneAdjustment + serviceFee;
+    const promotionDiscount = bestPromotion ? (adjustedPrice * bestPromotion.discountPercent / 100) : 0;
+    const finalPrice = adjustedPrice - promotionDiscount;
 
     return {
-      adjustedPrice: Math.round(total),
+      basePrice,
+      adjustedPrice: finalPrice,
+      zoneMultiplier: zone.priceMultiplier,
       zoneName: zone.name,
+      applicablePromotions,
       breakdown: {
-        baseService: Math.round(baseService),
-        zoneAdjustment: Math.round(zoneAdjustment),
-        additionalFees,
+        baseService: basePrice,
+        zoneAdjustment,
         promotionDiscount,
-        total: Math.round(total)
+        additionalFees: serviceFee,
+        total: finalPrice
       }
     };
+  }
+
+  static getActivePromotions(postalCode: string): Promotion[] {
+    const zone = this.findZoneByPostalCode(postalCode);
+    return zone?.activePromotions?.filter(promo => 
+      new Date(promo.validUntil) > new Date()
+    ) || [];
   }
 }

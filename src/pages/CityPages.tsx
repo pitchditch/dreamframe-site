@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import HeroWithContent from '../components/HeroWithContent';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
+import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import CityNavigation from '../components/home/CityNavigation';
@@ -71,6 +72,8 @@ const CityPages = () => {
             <ServiceAreasCarousel />
           </div>
         </section>
+
+        <ReferralButton />
 
         <footer className="text-center text-sm text-gray-500 mt-12">
           <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>
