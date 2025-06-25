@@ -119,7 +119,7 @@ serve(async (req) => {
 
     // Send the quote/contract email
     const emailRes = await resend.emails.send({
-      from: "BC Pressure Washing <onboarding@resend.dev>",
+      from: "BC Pressure Washing <quotes@bcpressurewashing.ca>",
       to: [body.customerEmail],
       subject: `Service Quote - ${body.service} at ${body.address}`,
       html: quoteEmailHtml,

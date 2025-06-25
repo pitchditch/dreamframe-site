@@ -10,7 +10,6 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const Contact = lazy(() => import('./pages/Contact'));
-const WhyUs = lazy(() => import('./pages/WhyUs'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const CalculatorPage = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
@@ -22,12 +21,6 @@ const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 // Specific service pages
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
 const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
-
-// Admin pages
-const AdminQuotes = lazy(() => import('./pages/AdminQuotes'));
-
-// City pages
-const CityPages = lazy(() => import('./pages/CityPages'));
 
 const queryClient = new QueryClient();
 
@@ -42,7 +35,6 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/why-us" element={<WhyUs />} />
               <Route path="/calculator" element={<CalculatorPage />} />
               <Route path="/booking" element={<Booking />} />
 
@@ -53,12 +45,6 @@ function App() {
               {/* Specific Service Pages */}
               <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
               <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
-
-              {/* Admin Routes */}
-              <Route path="/admin-quotes" element={<AdminQuotes />} />
-
-              {/* City Routes */}
-              <Route path="/:citySlug" element={<CityPages />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
