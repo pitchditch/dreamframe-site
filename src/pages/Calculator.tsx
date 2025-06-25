@@ -1,13 +1,13 @@
-
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
-import { SmartPriceCalculator } from '../components/SmartPriceCalculator';
+import StreamlinedCalculatorForm from '../components/StreamlinedCalculator/StreamlinedCalculatorForm';
 import { Helmet } from 'react-helmet-async';
 import { Percent, Shield, Star, Clock, Users, CheckCircle } from 'lucide-react';
-import TestimonialCarousel from '@/components/TestimonialCarousel';
+import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
+import { Card, CardContent } from '@/components/ui/card';
 
-const Calculator: React.FC = () => {
+const Calculator = () => {
   // Check if user was referred with form data
   const savedPostalCode = localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
   const savedHouseSize = localStorage.getItem('calculatorHouseSize');
@@ -19,9 +19,9 @@ const Calculator: React.FC = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Smart Quote Calculator - Instant Pricing | BC Pressure Washing</title>
-        <meta name="description" content="Get instant quotes with automatic address lookup and square footage detection. Professional cleaning services in White Rock, Surrey and Metro Vancouver." />
-        <meta name="keywords" content="smart quote calculator, address lookup, square footage, pressure washing estimate, White Rock, Surrey, BC" />
+        <title>Get Your Free Quote - 3 Simple Steps | BC Pressure Washing</title>
+        <meta name="description" content="Get an instant quote for professional cleaning services in White Rock & Surrey. Simple 3-step form - address, property size, service type." />
+        <meta name="keywords" content="free quote, pressure washing estimate, window cleaning quote, White Rock, Surrey, BC" />
       </Helmet>
       
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12">
@@ -33,11 +33,11 @@ const Calculator: React.FC = () => {
               SPRING SALE: 20% OFF ALL SERVICES
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Smart Quote Calculator
+              Get an Instant Quote
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Revolutionary pricing with automatic address lookup and square footage detection. 
-              Get accurate quotes in seconds!
+              Professional exterior cleaning services in White Rock & Surrey. 
+              Quick quote in just 3 simple steps – no phone calls required!
             </p>
           </div>
 
@@ -46,7 +46,7 @@ const Calculator: React.FC = () => {
             <div className="grid lg:grid-cols-4 gap-12 items-start">
               {/* Form Column (3/4 width on desktop) */}
               <div className="lg:col-span-3">
-                <SmartPriceCalculator />
+                <StreamlinedCalculatorForm />
               </div>
               
               {/* Trust Elements Sidebar (1/4 width on desktop) */}
@@ -97,7 +97,7 @@ const Calculator: React.FC = () => {
             </div>
           </div>
 
-          {/* 100% Satisfaction Guarantee */}
+          {/* 100% Satisfaction Guarantee - Keep existing */}
           <div className="mt-20 relative overflow-hidden rounded-xl shadow-2xl">
             <div className="absolute inset-0">
               <img 
@@ -126,7 +126,7 @@ const Calculator: React.FC = () => {
             </div>
           </div>
           
-          {/* Questions Form */}
+          {/* Keep existing Questions Form */}
           <div className="mt-16">
             <QuestionsForm />
           </div>

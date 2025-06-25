@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -18,7 +19,6 @@ import CompetitorComparisonSection from '../components/home/CompetitorComparison
 import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
-import CityNavigation from '../components/home/CityNavigation';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -69,9 +69,6 @@ const Index = () => {
       <HeroWithContent>
         <>
           <ServiceBanner />
-          
-          {/* City Navigation Section */}
-          <CityNavigation />
           
           {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">

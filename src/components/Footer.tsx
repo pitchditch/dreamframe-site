@@ -133,22 +133,31 @@ const Footer = () => {
         </div>
       </div>
       
-      {/* Full-width Marine Drive image below footer content */}
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        {isHomePage ? (
+      {/* Full-width Marine Drive image below footer content - only show on homepage */}
+      {isHomePage ? (
+        <div className="w-full">
           <img 
             src="/lovable-uploads/2b1c86bf-f351-48ad-831b-a33b68b7bcdc.png" 
             alt="White Rock Marine Drive" 
-            className="w-full h-auto object-cover block" 
+            className="w-full h-auto object-cover" 
+            style={{
+              maxHeight: "400px"
+            }} 
           />
-        ) : (
+        </div>
+      ) : (
+        <div className="w-full">
           <img 
             src="/lovable-uploads/32eacf1b-1b0c-4d77-8a7e-2d495f635e4f.png" 
             alt="White Rock Based Business - Marine Drive" 
-            className="w-full h-auto object-cover block"
+            className="w-full h-auto object-cover"
+            style={{
+              minHeight: "300px",
+              maxHeight: "500px"
+            }}
           />
-        )}
-      </div>
+        </div>
+      )}
     </footer>
   );
 };
