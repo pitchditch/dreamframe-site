@@ -39,7 +39,7 @@ serve(async (req) => {
       customerEmailRes = await sendCustomerEmail(resend, body);
     }
 
-    // Send SMS confirmation without trial account prefix
+    // Send SMS confirmation
     let smsRes = null;
     const finalPhoneNumber = extractPhoneNumber(body);
     
@@ -54,14 +54,23 @@ serve(async (req) => {
     if (finalPhoneNumber) {
       console.log(`Phone number found: ${finalPhoneNumber}`);
       const customerName = body.name || body.contactName || body.customer?.name || 'there';
-      // Clean message without any trial prefixes
+      
+      // Create a cleaner message for SMS
       const smsMessage = `Hi ${customerName}! Thanks for contacting BC Pressure Washing. We've received your inquiry and will call you back within 24 hours. Questions? Call (778) 808-7620`;
       
       smsRes = await sendSMS(finalPhoneNumber, smsMessage);
       console.log("SMS result:", smsRes);
+      
+      // Log success/failure for debugging
+      if (smsRes.success) {
+        console.log(`SMS confirmation sent successfully to ${finalPhoneNumber}`);
+      } else {
+        console.error(`Failed to send SMS confirmation to ${finalPhoneNumber}:`, smsRes.error);
+      }
     } else {
       console.log("No phone number provided in form data");
       console.log("Available fields:", Object.keys(body));
+      smsRes = { success: false, error: "No phone number provided" };
     }
 
     return new Response(JSON.stringify({ 

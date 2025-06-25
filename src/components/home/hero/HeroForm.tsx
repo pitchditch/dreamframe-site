@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from "@/components/ui/input";
@@ -34,8 +34,8 @@ const HeroForm = () => {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'max-w-xl w-full'} ${isMobile ? 'mt-4 mb-4' : 'mt-4 mb-6'} animate-on-scroll delay-300`}>
-      <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-3">
+    <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} ${isMobile ? 'mt-6 mb-6' : 'mt-6 mb-8'} animate-on-scroll delay-300`}>
+      <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-grow">
           <Input
             ref={inputRef}
@@ -43,16 +43,29 @@ const HeroForm = () => {
             placeholder={t("Enter Your Postal Code")}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
-            className={`bg-white border-white text-black ${isMobile ? 'h-12 text-lg rounded-lg' : 'h-12 md:h-14 text-base md:text-lg rounded-lg'} pl-4 pr-10 focus:ring-bc-red focus:border-bc-red placeholder-gray-500 font-medium w-full`}
+            className={`bg-white/95 backdrop-blur-sm border-3 border-white/50 text-black ${isMobile ? 'h-16 text-xl rounded-2xl' : 'h-16 md:h-18 text-xl md:text-2xl rounded-2xl'} pl-6 pr-12 focus:ring-4 focus:ring-bc-red/50 focus:border-bc-red placeholder-gray-600 font-bold w-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-3xl focus:scale-105`}
+            style={{
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)'
+            }}
           />
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+            <Sparkles className="w-6 h-6 text-bc-red animate-pulse" />
+          </div>
         </div>
         <Button 
           type="submit" 
           variant="bc-red" 
           size="lg" 
-          className={`${isMobile ? 'h-12 text-lg rounded-lg px-6' : 'h-12 md:h-14 text-base md:text-lg rounded-lg px-6 md:px-8'} text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto sm:min-w-[200px] md:min-w-[240px]`}
+          className={`${isMobile ? 'h-16 text-xl rounded-2xl px-8' : 'h-16 md:h-18 text-xl md:text-2xl rounded-2xl px-10 md:px-12'} text-white font-black shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-3xl active:scale-95 w-full sm:w-auto sm:min-w-[280px] md:min-w-[320px] bg-gradient-to-r from-bc-red to-red-600 hover:from-red-600 hover:to-red-700 border-2 border-white/20`}
+          style={{
+            boxShadow: '0 25px 50px -12px rgba(220, 38, 127, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+            textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+          }}
         >
-          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-2" size={18} />
+          <span className="flex items-center gap-3">
+            {isMobile ? t("Get FREE Quote") : t("Get Your FREE Instant Quote")} 
+            <MessageSquare className="ml-1" size={24} />
+          </span>
         </Button>
       </form>
     </div>

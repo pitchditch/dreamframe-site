@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -5,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin, Calculator, Percent, Phone } from 'lucide-react';
 import { PricingEngine, PricingRequest, PricingResponse } from './PricingEngine';
-import { getCityBySlug, CityData } from '@/data/cities';
+import { getCityBySlug } from '@/data/cities';
 
 interface EnhancedCalculatorProps {
   defaultCity?: string;
@@ -32,8 +33,8 @@ export const EnhancedCalculator: React.FC<EnhancedCalculatorProps> = ({
   // Auto-populate postal code if city is detected
   useEffect(() => {
     if (defaultCity) {
-      const cityData = getCityBySlug(defaultCity) as CityData;
-      if (cityData && cityData.postalCodePrefix) {
+      const cityData = getCityBySlug(defaultCity);
+      if (cityData) {
         const firstPostalCode = cityData.postalCodePrefix.split(',')[0].trim();
         setFormData(prev => ({ ...prev, postalCode: firstPostalCode }));
       }

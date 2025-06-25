@@ -1,70 +1,87 @@
 
-import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import ReferralProgramDialog from '@/components/ReferralProgramDialog';
 
 const RedCarSection = () => {
+  const [isReferralDialogOpen, setIsReferralDialogOpen] = useState(false);
+
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          {/* Red Car Section - Full Width */}
-          <div className="bg-gradient-to-r from-gray-900 to-black text-white rounded-lg overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 items-center min-h-[500px]">
-              <div className="p-8 lg:p-12 order-1 lg:order-1">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-red-500">Seen Our Red Car?</h3>
-                <p className="mb-6 text-base md:text-lg text-gray-300">
-                  If you've spotted our distinctive red vehicle along Marine Drive in White Rock, 
-                  mention it when you contact us to receive a special <span className="animate-pulse font-bold text-red-500 text-lg md:text-xl">10% discount</span> on your service!
-                </p>
-                <p className="mb-8 text-sm md:text-base text-gray-300">
-                  As a locally owned and operated business, we're proud to be an active part of the White Rock 
-                  and Surrey communities. We're not just a service provider - we're your neighbors, 
-                  committed to keeping our local properties looking their best.
-                </p>
-                
-                {/* Owner profile */}
-                <div className="bg-white/10 backdrop-blur-sm p-4 md:p-6 rounded-lg mb-6">
-                  <div className="flex items-center gap-3 md:gap-4 mb-4">
-                    <Avatar className="w-12 h-12 md:w-16 md:h-16 border-2 border-bc-red flex-shrink-0">
-                      <AvatarImage src="/lovable-uploads/72766780-6dc1-42de-8971-3a11add4daad.png" alt="Jayden - Owner" />
-                      <AvatarFallback>JF</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-bold text-white text-sm md:text-base">Jayden - Owner</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-300 italic mb-2 text-sm md:text-base">
-                    "I'm committed to providing high-quality service with a personal touch. If you see my red car around town, feel free to wave or stop for a chat!"
-                  </p>
-                  <p className="font-bold text-bc-red text-sm md:text-base">— Jayden, Owner</p>
-                </div>
-                
+    <>
+      <section className="py-16 bg-gradient-to-r from-bc-red to-red-600 text-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Content */}
+            <div className="lg:w-1/2 text-center lg:text-left">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                Seen Our Red Car? Mention it for 10% Off!
+              </h2>
+              
+              <p className="text-xl mb-8 text-white/90 leading-relaxed">
+                If you spot our distinctive red vehicle around White Rock or Surrey, mention it when you book and enjoy 10% off your service!
+              </p>
+              
+              <p className="text-lg mb-8 text-white/80">
+                We're proud to be your local, owner-operated business — committed to keeping our community's homes looking their best.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
-                  variant="bc-red" 
                   size="lg" 
-                  className="group w-full sm:w-auto"
+                  className="bg-white text-bc-red hover:bg-gray-100 text-lg font-bold px-8 py-4"
                   asChild
                 >
-                  <Link to="/contact">
-                    Claim Your 10% Discount
-                  </Link>
+                  <a href="tel:7788087620">Claim Your 10% Discount</a>
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-white text-bc-red hover:bg-white hover:text-bc-red text-lg font-bold px-8 py-4 bg-white"
+                  onClick={() => setIsReferralDialogOpen(true)}
+                >
+                  Start Referring Friends
                 </Button>
               </div>
               
-              <div className="h-full order-2 lg:order-2">
+              {/* Jayden's Personal Note */}
+              <div className="mt-8 p-6 bg-white/10 rounded-lg backdrop-blur-sm">
+                <div className="flex items-center gap-4 mb-4">
+                  <img
+                    src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
+                    alt="Jayden Fisher - Owner"
+                    className="w-16 h-16 rounded-full border-2 border-white"
+                  />
+                  <div>
+                    <p className="font-bold text-lg">Jayden Fisher</p>
+                    <p className="text-white/80">Owner & Operator</p>
+                  </div>
+                </div>
+                <p className="text-white/90 italic">
+                  "If you see my red car, feel free to wave or stop for a chat!"
+                </p>
+              </div>
+            </div>
+            
+            {/* Image */}
+            <div className="lg:w-1/2">
+              <div className="relative">
                 <img
-                  src="/lovable-uploads/9dc6484c-91bb-4ae3-994d-f6cfefbf7c63.png" 
-                  alt="BC Pressure Washing Red Car at Marine Drive"
-                  className="w-full h-full object-cover object-center min-h-[300px] lg:min-h-[500px]"
+                  src="/lovable-uploads/958a85db-bdfc-469f-be71-ab79ed06ddd9.png"
+                  alt="BC Pressure Washing red car at the beach"
+                  className="rounded-lg shadow-2xl w-full h-auto transform hover:scale-105 transition-transform duration-300"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      
+      <ReferralProgramDialog 
+        open={isReferralDialogOpen} 
+        onOpenChange={setIsReferralDialogOpen} 
+      />
+    </>
   );
 };
 

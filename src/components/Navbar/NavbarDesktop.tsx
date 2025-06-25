@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -162,9 +161,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-base font-medium">Google</span>
                       </a>
-                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
+                      <a href="https://www.yelp.com/biz/bc-pressure-washing-white-rock" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
                         <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-base font-medium">Yelp</span>
+                      </a>
+                      <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group" style={{backgroundColor: 'transparent !important'}}>
+                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110"  />
+                        <span className="text-base font-medium">TrustedPros</span>
                       </a>
                     </div>
                   </div>

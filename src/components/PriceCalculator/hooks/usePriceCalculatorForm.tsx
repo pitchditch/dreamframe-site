@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { trackFormStep } from '@/utils/analytics';
@@ -39,7 +40,9 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void,
   }, []);
 
   useEffect(() => {
-    const stepName = 
+    trackFormStep(
+      'PriceCalculator',
+      step + 1,
       step === 0 ? 'Address' :
       step === 1 ? 'Property Size' :
       step === 2 ? 'Services Selection' :
@@ -47,12 +50,8 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void,
       step === 4 ? 'Date Selection' :
       step === 5 ? 'Contact Info' :
       step === 6 ? 'Summary' :
-      'Thank You';
-    
-    trackFormStep('PriceCalculator', {
-      step_number: step + 1,
-      step_name: stepName
-    });
+      'Thank You'
+    );
   }, [step]);
 
   const calculateAndSetEstimateTotal = () => {

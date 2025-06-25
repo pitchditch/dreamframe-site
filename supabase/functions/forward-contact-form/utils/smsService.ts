@@ -45,7 +45,11 @@ export async function sendSMS(to: string, message: string) {
     
     if (response.ok) {
       console.log("SMS sent successfully:", result.sid);
-      return { success: true, sid: result.sid };
+      // Check if the message was sent with trial account prefix
+      if (result.body && result.body.includes("Sent from your Twilio trial account")) {
+        console.log("Note: SMS sent with trial account prefix - upgrade Twilio account to remove");
+      }
+      return { success: true, sid: result.sid, message: result.body };
     } else {
       console.error("Failed to send SMS:", result);
       return { success: false, error: result };
