@@ -1,13 +1,14 @@
+
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
-import StreamlinedCalculatorForm from '../components/StreamlinedCalculator/StreamlinedCalculatorForm';
+import { SmartPriceCalculator } from '../components/SmartPriceCalculator';
 import { Helmet } from 'react-helmet-async';
 import { Percent, Shield, Star, Clock, Users, CheckCircle } from 'lucide-react';
-import { TestimonialCarousel } from '@/components/TestimonialCarousel';
+import TestimonialCarousel from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
-import { Card, CardContent } from '@/components/ui/card';
+import ReferralButton from '@/components/ReferralButton';
 
-const Calculator = () => {
+const Calculator: React.FC = () => {
   // Check if user was referred with form data
   const savedPostalCode = localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
   const savedHouseSize = localStorage.getItem('calculatorHouseSize');
@@ -19,9 +20,9 @@ const Calculator = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Get Your Free Quote - 3 Simple Steps | BC Pressure Washing</title>
-        <meta name="description" content="Get an instant quote for professional cleaning services in White Rock & Surrey. Simple 3-step form - address, property size, service type." />
-        <meta name="keywords" content="free quote, pressure washing estimate, window cleaning quote, White Rock, Surrey, BC" />
+        <title>Smart Quote Calculator - Instant Pricing | BC Pressure Washing</title>
+        <meta name="description" content="Get instant quotes with automatic address lookup and square footage detection. Professional cleaning services in White Rock, Surrey and Metro Vancouver." />
+        <meta name="keywords" content="smart quote calculator, address lookup, square footage, pressure washing estimate, White Rock, Surrey, BC" />
       </Helmet>
       
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12">
@@ -33,11 +34,11 @@ const Calculator = () => {
               SPRING SALE: 20% OFF ALL SERVICES
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Get an Instant Quote
+              Smart Quote Calculator
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Professional exterior cleaning services in White Rock & Surrey. 
-              Quick quote in just 3 simple steps – no phone calls required!
+              Revolutionary pricing with automatic address lookup and square footage detection. 
+              Get accurate quotes in seconds!
             </p>
           </div>
 
@@ -46,7 +47,7 @@ const Calculator = () => {
             <div className="grid lg:grid-cols-4 gap-12 items-start">
               {/* Form Column (3/4 width on desktop) */}
               <div className="lg:col-span-3">
-                <StreamlinedCalculatorForm />
+                <SmartPriceCalculator />
               </div>
               
               {/* Trust Elements Sidebar (1/4 width on desktop) */}
@@ -91,13 +92,32 @@ const Calculator = () => {
                         <div className="text-sm text-yellow-600">White Rock & Surrey</div>
                       </div>
                     </div>
+
+                    {/* Review Badges with Fixed Square Images */}
+                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                      <h4 className="font-semibold text-gray-800 mb-3 text-center">Leave Us a Review</h4>
+                      <div className="flex justify-center space-x-3">
+                        <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="w-10 h-10 object-contain" />
+                        </a>
+                        <a href="https://www.yelp.com/biz/bc-pressure-washing-white-rock" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="w-10 h-10 object-contain" />
+                        </a>
+                        <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="w-10 h-10 object-contain" />
+                        </a>
+                        <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-white hover:bg-gray-100 rounded-md transition-colors border">
+                          <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="w-10 h-10 object-contain" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* 100% Satisfaction Guarantee - Keep existing */}
+          {/* 100% Satisfaction Guarantee */}
           <div className="mt-20 relative overflow-hidden rounded-xl shadow-2xl">
             <div className="absolute inset-0">
               <img 
@@ -126,7 +146,10 @@ const Calculator = () => {
             </div>
           </div>
           
-          {/* Keep existing Questions Form */}
+          {/* Referral Button Section */}
+          <ReferralButton />
+
+          {/* Questions Form */}
           <div className="mt-16">
             <QuestionsForm />
           </div>

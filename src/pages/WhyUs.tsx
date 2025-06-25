@@ -15,32 +15,93 @@ const WhyUs = () => {
   } = useTranslation();
   
   return <Layout>
-      <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="absolute inset-0 opacity-30">
-          {/* Use different images for mobile and desktop */}
-          <img 
-            src="/lovable-uploads/c445485c-8dd6-4dcf-8896-5c61eee4d27f.png" 
-            alt="House exterior cleaning" 
-            className="w-full h-full object-cover md:hidden" 
+      <section className="relative w-full h-screen overflow-hidden">
+        {/* YouTube Video Background - Full Screen */}
+        <div className="absolute inset-0 w-full h-full">
+          <iframe
+            src="https://www.youtube.com/embed/GJZpuELGJpI?si=uAM9sVcFwtyjrlKt&autoplay=1&mute=1&loop=1&playlist=GJZpuELGJpI&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
+            className="absolute top-1/2 left-1/2 w-screen h-screen"
+            style={{ 
+              minWidth: '100vw', 
+              minHeight: '100vh',
+              transform: 'translate(-50%, -50%) scale(1.2)',
+              border: 'none'
+            }}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="BC Pressure Washing Background Video"
           />
-          <img 
-            src="/lovable-uploads/97d248af-b7d9-450c-bc42-b0df42d9491d.png" 
-            alt="House exterior cleaning" 
-            className="w-full h-full object-cover hidden md:block" 
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/60"></div>
         </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
-            <p className="text-xl text-gray-300 mb-8">
-              We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
-            </p>
+        
+        <div className="relative z-10 flex flex-col items-center justify-center h-full">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center text-white mb-16">
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">Why Choose Us</h1>
+              <p className="text-xl text-gray-300 mb-8">
+                We're dedicated to providing superior exterior cleaning services with a focus on quality, reliability, and customer satisfaction.
+              </p>
+            </div>
+            
+            {/* Core Values Overlay */}
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-white">Our Core Values</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg text-center border border-white/20">
+                  <div className="w-16 h-16 bg-blue-100/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Quality Service</h3>
+                  <p className="text-gray-200">
+                    We never compromise on quality. Our team is trained to deliver exceptional results on every project.
+                  </p>
+                </div>
+                
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg text-center border border-white/20">
+                  <div className="w-16 h-16 bg-green-100/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Reliability</h3>
+                  <p className="text-gray-200">
+                    We show up on time, every time, and complete projects within the promised timeframe.
+                  </p>
+                </div>
+                
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg text-center border border-white/20">
+                  <div className="w-16 h-16 bg-yellow-100/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Innovation</h3>
+                  <p className="text-gray-200">
+                    We utilize the latest technology and techniques to deliver superior cleaning results.
+                  </p>
+                </div>
+                
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg text-center border border-white/20">
+                  <div className="w-16 h-16 bg-purple-100/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Customer Focus</h3>
+                  <p className="text-gray-200">
+                    Your satisfaction is our priority. We listen to your needs and exceed expectations.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Red Car Discount Banner - NEW SECTION */}
+      {/* Red Car Discount Banner */}
       <section className="bg-bc-red py-8 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -64,63 +125,6 @@ const WhyUs = () => {
                   <span>Call Now: 778-808-7620</span>
                 </a>
               </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Our Core Values</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Quality Service</h3>
-              <p className="text-gray-600">
-                We never compromise on quality. Our team is trained to deliver exceptional results on every project.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Reliability</h3>
-              <p className="text-gray-600">
-                We show up on time, every time, and complete projects within the promised timeframe.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Innovation</h3>
-              <p className="text-gray-600">
-                We utilize the latest technology and techniques to deliver superior cleaning results.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Customer Focus</h3>
-              <p className="text-gray-600">
-                Your satisfaction is our priority. We listen to your needs and exceed expectations.
-              </p>
             </div>
           </div>
         </div>

@@ -1,446 +1,344 @@
-import { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
-import { Helmet } from 'react-helmet';
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Phone, Mail, MapPin, Clock, CheckCircle } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Mail, MapPin, Clock, Send, Building } from 'lucide-react';
-import { trackFormSubmission } from '@/utils/analytics';
-import { RateLimiter, sanitizeFormData, createHoneypot, detectBot, sanitizeLogData } from '@/utils/security';
-import ChatAssistant from '@/components/ChatAssistant';
 
 const Contact = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    service: 'Window Cleaning',
-    message: '',
-    sawRedCar: false,
-    isBusinessInquiry: false
+    service: '',
+    message: ''
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
+  // Auto-fill form with booking data if available
   useEffect(() => {
-    // Check if the user came from the business CTA
-    const isBusinessContact = localStorage.getItem('isBusinessContact');
-    if (isBusinessContact === 'true') {
-      // Update form data to indicate business inquiry
-      setFormData(prev => ({ ...prev, isBusinessInquiry: true, service: 'Commercial Services' }));
-      // Clear the localStorage item
-      localStorage.removeItem('isBusinessContact');
+    const bookingData = localStorage.getItem('bookingData');
+    if (bookingData) {
+      try {
+        const data = JSON.parse(bookingData);
+        const prefilledMessage = `Hi! I'm interested in ${data.service} for my property at ${data.address}. ${data.squareFootage ? `Property size: ${data.squareFootage.toLocaleString()} sq ft. ` : ''}${data.quote ? `Quote received: $${data.quote}. ` : ''}Please contact me to schedule this service.`;
+        
+        setFormData(prev => ({
+          ...prev,
+          service: data.service || '',
+          message: prefilledMessage
+        }));
+        
+        // Clear the booking data after using it
+        localStorage.removeItem('bookingData');
+      } catch (error) {
+        console.error('Error parsing booking data:', error);
+      }
     }
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData(prev => ({ ...prev, [name]: checked }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (isSubmitting) return;
-    
+    setIsSubmitting(true);
+
     try {
-      // Rate limiting check
-      const identifier = formData.email || 'anonymous';
-      if (!RateLimiter.canSubmit(identifier)) {
-        const remainingTime = RateLimiter.getRemainingTime(identifier);
-        const minutes = Math.ceil(remainingTime / (1000 * 60));
+      console.log('Submitting contact form with data:', formData);
+
+      // Send to Supabase Edge Function
+      const response = await fetch(
+        "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            service: formData.service,
+            message: formData.message,
+            subject: "Contact Form Submission",
+            form: "ContactPage",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Form submission successful:', result);
+        
         toast({
-          title: "Too Many Requests",
-          description: `Please wait ${minutes} minutes before submitting again.`,
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Bot detection
-      const formElement = e.target as HTMLFormElement;
-      const formDataObj = new FormData(formElement);
-      if (detectBot(formDataObj)) {
-        console.warn('Bot submission detected and blocked');
-        return;
-      }
-
-      // Sanitize form data
-      const sanitizedData = sanitizeFormData(formData);
-      
-      setIsSubmitting(true);
-
-      trackFormSubmission('contact_form', {
-        form_type: 'contact',
-        service_type: sanitizedData.service,
-        saw_red_car: sanitizedData.sawRedCar,
-        is_business_inquiry: sanitizedData.isBusinessInquiry
-      });
-
-      const templateParams = {
-        from_name: sanitizedData.name,
-        from_email: sanitizedData.email,
-        phone: sanitizedData.phone,
-        service_interest: sanitizedData.service,
-        message: sanitizedData.message,
-        subject: sanitizedData.sawRedCar 
-          ? 'Contact Form Submission (RED CAR DISCOUNT 10%)' 
-          : sanitizedData.isBusinessInquiry 
-            ? 'Business Inquiry Contact Form Submission'
-            : 'Contact Form Submission',
-        form_type: sanitizedData.isBusinessInquiry ? 'Business Contact Form' : 'Main Contact Form',
-        discount_eligible: sanitizedData.sawRedCar ? 'YES - 10% RED CAR DISCOUNT' : 'No',
-        business_inquiry: sanitizedData.isBusinessInquiry ? 'YES' : 'No'
-      };
-
-      // Log sanitized data (no sensitive info)
-      console.log('Contact form submission:', sanitizeLogData(sanitizedData));
-
-      // Send email using EmailJS with updated template ID
-      emailjs.send(
-        'service_xrk4vas',
-        'template_cpivz2k',
-        templateParams,
-        'MMzAmk5eWrjFgC_nP'
-      )
-      .then(() => {
-        toast({
-          title: "Message Sent!",
-          description: "We've received your message and will get back to you shortly.",
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours. Check your phone for a confirmation text!",
         });
 
+        // Clear form
         setFormData({
           name: '',
           email: '',
           phone: '',
-          service: 'Window Cleaning',
-          message: '',
-          sawRedCar: false,
-          isBusinessInquiry: false
+          service: '',
+          message: ''
         });
 
-        setIsSubmitting(false);
-      })
-      .catch((error) => {
-        console.error('EmailJS Error (sanitized):', error?.text || 'Unknown error');
-        toast({
-          title: "Something went wrong.",
-          description: "Please try again later or contact us directly.",
-          variant: "destructive"
-        });
-        setIsSubmitting(false);
-      });
+        // Redirect to homepage after showing success message
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to send message");
+      }
     } catch (error) {
-      console.error('Form submission error (sanitized):', error instanceof Error ? error.message : 'Unknown error');
+      console.error('Form submission error:', error);
       toast({
-        title: "Something went wrong.",
-        description: "Please try again later or contact us directly.",
-        variant: "destructive"
+        variant: "destructive",
+        title: "Error sending message",
+        description: "Please try again or call us directly.",
       });
+    } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
     <Layout>
       <Helmet>
-        <title>{formData.isBusinessInquiry 
-          ? "Commercial Cleaning Services | BC Pressure Washing" 
-          : "Contact BC Pressure Washing | Window Cleaning & Pressure Washing Services in White Rock"}
-        </title>
-        <meta name="description" content={formData.isBusinessInquiry 
-          ? "Get in touch with BC Pressure Washing for professional commercial cleaning services, including storefront cleaning, parking lot maintenance, and property management services." 
-          : "Get in touch with BC Pressure Washing for professional window cleaning, pressure washing, roof cleaning, and gutter cleaning services in White Rock, Surrey, and Metro Vancouver."} 
-        />
+        <title>Contact Us - Free Quotes | BC Pressure Washing</title>
+        <meta name="description" content="Get your free quote today! Contact BC Pressure Washing for professional cleaning services in White Rock, Surrey, and Metro Vancouver. Call (778) 808-7620." />
       </Helmet>
-
-      <div className="relative bg-black text-white h-screen">
-        <img 
-          src={formData.isBusinessInquiry 
-            ? "/lovable-uploads/6e463050-a822-420e-8227-6bc3306b6832.png" 
-            : "/lovable-uploads/53939952-27dd-42b6-92d3-7ab137a3b788.png"}
-          alt="Contact Us Background"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
-      </div>
-
-      {/* Chat bot visible floating right */}
-      <div className="hidden md:block fixed right-8 bottom-8 z-50">
-        <ChatAssistant />
-      </div>
-      <div className="md:hidden fixed right-5 bottom-5 z-50 flex flex-row gap-4">
-        <ChatAssistant />
-      </div>
-
-      <section className="py-16 -mt-32 relative z-10">
+      
+      <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold mb-6 text-white">
-                {formData.isBusinessInquiry ? "Business Inquiry" : "Get In Touch"}
-              </h2>
-              <p className="text-gray-200 mb-8">
-                {formData.isBusinessInquiry 
-                  ? "We provide specialized cleaning services for businesses of all sizes. Complete this form for a customized quote tailored to your commercial needs."
-                  : "Fill out the form below and we'll get back to you as soon as possible. If you need an immediate response, please call us directly."}
-              </p>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Get Your Free Quote
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Ready to transform your property? Contact us today for a free, no-obligation quote.
+            </p>
+          </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-xl">
-                {createHoneypot()}
-                
-                {formData.isBusinessInquiry && (
-                  <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <Building className="h-5 w-5 text-blue-500" />
-                      </div>
-                      <div className="ml-3">
-                        <h3 className="text-sm font-medium text-blue-800">Business Inquiry</h3>
-                        <div className="text-sm text-blue-700 mt-1">
-                          We'll customize our services to match your business needs.
-                        </div>
-                      </div>
+          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            {/* Contact Form */}
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-gray-900">
+                  Send us a message
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Name *
+                      </label>
+                      <Input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone *
+                      </label>
+                      <Input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full"
+                        placeholder="(778) 123-4567"
+                      />
                     </div>
                   </div>
-                )}
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                   <div>
-                    <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Your Name *</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      maxLength={100}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                      placeholder={formData.isBusinessInquiry ? "Your Name / Company Rep" : "John Smith"}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email Address *</label>
-                    <input
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email *
+                    </label>
+                    <Input
                       type="email"
-                      id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      maxLength={100}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                      placeholder="john@example.com"
+                      className="w-full"
                     />
                   </div>
-                </div>
 
-                {formData.isBusinessInquiry && (
                   <div>
-                    <label htmlFor="company" className="block text-gray-700 font-medium mb-2">Company Name *</label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      onChange={handleChange}
-                      required
-                      maxLength={100}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                      placeholder="Your Company Name"
-                    />
-                  </div>
-                )}
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      maxLength={20}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                      placeholder="(123) 456-7890"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="service" className="block text-gray-700 font-medium mb-2">Service Interested In *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Service Interested In
+                    </label>
                     <select
-                      id="service"
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
-                      {formData.isBusinessInquiry ? (
-                        <>
-                          <option value="Commercial Services">Commercial Cleaning</option>
-                          <option value="Storefront Cleaning">Storefront Cleaning</option>
-                          <option value="Commercial Window Cleaning">Commercial Window Cleaning</option>
-                          <option value="Parking Lot Cleaning">Parking Lot Maintenance</option>
-                          <option value="Building Exterior Cleaning">Building Exterior Cleaning</option>
-                          <option value="Property Management">Property Management</option>
-                        </>
-                      ) : (
-                        <>
-                          <option value="Window Cleaning">Window Cleaning</option>
-                          <option value="Pressure Washing">Pressure Washing</option>
-                          <option value="Roof Cleaning">Roof Cleaning</option>
-                          <option value="Gutter Cleaning">Gutter Cleaning</option>
-                          <option value="Commercial Services">Commercial Services</option>
-                          <option value="Other">Other</option>
-                        </>
-                      )}
+                      <option value="">Select a service</option>
+                      <option value="Window Cleaning">Window Cleaning</option>
+                      <option value="House Washing">House Washing</option>
+                      <option value="Pressure Washing">Pressure Washing</option>
+                      <option value="Gutter Cleaning">Gutter Cleaning</option>
+                      <option value="Deck Cleaning">Deck Cleaning</option>
+                      <option value="Roof Cleaning">Roof Cleaning</option>
+                      <option value="Multiple Services">Multiple Services</option>
                     </select>
                   </div>
-                </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Your Message *</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    maxLength={1000}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bc-red focus:border-transparent"
-                    placeholder={formData.isBusinessInquiry 
-                      ? "Please provide details about your company's cleaning needs, facility size, and any specific requirements..." 
-                      : "Please provide details about your project or questions..."}
-                  ></textarea>
-                </div>
-
-                {!formData.isBusinessInquiry && (
-                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                    <div className="flex items-center gap-2">
-                      <input 
-                        type="checkbox" 
-                        id="sawRedCar" 
-                        name="sawRedCar"
-                        checked={formData.sawRedCar} 
-                        onChange={handleCheckboxChange}
-                        className="w-4 h-4 text-bc-red border-gray-300 rounded focus:ring-bc-red"
-                      />
-                      <label htmlFor="sawRedCar" className="font-medium text-gray-700">
-                        I spotted your red car along Marine Drive (10% discount!)
-                      </label>
-                    </div>
-                    <p className="text-sm text-gray-500 mt-1 pl-6">
-                      Mention this for a special 10% discount on your service
-                    </p>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Message *
+                    </label>
+                    <Textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      placeholder="Tell us about your project, property size, and any specific requirements..."
+                      className="w-full"
+                    />
                   </div>
-                )}
-                
-                {formData.isBusinessInquiry && (
-                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                    <div className="flex items-center gap-2">
-                      <input 
-                        type="checkbox" 
-                        id="isBusinessInquiry" 
-                        name="isBusinessInquiry"
-                        checked={formData.isBusinessInquiry} 
-                        onChange={handleCheckboxChange}
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                      />
-                      <label htmlFor="isBusinessInquiry" className="font-medium text-gray-700">
-                        This is a commercial/business inquiry
-                      </label>
-                    </div>
-                  </div>
-                )}
 
-                <div className="text-xs text-gray-500">
-                  By submitting this form, you consent to being contacted by BC Pressure Washing. 
-                  View our <a href="/privacy" className="text-bc-red hover:underline">Privacy Policy</a>.
-                </div>
-
-                <div>
-                  <button
+                  <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-bc-red text-white px-8 py-3 rounded-md font-medium inline-flex items-center transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 disabled:opacity-75"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
                   >
                     {isSubmitting ? (
                       <>
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                         Sending...
                       </>
                     ) : (
-                      <>
-                        <Send className="mr-2 h-5 w-5" />
-                        Send Message
-                      </>
+                      'Send Message'
                     )}
-                  </button>
-                </div>
-              </form>
-            </div>
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
 
-            <div className="bg-gray-50 p-8 rounded-lg h-fit">
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <Phone className="text-bc-red mr-4 mt-1" />
-                  <div>
-                    <h4 className="font-bold">Phone</h4>
-                    <p className="text-gray-600 mt-1">
-                      <a href="tel:7788087620" className="hover:text-bc-red transition-colors">778-808-7620</a>
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">Mon-Sat: 8am - 6pm</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Mail className="text-bc-red mr-4 mt-1" />
-                  <div>
-                    <h4 className="font-bold">Email</h4>
-                    <p className="text-gray-600 mt-1">
-                      <a href="mailto:info@bcpressurewashing.ca" className="hover:text-bc-red transition-colors">info@bcpressurewashing.ca</a>
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <MapPin className="text-bc-red mr-4 mt-1" />
-                  <div>
-                    <h4 className="font-bold">Location</h4>
-                    <p className="text-gray-600 mt-1">Marine Dr<br />White Rock, BC</p>
-                    <p className="text-sm text-gray-500 mt-1">Serving Surrey, White Rock & Metro Vancouver</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Clock className="text-bc-red mr-4 mt-1" />
-                  <div>
-                    <h4 className="font-bold">Business Hours</h4>
-                    <div className="text-gray-600 mt-1">
-                      <p>Monday - Friday: 8am - 6pm</p>
-                      <p>Saturday: 9am - 5pm</p>
-                      <p>Sunday: Closed</p>
+            {/* Contact Information */}
+            <div className="space-y-8">
+              {/* Quick Contact */}
+              <Card className="shadow-lg">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Contact</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <Phone className="w-5 h-5 text-blue-600 mr-3" />
+                      <div>
+                        <p className="font-semibold">(778) 808-7620</p>
+                        <p className="text-sm text-gray-600">Call or text anytime</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <Mail className="w-5 h-5 text-blue-600 mr-3" />
+                      <div>
+                        <p className="font-semibold">info@bcpressurewashing.ca</p>
+                        <p className="text-sm text-gray-600">We reply within 24 hours</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin className="w-5 h-5 text-blue-600 mr-3" />
+                      <div>
+                        <p className="font-semibold">White Rock & Surrey, BC</p>
+                        <p className="text-sm text-gray-600">Serving Metro Vancouver</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="w-5 h-5 text-blue-600 mr-3" />
+                      <div>
+                        <p className="font-semibold">Mon-Sat: 7AM-7PM</p>
+                        <p className="text-sm text-gray-600">Emergency service available</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
+
+              {/* Why Choose Us */}
+              <Card className="shadow-lg">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Why Choose Us?</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Free Estimates</p>
+                        <p className="text-sm text-gray-600">No hidden fees or surprises</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Fully Insured</p>
+                        <p className="text-sm text-gray-600">Licensed and bonded professionals</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Satisfaction Guaranteed</p>
+                        <p className="text-sm text-gray-600">100% satisfaction or we'll make it right</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Same-Day Service</p>
+                        <p className="text-sm text-gray-600">Often available for urgent needs</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Service Areas */}
+              <Card className="shadow-lg">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Service Areas</h3>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <p>• White Rock</p>
+                    <p>• Surrey</p>
+                    <p>• Langley</p>
+                    <p>• Delta</p>
+                    <p>• Richmond</p>
+                    <p>• Burnaby</p>
+                    <p>• Vancouver</p>
+                    <p>• New Westminster</p>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-3">
+                    Don't see your city? Contact us - we may still be able to help!
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </Layout>
   );
 };
