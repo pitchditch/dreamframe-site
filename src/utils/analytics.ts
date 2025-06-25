@@ -1,4 +1,5 @@
 
+
 export const trackPageView = (path: string) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'page_view', {
