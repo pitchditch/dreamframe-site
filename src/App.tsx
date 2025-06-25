@@ -1,10 +1,11 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import Index from "./pages/Index";
+import Home from "./pages/Home";
 import CityPages from "./pages/CityPages";
 import Calculator from "./pages/Calculator";
 import Contact from "./pages/Contact";
@@ -12,10 +13,6 @@ import Services from "./pages/Services";
 import Testimonials from "./pages/Testimonials";
 import WindowCleaning from "./pages/WindowCleaning";
 import PressureWashing from "./pages/PressureWashing";
-import SoftWash from "./pages/SoftWash";
-import RoofCleaning from "./pages/RoofCleaning";
-import GutterCleaning from "./pages/GutterCleaning";
-import HouseWash from "./pages/HouseWash";
 import Equipment from "./pages/Equipment";
 import ComparePrices from "./pages/ComparePrices";
 import CompareServices from "./pages/CompareServices";
@@ -31,7 +28,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Home />} />
             
             {/* City-specific homepage routes */}
             <Route path="/vancouver" element={<CityPages />} />
@@ -58,10 +55,6 @@ const App = () => (
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
-            <Route path="/services/soft-wash" element={<SoftWash />} />
-            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-            <Route path="/services/house-wash" element={<HouseWash />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/compare-prices" element={<ComparePrices />} />
             <Route path="/compare-services" element={<CompareServices />} />
