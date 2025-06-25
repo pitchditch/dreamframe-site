@@ -1,25 +1,54 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
-import HeroWithContent from '../components/HeroWithContent';
-import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
+import HeroSection from '../components/home/HeroSection';
+import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
-import CityNavigation from '../components/home/CityNavigation';
-import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
-import BeforeAfterGallery from '../components/BeforeAfterGallery';
-import RedCarSection from '../components/home/RedCarSection';
-import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
-import ReferralProgramSection from '../components/ReferralProgramSection';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
+import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
+import PackagesSection from '../components/home/PackagesSection';
+import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
+import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuaranteeSection';
+import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 
 const Home = () => {
+  // Explicitly getting language related functions to ensure they're available
   const { language, setLanguage } = useTranslation();
 
   useEffect(() => {
+    // We don't force English as default anymore to allow language selection
+    // Leave existing preferred language if set
+    
+    document.body.classList.add('has-video-header');
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach(el => observer.observe(el));
+
+    // Log current language for debugging
     console.log('Current language on Home page:', language);
+
+    return () => {
+      document.body.classList.remove('has-video-header');
+      animatedElements.forEach(el => observer.unobserve(el));
+    };
   }, [language, setLanguage]);
 
   return (
@@ -43,7 +72,7 @@ const Home = () => {
         <meta name="twitter:title" content="BC Pressure Washing - Exterior Cleaning Services" />
         <meta name="twitter:description" content="Seen our red BC Pressure Washing car? Get 10% off! Window, gutter, and pressure washing in White Rock & Surrey." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <script type="application/ld+json">
+
           {`
           {
             "@context": "https://schema.org",
@@ -98,51 +127,43 @@ const Home = () => {
             ]
           }
           `}
-        </script>
       </Helmet>
 
-      <HeroWithContent>
-        {/* Service Locations */}
-        <CityNavigation />
-        
-        {/* Service Selection */}
-        <ServiceSelectionSection />
-        
-        {/* Before/After Gallery */}
-        <BeforeAfterGallery />
-        
-        {/* Testimonials */}
-        <TestimonialsSection />
-        
-        {/* Red Car Section */}
-        <RedCarSection />
-        
-        {/* Trusted Customers */}
-        <TrustedCustomersSection />
-        
-        {/* Referral Program */}
-        <ReferralProgramSection />
-
-        {/* Service Areas */}
-        <section className="py-16 bg-gray-900 text-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
-            <ServiceAreaMap />
-            <ServiceAreasCarousel />
+      <HeroSection />
+      
+      <div className="relative z-20 -mt-24 md:-mt-32">
+        <div className="bg-white rounded-t-3xl shadow-xl">
+          <FeaturedProjectSection />
+          <PremiumSolutionsSection />
+          {/* Add data-component attribute to help with visibility detection */}
+          <div data-component="owner-operated">
+            <OwnerOperatedSection />
           </div>
-        </section>
+          <SatisfactionGuaranteeSection />
+          <SpringSaleCarousel />
+          <TestimonialsSection />
+          <PackagesSection />
 
-        <ReferralButton />
+          <section className="py-16 bg-gray-900 text-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+              <ServiceAreaMap />
+              <ServiceAreasCarousel />
+            </div>
+          </section>
 
-        <footer className="text-center text-sm text-gray-500 mt-12">
-          <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>
-          <p>Follow us: 
-            <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Instagram</a> | 
-            <a href="https://www.youtube.com/@bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">YouTube</a> | 
-            <a href="https://www.facebook.com/bcpressurewashing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Facebook</a>
-          </p>
-        </footer>
-      </HeroWithContent>
+          <ReferralButton />
+
+          <footer className="text-center text-sm text-gray-500 mt-12">
+            <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>
+            <p>Follow us: 
+              <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Instagram</a> | 
+              <a href="https://www.youtube.com/@bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">YouTube</a> | 
+              <a href="https://www.facebook.com/bcpressurewashing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Facebook</a>
+            </p>
+          </footer>
+        </div>
+      </div>
     </Layout>
   );
 };

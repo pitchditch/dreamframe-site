@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +10,6 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, MapPin, DollarSign, User, Phone, Mail, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 
 interface BookingData {
   service: string;
@@ -65,35 +65,6 @@ const BookingCalendar: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      console.log('Submitting booking with customer info:', customerInfo);
-
-      // Use Supabase client to call the edge function instead of direct fetch
-      const { data, error } = await supabase.functions.invoke('forward-contact-form', {
-        body: {
-          name: customerInfo.name,
-          email: customerInfo.email,
-          phone: customerInfo.phone,
-          service: bookingData?.service || 'Service Booking',
-          message: `Booking Request:\n\nDate: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}\nTime: ${selectedTime}\nService: ${bookingData?.service}\nAddress: ${bookingData?.address}\n${bookingData?.squareFootage ? `Property Size: ${bookingData.squareFootage.toLocaleString()} sq ft\n` : ''}${bookingData?.quote ? `Quote: $${bookingData.quote}\n` : ''}${customerInfo.notes ? `Notes: ${customerInfo.notes}` : ''}`,
-          subject: "Service Booking Request",
-          form: "BookingCalendar",
-          address: bookingData?.address,
-          preferredTime: `${format(selectedDate, 'yyyy-MM-dd')} at ${selectedTime}`,
-          customer: customerInfo
-        }
-      });
-
-      if (error) {
-        throw new Error(error.message || "Failed to submit booking");
-      }
-
-      console.log('Booking submission successful:', data);
-      
-      toast({
-        title: "Booking Request Submitted!",
-        description: "We'll contact you within 24 hours to confirm your appointment. Check your phone for a confirmation text!",
-      });
-
       // Store the complete booking information
       const completeBooking = {
         ...bookingData,
@@ -104,12 +75,18 @@ const BookingCalendar: React.FC = () => {
       };
 
       localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
+      
+      // Clear the original booking data
       localStorage.removeItem('bookingData');
 
-      // Navigate to homepage after showing success message
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 2000);
+      toast({
+        title: "Booking Request Submitted!",
+        description: "We'll contact you within 24 hours to confirm your appointment.",
+      });
+
+      // Navigate to contact page with booking confirmation
+      navigate('/contact');
+      
     } catch (error) {
       console.error('Error submitting booking:', error);
       toast({
@@ -298,7 +275,6 @@ const BookingCalendar: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full"
-                    placeholder="(778) 123-4567"
                   />
                 </div>
 

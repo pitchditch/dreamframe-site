@@ -1,6 +1,6 @@
 
 import React from 'react';
-import TestimonialCarousel from '@/components/TestimonialCarousel';
+import { TestimonialCarousel as MainTestimonialCarousel } from '@/components/TestimonialCarousel';
 
 // Export the main testimonial carousel instead to avoid duplicates
-export { default as TestimonialCarousel } from '@/components/TestimonialCarousel';
+export const TestimonialCarousel = MainTestimonialCarousel;

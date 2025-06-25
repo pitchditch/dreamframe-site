@@ -4,10 +4,10 @@ import Layout from '../components/Layout';
 import { SmartPriceCalculator } from '../components/SmartPriceCalculator';
 import { Helmet } from 'react-helmet-async';
 import { Percent, Shield, Star, Clock, Users, CheckCircle } from 'lucide-react';
-import TestimonialCarousel from '@/components/TestimonialCarousel';
+import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
-const Calculator: React.FC = () => {
+const Calculator = () => {
   // Check if user was referred with form data
   const savedPostalCode = localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
   const savedHouseSize = localStorage.getItem('calculatorHouseSize');
