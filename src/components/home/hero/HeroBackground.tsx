@@ -1,4 +1,5 @@
 
+
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HeroBackgroundProps {
@@ -21,7 +22,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         </div>
       )}
 
-      {/* Background - Positioned to show more of the red car */}
+      {/* Background - Positioned to show bottom of image */}
       <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           <img 
@@ -31,7 +32,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             loading="eager"
             fetchPriority="high"
             style={{ 
-              objectPosition: isMobile ? '50% 25%' : '50% 20%'
+              objectPosition: isMobile ? '50% 40%' : '50% 35%'
             }}
           />
         </div>
@@ -42,3 +43,4 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
 };
 
 export default HeroBackground;
+
