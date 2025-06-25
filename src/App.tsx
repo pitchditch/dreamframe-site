@@ -19,7 +19,7 @@ const Booking = lazy(() => import('./pages/Booking'));
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
 const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 
-// Service pages in services folder
+// Service pages in services folder - Fixed import paths
 const GutterCleaning = lazy(() => import('./pages/services/GutterCleaning'));
 const RoofCleaning = lazy(() => import('./pages/services/RoofCleaning'));
 const HouseSoftWash = lazy(() => import('./pages/services/HouseSoftWash'));
