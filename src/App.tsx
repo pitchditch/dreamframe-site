@@ -1,5 +1,4 @@
 
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -21,6 +20,9 @@ import HouseWash from "./pages/services/HouseWashing";
 import Equipment from "./pages/Equipment";
 import ComparePrices from "./pages/ComparePrices";
 import CompareServices from "./pages/CompareServices";
+import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
+import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
+import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -64,6 +66,9 @@ const App = () => (
             <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
             <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
             <Route path="/services/house-wash" element={<HouseWash />} />
+            <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
+            <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/compare-prices" element={<ComparePrices />} />
             <Route path="/compare-services" element={<CompareServices />} />
