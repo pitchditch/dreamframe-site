@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import { Button } from './ui/button';
@@ -11,6 +12,7 @@ import { Link } from 'react-router-dom';
 const FooterContactForm = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [service, setService] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -42,7 +44,7 @@ const FooterContactForm = () => {
       }
 
       // Sanitize form data
-      const sanitizedData = sanitizeFormData({ email, service });
+      const sanitizedData = sanitizeFormData({ email, phone, service });
 
       setIsSubmitting(true);
 
@@ -70,11 +72,37 @@ const FooterContactForm = () => {
       );
 
       if (response.ok) {
-        toast({
-          title: "Message Sent!",
-          description: "We'll get back to you as soon as possible.",
-        });
+        // Send confirmations (email + SMS)
+        const confirmationResponse = await fetch(
+          "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/send-confirmations",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: sanitizedData.email,
+              phone: sanitizedData.phone,
+              name: "Valued Customer",
+              service: sanitizedData.service,
+              formType: "quick contact",
+              message: sanitizedData.service,
+            }),
+          }
+        );
+
+        if (confirmationResponse.ok) {
+          toast({
+            title: "Message Sent!",
+            description: "We'll get back to you as soon as possible. Check your email and phone for confirmation.",
+          });
+        } else {
+          toast({
+            title: "Message Sent!",
+            description: "We'll get back to you as soon as possible.",
+          });
+        }
+        
         setEmail('');
+        setPhone('');
         setService('');
       } else {
         const error = await response.json();
@@ -109,6 +137,16 @@ const FooterContactForm = () => {
               onChange={e => setEmail(e.target.value)} 
               required 
               maxLength={100}
+              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
+            />
+          </div>
+          <div>
+            <Input 
+              type="tel" 
+              placeholder="Your Phone (for SMS confirmation)" 
+              value={phone} 
+              onChange={e => setPhone(e.target.value)} 
+              maxLength={20}
               className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
             />
           </div>

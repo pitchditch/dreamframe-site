@@ -99,10 +99,35 @@ const QuickContactForm = () => {
       );
 
       if (response.ok) {
-        toast({
-          title: t("Quote Request Sent!"),
-          description: t("We'll contact you within 24 hours with your free quote."),
-        });
+        // Send confirmations (email + SMS)
+        const confirmationResponse = await fetch(
+          "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/send-confirmations",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: sanitizedData.email,
+              phone: sanitizedData.phone,
+              name: sanitizedData.name,
+              service: sanitizedData.service,
+              formType: "quote request",
+              message: sanitizedData.message,
+            }),
+          }
+        );
+
+        if (confirmationResponse.ok) {
+          toast({
+            title: t("Quote Request Sent!"),
+            description: t("We'll contact you within 24 hours with your free quote. Check your email and phone for confirmation."),
+          });
+        } else {
+          toast({
+            title: t("Quote Request Sent!"),
+            description: t("We'll contact you within 24 hours with your free quote."),
+          });
+        }
+        
         setFormData({
           name: "",
           email: "",
