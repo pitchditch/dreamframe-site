@@ -1,16 +1,25 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone } from 'lucide-react';
-import ServicesDropdown from './Navbar/ServicesDropdown';
+import { Menu, X, Phone, ChevronDown } from 'lucide-react';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  // Determine if we're over video content (for color changes)
-  const isOverVideo = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,16 +31,21 @@ const Navbar = () => {
 
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
+    { name: 'Services', href: '/services' },
+    { name: 'Testimonials', href: '/testimonials' },
     { name: 'Contact', href: '/contact' },
   ];
 
-  const textColor = isOverVideo && !isScrolled ? 'text-white' : 'text-gray-700';
-  const hoverColor = isOverVideo && !isScrolled ? 'hover:text-bc-red' : 'hover:text-bc-red';
+  const moreItems = [
+    { name: 'Calculator', href: '/calculator' },
+    { name: 'Equipment', href: '/equipment' },
+    { name: 'Compare Prices', href: '/compare-prices' },
+    { name: 'Compare Services', href: '/compare-services' },
+  ];
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md' : isOverVideo ? 'bg-transparent' : 'bg-white'
+      isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md' : 'bg-white'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
@@ -42,7 +56,7 @@ const Navbar = () => {
               alt="BC Pressure Washing Logo" 
               className="h-10 w-auto transition-transform duration-200 hover:scale-110"
             />
-            <span className={`text-xl font-bold ${textColor}`}>BC Pressure Washing</span>
+            <span className="text-xl font-bold text-gray-900">BC Pressure Washing</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -51,7 +65,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`${textColor} ${hoverColor} transition-all duration-200 hover:scale-110 font-medium ${
+                className={`text-gray-700 hover:text-bc-red transition-all duration-200 hover:scale-110 font-medium ${
                   location.pathname === item.href ? 'text-bc-red' : ''
                 }`}
               >
@@ -59,8 +73,49 @@ const Navbar = () => {
               </Link>
             ))}
             
-            {/* Services Dropdown */}
-            <ServicesDropdown isOverVideo={isOverVideo && !isScrolled} />
+            {/* More Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-bc-red transition-all duration-200 hover:scale-110 font-medium">
+                More <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 hover:scale-110" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                className="bg-white border border-gray-200 shadow-lg rounded-md w-80"
+                align="center"
+                sideOffset={0}
+              >
+                {moreItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link
+                      to={item.href}
+                      className="block px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full"
+                    >
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                
+                {/* Review Links Section */}
+                <div className="border-t border-gray-100 pt-2 mt-2">
+                  <div className="px-6 py-2">
+                    <h4 className="font-medium text-gray-900 text-sm">Leave a Review</h4>
+                    <div className="flex items-center space-x-3 mt-2">
+                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
+                        <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
+                        <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
+                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors">
+                        <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Phone Number */}
             <a
@@ -75,7 +130,7 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden ${textColor} ${hoverColor} transition-transform duration-200 hover:scale-110`}
+            className="md:hidden text-gray-700 hover:text-bc-red transition-transform duration-200 hover:scale-110"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -95,21 +150,16 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              
-              {/* Mobile Services Links */}
-              <div className="border-t pt-2 mt-2">
-                <div className="px-3 py-2 text-sm font-semibold text-gray-500 uppercase">Services</div>
-                <Link to="/services/window-cleaning" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Window Cleaning</Link>
-                <Link to="/services/gutter-cleaning" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Gutter Cleaning</Link>
-                <Link to="/services/house-soft-wash" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>House Soft Wash</Link>
-                <Link to="/services/roof-cleaning" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Roof Cleaning</Link>
-                <Link to="/services/pressure-washing" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Pressure Washing</Link>
-                <Link to="/services/fence-washing" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Fence Washing</Link>
-                <Link to="/services/deck-cleaning" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Deck Cleaning</Link>
-                <Link to="/services/driveway-cleaning" className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors" onClick={() => setIsOpen(false)}>Driveway Cleaning</Link>
-                <Link to="/services" className="block px-3 py-2 text-bc-red font-medium" onClick={() => setIsOpen(false)}>View All Services</Link>
-              </div>
-              
+              {moreItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block px-3 py-2 text-gray-700 hover:text-bc-red transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
               <a
                 href="tel:7788087620"
                 className="block px-3 py-2 text-bc-red font-medium"
