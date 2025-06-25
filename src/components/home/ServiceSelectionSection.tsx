@@ -1,87 +1,65 @@
 
-import React, { useState } from 'react';
-import { useTranslation } from '@/hooks/use-translation';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { services } from './ServiceSelectionSection/serviceData';
-import ServiceCard from './ServiceSelectionSection/ServiceCard';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const ServiceSelectionSection = () => {
-  const { t } = useTranslation();
-  const isMobile = useIsMobile();
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
-
-  const handleServiceClick = (serviceId: string) => {
-    // Scroll to the contact form
-    const contactForm = document.querySelector('[data-contact-form]');
-    if (contactForm) {
-      contactForm.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+  const services = [
+    {
+      title: 'House Washing',
+      description: 'Complete exterior house cleaning',
+      icon: '🏠',
+      href: '/services/house-washing'
+    },
+    {
+      title: 'Window Cleaning',
+      description: 'Crystal clear windows inside & out',
+      icon: '🪟',
+      href: '/services/window-cleaning'
+    },
+    {
+      title: 'Pressure Washing',
+      description: 'Driveways, patios & walkways',
+      icon: '🚿',
+      href: '/services/pressure-washing'
+    },
+    {
+      title: 'Gutter Cleaning',
+      description: 'Complete gutter maintenance',
+      icon: '🏘️',
+      href: '/services/gutter-cleaning'
     }
-    
-    // Store selected service for form pre-filling
-    sessionStorage.setItem('selectedService', serviceId);
-    
-    // Dispatch custom event to notify the form
-    window.dispatchEvent(new CustomEvent('serviceSelected', { 
-      detail: { serviceId } 
-    }));
-  };
+  ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold mb-6 text-gray-900`}>
-            {t("What Can We Make Shine Today?")}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            What Do You Need Cleaned?
           </h2>
-          <p className={`${isMobile ? 'text-lg' : 'text-xl'} text-gray-600 max-w-3xl mx-auto`}>
-            {t("Choose a service to get instant pricing")}
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Choose from our professional cleaning services to make your property shine
           </p>
         </div>
-
-        {/* Grid layout: 3 columns and 2 rows */}
-        <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-3 gap-8'} max-w-6xl mx-auto`}>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {services.map((service, index) => (
-            <div key={service.id} className="flex flex-col">
-              <ServiceCard
-                service={service}
-                index={index}
-                hoveredService={hoveredService}
-                onServiceClick={handleServiceClick}
-                onMouseEnter={() => setHoveredService(index)}
-                onMouseLeave={() => setHoveredService(null)}
-                onVideoClose={() => setHoveredService(null)}
-              />
-              
-              {/* Instant Pricing Button */}
-              <div className="mt-4">
-                <Button 
-                  asChild 
-                  className="w-full bg-bc-red hover:bg-red-700 text-white font-bold py-3 text-base shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <Link to="/calculator">
-                    Get Instant Pricing
-                  </Link>
-                </Button>
-              </div>
+            <div key={index} className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300">
+              <div className="text-4xl mb-4">{service.icon}</div>
+              <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+              <p className="text-gray-600 mb-4">{service.description}</p>
+              <Button asChild variant="outline" className="w-full">
+                <Link to={service.href}>Learn More</Link>
+              </Button>
             </div>
           ))}
         </div>
-
-        <div className={`text-center ${isMobile ? 'mt-12' : 'mt-16'}`}>
-          <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 mb-6`}>
-            {t("Need a custom quote?")} 
-            <button 
-              onClick={() => handleServiceClick('custom')}
-              className="ml-2 text-bc-red hover:text-red-700 font-semibold underline"
-            >
-              {t("Contact us directly")}
-            </button>
-          </p>
+        
+        <div className="text-center mt-12">
+          <Button asChild size="lg" variant="bc-red">
+            <Link to="/calculator">Get Free Quote</Link>
+          </Button>
         </div>
       </div>
     </section>
