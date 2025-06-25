@@ -58,6 +58,7 @@ const FooterContactForm = () => {
       console.log('Footer contact form submission:', sanitizeLogData(sanitizedData));
 
       // Send email using Supabase Edge Function + Resend
+      console.log('Calling forward-contact-form function...');
       const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
@@ -72,6 +73,7 @@ const FooterContactForm = () => {
       );
 
       if (response.ok) {
+        console.log('Forward-contact-form successful, now sending confirmations...');
         // Send confirmations (email + SMS)
         const confirmationResponse = await fetch(
           "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/send-confirmations",
@@ -89,12 +91,20 @@ const FooterContactForm = () => {
           }
         );
 
+        console.log('Confirmation response status:', confirmationResponse.status);
+        
         if (confirmationResponse.ok) {
+          const confirmationResult = await confirmationResponse.json();
+          console.log('Confirmation result:', confirmationResult);
+          
           toast({
             title: "Message Sent!",
             description: "We'll get back to you as soon as possible. Check your email and phone for confirmation.",
           });
         } else {
+          const confirmationError = await confirmationResponse.text();
+          console.error('Confirmation error:', confirmationError);
+          
           toast({
             title: "Message Sent!",
             description: "We'll get back to you as soon as possible.",

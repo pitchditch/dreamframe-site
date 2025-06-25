@@ -24,6 +24,12 @@ const sendSMS = async (phone: string, message: string) => {
   const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
   const twilioFromNumber = Deno.env.get("TWILIO_FROM_NUMBER") || "+12345678901";
 
+  console.log("SMS Configuration check:", {
+    hasAccountSid: !!twilioAccountSid,
+    hasAuthToken: !!twilioAuthToken,
+    fromNumber: twilioFromNumber
+  });
+
   if (!twilioAccountSid || !twilioAuthToken) {
     console.log("Twilio credentials not configured, skipping SMS");
     return null;
@@ -32,6 +38,7 @@ const sendSMS = async (phone: string, message: string) => {
   const credentials = btoa(`${twilioAccountSid}:${twilioAuthToken}`);
   
   try {
+    console.log("Sending SMS to:", phone);
     const response = await fetch(
       `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
       {
@@ -64,14 +71,37 @@ const sendSMS = async (phone: string, message: string) => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log("Send-confirmations function called with method:", req.method);
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { email, phone, name, service, formType, message }: ConfirmationRequest = await req.json();
+    const body = await req.text();
+    console.log("Request body received:", body);
+    
+    const { email, phone, name, service, formType, message }: ConfirmationRequest = JSON.parse(body);
+    
+    console.log("Parsed request data:", { email, phone, name, service, formType });
+
+    // Check if Resend API key is available
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    console.log("Resend API key available:", !!resendApiKey);
+    
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY not found in environment variables");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
 
     // Send email confirmation
+    console.log("Attempting to send email to:", email);
     const emailResponse = await resend.emails.send({
       from: "BC Pressure Washing <info@bcpressurewashing.ca>",
       to: [email],
@@ -111,6 +141,8 @@ const handler = async (req: Request): Promise<Response> => {
     if (phone && phone.trim()) {
       const smsMessage = `Hi ${name}! We received your ${service || 'service'} request. We'll contact you within 24 hours with your quote. BC Pressure Washing - (778) 808-7620`;
       smsResponse = await sendSMS(phone, smsMessage);
+    } else {
+      console.log("No phone number provided, skipping SMS");
     }
 
     return new Response(
