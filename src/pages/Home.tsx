@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import HeroWithContent from '../components/HeroWithContent';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import TestimonialsSection from '../components/home/TestimonialsSection';
+import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import CityNavigation from '../components/home/CityNavigation';
@@ -13,8 +14,6 @@ import BeforeAfterGallery from '../components/BeforeAfterGallery';
 import RedCarSection from '../components/home/RedCarSection';
 import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
 import ReferralProgramSection from '../components/ReferralProgramSection';
-import ServiceBanner from '@/components/ServiceBanner';
-import TrustBadgesSection from '@/components/TrustBadgesSection';
 
 const Home = () => {
   const { language, setLanguage } = useTranslation();
@@ -103,9 +102,6 @@ const Home = () => {
       </Helmet>
 
       <HeroWithContent>
-        {/* Trust Badges - Restored below hero */}
-        <TrustBadgesSection />
-        
         {/* Service Locations */}
         <CityNavigation />
         
@@ -135,6 +131,8 @@ const Home = () => {
             <ServiceAreasCarousel />
           </div>
         </section>
+
+        <ReferralButton />
 
         <footer className="text-center text-sm text-gray-500 mt-12">
           <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>

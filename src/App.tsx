@@ -15,24 +15,13 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const CalculatorPage = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
 
-// Original service pages
+// Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
 const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 
-// Service pages in services folder - Fixed import paths
-const GutterCleaning = lazy(() => import('./pages/services/GutterCleaning'));
-const RoofCleaning = lazy(() => import('./pages/services/RoofCleaning'));
-const HouseSoftWash = lazy(() => import('./pages/services/HouseSoftWash'));
-const FenceWashing = lazy(() => import('./pages/services/FenceWashing'));
-const DeckCleaning = lazy(() => import('./pages/services/DeckCleaning'));
-const DrivewayoCleaning = lazy(() => import('./pages/services/DrivewayoCleaning'));
-const PostConstructionWindowCleaning = lazy(() => import('./pages/services/PostConstructionWindowCleaning'));
-
-// Commercial service pages
+// Specific service pages
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
 const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
-const CommercialBuildingWashing = lazy(() => import('./pages/services/CommercialBuildingWashing'));
-const ParkingLotCleaning = lazy(() => import('./pages/services/ParkingLotCleaning'));
 
 // Admin pages
 const AdminQuotes = lazy(() => import('./pages/AdminQuotes'));
@@ -57,25 +46,13 @@ function App() {
               <Route path="/calculator" element={<CalculatorPage />} />
               <Route path="/booking" element={<Booking />} />
 
-              {/* Original Service Routes */}
+              {/* Service Routes */}
               <Route path="/services/window-cleaning" element={<WindowCleaning />} />
               <Route path="/services/pressure-washing" element={<PressureWashing />} />
               
-              {/* Additional Service Routes */}
-              <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-              <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-              <Route path="/services/house-washing" element={<HouseSoftWash />} />
-              <Route path="/services/house-soft-wash" element={<HouseSoftWash />} />
-              <Route path="/services/fence-washing" element={<FenceWashing />} />
-              <Route path="/services/deck-cleaning" element={<DeckCleaning />} />
-              <Route path="/services/driveway-cleaning" element={<DrivewayoCleaning />} />
-              <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-              
-              {/* Commercial Service Pages */}
+              {/* Specific Service Pages */}
               <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
               <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
-              <Route path="/services/commercial-building-washing" element={<CommercialBuildingWashing />} />
-              <Route path="/services/parking-lot-cleaning" element={<ParkingLotCleaning />} />
 
               {/* Admin Routes */}
               <Route path="/admin-quotes" element={<AdminQuotes />} />
