@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -15,36 +14,55 @@ const HeroSection = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
   
-  // Show on home page and city pages
+  // Only load video on home page
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
-  const isCityPage = location.pathname !== '/' && location.pathname !== '/home' && !location.pathname.includes('/services') && !location.pathname.includes('/about') && !location.pathname.includes('/contact') && !location.pathname.includes('/why-us') && !location.pathname.includes('/calculator') && !location.pathname.includes('/booking') && !location.pathname.includes('/admin');
-  
-  const shouldShowHero = isHomePage || isCityPage;
   
   useEffect(() => {
-    if (!shouldShowHero) return;
+    if (!isHomePage) return;
     
-    // Preload the new hero image
-    const img = new Image();
-    img.src = "/lovable-uploads/3774dac7-a537-41d3-b86b-eee5ae6dfd89.png";
-    img.onload = () => {
-      setVideoLoaded(true);
-      setIsLoading(false);
-      window.dispatchEvent(new CustomEvent('heroLoaded'));
-    };
-    // Start loading immediately
-    img.loading = 'eager';
-    
-    // Fallback timer for faster loading
-    setTimeout(() => {
-      setVideoLoaded(true);
-      setIsLoading(false);
-      window.dispatchEvent(new CustomEvent('heroLoaded'));
-    }, 500);
-  }, [isMobile, shouldShowHero]);
+    if (isMobile) {
+      // Preload mobile background image immediately
+      const img = new Image();
+      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
+      img.onload = () => {
+        setVideoLoaded(true);
+        setIsLoading(false);
+        window.dispatchEvent(new CustomEvent('heroLoaded'));
+      };
+      // Start loading immediately
+      img.loading = 'eager';
+    } else {
+      // For desktop, preload the video with aggressive settings
+      const videoPreloader = document.createElement('iframe');
+      videoPreloader.src = "https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=metadata";
+      videoPreloader.style.position = 'absolute';
+      videoPreloader.style.opacity = '0';
+      videoPreloader.style.pointerEvents = 'none';
+      document.body.appendChild(videoPreloader);
+      
+      videoPreloader.onload = () => {
+        setTimeout(() => {
+          setVideoLoaded(true);
+          setIsLoading(false);
+          window.dispatchEvent(new CustomEvent('heroLoaded'));
+          document.body.removeChild(videoPreloader);
+        }, 300); // Reduced delay for faster loading
+      };
+      
+      // Fallback timer - much faster
+      setTimeout(() => {
+        setVideoLoaded(true);
+        setIsLoading(false);
+        window.dispatchEvent(new CustomEvent('heroLoaded'));
+        if (document.body.contains(videoPreloader)) {
+          document.body.removeChild(videoPreloader);
+        }
+      }, 800); // Reduced from 1500ms
+    }
+  }, [isMobile, isHomePage]);
   
-  // Don't render hero section if not on home page or city page
-  if (!shouldShowHero) return null;
+  // Don't render hero section if not on home page
+  if (!isHomePage) return null;
 
   return (
     <section className="hero-section relative h-screen w-full overflow-hidden">

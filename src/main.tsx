@@ -1,18 +1,22 @@
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
-import { HelmetProvider } from 'react-helmet-async';
-import { cleanupServiceWorkers } from './utils/serviceWorkerUtils';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+import { HelmetProvider } from "react-helmet-async";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TranslationProvider } from "./hooks/use-translation.tsx";
 
-// Clean up any existing service workers that might be causing issues
-cleanupServiceWorkers();
+const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <TranslationProvider>
+          <App />
+        </TranslationProvider>
+      </QueryClientProvider>
     </HelmetProvider>
   </React.StrictMode>,
 );
