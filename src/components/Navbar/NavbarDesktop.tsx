@@ -8,9 +8,10 @@ import { Phone } from 'lucide-react';
 interface NavbarDesktopProps {
   isMenuOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  isOverVideo: boolean;
 }
 
-const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen }) => {
+const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen, isOverVideo }) => {
   return (
     <div className="hidden md:flex items-center justify-between w-full">
       <div className="flex items-center">
@@ -24,7 +25,7 @@ const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen }) => {
         <NavLink to="/" className="text-white hover:text-bc-red transition-colors">
           Home
         </NavLink>
-        <ServicesDropdown />
+        <ServicesDropdown isOverVideo={isOverVideo} />
         <NavLink to="/calculator" className="text-white hover:text-bc-red transition-colors">
           Quote Calculator
         </NavLink>
