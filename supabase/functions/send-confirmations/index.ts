@@ -17,9 +17,6 @@ interface ConfirmationRequest {
   service?: string;
   formType: string;
   message?: string;
-  customEmailSubject?: string;
-  customEmailHTML?: string;
-  customSMSMessage?: string;
 }
 
 const sendSMS = async (phone: string, message: string) => {
@@ -84,17 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
     const body = await req.text();
     console.log("Request body received:", body);
     
-    const { 
-      email, 
-      phone, 
-      name, 
-      service, 
-      formType, 
-      message,
-      customEmailSubject,
-      customEmailHTML,
-      customSMSMessage
-    }: ConfirmationRequest = JSON.parse(body);
+    const { email, phone, name, service, formType, message }: ConfirmationRequest = JSON.parse(body);
     
     console.log("Parsed request data:", { email, phone, name, service, formType });
 
@@ -115,13 +102,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email confirmation
     console.log("Attempting to send email to:", email);
-    
-    let emailHTML = customEmailHTML;
-    let emailSubject = customEmailSubject || `We received your ${formType} request - BC Pressure Washing`;
-    
-    // Use default template if no custom HTML provided
-    if (!emailHTML) {
-      emailHTML = `
+    const emailResponse = await resend.emails.send({
+      from: "BC Pressure Washing <info@bcpressurewashing.ca>",
+      to: [email],
+      subject: "We received your request - BC Pressure Washing",
+      html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h1 style="color: #dc2626;">Thank you, ${name}!</h1>
           <p>We've received your ${formType} request and will get back to you shortly.</p>
@@ -146,14 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
             <a href="https://bcpressurewashing.ca">bcpressurewashing.ca</a></p>
           </div>
         </div>
-      `;
-    }
-
-    const emailResponse = await resend.emails.send({
-      from: "BC Pressure Washing <info@bcpressurewashing.ca>",
-      to: [email],
-      subject: emailSubject,
-      html: emailHTML,
+      `,
     });
 
     console.log("Email confirmation sent:", emailResponse);
@@ -161,13 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send SMS confirmation if phone number provided
     let smsResponse = null;
     if (phone && phone.trim()) {
-      let smsMessage = customSMSMessage;
-      
-      // Use default message if no custom SMS provided
-      if (!smsMessage) {
-        smsMessage = `Hi ${name}! We received your ${service || 'service'} request. We'll contact you within 24 hours with your quote. BC Pressure Washing - (778) 808-7620`;
-      }
-      
+      const smsMessage = `Hi ${name}! We received your ${service || 'service'} request. We'll contact you within 24 hours with your quote. BC Pressure Washing - (778) 808-7620`;
       smsResponse = await sendSMS(phone, smsMessage);
     } else {
       console.log("No phone number provided, skipping SMS");

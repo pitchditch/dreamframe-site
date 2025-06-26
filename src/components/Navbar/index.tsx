@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from '../Logo';
-import NavbarDesktop from './NavbarDesktop';
-import NavbarMobile from './NavbarMobile';
+import { NavbarDesktop } from './NavbarDesktop';
+import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
 
 const Navbar = () => {
@@ -70,14 +70,15 @@ const Navbar = () => {
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo} />
-        <NavbarDesktop isMenuOpen={isMenuOpen} setIsOpen={setIsMenuOpen} isOverVideo={isOverVideo} />
+        <NavbarDesktop isOverVideo={isOverVideo} />
         <div className="md:hidden">
           <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
-        isOpen={isMenuOpen}
-        setIsOpen={setIsMenuOpen}
+        isMenuOpen={isMenuOpen}
+        isServicesMenuOpen={isServicesMenuOpen}
+        setIsServicesMenuOpen={setIsServicesMenuOpen}
       />
     </header>
   );
