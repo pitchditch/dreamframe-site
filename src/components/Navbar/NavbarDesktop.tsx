@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { ServicesDropdown } from './ServicesDropdown';
+import ServicesDropdown from './ServicesDropdown';
 import { Button } from '../ui/button';
 import { Phone } from 'lucide-react';
 
@@ -29,9 +30,6 @@ const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen }) => {
         </NavLink>
         <NavLink to="/invoices" className="text-white hover:text-bc-red transition-colors">
           Invoices
-        </NavLink>
-        <NavLink to="/about" className="text-white hover:text-bc-red transition-colors">
-          About
         </NavLink>
         <NavLink to="/contact" className="text-white hover:text-bc-red transition-colors">
           Contact

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { X } from 'lucide-react';
@@ -5,6 +6,8 @@ import { X } from 'lucide-react';
 interface NavbarMobileProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  isServicesMenuOpen: boolean;
+  setIsServicesMenuOpen: (open: boolean) => void;
 }
 
 const NavbarMobile: React.FC<NavbarMobileProps> = ({ isOpen, setIsOpen }) => {
@@ -60,14 +63,6 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ isOpen, setIsOpen }) => {
           onClick={() => setIsOpen(false)}
         >
           Invoices
-        </NavLink>
-        
-        <NavLink 
-          to="/about" 
-          className="text-white hover:text-bc-red block px-3 py-2 text-base font-medium transition-colors"
-          onClick={() => setIsOpen(false)}
-        >
-          About
         </NavLink>
         
         <NavLink 
