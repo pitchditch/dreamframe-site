@@ -1,57 +1,54 @@
-
 import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import './App.css';
-import Index from './pages/Index';
-import Home from './pages/Home';
-import Contact from './pages/Contact';
-import Services from './pages/Services';
-import WindowCleaning from './pages/WindowCleaning';
-import PressureWashing from './pages/PressureWashing';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import ServicesPage from './pages/ServicesPage';
+import WindowCleaningPage from './pages/WindowCleaningPage';
+import PressureWashingPage from './pages/PressureWashingPage';
+import GutterCleaningPage from './pages/GutterCleaningPage';
+import RoofCleaningPage from './pages/RoofCleaningPage';
 import { SmartPriceCalculator } from './components/SmartPriceCalculator';
 import Invoices from "./pages/Invoices";
-
-// Import service pages that exist
-import GutterCleaning from './pages/services/GutterCleaning';
-import RoofCleaning from './pages/services/RoofCleaning';
 
 function App() {
   
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Index />,
+      element: <HomePage />,
     },
     {
-      path: "/home",
-      element: <Home />,
+      path: "/about",
+      element: <AboutPage />,
     },
     {
       path: "/contact",
-      element: <Contact />,
+      element: <ContactPage />,
     },
     {
       path: "/services",
-      element: <Services />,
+      element: <ServicesPage />,
     },
     {
       path: "/services/window-cleaning",
-      element: <WindowCleaning />,
+      element: <WindowCleaningPage />,
     },
     {
       path: "/services/pressure-washing",
-      element: <PressureWashing />,
+      element: <PressureWashingPage />,
     },
     {
       path: "/services/gutter-cleaning",
-      element: <GutterCleaning />,
+      element: <GutterCleaningPage />,
     },
     {
       path: "/services/roof-cleaning",
-      element: <RoofCleaning />,
+      element: <RoofCleaningPage />,
     },
     {
       path: "/calculator",

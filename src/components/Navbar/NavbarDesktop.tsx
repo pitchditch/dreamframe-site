@@ -1,17 +1,15 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import ServicesDropdown from './ServicesDropdown';
+import { ServicesDropdown } from './ServicesDropdown';
 import { Button } from '../ui/button';
 import { Phone } from 'lucide-react';
 
 interface NavbarDesktopProps {
   isMenuOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  isOverVideo: boolean;
 }
 
-const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen, isOverVideo }) => {
+const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen }) => {
   return (
     <div className="hidden md:flex items-center justify-between w-full">
       <div className="flex items-center">
@@ -25,12 +23,15 @@ const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ setIsOpen, isOverVideo })
         <NavLink to="/" className="text-white hover:text-bc-red transition-colors">
           Home
         </NavLink>
-        <ServicesDropdown isOverVideo={isOverVideo} />
+        <ServicesDropdown />
         <NavLink to="/calculator" className="text-white hover:text-bc-red transition-colors">
           Quote Calculator
         </NavLink>
         <NavLink to="/invoices" className="text-white hover:text-bc-red transition-colors">
           Invoices
+        </NavLink>
+        <NavLink to="/about" className="text-white hover:text-bc-red transition-colors">
+          About
         </NavLink>
         <NavLink to="/contact" className="text-white hover:text-bc-red transition-colors">
           Contact
