@@ -1,17 +1,18 @@
+
 import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import './App.css';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import ServicesPage from './pages/ServicesPage';
-import WindowCleaningPage from './pages/WindowCleaningPage';
-import PressureWashingPage from './pages/PressureWashingPage';
-import GutterCleaningPage from './pages/GutterCleaningPage';
-import RoofCleaningPage from './pages/RoofCleaningPage';
+import HomePage from './pages/Home';
+import AboutPage from './pages/About';
+import ContactPage from './pages/Contact';
+import ServicesPage from './pages/Services';
+import WindowCleaningPage from './pages/services/WindowCleaning';
+import PressureWashingPage from './pages/services/PressureWashing';
+import GutterCleaningPage from './pages/services/GutterCleaning';
+import RoofCleaningPage from './pages/services/RoofCleaning';
 import { SmartPriceCalculator } from './components/SmartPriceCalculator';
 import Invoices from "./pages/Invoices";
 
