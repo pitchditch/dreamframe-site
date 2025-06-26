@@ -70,15 +70,14 @@ const Navbar = () => {
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo} />
-        <NavbarDesktop isMenuOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+        <NavbarDesktop isMenuOpen={isMenuOpen} setIsOpen={setIsMenuOpen} isOverVideo={isOverVideo} />
         <div className="md:hidden">
           <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
       <NavbarMobile
-        isMenuOpen={isMenuOpen}
-        isServicesMenuOpen={isServicesMenuOpen}
-        setIsServicesMenuOpen={setIsServicesMenuOpen}
+        isOpen={isMenuOpen}
+        setIsOpen={setIsMenuOpen}
       />
     </header>
   );
