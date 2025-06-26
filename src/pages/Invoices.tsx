@@ -34,6 +34,8 @@ interface InvoiceData {
   total: number;
   notes: string;
   manualTotal: boolean;
+  manualGST: boolean;
+  manualPST: boolean;
 }
 
 const Invoices: React.FC = () => {
@@ -56,7 +58,9 @@ const Invoices: React.FC = () => {
     pstAmount: 0,
     total: 0,
     notes: '',
-    manualTotal: false
+    manualTotal: false,
+    manualGST: false,
+    manualPST: false
   });
 
   const addItem = () => {
@@ -94,8 +98,10 @@ const Invoices: React.FC = () => {
       });
 
       const subtotal = updatedItems.reduce((sum, item) => sum + item.amount, 0);
-      const gstAmount = subtotal * (prev.gstRate / 100);
-      const pstAmount = subtotal * (prev.pstRate / 100);
+      
+      // PST applies only to product subtotal, GST applies to subtotal + PST
+      const pstAmount = prev.manualPST ? prev.pstAmount : subtotal * (prev.pstRate / 100);
+      const gstAmount = prev.manualGST ? prev.gstAmount : (subtotal + pstAmount) * (prev.gstRate / 100);
       const total = prev.manualTotal ? prev.total : subtotal + gstAmount + pstAmount;
 
       return {
@@ -112,8 +118,10 @@ const Invoices: React.FC = () => {
   const updateTaxRates = (field: 'gstRate' | 'pstRate', value: number) => {
     setInvoice(prev => {
       const newInvoice = { ...prev, [field]: value };
-      const gstAmount = prev.subtotal * (newInvoice.gstRate / 100);
-      const pstAmount = prev.subtotal * (newInvoice.pstRate / 100);
+      
+      // PST applies only to product subtotal, GST applies to subtotal + PST
+      const pstAmount = prev.manualPST ? prev.pstAmount : prev.subtotal * (newInvoice.pstRate / 100);
+      const gstAmount = prev.manualGST ? prev.gstAmount : (prev.subtotal + pstAmount) * (newInvoice.gstRate / 100);
       const total = prev.manualTotal ? prev.total : prev.subtotal + gstAmount + pstAmount;
       
       return {
@@ -132,10 +140,38 @@ const Invoices: React.FC = () => {
     }));
   };
 
+  const toggleManualGST = () => {
+    setInvoice(prev => ({
+      ...prev,
+      manualGST: !prev.manualGST
+    }));
+  };
+
+  const toggleManualPST = () => {
+    setInvoice(prev => ({
+      ...prev,
+      manualPST: !prev.manualPST
+    }));
+  };
+
   const updateTotal = (value: number) => {
     setInvoice(prev => ({
       ...prev,
       total: value
+    }));
+  };
+
+  const updateGSTAmount = (value: number) => {
+    setInvoice(prev => ({
+      ...prev,
+      gstAmount: value
+    }));
+  };
+
+  const updatePSTAmount = (value: number) => {
+    setInvoice(prev => ({
+      ...prev,
+      pstAmount: value
     }));
   };
 
@@ -188,8 +224,8 @@ const Invoices: React.FC = () => {
         <div style="text-align: right; margin-bottom: 30px;">
           <div style="display: inline-block; text-align: right;">
             <p><strong>Subtotal: $${invoice.subtotal.toFixed(2)}</strong></p>
-            <p><strong>GST (${invoice.gstRate}%): $${invoice.gstAmount.toFixed(2)}</strong></p>
             <p><strong>PST (${invoice.pstRate}%): $${invoice.pstAmount.toFixed(2)}</strong></p>
+            <p><strong>GST (${invoice.gstRate}%): $${invoice.gstAmount.toFixed(2)}</strong></p>
             <div style="border-top: 2px solid #374151; padding-top: 10px; margin-top: 10px;">
               <h3 style="color: #dc2626; margin: 0;">Total: $${invoice.total.toFixed(2)}</h3>
             </div>
@@ -277,7 +313,9 @@ const Invoices: React.FC = () => {
           pstAmount: 0,
           total: 0,
           notes: '',
-          manualTotal: false
+          manualTotal: false,
+          manualGST: false,
+          manualPST: false
         });
       } else {
         throw new Error('Failed to send invoice');
@@ -496,36 +534,96 @@ const Invoices: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="border-t pt-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <Label>Total Amount</Label>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={toggleManualTotal}
-                        className="text-xs"
-                      >
-                        <Edit className="w-3 h-3 mr-1" />
-                        {invoice.manualTotal ? 'Auto Calculate' : 'Manual Edit'}
-                      </Button>
-                    </div>
-                    {invoice.manualTotal ? (
-                      <Input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value={invoice.total}
-                        onChange={(e) => updateTotal(parseFloat(e.target.value) || 0)}
-                        placeholder="Enter total amount"
-                        className="text-lg font-bold"
-                      />
-                    ) : (
-                      <div className="h-12 flex items-center px-3 bg-gray-50 border rounded-md">
-                        <span className="text-lg font-bold text-green-600">
-                          ${invoice.total.toFixed(2)}
-                        </span>
+                  <div className="border-t pt-4 space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <Label>PST Amount</Label>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={toggleManualPST}
+                          className="text-xs"
+                        >
+                          <Edit className="w-3 h-3 mr-1" />
+                          {invoice.manualPST ? 'Auto Calculate' : 'Manual Edit'}
+                        </Button>
                       </div>
-                    )}
+                      {invoice.manualPST ? (
+                        <Input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={invoice.pstAmount}
+                          onChange={(e) => updatePSTAmount(parseFloat(e.target.value) || 0)}
+                          placeholder="Enter PST amount"
+                        />
+                      ) : (
+                        <div className="h-10 flex items-center px-3 bg-gray-50 border rounded-md">
+                          <span>${invoice.pstAmount.toFixed(2)}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <Label>GST Amount</Label>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={toggleManualGST}
+                          className="text-xs"
+                        >
+                          <Edit className="w-3 h-3 mr-1" />
+                          {invoice.manualGST ? 'Auto Calculate' : 'Manual Edit'}
+                        </Button>
+                      </div>
+                      {invoice.manualGST ? (
+                        <Input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={invoice.gstAmount}
+                          onChange={(e) => updateGSTAmount(parseFloat(e.target.value) || 0)}
+                          placeholder="Enter GST amount"
+                        />
+                      ) : (
+                        <div className="h-10 flex items-center px-3 bg-gray-50 border rounded-md">
+                          <span>${invoice.gstAmount.toFixed(2)}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <Label>Total Amount</Label>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={toggleManualTotal}
+                          className="text-xs"
+                        >
+                          <Edit className="w-3 h-3 mr-1" />
+                          {invoice.manualTotal ? 'Auto Calculate' : 'Manual Edit'}
+                        </Button>
+                      </div>
+                      {invoice.manualTotal ? (
+                        <Input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={invoice.total}
+                          onChange={(e) => updateTotal(parseFloat(e.target.value) || 0)}
+                          placeholder="Enter total amount"
+                          className="text-lg font-bold"
+                        />
+                      ) : (
+                        <div className="h-12 flex items-center px-3 bg-gray-50 border rounded-md">
+                          <span className="text-lg font-bold text-green-600">
+                            ${invoice.total.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   
                   <div>
@@ -558,12 +656,18 @@ const Invoices: React.FC = () => {
                       <span>${invoice.subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>GST ({invoice.gstRate}%):</span>
-                      <span>${invoice.gstAmount.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between">
                       <span>PST ({invoice.pstRate}%):</span>
                       <span>${invoice.pstAmount.toFixed(2)}</span>
+                      {invoice.manualPST && (
+                        <span className="text-xs text-gray-500 ml-2">(Manual)</span>
+                      )}
+                    </div>
+                    <div className="flex justify-between">
+                      <span>GST ({invoice.gstRate}%):</span>
+                      <span>${invoice.gstAmount.toFixed(2)}</span>
+                      {invoice.manualGST && (
+                        <span className="text-xs text-gray-500 ml-2">(Manual)</span>
+                      )}
                     </div>
                     <div className="border-t pt-3 flex justify-between font-bold text-lg">
                       <span>Total:</span>
@@ -653,8 +757,8 @@ const Invoices: React.FC = () => {
                     
                     <div className="text-right text-xs space-y-1">
                       <div>Subtotal: ${invoice.subtotal.toFixed(2)}</div>
-                      <div>GST: ${invoice.gstAmount.toFixed(2)}</div>
-                      <div>PST: ${invoice.pstAmount.toFixed(2)}</div>
+                      <div>PST: ${invoice.pstAmount.toFixed(2)} {invoice.manualPST && <span className="text-gray-500">(Manual)</span>}</div>
+                      <div>GST: ${invoice.gstAmount.toFixed(2)} {invoice.manualGST && <span className="text-gray-500">(Manual)</span>}</div>
                       <div className="font-bold border-t pt-1">
                         Total: ${invoice.total.toFixed(2)}
                         {invoice.manualTotal && <span className="text-gray-500"> (Manual)</span>}
