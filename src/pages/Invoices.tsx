@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { FileText, Mail, MessageSquare, Plus, Trash2, Calculator } from 'lucide-react';
+import { FileText, Mail, MessageSquare, Plus, Trash2, Calculator, Edit } from 'lucide-react';
 import Layout from '@/components/Layout';
 
 interface InvoiceItem {
@@ -34,6 +33,7 @@ interface InvoiceData {
   pstAmount: number;
   total: number;
   notes: string;
+  manualTotal: boolean;
 }
 
 const Invoices: React.FC = () => {
@@ -55,7 +55,8 @@ const Invoices: React.FC = () => {
     gstAmount: 0,
     pstAmount: 0,
     total: 0,
-    notes: ''
+    notes: '',
+    manualTotal: false
   });
 
   const addItem = () => {
@@ -95,7 +96,7 @@ const Invoices: React.FC = () => {
       const subtotal = updatedItems.reduce((sum, item) => sum + item.amount, 0);
       const gstAmount = subtotal * (prev.gstRate / 100);
       const pstAmount = subtotal * (prev.pstRate / 100);
-      const total = subtotal + gstAmount + pstAmount;
+      const total = prev.manualTotal ? prev.total : subtotal + gstAmount + pstAmount;
 
       return {
         ...prev,
@@ -113,7 +114,7 @@ const Invoices: React.FC = () => {
       const newInvoice = { ...prev, [field]: value };
       const gstAmount = prev.subtotal * (newInvoice.gstRate / 100);
       const pstAmount = prev.subtotal * (newInvoice.pstRate / 100);
-      const total = prev.subtotal + gstAmount + pstAmount;
+      const total = prev.manualTotal ? prev.total : prev.subtotal + gstAmount + pstAmount;
       
       return {
         ...newInvoice,
@@ -122,6 +123,20 @@ const Invoices: React.FC = () => {
         total
       };
     });
+  };
+
+  const toggleManualTotal = () => {
+    setInvoice(prev => ({
+      ...prev,
+      manualTotal: !prev.manualTotal
+    }));
+  };
+
+  const updateTotal = (value: number) => {
+    setInvoice(prev => ({
+      ...prev,
+      total: value
+    }));
   };
 
   const generateInvoiceHTML = () => {
@@ -261,7 +276,8 @@ const Invoices: React.FC = () => {
           gstAmount: 0,
           pstAmount: 0,
           total: 0,
-          notes: ''
+          notes: '',
+          manualTotal: false
         });
       } else {
         throw new Error('Failed to send invoice');
@@ -450,7 +466,7 @@ const Invoices: React.FC = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Tax Settings</CardTitle>
+                  <CardTitle>Tax Settings & Total</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -479,6 +495,39 @@ const Invoices: React.FC = () => {
                       />
                     </div>
                   </div>
+                  
+                  <div className="border-t pt-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <Label>Total Amount</Label>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={toggleManualTotal}
+                        className="text-xs"
+                      >
+                        <Edit className="w-3 h-3 mr-1" />
+                        {invoice.manualTotal ? 'Auto Calculate' : 'Manual Edit'}
+                      </Button>
+                    </div>
+                    {invoice.manualTotal ? (
+                      <Input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={invoice.total}
+                        onChange={(e) => updateTotal(parseFloat(e.target.value) || 0)}
+                        placeholder="Enter total amount"
+                        className="text-lg font-bold"
+                      />
+                    ) : (
+                      <div className="h-12 flex items-center px-3 bg-gray-50 border rounded-md">
+                        <span className="text-lg font-bold text-green-600">
+                          ${invoice.total.toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  
                   <div>
                     <Label htmlFor="notes">Notes</Label>
                     <Textarea
@@ -519,6 +568,9 @@ const Invoices: React.FC = () => {
                     <div className="border-t pt-3 flex justify-between font-bold text-lg">
                       <span>Total:</span>
                       <span className="text-green-600">${invoice.total.toFixed(2)}</span>
+                      {invoice.manualTotal && (
+                        <span className="text-xs text-gray-500 ml-2">(Manual)</span>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -603,7 +655,10 @@ const Invoices: React.FC = () => {
                       <div>Subtotal: ${invoice.subtotal.toFixed(2)}</div>
                       <div>GST: ${invoice.gstAmount.toFixed(2)}</div>
                       <div>PST: ${invoice.pstAmount.toFixed(2)}</div>
-                      <div className="font-bold border-t pt-1">Total: ${invoice.total.toFixed(2)}</div>
+                      <div className="font-bold border-t pt-1">
+                        Total: ${invoice.total.toFixed(2)}
+                        {invoice.manualTotal && <span className="text-gray-500"> (Manual)</span>}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
