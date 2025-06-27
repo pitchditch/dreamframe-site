@@ -23,6 +23,7 @@ import CompareServices from "./pages/CompareServices";
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
+import WhyUs from "./pages/WhyUs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/why-us" element={<WhyUs />} />
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
             <Route path="/services/soft-wash" element={<SoftWash />} />
