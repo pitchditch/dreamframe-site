@@ -77,19 +77,18 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-size: 22px; /* Increased from 20px to 22px for better readability */
-    font-weight: 600; /* Increased from 500 to 600 */
-    line-height: 1.8; /* Improved line height for readability */
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.6;
   }
   
-  /* Improved navbar text rendering */
   nav a, .navbar-text {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.01em;
-    font-weight: 800; /* Increased from 700 to 800 for better visibility */
-    font-size: 1.3rem; /* Increased from 1.25rem for better visibility */
+    font-weight: 700;
+    font-size: 1.125rem;
   }
 }
 
@@ -124,11 +123,10 @@
 @layer components {
   .btn-primary {
     @apply bg-bc-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-300;
-    font-size: 1.5rem; /* Increased from 1.375rem for better readability */
-    font-weight: 800; /* Made buttons extra bold */
+    font-size: 1.25rem;
+    font-weight: 700;
   }
   
-  /* Ghost writer typing animation */
   .ghost-text {
     overflow: hidden;
     border-right: 0.15em solid transparent;
@@ -190,79 +188,82 @@
     }
   }
 
-  /* Enhanced text shadows for better readability */
   .text-shadow {
-    text-shadow: 0 3px 6px rgba(0,0,0,0.8); /* Increased shadow for better contrast */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   }
   
   .text-shadow-sm {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Enhanced shadow for better contrast */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   }
   
   .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.9);
+    text-shadow: 0 4px 8px rgba(0,0,0,0.7), 0 2px 4px rgba(0,0,0,0.7);
   }
   
-  /* Better heading readability with larger sizes */
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-weight: 900; /* Made headings extra bold */
+    font-weight: 700;
   }
   
-  /* Significantly increased text sizes for better readability */
   h1 {
-    font-size: 4.5rem; /* Increased from 4rem for better readability */
-    font-weight: 900;
+    font-size: 3.5rem;
+    font-weight: 800;
     line-height: 1.1;
   }
   
   h2 {
-    font-size: 3.5rem; /* Increased from 3.25rem for better readability */
-    font-weight: 900;
+    font-size: 2.75rem;
+    font-weight: 800;
     line-height: 1.2;
   }
   
   h3 {
-    font-size: 3rem; /* Increased from 2.75rem for better readability */
-    font-weight: 900;
+    font-size: 2.25rem;
+    font-weight: 700;
     line-height: 1.2;
   }
   
   h4 {
-    font-size: 2.25rem; /* Increased from 2rem for better readability */
-    font-weight: 800;
+    font-size: 1.875rem;
+    font-weight: 700;
     line-height: 1.3;
   }
   
   p {
-    font-size: 1.5rem; /* Increased from 1.375rem for better readability */
-    font-weight: 600; /* Increased from 500 */
-    line-height: 1.9;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.6;
   }
-  
-  /* Specific styles for homepage content for older readers */
-  .homepage-content p {
-    font-size: 1.6rem; /* Even larger for homepage content */
-    line-height: 2;
-    margin-bottom: 1.5rem;
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-weight: 800;
+    line-height: 1.1;
   }
-  
-  .homepage-content h1 {
-    font-size: 5rem; /* Extra large for homepage hero */
-    margin-bottom: 2rem;
+
+  .section-subtitle {
+    @apply text-lg md:text-xl text-gray-600 max-w-4xl mx-auto;
+    line-height: 1.6;
+    font-weight: 500;
   }
-  
-  .homepage-content h2 {
-    font-size: 4rem; /* Extra large for homepage sections */
-    margin-bottom: 1.5rem;
+
+  .text-on-dark {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    font-weight: 700;
   }
-  
-  .homepage-content h3 {
-    font-size: 3.25rem; /* Large for homepage subsections */
-    margin-bottom: 1.25rem;
+
+  .text-on-light {
+    text-shadow: none;
+    font-weight: 600;
+  }
+
+  .high-contrast-text {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    font-weight: 600;
   }
 }
 
@@ -288,78 +289,25 @@
   transform-style: preserve-3d;
 }
 
-/* Spin site logo after 30 seconds of inactivity */
 .logo-inactive-spin {
   animation: spinCoin 2s infinite linear;
   transform-style: preserve-3d;
 }
 
-/* For ghost text typing animation in postal code field */
 .postal-code-ghost {
   color: #aaa;
   font-style: italic;
 }
 
-/* Text enhancements for readability */
 .content-text {
-  line-height: 2; /* Increased line height for better readability */
-  letter-spacing: 0.02em; /* Increased letter spacing */
-  font-size: 1.5rem; /* Increased from 1.375rem */
-  font-weight: 600; /* Increased font weight */
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  font-size: 1.125rem;
+  font-weight: 500;
 }
 
 .heading-text {
   letter-spacing: -0.01em;
-  font-weight: 900; /* Made headings extra bold */
-  font-size: 3.5rem; /* Increased heading text size */
-}
-
-/* Improved section header readability */
-.section-title {
-  @apply text-6xl md:text-7xl font-bold relative; /* Increased from 5xl/6xl to 6xl/7xl */
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  font-weight: 900; /* Made section titles extra bold */
-  line-height: 1.1;
-}
-
-.section-subtitle {
-  @apply text-2xl md:text-3xl text-gray-600 max-w-4xl mx-auto; /* Increased from xl/2xl to 2xl/3xl */
-  line-height: 1.8;
-  font-weight: 600; /* Increased font weight */
-}
-
-/* Ensure text is readable over all backgrounds */
-.text-on-dark {
-  text-shadow: 0 3px 6px rgba(0,0,0,0.8); /* Increased shadow for better contrast */
-  font-weight: 800; /* Made text on dark backgrounds extra bold */
-}
-
-.text-on-light {
-  text-shadow: none;
-  font-weight: 800; /* Increased from 700 to 800 */
-}
-
-/* Enhanced contrast for better accessibility */
-.high-contrast-text {
-  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-  font-weight: 700; /* Increased font weight */
-}
-
-/* Mobile responsive adjustments for readability */
-@media (max-width: 768px) {
-  .homepage-content h1 {
-    font-size: 3.5rem; /* Smaller but still readable on mobile */
-  }
-  
-  .homepage-content h2 {
-    font-size: 2.75rem; /* Smaller but still readable on mobile */
-  }
-  
-  .homepage-content h3 {
-    font-size: 2.25rem; /* Smaller but still readable on mobile */
-  }
-  
-  .homepage-content p {
-    font-size: 1.4rem; /* Slightly smaller on mobile but still readable */
-  }
+  font-weight: 700;
+  font-size: 2.5rem;
 }
