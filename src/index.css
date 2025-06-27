@@ -1,3 +1,4 @@
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -76,7 +77,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-size: 20px; /* Increased from 18px to 20px */
+    font-size: 22px; /* Increased from 20px to 22px for better readability */
     font-weight: 600; /* Increased from 500 to 600 */
     line-height: 1.8; /* Improved line height for readability */
   }
@@ -88,7 +89,7 @@
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.01em;
     font-weight: 800; /* Increased from 700 to 800 for better visibility */
-    font-size: 1.25rem; /* Made navbar text even larger */
+    font-size: 1.3rem; /* Increased from 1.25rem for better visibility */
   }
 }
 
@@ -123,7 +124,7 @@
 @layer components {
   .btn-primary {
     @apply bg-bc-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-300;
-    font-size: 1.375rem; /* Increased button text size */
+    font-size: 1.5rem; /* Increased from 1.375rem for better readability */
     font-weight: 800; /* Made buttons extra bold */
   }
   
@@ -191,18 +192,18 @@
 
   /* Enhanced text shadows for better readability */
   .text-shadow {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    text-shadow: 0 3px 6px rgba(0,0,0,0.8); /* Increased shadow for better contrast */
   }
   
   .text-shadow-sm {
-    text-shadow: 0 2px 3px rgba(0,0,0,0.8); /* Enhanced shadow for better contrast */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Enhanced shadow for better contrast */
   }
   
   .text-shadow-lg {
     text-shadow: 0 4px 8px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.9);
   }
   
-  /* Better heading readability */
+  /* Better heading readability with larger sizes */
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
     text-rendering: optimizeLegibility;
@@ -213,29 +214,55 @@
   
   /* Significantly increased text sizes for better readability */
   h1 {
-    font-size: 4rem; /* Increased from 3rem */
+    font-size: 4.5rem; /* Increased from 4rem for better readability */
     font-weight: 900;
+    line-height: 1.1;
   }
   
   h2 {
-    font-size: 3.25rem; /* Increased from 2.5rem */
+    font-size: 3.5rem; /* Increased from 3.25rem for better readability */
     font-weight: 900;
+    line-height: 1.2;
   }
   
   h3 {
-    font-size: 2.75rem; /* Increased from 2rem */
+    font-size: 3rem; /* Increased from 2.75rem for better readability */
     font-weight: 900;
+    line-height: 1.2;
   }
   
   h4 {
-    font-size: 2rem; /* Increased from 1.5rem */
+    font-size: 2.25rem; /* Increased from 2rem for better readability */
     font-weight: 800;
+    line-height: 1.3;
   }
   
   p {
-    font-size: 1.375rem; /* Increased from 1.125rem */
+    font-size: 1.5rem; /* Increased from 1.375rem for better readability */
     font-weight: 600; /* Increased from 500 */
     line-height: 1.9;
+  }
+  
+  /* Specific styles for homepage content for older readers */
+  .homepage-content p {
+    font-size: 1.6rem; /* Even larger for homepage content */
+    line-height: 2;
+    margin-bottom: 1.5rem;
+  }
+  
+  .homepage-content h1 {
+    font-size: 5rem; /* Extra large for homepage hero */
+    margin-bottom: 2rem;
+  }
+  
+  .homepage-content h2 {
+    font-size: 4rem; /* Extra large for homepage sections */
+    margin-bottom: 1.5rem;
+  }
+  
+  .homepage-content h3 {
+    font-size: 3.25rem; /* Large for homepage subsections */
+    margin-bottom: 1.25rem;
   }
 }
 
@@ -275,34 +302,35 @@
 
 /* Text enhancements for readability */
 .content-text {
-  line-height: 1.9; /* Increased line height */
+  line-height: 2; /* Increased line height for better readability */
   letter-spacing: 0.02em; /* Increased letter spacing */
-  font-size: 1.375rem; /* Made content text larger */
+  font-size: 1.5rem; /* Increased from 1.375rem */
   font-weight: 600; /* Increased font weight */
 }
 
 .heading-text {
   letter-spacing: -0.01em;
   font-weight: 900; /* Made headings extra bold */
-  font-size: 3rem; /* Increased heading text size */
+  font-size: 3.5rem; /* Increased heading text size */
 }
 
 /* Improved section header readability */
 .section-title {
-  @apply text-5xl md:text-6xl font-bold relative; /* Significantly increased size */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  @apply text-6xl md:text-7xl font-bold relative; /* Increased from 5xl/6xl to 6xl/7xl */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-weight: 900; /* Made section titles extra bold */
+  line-height: 1.1;
 }
 
 .section-subtitle {
-  @apply text-2xl text-gray-600 max-w-3xl mx-auto; /* Increased from xl to 2xl */
+  @apply text-2xl md:text-3xl text-gray-600 max-w-4xl mx-auto; /* Increased from xl/2xl to 2xl/3xl */
   line-height: 1.8;
   font-weight: 600; /* Increased font weight */
 }
 
 /* Ensure text is readable over all backgrounds */
 .text-on-dark {
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  text-shadow: 0 3px 6px rgba(0,0,0,0.8); /* Increased shadow for better contrast */
   font-weight: 800; /* Made text on dark backgrounds extra bold */
 }
 
@@ -313,6 +341,25 @@
 
 /* Enhanced contrast for better accessibility */
 .high-contrast-text {
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
   font-weight: 700; /* Increased font weight */
+}
+
+/* Mobile responsive adjustments for readability */
+@media (max-width: 768px) {
+  .homepage-content h1 {
+    font-size: 3.5rem; /* Smaller but still readable on mobile */
+  }
+  
+  .homepage-content h2 {
+    font-size: 2.75rem; /* Smaller but still readable on mobile */
+  }
+  
+  .homepage-content h3 {
+    font-size: 2.25rem; /* Smaller but still readable on mobile */
+  }
+  
+  .homepage-content p {
+    font-size: 1.4rem; /* Slightly smaller on mobile but still readable */
+  }
 }

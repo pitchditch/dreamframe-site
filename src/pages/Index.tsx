@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -66,69 +67,71 @@ const Index = () => {
     >
       <SEOContent faqItems={faqItems} />
       
-      <HeroWithContent>
-        <>
-          <ServiceBanner />
-          
-          {/* City Navigation Section */}
-          <CityNavigation />
-          
-          {/* What Do You Need Pressure Washed */}
-          <div className="bg-white relative z-50">
-            <ServiceSelectionSection />
-          </div>
-          
-          <div className="bg-white relative z-50">
-            {/* Enhanced Before/After Gallery with filtering */}
-            <EnhancedBeforeAfterGallery />
+      <div className="homepage-content">
+        <HeroWithContent>
+          <>
+            <ServiceBanner />
             
-            {/* Trust Badges Section */}
-            <TrustBadgesSection />
+            {/* City Navigation Section */}
+            <CityNavigation />
             
-            {/* Contact Form */}
-            <QuickContactForm />
-            
-            {/* Testimonials */}
-            <TestimonialsSection />
-            
-            {/* Red Car Section */}
-            <RedCarSection />
-            
-            {/* Trusted Customers Slideshow */}
-            <TrustedCustomersSection />
-            
-            {/* Referral Program Section */}
-            <ReferralProgramSection />
-            
-            {/* Competitor Comparison */}
-            <CompetitorComparisonSection />
-            
-            {/* Service Areas Section with Interactive Map */}
-            <ServiceAreasSection />
-            
-            {/* FAQ Section - Full width with bigger buttons */}
-            <div data-section="faq" className="w-full">
-              <FAQSection 
-                title={t("Still Have Questions?")} 
-                subtitle={t("Everything you need to know about our services")}
-                faqs={faqItems}
-                darkMode={true}
-                fullWidth={true}
-                largeButtons={true}
-              />
+            {/* What Do You Need Pressure Washed */}
+            <div className="bg-white relative z-50">
+              <ServiceSelectionSection />
             </div>
             
-            {/* White Rock Footer Image */}
-            <div className="w-full footer-image">
-              <img 
-                src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
-                alt="White Rock Marine Drive - Local Business" 
-                className="w-full h-auto object-cover object-center rounded-t-3xl" 
-              />
+            <div className="bg-white relative z-50">
+              {/* Enhanced Before/After Gallery with filtering */}
+              <EnhancedBeforeAfterGallery />
+              
+              {/* Trust Badges Section */}
+              <TrustBadgesSection />
+              
+              {/* Contact Form */}
+              <QuickContactForm />
+              
+              {/* Testimonials */}
+              <TestimonialsSection />
+              
+              {/* Red Car Section */}
+              <RedCarSection />
+              
+              {/* Trusted Customers Slideshow */}
+              <TrustedCustomersSection />
+              
+              {/* Referral Program Section */}
+              <ReferralProgramSection />
+              
+              {/* Competitor Comparison */}
+              <CompetitorComparisonSection />
+              
+              {/* Service Areas Section with Interactive Map */}
+              <ServiceAreasSection />
+              
+              {/* FAQ Section - Full width with bigger buttons */}
+              <div data-section="faq" className="w-full">
+                <FAQSection 
+                  title={t("Still Have Questions?")} 
+                  subtitle={t("Everything you need to know about our services")}
+                  faqs={faqItems}
+                  darkMode={true}
+                  fullWidth={true}
+                  largeButtons={true}
+                />
+              </div>
+              
+              {/* White Rock Footer Image */}
+              <div className="w-full footer-image">
+                <img 
+                  src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+                  alt="White Rock Marine Drive - Local Business" 
+                  className="w-full h-auto object-cover object-center rounded-t-3xl" 
+                />
+              </div>
             </div>
-          </div>
-        </>
-      </HeroWithContent>
+          </>
+        </HeroWithContent>
+      </div>
       
       <ReferralButton />
       <StickyQuoteBar />
