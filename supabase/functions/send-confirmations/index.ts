@@ -22,6 +22,10 @@ interface ConfirmationRequest {
   addOns?: string[];
   houseSize?: string;
   address?: string;
+  scheduledDate?: string;
+  scheduledTime?: string;
+  squareFootage?: number;
+  notes?: string;
 }
 
 const sendSMS = async (phone: string, message: string) => {
@@ -120,10 +124,14 @@ const handler = async (req: Request): Promise<Response> => {
       services,
       addOns,
       houseSize,
-      address
+      address,
+      scheduledDate,
+      scheduledTime,
+      squareFootage,
+      notes
     }: ConfirmationRequest = JSON.parse(body);
     
-    console.log("Parsed request data:", { email, phone, name, service, formType, estimateTotal });
+    console.log("Parsed request data:", { email, phone, name, service, formType, estimateTotal, scheduledDate, scheduledTime });
 
     // Check if Resend API key is available
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
@@ -145,12 +153,17 @@ const handler = async (req: Request): Promise<Response> => {
     const addOnDetails = addOns ? formatAddOns(addOns) : 'None';
     const houseSizeText = houseSize ? houseSize.charAt(0).toUpperCase() + houseSize.slice(1) : 'Not specified';
     
+    // Determine if this is a booking confirmation or regular quote
+    const isBookingConfirmation = formType === 'Booking Confirmation' && scheduledDate && scheduledTime;
+    
     // Send email confirmation with professional quote
     console.log("Attempting to send email to:", email);
     const emailResponse = await resend.emails.send({
       from: "BC Pressure Washing <info@bcpressurewashing.ca>",
       to: [email],
-      subject: "Your Professional Quote - BC Pressure Washing",
+      subject: isBookingConfirmation ? 
+        "Booking Confirmation & Professional Quote - BC Pressure Washing" : 
+        "Your Professional Quote - BC Pressure Washing",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
           <!-- Header -->
@@ -161,15 +174,34 @@ const handler = async (req: Request): Promise<Response> => {
 
           <!-- Quote Details -->
           <div style="padding: 30px;">
-            <h2 style="color: #dc2626; margin-bottom: 20px; font-size: 24px;">Thank you, ${name}!</h2>
+            <h2 style="color: #dc2626; margin-bottom: 20px; font-size: 24px;">
+              ${isBookingConfirmation ? `Booking Confirmed, ${name}!` : `Thank you, ${name}!`}
+            </h2>
             <p style="font-size: 16px; line-height: 1.6; color: #374151; margin-bottom: 25px;">
-              We've prepared your professional quote based on your requirements. Our team will contact you shortly to confirm details and schedule your service.
+              ${isBookingConfirmation ? 
+                'Your service has been scheduled! Below is your booking confirmation and professional quote.' :
+                'We\'ve prepared your professional quote based on your requirements. Our team will contact you shortly to confirm details and schedule your service.'
+              }
             </p>
+
+            ${isBookingConfirmation ? `
+            <!-- Booking Confirmation Box -->
+            <div style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-left: 4px solid #16a34a; padding: 25px; margin: 25px 0; border-radius: 8px;">
+              <h3 style="color: #16a34a; margin: 0 0 15px 0; font-size: 20px;">📅 Your Appointment</h3>
+              <div style="font-size: 18px; font-weight: bold; color: #16a34a; margin-bottom: 5px;">
+                ${scheduledDate} at ${scheduledTime}
+              </div>
+              <div style="color: #166534; font-size: 16px;">
+                Service: ${serviceDetails}
+              </div>
+              ${address ? `<div style="color: #166534; font-size: 14px; margin-top: 5px;">Location: ${address}</div>` : ''}
+            </div>
+            ` : ''}
 
             <!-- Quote Summary Box -->
             ${estimateTotal ? `
             <div style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); border-left: 4px solid #dc2626; padding: 25px; margin: 25px 0; border-radius: 8px;">
-              <h3 style="color: #dc2626; margin: 0 0 15px 0; font-size: 20px;">Your Quote Summary</h3>
+              <h3 style="color: #dc2626; margin: 0 0 15px 0; font-size: 20px;">Your Professional Quote</h3>
               <div style="font-size: 32px; font-weight: bold; color: #dc2626; margin-bottom: 10px;">
                 ${formatCurrency(estimateTotal)}
               </div>
@@ -197,19 +229,37 @@ const handler = async (req: Request): Promise<Response> => {
                   <td style="padding: 8px 0; color: #374151;">${address}</td>
                 </tr>
                 ` : ''}
+                ${squareFootage ? `
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Square Footage:</td>
+                  <td style="padding: 8px 0; color: #374151;">${squareFootage.toLocaleString()} sq ft</td>
+                </tr>
+                ` : ''}
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Property Size:</td>
                   <td style="padding: 8px 0; color: #374151;">${houseSizeText}</td>
                 </tr>
-                ${message ? `
+                ${(message || notes) ? `
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Your Message:</td>
-                  <td style="padding: 8px 0; color: #374151;">${message}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Notes:</td>
+                  <td style="padding: 8px 0; color: #374151;">${message || notes}</td>
                 </tr>
                 ` : ''}
               </table>
             </div>
 
+            ${isBookingConfirmation ? `
+            <!-- Appointment Reminder -->
+            <div style="background-color: #eff6ff; border: 1px solid #3b82f6; padding: 20px; border-radius: 8px; margin: 25px 0;">
+              <h3 style="color: #1e40af; margin-top: 0; font-size: 18px;">📋 Before Your Appointment</h3>
+              <ul style="color: #1e3a8a; margin: 10px 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">Ensure clear access to all areas requiring service</li>
+                <li style="margin-bottom: 8px;">Remove any delicate items from the work area</li>
+                <li style="margin-bottom: 8px;">Have your property keys/access ready if needed</li>
+                <li style="margin-bottom: 8px;">Our team will call 30 minutes before arrival</li>
+              </ul>
+            </div>
+            ` : `
             <!-- What's Next -->
             <div style="background-color: #f0f9ff; border: 1px solid #0ea5e9; padding: 20px; border-radius: 8px; margin: 25px 0;">
               <h3 style="color: #0c4a6e; margin-top: 0; font-size: 18px;">What Happens Next?</h3>
@@ -220,6 +270,7 @@ const handler = async (req: Request): Promise<Response> => {
                 <li style="margin-bottom: 8px;">100% satisfaction guarantee on all work completed</li>
               </ul>
             </div>
+            `}
 
             <!-- Contact Info -->
             <div style="text-align: center; margin: 30px 0;">
@@ -270,7 +321,10 @@ const handler = async (req: Request): Promise<Response> => {
     // Send SMS confirmation if phone number provided
     let smsResponse = null;
     if (phone && phone.trim()) {
-      const smsMessage = `Hi ${name}! Your quote from BC Pressure Washing is ready. ${estimateTotal ? `Estimated total: ${formatCurrency(estimateTotal)}. ` : ''}We'll contact you within 24 hours. (778) 808-7620`;
+      const smsMessage = isBookingConfirmation ?
+        `Hi ${name}! Your BC Pressure Washing appointment is confirmed for ${scheduledDate} at ${scheduledTime}. ${estimateTotal ? `Quote: ${formatCurrency(estimateTotal)}. ` : ''}We'll call 30 min before arrival. (778) 808-7620` :
+        `Hi ${name}! Your quote from BC Pressure Washing is ready. ${estimateTotal ? `Estimated total: ${formatCurrency(estimateTotal)}. ` : ''}We'll contact you within 24 hours. (778) 808-7620`;
+      
       smsResponse = await sendSMS(phone, smsMessage);
     } else {
       console.log("No phone number provided, skipping SMS");
