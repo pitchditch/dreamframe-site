@@ -26,12 +26,21 @@ import PostConstructionWindowCleaning from "./pages/services/PostConstructionWin
 import WhyUs from "./pages/WhyUs";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Initialize React Query client with default options
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => {
-  // Build system initialization log
-  console.log('BC Pressure Washing App - Initializing Build System');
-  console.log('App component loaded successfully');
+  // Application initialization logs
+  console.log('BC Pressure Washing App - Starting Application');
+  console.log('React Query Client initialized successfully');
+  console.log('Router configuration loaded');
   
   return (
     <HelmetProvider>
@@ -41,6 +50,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <Routes>
+              {/* Main homepage */}
               <Route path="/" element={<Index />} />
               
               {/* City-specific homepage routes */}
@@ -62,11 +72,14 @@ const App = () => {
               {/* Dynamic route for all cities */}
               <Route path="/:citySlug" element={<CityPages />} />
               
+              {/* Application pages */}
               <Route path="/calculator" element={<Calculator />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<Services />} />
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/why-us" element={<WhyUs />} />
+              
+              {/* Service-specific pages */}
               <Route path="/services/window-cleaning" element={<WindowCleaning />} />
               <Route path="/services/pressure-washing" element={<PressureWashing />} />
               <Route path="/services/soft-wash" element={<SoftWash />} />
@@ -76,9 +89,13 @@ const App = () => {
               <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
               <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
               <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+              
+              {/* Utility pages */}
               <Route path="/equipment" element={<Equipment />} />
               <Route path="/compare-prices" element={<ComparePrices />} />
               <Route path="/compare-services" element={<CompareServices />} />
+              
+              {/* 404 fallback */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
