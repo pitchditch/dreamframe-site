@@ -47,7 +47,7 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
   }, [contentVisible]);
 
   return (
-    <>
+    <div className="relative">
       {/* Hero Section with Video + Price Calculator */}
       <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
         <HeroSection />
@@ -86,7 +86,7 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
