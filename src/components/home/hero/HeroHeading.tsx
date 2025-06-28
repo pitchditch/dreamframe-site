@@ -9,7 +9,7 @@ const HeroHeading = () => {
   return (
     <div className={`${isMobile ? 'mb-6 mt-4' : 'mb-8 mt-8'}`}>
       {/* Main heading */}
-      <h1 className={`${isMobile ? 'text-3xl leading-tight' : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'} font-bold ${isMobile ? 'mb-4' : 'mb-6'} animate-on-scroll leading-tight`}>
+      <h1 className={`${isMobile ? 'text-4xl leading-tight' : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl'} font-bold ${isMobile ? 'mb-4' : 'mb-6'} animate-on-scroll leading-tight`}>
         <span className="text-white">
           {isMobile ? (
             <>
@@ -26,7 +26,7 @@ const HeroHeading = () => {
       </h1>
       
       {/* Subtitle - Better for mobile */}
-      <p className={`${isMobile ? 'text-lg leading-relaxed mb-4 font-semibold' : 'text-xl sm:text-2xl md:text-3xl mb-6'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}>
+      <p className={`${isMobile ? 'text-xl leading-relaxed mb-4 font-semibold' : 'text-2xl sm:text-3xl md:text-4xl mb-6'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}>
         {isMobile 
           ? t("Fast, insured service in White Rock & Surrey. We make your property sparkle!")
           : t("Fast, fully insured service backed by a satisfaction guarantee. We'll make your property sparkle!")

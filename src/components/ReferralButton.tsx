@@ -7,6 +7,10 @@ import ReferralOverlay from './ReferralOverlay';
 const ReferralButton = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
+  const handleOpenOverlay = () => {
+    setIsOverlayOpen(true);
+  };
+
   return (
     <>
       {/* Main Referral Section */}
@@ -27,7 +31,7 @@ const ReferralButton = () => {
             <Button 
               size="lg" 
               className="bg-white text-bc-red hover:bg-gray-100 text-xl font-bold px-8 py-4 mb-8"
-              onClick={() => setIsOverlayOpen(true)}
+              onClick={handleOpenOverlay}
             >
               <Gift className="mr-2 h-6 w-6" />
               Start Referring Friends
@@ -39,7 +43,7 @@ const ReferralButton = () => {
       {/* Floating "Start Referring Friends" Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <Button
-          onClick={() => setIsOverlayOpen(true)}
+          onClick={handleOpenOverlay}
           className="bg-bc-red hover:bg-red-700 text-white shadow-2xl rounded-full px-6 py-3 text-lg font-bold animate-pulse"
         >
           <Gift className="mr-2 h-5 w-5" />
