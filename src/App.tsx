@@ -26,83 +26,60 @@ import PostConstructionWindowCleaning from "./pages/services/PostConstructionWin
 import WhyUs from "./pages/WhyUs";
 import NotFound from "./pages/NotFound";
 
-// Initialize React Query client with default options
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
-const App = () => {
-  // Application initialization logs
-  console.log('BC Pressure Washing App - Starting Application');
-  console.log('React Query Client initialized successfully');
-  console.log('Router configuration loaded');
-  
-  return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              {/* Main homepage */}
-              <Route path="/" element={<Index />} />
-              
-              {/* City-specific homepage routes */}
-              <Route path="/vancouver" element={<CityPages />} />
-              <Route path="/surrey" element={<CityPages />} />
-              <Route path="/burnaby" element={<CityPages />} />
-              <Route path="/richmond" element={<CityPages />} />
-              <Route path="/coquitlam" element={<CityPages />} />
-              <Route path="/langley-city" element={<CityPages />} />
-              <Route path="/township-of-langley" element={<CityPages />} />
-              <Route path="/delta" element={<CityPages />} />
-              <Route path="/new-westminster" element={<CityPages />} />
-              <Route path="/port-coquitlam" element={<CityPages />} />
-              <Route path="/port-moody" element={<CityPages />} />
-              <Route path="/maple-ridge" element={<CityPages />} />
-              <Route path="/pitt-meadows" element={<CityPages />} />
-              <Route path="/white-rock" element={<CityPages />} />
-              
-              {/* Dynamic route for all cities */}
-              <Route path="/:citySlug" element={<CityPages />} />
-              
-              {/* Application pages */}
-              <Route path="/calculator" element={<Calculator />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/testimonials" element={<Testimonials />} />
-              <Route path="/why-us" element={<WhyUs />} />
-              
-              {/* Service-specific pages */}
-              <Route path="/services/window-cleaning" element={<WindowCleaning />} />
-              <Route path="/services/pressure-washing" element={<PressureWashing />} />
-              <Route path="/services/soft-wash" element={<SoftWash />} />
-              <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-              <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-              <Route path="/services/house-wash" element={<HouseWash />} />
-              <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
-              <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
-              <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-              
-              {/* Utility pages */}
-              <Route path="/equipment" element={<Equipment />} />
-              <Route path="/compare-prices" element={<ComparePrices />} />
-              <Route path="/compare-services" element={<CompareServices />} />
-              
-              {/* 404 fallback */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
-  );
-};
+const App = () => (
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            
+            {/* City-specific homepage routes */}
+            <Route path="/vancouver" element={<CityPages />} />
+            <Route path="/surrey" element={<CityPages />} />
+            <Route path="/burnaby" element={<CityPages />} />
+            <Route path="/richmond" element={<CityPages />} />
+            <Route path="/coquitlam" element={<CityPages />} />
+            <Route path="/langley-city" element={<CityPages />} />
+            <Route path="/township-of-langley" element={<CityPages />} />
+            <Route path="/delta" element={<CityPages />} />
+            <Route path="/new-westminster" element={<CityPages />} />
+            <Route path="/port-coquitlam" element={<CityPages />} />
+            <Route path="/port-moody" element={<CityPages />} />
+            <Route path="/maple-ridge" element={<CityPages />} />
+            <Route path="/pitt-meadows" element={<CityPages />} />
+            <Route path="/white-rock" element={<CityPages />} />
+            
+            {/* Dynamic route for all cities */}
+            <Route path="/:citySlug" element={<CityPages />} />
+            
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/why-us" element={<WhyUs />} />
+            <Route path="/services/window-cleaning" element={<WindowCleaning />} />
+            <Route path="/services/pressure-washing" element={<PressureWashing />} />
+            <Route path="/services/soft-wash" element={<SoftWash />} />
+            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
+            <Route path="/services/house-wash" element={<HouseWash />} />
+            <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
+            <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+            <Route path="/equipment" element={<Equipment />} />
+            <Route path="/compare-prices" element={<ComparePrices />} />
+            <Route path="/compare-services" element={<CompareServices />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
+);
 
 export default App;

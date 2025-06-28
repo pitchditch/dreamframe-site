@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -47,7 +46,7 @@ const HeroSection = () => {
           setIsLoading(false);
           window.dispatchEvent(new CustomEvent('heroLoaded'));
           document.body.removeChild(videoPreloader);
-        }, 300);
+        }, 300); // Reduced delay for faster loading
       };
       
       // Fallback timer - much faster
@@ -58,7 +57,7 @@ const HeroSection = () => {
         if (document.body.contains(videoPreloader)) {
           document.body.removeChild(videoPreloader);
         }
-      }, 800);
+      }, 800); // Reduced from 1500ms
     }
   }, [isMobile, isHomePage]);
   
@@ -69,8 +68,8 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Centered vertically with better mobile spacing */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700 ${isMobile ? 'py-8' : 'py-16'}`}>
+      {/* Hero Content - Centered vertically */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />

@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -9,7 +8,6 @@ import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
 import ServiceBanner from '../components/ServiceBanner';
 import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
-import PropertyTypesSection from '../components/home/PropertyTypesSection';
 import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
 import TrustBadgesSection from '../components/TrustBadgesSection';
 import QuickContactForm from '../components/home/QuickContactForm';
@@ -79,9 +77,6 @@ const Index = () => {
           <div className="bg-white relative z-50">
             <ServiceSelectionSection />
           </div>
-          
-          {/* Property Types Section */}
-          <PropertyTypesSection />
           
           <div className="bg-white relative z-50">
             {/* Enhanced Before/After Gallery with filtering */}
