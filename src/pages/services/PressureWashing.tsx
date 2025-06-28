@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -68,7 +67,13 @@ const PressureWashing = () => {
                 <span className="font-medium text-center">Eco-Friendly & Biodegradable Solutions</span>
               </div>
               <div className="flex flex-col items-center space-y-4 bg-gray-50 p-6 rounded-lg">
-                <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Professional Equipment" className="w-12 h-12 object-contain" />
+                <img 
+                  src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" 
+                  alt="Professional pressure washing equipment used by BC Pressure Washing" 
+                  title="Commercial-grade pressure washing equipment"
+                  className="w-12 h-12 object-contain" 
+                  loading="lazy"
+                />
                 <span className="font-medium text-center">Professional-Grade Equipment</span>
               </div>
               <div className="flex flex-col items-center space-y-4 bg-gray-50 p-6 rounded-lg">
@@ -84,32 +89,81 @@ const PressureWashing = () => {
         </div>
       </section>
       
-      {/* What We Clean Section */}
+      {/* What We Clean Section - Restored with proper images and metadata */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">We Professionally Clean All Exterior Surfaces</h2>
+          <h2 className="text-3xl font-bold text-center mb-6">Surfaces We Professionally Clean</h2>
+          <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            From house siding to driveways, we clean all exterior surfaces with the right technique for optimal results.
+          </p>
           
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
             <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" alt="Siding & Exterior Walls" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
-              <span className="font-medium text-center">Siding & Exterior Walls</span>
+              <img 
+                src="/lovable-uploads/77a691e2-8b93-4749-be35-5ca5bbf137b3.png" 
+                alt="House siding pressure washing Surrey - vinyl, stucco, brick, hardie board cleaning"
+                title="Professional house siding cleaning - Surrey, White Rock"
+                className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" 
+                loading="lazy"
+              />
+              <span className="font-medium text-center">House Siding & Exterior Walls</span>
+              <p className="text-sm text-gray-500 text-center">Vinyl, stucco, brick, hardie board</p>
             </Link>
+            
             <Link to="/services/deck-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" alt="Decks & Patios" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img 
+                src="/lovable-uploads/197efc6d-85e4-474e-8c04-38e42cc66919.png" 
+                alt="Deck and patio pressure washing Surrey - wood, composite, stone cleaning"
+                title="Professional deck and patio cleaning services"
+                className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" 
+                loading="lazy"
+              />
               <span className="font-medium text-center">Decks & Patios</span>
+              <p className="text-sm text-gray-500 text-center">Wood, composite, stone surfaces</p>
             </Link>
+            
             <Link to="/services/driveway-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img 
+                src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" 
+                alt="Driveway pressure washing Surrey - concrete, asphalt, paver cleaning"
+                title="Professional driveway and walkway pressure washing"
+                className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" 
+                loading="lazy"
+              />
               <span className="font-medium text-center">Driveways & Walkways</span>
+              <p className="text-sm text-gray-500 text-center">Concrete, asphalt, pavers</p>
             </Link>
-            <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+            
+            <Link to="/services/fence-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img 
+                src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" 
+                alt="Fence and gate pressure washing Surrey - wood, vinyl, metal cleaning"
+                title="Professional fence and gate cleaning services"
+                className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" 
+                loading="lazy"
+              />
               <span className="font-medium text-center">Fences & Gates</span>
+              <p className="text-sm text-gray-500 text-center">Wood, vinyl, metal fencing</p>
             </Link>
+            
             <Link to="/services/roof-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/f0a0ce40-19b0-45e9-90a2-a2794f220df3.png" alt="Roofs & Gutters" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img 
+                src="/lovable-uploads/f0a0ce40-19b0-45e9-90a2-a2794f220df3.png" 
+                alt="Roof and gutter soft washing Surrey - moss removal, algae cleaning"
+                title="Professional roof cleaning and gutter maintenance"
+                className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" 
+                loading="lazy"
+              />
               <span className="font-medium text-center">Roofs & Gutters</span>
+              <p className="text-sm text-gray-500 text-center">Soft wash moss & algae removal</p>
             </Link>
+          </div>
+          
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">Each surface requires specific pressure and cleaning techniques for optimal results without damage.</p>
+            <Button asChild variant="bc-red">
+              <Link to="/calculator">Get Free Quote for Your Surface</Link>
+            </Button>
           </div>
         </div>
       </section>

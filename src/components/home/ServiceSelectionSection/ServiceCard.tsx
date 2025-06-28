@@ -48,6 +48,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     return isMobile ? 'w-24 h-24' : 'w-32 h-32';
   };
 
+  // Generate proper alt text with SEO-friendly descriptions
+  const getImageAltText = () => {
+    const baseTitle = t(service.title);
+    return `Professional ${baseTitle} services in Surrey, White Rock and Metro Vancouver - BC Pressure Washing`;
+  };
+
   return (
     <div
       key={service.id}
@@ -64,20 +70,24 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           <HoverImageSlideshow 
             images={service.slideImages} 
             interval={2500}
-            altText={`${service.title} showcase`}
+            altText={getImageAltText()}
           >
             <img 
               src={service.image} 
-              alt={service.title}
+              alt={getImageAltText()}
+              title={`${t(service.title)} - Professional cleaning services`}
               className={`${getImageSize()} object-cover transition-transform duration-300 group-hover:scale-110 rounded-lg mx-auto`}
+              loading="lazy"
             />
           </HoverImageSlideshow>
           <div className="absolute inset-0 bg-bc-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
             {service.customIcon ? (
               <img 
                 src={service.customIcon} 
-                alt={`${service.title} icon`}
+                alt={`${t(service.title)} service icon`}
+                title={`${t(service.title)} professional service`}
                 className={service.id === 'roof-cleaning' ? "w-16 h-16" : "w-8 h-8"}
+                loading="lazy"
               />
             ) : (
               <IconComponent className={getIconStyles()} />
