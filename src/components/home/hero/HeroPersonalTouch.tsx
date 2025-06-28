@@ -15,10 +15,10 @@ const HeroPersonalTouch = () => {
           className={`${isMobile ? 'w-20 h-20' : 'w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36'} rounded-full border-2 border-white shadow-md mr-5 md:mr-6 flex-shrink-0`}
         />
         <div className="text-left">
-          <p className={`font-bold text-white ${isMobile ? 'text-xl leading-tight' : 'text-2xl md:text-3xl lg:text-4xl'} drop-shadow-md leading-tight`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+          <p className={`font-bold text-white ${isMobile ? 'text-lg leading-tight' : 'text-xl md:text-2xl lg:text-3xl'} drop-shadow-md leading-tight`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
             {t("Every Job is Personally Checked by Me.")}
           </p>
-          <p className={`text-white font-medium ${isMobile ? 'text-lg mt-2' : 'text-xl md:text-2xl mt-3'}`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+          <p className={`text-white font-medium ${isMobile ? 'text-base mt-2' : 'text-lg md:text-xl mt-3'}`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
             — Jayden Fisher, {t("Owner")}
           </p>
         </div>
