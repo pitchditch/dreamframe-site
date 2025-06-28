@@ -13,8 +13,10 @@ const PropertyTypesSection = () => {
 
   return (
     <section className="relative h-screen overflow-hidden">
-      {/* Background slideshow - full width */}
-      <PropertyTypesSlideshow />
+      {/* Background slideshow - ensure it's always visible */}
+      <div className="absolute inset-0 z-0">
+        <PropertyTypesSlideshow />
+      </div>
       
       {/* Content overlay */}
       <div className="relative z-10 h-full flex items-center">
