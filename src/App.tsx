@@ -29,7 +29,9 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  console.log('BC Pressure Washing App - Build System Ready');
+  // Build system initialization log
+  console.log('BC Pressure Washing App - Initializing Build System');
+  console.log('App component loaded successfully');
   
   return (
     <HelmetProvider>
