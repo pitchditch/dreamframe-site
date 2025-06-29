@@ -43,16 +43,16 @@ const HeroForm = () => {
             placeholder={t("Enter Your Postal Code")}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
-            className={`bg-white border-white text-black ${isMobile ? 'h-16 text-xl rounded-xl' : 'h-16 md:h-18 text-xl md:text-2xl rounded-xl'} pl-6 pr-12 focus:ring-bc-red focus:border-bc-red placeholder-gray-500 font-medium w-full shadow-lg`}
+            className={`bg-white border-white text-black ${isMobile ? 'h-14 text-lg rounded-xl' : 'h-14 md:h-16 text-lg md:text-xl rounded-xl'} pl-6 pr-12 focus:ring-bc-red focus:border-bc-red placeholder-gray-500 font-medium w-full shadow-lg`}
           />
         </div>
         <Button 
           type="submit" 
           variant="bc-red" 
           size="lg" 
-          className={`${isMobile ? 'h-16 text-xl rounded-xl px-8' : 'h-16 md:h-18 text-xl md:text-2xl rounded-xl px-8 md:px-10'} text-white font-bold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto sm:min-w-[280px] md:min-w-[320px]`}
+          className={`${isMobile ? 'h-14 text-lg rounded-xl px-6' : 'h-14 md:h-16 text-lg md:text-xl rounded-xl px-6 md:px-8'} text-white font-bold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto sm:min-w-[260px] md:min-w-[300px]`}
         >
-          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-3" size={24} />
+          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-3" size={20} />
         </Button>
       </form>
     </div>
