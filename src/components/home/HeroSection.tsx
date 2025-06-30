@@ -68,9 +68,9 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Centered vertically */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
-        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
+      {/* Hero Content - Positioned higher and centered */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: '5vh' }}>
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-5xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
         </div>
