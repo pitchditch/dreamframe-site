@@ -12,13 +12,13 @@ const HeroPersonalTouch = () => {
         <img 
           src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
           alt="Jayden Fisher - Owner" 
-          className={`${isMobile ? 'w-14 h-14' : 'w-19 h-19 md:w-22 md:h-22'} rounded-full border-3 border-white shadow-lg mr-4 flex-shrink-0`}
+          className={`${isMobile ? 'w-12 h-12' : 'w-16 h-16 md:w-18 md:h-18'} rounded-full border-3 border-white shadow-lg mr-4 flex-shrink-0`}
         />
         <div className="text-left">
-          <p className={`font-bold text-white ${isMobile ? 'text-base leading-tight' : 'text-lg md:text-xl lg:text-2xl'} drop-shadow-lg leading-tight mb-1`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+          <p className={`font-bold text-white ${isMobile ? 'text-base leading-tight' : 'text-lg md:text-xl lg:text-xl'} drop-shadow-lg leading-tight mb-1`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
             {t("Every Job is Personally Checked by Me.")}
           </p>
-          <p className={`text-white font-medium ${isMobile ? 'text-base mt-1' : 'text-base md:text-lg mt-1'}`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+          <p className={`text-white font-medium ${isMobile ? 'text-sm mt-1' : 'text-base md:text-base mt-1'}`} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
             — Jayden Fisher, {t("Owner")}
           </p>
         </div>

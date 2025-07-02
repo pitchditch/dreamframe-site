@@ -50,9 +50,9 @@ const HeroForm = () => {
           type="submit" 
           variant="bc-red" 
           size="lg" 
-          className={`${isMobile ? 'h-14 text-lg rounded-lg px-5' : 'h-16 md:h-17 text-xl md:text-2xl rounded-lg px-6 md:px-8'} text-white font-bold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto sm:min-w-[240px] md:min-w-[280px]`}
+          className={`${isMobile ? 'h-14 text-base rounded-lg px-4' : 'h-16 md:h-17 text-lg md:text-xl rounded-lg px-5 md:px-6'} text-white font-bold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto sm:min-w-[220px] md:min-w-[260px] whitespace-nowrap`}
         >
-          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-2" size={22} />
+          {isMobile ? t("Free Instant Quote") : t("Get Your Free Instant Estimate")} <MessageSquare className="ml-2" size={18} />
         </Button>
       </form>
     </div>
