@@ -24,6 +24,7 @@ import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning"
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
 import WhyUs from "./pages/WhyUs";
+import HouseTracking from "./pages/HouseTracking";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/compare-prices" element={<ComparePrices />} />
             <Route path="/compare-services" element={<CompareServices />} />
+            <Route path="/house-tracking" element={<HouseTracking />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

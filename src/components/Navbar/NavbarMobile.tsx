@@ -82,13 +82,13 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   <Link to="/services/driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/68ffcaf5-5089-4ee6-88f6-8641ac82aa02.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Driveway Cleaning')}</span>
                   </Link>
                   <Link to="/services/fence-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/b1066466-b276-4928-9c97-88a44a2cbf57.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Fence Washing')}</span>
                   </Link>
