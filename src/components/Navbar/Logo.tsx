@@ -9,17 +9,40 @@ interface LogoProps {
 export const Logo = ({ isOverVideo }: LogoProps) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [lastActivity, setLastActivity] = useState(Date.now());
+  const [imagesPreloaded, setImagesPreloaded] = useState(false);
   const location = useLocation();
   
   // Determine if we're on the home page with hero section
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
 
   useEffect(() => {
-    // Preload both logo images immediately
-    const whiteLogoImg = new Image();
-    const blackLogoImg = new Image();
-    whiteLogoImg.src = "/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png";
-    blackLogoImg.src = "/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png";
+    // Preload both logo images immediately and aggressively
+    const preloadImages = async () => {
+      const whiteLogoImg = new Image();
+      const blackLogoImg = new Image();
+      
+      const whiteLogoLoaded = new Promise((resolve) => {
+        whiteLogoImg.onload = resolve;
+        whiteLogoImg.onerror = resolve; // resolve even on error to avoid blocking
+      });
+      
+      const blackLogoLoaded = new Promise((resolve) => {
+        blackLogoImg.onload = resolve;
+        blackLogoImg.onerror = resolve; // resolve even on error to avoid blocking
+      });
+      
+      // Set high priority and start loading immediately
+      whiteLogoImg.loading = 'eager';
+      blackLogoImg.loading = 'eager';
+      whiteLogoImg.src = "/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png";
+      blackLogoImg.src = "/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png";
+      
+      // Wait for both images to load
+      await Promise.all([whiteLogoLoaded, blackLogoLoaded]);
+      setImagesPreloaded(true);
+    };
+    
+    preloadImages();
 
     // Track user activity
     const handleActivity = () => {
@@ -67,6 +90,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
+            fetchPriority="high"
           />
         ) : (
           // Black/red logo for scrolled state with white background - MADE BIGGER
@@ -75,6 +99,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             alt="BC Pressure Washing Property Maintenance logo"
             className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
+            fetchPriority="high"
           />
         )}
       </div>
