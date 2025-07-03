@@ -1,45 +1,76 @@
 
-import { useEffect, useState } from 'react';
-import HeroBackground from './home/hero/HeroBackground';
-import HeroContent from './home/hero/HeroContent';
-import { LocationBanner } from './home/LocationBanner';
-import { useLocationDetection } from '@/hooks/use-location-detection';
+import { useState, useEffect } from 'react';
+import HeroSection from './home/HeroSection';
 
 interface HeroWithContentProps {
   children: React.ReactNode;
 }
 
 const HeroWithContent = ({ children }: HeroWithContentProps) => {
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const { location, detectedCity, loading: locationLoading } = useLocationDetection();
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVideoLoaded(true);
-      setIsLoading(false);
-    }, 1500);
+    // Wait for hero to load before showing content
+    const heroLoadTimer = setTimeout(() => {
+      setHeroLoaded(true);
+      // Small delay to ensure smooth transition
+      setTimeout(() => setContentVisible(true), 300);
+    }, 1000);
 
-    return () => clearTimeout(timer);
-  }, []);
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
 
-  const shouldShowLocationBanner = !locationLoading && detectedCity && location;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && contentVisible) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Only observe elements after content is visible
+    if (contentVisible) {
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
+      animatedElements.forEach(el => observer.observe(el));
+    }
+
+    return () => {
+      clearTimeout(heroLoadTimer);
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
+      animatedElements.forEach(el => observer.unobserve(el));
+    };
+  }, [contentVisible]);
 
   return (
     <>
-      {shouldShowLocationBanner && (
-        <LocationBanner 
-          detectedCity={detectedCity} 
-          currentCity={location.city}
-        />
+      {/* Hero Section with Video + Price Calculator */}
+      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
+        <HeroSection />
+      </div>
+      
+      {/* Loading overlay */}
+      {!heroLoaded && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <div className="text-white text-xl">Loading...</div>
+        </div>
       )}
       
-      <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-        <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
-        <HeroContent detectedCity={detectedCity} />
-      </section>
-      
-      {children}
+      {/* Content that slides over the hero */}
+      <div 
+        className={`relative z-40 transition-opacity duration-500 ${
+          contentVisible ? 'opacity-100' : 'opacity-0'
+        }`} 
+        style={{ marginTop: '100vh' }}
+      >
+        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
+          {children}
+        </div>
+      </div>
     </>
   );
 };
