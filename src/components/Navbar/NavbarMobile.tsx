@@ -82,7 +82,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   <Link to="/services/driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/68ffcaf5-5089-4ee6-88f6-8641ac82aa02.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/5e800a2b-cb89-4b90-8102-ff82838f2dc1.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Driveway Cleaning')}</span>
                   </Link>
