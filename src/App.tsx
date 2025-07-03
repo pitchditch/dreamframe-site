@@ -25,6 +25,7 @@ import CommercialPressureWashing from "./pages/services/CommercialPressureWashin
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
 import WhyUs from "./pages/WhyUs";
 import HouseTracking from "./pages/HouseTracking";
+import KelownaServices from "./pages/KelownaServices";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,9 @@ const App = () => (
             <Route path="/maple-ridge" element={<CityPages />} />
             <Route path="/pitt-meadows" element={<CityPages />} />
             <Route path="/white-rock" element={<CityPages />} />
+            
+            {/* Dedicated Kelowna page */}
+            <Route path="/kelowna" element={<KelownaServices />} />
             
             {/* Dynamic route for all cities */}
             <Route path="/:citySlug" element={<CityPages />} />
