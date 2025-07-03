@@ -85,7 +85,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Roof Cleaning')}</span>
                       </Link>
                       <Link to="/services/driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Pressure Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/5e800a2b-cb89-4b90-8102-ff82838f2dc1.png" alt="Driveway Pressure Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Driveway Pressure Washing')}</span>
                       </Link>
                       <Link to="/services/fence-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
