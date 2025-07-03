@@ -34,7 +34,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
       // Set high priority and start loading immediately
       whiteLogoImg.loading = 'eager';
       blackLogoImg.loading = 'eager';
-      whiteLogoImg.src = "/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png";
+      whiteLogoImg.src = "/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png";
       blackLogoImg.src = "/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png";
       
       // Wait for both images to load
@@ -76,16 +76,16 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     };
   }, [lastActivity]);
 
-  // Determine which logo to show - prioritize white logo on home page
-  const shouldShowWhiteLogo = isHomePage && isOverVideo;
+  // Determine which logo to show - white logo in hero sections, black logo everywhere else
+  const shouldShowWhiteLogo = isOverVideo;
 
   return (
     <Link to="/" className="flex items-center mr-auto">
       <div className="logo-container relative flex items-center perspective-1000 py-2 md:py-4">
         {shouldShowWhiteLogo ? (
-          // White logo for hero section with transparent background - MADE BIGGER
+          // White logo for hero section - using the uploaded white logo
           <img
-            src="/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png"
+            src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
             alt="BC Pressure Washing Property Maintenance logo"
             className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
@@ -93,7 +93,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             fetchPriority="high"
           />
         ) : (
-          // Black/red logo for scrolled state with white background - MADE BIGGER
+          // Black/red logo for scrolled state with white background
           <img
             src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"

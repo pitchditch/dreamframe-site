@@ -29,9 +29,9 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto z-20">
       <div className="relative flex items-center transition-all duration-300 pt-2">
         {isOverVideo ? (
-          // White logo for hero section with transparent background
+          // White logo for hero section - using the uploaded white logo
           <img
-            src="/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png"
+            src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
             alt="BC Pressure Washing Property Maintenance logo"
             className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[380px] md:max-w-[500px] hover:scale-105 duration-300`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
