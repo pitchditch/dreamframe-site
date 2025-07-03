@@ -28,10 +28,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
               alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover object-top transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
-              style={{ objectPosition: '50% 20%' }}
+              style={{ objectPosition: '50% 100%' }}
             />
           ) : (
             <>
