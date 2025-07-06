@@ -26,7 +26,7 @@ const LocationBanner: React.FC = () => {
               </div>
             </div>
             
-            {/* Verified Homeowners Section - Made images bigger */}
+            {/* Verified Homeowners Section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-4 text-center">Verified by Local Homeowners</h3>
               <div className="grid grid-cols-3 gap-4">
