@@ -103,7 +103,7 @@ const TestimonialsCarousel = () => {
                         <div className="flex items-center">
                           {testimonial.profileImage ? (
                             <div className="mr-4">
-                              <div className="h-20 w-20 border-2 border-gray-200 rounded-full overflow-hidden">
+                              <div className="h-24 w-24 border-2 border-gray-200 rounded-full overflow-hidden">
                                 <img 
                                   src={testimonial.profileImage} 
                                   alt={`${testimonial.name}'s portrait`}
@@ -113,8 +113,8 @@ const TestimonialsCarousel = () => {
                             </div>
                           ) : (
                             <div className="mr-4">
-                              <div className="h-20 w-20 bg-bc-red/20 text-bc-red border-2 border-gray-200 rounded-full flex items-center justify-center">
-                                <span className="text-xl font-bold">{testimonial.name.charAt(0)}</span>
+                              <div className="h-24 w-24 bg-bc-red/20 text-bc-red border-2 border-gray-200 rounded-full flex items-center justify-center">
+                                <span className="text-2xl font-bold">{testimonial.name.charAt(0)}</span>
                               </div>
                             </div>
                           )}
@@ -139,9 +139,9 @@ const TestimonialsCarousel = () => {
                         </div>
                       </div>
                       
-                      {/* Before/After Image - Fixed mobile sizing */}
+                      {/* Before/After Image - Made bigger */}
                       {testimonial.beforeAfterImage && (
-                        <div className="h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden">
+                        <div className="h-80 md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden">
                           <img 
                             src={testimonial.beforeAfterImage} 
                             alt="Before and after cleaning" 

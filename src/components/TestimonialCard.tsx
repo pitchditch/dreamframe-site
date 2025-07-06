@@ -38,15 +38,15 @@ const TestimonialCard = ({
           <div className="flex items-center">
             {profileImage ? (
               <div className="mr-4">
-                <Avatar className="h-20 w-20 border-2 border-gray-200">
+                <Avatar className="h-24 w-24 border-2 border-gray-200">
                   <AvatarImage src={profileImage} alt={`${name}'s portrait`} />
                   <AvatarFallback>{name.charAt(0)}</AvatarFallback>
                 </Avatar>
               </div>
             ) : (
               <div className="mr-4">
-                <Avatar className="h-20 w-20 bg-bc-red/20 text-bc-red border-2 border-gray-200">
-                  <AvatarFallback className="text-xl font-bold">{name.charAt(0)}</AvatarFallback>
+                <Avatar className="h-24 w-24 bg-bc-red/20 text-bc-red border-2 border-gray-200">
+                  <AvatarFallback className="text-2xl font-bold">{name.charAt(0)}</AvatarFallback>
                 </Avatar>
               </div>
             )}
@@ -67,9 +67,9 @@ const TestimonialCard = ({
           </div>
         </div>
         
-        {/* Before/After Image */}
+        {/* Before/After Image - Made bigger */}
         {beforeAfterImage && (
-          <div className="h-80 md:h-96 rounded-lg overflow-hidden">
+          <div className="h-80 md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden">
             <img 
               src={beforeAfterImage} 
               alt="Before and after cleaning" 
