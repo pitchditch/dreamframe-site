@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -19,6 +20,11 @@ import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import CityNavigation from '../components/home/CityNavigation';
+import NeighborhoodGrid from '../components/neighborhoods/NeighborhoodGrid';
+import EnhancedTestimonialsSection from '../components/testimonials/EnhancedTestimonialsSection';
+import UrgentCTABanner from '../components/cta/UrgentCTABanner';
+import BlogSection from '../components/blog/BlogSection';
+import MobileStickyBar from '../components/mobile/MobileStickyBar';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -79,17 +85,26 @@ const Index = () => {
           </div>
           
           <div className="bg-white relative z-50">
+            {/* Neighborhood-specific content */}
+            <NeighborhoodGrid />
+            
             {/* Enhanced Before/After Gallery with filtering */}
             <EnhancedBeforeAfterGallery />
+            
+            {/* Enhanced Testimonials with ratings */}
+            <EnhancedTestimonialsSection />
+            
+            {/* Urgent CTA Banner */}
+            <UrgentCTABanner />
             
             {/* Trust Badges Section */}
             <TrustBadgesSection />
             
+            {/* Blog Section with local content */}
+            <BlogSection />
+            
             {/* Contact Form */}
             <QuickContactForm />
-            
-            {/* Testimonials */}
-            <TestimonialsSection />
             
             {/* Red Car Section */}
             <RedCarSection />
@@ -132,6 +147,7 @@ const Index = () => {
       
       <ReferralButton />
       <StickyQuoteBar />
+      <MobileStickyBar />
       <AfkOverlay />
     </Layout>
   );
