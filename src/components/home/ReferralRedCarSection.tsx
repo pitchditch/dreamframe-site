@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Target, Car, Gift } from 'lucide-react';
+import { Target, Car, Gift, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
