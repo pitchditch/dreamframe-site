@@ -7,22 +7,17 @@ import StickyQuoteBar from '@/components/StickyQuoteBar';
 import AfkOverlay from '../components/AfkOverlay';
 import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
-import ServiceBanner from '../components/ServiceBanner';
-import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import TrustSignalsBanner from '../components/home/TrustSignalsBanner';
+import EnhancedServiceGrid from '../components/home/EnhancedServiceGrid';
+import ServiceAreasClickable from '../components/home/ServiceAreasClickable';
+import NeighborhoodGrid from '../components/neighborhoods/NeighborhoodGrid';
 import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
-import TrustBadgesSection from '../components/TrustBadgesSection';
-import QuickContactForm from '../components/home/QuickContactForm';
 import TestimonialsSection from '../components/home/TestimonialsSection';
-import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
-import ReferralProgramSection from '../components/ReferralProgramSection';
+import PricingCTASection from '../components/home/PricingCTASection';
+import QuickContactForm from '../components/home/QuickContactForm';
+import ReferralRedCarSection from '../components/home/ReferralRedCarSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import FAQSection from '../components/FAQSection';
-import RedCarSection from '../components/home/RedCarSection';
-import ServiceAreasSection from '../components/home/ServiceAreasSection';
-import CityNavigation from '../components/home/CityNavigation';
-import NeighborhoodGrid from '../components/neighborhoods/NeighborhoodGrid';
-import EnhancedTestimonialsSection from '../components/testimonials/EnhancedTestimonialsSection';
-import UrgentCTABanner from '../components/cta/UrgentCTABanner';
 import BlogSection from '../components/blog/BlogSection';
 import MobileStickyBar from '../components/mobile/MobileStickyBar';
 
@@ -74,54 +69,41 @@ const Index = () => {
       
       <HeroWithContent>
         <>
-          <ServiceBanner />
-          
-          {/* City Navigation Section */}
-          <CityNavigation />
-          
-          {/* What Do You Need Pressure Washed */}
-          <div className="bg-white relative z-50">
-            <ServiceSelectionSection />
-          </div>
+          {/* SECTION 1: Trust Signals Banner */}
+          <TrustSignalsBanner />
           
           <div className="bg-white relative z-50">
-            {/* Neighborhood-specific content */}
+            {/* SECTION 3: What Can We Make Shine Today? (Service Grid) */}
+            <EnhancedServiceGrid />
+            
+            {/* SECTION 2: Areas We Serve (Clickable Cities) */}
+            <ServiceAreasClickable />
+            
+            {/* SECTION 4: Local Expertise Cards (Neighborhood Grid) */}
             <NeighborhoodGrid />
             
-            {/* Enhanced Before/After Gallery with filtering */}
+            {/* SECTION 5: "See the Difference" – Before/After Gallery */}
             <EnhancedBeforeAfterGallery />
             
-            {/* Original Testimonials Section */}
+            {/* SECTION 6: Testimonials */}
             <TestimonialsSection />
             
-            {/* Urgent CTA Banner */}
-            <UrgentCTABanner />
+            {/* SECTION 7: Pricing CTA Section */}
+            <PricingCTASection />
             
-            {/* Trust Badges Section */}
-            <TrustBadgesSection />
-            
-            {/* Blog Section with local content */}
-            <BlogSection />
-            
-            {/* Contact Form */}
+            {/* SECTION 8: Contact Form */}
             <QuickContactForm />
             
-            {/* Red Car Section */}
-            <RedCarSection />
+            {/* SECTION 9: Referral Program & Red Car Bonus */}
+            <ReferralRedCarSection />
             
-            {/* Trusted Customers Slideshow */}
-            <TrustedCustomersSection />
-            
-            {/* Referral Program Section */}
-            <ReferralProgramSection />
-            
-            {/* Competitor Comparison */}
+            {/* SECTION 10: Comparison Table */}
             <CompetitorComparisonSection />
             
-            {/* Service Areas Section with Interactive Map */}
-            <ServiceAreasSection />
+            {/* SECTION 11: Blog Snippets */}
+            <BlogSection />
             
-            {/* FAQ Section - Full width with bigger buttons */}
+            {/* FAQ Section */}
             <div data-section="faq" className="w-full">
               <FAQSection 
                 title={t("Still Have Questions?")} 
