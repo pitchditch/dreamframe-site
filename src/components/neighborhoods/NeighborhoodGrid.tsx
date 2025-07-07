@@ -9,7 +9,7 @@ const neighborhoods = [
   {
     name: "White Rock",
     description: "Professional pressure washing for oceanfront properties and heritage homes",
-    image: "/lovable-uploads/7bfc9154-8e3f-4410-bb6e-660e6f53cbad.png",
+    image: "/lovable-uploads/0139cad9-098a-441a-9e26-7c7aad7e481d.png",
     services: ["Saltwater Stain Removal", "Deck Restoration", "Window Cleaning"],
     reviews: 4.9,
     slug: "white-rock"
@@ -17,7 +17,7 @@ const neighborhoods = [
   {
     name: "Surrey",
     description: "Comprehensive exterior cleaning for residential and commercial properties",
-    image: "/lovable-uploads/bc70c49b-3416-4778-a7c2-f96fe6701d60.png",
+    image: "/lovable-uploads/021dd5ff-95a8-4c83-9d47-9a44e895e0f3.png",
     services: ["Driveway Cleaning", "House Washing", "Roof Cleaning"],
     reviews: 4.8,
     slug: "surrey"
@@ -25,7 +25,7 @@ const neighborhoods = [
   {
     name: "Langley",
     description: "Specialized cleaning services for urban and suburban properties",
-    image: "/lovable-uploads/927946ff-99be-4945-8ee0-69bd0c510590.png",
+    image: "/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png",
     services: ["Residential Cleaning", "Fence Restoration", "Patio Cleaning"],
     reviews: 4.9,
     slug: "langley"
@@ -33,7 +33,7 @@ const neighborhoods = [
   {
     name: "Delta",
     description: "Expert pressure washing for waterfront and residential areas",
-    image: "/lovable-uploads/81d278ef-b9db-4afc-b432-e5fa95567775.png",
+    image: "/lovable-uploads/03642137-2e8b-4e37-a4e2-39bb157cbe53.png",
     services: ["Dock Cleaning", "Siding Restoration", "Gutter Cleaning"],
     reviews: 4.7,
     slug: "delta"
@@ -41,7 +41,7 @@ const neighborhoods = [
   {
     name: "Richmond",
     description: "Professional cleaning services for diverse residential communities",
-    image: "/lovable-uploads/0134cfcb-ad8c-4123-a227-763dc4b8f65a.png",
+    image: "/lovable-uploads/0413d26c-fb32-4ac3-ad1c-8e24f7878b90.png",
     services: ["Condo Cleaning", "Townhouse Maintenance", "Commercial Services"],
     reviews: 4.8,
     slug: "richmond"
@@ -49,7 +49,7 @@ const neighborhoods = [
   {
     name: "Burnaby",
     description: "Complete exterior maintenance for hillside homes and condos",
-    image: "/lovable-uploads/c21b7930-a2b4-4d4f-9dec-bea574158b0c.png",
+    image: "/lovable-uploads/041945aa-f58d-4820-9af6-0202a0b9b726.png",
     services: ["Steep Driveway Cleaning", "Retaining Wall Cleaning", "Patio Services"],
     reviews: 4.9,
     slug: "burnaby"
@@ -57,7 +57,7 @@ const neighborhoods = [
   {
     name: "Vancouver",
     description: "Premium cleaning services for urban properties and high-rises",
-    image: "/lovable-uploads/c5612b94-cfef-4c5f-bc6d-3cdd7475265a.png",
+    image: "/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png",
     services: ["High-Rise Cleaning", "Urban Property Care", "Commercial Buildings"],
     reviews: 4.8,
     slug: "vancouver"
