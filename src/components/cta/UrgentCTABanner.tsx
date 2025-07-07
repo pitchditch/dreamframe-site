@@ -41,7 +41,7 @@ const UrgentCTABanner = () => {
             asChild 
             size="lg" 
             variant="outline" 
-            className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-bc-red font-bold text-lg px-8 py-4 h-auto"
+            className="border-white text-white hover:bg-white hover:text-bc-red font-bold text-lg px-8 py-4 h-auto"
           >
             <Link to="/calculator" className="flex items-center">
               <MessageSquare className="mr-3" size={20} />
