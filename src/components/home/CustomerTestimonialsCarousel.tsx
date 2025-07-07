@@ -18,7 +18,7 @@ const testimonials = [
     city: "Surrey",
     rating: 5,
     quote: "Best pressure washing service in Surrey! Our driveway looks brand new. Highly recommend BC Pressure Washing.",
-    image: "/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png"
+    image: "/lovable-uploads/7950561a-0da2-4ea2-9881-59e5b3ae27f0.png"
   },
   {
     id: 3,
@@ -26,15 +26,15 @@ const testimonials = [
     city: "Vancouver",
     rating: 5,
     quote: "Professional window cleaning for our downtown condo. They work efficiently and the results are amazing every time.",
-    image: "/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png"
+    image: "/lovable-uploads/3e2ccffc-4b8a-4ad3-a5d5-8181d964327b.png"
   },
   {
     id: 4,
-    name: "Lisa Anderson",
-    city: "Burnaby",
+    name: "Jennifer Martinez",
+    city: "White Rock",
     rating: 5,
-    quote: "Great job on our steep driveway! They handled the challenging terrain with expertise and care. Very impressed.",
-    image: "/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png"
+    quote: "BC Pressure Washing transformed our home! Living by the ocean, we get a lot of salt buildup, but they made our siding look brand new.",
+    image: "/lovable-uploads/781d0a19-3b5f-4860-af2b-ffe54366a5f7.png"
   },
   {
     id: 5,
@@ -42,7 +42,15 @@ const testimonials = [
     city: "Richmond",
     rating: 5,
     quote: "Reliable and trustworthy service. They've been cleaning our townhouse complex for months. Always consistent quality.",
-    image: "/lovable-uploads/9ab5a05b-8db4-45b1-b31f-73f16bbc49a0.png"
+    image: "/lovable-uploads/830ffd22-58bc-4cc2-a4e3-e6ddb4eda92a.png"
+  },
+  {
+    id: 6,
+    name: "Lisa Anderson",
+    city: "Burnaby",
+    rating: 5,
+    quote: "Great job on our steep driveway! They handled the challenging terrain with expertise and care. Very impressed.",
+    image: "/lovable-uploads/750b883e-0b12-487f-b71a-b9332417de1e.png"
   }
 ];
 

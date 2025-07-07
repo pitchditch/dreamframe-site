@@ -8,7 +8,7 @@ import {
   Home, 
   Building, 
   Trash2, 
-  Car, 
+  Mountain, 
   Sparkles 
 } from 'lucide-react';
 
@@ -52,7 +52,7 @@ const services = [
     id: 'roof-cleaning',
     title: 'Roof & Moss Removal',
     description: 'Safe roof cleaning and moss treatment',
-    icon: Car,
+    icon: Mountain,
     link: '/services/roof-cleaning'
   }
 ];
