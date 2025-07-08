@@ -91,8 +91,8 @@ const Index = () => {
             {/* Enhanced Before/After Gallery with filtering */}
             <EnhancedBeforeAfterGallery />
             
-            {/* Enhanced Testimonials with ratings */}
-            <EnhancedTestimonialsSection />
+            {/* Original Testimonials Section */}
+            <TestimonialsSection />
             
             {/* Urgent CTA Banner */}
             <UrgentCTABanner />

@@ -24,9 +24,9 @@ const neighborhoods = [
   },
   {
     name: "Langley",
-    description: "Specialized cleaning services for rural and suburban properties",
+    description: "Specialized cleaning services for urban and suburban properties",
     image: "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png",
-    services: ["Barn Cleaning", "Fence Restoration", "Patio Cleaning"],
+    services: ["Residential Cleaning", "Fence Restoration", "Patio Cleaning"],
     reviews: 4.9,
     slug: "langley"
   },
