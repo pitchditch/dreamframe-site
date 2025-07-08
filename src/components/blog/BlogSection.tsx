@@ -11,7 +11,7 @@ const blogPosts = [
     title: "Essential Pressure Washing Tips for White Rock Patios",
     excerpt: "Learn how to maintain your patio's beauty with proper pressure washing techniques specific to White Rock's coastal climate.",
     date: "2024-01-15",
-    image: "/lovable-uploads/ab2c69e3-c94c-4cd5-97c5-ca62b7e2f502.png",
+    image: "/lovable-uploads/31a7bb54-33ce-4d38-ab58-989fe31b89dd.png",
     category: "Maintenance Tips"
   },
   {
@@ -19,7 +19,7 @@ const blogPosts = [
     title: "Why Surrey Driveways Need Regular Professional Cleaning",
     excerpt: "Discover the unique challenges Surrey driveways face and how professional pressure washing extends their lifespan.",
     date: "2024-01-10",
-    image: "/lovable-uploads/c0aac1bc-d7a6-4b75-8931-ccc27522df2a.png",
+    image: "/lovable-uploads/e82ca29a-91e6-407f-bc96-9f26b24d3556.png",
     category: "Local Insights"
   },
   {
@@ -27,7 +27,7 @@ const blogPosts = [
     title: "Seasonal House Washing Guide for Metro Vancouver",
     excerpt: "Your complete guide to maintaining your home's exterior throughout Metro Vancouver's changing seasons.",
     date: "2024-01-05",
-    image: "/lovable-uploads/dfb1d02f-4db4-4261-9b4d-8bb21236611e.png",
+    image: "/lovable-uploads/5bf05a75-78ed-4ef7-b4b6-6fb1e2bb86a8.png",
     category: "Seasonal Care"
   }
 ];
