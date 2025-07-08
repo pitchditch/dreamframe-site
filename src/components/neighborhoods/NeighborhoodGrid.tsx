@@ -9,7 +9,7 @@ const neighborhoods = [
   {
     name: "White Rock",
     description: "Professional pressure washing for oceanfront properties and heritage homes",
-    image: "/lovable-uploads/0139cad9-098a-441a-9e26-7c7aad7e481d.png",
+    image: "/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png",
     services: ["Saltwater Stain Removal", "Deck Restoration", "Window Cleaning"],
     reviews: 4.9,
     slug: "white-rock"
@@ -17,23 +17,23 @@ const neighborhoods = [
   {
     name: "Surrey",
     description: "Comprehensive exterior cleaning for residential and commercial properties",
-    image: "/lovable-uploads/021dd5ff-95a8-4c83-9d47-9a44e895e0f3.png",
+    image: "/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png",
     services: ["Driveway Cleaning", "House Washing", "Roof Cleaning"],
     reviews: 4.8,
     slug: "surrey"
   },
   {
     name: "Langley",
-    description: "Specialized cleaning services for urban and suburban properties",
-    image: "/lovable-uploads/0349dfb1-14e8-4659-bd93-89bc41c2fd53.png",
-    services: ["Residential Cleaning", "Fence Restoration", "Patio Cleaning"],
+    description: "Specialized cleaning services for rural and suburban properties",
+    image: "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png",
+    services: ["Barn Cleaning", "Fence Restoration", "Patio Cleaning"],
     reviews: 4.9,
     slug: "langley"
   },
   {
     name: "Delta",
     description: "Expert pressure washing for waterfront and residential areas",
-    image: "/lovable-uploads/03642137-2e8b-4e37-a4e2-39bb157cbe53.png",
+    image: "/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png",
     services: ["Dock Cleaning", "Siding Restoration", "Gutter Cleaning"],
     reviews: 4.7,
     slug: "delta"
@@ -41,7 +41,7 @@ const neighborhoods = [
   {
     name: "Richmond",
     description: "Professional cleaning services for diverse residential communities",
-    image: "/lovable-uploads/0413d26c-fb32-4ac3-ad1c-8e24f7878b90.png",
+    image: "/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png",
     services: ["Condo Cleaning", "Townhouse Maintenance", "Commercial Services"],
     reviews: 4.8,
     slug: "richmond"
@@ -49,18 +49,10 @@ const neighborhoods = [
   {
     name: "Burnaby",
     description: "Complete exterior maintenance for hillside homes and condos",
-    image: "/lovable-uploads/041945aa-f58d-4820-9af6-0202a0b9b726.png",
+    image: "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png",
     services: ["Steep Driveway Cleaning", "Retaining Wall Cleaning", "Patio Services"],
     reviews: 4.9,
     slug: "burnaby"
-  },
-  {
-    name: "Vancouver",
-    description: "Premium cleaning services for urban properties and high-rises",
-    image: "/lovable-uploads/04bd3905-2c86-4062-9cec-ddbddead79ab.png",
-    services: ["High-Rise Cleaning", "Urban Property Care", "Commercial Buildings"],
-    reviews: 4.8,
-    slug: "vancouver"
   }
 ];
 
@@ -90,7 +82,7 @@ const NeighborhoodGrid = () => {
                 </div>
               </div>
               
-              <CardContent className="p-6 flex flex-col h-full">
+              <CardContent className="p-6">
                 <div className="flex items-center mb-3">
                   <MapPin className="w-5 h-5 text-bc-red mr-2" />
                   <h3 className="text-xl font-bold group-hover:text-bc-red transition-colors">
@@ -116,7 +108,7 @@ const NeighborhoodGrid = () => {
                   </div>
                 </div>
                 
-                <div className="flex gap-2 mt-auto">
+                <div className="flex gap-2">
                   <Button asChild className="flex-1" variant="bc-red">
                     <Link to={`/areas/${neighborhood.slug}`}>
                       Learn More
