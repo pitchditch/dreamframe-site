@@ -19,7 +19,6 @@ import CompetitorComparisonSection from '../components/home/CompetitorComparison
 import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
-
 import NeighborhoodGrid from '../components/neighborhoods/NeighborhoodGrid';
 import EnhancedTestimonialsSection from '../components/testimonials/EnhancedTestimonialsSection';
 import UrgentCTABanner from '../components/cta/UrgentCTABanner';
@@ -75,7 +74,6 @@ const Index = () => {
       <HeroWithContent>
         <>
           <ServiceBanner />
-          
           
           {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
