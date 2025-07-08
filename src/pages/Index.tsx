@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -19,11 +18,7 @@ import CompetitorComparisonSection from '../components/home/CompetitorComparison
 import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
-import NeighborhoodGrid from '../components/neighborhoods/NeighborhoodGrid';
-import EnhancedTestimonialsSection from '../components/testimonials/EnhancedTestimonialsSection';
-import UrgentCTABanner from '../components/cta/UrgentCTABanner';
-import BlogSection from '../components/blog/BlogSection';
-import MobileStickyBar from '../components/mobile/MobileStickyBar';
+import CityNavigation from '../components/home/CityNavigation';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -75,32 +70,26 @@ const Index = () => {
         <>
           <ServiceBanner />
           
+          {/* City Navigation Section */}
+          <CityNavigation />
+          
           {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
             <ServiceSelectionSection />
           </div>
           
           <div className="bg-white relative z-50">
-            {/* Neighborhood-specific content */}
-            <NeighborhoodGrid />
-            
             {/* Enhanced Before/After Gallery with filtering */}
             <EnhancedBeforeAfterGallery />
-            
-            {/* Original Testimonials Section */}
-            <TestimonialsSection />
-            
-            {/* Urgent CTA Banner */}
-            <UrgentCTABanner />
             
             {/* Trust Badges Section */}
             <TrustBadgesSection />
             
-            {/* Blog Section with local content */}
-            <BlogSection />
-            
             {/* Contact Form */}
             <QuickContactForm />
+            
+            {/* Testimonials */}
+            <TestimonialsSection />
             
             {/* Red Car Section */}
             <RedCarSection />
@@ -143,7 +132,6 @@ const Index = () => {
       
       <ReferralButton />
       <StickyQuoteBar />
-      <MobileStickyBar />
       <AfkOverlay />
     </Layout>
   );
