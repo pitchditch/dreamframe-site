@@ -53,6 +53,12 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
 
   const handleAutoSend = async () => {
     try {
+      console.log('Sending quote confirmation...', {
+        email: quoteData.email,
+        phone: quoteData.phone,
+        name: quoteData.customerName
+      });
+
       // Send confirmation email and SMS via Supabase function
       const response = await fetch('/functions/v1/send-confirmations', {
         method: 'POST',
@@ -73,17 +79,23 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
         })
       });
 
+      const result = await response.json();
+      console.log('Send confirmation response:', result);
+
       if (response.ok) {
         toast({
           title: "Quote Sent Successfully!",
           description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}${quoteData.email && quoteData.phone ? ' and' : ''}${quoteData.phone ? ' via SMS' : ''}`,
         });
+      } else {
+        throw new Error(result.error || 'Failed to send quote');
       }
     } catch (error) {
       console.error('Auto-send failed:', error);
       toast({
         title: "Quote Created",
         description: "Quote generated successfully. You can manually send it using the buttons below.",
+        variant: "destructive"
       });
     }
   };
@@ -116,12 +128,12 @@ Reply YES to book or call for questions!`;
   const generateEmailHTML = () => {
     const servicesHTML = quoteResult.services.map(s => 
       s.note 
-        ? `<tr><td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${s.name}</td><td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; color: #2563eb; font-style: italic;">${s.note}</td></tr>`
-        : `<tr><td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${s.name}</td><td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold;">${formatCurrency(s.price)}</td></tr>`
+        ? `<tr style="border-bottom: 1px solid #e5e7eb;"><td style="padding: 16px 12px; font-size: 15px; color: #374151;">${s.name}</td><td style="padding: 16px 12px; text-align: right; color: #2563eb; font-style: italic; font-size: 15px;">${s.note}</td></tr>`
+        : `<tr style="border-bottom: 1px solid #e5e7eb;"><td style="padding: 16px 12px; font-size: 15px; color: #374151;">${s.name}</td><td style="padding: 16px 12px; text-align: right; font-weight: bold; color: #059669; font-size: 16px;">${formatCurrency(s.price)}</td></tr>`
     ).join('');
     
     const addOnsHTML = quoteResult.addOns.length > 0 
-      ? quoteResult.addOns.map(a => `<tr><td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${a.name} <span style="color: #6b7280; font-size: 0.875rem;">(Add-on)</span></td><td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold;">${formatCurrency(a.price)}</td></tr>`).join('')
+      ? quoteResult.addOns.map(a => `<tr style="border-bottom: 1px solid #e5e7eb;"><td style="padding: 16px 12px; font-size: 15px; color: #374151;">${a.name} <span style="color: #6b7280; font-size: 13px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">Add-on</span></td><td style="padding: 16px 12px; text-align: right; font-weight: bold; color: #059669; font-size: 16px;">${formatCurrency(a.price)}</td></tr>`).join('')
       : '';
     
     return `
@@ -132,48 +144,48 @@ Reply YES to book or call for questions!`;
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Your Professional Quote - BC Pressure Washing</title>
         </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 20px;">
           
           <!-- Header -->
-          <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); padding: 32px 24px; text-align: center; border-radius: 12px 12px 0 0;">
-            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">BC PRESSURE WASHING</h1>
-            <p style="color: #fecaca; margin: 8px 0 0 0; font-size: 16px; font-weight: 500;">Professional Exterior Cleaning Services</p>
-            <p style="color: #fecaca; margin: 4px 0 0 0; font-size: 14px;">bcpressurewashing.ca</p>
+          <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); padding: 40px 30px; text-align: center; border-radius: 16px 16px 0 0; box-shadow: 0 4px 20px rgba(220, 38, 38, 0.15);">
+            <h1 style="color: white; margin: 0; font-size: 36px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.2); letter-spacing: -0.5px;">BC PRESSURE WASHING</h1>
+            <p style="color: #fecaca; margin: 12px 0 0 0; font-size: 18px; font-weight: 500;">Professional Exterior Cleaning Services</p>
+            <p style="color: #fecaca; margin: 8px 0 0 0; font-size: 15px; opacity: 0.9;">bcpressurewashing.ca</p>
           </div>
 
           <!-- Main Content -->
-          <div style="background: white; padding: 32px 24px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+          <div style="background: white; padding: 40px 30px; border-radius: 0 0 16px 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
             
             <!-- Greeting -->
-            <h2 style="color: #dc2626; margin: 0 0 24px 0; font-size: 28px; font-weight: bold;">Thank you, ${quoteData.customerName}!</h2>
-            <p style="font-size: 16px; line-height: 1.7; color: #4b5563; margin-bottom: 32px;">
+            <h2 style="color: #dc2626; margin: 0 0 25px 0; font-size: 32px; font-weight: bold;">Thank you, ${quoteData.customerName}!</h2>
+            <p style="font-size: 17px; line-height: 1.7; color: #4b5563; margin-bottom: 35px;">
               We've prepared your professional pressure washing quote. Our team is ready to transform your property with our premium cleaning services.
             </p>
 
             <!-- Quote Total Banner -->
-            <div style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); border: 2px solid #dc2626; border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center;">
-              <h3 style="color: #dc2626; margin: 0 0 8px 0; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">Your Professional Quote</h3>
-              <div style="font-size: 48px; font-weight: bold; color: #dc2626; margin: 8px 0;">
+            <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 3px solid #059669; border-radius: 16px; padding: 30px; margin: 30px 0; text-align: center; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.1);">
+              <h3 style="color: #059669; margin: 0 0 12px 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Your Professional Quote</h3>
+              <div style="font-size: 52px; font-weight: bold; color: #059669; margin: 12px 0; text-shadow: 0 1px 2px rgba(5, 150, 105, 0.1);">
                 ${formatCurrency(quoteResult.total)}
               </div>
-              <p style="color: #6b7280; margin: 8px 0 0 0; font-size: 14px;">*Includes 12% tax | Final price confirmed after property inspection</p>
+              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Includes 12% tax | Final price confirmed after property inspection</p>
             </div>
 
             <!-- Property Details -->  
-            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 24px 0; border-left: 4px solid #dc2626;">
-              <h3 style="color: #374151; margin: 0 0 16px 0; font-size: 18px; font-weight: bold;">Property Details</h3>
-              ${quoteData.address ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Address:</strong> ${quoteData.address}</p>` : ''}
-              <p style="margin: 8px 0; color: #4b5563;"><strong>Property Size:</strong> ${quoteData.houseSize.charAt(0).toUpperCase() + quoteData.houseSize.slice(1)}</p>
-              ${quoteData.notes ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Special Notes:</strong> ${quoteData.notes}</p>` : ''}
+            <div style="background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 5px solid #dc2626;">
+              <h3 style="color: #374151; margin: 0 0 20px 0; font-size: 20px; font-weight: bold; color: #dc2626;">Property Details</h3>
+              ${quoteData.address ? `<p style="margin: 12px 0; color: #4b5563; font-size: 16px;"><strong style="color: #374151;">Address:</strong> ${quoteData.address}</p>` : ''}
+              <p style="margin: 12px 0; color: #4b5563; font-size: 16px;"><strong style="color: #374151;">Property Size:</strong> ${quoteData.houseSize.charAt(0).toUpperCase() + quoteData.houseSize.slice(1)}</p>
+              ${quoteData.notes ? `<p style="margin: 12px 0; color: #4b5563; font-size: 16px;"><strong style="color: #374151;">Special Notes:</strong> ${quoteData.notes}</p>` : ''}
             </div>
 
             <!-- Services Table -->
-            <h3 style="color: #374151; margin: 32px 0 16px 0; font-size: 20px; font-weight: bold;">Services Included</h3>
-            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h3 style="color: #374151; margin: 40px 0 20px 0; font-size: 22px; font-weight: bold;">Services Included</h3>
+            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
               <thead>
-                <tr style="background: #f9fafb;">
-                  <th style="padding: 16px; text-align: left; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb;">Service Description</th>
-                  <th style="padding: 16px; text-align: right; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; width: 140px;">Price</th>
+                <tr style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);">
+                  <th style="padding: 20px 16px; text-align: left; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; font-size: 16px;">Service Description</th>
+                  <th style="padding: 20px 16px; text-align: right; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; width: 140px; font-size: 16px;">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -183,43 +195,58 @@ Reply YES to book or call for questions!`;
             </table>
 
             <!-- Pricing Breakdown -->
-            <div style="margin: 32px 0; padding: 20px; background: #f9fafb; border-radius: 8px;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 16px;">
+            <div style="margin: 35px 0; padding: 25px; background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); border-radius: 12px; border: 1px solid #e5e7eb;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
                 <span style="color: #4b5563;">Subtotal:</span>
                 <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.subtotal)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 16px; padding-bottom: 16px; border-bottom: 1px solid #d1d5db;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 17px; padding-bottom: 20px; border-bottom: 2px solid #d1d5db;">
                 <span style="color: #4b5563;">Tax (12%):</span>
                 <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.tax)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; font-size: 24px; font-weight: bold; color: #dc2626;">
+              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669;">
                 <span>TOTAL:</span>
                 <span>${formatCurrency(quoteResult.total)}</span>
               </div>
             </div>
 
             <!-- What's Included -->
-            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 1px solid #28a745; border-radius: 8px; padding: 24px; margin: 32px 0;">
-              <h3 style="color: #155724; margin: 0 0 16px 0; font-size: 20px; font-weight: bold;">✅ What's Included</h3>
-              <ul style="color: #155724; margin: 0; padding-left: 20px; list-style-type: none;">
-                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ Professional grade equipment</li>
-                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ Eco-friendly cleaning solutions</li>
-                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ Fully insured and bonded</li>
-                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ 100% satisfaction guarantee</li>
-                <li style="margin-bottom: 0; position: relative; padding-left: 24px;">✓ Personal quality check by Jayden Fisher</li>
+            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 2px solid #28a745; border-radius: 12px; padding: 30px; margin: 35px 0;">
+              <h3 style="color: #155724; margin: 0 0 20px 0; font-size: 22px; font-weight: bold;">✅ What's Included</h3>
+              <ul style="color: #155724; margin: 0; padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
+                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
+                  Professional grade equipment
+                </li>
+                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
+                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
+                  Eco-friendly cleaning solutions
+                </li>
+                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
+                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
+                  Fully insured and bonded
+                </li>
+                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
+                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
+                  100% satisfaction guarantee
+                </li>
+                <li style="margin-bottom: 0; font-size: 16px; padding-left: 30px; position: relative;">
+                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
+                  Personal quality check by Jayden Fisher
+                </li>
               </ul>
             </div>
 
             <!-- Call to Action -->
-            <div style="text-align: center; margin: 32px 0;">
-              <p style="font-size: 18px; color: #374151; margin-bottom: 20px; font-weight: bold;">
+            <div style="text-align: center; margin: 40px 0;">
+              <p style="font-size: 20px; color: #374151; margin-bottom: 25px; font-weight: bold;">
                 Ready to book your service?
               </p>
-              <div style="margin: 20px 0;">
-                <a href="tel:7788087620" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 8px; font-size: 16px; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.25);">
+              <div style="margin: 25px 0;">
+                <a href="tel:7788087620" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; padding: 18px 35px; text-decoration: none; border-radius: 10px; font-weight: bold; margin: 10px; font-size: 17px; box-shadow: 0 6px 15px rgba(220, 38, 38, 0.3); transition: all 0.3s ease;">
                   📞 Call (778) 808-7620
                 </a>
-                <a href="mailto:info@bcpressurewashing.ca?subject=Quote Follow-up for ${quoteData.customerName}" style="display: inline-block; background: linear-gradient(135deg, #374151 0%, #1f2937 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 8px; font-size: 16px; box-shadow: 0 4px 6px rgba(55, 65, 81, 0.25);">
+                <a href="mailto:info@bcpressurewashing.ca?subject=Quote Follow-up for ${quoteData.customerName}" style="display: inline-block; background: linear-gradient(135deg, #374151 0%, #1f2937 100%); color: white; padding: 18px 35px; text-decoration: none; border-radius: 10px; font-weight: bold; margin: 10px; font-size: 17px; box-shadow: 0 6px 15px rgba(55, 65, 81, 0.3); transition: all 0.3s ease;">
                   ✉️ Reply to Email
                 </a>
               </div>
@@ -228,11 +255,11 @@ Reply YES to book or call for questions!`;
           </div>
           
           <!-- Footer -->
-          <div style="background: #374151; padding: 24px; text-align: center; border-radius: 0 0 12px 12px; margin-top: 32px;">
-            <p style="color: #d1d5db; margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">
+          <div style="background: linear-gradient(135deg, #374151 0%, #1f2937 100%); padding: 30px; text-align: center; border-radius: 0 0 16px 16px; margin-top: 40px;">
+            <p style="color: #d1d5db; margin: 0 0 12px 0; font-size: 18px; font-weight: bold;">
               Every job is personally checked by Jayden Fisher
             </p>
-            <p style="color: #9ca3af; margin: 0; font-size: 14px;">
+            <p style="color: #9ca3af; margin: 0; font-size: 15px; line-height: 1.6;">
               BC Pressure Washing | Professional Exterior Cleaning Services<br>
               White Rock, Surrey & Metro Vancouver<br>
               <a href="https://bcpressurewashing.ca" style="color: #fbbf24; text-decoration: none;">bcpressurewashing.ca</a> | Fully Insured & Bonded
