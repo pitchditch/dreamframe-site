@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calculator, Download, Send, Copy } from 'lucide-react';
+import { Calculator, Download, Send, Copy, Plus, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QuoteDisplay from './QuoteDisplay';
 
@@ -42,6 +42,12 @@ interface AddOnPrice {
   name: string;
   price: number;
   selected: boolean;
+}
+
+interface CustomService {
+  id: string;
+  name: string;
+  price: number;
 }
 
 interface QuoteResult {
@@ -92,6 +98,11 @@ const QuoteBuilderForm = () => {
     { id: 'garage-floor', name: 'Garage Floor Cleaning', price: 150, selected: false },
     { id: 'concrete-sealing', name: 'Concrete Sealing', price: 300, selected: false }
   ]);
+
+  // Custom services state
+  const [customServices, setCustomServices] = useState<CustomService[]>([]);
+  const [newServiceName, setNewServiceName] = useState('');
+  const [newServicePrice, setNewServicePrice] = useState('');
 
   // Tax controls
   const [gstRate] = useState(7); // GST is always 7%
@@ -148,6 +159,46 @@ const QuoteBuilderForm = () => {
     );
   };
 
+  const addCustomService = () => {
+    if (!newServiceName.trim() || !newServicePrice) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter both service name and price.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const customService: CustomService = {
+      id: `custom-${Date.now()}`,
+      name: newServiceName.trim(),
+      price: parseFloat(newServicePrice) || 0
+    };
+
+    setCustomServices(prev => [...prev, customService]);
+    setNewServiceName('');
+    setNewServicePrice('');
+
+    toast({
+      title: "Custom Service Added",
+      description: `${customService.name} has been added to your services.`,
+    });
+  };
+
+  const removeCustomService = (serviceId: string) => {
+    setCustomServices(prev => prev.filter(service => service.id !== serviceId));
+  };
+
+  const updateCustomServicePrice = (serviceId: string, price: number) => {
+    setCustomServices(prev => 
+      prev.map(service => 
+        service.id === serviceId 
+          ? { ...service, price: price || 0 }
+          : service
+      )
+    );
+  };
+
   const calculateQuote = () => {
     if (!quoteData.customerName || !quoteData.houseSize) {
       toast({
@@ -161,18 +212,19 @@ const QuoteBuilderForm = () => {
     const selectedServices = servicePrices.filter(service => service.selected);
     const selectedAddOns = addOnPrices.filter(addOn => addOn.selected);
 
-    if (selectedServices.length === 0) {
+    if (selectedServices.length === 0 && customServices.length === 0) {
       toast({
         title: "No Services Selected",
-        description: "Please select at least one service.",
+        description: "Please select at least one service or add a custom service.",
         variant: "destructive"
       });
       return;
     }
 
-    // Calculate subtotal
+    // Calculate subtotal including custom services
     const subtotal = selectedServices.reduce((sum, service) => sum + service.price, 0) +
-                    selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0);
+                    selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0) +
+                    customServices.reduce((sum, service) => sum + service.price, 0);
 
     // Calculate taxes
     const gst = subtotal * (gstRate / 100);
@@ -180,10 +232,16 @@ const QuoteBuilderForm = () => {
     const total = subtotal + gst + pst;
 
     const result: QuoteResult = {
-      services: selectedServices.map(service => ({
-        name: service.name,
-        price: service.price
-      })),
+      services: [
+        ...selectedServices.map(service => ({
+          name: service.name,
+          price: service.price
+        })),
+        ...customServices.map(service => ({
+          name: service.name,
+          price: service.price
+        }))
+      ],
       addOns: selectedAddOns.map(addOn => ({
         name: addOn.name,
         price: addOn.price
@@ -211,6 +269,9 @@ const QuoteBuilderForm = () => {
     });
     setServicePrices(prev => prev.map(service => ({ ...service, selected: false })));
     setAddOnPrices(prev => prev.map(addOn => ({ ...addOn, selected: false })));
+    setCustomServices([]);
+    setNewServiceName('');
+    setNewServicePrice('');
     setApplyPst(false);
     setQuoteResult(null);
     setShowQuote(false);
@@ -317,6 +378,73 @@ const QuoteBuilderForm = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Custom Services Section */}
+          <div className="space-y-3">
+            <Label>Custom Services</Label>
+            
+            {/* Add New Custom Service */}
+            <div className="p-4 border rounded-lg bg-gray-50">
+              <Label className="text-sm font-medium mb-3 block">Add Custom Service</Label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="md:col-span-2">
+                  <Input
+                    placeholder="Enter custom service name"
+                    value={newServiceName}
+                    onChange={(e) => setNewServiceName(e.target.value)}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex items-center gap-2 flex-1">
+                    <Label className="text-sm">$</Label>
+                    <Input
+                      type="number"
+                      placeholder="Price"
+                      value={newServicePrice}
+                      onChange={(e) => setNewServicePrice(e.target.value)}
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
+                  <Button onClick={addCustomService} size="sm">
+                    <Plus className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Display Custom Services */}
+            {customServices.length > 0 && (
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Added Custom Services</Label>
+                {customServices.map(service => (
+                  <div key={service.id} className="flex items-center gap-4 p-3 border rounded-lg bg-blue-50">
+                    <div className="flex-1 text-sm font-medium text-blue-700">
+                      {service.name}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Label className="text-sm">$</Label>
+                      <Input
+                        type="number"
+                        value={service.price}
+                        onChange={(e) => updateCustomServicePrice(service.id, parseFloat(e.target.value))}
+                        className="w-20"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                    <Button 
+                      variant="destructive" 
+                      size="sm" 
+                      onClick={() => removeCustomService(service.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Add-ons Selection with Manual Pricing */}
