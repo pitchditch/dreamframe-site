@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +10,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Calculator, Download, Send, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QuoteDisplay from './QuoteDisplay';
-import { formatCurrency } from './utils/quoteCalculations';
 
 interface QuoteData {
   customerName: string;
@@ -46,6 +46,13 @@ interface QuoteResult {
   pst: number;
   total: number;
 }
+
+const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD'
+  }).format(amount);
+};
 
 const QuoteBuilderForm = () => {
   const { toast } = useToast();
