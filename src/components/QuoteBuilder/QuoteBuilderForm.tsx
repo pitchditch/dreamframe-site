@@ -50,6 +50,12 @@ interface CustomService {
   price: number;
 }
 
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
 interface QuoteResult {
   services: Array<{
     name: string;
@@ -59,7 +65,12 @@ interface QuoteResult {
     name: string;
     price: number;
   }>;
-  subtotal: number;
+  products: Array<{
+    name: string;
+    price: number;
+  }>;
+  servicesSubtotal: number;
+  productsSubtotal: number;
   gst: number;
   pst: number;
   total: number;
@@ -103,6 +114,11 @@ const QuoteBuilderForm = () => {
   const [customServices, setCustomServices] = useState<CustomService[]>([]);
   const [newServiceName, setNewServiceName] = useState('');
   const [newServicePrice, setNewServicePrice] = useState('');
+
+  // Products state
+  const [products, setProducts] = useState<Product[]>([]);
+  const [newProductName, setNewProductName] = useState('');
+  const [newProductPrice, setNewProductPrice] = useState('');
 
   // Tax controls
   const [gstRate] = useState(7); // GST is always 7%
@@ -199,6 +215,46 @@ const QuoteBuilderForm = () => {
     );
   };
 
+  const addProduct = () => {
+    if (!newProductName.trim() || !newProductPrice) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter both product name and price.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const product: Product = {
+      id: `product-${Date.now()}`,
+      name: newProductName.trim(),
+      price: parseFloat(newProductPrice) || 0
+    };
+
+    setProducts(prev => [...prev, product]);
+    setNewProductName('');
+    setNewProductPrice('');
+
+    toast({
+      title: "Product Added",
+      description: `${product.name} has been added to your products.`,
+    });
+  };
+
+  const removeProduct = (productId: string) => {
+    setProducts(prev => prev.filter(product => product.id !== productId));
+  };
+
+  const updateProductPrice = (productId: string, price: number) => {
+    setProducts(prev => 
+      prev.map(product => 
+        product.id === productId 
+          ? { ...product, price: price || 0 }
+          : product
+      )
+    );
+  };
+
   const calculateQuote = () => {
     if (!quoteData.customerName || !quoteData.houseSize) {
       toast({
@@ -212,24 +268,31 @@ const QuoteBuilderForm = () => {
     const selectedServices = servicePrices.filter(service => service.selected);
     const selectedAddOns = addOnPrices.filter(addOn => addOn.selected);
 
-    if (selectedServices.length === 0 && customServices.length === 0) {
+    if (selectedServices.length === 0 && customServices.length === 0 && products.length === 0) {
       toast({
-        title: "No Services Selected",
-        description: "Please select at least one service or add a custom service.",
+        title: "No Items Selected",
+        description: "Please select at least one service, add a custom service, or add a product.",
         variant: "destructive"
       });
       return;
     }
 
-    // Calculate subtotal including custom services
-    const subtotal = selectedServices.reduce((sum, service) => sum + service.price, 0) +
-                    selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0) +
-                    customServices.reduce((sum, service) => sum + service.price, 0);
+    // Calculate services and add-ons subtotal
+    const servicesSubtotal = selectedServices.reduce((sum, service) => sum + service.price, 0) +
+                            selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0) +
+                            customServices.reduce((sum, service) => sum + service.price, 0);
+
+    // Calculate products subtotal
+    const productsSubtotal = products.reduce((sum, product) => sum + product.price, 0);
 
     // Calculate taxes
-    const gst = subtotal * (gstRate / 100);
-    const pst = applyPst ? subtotal * (pstRate / 100) : 0;
-    const total = subtotal + gst + pst;
+    // GST applies to both services and products
+    const gst = (servicesSubtotal + productsSubtotal) * (gstRate / 100);
+    
+    // PST applies only to products (if enabled)
+    const pst = applyPst ? productsSubtotal * (pstRate / 100) : 0;
+    
+    const total = servicesSubtotal + productsSubtotal + gst + pst;
 
     const result: QuoteResult = {
       services: [
@@ -246,7 +309,12 @@ const QuoteBuilderForm = () => {
         name: addOn.name,
         price: addOn.price
       })),
-      subtotal,
+      products: products.map(product => ({
+        name: product.name,
+        price: product.price
+      })),
+      servicesSubtotal,
+      productsSubtotal,
       gst,
       pst,
       total
@@ -270,8 +338,11 @@ const QuoteBuilderForm = () => {
     setServicePrices(prev => prev.map(service => ({ ...service, selected: false })));
     setAddOnPrices(prev => prev.map(addOn => ({ ...addOn, selected: false })));
     setCustomServices([]);
+    setProducts([]);
     setNewServiceName('');
     setNewServicePrice('');
+    setNewProductName('');
+    setNewProductPrice('');
     setApplyPst(false);
     setQuoteResult(null);
     setShowQuote(false);
@@ -477,13 +548,80 @@ const QuoteBuilderForm = () => {
             </div>
           </div>
 
+          {/* Products Section */}
+          <div className="space-y-3">
+            <Label>Products</Label>
+            
+            {/* Add New Product */}
+            <div className="p-4 border rounded-lg bg-green-50">
+              <Label className="text-sm font-medium mb-3 block">Add Product</Label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="md:col-span-2">
+                  <Input
+                    placeholder="Enter product name"
+                    value={newProductName}
+                    onChange={(e) => setNewProductName(e.target.value)}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex items-center gap-2 flex-1">
+                    <Label className="text-sm">$</Label>
+                    <Input
+                      type="number"
+                      placeholder="Price"
+                      value={newProductPrice}
+                      onChange={(e) => setNewProductPrice(e.target.value)}
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
+                  <Button onClick={addProduct} size="sm">
+                    <Plus className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Display Products */}
+            {products.length > 0 && (
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Added Products</Label>
+                {products.map(product => (
+                  <div key={product.id} className="flex items-center gap-4 p-3 border rounded-lg bg-green-50">
+                    <div className="flex-1 text-sm font-medium text-green-700">
+                      {product.name}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Label className="text-sm">$</Label>
+                      <Input
+                        type="number"
+                        value={product.price}
+                        onChange={(e) => updateProductPrice(product.id, parseFloat(e.target.value))}
+                        className="w-20"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                    <Button 
+                      variant="destructive" 
+                      size="sm" 
+                      onClick={() => removeProduct(product.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Tax Controls */}
           <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
             <h3 className="font-semibold">Tax Settings</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>GST (Always Applied)</Label>
+                <Label>GST (Applied to Services & Products)</Label>
                 <div className="flex items-center gap-2">
                   <Input
                     type="number"
@@ -502,7 +640,7 @@ const QuoteBuilderForm = () => {
                     checked={applyPst}
                     onCheckedChange={(checked) => setApplyPst(checked as boolean)}
                   />
-                  <Label htmlFor="apply-pst">Apply PST</Label>
+                  <Label htmlFor="apply-pst">Apply PST (Products Only)</Label>
                 </div>
                 {applyPst && (
                   <div className="flex items-center gap-2">
