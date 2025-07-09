@@ -89,7 +89,9 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
         addOns: quoteResult.addOns.map(a => a.name),
         houseSize: quoteData.houseSize,
         address: quoteData.address,
-        notes: quoteData.notes
+        notes: quoteData.notes,
+        // Add the full quote text for SMS
+        quoteText: generateSMSText()
       };
 
       console.log('Sending confirmation data:', confirmationData);
@@ -469,6 +471,23 @@ Reply YES to book or call for questions!`;
     }
   };
 
+  const sendManualSMS = async () => {
+    try {
+      await sendViaSupabase();
+      toast({
+        title: "SMS Sent!",
+        description: "Quote SMS sent successfully via Supabase",
+      });
+    } catch (error) {
+      console.error('Manual SMS send failed:', error);
+      toast({
+        title: "SMS Failed",
+        description: "Could not send SMS. Please try copying the content instead.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -594,7 +613,7 @@ Reply YES to book or call for questions!`;
         </Tabs>
 
         <div className="flex gap-2 mt-6">
-          <Button variant="outline" className="flex-1" onClick={() => window.open(`sms:${quoteData.phone?.replace(/\D/g, '')}?body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.phone}>
+          <Button variant="outline" className="flex-1" onClick={sendManualSMS} disabled={!quoteData.phone}>
             <MessageSquare className="w-4 h-4 mr-2" />
             Send SMS
           </Button>
