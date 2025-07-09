@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -42,6 +41,52 @@ interface QuoteDisplayProps {
 const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onClose }) => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('preview');
+  const [hasAutoSent, setHasAutoSent] = useState(false);
+
+  // Auto-send quote when component loads
+  useEffect(() => {
+    if (!hasAutoSent && (quoteData.email || quoteData.phone)) {
+      handleAutoSend();
+      setHasAutoSent(true);
+    }
+  }, [quoteData, hasAutoSent]);
+
+  const handleAutoSend = async () => {
+    try {
+      // Send confirmation email and SMS via Supabase function
+      const response = await fetch('/functions/v1/send-confirmations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: quoteData.email,
+          phone: quoteData.phone,
+          name: quoteData.customerName,
+          address: quoteData.address,
+          houseSize: quoteData.houseSize,
+          services: quoteResult.services.map(s => s.name),
+          addOns: quoteResult.addOns.map(a => a.name),
+          estimateTotal: quoteResult.total,
+          notes: quoteData.notes,
+          formType: 'Professional Quote'
+        })
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Quote Sent Successfully!",
+          description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}${quoteData.email && quoteData.phone ? ' and' : ''}${quoteData.phone ? ' via SMS' : ''}`,
+        });
+      }
+    } catch (error) {
+      console.error('Auto-send failed:', error);
+      toast({
+        title: "Quote Created",
+        description: "Quote generated successfully. You can manually send it using the buttons below.",
+      });
+    }
+  };
 
   const generateSMSText = () => {
     const servicesText = quoteResult.services.map(s => 
@@ -68,54 +113,134 @@ Every job is personally checked by Jayden Fisher | BC Pressure Washing | bcpress
 Reply YES to book or call for questions!`;
   };
 
-  const generateEmailText = () => {
+  const generateEmailHTML = () => {
     const servicesHTML = quoteResult.services.map(s => 
       s.note 
-        ? `<li>${s.name}: <em>${s.note}</em></li>`
-        : `<li>${s.name}: <strong>${formatCurrency(s.price)}</strong></li>`
+        ? `<tr><td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${s.name}</td><td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; color: #2563eb; font-style: italic;">${s.note}</td></tr>`
+        : `<tr><td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${s.name}</td><td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold;">${formatCurrency(s.price)}</td></tr>`
     ).join('');
+    
     const addOnsHTML = quoteResult.addOns.length > 0 
-      ? `<h3>Add-on Services:</h3><ul>${quoteResult.addOns.map(a => `<li>${a.name}: <strong>${formatCurrency(a.price)}</strong></li>`).join('')}</ul>`
+      ? quoteResult.addOns.map(a => `<tr><td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${a.name} <span style="color: #6b7280; font-size: 0.875rem;">(Add-on)</span></td><td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold;">${formatCurrency(a.price)}</td></tr>`).join('')
       : '';
     
-    return `Subject: Your Pressure Washing Quote - ${quoteData.customerName}
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Your Professional Quote - BC Pressure Washing</title>
+        </head>
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
+          
+          <!-- Header -->
+          <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); padding: 32px 24px; text-align: center; border-radius: 12px 12px 0 0;">
+            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">BC PRESSURE WASHING</h1>
+            <p style="color: #fecaca; margin: 8px 0 0 0; font-size: 16px; font-weight: 500;">Professional Exterior Cleaning Services</p>
+            <p style="color: #fecaca; margin: 4px 0 0 0; font-size: 14px;">bcpressurewashing.ca</p>
+          </div>
 
-Dear ${quoteData.customerName},
+          <!-- Main Content -->
+          <div style="background: white; padding: 32px 24px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            
+            <!-- Greeting -->
+            <h2 style="color: #dc2626; margin: 0 0 24px 0; font-size: 28px; font-weight: bold;">Thank you, ${quoteData.customerName}!</h2>
+            <p style="font-size: 16px; line-height: 1.7; color: #4b5563; margin-bottom: 32px;">
+              We've prepared your professional pressure washing quote. Our team is ready to transform your property with our premium cleaning services.
+            </p>
 
-Thank you for your interest in BC Pressure Washing! I've prepared a detailed quote for your property at ${quoteData.address}.
+            <!-- Quote Total Banner -->
+            <div style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); border: 2px solid #dc2626; border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center;">
+              <h3 style="color: #dc2626; margin: 0 0 8px 0; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">Your Professional Quote</h3>
+              <div style="font-size: 48px; font-weight: bold; color: #dc2626; margin: 8px 0;">
+                ${formatCurrency(quoteResult.total)}
+              </div>
+              <p style="color: #6b7280; margin: 8px 0 0 0; font-size: 14px;">*Includes 12% tax | Final price confirmed after property inspection</p>
+            </div>
 
-<h2>Services Included:</h2>
-<ul>
-${servicesHTML}
-</ul>
+            <!-- Property Details -->  
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 24px 0; border-left: 4px solid #dc2626;">
+              <h3 style="color: #374151; margin: 0 0 16px 0; font-size: 18px; font-weight: bold;">Property Details</h3>
+              ${quoteData.address ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Address:</strong> ${quoteData.address}</p>` : ''}
+              <p style="margin: 8px 0; color: #4b5563;"><strong>Property Size:</strong> ${quoteData.houseSize.charAt(0).toUpperCase() + quoteData.houseSize.slice(1)}</p>
+              ${quoteData.notes ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Special Notes:</strong> ${quoteData.notes}</p>` : ''}
+            </div>
 
-${addOnsHTML}
+            <!-- Services Table -->
+            <h3 style="color: #374151; margin: 32px 0 16px 0; font-size: 20px; font-weight: bold;">Services Included</h3>
+            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+              <thead>
+                <tr style="background: #f9fafb;">
+                  <th style="padding: 16px; text-align: left; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb;">Service Description</th>
+                  <th style="padding: 16px; text-align: right; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; width: 140px;">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${servicesHTML}
+                ${addOnsHTML}
+              </tbody>
+            </table>
 
-<hr>
-<h2>Quote Summary:</h2>
-<p><strong>Subtotal:</strong> ${formatCurrency(quoteResult.subtotal)}</p>
-<p><strong>Tax (12%):</strong> ${formatCurrency(quoteResult.tax)}</p>
-<p><strong>TOTAL:</strong> ${formatCurrency(quoteResult.total)}</p>
+            <!-- Pricing Breakdown -->
+            <div style="margin: 32px 0; padding: 20px; background: #f9fafb; border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 16px;">
+                <span style="color: #4b5563;">Subtotal:</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.subtotal)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 16px; padding-bottom: 16px; border-bottom: 1px solid #d1d5db;">
+                <span style="color: #4b5563;">Tax (12%):</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.tax)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 24px; font-weight: bold; color: #dc2626;">
+                <span>TOTAL:</span>
+                <span>${formatCurrency(quoteResult.total)}</span>
+              </div>
+            </div>
 
-${quoteData.notes ? `<h3>Special Notes:</h3><p>${quoteData.notes}</p>` : ''}
+            <!-- What's Included -->
+            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 1px solid #28a745; border-radius: 8px; padding: 24px; margin: 32px 0;">
+              <h3 style="color: #155724; margin: 0 0 16px 0; font-size: 20px; font-weight: bold;">✅ What's Included</h3>
+              <ul style="color: #155724; margin: 0; padding-left: 20px; list-style-type: none;">
+                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ Professional grade equipment</li>
+                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ Eco-friendly cleaning solutions</li>
+                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ Fully insured and bonded</li>
+                <li style="margin-bottom: 8px; position: relative; padding-left: 24px;">✓ 100% satisfaction guarantee</li>
+                <li style="margin-bottom: 0; position: relative; padding-left: 24px;">✓ Personal quality check by Jayden Fisher</li>
+              </ul>
+            </div>
 
-<h3>What's Included:</h3>
-<ul>
-<li>✅ Professional grade equipment</li>
-<li>✅ Eco-friendly cleaning solutions</li>
-<li>✅ Fully insured and bonded</li>
-<li>✅ 100% satisfaction guarantee</li>
-<li>✅ Personal quality check by Jayden Fisher</li>
-</ul>
+            <!-- Call to Action -->
+            <div style="text-align: center; margin: 32px 0;">
+              <p style="font-size: 18px; color: #374151; margin-bottom: 20px; font-weight: bold;">
+                Ready to book your service?
+              </p>
+              <div style="margin: 20px 0;">
+                <a href="tel:7788087620" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 8px; font-size: 16px; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.25);">
+                  📞 Call (778) 808-7620
+                </a>
+                <a href="mailto:info@bcpressurewashing.ca?subject=Quote Follow-up for ${quoteData.customerName}" style="display: inline-block; background: linear-gradient(135deg, #374151 0%, #1f2937 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 8px; font-size: 16px; box-shadow: 0 4px 6px rgba(55, 65, 81, 0.25);">
+                  ✉️ Reply to Email
+                </a>
+              </div>
+            </div>
 
-<p><strong>Ready to book?</strong> Reply to this email or call us directly!</p>
-
-<p>Best regards,<br>
-Jayden Fisher<br>
-BC Pressure Washing<br>
-📧 info@bcpressurewashing.ca<br>
-🌐 bcpressurewashing.ca<br>
-📱 ${quoteData.phone || '(604) XXX-XXXX'}</p>`;
+          </div>
+          
+          <!-- Footer -->
+          <div style="background: #374151; padding: 24px; text-align: center; border-radius: 0 0 12px 12px; margin-top: 32px;">
+            <p style="color: #d1d5db; margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">
+              Every job is personally checked by Jayden Fisher
+            </p>
+            <p style="color: #9ca3af; margin: 0; font-size: 14px;">
+              BC Pressure Washing | Professional Exterior Cleaning Services<br>
+              White Rock, Surrey & Metro Vancouver<br>
+              <a href="https://bcpressurewashing.ca" style="color: #fbbf24; text-decoration: none;">bcpressurewashing.ca</a> | Fully Insured & Bonded
+            </p>
+          </div>
+        </body>
+      </html>
+    `;
   };
 
   const copyToClipboard = (text: string, type: string) => {
@@ -420,12 +545,12 @@ BC Pressure Washing<br>
           </TabsContent>
 
           <TabsContent value="email" className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded-lg border max-h-96 overflow-y-auto">
-              <div dangerouslySetInnerHTML={{ __html: generateEmailText().replace(/\n/g, '<br>') }} />
+            <div className="bg-white border rounded-lg overflow-hidden max-h-96 overflow-y-auto">
+              <div dangerouslySetInnerHTML={{ __html: generateEmailHTML() }} />
             </div>
-            <Button onClick={() => copyToClipboard(generateEmailText(), 'Email')} className="w-full">
+            <Button onClick={() => copyToClipboard(generateEmailHTML(), 'Email HTML')} className="w-full">
               <Copy className="w-4 h-4 mr-2" />
-              Copy Email Content
+              Copy Email HTML
             </Button>
           </TabsContent>
 
@@ -441,11 +566,11 @@ BC Pressure Washing<br>
         </Tabs>
 
         <div className="flex gap-2 mt-6">
-          <Button variant="outline" className="flex-1" onClick={sendSMS} disabled={!quoteData.phone}>
+          <Button variant="outline" className="flex-1" onClick={() => window.open(`sms:${quoteData.phone?.replace(/\D/g, '')}?body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.phone}>
             <MessageSquare className="w-4 h-4 mr-2" />
             Send SMS
           </Button>
-          <Button variant="outline" className="flex-1" onClick={sendEmail} disabled={!quoteData.email}>
+          <Button variant="outline" className="flex-1" onClick={() => window.open(`mailto:${quoteData.email}?subject=${encodeURIComponent(`Your Professional Quote - ${quoteData.customerName}`)}&body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.email}>
             <Mail className="w-4 h-4 mr-2" />
             Send Email
           </Button>
