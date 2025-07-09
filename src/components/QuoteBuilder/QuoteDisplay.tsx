@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,8 +29,7 @@ interface QuoteResult {
     price: number;
   }>;
   subtotal: number;
-  gst: number;
-  pst: number;
+  tax: number;
   total: number;
 }
 
@@ -91,9 +89,7 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
         addOns: quoteResult.addOns.map(a => a.name),
         houseSize: quoteData.houseSize,
         address: quoteData.address,
-        notes: quoteData.notes,
-        // Add the full quote text for SMS
-        quoteText: generateSMSText()
+        notes: quoteData.notes
       };
 
       console.log('Sending confirmation data:', confirmationData);
@@ -123,18 +119,14 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
       ? '\n\nAdd-ons:\n' + quoteResult.addOns.map(a => `• ${a.name}: ${formatCurrency(a.price)}`).join('\n')
       : '';
     
-    const taxBreakdown = [];
-    if (quoteResult.gst > 0) taxBreakdown.push(`GST (7%): ${formatCurrency(quoteResult.gst)}`);
-    if (quoteResult.pst > 0) taxBreakdown.push(`PST (7%): ${formatCurrency(quoteResult.pst)}`);
-    const taxText = taxBreakdown.length > 0 ? '\n' + taxBreakdown.join('\n') : '';
-    
     return `Hi ${quoteData.customerName}! 
 
 Here's your pressure washing quote for ${quoteData.address}:
 
 ${servicesText}${addOnsText}
 
-Subtotal: ${formatCurrency(quoteResult.subtotal)}${taxText}
+Subtotal: ${formatCurrency(quoteResult.subtotal)}
+Tax (12%): ${formatCurrency(quoteResult.tax)}
 TOTAL: ${formatCurrency(quoteResult.total)}
 
 ${quoteData.notes ? `Notes: ${quoteData.notes}\n\n` : ''}All work comes with our satisfaction guarantee!
@@ -187,7 +179,7 @@ Reply YES to book or call for questions!`;
               <div style="font-size: 52px; font-weight: bold; color: #059669; margin: 12px 0; text-shadow: 0 1px 2px rgba(5, 150, 105, 0.1);">
                 ${formatCurrency(quoteResult.total)}
               </div>
-              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Final price confirmed after property inspection</p>
+              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Includes 12% tax | Final price confirmed after property inspection</p>
             </div>
 
             <!-- Property Details -->  
@@ -219,15 +211,11 @@ Reply YES to book or call for questions!`;
                 <span style="color: #4b5563;">Subtotal:</span>
                 <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.subtotal)}</span>
               </div>
-              ${quoteResult.gst > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
-                <span style="color: #4b5563;">GST (7%):</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.gst)}</span>
-              </div>` : ''}
-              ${quoteResult.pst > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
-                <span style="color: #4b5563;">PST (7%):</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.pst)}</span>
-              </div>` : ''}
-              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669; padding-top: 20px; border-top: 2px solid #d1d5db;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 17px; padding-bottom: 20px; border-bottom: 2px solid #d1d5db;">
+                <span style="color: #4b5563;">Tax (12%):</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.tax)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669;">
                 <span>TOTAL:</span>
                 <span>${formatCurrency(quoteResult.total)}</span>
               </div>
@@ -409,8 +397,7 @@ Reply YES to book or call for questions!`;
 
           <div class="total-section">
             <div class="total-row"><strong>Subtotal:</strong> ${formatCurrency(quoteResult.subtotal)}</div>
-            ${quoteResult.gst > 0 ? `<div class="total-row"><strong>GST (7%):</strong> ${formatCurrency(quoteResult.gst)}</div>` : ''}
-            ${quoteResult.pst > 0 ? `<div class="total-row"><strong>PST (7%):</strong> ${formatCurrency(quoteResult.pst)}</div>` : ''}
+            <div class="total-row"><strong>Tax (12%):</strong> ${formatCurrency(quoteResult.tax)}</div>
             <div class="final-total">TOTAL: ${formatCurrency(quoteResult.total)}</div>
           </div>
 
@@ -451,6 +438,20 @@ Reply YES to book or call for questions!`;
     }
   };
 
+  const sendSMS = () => {
+    const smsText = generateSMSText();
+    const phoneNumber = quoteData.phone.replace(/\D/g, '');
+    const smsUrl = `sms:${phoneNumber}?body=${encodeURIComponent(smsText)}`;
+    window.open(smsUrl, '_blank');
+  };
+
+  const sendEmail = () => {
+    const smsText = generateSMSText(); // Use SMS text for plain text email body
+    const subject = `Your Pressure Washing Quote - ${quoteData.customerName}`;
+    const mailtoUrl = `mailto:${quoteData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(smsText)}`;
+    window.open(mailtoUrl, '_blank');
+  };
+
   const sendManualEmail = async () => {
     try {
       await sendViaSupabase();
@@ -463,23 +464,6 @@ Reply YES to book or call for questions!`;
       toast({
         title: "Email Failed",
         description: "Could not send email. Please try copying the content instead.",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const sendManualSMS = async () => {
-    try {
-      await sendViaSupabase();
-      toast({
-        title: "SMS Sent!",
-        description: "Quote SMS sent successfully via Supabase",
-      });
-    } catch (error) {
-      console.error('Manual SMS send failed:', error);
-      toast({
-        title: "SMS Failed",
-        description: "Could not send SMS. Please try copying the content instead.",
         variant: "destructive"
       });
     }
@@ -547,12 +531,7 @@ Reply YES to book or call for questions!`;
 
               <div className="text-right text-lg mb-6">
                 <div className="mb-2"><strong>Subtotal:</strong> {formatCurrency(quoteResult.subtotal)}</div>
-                {quoteResult.gst > 0 && (
-                  <div className="mb-2"><strong>GST (7%):</strong> {formatCurrency(quoteResult.gst)}</div>
-                )}
-                {quoteResult.pst > 0 && (
-                  <div className="mb-2"><strong>PST (7%):</strong> {formatCurrency(quoteResult.pst)}</div>
-                )}
+                <div className="mb-2"><strong>Tax (12%):</strong> {formatCurrency(quoteResult.tax)}</div>
                 <div className="text-xl font-bold text-red-600 border-t-2 border-gray-300 pt-2">
                   TOTAL: {formatCurrency(quoteResult.total)}
                 </div>
@@ -615,7 +594,7 @@ Reply YES to book or call for questions!`;
         </Tabs>
 
         <div className="flex gap-2 mt-6">
-          <Button variant="outline" className="flex-1" onClick={sendManualSMS} disabled={!quoteData.phone}>
+          <Button variant="outline" className="flex-1" onClick={() => window.open(`sms:${quoteData.phone?.replace(/\D/g, '')}?body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.phone}>
             <MessageSquare className="w-4 h-4 mr-2" />
             Send SMS
           </Button>
