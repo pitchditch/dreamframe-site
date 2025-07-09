@@ -10,7 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Calculator, Download, Send, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QuoteDisplay from './QuoteDisplay';
-import { calculateQuotePrice, formatCurrency } from './utils/quoteCalculations';
+import { formatCurrency } from './utils/quoteCalculations';
 
 interface QuoteData {
   customerName: string;
@@ -23,6 +23,16 @@ interface QuoteData {
   addOns: string[];
 }
 
+interface ServicePrice {
+  serviceId: string;
+  price: number;
+}
+
+interface AddOnPrice {
+  addOnId: string;
+  price: number;
+}
+
 interface QuoteResult {
   services: Array<{
     name: string;
@@ -33,7 +43,8 @@ interface QuoteResult {
     price: number;
   }>;
   subtotal: number;
-  tax: number;
+  gst: number;
+  pst: number;
   total: number;
 }
 
@@ -50,6 +61,10 @@ const QuoteBuilderForm = () => {
     addOns: []
   });
   
+  const [servicePrices, setServicePrices] = useState<ServicePrice[]>([]);
+  const [addOnPrices, setAddOnPrices] = useState<AddOnPrice[]>([]);
+  const [applyGST, setApplyGST] = useState(true);
+  const [applyPST, setApplyPST] = useState(false);
   const [quoteResult, setQuoteResult] = useState<QuoteResult | null>(null);
   const [showQuote, setShowQuote] = useState(false);
 
@@ -61,42 +76,82 @@ const QuoteBuilderForm = () => {
   ];
 
   const serviceOptions = [
-    { id: 'window-outside', label: 'Window Cleaning (Outside)' },
-    { id: 'window-inside', label: 'Window Cleaning (Inside)' },
-    { id: 'window-both', label: 'Window Cleaning (Both Sides)' },
-    { id: 'house-wash', label: 'House Washing' },
-    { id: 'house-wash-windows', label: 'House Wash + Windows' },
-    { id: 'driveway', label: 'Driveway Washing' },
-    { id: 'driveway-house', label: 'Driveway + House Washing' },
-    { id: 'gutter-inside', label: 'Gutter Cleaning (Inside)' },
-    { id: 'gutter-outside', label: 'Gutter Cleaning (Outside)' },
-    { id: 'gutter-both', label: 'Gutter Cleaning (Both)' },
-    { id: 'roof', label: 'Roof Cleaning' }
+    { id: 'window-outside', label: 'Window Cleaning (Outside)', defaultPrice: 300 },
+    { id: 'window-inside', label: 'Window Cleaning (Inside)', defaultPrice: 300 },
+    { id: 'window-both', label: 'Window Cleaning (Both Sides)', defaultPrice: 550 },
+    { id: 'house-wash', label: 'House Washing', defaultPrice: 400 },
+    { id: 'house-wash-windows', label: 'House Wash + Windows', defaultPrice: 650 },
+    { id: 'driveway', label: 'Driveway Washing', defaultPrice: 300 },
+    { id: 'driveway-house', label: 'Driveway + House Washing', defaultPrice: 650 },
+    { id: 'gutter-inside', label: 'Gutter Cleaning (Inside)', defaultPrice: 300 },
+    { id: 'gutter-outside', label: 'Gutter Cleaning (Outside)', defaultPrice: 200 },
+    { id: 'gutter-both', label: 'Gutter Cleaning (Both)', defaultPrice: 450 },
+    { id: 'roof', label: 'Roof Cleaning', defaultPrice: 500 }
   ];
 
   const addOnOptions = [
-    { id: 'deck-wash', label: 'Deck Washing', price: 250 },
-    { id: 'fence-wash', label: 'Fence Washing', price: 200 },
-    { id: 'garage-floor', label: 'Garage Floor Cleaning', price: 150 },
-    { id: 'concrete-sealing', label: 'Concrete Sealing', price: 300 }
+    { id: 'deck-wash', label: 'Deck Washing', defaultPrice: 250 },
+    { id: 'fence-wash', label: 'Fence Washing', defaultPrice: 200 },
+    { id: 'garage-floor', label: 'Garage Floor Cleaning', defaultPrice: 150 },
+    { id: 'concrete-sealing', label: 'Concrete Sealing', defaultPrice: 300 }
   ];
 
   const handleServiceChange = (serviceId: string, checked: boolean) => {
-    setQuoteData(prev => ({
-      ...prev,
-      services: checked 
-        ? [...prev.services, serviceId]
-        : prev.services.filter(s => s !== serviceId)
-    }));
+    if (checked) {
+      setQuoteData(prev => ({
+        ...prev,
+        services: [...prev.services, serviceId]
+      }));
+      
+      // Add default price for the service
+      const service = serviceOptions.find(s => s.id === serviceId);
+      if (service && !servicePrices.find(sp => sp.serviceId === serviceId)) {
+        setServicePrices(prev => [...prev, { serviceId, price: service.defaultPrice }]);
+      }
+    } else {
+      setQuoteData(prev => ({
+        ...prev,
+        services: prev.services.filter(s => s !== serviceId)
+      }));
+      
+      // Remove price for the service
+      setServicePrices(prev => prev.filter(sp => sp.serviceId !== serviceId));
+    }
   };
 
   const handleAddOnChange = (addOnId: string, checked: boolean) => {
-    setQuoteData(prev => ({
-      ...prev,
-      addOns: checked 
-        ? [...prev.addOns, addOnId]
-        : prev.addOns.filter(a => a !== addOnId)
-    }));
+    if (checked) {
+      setQuoteData(prev => ({
+        ...prev,
+        addOns: [...prev.addOns, addOnId]
+      }));
+      
+      // Add default price for the add-on
+      const addOn = addOnOptions.find(a => a.id === addOnId);
+      if (addOn && !addOnPrices.find(ap => ap.addOnId === addOnId)) {
+        setAddOnPrices(prev => [...prev, { addOnId, price: addOn.defaultPrice }]);
+      }
+    } else {
+      setQuoteData(prev => ({
+        ...prev,
+        addOns: prev.addOns.filter(a => a !== addOnId)
+      }));
+      
+      // Remove price for the add-on
+      setAddOnPrices(prev => prev.filter(ap => ap.addOnId !== addOnId));
+    }
+  };
+
+  const handleServicePriceChange = (serviceId: string, price: number) => {
+    setServicePrices(prev => 
+      prev.map(sp => sp.serviceId === serviceId ? { ...sp, price } : sp)
+    );
+  };
+
+  const handleAddOnPriceChange = (addOnId: string, price: number) => {
+    setAddOnPrices(prev => 
+      prev.map(ap => ap.addOnId === addOnId ? { ...ap, price } : ap)
+    );
   };
 
   const calculateQuote = () => {
@@ -109,7 +164,40 @@ const QuoteBuilderForm = () => {
       return;
     }
 
-    const result = calculateQuotePrice(quoteData.houseSize, quoteData.services, quoteData.addOns, addOnOptions);
+    const services = quoteData.services.map(serviceId => {
+      const service = serviceOptions.find(s => s.id === serviceId);
+      const priceData = servicePrices.find(sp => sp.serviceId === serviceId);
+      return {
+        name: service?.label || serviceId,
+        price: priceData?.price || 0
+      };
+    });
+
+    const addOns = quoteData.addOns.map(addOnId => {
+      const addOn = addOnOptions.find(a => a.id === addOnId);
+      const priceData = addOnPrices.find(ap => ap.addOnId === addOnId);
+      return {
+        name: addOn?.label || addOnId,
+        price: priceData?.price || 0
+      };
+    });
+
+    const subtotal = services.reduce((sum, s) => sum + s.price, 0) + 
+                    addOns.reduce((sum, a) => sum + a.price, 0);
+
+    const gst = applyGST ? subtotal * 0.07 : 0;
+    const pst = applyPST ? subtotal * 0.07 : 0;
+    const total = subtotal + gst + pst;
+
+    const result = {
+      services,
+      addOns,
+      subtotal,
+      gst,
+      pst,
+      total
+    };
+
     setQuoteResult(result);
     setShowQuote(true);
   };
@@ -125,6 +213,10 @@ const QuoteBuilderForm = () => {
       notes: '',
       addOns: []
     });
+    setServicePrices([]);
+    setAddOnPrices([]);
+    setApplyGST(true);
+    setApplyPST(false);
     setQuoteResult(null);
     setShowQuote(false);
   };
@@ -205,17 +297,32 @@ const QuoteBuilderForm = () => {
           {/* Services Selection */}
           <div className="space-y-3">
             <Label>Services Required *</Label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-3">
               {serviceOptions.map(service => (
-                <div key={service.id} className="flex items-center space-x-2">
+                <div key={service.id} className="flex items-center space-x-4 p-3 border rounded-lg">
                   <Checkbox
                     id={service.id}
                     checked={quoteData.services.includes(service.id)}
                     onCheckedChange={(checked) => handleServiceChange(service.id, checked as boolean)}
                   />
-                  <Label htmlFor={service.id} className="text-sm">
-                    {service.label}
-                  </Label>
+                  <div className="flex-1">
+                    <Label htmlFor={service.id} className="text-sm font-medium">
+                      {service.label}
+                    </Label>
+                  </div>
+                  {quoteData.services.includes(service.id) && (
+                    <div className="flex items-center space-x-2">
+                      <Label className="text-sm">Price:</Label>
+                      <Input
+                        type="number"
+                        value={servicePrices.find(sp => sp.serviceId === service.id)?.price || service.defaultPrice}
+                        onChange={(e) => handleServicePriceChange(service.id, parseFloat(e.target.value) || 0)}
+                        className="w-24"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -224,19 +331,61 @@ const QuoteBuilderForm = () => {
           {/* Add-ons Selection */}
           <div className="space-y-3">
             <Label>Optional Add-ons</Label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-3">
               {addOnOptions.map(addOn => (
-                <div key={addOn.id} className="flex items-center space-x-2">
+                <div key={addOn.id} className="flex items-center space-x-4 p-3 border rounded-lg">
                   <Checkbox
                     id={addOn.id}
                     checked={quoteData.addOns.includes(addOn.id)}
                     onCheckedChange={(checked) => handleAddOnChange(addOn.id, checked as boolean)}
                   />
-                  <Label htmlFor={addOn.id} className="text-sm">
-                    {addOn.label} (+{formatCurrency(addOn.price)})
-                  </Label>
+                  <div className="flex-1">
+                    <Label htmlFor={addOn.id} className="text-sm font-medium">
+                      {addOn.label}
+                    </Label>
+                  </div>
+                  {quoteData.addOns.includes(addOn.id) && (
+                    <div className="flex items-center space-x-2">
+                      <Label className="text-sm">Price:</Label>
+                      <Input
+                        type="number"
+                        value={addOnPrices.find(ap => ap.addOnId === addOn.id)?.price || addOn.defaultPrice}
+                        onChange={(e) => handleAddOnPriceChange(addOn.id, parseFloat(e.target.value) || 0)}
+                        className="w-24"
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Tax Settings */}
+          <div className="space-y-3">
+            <Label>Tax Settings</Label>
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="gst"
+                  checked={applyGST}
+                  onCheckedChange={(checked) => setApplyGST(checked as boolean)}
+                />
+                <Label htmlFor="gst" className="text-sm">
+                  Apply GST (7%)
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="pst"
+                  checked={applyPST}
+                  onCheckedChange={(checked) => setApplyPST(checked as boolean)}
+                />
+                <Label htmlFor="pst" className="text-sm">
+                  Apply PST (7%)
+                </Label>
+              </div>
             </div>
           </div>
 
