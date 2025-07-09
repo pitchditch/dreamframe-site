@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -64,7 +63,9 @@ const QuoteBuilderForm = () => {
   const [servicePrices, setServicePrices] = useState<ServicePrice[]>([]);
   const [addOnPrices, setAddOnPrices] = useState<AddOnPrice[]>([]);
   const [applyGST, setApplyGST] = useState(true);
+  const [gstRate, setGstRate] = useState(7);
   const [applyPST, setApplyPST] = useState(false);
+  const [pstRate, setPstRate] = useState(7);
   const [quoteResult, setQuoteResult] = useState<QuoteResult | null>(null);
   const [showQuote, setShowQuote] = useState(false);
 
@@ -103,7 +104,6 @@ const QuoteBuilderForm = () => {
         services: [...prev.services, serviceId]
       }));
       
-      // Add default price for the service
       const service = serviceOptions.find(s => s.id === serviceId);
       if (service && !servicePrices.find(sp => sp.serviceId === serviceId)) {
         setServicePrices(prev => [...prev, { serviceId, price: service.defaultPrice }]);
@@ -114,7 +114,6 @@ const QuoteBuilderForm = () => {
         services: prev.services.filter(s => s !== serviceId)
       }));
       
-      // Remove price for the service
       setServicePrices(prev => prev.filter(sp => sp.serviceId !== serviceId));
     }
   };
@@ -126,7 +125,6 @@ const QuoteBuilderForm = () => {
         addOns: [...prev.addOns, addOnId]
       }));
       
-      // Add default price for the add-on
       const addOn = addOnOptions.find(a => a.id === addOnId);
       if (addOn && !addOnPrices.find(ap => ap.addOnId === addOnId)) {
         setAddOnPrices(prev => [...prev, { addOnId, price: addOn.defaultPrice }]);
@@ -137,7 +135,6 @@ const QuoteBuilderForm = () => {
         addOns: prev.addOns.filter(a => a !== addOnId)
       }));
       
-      // Remove price for the add-on
       setAddOnPrices(prev => prev.filter(ap => ap.addOnId !== addOnId));
     }
   };
@@ -185,8 +182,8 @@ const QuoteBuilderForm = () => {
     const subtotal = services.reduce((sum, s) => sum + s.price, 0) + 
                     addOns.reduce((sum, a) => sum + a.price, 0);
 
-    const gst = applyGST ? subtotal * 0.07 : 0;
-    const pst = applyPST ? subtotal * 0.07 : 0;
+    const gst = applyGST ? subtotal * (gstRate / 100) : 0;
+    const pst = applyPST ? subtotal * (pstRate / 100) : 0;
     const total = subtotal + gst + pst;
 
     const result = {
@@ -216,7 +213,9 @@ const QuoteBuilderForm = () => {
     setServicePrices([]);
     setAddOnPrices([]);
     setApplyGST(true);
+    setGstRate(7);
     setApplyPST(false);
+    setPstRate(7);
     setQuoteResult(null);
     setShowQuote(false);
   };
@@ -365,26 +364,55 @@ const QuoteBuilderForm = () => {
           {/* Tax Settings */}
           <div className="space-y-3">
             <Label>Tax Settings</Label>
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center space-x-4 p-3 border rounded-lg">
                 <Checkbox
                   id="gst"
                   checked={applyGST}
                   onCheckedChange={(checked) => setApplyGST(checked as boolean)}
                 />
-                <Label htmlFor="gst" className="text-sm">
-                  Apply GST (7%)
+                <Label htmlFor="gst" className="text-sm flex-1">
+                  Apply GST
                 </Label>
+                {applyGST && (
+                  <div className="flex items-center space-x-2">
+                    <Input
+                      type="number"
+                      value={gstRate}
+                      onChange={(e) => setGstRate(parseFloat(e.target.value) || 0)}
+                      className="w-16"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                    />
+                    <span className="text-sm">%</span>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center space-x-2">
+              
+              <div className="flex items-center space-x-4 p-3 border rounded-lg">
                 <Checkbox
                   id="pst"
                   checked={applyPST}
                   onCheckedChange={(checked) => setApplyPST(checked as boolean)}
                 />
-                <Label htmlFor="pst" className="text-sm">
-                  Apply PST (7%)
+                <Label htmlFor="pst" className="text-sm flex-1">
+                  Apply PST
                 </Label>
+                {applyPST && (
+                  <div className="flex items-center space-x-2">
+                    <Input
+                      type="number"
+                      value={pstRate}
+                      onChange={(e) => setPstRate(parseFloat(e.target.value) || 0)}
+                      className="w-16"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                    />
+                    <span className="text-sm">%</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
