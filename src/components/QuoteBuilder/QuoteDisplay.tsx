@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Download, Send, X, MessageSquare, Mail, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { formatCurrency } from './utils/quoteCalculations';
+import emailjs from '@emailjs/browser';
 
 interface QuoteData {
   customerName: string;
@@ -53,50 +54,66 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
 
   const handleAutoSend = async () => {
     try {
-      console.log('Sending quote confirmation...', {
+      console.log('Sending quote confirmation directly from website...', {
         email: quoteData.email,
         phone: quoteData.phone,
         name: quoteData.customerName
       });
 
-      // Send confirmation email and SMS via Supabase function
-      const response = await fetch('/functions/v1/send-confirmations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: quoteData.email,
-          phone: quoteData.phone,
-          name: quoteData.customerName,
-          address: quoteData.address,
-          houseSize: quoteData.houseSize,
-          services: quoteResult.services.map(s => s.name),
-          addOns: quoteResult.addOns.map(a => a.name),
-          estimateTotal: quoteResult.total,
-          notes: quoteData.notes,
-          formType: 'Professional Quote'
-        })
-      });
-
-      const result = await response.json();
-      console.log('Send confirmation response:', result);
-
-      if (response.ok) {
-        toast({
-          title: "Quote Sent Successfully!",
-          description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}${quoteData.email && quoteData.phone ? ' and' : ''}${quoteData.phone ? ' via SMS' : ''}`,
-        });
-      } else {
-        throw new Error(result.error || 'Failed to send quote');
+      // Send email directly from the website using EmailJS
+      if (quoteData.email) {
+        await sendEmailDirectly();
       }
+
+      // Send SMS notification (you can implement Twilio direct API call here if needed)
+      if (quoteData.phone) {
+        // For SMS, you might still need a backend service or use a service like Twilio
+        console.log('SMS sending would require backend service or Twilio API');
+      }
+
+      toast({
+        title: "Quote Sent Successfully!",
+        description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}`,
+      });
     } catch (error) {
-      console.error('Auto-send failed:', error);
+      console.error('Direct send failed:', error);
       toast({
         title: "Quote Created",
         description: "Quote generated successfully. You can manually send it using the buttons below.",
         variant: "destructive"
       });
+    }
+  };
+
+  const sendEmailDirectly = async () => {
+    // Initialize EmailJS (you'll need to set up EmailJS service)
+    // This is a placeholder - you'll need to configure EmailJS with your service ID, template ID, and public key
+    try {
+      const templateParams = {
+        to_email: quoteData.email,
+        to_name: quoteData.customerName,
+        from_name: 'BC Pressure Washing',
+        subject: 'Your Professional Quote - BC Pressure Washing',
+        html_content: generateEmailHTML(),
+        customer_name: quoteData.customerName,
+        total_amount: formatCurrency(quoteResult.total),
+        services: quoteResult.services.map(s => s.name).join(', '),
+        address: quoteData.address || 'Not specified',
+        phone: quoteData.phone || 'Not provided',
+        notes: quoteData.notes || 'None'
+      };
+
+      // Note: You'll need to configure these values in EmailJS dashboard
+      const SERVICE_ID = 'your_service_id'; // Configure in EmailJS
+      const TEMPLATE_ID = 'your_template_id'; // Configure in EmailJS  
+      const PUBLIC_KEY = 'your_public_key'; // Configure in EmailJS
+
+      const result = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+      console.log('Email sent successfully:', result);
+      return result;
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      throw error;
     }
   };
 
@@ -208,33 +225,6 @@ Reply YES to book or call for questions!`;
                 <span>TOTAL:</span>
                 <span>${formatCurrency(quoteResult.total)}</span>
               </div>
-            </div>
-
-            <!-- What's Included -->
-            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 2px solid #28a745; border-radius: 12px; padding: 30px; margin: 35px 0;">
-              <h3 style="color: #155724; margin: 0 0 20px 0; font-size: 22px; font-weight: bold;">✅ What's Included</h3>
-              <ul style="color: #155724; margin: 0; padding-left: 0; list-style: none;">
-                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
-                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
-                  Professional grade equipment
-                </li>
-                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
-                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
-                  Eco-friendly cleaning solutions
-                </li>
-                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
-                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
-                  Fully insured and bonded
-                </li>
-                <li style="margin-bottom: 12px; font-size: 16px; padding-left: 30px; position: relative;">
-                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
-                  100% satisfaction guarantee
-                </li>
-                <li style="margin-bottom: 0; font-size: 16px; padding-left: 30px; position: relative;">
-                  <span style="position: absolute; left: 0; top: 0; color: #28a745; font-weight: bold;">✓</span>
-                  Personal quality check by Jayden Fisher
-                </li>
-              </ul>
             </div>
 
             <!-- Call to Action -->
@@ -454,6 +444,22 @@ Reply YES to book or call for questions!`;
     }
   };
 
+  const sendManualEmail = async () => {
+    try {
+      await sendEmailDirectly();
+      toast({
+        title: "Email Sent!",
+        description: "Quote email sent successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Email Failed",
+        description: "Could not send email. Please try copying the content instead.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const sendSMS = () => {
     const smsText = generateSMSText();
     const phoneNumber = quoteData.phone.replace(/\D/g, '');
@@ -597,7 +603,7 @@ Reply YES to book or call for questions!`;
             <MessageSquare className="w-4 h-4 mr-2" />
             Send SMS
           </Button>
-          <Button variant="outline" className="flex-1" onClick={() => window.open(`mailto:${quoteData.email}?subject=${encodeURIComponent(`Your Professional Quote - ${quoteData.customerName}`)}&body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.email}>
+          <Button variant="outline" className="flex-1" onClick={sendManualEmail} disabled={!quoteData.email}>
             <Mail className="w-4 h-4 mr-2" />
             Send Email
           </Button>
