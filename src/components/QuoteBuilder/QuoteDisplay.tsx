@@ -4,8 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Download, Send, X, MessageSquare, Mail, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { formatCurrency } from './utils/quoteCalculations';
 import { supabase } from '@/integrations/supabase/client';
+
+const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    minimumFractionDigits: 2
+  }).format(amount);
+};
 
 interface QuoteData {
   customerName: string;
@@ -29,7 +36,8 @@ interface QuoteResult {
     price: number;
   }>;
   subtotal: number;
-  tax: number;
+  gst: number;
+  pst: number;
   total: number;
 }
 
@@ -119,6 +127,10 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
       ? '\n\nAdd-ons:\n' + quoteResult.addOns.map(a => `• ${a.name}: ${formatCurrency(a.price)}`).join('\n')
       : '';
     
+    const taxBreakdown = [];
+    if (quoteResult.gst > 0) taxBreakdown.push(`GST (7%): ${formatCurrency(quoteResult.gst)}`);
+    if (quoteResult.pst > 0) taxBreakdown.push(`PST: ${formatCurrency(quoteResult.pst)}`);
+    
     return `Hi ${quoteData.customerName}! 
 
 Here's your pressure washing quote for ${quoteData.address}:
@@ -126,7 +138,7 @@ Here's your pressure washing quote for ${quoteData.address}:
 ${servicesText}${addOnsText}
 
 Subtotal: ${formatCurrency(quoteResult.subtotal)}
-Tax (12%): ${formatCurrency(quoteResult.tax)}
+${taxBreakdown.join('\n')}
 TOTAL: ${formatCurrency(quoteResult.total)}
 
 ${quoteData.notes ? `Notes: ${quoteData.notes}\n\n` : ''}All work comes with our satisfaction guarantee!
@@ -179,7 +191,7 @@ Reply YES to book or call for questions!`;
               <div style="font-size: 52px; font-weight: bold; color: #059669; margin: 12px 0; text-shadow: 0 1px 2px rgba(5, 150, 105, 0.1);">
                 ${formatCurrency(quoteResult.total)}
               </div>
-              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Includes 12% tax | Final price confirmed after property inspection</p>
+              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Final price confirmed after property inspection</p>
             </div>
 
             <!-- Property Details -->  
@@ -211,11 +223,15 @@ Reply YES to book or call for questions!`;
                 <span style="color: #4b5563;">Subtotal:</span>
                 <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.subtotal)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 17px; padding-bottom: 20px; border-bottom: 2px solid #d1d5db;">
-                <span style="color: #4b5563;">Tax (12%):</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.tax)}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669;">
+              ${quoteResult.gst > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
+                <span style="color: #4b5563;">GST (7%):</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.gst)}</span>
+              </div>` : ''}
+              ${quoteResult.pst > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 17px;">
+                <span style="color: #4b5563;">PST:</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.pst)}</span>
+              </div>` : ''}
+              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669; border-top: 2px solid #d1d5db; padding-top: 20px;">
                 <span>TOTAL:</span>
                 <span>${formatCurrency(quoteResult.total)}</span>
               </div>
@@ -397,7 +413,8 @@ Reply YES to book or call for questions!`;
 
           <div class="total-section">
             <div class="total-row"><strong>Subtotal:</strong> ${formatCurrency(quoteResult.subtotal)}</div>
-            <div class="total-row"><strong>Tax (12%):</strong> ${formatCurrency(quoteResult.tax)}</div>
+            ${quoteResult.gst > 0 ? `<div class="total-row"><strong>GST (7%):</strong> ${formatCurrency(quoteResult.gst)}</div>` : ''}
+            ${quoteResult.pst > 0 ? `<div class="total-row"><strong>PST:</strong> ${formatCurrency(quoteResult.pst)}</div>` : ''}
             <div class="final-total">TOTAL: ${formatCurrency(quoteResult.total)}</div>
           </div>
 
@@ -531,7 +548,8 @@ Reply YES to book or call for questions!`;
 
               <div className="text-right text-lg mb-6">
                 <div className="mb-2"><strong>Subtotal:</strong> {formatCurrency(quoteResult.subtotal)}</div>
-                <div className="mb-2"><strong>Tax (12%):</strong> {formatCurrency(quoteResult.tax)}</div>
+                {quoteResult.gst > 0 && <div className="mb-2"><strong>GST (7%):</strong> {formatCurrency(quoteResult.gst)}</div>}
+                {quoteResult.pst > 0 && <div className="mb-2"><strong>PST:</strong> {formatCurrency(quoteResult.pst)}</div>}
                 <div className="text-xl font-bold text-red-600 border-t-2 border-gray-300 pt-2">
                   TOTAL: {formatCurrency(quoteResult.total)}
                 </div>

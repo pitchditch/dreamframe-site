@@ -10,7 +10,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Calculator, Download, Send, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QuoteDisplay from './QuoteDisplay';
-import { calculateQuotePrice, formatCurrency } from './utils/quoteCalculations';
+
+const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    minimumFractionDigits: 2
+  }).format(amount);
+};
 
 interface QuoteData {
   customerName: string;
@@ -23,6 +30,20 @@ interface QuoteData {
   addOns: string[];
 }
 
+interface ServicePrice {
+  id: string;
+  name: string;
+  price: number;
+  selected: boolean;
+}
+
+interface AddOnPrice {
+  id: string;
+  name: string;
+  price: number;
+  selected: boolean;
+}
+
 interface QuoteResult {
   services: Array<{
     name: string;
@@ -33,7 +54,8 @@ interface QuoteResult {
     price: number;
   }>;
   subtotal: number;
-  tax: number;
+  gst: number;
+  pst: number;
   total: number;
 }
 
@@ -50,6 +72,32 @@ const QuoteBuilderForm = () => {
     addOns: []
   });
   
+  const [servicePrices, setServicePrices] = useState<ServicePrice[]>([
+    { id: 'window-outside', name: 'Window Cleaning (Outside)', price: 300, selected: false },
+    { id: 'window-inside', name: 'Window Cleaning (Inside)', price: 300, selected: false },
+    { id: 'window-both', name: 'Window Cleaning (Both Sides)', price: 550, selected: false },
+    { id: 'house-wash', name: 'House Washing', price: 400, selected: false },
+    { id: 'house-wash-windows', name: 'House Wash + Windows', price: 650, selected: false },
+    { id: 'driveway', name: 'Driveway Washing', price: 300, selected: false },
+    { id: 'driveway-house', name: 'Driveway + House Washing', price: 650, selected: false },
+    { id: 'gutter-inside', name: 'Gutter Cleaning (Inside)', price: 350, selected: false },
+    { id: 'gutter-outside', name: 'Gutter Cleaning (Outside)', price: 200, selected: false },
+    { id: 'gutter-both', name: 'Gutter Cleaning (Both)', price: 500, selected: false },
+    { id: 'roof', name: 'Roof Cleaning', price: 800, selected: false }
+  ]);
+
+  const [addOnPrices, setAddOnPrices] = useState<AddOnPrice[]>([
+    { id: 'deck-wash', name: 'Deck Washing', price: 250, selected: false },
+    { id: 'fence-wash', name: 'Fence Washing', price: 200, selected: false },
+    { id: 'garage-floor', name: 'Garage Floor Cleaning', price: 150, selected: false },
+    { id: 'concrete-sealing', name: 'Concrete Sealing', price: 300, selected: false }
+  ]);
+
+  // Tax controls
+  const [gstRate] = useState(7); // GST is always 7%
+  const [applyPst, setApplyPst] = useState(false);
+  const [pstRate, setPstRate] = useState(7); // Default PST rate for BC
+
   const [quoteResult, setQuoteResult] = useState<QuoteResult | null>(null);
   const [showQuote, setShowQuote] = useState(false);
 
@@ -60,56 +108,92 @@ const QuoteBuilderForm = () => {
     { value: 'xlarge', label: '3,500+ sqft (X-Large)' }
   ];
 
-  const serviceOptions = [
-    { id: 'window-outside', label: 'Window Cleaning (Outside)' },
-    { id: 'window-inside', label: 'Window Cleaning (Inside)' },
-    { id: 'window-both', label: 'Window Cleaning (Both Sides)' },
-    { id: 'house-wash', label: 'House Washing' },
-    { id: 'house-wash-windows', label: 'House Wash + Windows' },
-    { id: 'driveway', label: 'Driveway Washing' },
-    { id: 'driveway-house', label: 'Driveway + House Washing' },
-    { id: 'gutter-inside', label: 'Gutter Cleaning (Inside)' },
-    { id: 'gutter-outside', label: 'Gutter Cleaning (Outside)' },
-    { id: 'gutter-both', label: 'Gutter Cleaning (Both)' },
-    { id: 'roof', label: 'Roof Cleaning' }
-  ];
-
-  const addOnOptions = [
-    { id: 'deck-wash', label: 'Deck Washing', price: 250 },
-    { id: 'fence-wash', label: 'Fence Washing', price: 200 },
-    { id: 'garage-floor', label: 'Garage Floor Cleaning', price: 150 },
-    { id: 'concrete-sealing', label: 'Concrete Sealing', price: 300 }
-  ];
-
-  const handleServiceChange = (serviceId: string, checked: boolean) => {
-    setQuoteData(prev => ({
-      ...prev,
-      services: checked 
-        ? [...prev.services, serviceId]
-        : prev.services.filter(s => s !== serviceId)
-    }));
+  const handleServiceToggle = (serviceId: string, checked: boolean) => {
+    setServicePrices(prev => 
+      prev.map(service => 
+        service.id === serviceId 
+          ? { ...service, selected: checked }
+          : service
+      )
+    );
   };
 
-  const handleAddOnChange = (addOnId: string, checked: boolean) => {
-    setQuoteData(prev => ({
-      ...prev,
-      addOns: checked 
-        ? [...prev.addOns, addOnId]
-        : prev.addOns.filter(a => a !== addOnId)
-    }));
+  const handleServicePriceChange = (serviceId: string, price: number) => {
+    setServicePrices(prev => 
+      prev.map(service => 
+        service.id === serviceId 
+          ? { ...service, price: price || 0 }
+          : service
+      )
+    );
+  };
+
+  const handleAddOnToggle = (addOnId: string, checked: boolean) => {
+    setAddOnPrices(prev => 
+      prev.map(addOn => 
+        addOn.id === addOnId 
+          ? { ...addOn, selected: checked }
+          : addOn
+      )
+    );
+  };
+
+  const handleAddOnPriceChange = (addOnId: string, price: number) => {
+    setAddOnPrices(prev => 
+      prev.map(addOn => 
+        addOn.id === addOnId 
+          ? { ...addOn, price: price || 0 }
+          : addOn
+      )
+    );
   };
 
   const calculateQuote = () => {
-    if (!quoteData.customerName || !quoteData.houseSize || quoteData.services.length === 0) {
+    if (!quoteData.customerName || !quoteData.houseSize) {
       toast({
         title: "Missing Information",
-        description: "Please fill in customer name, house size, and select at least one service.",
+        description: "Please fill in customer name and house size.",
         variant: "destructive"
       });
       return;
     }
 
-    const result = calculateQuotePrice(quoteData.houseSize, quoteData.services, quoteData.addOns, addOnOptions);
+    const selectedServices = servicePrices.filter(service => service.selected);
+    const selectedAddOns = addOnPrices.filter(addOn => addOn.selected);
+
+    if (selectedServices.length === 0) {
+      toast({
+        title: "No Services Selected",
+        description: "Please select at least one service.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Calculate subtotal
+    const subtotal = selectedServices.reduce((sum, service) => sum + service.price, 0) +
+                    selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0);
+
+    // Calculate taxes
+    const gst = subtotal * (gstRate / 100);
+    const pst = applyPst ? subtotal * (pstRate / 100) : 0;
+    const total = subtotal + gst + pst;
+
+    const result: QuoteResult = {
+      services: selectedServices.map(service => ({
+        name: service.name,
+        price: service.price
+      })),
+      addOns: selectedAddOns.map(addOn => ({
+        name: addOn.name,
+        price: addOn.price
+      })),
+      subtotal,
+      gst,
+      pst,
+      total
+    };
+
     setQuoteResult(result);
     setShowQuote(true);
   };
@@ -125,6 +209,9 @@ const QuoteBuilderForm = () => {
       notes: '',
       addOns: []
     });
+    setServicePrices(prev => prev.map(service => ({ ...service, selected: false })));
+    setAddOnPrices(prev => prev.map(addOn => ({ ...addOn, selected: false })));
+    setApplyPst(false);
     setQuoteResult(null);
     setShowQuote(false);
   };
@@ -202,41 +289,108 @@ const QuoteBuilderForm = () => {
             </Select>
           </div>
 
-          {/* Services Selection */}
+          {/* Services Selection with Manual Pricing */}
           <div className="space-y-3">
             <Label>Services Required *</Label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {serviceOptions.map(service => (
-                <div key={service.id} className="flex items-center space-x-2">
+            <div className="space-y-3">
+              {servicePrices.map(service => (
+                <div key={service.id} className="flex items-center gap-4 p-3 border rounded-lg">
                   <Checkbox
                     id={service.id}
-                    checked={quoteData.services.includes(service.id)}
-                    onCheckedChange={(checked) => handleServiceChange(service.id, checked as boolean)}
+                    checked={service.selected}
+                    onCheckedChange={(checked) => handleServiceToggle(service.id, checked as boolean)}
                   />
-                  <Label htmlFor={service.id} className="text-sm">
-                    {service.label}
+                  <Label htmlFor={service.id} className="flex-1 text-sm">
+                    {service.name}
                   </Label>
+                  <div className="flex items-center gap-2">
+                    <Label className="text-sm">$</Label>
+                    <Input
+                      type="number"
+                      value={service.price}
+                      onChange={(e) => handleServicePriceChange(service.id, parseFloat(e.target.value))}
+                      className="w-20"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Add-ons Selection */}
+          {/* Add-ons Selection with Manual Pricing */}
           <div className="space-y-3">
             <Label>Optional Add-ons</Label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {addOnOptions.map(addOn => (
-                <div key={addOn.id} className="flex items-center space-x-2">
+            <div className="space-y-3">
+              {addOnPrices.map(addOn => (
+                <div key={addOn.id} className="flex items-center gap-4 p-3 border rounded-lg">
                   <Checkbox
                     id={addOn.id}
-                    checked={quoteData.addOns.includes(addOn.id)}
-                    onCheckedChange={(checked) => handleAddOnChange(addOn.id, checked as boolean)}
+                    checked={addOn.selected}
+                    onCheckedChange={(checked) => handleAddOnToggle(addOn.id, checked as boolean)}
                   />
-                  <Label htmlFor={addOn.id} className="text-sm">
-                    {addOn.label} (+{formatCurrency(addOn.price)})
+                  <Label htmlFor={addOn.id} className="flex-1 text-sm">
+                    {addOn.name}
                   </Label>
+                  <div className="flex items-center gap-2">
+                    <Label className="text-sm">$</Label>
+                    <Input
+                      type="number"
+                      value={addOn.price}
+                      onChange={(e) => handleAddOnPriceChange(addOn.id, parseFloat(e.target.value))}
+                      className="w-20"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Tax Controls */}
+          <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
+            <h3 className="font-semibold">Tax Settings</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>GST (Always Applied)</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="number"
+                    value={gstRate}
+                    readOnly
+                    className="w-20 bg-gray-100"
+                  />
+                  <Label className="text-sm">%</Label>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="apply-pst"
+                    checked={applyPst}
+                    onCheckedChange={(checked) => setApplyPst(checked as boolean)}
+                  />
+                  <Label htmlFor="apply-pst">Apply PST</Label>
+                </div>
+                {applyPst && (
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      value={pstRate}
+                      onChange={(e) => setPstRate(parseFloat(e.target.value) || 0)}
+                      className="w-20"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                    />
+                    <Label className="text-sm">%</Label>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
