@@ -435,9 +435,9 @@ Reply YES to book or call for questions!`;
   };
 
   const sendEmail = () => {
-    const emailContent = generateEmailText();
+    const smsText = generateSMSText(); // Use SMS text for plain text email body
     const subject = `Your Pressure Washing Quote - ${quoteData.customerName}`;
-    const mailtoUrl = `mailto:${quoteData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailContent.replace(/<[^>]*>/g, ''))}`;
+    const mailtoUrl = `mailto:${quoteData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(smsText)}`;
     window.open(mailtoUrl, '_blank');
   };
 
