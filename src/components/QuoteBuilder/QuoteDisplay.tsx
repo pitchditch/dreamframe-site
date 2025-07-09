@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Download, Send, X, MessageSquare, Mail, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { formatCurrency } from './utils/quoteCalculations';
-import emailjs from '@emailjs/browser';
+import { supabase } from '@/integrations/supabase/client';
 
 interface QuoteData {
   customerName: string;
@@ -54,29 +54,21 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
 
   const handleAutoSend = async () => {
     try {
-      console.log('Sending quote confirmation directly from website...', {
+      console.log('Sending quote confirmation via Supabase...', {
         email: quoteData.email,
         phone: quoteData.phone,
         name: quoteData.customerName
       });
 
-      // Send email directly from the website using EmailJS
-      if (quoteData.email) {
-        await sendEmailDirectly();
-      }
-
-      // Send SMS notification (you can implement Twilio direct API call here if needed)
-      if (quoteData.phone) {
-        // For SMS, you might still need a backend service or use a service like Twilio
-        console.log('SMS sending would require backend service or Twilio API');
-      }
+      // Send via Supabase edge function
+      await sendViaSupabase();
 
       toast({
         title: "Quote Sent Successfully!",
-        description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}`,
+        description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}${quoteData.phone ? ' and SMS' : ''}`,
       });
     } catch (error) {
-      console.error('Direct send failed:', error);
+      console.error('Auto-send failed:', error);
       toast({
         title: "Quote Created",
         description: "Quote generated successfully. You can manually send it using the buttons below.",
@@ -85,34 +77,36 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
     }
   };
 
-  const sendEmailDirectly = async () => {
-    // Initialize EmailJS (you'll need to set up EmailJS service)
-    // This is a placeholder - you'll need to configure EmailJS with your service ID, template ID, and public key
+  const sendViaSupabase = async () => {
     try {
-      const templateParams = {
-        to_email: quoteData.email,
-        to_name: quoteData.customerName,
-        from_name: 'BC Pressure Washing',
-        subject: 'Your Professional Quote - BC Pressure Washing',
-        html_content: generateEmailHTML(),
-        customer_name: quoteData.customerName,
-        total_amount: formatCurrency(quoteResult.total),
-        services: quoteResult.services.map(s => s.name).join(', '),
-        address: quoteData.address || 'Not specified',
-        phone: quoteData.phone || 'Not provided',
-        notes: quoteData.notes || 'None'
+      const confirmationData = {
+        email: quoteData.email,
+        phone: quoteData.phone,
+        name: quoteData.customerName,
+        formType: 'Professional Quote',
+        estimateTotal: quoteResult.total,
+        services: quoteResult.services.map(s => s.name),
+        addOns: quoteResult.addOns.map(a => a.name),
+        houseSize: quoteData.houseSize,
+        address: quoteData.address,
+        notes: quoteData.notes
       };
 
-      // Note: You'll need to configure these values in EmailJS dashboard
-      const SERVICE_ID = 'your_service_id'; // Configure in EmailJS
-      const TEMPLATE_ID = 'your_template_id'; // Configure in EmailJS  
-      const PUBLIC_KEY = 'your_public_key'; // Configure in EmailJS
+      console.log('Sending confirmation data:', confirmationData);
 
-      const result = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
-      console.log('Email sent successfully:', result);
-      return result;
+      const { data, error } = await supabase.functions.invoke('send-confirmations', {
+        body: confirmationData
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('Confirmation sent successfully:', data);
+      return data;
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Error sending via Supabase:', error);
       throw error;
     }
   };
@@ -444,22 +438,6 @@ Reply YES to book or call for questions!`;
     }
   };
 
-  const sendManualEmail = async () => {
-    try {
-      await sendEmailDirectly();
-      toast({
-        title: "Email Sent!",
-        description: "Quote email sent successfully",
-      });
-    } catch (error) {
-      toast({
-        title: "Email Failed",
-        description: "Could not send email. Please try copying the content instead.",
-        variant: "destructive"
-      });
-    }
-  };
-
   const sendSMS = () => {
     const smsText = generateSMSText();
     const phoneNumber = quoteData.phone.replace(/\D/g, '');
@@ -472,6 +450,23 @@ Reply YES to book or call for questions!`;
     const subject = `Your Pressure Washing Quote - ${quoteData.customerName}`;
     const mailtoUrl = `mailto:${quoteData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(smsText)}`;
     window.open(mailtoUrl, '_blank');
+  };
+
+  const sendManualEmail = async () => {
+    try {
+      await sendViaSupabase();
+      toast({
+        title: "Email Sent!",
+        description: "Quote email sent successfully via Supabase",
+      });
+    } catch (error) {
+      console.error('Manual email send failed:', error);
+      toast({
+        title: "Email Failed",
+        description: "Could not send email. Please try copying the content instead.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
