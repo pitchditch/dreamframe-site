@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -50,40 +50,6 @@ interface QuoteDisplayProps {
 const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onClose }) => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('preview');
-  const [hasAutoSent, setHasAutoSent] = useState(false);
-
-  // Auto-send quote when component loads
-  useEffect(() => {
-    if (!hasAutoSent && (quoteData.email || quoteData.phone)) {
-      handleAutoSend();
-      setHasAutoSent(true);
-    }
-  }, [quoteData, hasAutoSent]);
-
-  const handleAutoSend = async () => {
-    try {
-      console.log('Sending quote confirmation via Supabase...', {
-        email: quoteData.email,
-        phone: quoteData.phone,
-        name: quoteData.customerName
-      });
-
-      // Send via Supabase edge function
-      await sendViaSupabase();
-
-      toast({
-        title: "Quote Sent Successfully!",
-        description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}${quoteData.phone ? ' and SMS' : ''}`,
-      });
-    } catch (error) {
-      console.error('Auto-send failed:', error);
-      toast({
-        title: "Quote Created",
-        description: "Quote generated successfully. You can manually send it using the buttons below.",
-        variant: "destructive"
-      });
-    }
-  };
 
   const sendViaSupabase = async () => {
     try {
@@ -455,29 +421,44 @@ Reply YES to book or call for questions!`;
     }
   };
 
-  const sendSMS = () => {
-    const smsText = generateSMSText();
-    const phoneNumber = quoteData.phone.replace(/\D/g, '');
-    const smsUrl = `sms:${phoneNumber}?body=${encodeURIComponent(smsText)}`;
-    window.open(smsUrl, '_blank');
-  };
-
-  const sendEmail = () => {
-    const smsText = generateSMSText(); // Use SMS text for plain text email body
-    const subject = `Your Pressure Washing Quote - ${quoteData.customerName}`;
-    const mailtoUrl = `mailto:${quoteData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(smsText)}`;
-    window.open(mailtoUrl, '_blank');
-  };
-
-  const sendManualEmail = async () => {
+  const sendSMS = async () => {
     try {
+      console.log('Sending quote via SMS...', {
+        phone: quoteData.phone,
+        name: quoteData.customerName
+      });
+
       await sendViaSupabase();
+
       toast({
-        title: "Email Sent!",
-        description: "Quote email sent successfully via Supabase",
+        title: "SMS Sent Successfully!",
+        description: `Quote sent to ${quoteData.customerName} via SMS`,
       });
     } catch (error) {
-      console.error('Manual email send failed:', error);
+      console.error('SMS send failed:', error);
+      toast({
+        title: "SMS Failed",
+        description: "Could not send SMS. Please try copying the content instead.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const sendEmail = async () => {
+    try {
+      console.log('Sending quote via email...', {
+        email: quoteData.email,
+        name: quoteData.customerName
+      });
+
+      await sendViaSupabase();
+
+      toast({
+        title: "Email Sent Successfully!",
+        description: `Quote sent to ${quoteData.customerName} via email`,
+      });
+    } catch (error) {
+      console.error('Email send failed:', error);
       toast({
         title: "Email Failed",
         description: "Could not send email. Please try copying the content instead.",
@@ -612,11 +593,11 @@ Reply YES to book or call for questions!`;
         </Tabs>
 
         <div className="flex gap-2 mt-6">
-          <Button variant="outline" className="flex-1" onClick={() => window.open(`sms:${quoteData.phone?.replace(/\D/g, '')}?body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.phone}>
+          <Button variant="outline" className="flex-1" onClick={sendSMS} disabled={!quoteData.phone}>
             <MessageSquare className="w-4 h-4 mr-2" />
             Send SMS
           </Button>
-          <Button variant="outline" className="flex-1" onClick={sendManualEmail} disabled={!quoteData.email}>
+          <Button variant="outline" className="flex-1" onClick={sendEmail} disabled={!quoteData.email}>
             <Mail className="w-4 h-4 mr-2" />
             Send Email
           </Button>
