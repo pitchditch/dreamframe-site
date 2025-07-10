@@ -1,19 +1,11 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Download, Send, X, MessageSquare, Mail, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from './utils/quoteCalculations';
 import { supabase } from '@/integrations/supabase/client';
-
-const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
-    minimumFractionDigits: 2
-  }).format(amount);
-};
 
 interface QuoteData {
   customerName: string;
@@ -36,14 +28,8 @@ interface QuoteResult {
     name: string;
     price: number;
   }>;
-  products: Array<{
-    name: string;
-    price: number;
-  }>;
-  servicesSubtotal: number;
-  productsSubtotal: number;
-  gst: number;
-  pst: number;
+  subtotal: number;
+  tax: number;
   total: number;
 }
 
@@ -56,6 +42,40 @@ interface QuoteDisplayProps {
 const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onClose }) => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('preview');
+  const [hasAutoSent, setHasAutoSent] = useState(false);
+
+  // Auto-send quote when component loads
+  useEffect(() => {
+    if (!hasAutoSent && (quoteData.email || quoteData.phone)) {
+      handleAutoSend();
+      setHasAutoSent(true);
+    }
+  }, [quoteData, hasAutoSent]);
+
+  const handleAutoSend = async () => {
+    try {
+      console.log('Sending quote confirmation via Supabase...', {
+        email: quoteData.email,
+        phone: quoteData.phone,
+        name: quoteData.customerName
+      });
+
+      // Send via Supabase edge function
+      await sendViaSupabase();
+
+      toast({
+        title: "Quote Sent Successfully!",
+        description: `Professional quote sent to ${quoteData.customerName}${quoteData.email ? ' via email' : ''}${quoteData.phone ? ' and SMS' : ''}`,
+      });
+    } catch (error) {
+      console.error('Auto-send failed:', error);
+      toast({
+        title: "Quote Created",
+        description: "Quote generated successfully. You can manually send it using the buttons below.",
+        variant: "destructive"
+      });
+    }
+  };
 
   const sendViaSupabase = async () => {
     try {
@@ -67,7 +87,6 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
         estimateTotal: quoteResult.total,
         services: quoteResult.services.map(s => s.name),
         addOns: quoteResult.addOns.map(a => a.name),
-        products: quoteResult.products.map(p => p.name),
         houseSize: quoteData.houseSize,
         address: quoteData.address,
         notes: quoteData.notes
@@ -96,29 +115,18 @@ const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onC
     const servicesText = quoteResult.services.map(s => 
       s.note ? `• ${s.name}: ${s.note}` : `• ${s.name}: ${formatCurrency(s.price)}`
     ).join('\n');
-    
     const addOnsText = quoteResult.addOns.length > 0 
       ? '\n\nAdd-ons:\n' + quoteResult.addOns.map(a => `• ${a.name}: ${formatCurrency(a.price)}`).join('\n')
       : '';
-
-    const productsText = quoteResult.products.length > 0 
-      ? '\n\nProducts:\n' + quoteResult.products.map(p => `• ${p.name}: ${formatCurrency(p.price)}`).join('\n')
-      : '';
-    
-    const taxBreakdown = [];
-    if (quoteResult.gst > 0) taxBreakdown.push(`GST (7%): ${formatCurrency(quoteResult.gst)}`);
-    if (quoteResult.pst > 0) taxBreakdown.push(`PST (Products Only): ${formatCurrency(quoteResult.pst)}`);
     
     return `Hi ${quoteData.customerName}! 
 
 Here's your pressure washing quote for ${quoteData.address}:
 
-Services:
-${servicesText}${addOnsText}${productsText}
+${servicesText}${addOnsText}
 
-Services Subtotal: ${formatCurrency(quoteResult.servicesSubtotal)}
-${quoteResult.productsSubtotal > 0 ? `Products Subtotal: ${formatCurrency(quoteResult.productsSubtotal)}` : ''}
-${taxBreakdown.join('\n')}
+Subtotal: ${formatCurrency(quoteResult.subtotal)}
+Tax (12%): ${formatCurrency(quoteResult.tax)}
 TOTAL: ${formatCurrency(quoteResult.total)}
 
 ${quoteData.notes ? `Notes: ${quoteData.notes}\n\n` : ''}All work comes with our satisfaction guarantee!
@@ -137,10 +145,6 @@ Reply YES to book or call for questions!`;
     
     const addOnsHTML = quoteResult.addOns.length > 0 
       ? quoteResult.addOns.map(a => `<tr style="border-bottom: 1px solid #e5e7eb;"><td style="padding: 16px 12px; font-size: 15px; color: #374151;">${a.name} <span style="color: #6b7280; font-size: 13px; background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">Add-on</span></td><td style="padding: 16px 12px; text-align: right; font-weight: bold; color: #059669; font-size: 16px;">${formatCurrency(a.price)}</td></tr>`).join('')
-      : '';
-
-    const productsHTML = quoteResult.products.length > 0 
-      ? quoteResult.products.map(p => `<tr style="border-bottom: 1px solid #e5e7eb;"><td style="padding: 16px 12px; font-size: 15px; color: #374151;">${p.name} <span style="color: #059669; font-size: 13px; background: #dcfce7; padding: 2px 6px; border-radius: 4px;">Product</span></td><td style="padding: 16px 12px; text-align: right; font-weight: bold; color: #059669; font-size: 16px;">${formatCurrency(p.price)}</td></tr>`).join('')
       : '';
     
     return `
@@ -175,7 +179,7 @@ Reply YES to book or call for questions!`;
               <div style="font-size: 52px; font-weight: bold; color: #059669; margin: 12px 0; text-shadow: 0 1px 2px rgba(5, 150, 105, 0.1);">
                 ${formatCurrency(quoteResult.total)}
               </div>
-              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Final price confirmed after property inspection</p>
+              <p style="color: #6b7280; margin: 12px 0 0 0; font-size: 15px;">*Includes 12% tax | Final price confirmed after property inspection</p>
             </div>
 
             <!-- Property Details -->  
@@ -187,40 +191,31 @@ Reply YES to book or call for questions!`;
             </div>
 
             <!-- Services Table -->
-            <h3 style="color: #374151; margin: 40px 0 20px 0; font-size: 22px; font-weight: bold;">Services & Products</h3>
+            <h3 style="color: #374151; margin: 40px 0 20px 0; font-size: 22px; font-weight: bold;">Services Included</h3>
             <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
               <thead>
                 <tr style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);">
-                  <th style="padding: 20px 16px; text-align: left; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; font-size: 16px;">Item Description</th>
+                  <th style="padding: 20px 16px; text-align: left; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; font-size: 16px;">Service Description</th>
                   <th style="padding: 20px 16px; text-align: right; font-weight: bold; color: #374151; border-bottom: 2px solid #e5e7eb; width: 140px; font-size: 16px;">Price</th>
                 </tr>
               </thead>
               <tbody>
                 ${servicesHTML}
                 ${addOnsHTML}
-                ${productsHTML}
               </tbody>
             </table>
 
             <!-- Pricing Breakdown -->
             <div style="margin: 35px 0; padding: 25px; background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); border-radius: 12px; border: 1px solid #e5e7eb;">
               <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
-                <span style="color: #4b5563;">Services Subtotal:</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.servicesSubtotal)}</span>
+                <span style="color: #4b5563;">Subtotal:</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.subtotal)}</span>
               </div>
-              ${quoteResult.productsSubtotal > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
-                <span style="color: #4b5563;">Products Subtotal:</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.productsSubtotal)}</span>
-              </div>` : ''}
-              ${quoteResult.gst > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 17px;">
-                <span style="color: #4b5563;">GST (7%):</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.gst)}</span>
-              </div>` : ''}
-              ${quoteResult.pst > 0 ? `<div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 17px;">
-                <span style="color: #4b5563;">PST (Products Only):</span>
-                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.pst)}</span>
-              </div>` : ''}
-              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669; border-top: 2px solid #d1d5db; padding-top: 20px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 17px; padding-bottom: 20px; border-bottom: 2px solid #d1d5db;">
+                <span style="color: #4b5563;">Tax (12%):</span>
+                <span style="font-weight: bold; color: #374151;">${formatCurrency(quoteResult.tax)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 28px; font-weight: bold; color: #059669;">
                 <span>TOTAL:</span>
                 <span>${formatCurrency(quoteResult.total)}</span>
               </div>
@@ -380,7 +375,7 @@ Reply YES to book or call for questions!`;
           <table class="services-table">
             <thead>
               <tr>
-                <th>Item Description</th>
+                <th>Service Description</th>
                 <th style="width: 120px;">Price</th>
               </tr>
             </thead>
@@ -397,20 +392,12 @@ Reply YES to book or call for questions!`;
                   <td class="price">${formatCurrency(addOn.price)}</td>
                 </tr>
               `).join('')}
-              ${quoteResult.products.map((product) => `
-                <tr>
-                  <td>${product.name} (Product)</td>
-                  <td class="price">${formatCurrency(product.price)}</td>
-                </tr>
-              `).join('')}
             </tbody>
           </table>
 
           <div class="total-section">
-            <div class="total-row"><strong>Services Subtotal:</strong> ${formatCurrency(quoteResult.servicesSubtotal)}</div>
-            ${quoteResult.productsSubtotal > 0 ? `<div class="total-row"><strong>Products Subtotal:</strong> ${formatCurrency(quoteResult.productsSubtotal)}</div>` : ''}
-            ${quoteResult.gst > 0 ? `<div class="total-row"><strong>GST (7%):</strong> ${formatCurrency(quoteResult.gst)}</div>` : ''}
-            ${quoteResult.pst > 0 ? `<div class="total-row"><strong>PST (Products Only):</strong> ${formatCurrency(quoteResult.pst)}</div>` : ''}
+            <div class="total-row"><strong>Subtotal:</strong> ${formatCurrency(quoteResult.subtotal)}</div>
+            <div class="total-row"><strong>Tax (12%):</strong> ${formatCurrency(quoteResult.tax)}</div>
             <div class="final-total">TOTAL: ${formatCurrency(quoteResult.total)}</div>
           </div>
 
@@ -451,44 +438,29 @@ Reply YES to book or call for questions!`;
     }
   };
 
-  const sendSMS = async () => {
-    try {
-      console.log('Sending quote via SMS...', {
-        phone: quoteData.phone,
-        name: quoteData.customerName
-      });
-
-      await sendViaSupabase();
-
-      toast({
-        title: "SMS Sent Successfully!",
-        description: `Quote sent to ${quoteData.customerName} via SMS`,
-      });
-    } catch (error) {
-      console.error('SMS send failed:', error);
-      toast({
-        title: "SMS Failed",
-        description: "Could not send SMS. Please try copying the content instead.",
-        variant: "destructive"
-      });
-    }
+  const sendSMS = () => {
+    const smsText = generateSMSText();
+    const phoneNumber = quoteData.phone.replace(/\D/g, '');
+    const smsUrl = `sms:${phoneNumber}?body=${encodeURIComponent(smsText)}`;
+    window.open(smsUrl, '_blank');
   };
 
-  const sendEmail = async () => {
+  const sendEmail = () => {
+    const smsText = generateSMSText(); // Use SMS text for plain text email body
+    const subject = `Your Pressure Washing Quote - ${quoteData.customerName}`;
+    const mailtoUrl = `mailto:${quoteData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(smsText)}`;
+    window.open(mailtoUrl, '_blank');
+  };
+
+  const sendManualEmail = async () => {
     try {
-      console.log('Sending quote via email...', {
-        email: quoteData.email,
-        name: quoteData.customerName
-      });
-
       await sendViaSupabase();
-
       toast({
-        title: "Email Sent Successfully!",
-        description: `Quote sent to ${quoteData.customerName} via email`,
+        title: "Email Sent!",
+        description: "Quote email sent successfully via Supabase",
       });
     } catch (error) {
-      console.error('Email send failed:', error);
+      console.error('Manual email send failed:', error);
       toast({
         title: "Email Failed",
         description: "Could not send email. Please try copying the content instead.",
@@ -534,7 +506,7 @@ Reply YES to book or call for questions!`;
                 <table className="w-full border-collapse border border-gray-300">
                   <thead>
                     <tr className="bg-gray-100">
-                      <th className="border border-gray-300 p-3 text-left font-semibold">Item Description</th>
+                      <th className="border border-gray-300 p-3 text-left font-semibold">Service Description</th>
                       <th className="border border-gray-300 p-3 text-right font-semibold w-32">Price</th>
                     </tr>
                   </thead>
@@ -553,21 +525,13 @@ Reply YES to book or call for questions!`;
                         <td className="border border-gray-300 p-3 text-right font-semibold">{formatCurrency(addOn.price)}</td>
                       </tr>
                     ))}
-                    {quoteResult.products.map((product, index) => (
-                      <tr key={`product-${index}`} className="hover:bg-gray-50">
-                        <td className="border border-gray-300 p-3">{product.name} (Product)</td>
-                        <td className="border border-gray-300 p-3 text-right font-semibold">{formatCurrency(product.price)}</td>
-                      </tr>
-                    ))}
                   </tbody>
                 </table>
               </div>
 
               <div className="text-right text-lg mb-6">
-                <div className="mb-2"><strong>Services Subtotal:</strong> {formatCurrency(quoteResult.servicesSubtotal)}</div>
-                {quoteResult.productsSubtotal > 0 && <div className="mb-2"><strong>Products Subtotal:</strong> {formatCurrency(quoteResult.productsSubtotal)}</div>}
-                {quoteResult.gst > 0 && <div className="mb-2"><strong>GST (7%):</strong> {formatCurrency(quoteResult.gst)}</div>}
-                {quoteResult.pst > 0 && <div className="mb-2"><strong>PST (Products Only):</strong> {formatCurrency(quoteResult.pst)}</div>}
+                <div className="mb-2"><strong>Subtotal:</strong> {formatCurrency(quoteResult.subtotal)}</div>
+                <div className="mb-2"><strong>Tax (12%):</strong> {formatCurrency(quoteResult.tax)}</div>
                 <div className="text-xl font-bold text-red-600 border-t-2 border-gray-300 pt-2">
                   TOTAL: {formatCurrency(quoteResult.total)}
                 </div>
@@ -630,11 +594,11 @@ Reply YES to book or call for questions!`;
         </Tabs>
 
         <div className="flex gap-2 mt-6">
-          <Button variant="outline" className="flex-1" onClick={sendSMS} disabled={!quoteData.phone}>
+          <Button variant="outline" className="flex-1" onClick={() => window.open(`sms:${quoteData.phone?.replace(/\D/g, '')}?body=${encodeURIComponent(generateSMSText())}`, '_blank')} disabled={!quoteData.phone}>
             <MessageSquare className="w-4 h-4 mr-2" />
             Send SMS
           </Button>
-          <Button variant="outline" className="flex-1" onClick={sendEmail} disabled={!quoteData.email}>
+          <Button variant="outline" className="flex-1" onClick={sendManualEmail} disabled={!quoteData.email}>
             <Mail className="w-4 h-4 mr-2" />
             Send Email
           </Button>
