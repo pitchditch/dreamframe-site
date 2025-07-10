@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,6 +6,10 @@ import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { History, Search, Calendar, User, Phone, Mail, MapPin, DollarSign } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Tables } from '@/integrations/supabase/types';
+
+// Use the database type directly and transform it
+type QuoteFromDB = Tables<'quotes'>;
 
 interface SavedQuote {
   id: string;
@@ -33,6 +36,28 @@ const formatCurrency = (amount: number): string => {
     currency: 'CAD',
     minimumFractionDigits: 2
   }).format(amount);
+};
+
+// Transform function to convert DB data to our interface
+const transformQuoteFromDB = (dbQuote: QuoteFromDB): SavedQuote => {
+  return {
+    id: dbQuote.id,
+    customer_name: dbQuote.customer_name,
+    customer_email: dbQuote.customer_email || undefined,
+    customer_phone: dbQuote.customer_phone || undefined,
+    property_address: dbQuote.property_address || undefined,
+    house_size: dbQuote.house_size || undefined,
+    services: Array.isArray(dbQuote.services) ? dbQuote.services as Array<{ name: string; price: number }> : [],
+    add_ons: Array.isArray(dbQuote.add_ons) ? dbQuote.add_ons as Array<{ name: string; price: number }> : [],
+    products: Array.isArray(dbQuote.products) ? dbQuote.products as Array<{ name: string; price: number }> : [],
+    services_subtotal: Number(dbQuote.services_subtotal),
+    products_subtotal: Number(dbQuote.products_subtotal),
+    gst_amount: Number(dbQuote.gst_amount),
+    pst_amount: Number(dbQuote.pst_amount),
+    total_amount: Number(dbQuote.total_amount),
+    notes: dbQuote.notes || undefined,
+    created_at: dbQuote.created_at,
+  };
 };
 
 const QuoteLog: React.FC = () => {
@@ -63,7 +88,9 @@ const QuoteLog: React.FC = () => {
         return;
       }
 
-      setQuotes(data || []);
+      // Transform the data using our helper function
+      const transformedQuotes = (data || []).map(transformQuoteFromDB);
+      setQuotes(transformedQuotes);
     } catch (error) {
       console.error('Error fetching quotes:', error);
       toast({
