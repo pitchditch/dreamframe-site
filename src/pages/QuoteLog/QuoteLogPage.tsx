@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Layout from '../../components/Layout';
 import { Helmet } from 'react-helmet-async';
 import { useQuoteLog } from '@/hooks/useQuoteLog';
@@ -17,7 +17,7 @@ const QuoteLogPage = () => {
 
   useEffect(() => {
     loadQuotes();
-  }, []);
+  }, [loadQuotes]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -32,23 +32,30 @@ const QuoteLogPage = () => {
     }
   }, [searchTerm, quotes]);
 
-  const loadQuotes = async () => {
+  const loadQuotes = useCallback(async () => {
+    console.log('QuoteLog: Starting to load quotes...');
     try {
       const data = await getQuoteLogs(100);
+      console.log('QuoteLog: Received data:', data);
       if (data) {
         setQuotes(data.map(item => ({
           ...item,
           services: Array.isArray(item.services) ? item.services as Array<{ name: string; price: number }> : [],
           products: Array.isArray(item.products) ? item.products as Array<{ name: string; price: number }> : []
         })) as Quote[]);
+        console.log('QuoteLog: Set quotes successfully');
+      } else {
+        console.log('QuoteLog: No data received');
+        setQuotes([]);
       }
     } catch (error) {
-      console.error('Failed to load quotes:', error);
+      console.error('QuoteLog: Failed to load quotes:', error);
       setQuotes([]);
     } finally {
+      console.log('QuoteLog: Setting loading to false');
       setLoading(false);
     }
-  };
+  }, [getQuoteLogs]);
 
   const handleSearchChange = (value: string) => {
     setSearchTerm(value);

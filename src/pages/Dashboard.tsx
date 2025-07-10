@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Layout from '../components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -71,18 +71,21 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
+    console.log('Dashboard: Starting to load data...');
     try {
       const quoteData = await getQuoteLogs(50);
+      console.log('Dashboard: Received quote data:', quoteData);
       setQuotes(quoteData || []);
     } catch (error) {
-      console.error('Failed to load dashboard data:', error);
+      console.error('Dashboard: Failed to load dashboard data:', error);
     } finally {
+      console.log('Dashboard: Setting loading to false');
       setLoading(false);
     }
-  };
+  }, [getQuoteLogs]);
 
   const getQuoteStats = () => {
     if (!quotes.length) return { totalValue: 0, count: 0, avgValue: 0 };
