@@ -67,13 +67,13 @@ const TestimonialCard = ({
           </div>
         </div>
         
-        {/* Before/After Image - Show full original size without cropping */}
+        {/* Before/After Image - Made bigger */}
         {beforeAfterImage && (
-          <div className="rounded-lg overflow-hidden">
+          <div className="h-80 md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden">
             <img 
               src={beforeAfterImage} 
               alt="Before and after cleaning" 
-              className="w-full h-auto object-contain"
+              className="w-full h-full object-cover"
             />
           </div>
         )}

@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
 import Layout from '../components/Layout';
@@ -7,6 +6,8 @@ import SpringSaleCarousel from '../components/home/SpringSaleCarousel';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import PremiumSolutionsSection from '../components/home/PremiumSolutionsSection';
 import PackagesSection from '../components/home/PackagesSection';
 import OwnerOperatedSection from '../components/home/OwnerOperatedSection';
@@ -72,7 +73,6 @@ const Home = () => {
         <meta name="twitter:description" content="Seen our red BC Pressure Washing car? Get 10% off! Window, gutter, and pressure washing in White Rock & Surrey." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-        <script type="application/ld+json">
           {`
           {
             "@context": "https://schema.org",
@@ -127,7 +127,6 @@ const Home = () => {
             ]
           }
           `}
-        </script>
       </Helmet>
 
       <HeroSection />
@@ -144,6 +143,14 @@ const Home = () => {
           <SpringSaleCarousel />
           <TestimonialsSection />
           <PackagesSection />
+
+          <section className="py-16 bg-gray-900 text-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
+              <ServiceAreaMap />
+              <ServiceAreasCarousel />
+            </div>
+          </section>
 
           <ReferralButton />
 
