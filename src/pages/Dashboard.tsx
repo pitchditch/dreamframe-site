@@ -65,6 +65,7 @@ const mockAnalyticsData = {
 };
 
 const Dashboard = () => {
+  console.log('Dashboard: Component rendering');
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { getQuoteLogs } = useQuoteLog();
@@ -84,6 +85,7 @@ const Dashboard = () => {
   }, [getQuoteLogs]);
 
   useEffect(() => {
+    console.log('Dashboard: Component mounted, calling loadData');
     loadData();
   }, []);
 

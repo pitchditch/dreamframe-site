@@ -9,15 +9,12 @@ import LoadingState from './components/LoadingState';
 import type { Quote } from './types';
 
 const QuoteLogPage = () => {
+  console.log('QuoteLogPage: Component rendering');
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [filteredQuotes, setFilteredQuotes] = useState<Quote[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const { getQuoteLogs } = useQuoteLog();
-
-  useEffect(() => {
-    loadQuotes();
-  }, []);
 
   useEffect(() => {
     if (searchTerm) {
@@ -56,6 +53,11 @@ const QuoteLogPage = () => {
       setLoading(false);
     }
   }, [getQuoteLogs]);
+
+  useEffect(() => {
+    console.log('QuoteLog: Component mounted, calling loadQuotes');
+    loadQuotes();
+  }, []);
 
   const handleSearchChange = (value: string) => {
     setSearchTerm(value);
