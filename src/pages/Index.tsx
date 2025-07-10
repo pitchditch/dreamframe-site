@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import ReferralButton from '../components/ReferralButton';
@@ -20,7 +19,6 @@ import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import CityNavigation from '../components/home/CityNavigation';
-import ExpertTipsSection from '../components/home/ExpertTipsSection';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -89,9 +87,6 @@ const Index = () => {
             
             {/* Contact Form */}
             <QuickContactForm />
-            
-            {/* Expert Tips Section */}
-            <ExpertTipsSection />
             
             {/* Testimonials */}
             <TestimonialsSection />
