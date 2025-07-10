@@ -58,13 +58,16 @@ const QuoteLog = () => {
   const loadQuotes = async () => {
     try {
       const data = await getQuoteLogs(100);
-      setQuotes((data || []).map(item => ({
-        ...item,
-        services: Array.isArray(item.services) ? item.services as Array<{ name: string; price: number }> : [],
-        products: Array.isArray(item.products) ? item.products as Array<{ name: string; price: number }> : []
-      })) as unknown as Quote[]);
+      if (data) {
+        setQuotes(data.map(item => ({
+          ...item,
+          services: Array.isArray(item.services) ? item.services as Array<{ name: string; price: number }> : [],
+          products: Array.isArray(item.products) ? item.products as Array<{ name: string; price: number }> : []
+        })) as Quote[]);
+      }
     } catch (error) {
       console.error('Failed to load quotes:', error);
+      setQuotes([]);
     } finally {
       setLoading(false);
     }

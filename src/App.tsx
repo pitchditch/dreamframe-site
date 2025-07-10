@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import StreamlinedCalculator from "./pages/StreamlinedCalculator";
 import QuoteBuilder from "./pages/QuoteBuilder";
 import QuoteLog from "./pages/QuoteLog";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/calculator" element={<StreamlinedCalculator />} />
             <Route path="/quote-builder" element={<QuoteBuilder />} />
-            <Route path="/quote-log" element={<QuoteLog />} />
+          <Route path="/quote-log" element={<QuoteLog />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
