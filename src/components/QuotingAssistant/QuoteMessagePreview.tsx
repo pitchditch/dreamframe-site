@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Copy, Check, Send, Mail, MessageSquare } from 'lucide-react';
+import { Copy, Check, Send, Mail, MessageSquare, Eye } from 'lucide-react';
 
 interface QuoteMessagePreviewProps {
   emailMessage: string;
@@ -25,6 +25,17 @@ const QuoteMessagePreview: React.FC<QuoteMessagePreviewProps> = ({
   copiedSMS,
   isSending,
 }) => {
+  const [showEmailPreview, setShowEmailPreview] = React.useState(false);
+
+  // Convert plain text email to HTML for preview
+  const convertToHTML = (text: string) => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br>')
+      .replace(/(\$[\d,]+\.?\d*)/g, '<span style="color: #dc2626; font-weight: bold;">$1</span>');
+  };
+
   return (
     <div className="grid md:grid-cols-2 gap-6">
       {/* Email Preview */}
@@ -41,23 +52,46 @@ const QuoteMessagePreview: React.FC<QuoteMessagePreviewProps> = ({
               {emailMessage}
             </pre>
           </div>
-          <Button 
-            variant="outline" 
-            onClick={onCopyEmail}
-            className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400"
-          >
-            {copiedEmail ? (
-              <>
-                <Check className="w-4 h-4 mr-2" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy className="w-4 h-4 mr-2" />
-                Copy Email
-              </>
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              onClick={onCopyEmail}
+              className="flex-1 border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400"
+            >
+              {copiedEmail ? (
+                <>
+                  <Check className="w-4 h-4 mr-2" />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy Email
+                </>
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowEmailPreview(!showEmailPreview)}
+              className="border-blue-300 text-blue-600 hover:bg-blue-50"
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              Preview
+            </Button>
+          </div>
+          
+          {/* HTML Email Preview */}
+          {showEmailPreview && (
+            <div className="mt-4 border rounded-lg overflow-hidden">
+              <div className="bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700">
+                Email Preview (HTML Rendered)
+              </div>
+              <div 
+                className="p-4 bg-white max-h-96 overflow-y-auto text-sm"
+                dangerouslySetInnerHTML={{ __html: convertToHTML(emailMessage) }}
+              />
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -75,9 +109,9 @@ const QuoteMessagePreview: React.FC<QuoteMessagePreviewProps> = ({
               {smsMessage}
             </p>
             <div className="mt-3 text-xs text-gray-500 flex justify-between">
-              <span>Characters: {smsMessage.length}/300</span>
-              <span className={smsMessage.length > 300 ? 'text-red-500 font-semibold' : 'text-green-600'}>
-                {smsMessage.length > 300 ? 'Too long!' : 'Good length'}
+              <span>Characters: {smsMessage.length}/1600</span>
+              <span className={smsMessage.length > 1600 ? 'text-red-500 font-semibold' : 'text-green-600'}>
+                {smsMessage.length > 1600 ? 'Too long!' : 'Good length'}
               </span>
             </div>
           </div>

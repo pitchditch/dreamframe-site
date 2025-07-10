@@ -7,6 +7,12 @@ interface Window {
     config?: Record<string, any> | EventParams
   ) => void;
   dataLayer?: any[];
+  fbq?: (
+    command: 'init' | 'track' | 'trackCustom',
+    idOrEvent: string,
+    parameters?: Record<string, any>
+  ) => void;
+  _fbq?: any;
 }
 
 interface EventParams {
