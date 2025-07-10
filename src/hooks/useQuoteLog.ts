@@ -90,7 +90,7 @@ export const useQuoteLog = () => {
       const { data, error } = await supabase
         .from('quotes')
         .select('*')
-        .order('sent_at', { ascending: false })
+        .order('created_at', { ascending: false })
         .limit(limit);
 
       if (error) {
