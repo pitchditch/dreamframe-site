@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Calculator, Send, Copy, Check } from 'lucide-react';
+import { Calculator, Send, Copy, Check, Mail, MessageSquare } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import QuoteMessagePreview from './QuoteMessagePreview';
@@ -125,7 +125,7 @@ info@bcpressurewashing.ca`;
         customer_name: data.customerName,
         customer_phone: data.customerPhone || null,
         customer_email: data.customerEmail,
-        services: [data.services], // Store as array for consistency with existing schema
+        services: [data.services],
         services_subtotal: data.totalAmount,
         products: [],
         products_subtotal: 0,
@@ -235,76 +235,146 @@ info@bcpressurewashing.ca`;
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="w-5 h-5" />
-            BC Pressure Washing - Quoting Assistant
-          </CardTitle>
-          <p className="text-muted-foreground">
-            Generate personalized quotes with professional email and SMS messages for your customers.
-          </p>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleGenerateQuote)} className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="customerName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Customer Name *</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Sarah Jones" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-red-50 py-8">
+      <div className="max-w-6xl mx-auto p-6 space-y-6">
+        <Card className="border-primary/20 shadow-xl">
+          <CardHeader className="bg-gradient-to-r from-primary to-red-600 text-white rounded-t-lg">
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <Calculator className="w-6 h-6" />
+              BC Pressure Washing - Professional Quoting Assistant
+            </CardTitle>
+            <p className="text-blue-100">
+              Generate personalized quotes with professional email and SMS messages for your customers.
+            </p>
+          </CardHeader>
+          <CardContent className="p-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(handleGenerateQuote)} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="customerName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700 font-semibold">Customer Name *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Sarah Jones" 
+                            className="border-gray-300 focus:border-primary focus:ring-primary"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="customerEmail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700 font-semibold">Customer Email *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="email" 
+                            placeholder="sarah@email.com" 
+                            className="border-gray-300 focus:border-primary focus:ring-primary"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="customerPhone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700 font-semibold">Customer Phone</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="+1 604-555-1234" 
+                            className="border-gray-300 focus:border-primary focus:ring-primary"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="totalAmount"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700 font-semibold">Total Amount ($) *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            step="0.01"
+                            placeholder="600.00" 
+                            className="border-gray-300 focus:border-primary focus:ring-primary"
+                            {...field}
+                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="propertyAddress"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700 font-semibold">Property Address</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="123 Main St, White Rock, BC" 
+                            className="border-gray-300 focus:border-primary focus:ring-primary"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="houseSize"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700 font-semibold">House Size</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Medium (1,500-2,500 sq ft)" 
+                            className="border-gray-300 focus:border-primary focus:ring-primary"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
-                  name="customerEmail"
+                  name="services"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Customer Email *</FormLabel>
+                      <FormLabel className="text-gray-700 font-semibold">Services *</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="sarah@email.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="customerPhone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Customer Phone</FormLabel>
-                      <FormControl>
-                        <Input placeholder="+1 604-555-1234" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="totalAmount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Total Amount ($) *</FormLabel>
-                      <FormControl>
-                        <Input 
-                          type="number" 
-                          step="0.01"
-                          placeholder="600.00" 
+                        <Textarea 
+                          placeholder="Window Cleaning (outside only), Gutter Cleaning (inside only)"
+                          className="border-gray-300 focus:border-primary focus:ring-primary min-h-[100px]"
                           {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                         />
                       </FormControl>
                       <FormMessage />
@@ -314,91 +384,47 @@ info@bcpressurewashing.ca`;
 
                 <FormField
                   control={form.control}
-                  name="propertyAddress"
+                  name="notes"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Property Address</FormLabel>
+                      <FormLabel className="text-gray-700 font-semibold">Notes</FormLabel>
                       <FormControl>
-                        <Input placeholder="123 Main St, White Rock, BC" {...field} />
+                        <Textarea 
+                          placeholder="Includes discount for new customers"
+                          className="border-gray-300 focus:border-primary focus:ring-primary"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="houseSize"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>House Size</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Medium (1,500-2,500 sq ft)" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                <Button 
+                  type="submit" 
+                  disabled={isGenerating}
+                  className="w-full md:w-auto bg-gradient-to-r from-primary to-red-600 hover:from-primary/90 hover:to-red-600/90 text-white font-semibold py-3 px-8 text-lg"
+                >
+                  {isGenerating ? 'Generating...' : 'Generate Quote Messages'}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
 
-              <FormField
-                control={form.control}
-                name="services"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Services *</FormLabel>
-                    <FormControl>
-                      <Textarea 
-                        placeholder="Window Cleaning (outside only), Gutter Cleaning (inside only)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes</FormLabel>
-                    <FormControl>
-                      <Textarea 
-                        placeholder="Includes discount for new customers"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button 
-                type="submit" 
-                disabled={isGenerating}
-                className="w-full md:w-auto"
-              >
-                {isGenerating ? 'Generating...' : 'Generate Quote Messages'}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-
-      {generatedMessages && (
-        <QuoteMessagePreview
-          emailMessage={generatedMessages.email}
-          smsMessage={generatedMessages.sms}
-          onCopyEmail={() => copyToClipboard(generatedMessages.email, 'email')}
-          onCopySMS={() => copyToClipboard(generatedMessages.sms, 'sms')}
-          onSendQuote={handleSendQuote}
-          copiedEmail={copiedEmail}
-          copiedSMS={copiedSMS}
-          isSending={isSending}
-        />
-      )}
+        {generatedMessages && (
+          <QuoteMessagePreview
+            emailMessage={generatedMessages.email}
+            smsMessage={generatedMessages.sms}
+            onCopyEmail={() => copyToClipboard(generatedMessages.email, 'email')}
+            onCopySMS={() => copyToClipboard(generatedMessages.sms, 'sms')}
+            onSendQuote={handleSendQuote}
+            copiedEmail={copiedEmail}
+            copiedSMS={copiedSMS}
+            isSending={isSending}
+          />
+        )}
+      </div>
     </div>
   );
 };
