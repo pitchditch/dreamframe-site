@@ -26,6 +26,7 @@ import PostConstructionWindowCleaning from "./pages/services/PostConstructionWin
 import WhyUs from "./pages/WhyUs";
 import HouseTracking from "./pages/HouseTracking";
 import KelownaServices from "./pages/KelownaServices";
+import QuotingPage from "./pages/QuotingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -67,6 +68,7 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/why-us" element={<WhyUs />} />
+            <Route path="/quoting" element={<QuotingPage />} />
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
             <Route path="/services/soft-wash" element={<SoftWash />} />
