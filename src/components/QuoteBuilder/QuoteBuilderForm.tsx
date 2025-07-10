@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,9 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calculator, Download, Send, Copy, Plus, Trash2 } from 'lucide-react';
+import { Calculator, Download, Send, Copy, Plus, Trash2, History } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useQuoteLog } from '@/hooks/useQuoteLog';
 import QuoteDisplay from './QuoteDisplay';
+import QuoteLog from './QuoteLog';
 
 const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-CA', {
@@ -78,6 +79,9 @@ interface QuoteResult {
 
 const QuoteBuilderForm = () => {
   const { toast } = useToast();
+  const { logQuote, isLogging } = useQuoteLog();
+  const [showQuoteLog, setShowQuoteLog] = useState(false);
+
   const [quoteData, setQuoteData] = useState<QuoteData>({
     customerName: '',
     address: '',
@@ -255,7 +259,7 @@ const QuoteBuilderForm = () => {
     );
   };
 
-  const calculateQuote = () => {
+  const calculateQuote = async () => {
     if (!quoteData.customerName || !quoteData.houseSize) {
       toast({
         title: "Missing Information",
@@ -320,6 +324,26 @@ const QuoteBuilderForm = () => {
       total
     };
 
+    // Log the quote to database
+    const logData = {
+      customerName: quoteData.customerName,
+      customerEmail: quoteData.email || undefined,
+      customerPhone: quoteData.phone || undefined,
+      propertyAddress: quoteData.address || undefined,
+      houseSize: quoteData.houseSize || undefined,
+      services: result.services,
+      addOns: result.addOns,
+      products: result.products,
+      servicesSubtotal: result.servicesSubtotal,
+      productsSubtotal: result.productsSubtotal,
+      gstAmount: result.gst,
+      pstAmount: result.pst,
+      totalAmount: result.total,
+      notes: quoteData.notes || undefined
+    };
+
+    await logQuote(logData);
+
     setQuoteResult(result);
     setShowQuote(true);
   };
@@ -348,13 +372,37 @@ const QuoteBuilderForm = () => {
     setShowQuote(false);
   };
 
+  if (showQuoteLog) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Quote Log</h2>
+          <Button onClick={() => setShowQuoteLog(false)} variant="outline">
+            Back to Quote Builder
+          </Button>
+        </div>
+        <QuoteLog />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="w-5 h-5" />
-            Quote Builder - BC Pressure Washing
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Calculator className="w-5 h-5" />
+              Quote Builder - BC Pressure Washing
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => setShowQuoteLog(true)}
+              className="flex items-center gap-2"
+            >
+              <History className="w-4 h-4" />
+              View Quote Log
+            </Button>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -674,9 +722,9 @@ const QuoteBuilderForm = () => {
 
           {/* Action Buttons */}
           <div className="flex gap-3">
-            <Button onClick={calculateQuote} className="flex-1">
+            <Button onClick={calculateQuote} className="flex-1" disabled={isLogging}>
               <Calculator className="w-4 h-4 mr-2" />
-              Calculate Quote
+              {isLogging ? 'Saving Quote...' : 'Calculate Quote'}
             </Button>
             <Button variant="outline" onClick={resetForm}>
               Reset Form
