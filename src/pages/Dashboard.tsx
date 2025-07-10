@@ -69,10 +69,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const { getQuoteLogs } = useQuoteLog();
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
   const loadData = useCallback(async () => {
     console.log('Dashboard: Starting to load data...');
     try {
@@ -86,6 +82,10 @@ const Dashboard = () => {
       setLoading(false);
     }
   }, [getQuoteLogs]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const getQuoteStats = () => {
     if (!quotes.length) return { totalValue: 0, count: 0, avgValue: 0 };

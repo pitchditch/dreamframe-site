@@ -17,7 +17,7 @@ const QuoteLogPage = () => {
 
   useEffect(() => {
     loadQuotes();
-  }, [loadQuotes]);
+  }, []);
 
   useEffect(() => {
     if (searchTerm) {
