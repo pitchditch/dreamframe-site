@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, Download, Send, X, MessageSquare, Mail, Printer, Save } from 'lucide-react';
+import { Copy, Download, Send, X, MessageSquare, Mail, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useQuoteLog } from '@/hooks/useQuoteLog';
+import { supabase } from '@/integrations/supabase/client';
 
 const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-CA', {
@@ -55,14 +55,40 @@ interface QuoteDisplayProps {
 
 const QuoteDisplay: React.FC<QuoteDisplayProps> = ({ quoteData, quoteResult, onClose }) => {
   const { toast } = useToast();
-  const { logSentQuote, isLogging } = useQuoteLog();
   const [activeTab, setActiveTab] = useState('preview');
 
-  const handleSaveQuote = async () => {
+  const sendViaSupabase = async () => {
     try {
-      await logSentQuote(quoteData, quoteResult);
+      const confirmationData = {
+        email: quoteData.email,
+        phone: quoteData.phone,
+        name: quoteData.customerName,
+        formType: 'Professional Quote',
+        estimateTotal: quoteResult.total,
+        services: quoteResult.services.map(s => s.name),
+        addOns: quoteResult.addOns.map(a => a.name),
+        products: quoteResult.products.map(p => p.name),
+        houseSize: quoteData.houseSize,
+        address: quoteData.address,
+        notes: quoteData.notes
+      };
+
+      console.log('Sending confirmation data:', confirmationData);
+
+      const { data, error } = await supabase.functions.invoke('send-confirmations', {
+        body: confirmationData
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('Confirmation sent successfully:', data);
+      return data;
     } catch (error) {
-      // Error is already handled in the hook
+      console.error('Error sending via Supabase:', error);
+      throw error;
     }
   };
 
@@ -425,6 +451,51 @@ Reply YES to book or call for questions!`;
     }
   };
 
+  const sendSMS = async () => {
+    try {
+      console.log('Sending quote via SMS...', {
+        phone: quoteData.phone,
+        name: quoteData.customerName
+      });
+
+      await sendViaSupabase();
+
+      toast({
+        title: "SMS Sent Successfully!",
+        description: `Quote sent to ${quoteData.customerName} via SMS`,
+      });
+    } catch (error) {
+      console.error('SMS send failed:', error);
+      toast({
+        title: "SMS Failed",
+        description: "Could not send SMS. Please try copying the content instead.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const sendEmail = async () => {
+    try {
+      console.log('Sending quote via email...', {
+        email: quoteData.email,
+        name: quoteData.customerName
+      });
+
+      await sendViaSupabase();
+
+      toast({
+        title: "Email Sent Successfully!",
+        description: `Quote sent to ${quoteData.customerName} via email`,
+      });
+    } catch (error) {
+      console.error('Email send failed:', error);
+      toast({
+        title: "Email Failed",
+        description: "Could not send email. Please try copying the content instead.",
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -559,14 +630,13 @@ Reply YES to book or call for questions!`;
         </Tabs>
 
         <div className="flex gap-2 mt-6">
-          <Button 
-            variant="outline" 
-            className="flex-1" 
-            onClick={handleSaveQuote} 
-            disabled={isLogging}
-          >
-            <Save className="w-4 h-4 mr-2" />
-            {isLogging ? 'Saving...' : 'Save Quote'}
+          <Button variant="outline" className="flex-1" onClick={sendSMS} disabled={!quoteData.phone}>
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Send SMS
+          </Button>
+          <Button variant="outline" className="flex-1" onClick={sendEmail} disabled={!quoteData.email}>
+            <Mail className="w-4 h-4 mr-2" />
+            Send Email
           </Button>
         </div>
       </CardContent>
