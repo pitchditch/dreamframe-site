@@ -2,9 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
-import { cities } from '@/data/cities';
+import { getNavigationCities } from '@/data/cities';
 
 const CityNavigation = () => {
+  const cities = getNavigationCities();
+  
   return (
     <section className="py-8 bg-gray-900 text-white">
       <div className="container mx-auto px-4">

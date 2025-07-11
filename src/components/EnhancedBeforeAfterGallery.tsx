@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -63,6 +63,18 @@ const EnhancedBeforeAfterGallery = () => {
     ? beforeAfterImages 
     : beforeAfterImages.filter(img => img.category === selectedCategory);
 
+  // Auto-advance carousel every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const nextIndex = (prev + 1) % filteredImages.length;
+        return nextIndex;
+      });
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [filteredImages.length]); // Re-run effect when filtered images change
+
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % filteredImages.length);
   };
@@ -75,7 +87,7 @@ const EnhancedBeforeAfterGallery = () => {
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    setCurrentIndex(0);
+    setCurrentIndex(0); // Reset to first image when category changes
   };
 
   return (
