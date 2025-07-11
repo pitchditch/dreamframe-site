@@ -41,26 +41,6 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/why-us" element={<WhyUs />} />
-            <Route path="/quoting" element={<QuotingPage />} />
-            <Route path="/services/window-cleaning" element={<WindowCleaning />} />
-            <Route path="/services/pressure-washing" element={<PressureWashing />} />
-            <Route path="/services/soft-wash" element={<SoftWash />} />
-            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-            <Route path="/services/house-wash" element={<HouseWash />} />
-            <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
-            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
-            <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-            <Route path="/equipment" element={<Equipment />} />
-            <Route path="/compare-prices" element={<ComparePrices />} />
-            <Route path="/compare-services" element={<CompareServices />} />
-            <Route path="/house-tracking" element={<HouseTracking />} />
             
             {/* City-specific homepage routes */}
             <Route path="/vancouver" element={<CityPages />} />
@@ -83,6 +63,27 @@ const App = () => (
             
             {/* Dynamic route for all cities */}
             <Route path="/:citySlug" element={<CityPages />} />
+            
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/why-us" element={<WhyUs />} />
+            <Route path="/quoting" element={<QuotingPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/services/window-cleaning" element={<WindowCleaning />} />
+            <Route path="/services/pressure-washing" element={<PressureWashing />} />
+            <Route path="/services/soft-wash" element={<SoftWash />} />
+            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
+            <Route path="/services/house-wash" element={<HouseWash />} />
+            <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
+            <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+            <Route path="/equipment" element={<Equipment />} />
+            <Route path="/compare-prices" element={<ComparePrices />} />
+            <Route path="/compare-services" element={<CompareServices />} />
+            <Route path="/house-tracking" element={<HouseTracking />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
