@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -30,45 +31,28 @@ interface ConfirmationRequest {
 const sendSMS = async (phone: string, message: string) => {
   const twilioAccountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
   const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
-  const twilioFromNumber = Deno.env.get("TWILIO_FROM_NUMBER");
+  const twilioFromNumber = Deno.env.get("TWILIO_FROM_NUMBER") || "+12345678901";
 
   console.log("SMS Configuration check:", {
     hasAccountSid: !!twilioAccountSid,
     hasAuthToken: !!twilioAuthToken,
-    hasFromNumber: !!twilioFromNumber,
     fromNumber: twilioFromNumber,
     targetPhone: phone
   });
 
-  if (!twilioAccountSid || !twilioAuthToken || !twilioFromNumber) {
-    console.error("Missing Twilio credentials:", {
-      accountSid: !!twilioAccountSid,
-      authToken: !!twilioAuthToken,
-      fromNumber: !!twilioFromNumber
-    });
-    return { error: "Twilio credentials not configured properly" };
+  if (!twilioAccountSid || !twilioAuthToken) {
+    console.log("Twilio credentials not configured, skipping SMS");
+    return null;
   }
 
-  // Clean and format phone number
-  let cleanPhone = phone.replace(/[^\d+]/g, '');
-  
-  // Add +1 if it's a North American number without country code
-  if (!cleanPhone.startsWith('+')) {
-    if (cleanPhone.length === 10) {
-      cleanPhone = '+1' + cleanPhone;
-    } else if (cleanPhone.length === 11 && cleanPhone.startsWith('1')) {
-      cleanPhone = '+' + cleanPhone;
-    } else {
-      cleanPhone = '+1' + cleanPhone;
-    }
-  }
-  
-  console.log("Formatted phone number:", cleanPhone);
+  // Clean phone number - remove any non-digit characters except +
+  const cleanPhone = phone.replace(/[^\d+]/g, '');
+  console.log("Cleaned phone number:", cleanPhone);
 
   const credentials = btoa(`${twilioAccountSid}:${twilioAuthToken}`);
   
   try {
-    console.log("Sending SMS via Twilio...");
+    console.log("Sending SMS to:", cleanPhone);
     const response = await fetch(
       `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
       {
@@ -80,29 +64,26 @@ const sendSMS = async (phone: string, message: string) => {
         body: new URLSearchParams({
           From: twilioFromNumber,
           To: cleanPhone,
-          Body: message.substring(0, 1600), // SMS limit
+          Body: message,
         }),
       }
     );
 
     const responseText = await response.text();
     console.log("Twilio response status:", response.status);
-    console.log("Twilio response body:", responseText);
+    console.log("Twilio response:", responseText);
 
     if (response.ok) {
       const result = JSON.parse(responseText);
-      console.log("SMS sent successfully! Message SID:", result.sid);
-      return { success: true, sid: result.sid };
+      console.log("SMS sent successfully:", result.sid);
+      return result;
     } else {
-      console.error("SMS sending failed:", {
-        status: response.status,
-        response: responseText
-      });
-      return { error: `SMS failed: ${responseText}` };
+      console.error("SMS sending failed:", responseText);
+      return { error: responseText };
     }
   } catch (error) {
     console.error("SMS error:", error);
-    return { error: `SMS error: ${error.message}` };
+    return { error: error.message };
   }
 };
 
