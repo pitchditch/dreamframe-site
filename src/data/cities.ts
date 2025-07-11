@@ -1,4 +1,3 @@
-
 export interface CityData {
   name: string;
   slug: string;
@@ -9,6 +8,7 @@ export interface CityData {
     author: string;
     rating: number;
   }>;
+  hideFromNavigation?: boolean;
 }
 
 export const cities: CityData[] = [
@@ -155,6 +155,7 @@ export const cities: CityData[] = [
     slug: "township-of-langley",
     postalCodePrefix: "V1M, V2Y, V2Z, V3A",
     nearbyAreas: ["Walnut Grove", "Fort Langley", "Murrayville", "Brookswood", "Fernridge", "Aldergrove"],
+    hideFromNavigation: true,
     testimonials: [
       {
         text: "Great pressure washing service for our Walnut Grove home. Everything looks brand new!",
@@ -339,6 +340,7 @@ export const cities: CityData[] = [
     slug: "kelowna",
     postalCodePrefix: "V1V, V1W, V1X, V1Y, V1Z, V4T, V4V",
     nearbyAreas: ["West Kelowna", "Peachland", "Summerland", "Penticton", "Rutland", "Glenmore", "Mission"],
+    hideFromNavigation: true,
     testimonials: [
       {
         text: "Outstanding pressure washing service! Our Kelowna home's driveway and deck look brand new after their thorough cleaning.",
