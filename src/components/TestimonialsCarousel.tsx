@@ -139,13 +139,13 @@ const TestimonialsCarousel = () => {
                         </div>
                       </div>
                       
-                      {/* Before/After Image - Full size without height constraints */}
+                      {/* Before/After Image - Made bigger */}
                       {testimonial.beforeAfterImage && (
-                        <div className="rounded-lg overflow-hidden">
+                        <div className="h-80 md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden">
                           <img 
                             src={testimonial.beforeAfterImage} 
                             alt="Before and after cleaning" 
-                            className="w-full h-auto object-cover"
+                            className="w-full h-full object-cover"
                           />
                         </div>
                       )}
