@@ -152,7 +152,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   
                   <div className="pt-2 border-t border-gray-100">
-                    <h4 className="font-medium text-gray-900 pb-2">{t('Leave a Review')}</h4>
+                    <h4 className="font-medium text-gray-900 pb-2 text-sm">{t('Leave a Review')}</h4>
                     <div className="flex space-x-3">
                       <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
                         <img src="/lovable-uploads/16f0c875-4a0c-44b6-8c3c-c995877476e9.png" alt="Google" className="h-6 w-6 object-contain" />
