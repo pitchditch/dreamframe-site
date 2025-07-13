@@ -21,8 +21,8 @@ const HoverImageSlideshow: React.FC<HoverImageSlideshowProps> = ({
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     
-    // Only run slideshow if hovering and we have more than one image
-    if (isHovering && images.length > 1) {
+    // Run slideshow automatically if we have more than one image
+    if (images.length > 1) {
       intervalId = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
       }, interval);
@@ -31,7 +31,7 @@ const HoverImageSlideshow: React.FC<HoverImageSlideshowProps> = ({
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [isHovering, images.length, interval]);
+  }, [images.length, interval]);
   
   // Don't render slideshow if no images or only one image
   if (!images.length) return <>{children}</>;
