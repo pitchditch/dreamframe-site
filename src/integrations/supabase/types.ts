@@ -77,6 +77,48 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          created_at: string
+          friend_email: string | null
+          friend_name: string
+          friend_phone: string | null
+          id: string
+          referral_code: string
+          referrer_email: string | null
+          referrer_name: string
+          referrer_phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          friend_email?: string | null
+          friend_name: string
+          friend_phone?: string | null
+          id?: string
+          referral_code: string
+          referrer_email?: string | null
+          referrer_name: string
+          referrer_phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          friend_email?: string | null
+          friend_name?: string
+          friend_phone?: string | null
+          id?: string
+          referral_code?: string
+          referrer_email?: string | null
+          referrer_name?: string
+          referrer_phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

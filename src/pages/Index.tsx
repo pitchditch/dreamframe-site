@@ -19,6 +19,7 @@ import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import CityNavigation from '../components/home/CityNavigation';
+import ReferralButton from '@/components/ReferralButton';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -131,6 +132,7 @@ const Index = () => {
       
       <StickyQuoteBar />
       <AfkOverlay />
+      <ReferralButton />
     </Layout>
   );
 };

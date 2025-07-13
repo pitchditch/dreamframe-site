@@ -27,6 +27,7 @@ import FenceWashing from "./pages/services/FenceWashing";
 import WhyUs from "./pages/WhyUs";
 import HouseTracking from "./pages/HouseTracking";
 import KelownaServices from "./pages/KelownaServices";
+import ReferralHub from "./pages/ReferralHub";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -82,6 +83,7 @@ const App = () => (
             <Route path="/compare-prices" element={<ComparePrices />} />
             <Route path="/compare-services" element={<CompareServices />} />
             <Route path="/house-tracking" element={<HouseTracking />} />
+            <Route path="/referral-hub" element={<ReferralHub />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
