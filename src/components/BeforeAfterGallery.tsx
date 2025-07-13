@@ -38,29 +38,22 @@ const beforeAfterImages = [
 
 const BeforeAfterGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
 
   // Auto-advance carousel every 4 seconds
   useEffect(() => {
-    if (!isPlaying) return;
-    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % beforeAfterImages.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, []);
 
   const nextSlide = () => {
-    setIsPlaying(false);
     setCurrentIndex((prev) => (prev + 1) % beforeAfterImages.length);
-    setTimeout(() => setIsPlaying(true), 8000); // Resume auto-play after 8 seconds
   };
 
   const prevSlide = () => {
-    setIsPlaying(false);
     setCurrentIndex((prev) => (prev - 1 + beforeAfterImages.length) % beforeAfterImages.length);
-    setTimeout(() => setIsPlaying(true), 8000); // Resume auto-play after 8 seconds
   };
 
   const currentImage = beforeAfterImages[currentIndex];
@@ -140,11 +133,7 @@ const BeforeAfterGallery = () => {
                 {beforeAfterImages.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => {
-                      setIsPlaying(false);
-                      setCurrentIndex(index);
-                      setTimeout(() => setIsPlaying(true), 8000);
-                    }}
+                    onClick={() => setCurrentIndex(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${
                       index === currentIndex ? 'bg-bc-red' : 'bg-gray-300'
                     }`}

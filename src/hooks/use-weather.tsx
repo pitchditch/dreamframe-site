@@ -71,45 +71,6 @@ export const useWeather = () => {
     }
   };
 
-  const getCurrentTemperature = async (locationData: LocationData): Promise<number> => {
-    try {
-      // Use Canadian weather service for more accurate local temperatures
-      const response = await fetch(`https://api.weather.gc.ca/collections/climate-daily/items?bbox=${locationData.lon-0.1},${locationData.lat-0.1},${locationData.lon+0.1},${locationData.lat+0.1}&limit=1`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.features && data.features.length > 0) {
-          return data.features[0].properties.mean_temperature || 20;
-        }
-      }
-      
-      // Real-time temperature based on current conditions in BC/Vancouver area
-      const now = new Date();
-      const hour = now.getHours();
-      const month = now.getMonth();
-      const isWinter = month >= 11 || month <= 2;
-      const isSummer = month >= 5 && month <= 8;
-      
-      let baseTemp;
-      if (isWinter) {
-        baseTemp = Math.floor(Math.random() * 6 + 5); // 5-11°C in winter
-      } else if (isSummer) {
-        baseTemp = Math.floor(Math.random() * 8 + 18); // 18-26°C in summer  
-      } else {
-        baseTemp = Math.floor(Math.random() * 8 + 12); // 12-20°C spring/fall
-      }
-      
-      // Adjust for time of day
-      if (hour >= 6 && hour <= 9) baseTemp -= 2; // cooler morning
-      if (hour >= 14 && hour <= 17) baseTemp += 2; // warmer afternoon
-      if (hour >= 20 || hour <= 5) baseTemp -= 3; // cooler night
-      
-      return Math.max(baseTemp, isWinter ? 2 : 8);
-    } catch (err) {
-      return 20; // Default fallback
-    }
-  };
-
   const getLocationByIP = async (): Promise<LocationData> => {
     try {
       const response = await fetch('https://ipapi.co/json/');
@@ -163,18 +124,18 @@ export const useWeather = () => {
         const hour = now.getHours();
         const month = now.getMonth();
         
-        // Get more accurate current weather data from multiple sources
-        const currentTemp = await getCurrentTemperature(locationData);
+        // Simulate seasonal and daily patterns
+        const isWinter = month >= 11 || month <= 2;
+        const isDaytime = hour >= 6 && hour <= 18;
         
         let condition = 'Clear';
-        let temperature = currentTemp;
-        
-        // Use more realistic temperature patterns based on current time
-        const isWinter = month >= 11 || month <= 2;
+        let temperature = 18;
         
         if (isWinter) {
+          temperature = Math.random() > 0.3 ? Math.floor(Math.random() * 10 + 2) : Math.floor(Math.random() * 8 + 8);
           condition = Math.random() > 0.6 ? 'Cloudy' : Math.random() > 0.8 ? 'Rain' : 'Clear';
         } else {
+          temperature = Math.random() > 0.2 ? Math.floor(Math.random() * 15 + 15) : Math.floor(Math.random() * 10 + 10);
           condition = Math.random() > 0.7 ? 'Cloudy' : 'Clear';
         }
 

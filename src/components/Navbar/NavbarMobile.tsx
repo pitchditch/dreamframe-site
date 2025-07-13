@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale, Calculator } from 'lucide-react';
+import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -13,7 +13,6 @@ interface NavbarMobileProps {
 
 export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   
   // Add state for more dropdown
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
@@ -172,17 +171,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             </Link>
             
             <div className="pt-4 flex flex-col gap-3">
-              <div className="text-base">
-                <LanguageSelector />
-              </div>
-              
-              <button 
-                onClick={() => navigate('/calculator')} 
-                className="flex items-center gap-2 py-3 px-2 text-white bg-bc-red hover:bg-red-700 transition-colors rounded-md font-medium justify-center text-base"
-              >
-                <Calculator className="w-5 h-5" />
-                <span>Price Calculator</span>
-              </button>
+              <LanguageSelector />
             </div>
           </nav>
         </div>
