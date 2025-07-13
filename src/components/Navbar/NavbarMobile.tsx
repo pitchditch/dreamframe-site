@@ -158,7 +158,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                         <img src="/lovable-uploads/16f0c875-4a0c-44b6-8c3c-c995877476e9.png" alt="Google" className="h-6 w-6 object-contain" />
                       </a>
                       <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
-                        <img src="/lovable-uploads/a012b0c4-8ea4-4bcd-a39d-e62c2c8d1a97.png" alt="Yelp" className="h-6 w-6 object-contain" />
+                        <img src="/lovable-uploads/a012b0c4-8ea4-4bcd-a39d-e62c2c8d1a97.png" alt="Yelp" className="h-8 w-8 object-contain" />
                       </a>
                     </div>
                   </div>
