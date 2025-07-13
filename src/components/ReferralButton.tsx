@@ -8,6 +8,7 @@ const ReferralButton = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   const handleOpenOverlay = () => {
+    console.log('Opening referral overlay');
     setIsOverlayOpen(true);
   };
 
