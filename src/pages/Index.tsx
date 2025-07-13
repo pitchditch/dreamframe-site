@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
-import ReferralButton from '../components/ReferralButton';
+
 import { useTranslation } from '@/hooks/use-translation';
 import StickyQuoteBar from '@/components/StickyQuoteBar';
 import AfkOverlay from '../components/AfkOverlay';
@@ -128,7 +128,7 @@ const Index = () => {
         </>
       </HeroWithContent>
       
-      <ReferralButton />
+      
       <StickyQuoteBar />
       <AfkOverlay />
     </Layout>
