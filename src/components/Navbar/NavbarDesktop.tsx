@@ -185,12 +185,10 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
               ? 'border-white bg-white/10 text-white hover:bg-white hover:text-bc-red backdrop-blur-sm' 
               : 'bg-bc-red text-white hover:bg-red-700'
           }`}
-          asChild
+          onClick={() => window.location.href = '/calculator'}
         >
-          <Link to="/calculator" className="flex items-center gap-2">
-            <Calculator className="w-4 h-4" />
-            Price Calculator
-          </Link>
+          <Calculator className="w-4 h-4" />
+          Price Calculator
         </Button>
         
         <Link 

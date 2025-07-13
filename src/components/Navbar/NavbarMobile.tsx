@@ -175,10 +175,13 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                 <LanguageSelector />
               </div>
               
-              <Link to="/calculator" className="flex items-center gap-2 py-3 px-2 text-white bg-bc-red hover:bg-red-700 transition-colors rounded-md font-medium justify-center text-base">
+              <button 
+                onClick={() => window.location.href = '/calculator'} 
+                className="flex items-center gap-2 py-3 px-2 text-white bg-bc-red hover:bg-red-700 transition-colors rounded-md font-medium justify-center text-base"
+              >
                 <Calculator className="w-5 h-5" />
                 <span>Price Calculator</span>
-              </Link>
+              </button>
             </div>
           </nav>
         </div>

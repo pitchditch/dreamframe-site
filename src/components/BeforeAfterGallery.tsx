@@ -49,7 +49,7 @@ const BeforeAfterGallery = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, currentIndex]);
 
   const nextSlide = () => {
     setIsPlaying(false);
