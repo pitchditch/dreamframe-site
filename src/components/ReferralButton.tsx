@@ -40,16 +40,6 @@ const ReferralButton = () => {
         </div>
       </section>
 
-      {/* Floating "Start Referring Friends" Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <Button
-          onClick={handleOpenOverlay}
-          className="bg-bc-red hover:bg-red-700 text-white shadow-2xl rounded-full px-6 py-3 text-lg font-bold animate-pulse"
-        >
-          <Gift className="mr-2 h-5 w-5" />
-          Start Referring Friends
-        </Button>
-      </div>
 
       <ReferralOverlay 
         isOpen={isOverlayOpen}
