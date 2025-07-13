@@ -187,7 +187,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           }`}
           asChild
         >
-          <Link to="/quote" className="flex items-center gap-2">
+          <Link to="/calculator" className="flex items-center gap-2">
             <Calculator className="w-4 h-4" />
             Price Calculator
           </Link>

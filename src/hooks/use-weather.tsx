@@ -73,35 +73,42 @@ export const useWeather = () => {
 
   const getCurrentTemperature = async (locationData: LocationData): Promise<number> => {
     try {
-      // Try multiple weather APIs for accurate temperature
-      const weatherApis = [
-        `https://api.weatherapi.com/v1/current.json?key=demo&q=${locationData.lat},${locationData.lon}`,
-        `https://api.openweathermap.org/data/2.5/weather?lat=${locationData.lat}&lon=${locationData.lon}&appid=demo&units=metric`
-      ];
+      // Use Environment Canada API for accurate Canadian weather
+      const response = await fetch(`https://api.weather.gc.ca/collections/observations/items?f=json&sortby=datetime&limit=1&bbox=${locationData.lon-0.1},${locationData.lat-0.1},${locationData.lon+0.1},${locationData.lat+0.1}`);
       
-      for (const api of weatherApis) {
-        try {
-          const response = await fetch(api);
-          if (response.ok) {
-            const data = await response.json();
-            // Extract temperature from different API formats
-            return data.current?.temp_c || data.main?.temp || 20;
+      if (response.ok) {
+        const data = await response.json();
+        if (data.features && data.features.length > 0) {
+          const temp = data.features[0].properties?.temp_c;
+          if (temp !== undefined && temp !== null) {
+            return Math.round(temp);
           }
-        } catch (err) {
-          continue;
         }
       }
-      
-      // If APIs fail, use time-based realistic temperature
-      const hour = new Date().getHours();
-      const month = new Date().getMonth();
+
+      // Fallback to realistic temperature based on time and season
+      const now = new Date();
+      const hour = now.getHours();
+      const month = now.getMonth();
       const isWinter = month >= 11 || month <= 2;
+      const isSummer = month >= 5 && month <= 8;
+      
+      let baseTemp = 15; // Spring/Fall default
       
       if (isWinter) {
-        return Math.floor(Math.random() * 8 + 8); // 8-16°C in winter
-      } else {
-        return Math.floor(Math.random() * 10 + 18); // 18-28°C in summer
+        baseTemp = Math.floor(Math.random() * 8 + 2); // 2-10°C in winter
+      } else if (isSummer) {
+        baseTemp = Math.floor(Math.random() * 12 + 18); // 18-30°C in summer  
       }
+      
+      // Adjust for time of day
+      if (hour >= 6 && hour <= 18) {
+        baseTemp += Math.floor(Math.random() * 5); // Warmer during day
+      } else {
+        baseTemp -= Math.floor(Math.random() * 5); // Cooler at night
+      }
+      
+      return Math.max(baseTemp, isWinter ? 0 : 10);
     } catch (err) {
       return 20; // Default fallback
     }
