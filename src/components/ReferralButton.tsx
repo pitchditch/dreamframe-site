@@ -21,11 +21,11 @@ const ReferralButton = () => {
             <div className="mb-8">
               <Gift className="w-16 h-16 text-white mx-auto mb-4" />
               <h2 className="text-4xl font-bold text-white mb-4">
-                Refer a Friend & Both Save $50!
+                Refer a Friend & Get 25% Off!
               </h2>
               <p className="text-xl text-white/90 mb-8">
                 Know someone who needs our services? When you refer them and they book, 
-                you both get $50 off your next service!
+                you get 25% off your next service!
               </p>
             </div>
 
