@@ -26,11 +26,12 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/377cad71-5dba-417d-805e-0e8d67112fd6.png"
-              alt="Pressure washing house exterior"
-              className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+              alt="House with palm tree and red BC Pressure Washing car"
+              className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
+              style={{ objectPosition: '50% 100%' }}
             />
           ) : (
             <>

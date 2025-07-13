@@ -32,7 +32,7 @@ const Calculator = () => {
               <Percent className="inline-block h-5 w-5 mr-2" />
               SPRING SALE: 20% OFF ALL SERVICES
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Smart Quote Calculator
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -114,7 +114,7 @@ const Calculator = () => {
             <div className="relative p-12 text-white">
               <h3 className="text-4xl font-bold mb-6">100% Satisfaction Guarantee</h3>
               <p className="text-xl mb-8 max-w-3xl leading-relaxed">
-                Not happy? We'll return at no cost to fix it.
+                We guarantee your satisfaction. Not happy? We'll return at no cost.
               </p>
               <div className="flex items-center">
                 <img
