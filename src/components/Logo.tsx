@@ -13,7 +13,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   
   // Bigger logo sizes for hero section
   const mobileLogoHeight = isOverVideo ? 'h-24 w-auto' : 'h-24 w-auto'; 
-  const desktopLogoHeight = isOverVideo ? 'h-40 md:h-44 w-auto' : 'h-36 md:h-40 w-auto';
+  const desktopLogoHeight = isOverVideo ? 'h-40 md:h-44 w-auto' : 'h-40 md:h-44 w-auto';
   
   useEffect(() => {
     const handleScroll = () => {

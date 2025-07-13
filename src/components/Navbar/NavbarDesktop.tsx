@@ -182,12 +182,12 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           size="sm"
           className={`transition-all duration-300 hover:scale-105 font-semibold ${
             isOverVideo 
-              ? 'border-white text-white hover:bg-white hover:text-bc-red' 
+              ? 'border-bc-red bg-bc-red text-white hover:bg-red-700 hover:border-red-700' 
               : 'bg-bc-red text-white hover:bg-red-700'
           }`}
           asChild
         >
-          <Link to="/quote" className="flex items-center gap-2">
+          <Link to="/calculator" className="flex items-center gap-2">
             <Calculator className="w-4 h-4" />
             Price Calculator
           </Link>

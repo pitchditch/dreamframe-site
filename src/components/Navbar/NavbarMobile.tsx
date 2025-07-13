@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale } from 'lucide-react';
+import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale, Calculator } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -166,6 +166,11 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               </div>
             </div>
             
+            <Link to="/calculator" className="flex items-center gap-2 py-3 px-2 text-white bg-bc-red hover:bg-red-700 transition-colors rounded-md font-medium">
+              <Calculator className="w-5 h-5" />
+              <span>{t('Price Calculator')}</span>
+            </Link>
+
             <Link to="/contact" className="py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
               {t('Contact')}
             </Link>
