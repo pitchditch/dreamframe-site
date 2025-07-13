@@ -153,8 +153,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                   </Link>
                   
                   <div className="pt-6 border-t border-gray-200">
-                    <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-lg">
-                      <Star className="h-6 w-6 text-bc-red" />
+                    <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-base">
+                      <Star className="h-5 w-5 text-bc-red" />
                       {t('Leave a Review')}
                     </h4>
                     <div className="flex space-x-6">
@@ -163,7 +163,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-base font-medium">Google</span>
                       </a>
                       <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
-                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-10 w-10 object-contain transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-base font-medium">Yelp</span>
                       </a>
                     </div>
