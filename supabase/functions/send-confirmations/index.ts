@@ -36,8 +36,7 @@ const sendSMS = async (phone: string, message: string) => {
   console.log("SMS Configuration check:", {
     hasAccountSid: !!twilioAccountSid,
     hasAuthToken: !!twilioAuthToken,
-    fromNumber: twilioFromNumber,
-    targetPhone: phone
+    fromNumber: twilioFromNumber
   });
 
   if (!twilioAccountSid || !twilioAuthToken) {
@@ -45,14 +44,10 @@ const sendSMS = async (phone: string, message: string) => {
     return null;
   }
 
-  // Clean phone number - remove any non-digit characters except +
-  const cleanPhone = phone.replace(/[^\d+]/g, '');
-  console.log("Cleaned phone number:", cleanPhone);
-
   const credentials = btoa(`${twilioAccountSid}:${twilioAuthToken}`);
   
   try {
-    console.log("Sending SMS to:", cleanPhone);
+    console.log("Sending SMS to:", phone);
     const response = await fetch(
       `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
       {
@@ -63,27 +58,24 @@ const sendSMS = async (phone: string, message: string) => {
         },
         body: new URLSearchParams({
           From: twilioFromNumber,
-          To: cleanPhone,
+          To: phone,
           Body: message,
         }),
       }
     );
 
-    const responseText = await response.text();
-    console.log("Twilio response status:", response.status);
-    console.log("Twilio response:", responseText);
-
     if (response.ok) {
-      const result = JSON.parse(responseText);
+      const result = await response.json();
       console.log("SMS sent successfully:", result.sid);
       return result;
     } else {
-      console.error("SMS sending failed:", responseText);
-      return { error: responseText };
+      const error = await response.text();
+      console.error("SMS sending failed:", error);
+      return null;
     }
   } catch (error) {
     console.error("SMS error:", error);
-    return { error: error.message };
+    return null;
   }
 };
 
@@ -106,7 +98,7 @@ const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
-    minimumFractionDigits: 2
+    minimumFractionDigits: 0
   }).format(amount);
 };
 
@@ -136,13 +128,8 @@ const handler = async (req: Request): Promise<Response> => {
       scheduledDate,
       scheduledTime,
       squareFootage,
-      notes,
-      servicesSubtotal,
-      products,
-      productsSubtotal,
-      gstAmount,
-      pstAmount
-    } = JSON.parse(body);
+      notes
+    }: ConfirmationRequest = JSON.parse(body);
     
     console.log("Parsed request data:", { email, phone, name, service, formType, estimateTotal, scheduledDate, scheduledTime });
 
@@ -168,281 +155,164 @@ const handler = async (req: Request): Promise<Response> => {
     
     // Determine if this is a booking confirmation or regular quote
     const isBookingConfirmation = formType === 'Booking Confirmation' && scheduledDate && scheduledTime;
-    const isProfessionalQuote = formType === 'Professional Quote';
-
-    // Prepare products section
-    const productsSection = products && products.length > 0 ? `
-    <div class="details-section">
-      <div class="details-header">📦 Products & Materials</div>
-      <div class="details-content">
-        ${products.map((product: any) => `
-        <div class="detail-row">
-          <div class="detail-label">${product.name}:</div>
-          <div class="detail-value">${formatCurrency(product.cost)}</div>
-        </div>
-        `).join('')}
-        <div class="detail-row" style="border-top: 2px solid #e2e8f0; padding-top: 12px; margin-top: 12px;">
-          <div class="detail-label">Products Subtotal:</div>
-          <div class="detail-value font-semibold">${formatCurrency(productsSubtotal || 0)}</div>
-        </div>
-        ${gstAmount > 0 ? `
-        <div class="detail-row">
-          <div class="detail-label">GST (5%):</div>
-          <div class="detail-value">${formatCurrency(gstAmount)}</div>
-        </div>
-        ` : ''}
-        ${pstAmount > 0 ? `
-        <div class="detail-row">
-          <div class="detail-label">PST (7%):</div>
-          <div class="detail-value">${formatCurrency(pstAmount)}</div>
-        </div>
-        ` : ''}
-      </div>
-    </div>
-    ` : '';
     
-    // Send email confirmation with beautiful styling
+    // Send email confirmation with professional quote
     console.log("Attempting to send email to:", email);
     const emailResponse = await resend.emails.send({
       from: "BC Pressure Washing <info@bcpressurewashing.ca>",
       to: [email],
-      subject: isProfessionalQuote ? 
-        `Your Professional Quote - BC Pressure Washing ${estimateTotal ? `(${formatCurrency(estimateTotal)})` : ''}` :
-        isBookingConfirmation ? 
-          "Booking Confirmation & Professional Quote - BC Pressure Washing" : 
-          "Your Professional Quote - BC Pressure Washing",
+      subject: isBookingConfirmation ? 
+        "Booking Confirmation & Professional Quote - BC Pressure Washing" : 
+        "Your Professional Quote - BC Pressure Washing",
       html: `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>BC Pressure Washing Quote</title>
-          <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f8fafc; }
-            .container { max-width: 650px; margin: 0 auto; background: white; }
-            .header { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); padding: 30px; text-align: center; color: white; position: relative; overflow: hidden; }
-            .header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); }
-            .logo { max-width: 280px; height: auto; margin-bottom: 20px; position: relative; z-index: 1; filter: brightness(0) invert(1); }
-            .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); position: relative; z-index: 1; }
-            .header p { font-size: 16px; color: #fef2f2; position: relative; z-index: 1; }
-            .badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 50px; margin-top: 15px; font-size: 13px; font-weight: 500; position: relative; z-index: 1; }
-            .content { padding: 40px 30px; }
-            .greeting { text-align: center; margin-bottom: 30px; }
-            .greeting h2 { font-size: 26px; color: #1e293b; margin-bottom: 15px; }
-            .greeting p { font-size: 16px; color: #475569; max-width: 500px; margin: 0 auto; }
-            .quote-box { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white; padding: 30px; border-radius: 16px; text-align: center; margin: 25px 0; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3); }
-            .quote-box::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); }
-            .quote-box h3 { font-size: 22px; margin-bottom: 20px; position: relative; z-index: 1; }
-            .price-display { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; margin-bottom: 15px; position: relative; z-index: 1; }
-            .price { font-size: 36px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-            .price-label { font-size: 13px; color: #dbeafe; margin-top: 5px; }
-            .disclaimer { font-size: 12px; color: #f0f9ff; position: relative; z-index: 1; }
-            .details-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin: 25px 0; overflow: hidden; }
-            .details-header { background: linear-gradient(90deg, #475569 0%, #64748b 100%); color: white; padding: 18px; font-size: 18px; font-weight: 600; }
-            .details-content { padding: 20px; }
-            .detail-row { display: flex; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
-            .detail-row:last-child { border-bottom: none; }
-            .detail-label { font-weight: 600; color: #475569; width: 40%; font-size: 14px; }
-            .detail-value { color: #1e293b; font-size: 14px; font-weight: 500; flex: 1; }
-            .services-section { background: #f0f9ff; border: 2px solid #3b82f6; border-radius: 12px; margin: 25px 0; overflow: hidden; }
-            .services-header { background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 18px; font-size: 18px; font-weight: 600; }
-            .booking-confirm { background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 12px; padding: 25px; margin: 25px 0; box-shadow: 0 4px 6px rgba(34, 197, 94, 0.1); }
-            .booking-confirm h3 { color: #16a34a; font-size: 20px; margin-bottom: 15px; display: flex; align-items: center; }
-            .booking-details { background: white; padding: 18px; border-radius: 8px; border: 1px solid #22c55e; }
-            .booking-date { font-size: 18px; font-weight: 700; color: #16a34a; margin-bottom: 5px; }
-            .booking-service { color: #166534; font-size: 15px; font-weight: 500; margin-bottom: 3px; }
-            .booking-address { color: #166534; font-size: 13px; }
-            .next-steps { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-radius: 12px; padding: 20px; margin: 25px 0; }
-            .next-steps h3 { color: #0c4a6e; font-size: 16px; margin-bottom: 12px; }
-            .next-steps ul { color: #164e63; padding-left: 18px; }
-            .next-steps li { margin-bottom: 6px; }
-            .cta-section { text-align: center; background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%); padding: 30px; border-radius: 16px; margin: 30px 0; border: 1px solid #e5e7eb; }
-            .cta-section h3 { font-size: 20px; color: #1f2937; margin-bottom: 15px; }
-            .cta-section p { font-size: 15px; color: #6b7280; margin-bottom: 20px; }
-            .cta-buttons { margin: 15px 0; }
-            .cta-button { display: inline-block; padding: 14px 28px; margin: 6px; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 15px; transition: all 0.3s ease; }
-            .cta-primary { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); }
-            .cta-secondary { background: linear-gradient(135deg, #374151 0%, #4b5563 100%); color: white; box-shadow: 0 4px 12px rgba(55, 65, 81, 0.3); }
-            .trust-badges { background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); padding: 25px; border-radius: 12px; text-align: center; margin: 25px 0; }
-            .badges-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; }
-            .badge-item { text-align: center; min-width: 100px; }
-            .badge-icon { font-size: 16px; margin-bottom: 6px; }
-            .badge-title { font-weight: 600; color: #dc2626; font-size: 13px; }
-            .badge-desc { font-size: 11px; color: #6b7280; }
-            .footer { background: linear-gradient(135deg, #1f2937 0%, #374151 100%); color: white; padding: 25px; text-align: center; }
-            .footer h4 { font-size: 16px; margin-bottom: 12px; }
-            .footer p { color: #d1d5db; font-size: 13px; margin-bottom: 12px; }
-            .footer a { color: #fbbf24; text-decoration: none; font-weight: 500; }
-            .footer-divider { border-top: 1px solid #4b5563; margin-top: 15px; padding-top: 15px; }
-            .footer-divider p { color: #9ca3af; font-size: 11px; margin: 0; }
-            @media (max-width: 600px) {
-              .container { margin: 0; }
-              .header, .content { padding: 20px; }
-              .price { font-size: 28px; }
-              .badges-grid { flex-direction: column; gap: 15px; }
-              .cta-button { display: block; margin: 6px 0; }
-              .logo { max-width: 220px; }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <!-- Header -->
-            <div class="header">
-              <img src="https://uyqudsqwspapmujvzmm.supabase.co/storage/v1/object/public/lovable-uploads/41acc7e7-b980-4bca-aec1-f999b7c2c9f9.png" alt="BC Pressure Washing Logo" class="logo">
-              <h1>Professional Exterior Cleaning Services</h1>
-              <p>Licensed & Insured • 5-Star Rated • Local & Trusted</p>
-              <div class="badge">
-                ✨ Serving White Rock, Surrey & Metro Vancouver
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+          <!-- Header -->
+          <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); padding: 30px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">BC Pressure Washing</h1>
+            <p style="color: #fecaca; margin: 10px 0 0 0; font-size: 16px;">Professional Exterior Cleaning Services</p>
+          </div>
+
+          <!-- Quote Details -->
+          <div style="padding: 30px;">
+            <h2 style="color: #dc2626; margin-bottom: 20px; font-size: 24px;">
+              ${isBookingConfirmation ? `Booking Confirmed, ${name}!` : `Thank you, ${name}!`}
+            </h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #374151; margin-bottom: 25px;">
+              ${isBookingConfirmation ? 
+                'Your service has been scheduled! Below is your booking confirmation and professional quote.' :
+                'We\'ve prepared your professional quote based on your requirements. Our team will contact you shortly to confirm details and schedule your service.'
+              }
+            </p>
+
+            ${isBookingConfirmation ? `
+            <!-- Booking Confirmation Box -->
+            <div style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-left: 4px solid #16a34a; padding: 25px; margin: 25px 0; border-radius: 8px;">
+              <h3 style="color: #16a34a; margin: 0 0 15px 0; font-size: 20px;">📅 Your Appointment</h3>
+              <div style="font-size: 18px; font-weight: bold; color: #16a34a; margin-bottom: 5px;">
+                ${scheduledDate} at ${scheduledTime}
+              </div>
+              <div style="color: #166534; font-size: 16px;">
+                Service: ${serviceDetails}
+              </div>
+              ${address ? `<div style="color: #166534; font-size: 14px; margin-top: 5px;">Location: ${address}</div>` : ''}
+            </div>
+            ` : ''}
+
+            <!-- Quote Summary Box -->
+            ${estimateTotal ? `
+            <div style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); border-left: 4px solid #dc2626; padding: 25px; margin: 25px 0; border-radius: 8px;">
+              <h3 style="color: #dc2626; margin: 0 0 15px 0; font-size: 20px;">Your Professional Quote</h3>
+              <div style="font-size: 32px; font-weight: bold; color: #dc2626; margin-bottom: 10px;">
+                ${formatCurrency(estimateTotal)}
+              </div>
+              <p style="color: #6b7280; margin: 0; font-size: 14px;">*Final price may vary based on property inspection</p>
+            </div>
+            ` : ''}
+
+            <!-- Service Details -->
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="color: #374151; margin-top: 0; font-size: 18px;">Service Details</h3>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280; width: 30%;">Services:</td>
+                  <td style="padding: 8px 0; color: #374151;">${serviceDetails}</td>
+                </tr>
+                ${addOnDetails !== 'None' ? `
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Add-ons:</td>
+                  <td style="padding: 8px 0; color: #374151;">${addOnDetails}</td>
+                </tr>
+                ` : ''}
+                ${address ? `
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Property:</td>
+                  <td style="padding: 8px 0; color: #374151;">${address}</td>
+                </tr>
+                ` : ''}
+                ${squareFootage ? `
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Square Footage:</td>
+                  <td style="padding: 8px 0; color: #374151;">${squareFootage.toLocaleString()} sq ft</td>
+                </tr>
+                ` : ''}
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Property Size:</td>
+                  <td style="padding: 8px 0; color: #374151;">${houseSizeText}</td>
+                </tr>
+                ${(message || notes) ? `
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Notes:</td>
+                  <td style="padding: 8px 0; color: #374151;">${message || notes}</td>
+                </tr>
+                ` : ''}
+              </table>
+            </div>
+
+            ${isBookingConfirmation ? `
+            <!-- Appointment Reminder -->
+            <div style="background-color: #eff6ff; border: 1px solid #3b82f6; padding: 20px; border-radius: 8px; margin: 25px 0;">
+              <h3 style="color: #1e40af; margin-top: 0; font-size: 18px;">📋 Before Your Appointment</h3>
+              <ul style="color: #1e3a8a; margin: 10px 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">Ensure clear access to all areas requiring service</li>
+                <li style="margin-bottom: 8px;">Remove any delicate items from the work area</li>
+                <li style="margin-bottom: 8px;">Have your property keys/access ready if needed</li>
+                <li style="margin-bottom: 8px;">Our team will call 30 minutes before arrival</li>
+              </ul>
+            </div>
+            ` : `
+            <!-- What's Next -->
+            <div style="background-color: #f0f9ff; border: 1px solid #0ea5e9; padding: 20px; border-radius: 8px; margin: 25px 0;">
+              <h3 style="color: #0c4a6e; margin-top: 0; font-size: 18px;">What Happens Next?</h3>
+              <ul style="color: #164e63; margin: 10px 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">We'll contact you within 24 hours to confirm details</li>
+                <li style="margin-bottom: 8px;">Schedule a convenient time for your service</li>
+                <li style="margin-bottom: 8px;">Our professional team will arrive on time and ready to work</li>
+                <li style="margin-bottom: 8px;">100% satisfaction guarantee on all work completed</li>
+              </ul>
+            </div>
+            `}
+
+            <!-- Contact Info -->
+            <div style="text-align: center; margin: 30px 0;">
+              <p style="font-size: 16px; color: #374151; margin-bottom: 15px;">
+                <strong>Have questions? We're here to help!</strong>
+              </p>
+              <div style="margin: 15px 0;">
+                <a href="tel:7788087620" style="display: inline-block; background-color: #dc2626; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 5px;">
+                  Call (778) 808-7620
+                </a>
+                <a href="mailto:info@bcpressurewashing.ca" style="display: inline-block; background-color: #374151; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 5px;">
+                  Email Us
+                </a>
               </div>
             </div>
 
-            <!-- Content -->
-            <div class="content">
-              <!-- Greeting -->
-              <div class="greeting">
-                <h2>${isProfessionalQuote ? `Thank you, ${name}!` : 
-                      isBookingConfirmation ? `Booking Confirmed, ${name}!` : `Thank you, ${name}!`}</h2>
-                <p>${isProfessionalQuote ? 
-                    'Your professional quote is ready! Jayden will personally handle your project to ensure exceptional results.' :
-                    isBookingConfirmation ? 
-                      'Your service has been scheduled! Below is your booking confirmation and professional quote.' :
-                      'We\'ve prepared your professional quote based on your requirements. Our team will contact you shortly to confirm details and schedule your service.'
-                  }</p>
+            <!-- Trust Badges -->
+            <div style="text-align: center; margin: 25px 0; padding: 20px; background-color: #f9fafb; border-radius: 8px;">
+              <div style="display: inline-block; margin: 0 15px; text-align: center;">
+                <div style="font-weight: bold; color: #dc2626;">✓ Licensed & Insured</div>
+                <div style="font-size: 12px; color: #6b7280;">WCB & Liability</div>
               </div>
-
-              ${isBookingConfirmation ? `
-              <!-- Booking Confirmation -->
-              <div class="booking-confirm">
-                <h3>📅 Your Scheduled Appointment</h3>
-                <div class="booking-details">
-                  <div class="booking-date">${scheduledDate} at ${scheduledTime}</div>
-                  <div class="booking-service">Service: ${serviceDetails}</div>
-                  ${address ? `<div class="booking-address">📍 ${address}</div>` : ''}
-                </div>
+              <div style="display: inline-block; margin: 0 15px; text-align: center;">
+                <div style="font-weight: bold; color: #dc2626;">✓ 5-Star Rated</div>
+                <div style="font-size: 12px; color: #6b7280;">Google Reviews</div>
               </div>
-              ` : ''}
-
-              ${estimateTotal ? `
-              <!-- Quote Box -->
-              <div class="quote-box">
-                <h3>Your Professional Quote</h3>
-                <div class="price-display">
-                  <div class="price">${formatCurrency(estimateTotal)}</div>
-                  <div class="price-label">Professional Service Investment</div>
-                </div>
-                <div class="disclaimer">*Final price confirmed after property inspection</div>
-              </div>
-              ` : ''}
-
-              <!-- Service Details -->
-              <div class="services-section">
-                <div class="services-header">🔧 Services Requested</div>
-                <div class="details-content">
-                  <div class="detail-row">
-                    <div class="detail-label">Services:</div>
-                    <div class="detail-value">${serviceDetails}</div>
-                  </div>
-                  ${servicesSubtotal ? `
-                  <div class="detail-row">
-                    <div class="detail-label">Services Cost:</div>
-                    <div class="detail-value font-semibold">${formatCurrency(servicesSubtotal)}</div>
-                  </div>
-                  ` : ''}
-                </div>
-              </div>
-
-              ${productsSection}
-
-              <!-- Property Details -->
-              <div class="details-section">
-                <div class="details-header">🏠 Property Information</div>
-                <div class="details-content">
-                  ${address ? `
-                  <div class="detail-row">
-                    <div class="detail-label">Property:</div>
-                    <div class="detail-value">${address}</div>
-                  </div>
-                  ` : ''}
-                  ${squareFootage ? `
-                  <div class="detail-row">
-                    <div class="detail-label">Square Footage:</div>
-                    <div class="detail-value">${squareFootage.toLocaleString()} sq ft</div>
-                  </div>
-                  ` : ''}
-                  <div class="detail-row">
-                    <div class="detail-label">Property Size:</div>
-                    <div class="detail-value">${houseSizeText}</div>
-                  </div>
-                  ${(message || notes) ? `
-                  <div class="detail-row">
-                    <div class="detail-label">Notes:</div>
-                    <div class="detail-value">${message || notes}</div>
-                  </div>
-                  ` : ''}
-                </div>
-              </div>
-
-              ${!isBookingConfirmation ? `
-              <!-- What's Next -->
-              <div class="next-steps">
-                <h3>🎯 What Happens Next?</h3>
-                <ul>
-                  <li>Jayden will contact you within 24 hours to confirm details</li>
-                  <li>Schedule a convenient time for your service</li>
-                  <li>Our professional team will arrive on time and ready to work</li>
-                  <li>100% satisfaction guarantee on all work completed</li>
-                </ul>
-              </div>
-              ` : ''}
-
-              <!-- CTA Section -->
-              <div class="cta-section">
-                <h3>Ready to Get Started? 🚀</h3>
-                <p>Have questions or ready to book? Jayden is here to help!</p>
-                <div class="cta-buttons">
-                  <a href="tel:7788087620" class="cta-button cta-primary">📞 Call (778) 808-7620</a>
-                  <a href="mailto:info@bcpressurewashing.ca" class="cta-button cta-secondary">✉️ Email Us</a>
-                </div>
-              </div>
-
-              <!-- Trust Badges -->
-              <div class="trust-badges">
-                <div class="badges-grid">
-                  <div class="badge-item">
-                    <div class="badge-icon">🛡️</div>
-                    <div class="badge-title">Licensed & Insured</div>
-                    <div class="badge-desc">WCB & Liability</div>
-                  </div>
-                  <div class="badge-item">
-                    <div class="badge-icon">⭐</div>
-                    <div class="badge-title">5-Star Rated</div>
-                    <div class="badge-desc">Google Reviews</div>
-                  </div>
-                  <div class="badge-item">
-                    <div class="badge-icon">🏠</div>
-                    <div class="badge-title">Local & Trusted</div>
-                    <div class="badge-desc">White Rock & Surrey</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="footer">
-              <h4>BC Pressure Washing Property Maintenance Ltd.</h4>
-              <p>Professional Exterior Cleaning Services<br>
-              Serving White Rock, Surrey & Metro Vancouver</p>
-              <a href="https://bcpressurewashing.ca">🌐 bcpressurewashing.ca</a>
-              <div class="footer-divider">
-                <p>© 2024 BC Pressure Washing Property Maintenance Ltd. All rights reserved.</p>
+              <div style="display: inline-block; margin: 0 15px; text-align: center;">
+                <div style="font-weight: bold; color: #dc2626;">✓ Local & Trusted</div>
+                <div style="font-size: 12px; color: #6b7280;">White Rock & Surrey</div>
               </div>
             </div>
           </div>
-        </body>
-        </html>
+          
+          <!-- Footer -->
+          <div style="background-color: #374151; padding: 20px; text-align: center;">
+            <p style="color: #d1d5db; margin: 0; font-size: 14px;">
+              BC Pressure Washing - Professional Exterior Cleaning Services<br>
+              White Rock, Surrey & Metro Vancouver<br>
+              <a href="https://bcpressurewashing.ca" style="color: #fbbf24;">bcpressurewashing.ca</a>
+            </p>
+          </div>
+        </div>
       `,
     });
 
@@ -451,14 +321,11 @@ const handler = async (req: Request): Promise<Response> => {
     // Send SMS confirmation if phone number provided
     let smsResponse = null;
     if (phone && phone.trim()) {
-      const smsMessage = isProfessionalQuote ?
-        `Hi ${name}! Your BC Pressure Washing quote is ready: ${serviceDetails} - ${estimateTotal ? formatCurrency(estimateTotal) : 'Custom pricing'}. ${notes || message ? (notes || message) + ' ' : ''}Jayden will contact you within 24hrs. Questions? Call (778) 808-7620` :
-        isBookingConfirmation ?
-          `Hi ${name}! Your BC Pressure Washing appointment is confirmed for ${scheduledDate} at ${scheduledTime}. ${estimateTotal ? `Quote: ${formatCurrency(estimateTotal)}. ` : ''}We'll call 30 min before arrival. (778) 808-7620` :
-          `Hi ${name}! Your quote from BC Pressure Washing is ready. ${estimateTotal ? `Estimated total: ${formatCurrency(estimateTotal)}. ` : ''}We'll contact you within 24 hours. (778) 808-7620`;
+      const smsMessage = isBookingConfirmation ?
+        `Hi ${name}! Your BC Pressure Washing appointment is confirmed for ${scheduledDate} at ${scheduledTime}. ${estimateTotal ? `Quote: ${formatCurrency(estimateTotal)}. ` : ''}We'll call 30 min before arrival. (778) 808-7620` :
+        `Hi ${name}! Your quote from BC Pressure Washing is ready. ${estimateTotal ? `Estimated total: ${formatCurrency(estimateTotal)}. ` : ''}We'll contact you within 24 hours. (778) 808-7620`;
       
       smsResponse = await sendSMS(phone, smsMessage);
-      console.log("SMS sending result:", smsResponse);
     } else {
       console.log("No phone number provided, skipping SMS");
     }

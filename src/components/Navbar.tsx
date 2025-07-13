@@ -37,7 +37,6 @@ const Navbar = () => {
   ];
 
   const moreItems = [
-    { name: 'Quoting Assistant', href: '/quoting' },
     { name: 'Calculator', href: '/calculator' },
     { name: 'Equipment', href: '/equipment' },
     { name: 'Compare Prices', href: '/compare-prices' },
