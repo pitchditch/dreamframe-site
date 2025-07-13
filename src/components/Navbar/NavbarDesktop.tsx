@@ -182,7 +182,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           size="sm"
           className={`transition-all duration-300 hover:scale-105 font-semibold ${
             isOverVideo 
-              ? 'border-white text-white hover:bg-white hover:text-bc-red' 
+              ? 'border-white bg-white/10 text-white hover:bg-white hover:text-bc-red backdrop-blur-sm' 
               : 'bg-bc-red text-white hover:bg-red-700'
           }`}
           asChild
