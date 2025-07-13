@@ -31,8 +31,9 @@ const ReferralButton = () => {
 
             <Button 
               size="lg" 
-              className="bg-white text-bc-red hover:bg-gray-100 text-xl font-bold px-8 py-4 mb-8"
+              className="bg-white text-bc-red hover:bg-gray-100 text-xl font-bold px-8 py-4 mb-8 relative z-10 cursor-pointer"
               onClick={handleOpenOverlay}
+              type="button"
             >
               <Gift className="mr-2 h-6 w-6" />
               Start Referring Friends
