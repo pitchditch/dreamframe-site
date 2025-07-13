@@ -59,11 +59,18 @@ const RedCarSection = () => {
                     </div>
                     
                     <p className="text-xl mb-6 leading-relaxed">
-                      Spotted our red car on Marine Drive? Get{' '}
+                      If you've spotted our distinctive red vehicle along Marine Drive in White Rock, 
+                      mention it when you contact us to receive a special{' '}
                       <span className="bg-yellow-400 text-red-800 px-3 py-1 rounded-full font-bold text-xl animate-pulse">
-                        10% off
+                        10% discount
                       </span>{' '}
-                      your service when you mention it!
+                      on your service!
+                    </p>
+                    
+                    <p className="text-lg text-white/90 mb-8">
+                      As a locally owned and operated business, we're proud to be an active part of the White Rock 
+                      and Surrey communities. We're not just a service provider - we're your neighbors, 
+                      committed to keeping our local properties looking their best.
                     </p>
                   </div>
                 </div>
@@ -81,7 +88,7 @@ const RedCarSection = () => {
                     </div>
                   </div>
                   <blockquote className="text-white/95 italic text-lg mb-4 pl-4 border-l-4 border-yellow-400">
-                    "Your local cleaning expert. Wave if you see me around town!"
+                    "I'm committed to providing high-quality service with a personal touch. If you see my red car around town, feel free to wave or stop for a chat!"
                   </blockquote>
                   <p className="font-bold text-yellow-300 text-lg">— Jayden, Your Neighbor</p>
                 </div>
