@@ -70,8 +70,6 @@ const Index = () => {
         <>
           <ServiceBanner />
           
-          {/* City Navigation Section */}
-          <CityNavigation />
           
           {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
