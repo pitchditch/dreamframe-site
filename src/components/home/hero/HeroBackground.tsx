@@ -1,4 +1,3 @@
-
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HeroBackgroundProps {
@@ -59,7 +58,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             </>
           )}
         </div>
-        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/80 via-black/60 to-black/80' : 'from-black/70 via-black/40 to-black/60'}`}></div>
+        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/40 via-black/20 to-black/40' : 'from-black/30 via-black/10 to-black/30'}`}></div>
       </div>
     </>
   );
