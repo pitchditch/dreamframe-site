@@ -23,7 +23,7 @@ const HeroSection = () => {
     if (isMobile) {
       // Preload mobile background image immediately
       const img = new Image();
-      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
+      img.src = "/hero-bg.png";
       img.onload = () => {
         setVideoLoaded(true);
         setIsLoading(false);
