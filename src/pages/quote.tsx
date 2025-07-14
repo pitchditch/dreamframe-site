@@ -1,44 +1,47 @@
-import { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import React, { useState } from "react";
 
-const QuotePage = () => {
-  const [quote, setQuote] = useState('');
-  const [author, setAuthor] = useState('');
+const Quote = () => {
+  const [quoteDetails, setQuoteDetails] = useState({
+    name: "Jayden Fisher",
+    email: "bcpressurewashing.ca@gmail.com",
+    phone: "778-808-7620",
+    service: "Pressure Washing",
+    address: "15501 Marine Dr",
+    message: "",
+  });
 
-  useEffect(() => {
-    const fetchQuote = async () => {
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setQuoteDetails({ ...quoteDetails, [e.target.name]: e.target.value });
+  };
 
-      const { data, error } = await supabase
-        .from('quotes')
-        .select('quote, author')
-        .order('id', { random: true })
-        .limit(1)
-        .single();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      if (error) {
-        console.error('Error fetching quote:', error);
-      } else {
-        setQuote(data.quote);
-        setAuthor(data.author);
-      }
-    };
-
-    fetchQuote();
-  }, []);
+    // 🚀 Integrate Supabase, Resend, Twilio Here
+    console.log("Quote sent:", quoteDetails);
+    alert("Quote sent (simulation only). Email + SMS can be integrated.");
+  };
 
   return (
-    <div>
-      <h1>Random Quote</h1>
-      <blockquote>
-        <p>{quote}</p>
-        <cite>- {author}</cite>
-      </blockquote>
-    </div>
-  );
-};
+    <div style={containerStyle}>
+      <h1 style={titleStyle}>📨 Send a Quote</h1>
 
-export default QuotePage;
+      <form onSubmit={handleSubmit} style={formStyle}>
+        <label>Full Name</label>
+        <input
+          name="name"
+          type="text"
+          value={quoteDetails.name}
+          onChange={handleChange}
+          style={inputStyle}
+          required
+        />
+
+        <label>Email</label>
+        <input
+          name="email"
+          type="email"
+          value={quoteDetails.email}
+          onChange={handleChange
