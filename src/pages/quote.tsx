@@ -19,29 +19,24 @@ const Quote = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 🚀 Integrate Supabase, Resend, Twilio Here
-    console.log("Quote sent:", quoteDetails);
-    alert("Quote sent (simulation only). Email + SMS can be integrated.");
+    try {
+      const res = await fetch("https://your-vercel-project.vercel.app/api/sendquote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quoteDetails),
+      });
+
+      if (res.ok) {
+        alert("✅ Quote sent successfully!");
+      } else {
+        alert("❌ Failed to send quote.");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong.");
+    }
   };
 
   return (
     <div style={containerStyle}>
-      <h1 style={titleStyle}>📨 Send a Quote</h1>
-
-      <form onSubmit={handleSubmit} style={formStyle}>
-        <label>Full Name</label>
-        <input
-          name="name"
-          type="text"
-          value={quoteDetails.name}
-          onChange={handleChange}
-          style={inputStyle}
-          required
-        />
-
-        <label>Email</label>
-        <input
-          name="email"
-          type="email"
-          value={quoteDetails.email}
-          onChange={handleChange
+      <h1 style={titleStyle}>📨 Request a Free Qu
