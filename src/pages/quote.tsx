@@ -20,7 +20,7 @@ const Quote = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://your-vercel-project.vercel.app/api/sendquote", {
+      const res = await fetch("https://bcpressurewashing.ca/api/sendquote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(quoteDetails),
