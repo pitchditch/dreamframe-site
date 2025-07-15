@@ -62,7 +62,6 @@ const Quote = () => {
 
       if (res.ok) {
         alert("✅ Quote sent successfully!");
-        // Reset form
         setQuoteDetails({
           name: "",
           email: "",
@@ -82,7 +81,10 @@ const Quote = () => {
 
   return (
     <div style={containerStyle}>
-      <h2>Request a Quote</h2>
+      <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>
+        📨 Request a Free Quote
+      </h1>
+
       <form onSubmit={handleSubmit}>
         <label style={labelStyle} htmlFor="name">Name</label>
         <input
@@ -160,5 +162,3 @@ const Quote = () => {
 };
 
 export default Quote;
-
-      <h1 style={titleStyle}>📨 Request a Free Qu
