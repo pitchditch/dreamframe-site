@@ -95,3 +95,8 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
+);
+
+export default App;
