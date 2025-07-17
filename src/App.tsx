@@ -32,7 +32,7 @@ import ReferralHub from "./pages/ReferralHub";
 import NotFound from "./pages/NotFound";
 
 // ✅ NEW: Quote Page
-import Quote from "./pages/services/quote";
+import Quote from "./pages/services/Quote";
 
 const queryClient = new QueryClient();
 
@@ -70,7 +70,7 @@ const App = () => (
             <Route path="/services/fence-washing" element={<FenceWashing />} />
 
             {/* ✅ NEW QUOTE PAGE ROUTE */}
-            <Route path="/services/quote" element={<Quote />} />
+            <Route path="/services/Quote" element={<Quote />} />
 
             {/* City Pages */}
             <Route path="/kelowna" element={<KelownaServices />} />
@@ -83,14 +83,8 @@ const App = () => (
             <Route path="/township-of-langley" element={<CityPages />} />
             <Route path="/delta" element={<CityPages />} />
             <Route path="/new-westminster" element={<CityPages />} />
-            <Route path="/port-coquitlam" element={<CityPages />} />
-            <Route path="/port-moody" element={<CityPages />} />
-            <Route path="/maple-ridge" element={<CityPages />} />
-            <Route path="/pitt-meadows" element={<CityPages />} />
-            <Route path="/white-rock" element={<CityPages />} />
-            <Route path="/:citySlug" element={<CityPages />} />
 
-            {/* 404 */}
+            {/* 404 Fallback */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
