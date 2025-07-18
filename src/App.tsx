@@ -70,7 +70,7 @@ const App = () => (
             <Route path="/services/fence-washing" element={<FenceWashing />} />
 
             {/* ✅ NEW QUOTE PAGE ROUTE */}
-            <Route path="/services/Quote" element={<Quote />} />
+            <Route path="/services/quote" element={<Quote />} />
 
             {/* City Pages */}
             <Route path="/kelowna" element={<KelownaServices />} />
