@@ -1,11 +1,10 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-
-// Pages
 import Index from "./pages/Index";
 import CityPages from "./pages/CityPages";
 import Calculator from "./pages/Calculator";
@@ -31,9 +30,6 @@ import KelownaServices from "./pages/KelownaServices";
 import ReferralHub from "./pages/ReferralHub";
 import NotFound from "./pages/NotFound";
 
-// ✅ NEW: Quote Page
-import Quote from "./pages/services/Quote";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -44,20 +40,35 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* General Pages */}
             <Route path="/" element={<Index />} />
+            
+            {/* City-specific homepage routes */}
+            <Route path="/vancouver" element={<CityPages />} />
+            <Route path="/surrey" element={<CityPages />} />
+            <Route path="/burnaby" element={<CityPages />} />
+            <Route path="/richmond" element={<CityPages />} />
+            <Route path="/coquitlam" element={<CityPages />} />
+            <Route path="/langley-city" element={<CityPages />} />
+            <Route path="/township-of-langley" element={<CityPages />} />
+            <Route path="/delta" element={<CityPages />} />
+            <Route path="/new-westminster" element={<CityPages />} />
+            <Route path="/port-coquitlam" element={<CityPages />} />
+            <Route path="/port-moody" element={<CityPages />} />
+            <Route path="/maple-ridge" element={<CityPages />} />
+            <Route path="/pitt-meadows" element={<CityPages />} />
+            <Route path="/white-rock" element={<CityPages />} />
+            
+            {/* Dedicated Kelowna page */}
+            <Route path="/kelowna" element={<KelownaServices />} />
+            
+            {/* Dynamic route for all cities */}
+            <Route path="/:citySlug" element={<CityPages />} />
+            
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/why-us" element={<WhyUs />} />
-            <Route path="/equipment" element={<Equipment />} />
-            <Route path="/compare-prices" element={<ComparePrices />} />
-            <Route path="/compare-services" element={<CompareServices />} />
-            <Route path="/house-tracking" element={<HouseTracking />} />
-            <Route path="/referral-hub" element={<ReferralHub />} />
-
-            {/* Service Pages */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
             <Route path="/services/soft-wash" element={<SoftWash />} />
@@ -68,23 +79,11 @@ const App = () => (
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
             <Route path="/services/fence-washing" element={<FenceWashing />} />
-
-            {/* ✅ NEW QUOTE PAGE ROUTE */}
-            <Route path="/services/quote" element={<Quote />} />
-
-            {/* City Pages */}
-            <Route path="/kelowna" element={<KelownaServices />} />
-            <Route path="/vancouver" element={<CityPages />} />
-            <Route path="/surrey" element={<CityPages />} />
-            <Route path="/burnaby" element={<CityPages />} />
-            <Route path="/richmond" element={<CityPages />} />
-            <Route path="/coquitlam" element={<CityPages />} />
-            <Route path="/langley-city" element={<CityPages />} />
-            <Route path="/township-of-langley" element={<CityPages />} />
-            <Route path="/delta" element={<CityPages />} />
-            <Route path="/new-westminster" element={<CityPages />} />
-
-            {/* 404 Fallback */}
+            <Route path="/equipment" element={<Equipment />} />
+            <Route path="/compare-prices" element={<ComparePrices />} />
+            <Route path="/compare-services" element={<CompareServices />} />
+            <Route path="/house-tracking" element={<HouseTracking />} />
+            <Route path="/referral-hub" element={<ReferralHub />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

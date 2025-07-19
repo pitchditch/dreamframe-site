@@ -1,3 +1,4 @@
+
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HeroBackgroundProps {
@@ -25,8 +26,8 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/17afaacc-baed-4cc6-9e72-c392c470382e.png"
-              alt="Professional pressure washing service"
+              src="/lovable-uploads/5dedb638-2ea8-4ce6-8272-03844fd0554c.png"
+              alt="Professional pressure washing service in action"
               className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
@@ -58,7 +59,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             </>
           )}
         </div>
-        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/40 via-black/20 to-black/40' : 'from-black/30 via-black/10 to-black/30'}`}></div>
+        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/80 via-black/60 to-black/80' : 'from-black/70 via-black/40 to-black/60'}`}></div>
       </div>
     </>
   );
