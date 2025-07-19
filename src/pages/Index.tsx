@@ -1,77 +1,138 @@
-
+import { useEffect } from 'react';
 import Layout from '../components/Layout';
 
+import { useTranslation } from '@/hooks/use-translation';
+import StickyQuoteBar from '@/components/StickyQuoteBar';
+import AfkOverlay from '../components/AfkOverlay';
+import SEOContent from '../components/SEOContent';
+import HeroWithContent from '../components/HeroWithContent';
+import ServiceBanner from '../components/ServiceBanner';
+import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
+import TrustBadgesSection from '../components/TrustBadgesSection';
+import QuickContactForm from '../components/home/QuickContactForm';
+import TestimonialsSection from '../components/home/TestimonialsSection';
+import TrustedCustomersSection from '../components/home/TrustedCustomersSection';
+import ReferralProgramSection from '../components/ReferralProgramSection';
+import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
+import FAQSection from '../components/FAQSection';
+import RedCarSection from '../components/home/RedCarSection';
+import ServiceAreasSection from '../components/home/ServiceAreasSection';
+import CityNavigation from '../components/home/CityNavigation';
+import ReferralButton from '@/components/ReferralButton';
+
 const Index = () => {
+  const { language, t } = useTranslation();
+
+  useEffect(() => {
+    document.body.classList.add('has-video-header');
+
+    console.log('Current language on Index page:', language);
+    console.log('Translation test:', t("Home"));
+
+    return () => {
+      document.body.classList.remove('has-video-header');
+    };
+  }, [language, t]);
+
+  const faqItems = [
+    {
+      question: t("What areas do you service?"),
+      answer: t("We are based in White Rock and service the entire Metro Vancouver region, including Surrey, Langley, Delta, Vancouver and surrounding areas.")
+    },
+    {
+      question: t("Are you fully insured?"),
+      answer: t("Yes, we are fully insured with WCB coverage and liability insurance for your complete peace of mind.")
+    },
+    {
+      question: t("How often should I have my windows cleaned?"),
+      answer: t("Most homeowners benefit from window cleaning 2-3 times per year, though this varies based on your location, property conditions, and personal preference.")
+    },
+    {
+      question: t("Do you offer any guarantees?"),
+      answer: t("Absolutely! We offer a 100% satisfaction guarantee. If you're not completely satisfied with our work, we'll come back and make it right at no additional cost.")
+    },
+    {
+      question: t("How do you price your services?"),
+      answer: t("Our pricing is based on the service requested, property size, accessibility, and specific requirements. We offer free quotes after assessing your property's needs.")
+    }
+  ];
+
   return (
     <Layout
+      image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
+      canonicalUrl="/"
       title="BC Pressure Washing - #1 White Rock, Surrey & Metro Vancouver Exterior Cleaning"
       description="Professional pressure washing, window cleaning & house washing in White Rock, Surrey, Langley & Metro Vancouver. ⭐ 5-Star Local Service | Free Quotes | Same-Day Availability"
     >
-      <section className="hero-section relative h-screen w-full overflow-hidden bg-gradient-to-br from-blue-900 to-gray-900">
-        <div className="absolute inset-0 bg-black/40"></div>
-        
-        <div className="container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white">
-          <div className="max-w-4xl text-left">
-            <div className="inline-block bg-bc-red text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              #1 Rated in White Rock & Surrey
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-shadow-lg">
-              Professional Pressure Washing
-              <span className="block text-bc-red">& Window Cleaning</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl mb-8 text-shadow-sm max-w-2xl">
-              Transform your property with our premium exterior cleaning services. Trusted by thousands across Metro Vancouver.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="/quote"
-                className="btn-primary inline-flex items-center justify-center"
-              >
-                Get Free Quote
-              </a>
-              <a
-                href="tel:7788087620"
-                className="bg-white text-gray-900 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg shadow-md transition-all duration-300 inline-flex items-center justify-center"
-              >
-                Call (778) 808-7620
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Professional Services</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We provide comprehensive exterior cleaning solutions for residential and commercial properties
-            </p>
+      <SEOContent faqItems={faqItems} />
+      
+      <HeroWithContent>
+        <>
+          <ServiceBanner />
+          
+          
+          {/* What Do You Need Pressure Washed */}
+          <div className="bg-white relative z-50">
+            <ServiceSelectionSection />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="service-card text-center">
-              <h3 className="text-xl font-bold mb-4">Window Cleaning</h3>
-              <p className="text-gray-600">Crystal clear, streak-free windows using purified water systems</p>
+          <div className="bg-white relative z-50">
+            {/* Enhanced Before/After Gallery with filtering */}
+            <EnhancedBeforeAfterGallery />
+            
+            {/* Trust Badges Section */}
+            <TrustBadgesSection />
+            
+            {/* Contact Form */}
+            <QuickContactForm />
+            
+            {/* Testimonials */}
+            <TestimonialsSection />
+            
+            {/* Red Car Section */}
+            <RedCarSection />
+            
+            {/* Trusted Customers Slideshow */}
+            <TrustedCustomersSection />
+            
+            {/* Referral Program Section */}
+            <ReferralProgramSection />
+            
+            {/* Competitor Comparison */}
+            <CompetitorComparisonSection />
+            
+            {/* Service Areas Section with Interactive Map */}
+            <ServiceAreasSection />
+            
+            {/* FAQ Section - Full width with bigger buttons */}
+            <div data-section="faq" className="w-full">
+              <FAQSection 
+                title={t("Still Have Questions?")} 
+                subtitle={t("Everything you need to know about our services")}
+                faqs={faqItems}
+                darkMode={true}
+                fullWidth={true}
+                largeButtons={true}
+              />
             </div>
-            <div className="service-card text-center">
-              <h3 className="text-xl font-bold mb-4">Pressure Washing</h3>
-              <p className="text-gray-600">Deep cleaning for driveways, patios, and exterior surfaces</p>
-            </div>
-            <div className="service-card text-center">
-              <h3 className="text-xl font-bold mb-4">Gutter Cleaning</h3>
-              <p className="text-gray-600">Complete gutter maintenance and debris removal</p>
-            </div>
-            <div className="service-card text-center">
-              <h3 className="text-xl font-bold mb-4">Roof Cleaning</h3>
-              <p className="text-gray-600">Safe moss removal and roof maintenance services</p>
+            
+            {/* White Rock Footer Image */}
+            <div className="w-full footer-image">
+              <img 
+                src="/lovable-uploads/06e9bd14-b601-4e6f-bcd9-01217b067c47.png" 
+                alt="White Rock Marine Drive - Local Business" 
+                className="w-full h-auto object-cover object-center rounded-t-3xl" 
+              />
             </div>
           </div>
-        </div>
-      </section>
+        </>
+      </HeroWithContent>
+      
+      
+      <StickyQuoteBar />
+      <AfkOverlay />
+      <ReferralButton />
     </Layout>
   );
 };
