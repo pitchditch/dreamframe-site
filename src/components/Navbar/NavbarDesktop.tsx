@@ -36,7 +36,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <button
                 onClick={handleHomeClick}
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -47,7 +47,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/why-us" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -57,7 +57,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -85,7 +85,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Roof Cleaning')}</span>
                       </Link>
                       <Link to="/services/driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/5e800a2b-cb89-4b90-8102-ff82838f2dc1.png" alt="Driveway Pressure Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Pressure Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Driveway Pressure Washing')}</span>
                       </Link>
                       <Link to="/services/fence-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
@@ -128,7 +128,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -153,8 +153,8 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                   </Link>
                   
                   <div className="pt-6 border-t border-gray-200">
-                    <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-base">
-                      <Star className="h-5 w-5 text-bc-red" />
+                    <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-lg">
+                      <Star className="h-6 w-6 text-bc-red" />
                       {t('Leave a Review')}
                     </h4>
                     <div className="flex space-x-6">
@@ -163,7 +163,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-base font-medium">Google</span>
                       </a>
                       <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
-                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-10 w-10 object-contain transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-base font-medium">Yelp</span>
                       </a>
                     </div>
@@ -178,7 +178,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
       <div className="flex items-center space-x-8">
         <Link 
           to="/contact" 
-          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
+          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide ${
             isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
           }`}
         >

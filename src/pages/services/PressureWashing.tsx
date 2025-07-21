@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Layout from '../../components/Layout';
 import ServiceHeader from '../../components/ServiceHeader';
@@ -98,11 +99,11 @@ const PressureWashing = () => {
               <span className="font-medium text-center">Decks & Patios</span>
             </Link>
             <Link to="/services/driveway-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/68ffcaf5-5089-4ee6-88f6-8641ac82aa02.png" alt="Driveways & Walkways" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+              <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="Driveways & Walkways" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Driveways & Walkways</span>
             </Link>
-            <Link to="/services/fence-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
-              <img src="/lovable-uploads/b1066466-b276-4928-9c97-88a44a2cbf57.png" alt="Fences & Gates" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+            <Link to="/services/pressure-washing" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">
+              <img src="/lovable-uploads/058537c2-5a7e-47ce-bf9d-ea1ada4c2595.png" alt="Fences & Gates" className="w-32 h-32 object-cover rounded-lg group-hover:scale-105 transition-transform" />
               <span className="font-medium text-center">Fences & Gates</span>
             </Link>
             <Link to="/services/roof-cleaning" className="flex flex-col items-center space-y-4 bg-white p-6 rounded-lg hover:shadow-md transition-shadow group">

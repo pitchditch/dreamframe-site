@@ -1,6 +1,7 @@
+
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
-
+import ReferralButton from '../components/ReferralButton';
 import { useTranslation } from '@/hooks/use-translation';
 import StickyQuoteBar from '@/components/StickyQuoteBar';
 import AfkOverlay from '../components/AfkOverlay';
@@ -8,6 +9,7 @@ import SEOContent from '../components/SEOContent';
 import HeroWithContent from '../components/HeroWithContent';
 import ServiceBanner from '../components/ServiceBanner';
 import ServiceSelectionSection from '../components/home/ServiceSelectionSection';
+import PropertyTypesSection from '../components/home/PropertyTypesSection';
 import EnhancedBeforeAfterGallery from '../components/EnhancedBeforeAfterGallery';
 import TrustBadgesSection from '../components/TrustBadgesSection';
 import QuickContactForm from '../components/home/QuickContactForm';
@@ -19,7 +21,6 @@ import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import CityNavigation from '../components/home/CityNavigation';
-import ReferralButton from '@/components/ReferralButton';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -71,11 +72,16 @@ const Index = () => {
         <>
           <ServiceBanner />
           
+          {/* City Navigation Section */}
+          <CityNavigation />
           
           {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
             <ServiceSelectionSection />
           </div>
+          
+          {/* Property Types Section */}
+          <PropertyTypesSection />
           
           <div className="bg-white relative z-50">
             {/* Enhanced Before/After Gallery with filtering */}
@@ -129,10 +135,9 @@ const Index = () => {
         </>
       </HeroWithContent>
       
-      
+      <ReferralButton />
       <StickyQuoteBar />
       <AfkOverlay />
-      <ReferralButton />
     </Layout>
   );
 };

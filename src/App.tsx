@@ -23,11 +23,7 @@ import CompareServices from "./pages/CompareServices";
 import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
 import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
 import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
-import FenceWashing from "./pages/services/FenceWashing";
 import WhyUs from "./pages/WhyUs";
-import HouseTracking from "./pages/HouseTracking";
-import KelownaServices from "./pages/KelownaServices";
-import ReferralHub from "./pages/ReferralHub";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,9 +54,6 @@ const App = () => (
             <Route path="/pitt-meadows" element={<CityPages />} />
             <Route path="/white-rock" element={<CityPages />} />
             
-            {/* Dedicated Kelowna page */}
-            <Route path="/kelowna" element={<KelownaServices />} />
-            
             {/* Dynamic route for all cities */}
             <Route path="/:citySlug" element={<CityPages />} />
             
@@ -78,12 +71,9 @@ const App = () => (
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
             <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-            <Route path="/services/fence-washing" element={<FenceWashing />} />
             <Route path="/equipment" element={<Equipment />} />
             <Route path="/compare-prices" element={<ComparePrices />} />
             <Route path="/compare-services" element={<CompareServices />} />
-            <Route path="/house-tracking" element={<HouseTracking />} />
-            <Route path="/referral-hub" element={<ReferralHub />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
