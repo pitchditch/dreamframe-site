@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -36,7 +35,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <button
                 onClick={handleHomeClick}
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -47,7 +46,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/why-us" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -57,7 +56,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -69,27 +68,27 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     <h3 className="font-semibold text-gray-900 mb-4 text-lg">Residential Services</h3>
                     <div className="grid grid-cols-2 gap-3">
                       <Link to="/services/window-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Window Cleaning')}</span>
                       </Link>
                       <Link to="/services/gutter-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Gutter Cleaning')}</span>
                       </Link>
                       <Link to="/services/pressure-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('House Washing')}</span>
                       </Link>
                       <Link to="/services/roof-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Roof Cleaning')}</span>
                       </Link>
                       <Link to="/services/driveway-cleaning" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Pressure Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/5f62bf7c-303e-456d-8438-f69479508411.png" alt="Driveway Pressure Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Driveway Pressure Washing')}</span>
                       </Link>
                       <Link to="/services/fence-washing" className="flex flex-col items-center gap-2 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/b18323e2-db3c-4f96-af15-171ee39301bc.png" alt="Fence Washing" className="w-12 h-12 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
+                        <img src="/lovable-uploads/db2d8d0c-21a4-47e8-a7d1-b6a7e95c13e9.png" alt="Fence Washing" className="w-10 h-10 object-cover rounded transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold text-sm text-center">{t('Fence Washing')}</span>
                       </Link>
                     </div>
@@ -99,23 +98,23 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                     <h3 className="font-semibold text-gray-900 mb-4 text-lg">Commercial Services</h3>
                     <div className="space-y-3">
                       <Link to="/services/commercial-window-cleaning" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/5b1d271e-15e2-4bf4-87ce-4ad9e9aadc75.png" alt="Commercial Window Cleaning" className="w-12 h-12 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-base">{t('Commercial Window Cleaning')}</span>
+                        <img src="/lovable-uploads/fe9ad8bf-d5d6-415e-9db8-ebbf40ad6fc5.png" alt="Commercial Window Cleaning" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Commercial Window Cleaning')}</span>
                       </Link>
                       <Link to="/services/commercial-pressure-washing" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/0cd8002e-089f-4aee-9688-39cf7966604e.png" alt="Commercial Pressure Washing" className="w-12 h-12 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-base">{t('Commercial Pressure Washing')}</span>
+                        <img src="/lovable-uploads/0cd8002e-089f-4aee-9688-39cf7966604e.png" alt="Commercial Pressure Washing" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Commercial Pressure Washing')}</span>
                       </Link>
                       <Link to="/services/post-construction-window-cleaning" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-                        <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning" className="w-12 h-12 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-base">{t('Post-Construction Cleaning')}</span>
+                        <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning" className="w-10 h-10 object-contain rounded transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Post-Construction Cleaning')}</span>
                       </Link>
                     </div>
                     
                     <div className="mt-6 pt-4 border-t border-gray-200">
-                      <Link to="/compare-services" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-3">
-                        <Scale className="w-7 h-7 text-bc-red transition-transform duration-200 group-hover:scale-110" />
-                        <span className="text-gray-800 group-hover:text-bc-red font-semibold text-base">{t('Compare Services')}</span>
+                      <Link to="/compare-services" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
+                        <Scale className="w-6 h-6 text-bc-red transition-transform duration-200 group-hover:scale-110" />
+                        <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Compare Services')}</span>
                       </Link>
                       <Link to="/services" className="text-bc-red hover:text-red-700 font-medium text-sm">
                         {t('See All Services')} →
@@ -128,7 +127,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -162,9 +161,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-base font-medium">Google</span>
                       </a>
-                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
+                      <a href="https://www.yelp.com/biz/bc-pressure-washing-white-rock" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group">
                         <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-base font-medium">Yelp</span>
+                      </a>
+                      <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors group" style={{backgroundColor: 'transparent !important'}}>
+                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110"  />
+                        <span className="text-base font-medium">TrustedPros</span>
                       </a>
                     </div>
                   </div>
@@ -178,7 +181,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
       <div className="flex items-center space-x-8">
         <Link 
           to="/contact" 
-          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-2xl tracking-wide ${
+          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
             isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
           }`}
         >

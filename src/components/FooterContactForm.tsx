@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import { Button } from './ui/button';
@@ -12,7 +11,6 @@ import { Link } from 'react-router-dom';
 const FooterContactForm = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [service, setService] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -44,7 +42,7 @@ const FooterContactForm = () => {
       }
 
       // Sanitize form data
-      const sanitizedData = sanitizeFormData({ email, phone, service });
+      const sanitizedData = sanitizeFormData({ email, service });
 
       setIsSubmitting(true);
 
@@ -58,7 +56,6 @@ const FooterContactForm = () => {
       console.log('Footer contact form submission:', sanitizeLogData(sanitizedData));
 
       // Send email using Supabase Edge Function + Resend
-      console.log('Calling forward-contact-form function...');
       const response = await fetch(
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
@@ -73,46 +70,11 @@ const FooterContactForm = () => {
       );
 
       if (response.ok) {
-        console.log('Forward-contact-form successful, now sending confirmations...');
-        // Send confirmations (email + SMS)
-        const confirmationResponse = await fetch(
-          "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/send-confirmations",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: sanitizedData.email,
-              phone: sanitizedData.phone,
-              name: "Valued Customer",
-              service: sanitizedData.service,
-              formType: "quick contact",
-              message: sanitizedData.service,
-            }),
-          }
-        );
-
-        console.log('Confirmation response status:', confirmationResponse.status);
-        
-        if (confirmationResponse.ok) {
-          const confirmationResult = await confirmationResponse.json();
-          console.log('Confirmation result:', confirmationResult);
-          
-          toast({
-            title: "Message Sent!",
-            description: "We'll get back to you as soon as possible. Check your email and phone for confirmation.",
-          });
-        } else {
-          const confirmationError = await confirmationResponse.text();
-          console.error('Confirmation error:', confirmationError);
-          
-          toast({
-            title: "Message Sent!",
-            description: "We'll get back to you as soon as possible.",
-          });
-        }
-        
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you as soon as possible.",
+        });
         setEmail('');
-        setPhone('');
         setService('');
       } else {
         const error = await response.json();
@@ -147,16 +109,6 @@ const FooterContactForm = () => {
               onChange={e => setEmail(e.target.value)} 
               required 
               maxLength={100}
-              className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
-            />
-          </div>
-          <div>
-            <Input 
-              type="tel" 
-              placeholder="Your Phone (for SMS confirmation)" 
-              value={phone} 
-              onChange={e => setPhone(e.target.value)} 
-              maxLength={20}
               className="bg-gray-800 border-gray-700 text-white placeholder-gray-400" 
             />
           </div>

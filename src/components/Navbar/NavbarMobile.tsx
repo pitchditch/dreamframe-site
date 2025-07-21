@@ -1,162 +1,188 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
-import { ChevronDown, ChevronUp, Star, Phone } from 'lucide-react';
 import LanguageSelector from '../LanguageSelector';
+import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
   isServicesMenuOpen: boolean;
-  setIsServicesMenuOpen: (open: boolean) => void;
+  setIsServicesMenuOpen: (isOpen: boolean) => void;
 }
 
 export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
   const { t } = useTranslation();
-
-  if (!isMenuOpen) return null;
+  
+  // Add state for more dropdown
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
 
   return (
-    <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-      <div className="px-4 py-4 space-y-2">
-        <Link
-          to="/"
-          className="block px-4 py-3 text-gray-700 hover:text-bc-red transition-colors font-medium text-lg"
-        >
-          {t('Home')}
-        </Link>
-        
-        <Link
-          to="/why-us"
-          className="block px-4 py-3 text-gray-700 hover:text-bc-red transition-colors font-medium text-lg"
-        >
-          {t('Why Us')}
-        </Link>
-
-        <div>
-          <button
-            onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
-            className="flex items-center justify-between w-full px-4 py-3 text-gray-700 hover:text-bc-red transition-colors font-medium text-lg"
-          >
-            {t('Services')}
-            {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-          
-          {isServicesMenuOpen && (
-            <div className="pl-4 pb-2 space-y-2">
-              <Link
-                to="/services/window-cleaning"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
+    <>
+      <div 
+        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
+          isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
+        }`}
+      >
+        <div className="container mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
+          <nav className="flex flex-col space-y-4">
+            <Link to="/" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
+              <Home className="w-5 h-5" />
+              <span>{t('Home')}</span>
+            </Link>
+            
+            <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
+              <img 
+                src="/lovable-uploads/4b1c2d66-50f8-40ca-abe3-c072141788ed.png" 
+                alt="Logo Icon" 
+                className="w-5 h-5 object-contain" 
+              />
+              <span>{t('Why Us')}</span>
+            </Link>
+            
+            {/* Services Dropdown */}
+            <div className="pb-2">
+              <div 
+                className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
+                onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
               >
-                {t('Window Cleaning')}
-              </Link>
-              <Link
-                to="/services/gutter-cleaning"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
-              >
-                {t('Gutter Cleaning')}
-              </Link>
-              <Link
-                to="/services/pressure-washing"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
-              >
-                {t('House Washing')}
-              </Link>
-              <Link
-                to="/services/roof-cleaning"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
-              >
-                {t('Roof Cleaning')}
-              </Link>
-              <Link
-                to="/services/driveway-cleaning"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
-              >
-                {t('Driveway Pressure Washing')}
-              </Link>
-              <Link
-                to="/services/fence-washing"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
-              >
-                {t('Fence Washing')}
-              </Link>
-              <Link
-                to="/services/commercial-window-cleaning"
-                className="block px-4 py-2 text-gray-600 hover:text-bc-red transition-colors"
-              >
-                {t('Commercial Services')}
-              </Link>
-              <Link
-                to="/compare-services"
-                className="block px-4 py-2 text-bc-red hover:text-red-700 transition-colors font-medium"
-              >
-                {t('Compare Services')}
-              </Link>
+                <span>{t('Services')}</span>
+                {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </div>
+              
+              <div className={`overflow-hidden transition-all duration-300 pl-4 ${
+                isServicesMenuOpen ? 'max-h-[800px] py-2' : 'max-h-0'
+              }`}>
+                <div className="flex flex-col space-y-1 pl-4">
+                  <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential Services</div>
+                  
+                  <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>{t('Window Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Soft Wash Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>{t('Pressure Washing')}</span>
+                  </Link>
+                  <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>{t('Gutter Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>{t('Roof Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>{t('Driveway Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/fence-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
+                    </div>
+                    <span>{t('Fence Washing')}</span>
+                  </Link>
+                  
+                  <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">Commercial Services</div>
+                  
+                  <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/5b1d271e-15e2-4bf4-87ce-4ad9e9aadc75.png" alt="Commercial Window Cleaning Icon" className="w-8 h-8 object-contain" />
+                    </div>
+                    <span>{t('Commercial Window Cleaning')}</span>
+                  </Link>
+                  <Link to="/services/commercial-pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/0cd8002e-089f-4aee-9688-39cf7966604e.png" alt="Commercial Pressure Washing Icon" className="w-8 h-8 object-contain" />
+                    </div>
+                    <span>{t('Commercial Pressure Washing')}</span>
+                  </Link>
+                  <Link to="/services/post-construction-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
+                      <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning Icon" className="w-8 h-8 object-contain" />
+                    </div>
+                    <span>{t('Post-Construction Cleaning')}</span>
+                  </Link>
+                  
+                  <Link to="/services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md mt-2 font-medium">
+                    <Box size={20} />
+                    <span>{t('See All Services')}</span>
+                  </Link>
+                  
+                  <Link to="/compare-services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md font-medium">
+                    <Scale size={20} />
+                    <span>{t('Compare Services')}</span>
+                  </Link>
+                </div>
+              </div>
             </div>
-          )}
+            
+            {/* More Menu Dropdown */}
+            <div className="pb-2">
+              <div 
+                className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
+                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+              >
+                <span>{t('More')}</span>
+                {isMoreMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </div>
+              
+              <div className={`overflow-hidden transition-all duration-300 pl-4 ${
+                isMoreMenuOpen ? 'max-h-[500px] py-2' : 'max-h-0'
+              }`}>
+                <div className="flex flex-col space-y-4 pl-4">
+                  <Link to="/testimonials" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <Star size={20} className="text-bc-red" />
+                    <span>{t('Testimonials')}</span>
+                  </Link>
+                  
+                  <Link to="/equipment" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <Wrench size={20} className="text-bc-red" />
+                    <span>{t('Our Equipment')}</span>
+                  </Link>
+                  
+                  <div className="pt-2 border-t border-gray-100">
+                    <h4 className="font-medium text-gray-900 pb-2">{t('Leave a Review')}</h4>
+                    <div className="flex space-x-3">
+                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                        <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                        <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://trustedpros.ca/company/bc-pressure-washing-whiterock" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                        <img src="https://trustedpros.ca/images/badge/logo-l-b.png" alt="TrustedPros" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                        <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <Link to="/contact" className="py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
+              {t('Contact')}
+            </Link>
+            
+            <div className="pt-4 flex flex-col gap-3">
+              <LanguageSelector />
+            </div>
+          </nav>
         </div>
-
-        <Link
-          to="/testimonials"
-          className="block px-4 py-3 text-gray-700 hover:text-bc-red transition-colors font-medium text-lg"
-        >
-          {t('Testimonials')}
-        </Link>
-        
-        <Link
-          to="/equipment"
-          className="block px-4 py-3 text-gray-700 hover:text-bc-red transition-colors font-medium text-lg"
-        >
-          {t('Our Equipment')}
-        </Link>
-
-        <Link
-          to="/contact"
-          className="block px-4 py-3 text-gray-700 hover:text-bc-red transition-colors font-medium text-lg"
-        >
-          {t('Contact')}
-        </Link>
-
-        <div className="pt-4 border-t border-gray-200">
-          <h4 className="px-4 py-2 font-medium text-gray-900 flex items-center gap-2">
-            <Star className="h-5 w-5 text-bc-red" />
-            {t('Leave a Review')}
-          </h4>
-          <div className="flex space-x-4 px-4 py-2">
-            <a 
-              href="https://g.page/r/CbeicZxdYHsKEAI/review" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
-            >
-              <img src="/lovable-uploads/90d2177a-4c1d-4d8b-9873-f8ee94f4cd1f.png" alt="Google" className="h-6 w-6 object-contain" />
-              <span className="text-sm font-medium">Google</span>
-            </a>
-            <a 
-              href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 p-2 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
-            >
-              <img src="/lovable-uploads/b6d07b0f-96b7-4c0f-90b6-fef10d13439f.png" alt="Yelp" className="h-6 w-6 object-contain" />
-              <span className="text-sm font-medium">Yelp</span>
-            </a>
-          </div>
-        </div>
-
-        <div className="pt-4 border-t border-gray-200">
-          <LanguageSelector />
-        </div>
-
-        <a
-          href="tel:7788087620"
-          className="flex items-center justify-center gap-2 bg-bc-red text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors font-medium text-lg mt-4"
-        >
-          <Phone size={20} />
-          (778) 808-7620
-        </a>
       </div>
-    </div>
+    </>
   );
 };
 

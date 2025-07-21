@@ -7,8 +7,8 @@ const HeroBanner = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={`inline-block bg-bc-red px-8 py-4 rounded-lg ${isMobile ? 'mb-6 mt-8' : 'mb-6 md:mb-8 mt-12 md:mt-16'} animate-on-scroll`}>
-      <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
+    <div className={`inline-block bg-bc-red px-6 py-3 rounded-lg ${isMobile ? 'mb-4 mt-8' : 'mb-4 md:mb-6 mt-12 md:mt-16'} animate-on-scroll`}>
+      <span className="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
         {t("Tired of Dirty Siding & Grimy Driveways?")}
       </span>
     </div>

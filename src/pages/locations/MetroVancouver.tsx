@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MapPin, Home, CheckCircle, Star, ChevronRight, Phone, Droplet, Wind, Layers, CloudRain, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { TestimonialCarousel } from '@/components/TestimonialCarousel';
+import TestimonialCarousel from '@/components/TestimonialCarousel';
 import ServiceAreaMap from '@/components/ServiceAreaMap';
 import ServiceAreasCarousel from '@/components/ServiceAreasCarousel';
 import { testimonials } from '@/data/testimonials';
