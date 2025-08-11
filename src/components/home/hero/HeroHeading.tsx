@@ -9,7 +9,7 @@ const HeroHeading = () => {
   return (
     <div className={`${isMobile ? 'mb-4' : 'mb-4 md:mb-6'}`}>
       {/* Main heading */}
-      <h1 className={`${isMobile ? 'text-4xl leading-tight' : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl'} font-bold ${isMobile ? 'mb-3' : 'mb-3 md:mb-4'} animate-on-scroll leading-tight`}>
+      <h1 className={`${isMobile ? 'text-4xl leading-tight' : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl'} font-bold ${isMobile ? 'mb-3' : 'mb-3 md:mb-4'} animate-on-scroll leading-tight`}>
         <span className="text-white">
           {isMobile ? (
             <>
