@@ -42,43 +42,74 @@ const FenceWashing = () => {
       canonicalUrl="/services/fence-washing"
     >
       <ServiceHeader 
-        title="Restore Your Fence with Professional Washing in White Rock"
-        description="Moss, mildew, and grey wood? We'll make it look new again."
+        title="Restore Your Fence to Like-New Condition"
+        description="Soft, safe, and deep-cleaned — we bring your fence back to life. Serving White Rock, Surrey & nearby cities."
         imagePath="/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png"
         darkOverlay={true}
       />
       
-      {/* Benefits Section */}
+      {/* What's Included Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-gray-900">Why Choose Professional Fence Washing?</h2>
-            <p className="text-lg text-gray-700 mb-8">
-              Over time, fences accumulate dirt, algae, mold, and weathering that can make them look old and worn. 
-              Our professional fence washing service restores your fence's original beauty while protecting your investment.
-            </p>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900">What's Included in Our Fence Washing Service</h2>
+            <div className="grid md:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-700">Gentle soft wash to protect wood or vinyl</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-700">Biodegradable solution removes algae, mildew, and dirt</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-700">Surface-safe pressure cleaning for stubborn stains</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-700">Optional sealant protection (ask us!)</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-700">Fully insured + satisfaction guaranteed</span>
+              </div>
+            </div>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div className="text-center p-6 bg-gray-50 rounded-lg">
-              <Shield className="w-12 h-12 text-bc-red mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Prevent Rot & Decay</h3>
-              <p className="text-gray-600">Remove harmful organic growth that can cause wood rot and structural damage over time.</p>
+        </div>
+      </section>
+
+      {/* Why Regular Fence Washing Matters Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-gray-900">Why Regular Fence Washing Matters</h2>
+            <p className="text-lg text-gray-700 mb-8">Over time, fences collect:</p>
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">Mold, algae, and mildew</h3>
+                <p className="text-gray-600">Organic growth that can damage wood and create health hazards</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">Pollution, road grime, and weather damage</h3>
+                <p className="text-gray-600">Environmental contaminants that degrade your fence over time</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">UV fading and water stains</h3>
+                <p className="text-gray-600">Sun and moisture damage that ages your fence prematurely</p>
+              </div>
             </div>
-            <div className="text-center p-6 bg-gray-50 rounded-lg">
-              <Sparkles className="w-12 h-12 text-bc-red mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Boost Curb Appeal</h3>
-              <p className="text-gray-600">Transform grey, weathered fencing back to its original color and finish.</p>
-            </div>
-            <div className="text-center p-6 bg-gray-50 rounded-lg">
-              <Leaf className="w-12 h-12 text-bc-red mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Eco-Friendly Options</h3>
-              <p className="text-gray-600">Soft wash techniques with biodegradable solutions safe for your family and pets.</p>
-            </div>
-            <div className="text-center p-6 bg-gray-50 rounded-lg">
-              <CheckCircle className="w-12 h-12 text-bc-red mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Safe for All Materials</h3>
-              <p className="text-gray-600">Specialized techniques for wood, vinyl, composite, and metal fencing materials.</p>
+            <p className="text-lg text-gray-700 mb-8">
+              Our process safely restores color and extends your fence's life, saving you money on replacements or repairs.
+            </p>
+            
+            {/* Pro Tip */}
+            <div className="bg-bc-red/5 border-l-4 border-bc-red p-6 rounded-r-lg">
+              <h3 className="font-bold text-gray-900 mb-2">💡 Pro Tip From Jayden:</h3>
+              <p className="text-gray-700 italic">
+                "We use a soft wash system and a fence-safe detergent — never just blasting it with high pressure. Your fence will thank you."
+              </p>
             </div>
           </div>
         </div>
@@ -176,32 +207,61 @@ const FenceWashing = () => {
       
       <section className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Service Areas in Metro Vancouver</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Cities We Serve Fence Washing In</h2>
           <ServiceAreaMap />
           <div className="text-center mt-8">
             <p className="text-gray-600 mb-4">Based in White Rock, proudly serving:</p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <span className="bg-white px-3 py-1 rounded-full">White Rock</span>
-              <span className="bg-white px-3 py-1 rounded-full">Surrey</span>
+              <span className="bg-white px-3 py-1 rounded-full">South Surrey</span>
               <span className="bg-white px-3 py-1 rounded-full">Langley</span>
+              <span className="bg-white px-3 py-1 rounded-full">Cloverdale</span>
               <span className="bg-white px-3 py-1 rounded-full">Delta</span>
-              <span className="bg-white px-3 py-1 rounded-full">Richmond</span>
-              <span className="bg-white px-3 py-1 rounded-full">Burnaby</span>
+            </div>
+            <div className="mt-4">
+              <Link to="/service-areas" className="text-bc-red hover:text-bc-red/80 font-medium">
+                See All Service Areas →
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Quick Quote CTA */}
+      {/* Combine & Save Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-6 text-gray-900">🔁 Combine & Save</h2>
+            <p className="text-lg text-gray-700 mb-8">Bundle with:</p>
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="font-bold text-gray-900 mb-2">House Washing</h3>
+                <p className="text-gray-600">Complete exterior cleaning</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="font-bold text-gray-900 mb-2">Deck Cleaning</h3>
+                <p className="text-gray-600">Restore your outdoor space</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="font-bold text-gray-900 mb-2">Driveway Pressure Washing</h3>
+                <p className="text-gray-600">Clean concrete and pavers</p>
+              </div>
+            </div>
+            <p className="text-lg font-medium text-bc-red">👉 Ask about multi-service discounts</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Get a Fast, Personalized Quote CTA */}
       <section className="py-16 bg-bc-red text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Get a Fast Quote – No Visit Needed</h2>
+          <h2 className="text-3xl font-bold mb-4">Get a Fast, Personalized Quote</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Tell us about your fence and get an instant estimate. Most quotes provided within 30 minutes during business hours.
+            Enter your address or book a walkaround — Jayden checks every job personally.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-white text-bc-red hover:bg-gray-100">
-              <Link to="/calculator">Get Instant Quote</Link>
+              <Link to="/calculator">📱 Start Quote →</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-bc-red">
               <a href="tel:7788087620">Call (778) 808-7620</a>

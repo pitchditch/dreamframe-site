@@ -21,7 +21,7 @@ export const ensureRootElement = (): HTMLElement => {
  * Add a visible version indicator in development mode
  */
 export const addVersionIndicator = (): void => {
-  if (import.meta.env.DEV) {
+  if (process.env.NODE_ENV === 'development') {
     const versionIndicator = document.createElement('div');
     versionIndicator.style.position = 'fixed';
     versionIndicator.style.bottom = '5px';

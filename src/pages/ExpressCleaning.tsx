@@ -14,7 +14,7 @@ import { ArrowRight, Clock, CheckCircle2, Calendar, Shield, Award, ThumbsUp } fr
 import emailjs from '@emailjs/browser';
 import { trackFormSubmit } from '@/lib/analytics-client';
 import useFormTracking from '@/hooks/useFormTracking';
-import ReferralButton from '@/components/ReferralButton';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link } from 'react-router-dom';
 

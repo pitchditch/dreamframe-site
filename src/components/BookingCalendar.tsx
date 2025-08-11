@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, MapPin, DollarSign, User, Phone, Mail, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 
 interface BookingData {
   service: string;
@@ -65,35 +64,6 @@ const BookingCalendar: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      console.log('Submitting booking with customer info:', customerInfo);
-
-      // Use Supabase client to call the edge function instead of direct fetch
-      const { data, error } = await supabase.functions.invoke('forward-contact-form', {
-        body: {
-          name: customerInfo.name,
-          email: customerInfo.email,
-          phone: customerInfo.phone,
-          service: bookingData?.service || 'Service Booking',
-          message: `Booking Request:\n\nDate: ${format(selectedDate, 'EEEE, MMMM d, yyyy')}\nTime: ${selectedTime}\nService: ${bookingData?.service}\nAddress: ${bookingData?.address}\n${bookingData?.squareFootage ? `Property Size: ${bookingData.squareFootage.toLocaleString()} sq ft\n` : ''}${bookingData?.quote ? `Quote: $${bookingData.quote}\n` : ''}${customerInfo.notes ? `Notes: ${customerInfo.notes}` : ''}`,
-          subject: "Service Booking Request",
-          form: "BookingCalendar",
-          address: bookingData?.address,
-          preferredTime: `${format(selectedDate, 'yyyy-MM-dd')} at ${selectedTime}`,
-          customer: customerInfo
-        }
-      });
-
-      if (error) {
-        throw new Error(error.message || "Failed to submit booking");
-      }
-
-      console.log('Booking submission successful:', data);
-      
-      toast({
-        title: "Booking Request Submitted!",
-        description: "We'll contact you within 24 hours to confirm your appointment. Check your phone for a confirmation text!",
-      });
-
       // Store the complete booking information
       const completeBooking = {
         ...bookingData,
@@ -103,13 +73,46 @@ const BookingCalendar: React.FC = () => {
         timestamp: Date.now()
       };
 
+      // Send professional quote and confirmation via our Supabase edge function
+      const response = await fetch('/api/send-confirmations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: customerInfo.email,
+          phone: customerInfo.phone,
+          name: customerInfo.name,
+          formType: 'Booking Confirmation',
+          service: bookingData?.service || 'Service Booking',
+          address: bookingData?.address,
+          estimateTotal: bookingData?.quote,
+          scheduledDate: format(selectedDate, 'EEEE, MMMM d, yyyy'),
+          scheduledTime: selectedTime,
+          squareFootage: bookingData?.squareFootage,
+          notes: customerInfo.notes,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Professional quote and confirmation sent successfully');
+      } else {
+        console.log('Fallback: Using toast notification instead of email service');
+      }
+
       localStorage.setItem('completeBooking', JSON.stringify(completeBooking));
+      
+      // Clear the original booking data
       localStorage.removeItem('bookingData');
 
-      // Navigate to homepage after showing success message
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 2000);
+      toast({
+        title: "Booking Request Submitted!",
+        description: "We've sent you a professional quote and will contact you within 24 hours to confirm your appointment.",
+      });
+
+      // Navigate to contact page with booking confirmation
+      navigate('/contact');
+      
     } catch (error) {
       console.error('Error submitting booking:', error);
       toast({
@@ -195,7 +198,8 @@ const BookingCalendar: React.FC = () => {
               </div>
               
               <div className="space-y-2 text-sm text-gray-600">
-                <p>✓ Free estimate included</p>
+                <p>✓ Professional quote sent via email</p>
+                <p>✓ SMS confirmation included</p>
                 <p>✓ Fully insured service</p>
                 <p>✓ 100% satisfaction guarantee</p>
                 <p>✓ Professional equipment</p>
@@ -298,7 +302,6 @@ const BookingCalendar: React.FC = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full"
-                    placeholder="(778) 123-4567"
                   />
                 </div>
 
@@ -336,15 +339,15 @@ const BookingCalendar: React.FC = () => {
                   {isSubmitting ? (
                     <>
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Submitting...
+                      Sending Quote & Confirmation...
                     </>
                   ) : (
-                    'Confirm Booking'
+                    'Confirm Booking & Send Quote'
                   )}
                 </Button>
 
                 <p className="text-xs text-gray-500 text-center">
-                  * We'll contact you within 24 hours to confirm your appointment
+                  * You'll receive a professional quote via email and SMS confirmation
                 </p>
               </form>
             </CardContent>

@@ -1,3 +1,4 @@
+
 project_id = "uyyudsjqwspapmujvzmm"
 
 [api]
@@ -78,4 +79,10 @@ inspector_port = 8083
 verify_jwt = false
 
 [functions.fetch-square-footage]
+verify_jwt = false
+
+[functions.forward-contact-form]
+verify_jwt = false
+
+[functions.send-confirmations]
 verify_jwt = false

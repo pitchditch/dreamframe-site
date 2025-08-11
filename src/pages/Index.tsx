@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
-import ReferralButton from '../components/ReferralButton';
+
 import { useTranslation } from '@/hooks/use-translation';
 import StickyQuoteBar from '@/components/StickyQuoteBar';
 import AfkOverlay from '../components/AfkOverlay';
@@ -19,6 +19,7 @@ import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
 import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import CityNavigation from '../components/home/CityNavigation';
+import ReferralButton from '@/components/ReferralButton';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -70,8 +71,6 @@ const Index = () => {
         <>
           <ServiceBanner />
           
-          {/* City Navigation Section */}
-          <CityNavigation />
           
           {/* What Do You Need Pressure Washed */}
           <div className="bg-white relative z-50">
@@ -130,9 +129,10 @@ const Index = () => {
         </>
       </HeroWithContent>
       
-      <ReferralButton />
+      
       <StickyQuoteBar />
       <AfkOverlay />
+      <ReferralButton />
     </Layout>
   );
 };
