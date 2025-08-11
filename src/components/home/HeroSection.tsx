@@ -50,15 +50,20 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Centered vertically */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
-        <div className={`${isMobile ? 'max-w-full' : 'max-w-3xl'} text-left`}>
+      {/* Hero Content - Centered vertically with better spacing */}
+      <div className={`container mx-auto px-4 py-8 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-2xl'} text-left space-y-4`}>
           <HeroBanner />
           <HeroHeading />
         </div>
         
-        <HeroForm />
-        <HeroPersonalTouch />
+        <div className="mt-6">
+          <HeroForm />
+        </div>
+        
+        <div className="mt-4">
+          <HeroPersonalTouch />
+        </div>
       </div>
       
       <HeroScrollIndicator videoLoaded={videoLoaded} isLoading={isLoading} />
