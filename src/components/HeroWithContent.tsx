@@ -58,10 +58,7 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
 
   return (
     <>
-      {/* Hero Section with Video + Price Calculator */}
-      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
-        <HeroSection />
-      </div>
+      <HeroSection />
       
       {/* Loading overlay */}
       {!heroLoaded && (
@@ -70,12 +67,11 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
         </div>
       )}
       
-      {/* Content that slides over the hero - increased margin to prevent text overlap */}
+      {/* Content below hero with slide-up animation (no negative margins) */}
       <div 
-        className={`relative z-30 transition-opacity duration-500 ${contentVisible ? 'opacity-100' : 'opacity-0'}`}
-        style={{ marginTop: '100vh' }}
+        className={`relative z-30 transition-opacity duration-500 transform transition-transform ${contentVisible ? 'opacity-100' : 'opacity-0'} ${overlapActive ? 'translate-y-0' : 'translate-y-6 md:translate-y-8'}`}
       >
-        <div className={`bg-white rounded-t-3xl shadow-2xl ${overlapActive ? '-mt-12 md:-mt-16' : 'mt-0'} min-h-screen relative z-20`}>
+        <div className={`bg-white rounded-t-3xl shadow-2xl min-h-screen relative z-20`}>
           {children}
         </div>
       </div>

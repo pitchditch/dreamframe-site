@@ -316,3 +316,16 @@
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
   font-weight: 700; /* Increased font weight */
 }
+
+/* Layout variables and hero sizing */
+@layer base {
+  :root { --header-h: 72px; }
+  @media (min-width: 1280px) {
+    :root { --header-h: 84px; }
+  }
+}
+
+@layer components {
+  .hero-section { min-height: calc(100svh - var(--header-h)); }
+}
+
