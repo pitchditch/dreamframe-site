@@ -60,7 +60,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                     id="hero-video"
                     className="w-full h-full"
                     style={{ pointerEvents: 'none' }}
-                    src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=metadata"
+                    src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&fs=0&disablekb=1&enablejsapi=1&preload=metadata"
                     title="Pressure Washing Video"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

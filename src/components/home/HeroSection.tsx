@@ -70,7 +70,7 @@ const HeroSection = () => {
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Hero Content - Positioned higher and centered with better spacing */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: isMobile ? '12vh' : '14vh', paddingBottom: isMobile ? '12vh' : '14vh' }}>
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: isMobile ? '18vh' : '20vh', paddingBottom: isMobile ? '10vh' : '10vh' }}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-5xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />

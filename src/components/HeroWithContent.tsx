@@ -62,12 +62,10 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
       
       {/* Content that slides over the hero - increased margin to prevent text overlap */}
       <div 
-        className={`relative z-40 transition-opacity duration-500 ${
-          contentVisible ? 'opacity-100' : 'opacity-0'
-        }`} 
+        className={`relative z-30 transition-opacity duration-500 ${contentVisible ? 'opacity-100' : 'opacity-0'}`}
         style={{ marginTop: '100vh' }}
       >
-        <div className="bg-white rounded-t-3xl shadow-2xl -mt-16 md:-mt-20 min-h-screen relative z-50">
+        <div className="bg-white rounded-t-3xl shadow-2xl -mt-8 md:-mt-10 min-h-screen relative z-20">
           {children}
         </div>
       </div>
