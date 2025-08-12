@@ -23,7 +23,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
 
       {/* Background - Different for mobile and desktop */}
       <div className="absolute inset-0 w-full h-full">
-        <div className="relative w-full h-full overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden bg-black">
           {isMobile ? (
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"

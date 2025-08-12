@@ -34,7 +34,7 @@ const HeroForm = () => {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} ${isMobile ? 'mt-2 mb-3' : 'mt-3 mb-4'} animate-on-scroll delay-300 bg-white/95 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-2xl text-black`}>
+    <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} ${isMobile ? 'mt-4 mb-4' : 'mt-8 mb-6'} animate-on-scroll delay-300 bg-white/95 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-2xl text-black`}>
       <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-grow">
           <Input
