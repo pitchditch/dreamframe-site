@@ -9,6 +9,7 @@ interface HeroWithContentProps {
 const HeroWithContent = ({ children }: HeroWithContentProps) => {
   const [heroLoaded, setHeroLoaded] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
+  const [overlapActive, setOverlapActive] = useState(false);
 
   useEffect(() => {
     // Wait for hero to load before showing content
@@ -46,6 +47,15 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
     };
   }, [contentVisible]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      setOverlapActive(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
       {/* Hero Section with Video + Price Calculator */}
@@ -65,7 +75,7 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
         className={`relative z-30 transition-opacity duration-500 ${contentVisible ? 'opacity-100' : 'opacity-0'}`}
         style={{ marginTop: '100vh' }}
       >
-        <div className="bg-white rounded-t-3xl shadow-2xl -mt-8 md:-mt-10 min-h-screen relative z-20">
+        <div className={`bg-white rounded-t-3xl shadow-2xl ${overlapActive ? '-mt-12 md:-mt-16' : 'mt-0'} min-h-screen relative z-20`}>
           {children}
         </div>
       </div>
