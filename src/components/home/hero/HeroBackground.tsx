@@ -47,8 +47,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                 id="hero-desktop-video"
                 className={`absolute w-full h-full top-0 left-0 transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
                 style={{ 
-                  transform: window.innerWidth >= 768 && window.innerWidth <= 1024 ? 'scale(1.2)' : 'scale(1.5)',
-                  transformOrigin: 'center center'
+                  transform: 'scale(1.0)',
+                  transformOrigin: 'center center',
+                  width: '100%',
+                  height: '100%'
                 }}
                 src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=metadata"
                 title="Pressure Washing Video"

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -68,8 +69,8 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Positioned higher and centered */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: '5vh' }}>
+      {/* Hero Content - Positioned higher and centered with better spacing */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: isMobile ? '2vh' : '3vh', paddingBottom: isMobile ? '8vh' : '10vh' }}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-5xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
