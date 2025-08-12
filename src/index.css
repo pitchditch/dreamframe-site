@@ -90,7 +90,10 @@
     font-weight: 800; /* Increased from 700 to 800 for better visibility */
     font-size: 1.25rem; /* Made navbar text even larger */
   }
-}
++
++  /* Ensure anchor targets are not hidden behind the fixed header */
++  [id] { scroll-margin-top: var(--header-h); }
+ }
 
 @layer utilities {
   .perspective-1000 {
@@ -327,5 +330,6 @@
 
 @layer components {
   .hero-section { min-height: calc(100svh - var(--header-h)); }
+  .hero-section h1 { font-size: clamp(28px, 6vw, 64px); line-height: 1.05; }
 }
 

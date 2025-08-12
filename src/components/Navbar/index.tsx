@@ -80,7 +80,7 @@ const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const isGutterCleaningPage = location.pathname === '/services/gutter-cleaning';
 
   return (
-    <header ref={headerRef} className={`site-header sticky top-0 w-full z-50 transition-all duration-300 ${
+    <header ref={headerRef} className={`site-header sticky top-0 w-full z-[1000] transition-all duration-300 ${
       isOverVideo 
         ? isGutterCleaningPage 
           ? 'bg-gradient-to-br from-blue-900 to-gray-900 h-[var(--header-h)]' 

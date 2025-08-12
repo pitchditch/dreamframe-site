@@ -66,11 +66,11 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="hero-section relative w-full overflow-hidden">
+    <section className="hero-section relative w-full overflow-hidden pt-[var(--header-h)]">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Hero Content - Positioned higher and centered with better spacing */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 1rem)', paddingBottom: 'clamp(2rem, 8vh, 6rem)' }}>
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingBottom: 'clamp(2rem, 8vh, 6rem)' }}>
         <div className={`${isMobile ? 'max-w-full' : 'max-w-5xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
