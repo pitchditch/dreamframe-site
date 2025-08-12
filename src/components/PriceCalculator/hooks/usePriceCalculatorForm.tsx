@@ -32,10 +32,7 @@ export const usePriceCalculatorForm = (initialStep = 0, onComplete?: () => void,
   useEffect(() => {
     const savedPostalCode = sessionStorage.getItem('postalCode') || localStorage.getItem('postalCode');
     if (savedPostalCode) {
-      setContact(prev => ({
-        ...prev,
-        phone: savedPostalCode
-      }));
+      setAddress(savedPostalCode);
     }
   }, []);
 
