@@ -26,18 +26,18 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-              alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="/lovable-uploads/e480c2ad-7edc-45cc-b19f-7a716f0a8a3f.png"
+              alt="House with BC Pressure Washing car in driveway"
+              className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
-              style={{ objectPosition: '50% 100%' }}
+              style={{ objectPosition: '50% 50%' }}
             />
           ) : (
             <>
               {/* Poster image for instant loading */}
               <img 
-                src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+                src="/lovable-uploads/e480c2ad-7edc-45cc-b19f-7a716f0a8a3f.png"
                 alt="BC Pressure Washing Service"
                 className={`absolute w-full h-full object-cover object-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
                 loading="eager"
@@ -49,10 +49,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                 <div 
                   className="absolute top-1/2 left-1/2"
                   style={{
-                    width: '120vw',
-                    height: '67.5vw',
-                    minWidth: '213.33vh',
-                    minHeight: '120vh',
+                    width: '130vw',
+                    height: '73vw',
+                    minWidth: '230vh',
+                    minHeight: '130vh',
                     transform: 'translate(-50%, -50%)'
                   }}
                 >

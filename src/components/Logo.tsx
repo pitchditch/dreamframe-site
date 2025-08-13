@@ -11,9 +11,9 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   
-  // Reduced logo sizes by 40% for better navbar fit
-  const mobileLogoHeight = isOverVideo ? 'h-11 w-auto' : 'h-11 w-auto'; 
-  const desktopLogoHeight = isOverVideo ? 'h-16 md:h-18 w-auto' : 'h-16 md:h-18 w-auto';
+  // Increased logo sizes by 20% from previous size
+  const mobileLogoHeight = isOverVideo ? 'h-13 w-auto' : 'h-13 w-auto'; 
+  const desktopLogoHeight = isOverVideo ? 'h-19 md:h-22 w-auto' : 'h-19 md:h-22 w-auto';
   
   useEffect(() => {
     const handleScroll = () => {

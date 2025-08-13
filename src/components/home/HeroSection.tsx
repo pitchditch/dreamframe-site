@@ -24,7 +24,7 @@ const HeroSection = () => {
     if (isMobile) {
       // Preload mobile background image immediately
       const img = new Image();
-      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
+      img.src = "/lovable-uploads/e480c2ad-7edc-45cc-b19f-7a716f0a8a3f.png";
       img.onload = () => {
         setVideoLoaded(true);
         setIsLoading(false);
@@ -80,7 +80,7 @@ const HeroSection = () => {
         <HeroPersonalTouch />
       </div>
       
-      <HeroScrollIndicator videoLoaded={videoLoaded} isLoading={isLoading} />
+      {/* Scroll indicator removed as requested */}
     </section>
   );
 };

@@ -278,7 +278,8 @@ const englishTranslations = {
   "Chat": "Chat",
   "Call (778) 808-7620": "Call (778) 808-7620",
   "Get Free Quote Online": "Get Free Quote Online",
-  "Quote": "Quote"
+  "Quote": "Quote",
+  "Tired of Streaky Windows or Dirty Siding?": "Tired of Streaky Windows or Dirty Siding?"
 };
 
 export default englishTranslations;
