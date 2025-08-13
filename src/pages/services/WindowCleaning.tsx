@@ -1,5 +1,5 @@
 
-import Layout from '../../components/Layout';
+import ServiceLayout from '../../components/ServiceLayout';
 import { useTranslation } from '@/hooks/use-translation';
 import { Check, ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,11 @@ const WindowCleaning = () => {
   ];
 
   return (
-    <Layout>
+    <ServiceLayout 
+      title="Window Cleaning in Surrey, White Rock & Greater Vancouver | BC Pressure Washing"
+      description="Crystal-clear, streak-free windows using our purified water technology. Professional window cleaning services in Surrey, White Rock & Greater Vancouver."
+      canonicalUrl="/services/window-cleaning"
+    >
       {/* Hero Section - Completely New */}
       <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
@@ -188,7 +192,7 @@ const WindowCleaning = () => {
         subtitle="Contact us now for professional window cleaning in Surrey, White Rock & Greater Vancouver."
         backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
       />
-    </Layout>
+    </ServiceLayout>
   );
 };
 

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import Layout from '../../components/Layout';
+import ServiceLayout from '../../components/ServiceLayout';
 import FAQSection from '../../components/FAQSection';
 import ServiceBenefits from '../../components/ServiceBenefits';
 import CallToAction from '../../components/CallToAction';
@@ -150,9 +150,10 @@ const GutterCleaning = () => {
   }];
 
   return (
-    <Layout 
+    <ServiceLayout
       title="Gutter Cleaning in Surrey & White Rock | Prevent Costly Water Damage | BC Pressure Washing" 
       description="Affordable, thorough gutter cleaning in Surrey, White Rock, and Metro Vancouver. Prevent damage to your roof and foundation. Book now from just $129!"
+      canonicalUrl="/services/gutter-cleaning"
     >
       <Helmet>
         <script type="application/ld+json">
@@ -387,7 +388,7 @@ const GutterCleaning = () => {
           backgroundImage="/lovable-uploads/b746ec68-b615-4294-b8f8-a19b14a4606c.png" 
         />
       </div>
-    </Layout>
+    </ServiceLayout>
   );
 };
 

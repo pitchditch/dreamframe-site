@@ -17,18 +17,33 @@ const StickyContactBar = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Show contact bar after scrolling past 50% of viewport height
-      if (scrollY > windowHeight * 0.5) {
-        setShowContactBar(true);
-      } else {
-        setShowContactBar(false);
+      // Find the "Need a custom quote" section and "See the difference" section
+      const customQuoteSection = document.querySelector('[data-custom-quote]') || 
+                                 document.querySelector('.service-selection-section') ||
+                                 document.querySelector('section:has-text("Need a custom quote")');
+      
+      const seeDifferenceSection = document.querySelector('[data-see-difference]') || 
+                                  document.querySelector('.before-after-gallery') ||
+                                  document.querySelector('h2:has-text("See The Difference")');
+      
+      let showThreshold = windowHeight * 0.5; // Default fallback
+      let hideThreshold = document.documentElement.scrollHeight - windowHeight - 100;
+      
+      // If we can find the sections, use them to determine positioning
+      if (customQuoteSection) {
+        const customQuoteBottom = customQuoteSection.getBoundingClientRect().bottom + scrollY;
+        showThreshold = customQuoteBottom - windowHeight;
+        
+        if (seeDifferenceSection) {
+          const seeDifferenceTop = seeDifferenceSection.getBoundingClientRect().top + scrollY;
+          hideThreshold = seeDifferenceTop - 100;
+        }
       }
       
-      // Hide when at the very bottom to avoid overlap with footer
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrolledToBottom = scrollY + windowHeight >= documentHeight - 100;
-      
-      if (scrolledToBottom) {
+      // Show contact bar after passing the custom quote section
+      if (scrollY > showThreshold && scrollY < hideThreshold) {
+        setShowContactBar(true);
+      } else {
         setShowContactBar(false);
       }
     };

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../../components/Layout';
+import ServiceLayout from '../../components/ServiceLayout';
 import ServiceHeader from '../../components/ServiceHeader';
 import CallToAction from '../../components/CallToAction';
 import { Check, Shield, Droplets, Home, Car, TreePine } from 'lucide-react';
@@ -37,9 +37,10 @@ const PressureWashing = () => {
   ];
   
   return (
-    <Layout 
+    <ServiceLayout
       title="Professional Pressure Washing Services | BC Pressure Washing" 
       description="Get expert pressure washing in Surrey, White Rock & Metro Vancouver. Safe, eco-friendly soft wash & power wash solutions. Request a free quote today!"
+      canonicalUrl="/services/pressure-washing"
     >
       <ServiceHeader 
         title="Revitalize Your Home with Expert Pressure Washing"
@@ -270,7 +271,7 @@ const PressureWashing = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </ServiceLayout>
   );
 };
 
