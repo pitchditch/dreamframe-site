@@ -22,8 +22,8 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
       )}
 
       {/* Background - Different for mobile and desktop */}
-      <div className="absolute inset-0 w-full h-full">
-        <div className="relative w-full h-full overflow-hidden bg-black">
+      <div className="absolute inset-0 w-full h-full -top-[var(--header-h)]" style={{ height: 'calc(100vh + var(--header-h))' }}>
+        <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
@@ -49,10 +49,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                 <div 
                   className="absolute top-1/2 left-1/2"
                   style={{
-                    width: '100vw',            // 16:9 cover trick
-                    height: '56.25vw',         // 9/16 of width
-                    minWidth: '177.78vh',      // 16/9 of height
-                    minHeight: '100vh',
+                    width: '100vw',
+                    height: '56.25vw',
+                    minWidth: '177.78vh',
+                    minHeight: 'calc(100vh + var(--header-h))',
                     transform: 'translate(-50%, -50%)'
                   }}
                 >
