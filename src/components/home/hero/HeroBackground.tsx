@@ -71,7 +71,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             </>
           )}
         </div>
-        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/80 via-black/60 to-black/80' : 'from-black/70 via-black/40 to-black/60'}`}></div>
+        {/* Removed gradient overlay for clean video background */}
       </div>
     </>
   );

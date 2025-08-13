@@ -7,9 +7,9 @@ const HeroHeading = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={`${isMobile ? 'mb-4 mt-2' : 'mb-5 mt-3'}`}>
+    <div className={`${isMobile ? 'mb-2 mt-1' : 'mb-3 mt-2'}`}>
       {/* Main heading */}
-      <h1 className={`${isMobile ? 'text-4xl leading-tight' : 'text-5xl sm:text-6xl md:text-7xl lg:text-7xl leading-[1.1]'} font-bold ${isMobile ? 'mb-3' : 'mb-4'} animate-on-scroll`}>
+      <h1 className={`${isMobile ? 'text-3xl leading-tight' : 'text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-[1.1]'} font-bold ${isMobile ? 'mb-2' : 'mb-3'} animate-on-scroll`}>
         <span className="text-white">
           {isMobile ? (
             <>
@@ -26,7 +26,7 @@ const HeroHeading = () => {
       </h1>
       
       {/* Subtitle - Better for mobile */}
-      <p className={`${isMobile ? 'text-xl leading-relaxed mb-3 font-semibold' : 'text-2xl sm:text-3xl md:text-4xl mb-4'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}>
+      <p className={`${isMobile ? 'text-lg leading-relaxed mb-2 font-semibold' : 'text-xl sm:text-2xl md:text-2xl mb-3'} animate-on-scroll delay-100 max-w-4xl font-medium text-white drop-shadow-md`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}>
         {isMobile 
           ? t("Fast, insured service in White Rock & Surrey. We make your property sparkle!")
           : t("Fast, fully insured service backed by a satisfaction guarantee. We'll make your property sparkle!")
