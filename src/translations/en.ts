@@ -56,7 +56,7 @@ const englishTranslations = {
   "Check Prices & Availability": "Check Prices & Availability",
   "Every Job is Personally Checked by Me.": "Every Job is Personally Checked by Me.",
   "Owner": "Owner",
-  "Scroll Up": "Scroll Up",
+  "Scroll Down": "Scroll Down",
 
   // Service-specific content with city targeting
   "What Can We Make Shine Today?": "What Can We Make Shine Today?",
