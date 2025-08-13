@@ -83,21 +83,21 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto">
       <div className="logo-container relative flex items-center perspective-1000 py-1 md:py-3">
         {shouldShowWhiteLogo ? (
-          // White logo for hero section - reduced by 55% total (25% + 30% more)
+          // White logo for hero section - reduced by 70% total
           <img
             src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-6 md:h-11 w-auto object-contain max-w-[84px] md:max-w-[126px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-4 md:h-7 w-auto object-contain max-w-[60px] md:max-w-[88px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
             fetchPriority="high"
           />
         ) : (
-          // Black/red logo for scrolled state with white background - reduced by 55% total (25% + 30% more)
+          // Black/red logo for scrolled state with white background - reduced by 70% total
           <img
             src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-6 md:h-12 w-auto object-contain max-w-[95px] md:max-w-[141px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-4 md:h-8 w-auto object-contain max-w-[67px] md:max-w-[99px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
             fetchPriority="high"
           />

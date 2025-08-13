@@ -66,12 +66,12 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="hero-section relative w-full overflow-hidden">
+    <section className="hero-section relative w-full h-screen overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Positioned higher and centered with better spacing */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 1rem)', paddingBottom: '1rem' }}>
-        <div className={`${isMobile ? 'max-w-full' : 'max-w-5xl'} text-left`}>
+      {/* Hero Content - Positioned to fit in one viewport */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 0.5rem)', paddingBottom: '0.5rem' }}>
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
         </div>

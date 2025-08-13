@@ -21,8 +21,8 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         </div>
       )}
 
-      {/* Background - Different for mobile and desktop */}
-      <div className="absolute inset-0 w-full h-full -top-[var(--header-h)]" style={{ height: 'calc(100vh + var(--header-h))' }}>
+      {/* Background - Full screen video covering entire viewport */}
+      <div className="fixed inset-0 w-full h-full z-0">
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
@@ -49,10 +49,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                 <div 
                   className="absolute top-1/2 left-1/2"
                   style={{
-                    width: '100vw',
-                    height: '56.25vw',
-                    minWidth: '177.78vh',
-                    minHeight: 'calc(100vh + var(--header-h))',
+                    width: '120vw',
+                    height: '67.5vw',
+                    minWidth: '213.33vh',
+                    minHeight: '120vh',
                     transform: 'translate(-50%, -50%)'
                   }}
                 >
@@ -71,7 +71,6 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             </>
           )}
         </div>
-        {/* Removed gradient overlay for clean video background */}
       </div>
     </>
   );
