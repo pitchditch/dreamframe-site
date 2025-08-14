@@ -7,7 +7,7 @@ const HeroPersonalTouch = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 ${isMobile ? 'my-3 mb-6' : 'my-4 mb-6'} animate-on-scroll delay-700 ${isMobile ? 'max-w-full' : 'max-w-3xl'}`}>
+    <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 ${isMobile ? 'my-2 mb-4' : 'my-3 mb-5'} animate-on-scroll delay-700 ${isMobile ? 'max-w-full' : 'max-w-3xl'}`}>
       <div className={`bg-black/70 backdrop-blur-sm ${isMobile ? 'p-4 rounded-lg max-w-full' : 'p-5 md:p-6 rounded-lg max-w-2xl'} border border-white/50 shadow-2xl w-full sm:w-auto flex flex-row items-center`}>
         <img 
           src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
