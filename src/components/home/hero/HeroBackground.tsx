@@ -24,9 +24,9 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
       {/* Background - Full screen video covering entire viewport */}
       <div className="fixed inset-0 w-full h-full z-0">
         <div className="relative w-full h-full overflow-hidden">
-          {isMobile ? (
+        {isMobile ? (
             <img 
-              src="/lovable-uploads/e480c2ad-7edc-45cc-b19f-7a716f0a8a3f.png"
+              src="/lovable-uploads/153cea1e-00de-4f89-8419-beef4ce2c857.png"
               alt="House with BC Pressure Washing car in driveway"
               className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"

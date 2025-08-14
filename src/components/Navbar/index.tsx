@@ -80,7 +80,7 @@ const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const isGutterCleaningPage = location.pathname === '/services/gutter-cleaning';
 
   return (
-    <header ref={headerRef} className="site-header sticky top-0 w-full z-[1000] transition-all duration-300 bg-transparent min-h-[60px] md:min-h-[72px] h-auto">
+    <header ref={headerRef} className="site-header fixed top-0 w-full z-[1000] transition-all duration-300 bg-transparent min-h-[60px] md:min-h-[72px] h-auto">
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo} />
         <NavbarDesktop isOverVideo={isOverVideo} />

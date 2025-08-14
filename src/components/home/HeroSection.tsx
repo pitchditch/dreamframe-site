@@ -3,11 +3,8 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import HeroBackground from './hero/HeroBackground';
-import HeroBanner from './hero/HeroBanner';
-import HeroHeading from './hero/HeroHeading';
-import HeroForm from './hero/HeroForm';
-import HeroPersonalTouch from './hero/HeroPersonalTouch';
-import HeroScrollIndicator from './hero/HeroScrollIndicator';
+import HeroContent from './hero/HeroContent';
+import HeroQuoteForm from './hero/HeroQuoteForm';
 
 const HeroSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -24,7 +21,7 @@ const HeroSection = () => {
     if (isMobile) {
       // Preload mobile background image immediately
       const img = new Image();
-      img.src = "/lovable-uploads/e480c2ad-7edc-45cc-b19f-7a716f0a8a3f.png";
+      img.src = "/lovable-uploads/153cea1e-00de-4f89-8419-beef4ce2c857.png";
       img.onload = () => {
         setVideoLoaded(true);
         setIsLoading(false);
@@ -47,10 +44,10 @@ const HeroSection = () => {
           setIsLoading(false);
           window.dispatchEvent(new CustomEvent('heroLoaded'));
           document.body.removeChild(videoPreloader);
-        }, 300); // Reduced delay for faster loading
+        }, 300);
       };
       
-      // Fallback timer - much faster
+      // Fallback timer
       setTimeout(() => {
         setVideoLoaded(true);
         setIsLoading(false);
@@ -58,7 +55,7 @@ const HeroSection = () => {
         if (document.body.contains(videoPreloader)) {
           document.body.removeChild(videoPreloader);
         }
-      }, 1400); // Give YouTube a bit more time to avoid showing title
+      }, 1400);
     }
   }, [isMobile, isHomePage]);
   
@@ -69,18 +66,18 @@ const HeroSection = () => {
     <section className="hero-section relative w-full h-screen overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Positioned to fit in one viewport */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: `calc(var(--header-h) + ${isMobile ? '0.5rem' : '1rem'})`, paddingBottom: `${isMobile ? '1rem' : '2rem'}` }}>
-        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
-          <HeroBanner />
-          <HeroHeading />
+      {/* Hero Content - Two column layout for desktop */}
+      <div className={`container mx-auto px-4 h-full flex ${isMobile ? 'flex-col justify-center' : 'flex-row items-center'} relative z-50 ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: `calc(var(--header-h) + 1rem)`, paddingBottom: '2rem' }}>
+        {/* Left side - Content */}
+        <div className={`${isMobile ? 'w-full mb-6' : 'w-1/2 pr-8'}`}>
+          <HeroContent />
         </div>
         
-        <HeroForm />
-        <HeroPersonalTouch />
+        {/* Right side - Quote Form */}
+        <div className={`${isMobile ? 'w-full' : 'w-1/2'}`}>
+          <HeroQuoteForm />
+        </div>
       </div>
-      
-      {/* Scroll indicator removed as requested */}
     </section>
   );
 };
