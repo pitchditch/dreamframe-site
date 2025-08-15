@@ -33,11 +33,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
     <div className="hidden md:flex items-center justify-between flex-1">
       <div className="flex-1 flex justify-center">
         <NavigationMenu>
-          <NavigationMenuList className="flex items-center justify-center space-x-2 xl:space-x-4">
+          <NavigationMenuList className="flex items-center justify-center space-x-8">
             <NavigationMenuItem>
               <button
                 onClick={handleHomeClick}
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-sm xl:text-base tracking-wide ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -48,7 +48,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             <NavigationMenuItem>
               <Link 
                 to="/why-us" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-sm xl:text-base tracking-wide whitespace-nowrap ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -58,7 +58,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-sm xl:text-base tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -129,7 +129,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-sm xl:text-base tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
+                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
               >
@@ -176,27 +176,26 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenu>
       </div>
       
-      <div className="flex items-center space-x-1 xl:space-x-3">
+      <div className="flex items-center space-x-4">
         <Button
           variant={isOverVideo ? "outline" : "default"}
           size="sm"
-          className={`transition-all duration-300 hover:scale-105 font-semibold text-xs xl:text-sm ${
+          className={`transition-all duration-300 hover:scale-105 font-semibold ${
             isOverVideo 
               ? 'border-white bg-white/10 text-white hover:bg-white hover:text-bc-red backdrop-blur-sm' 
               : 'bg-bc-red text-white hover:bg-red-700'
           }`}
           asChild
         >
-          <Link to="/quote" className="flex items-center gap-1 xl:gap-2">
-            <Calculator className="w-3 h-3 xl:w-4 xl:h-4" />
-            <span className="hidden lg:inline">Price Calculator</span>
-            <span className="lg:hidden">Quote</span>
+          <Link to="/quote" className="flex items-center gap-2">
+            <Calculator className="w-4 h-4" />
+            Price Calculator
           </Link>
         </Button>
         
         <Link 
           to="/contact" 
-          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-sm xl:text-base tracking-wide ${
+          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
             isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
           }`}
         >
