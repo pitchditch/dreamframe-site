@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import HeroBackground from './hero/HeroBackground';
-import HeroContent from './hero/HeroContent';
+import HeroHeading from './hero/HeroHeading';
+import HeroPersonalTouch from './hero/HeroPersonalTouch';
 import HeroQuoteForm from './hero/HeroQuoteForm';
 
 const HeroSection = () => {
@@ -67,10 +68,11 @@ const HeroSection = () => {
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Hero Content - Two column layout for desktop */}
-      <div className={`container mx-auto px-4 h-full flex ${isMobile ? 'flex-col justify-center' : 'flex-row items-center'} relative z-50 ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: `calc(var(--header-h) + 1rem)`, paddingBottom: '2rem' }}>
+      <div className={`container mx-auto ${isMobile ? 'px-6' : 'px-4'} h-full flex ${isMobile ? 'flex-col justify-center' : 'flex-row items-center'} relative z-50 ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: `calc(var(--header-h) + 1rem)`, paddingBottom: '2rem' }}>
         {/* Left side - Content */}
         <div className={`${isMobile ? 'w-full mb-6' : 'w-1/2 pr-8'}`}>
-          <HeroContent />
+          <HeroHeading />
+          <HeroPersonalTouch />
         </div>
         
         {/* Right side - Quote Form */}
