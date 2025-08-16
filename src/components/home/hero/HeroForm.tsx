@@ -34,28 +34,40 @@ const HeroForm = () => {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'max-w-2xl w-full'} ${isMobile ? 'mt-4 mb-4' : 'mt-8 mb-6'} animate-on-scroll delay-300 bg-white/95 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-2xl text-black`}>
-      <form onSubmit={handlePostalCodeSubmit} className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-grow">
+    <form onSubmit={handlePostalCodeSubmit} className="w-full mb-4">
+      <div className="space-y-3">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Postal Code
+          </label>
           <Input
             ref={inputRef}
             type="text"
-            placeholder={t("Enter your postal code (e.g., V5K 2A1)")}
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
-            className={`bg-white border-white text-black ${isMobile ? 'h-14 text-lg rounded-lg' : 'h-16 md:h-17 text-xl md:text-2xl rounded-lg'} pl-4 pr-10 focus:ring-bc-red focus:border-bc-red placeholder-gray-500 font-medium w-full shadow-lg`}
+            placeholder="e.g., V5K 2A1"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-bc-red text-gray-900 placeholder-gray-500 transition-colors"
+            required
           />
         </div>
-        <Button 
-          type="submit" 
-          variant="bc-red" 
-          size="lg" 
-          className={`${isMobile ? 'h-14 text-base rounded-lg px-4' : 'h-16 md:h-17 text-lg md:text-xl rounded-lg px-5 md:px-6'} text-white font-bold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto sm:min-w-[220px] md:min-w-[260px] whitespace-nowrap`}
+        <Button
+          type="submit"
+          variant="bc-red"
+          size="lg"
+          className="w-full py-3 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all"
         >
-          {t("Get My Free Quote")} <MessageSquare className="ml-2" size={18} />
+          {t("Get My Free Quote")} →
         </Button>
-      </form>
-    </div>
+        <p className="text-center text-xs text-gray-500">
+          Or call now for instant pricing
+        </p>
+        <div className="text-center">
+          <a href="tel:+17788087620" className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700">
+            📞 (778) 808-7620
+          </a>
+        </div>
+      </div>
+    </form>
   );
 };
 

@@ -87,7 +87,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
           <img
             src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-3 md:h-3.5 w-auto object-contain max-w-[24px] md:max-w-[34px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-4 md:h-5 w-auto object-contain max-w-[32px] md:max-w-[45px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
             fetchPriority="high"
@@ -97,7 +97,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
           <img
             src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-3 md:h-3.5 w-auto object-contain max-w-[26px] md:max-w-[38px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-4 md:h-5 w-auto object-contain max-w-[34px] md:max-w-[50px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
             fetchPriority="high"
           />
