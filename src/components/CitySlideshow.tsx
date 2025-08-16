@@ -14,12 +14,16 @@ interface ServiceArea {
 }
 
 const CitySlideshow = () => {
+  console.log('🏙️ CitySlideshow rendering...');
+  
   const [slides, setSlides] = useState<ServiceArea[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('🔍 Fetching slides...');
+    
     const fetchSlides = async () => {
       try {
         const { data, error } = await supabase
@@ -28,9 +32,18 @@ const CitySlideshow = () => {
           .eq('is_active', true)
           .order('sort_order', { ascending: true });
 
-        if (error) throw error;
+        console.log('📊 Slides data:', data);
+        
+        if (error) {
+          console.error('❌ Supabase error:', error);
+          throw error;
+        }
+        
         if (data && data.length > 0) {
+          console.log(`✅ Loaded ${data.length} slides`);
           setSlides(data);
+        } else {
+          console.log('⚠️ No slides data found');
         }
       } catch (error) {
         console.error('Error fetching slides:', error);

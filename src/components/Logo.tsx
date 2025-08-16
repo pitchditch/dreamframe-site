@@ -8,6 +8,7 @@ interface LogoProps {
 }
 
 export const Logo = ({ isOverVideo }: LogoProps) => {
+  console.log('🏢 Logo rendering, isOverVideo:', isOverVideo);
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   
