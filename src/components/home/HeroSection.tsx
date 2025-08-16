@@ -66,7 +66,7 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="hero-section relative w-full h-screen overflow-hidden">
+    <section className="hero-section relative w-full min-h-screen h-screen overflow-hidden z-10">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Hero Content - Redesigned layout */}
