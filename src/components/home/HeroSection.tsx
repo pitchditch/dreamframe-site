@@ -107,7 +107,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      <HeroScrollIndicator videoLoaded={videoLoaded} isLoading={isLoading} />
+      
     </section>
   );
 };

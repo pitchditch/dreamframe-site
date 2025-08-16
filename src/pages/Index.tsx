@@ -20,6 +20,7 @@ import RedCarSection from '../components/home/RedCarSection';
 
 import CityNavigation from '../components/home/CityNavigation';
 import ReferralButton from '@/components/ReferralButton';
+import PersonalizedChatbot from '@/components/PersonalizedChatbot';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -132,6 +133,7 @@ const Index = () => {
       <StickyQuoteBar />
       <AfkOverlay />
       <ReferralButton />
+      <PersonalizedChatbot />
     </Layout>
   );
 };
