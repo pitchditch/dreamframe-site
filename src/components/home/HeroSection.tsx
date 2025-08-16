@@ -24,7 +24,7 @@ const HeroSection = () => {
     if (isMobile) {
       // Preload mobile background image immediately
       const img = new Image();
-      img.src = "/lovable-uploads/a15b41db-e002-46b2-bd84-523bc920661f.png";
+      img.src = "/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png";
       img.onload = () => {
         setVideoLoaded(true);
         setIsLoading(false);
@@ -66,12 +66,12 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="hero-section relative w-full min-h-screen overflow-hidden z-10" style={{ height: '100vh' }}>
+    <section className="hero-section relative w-full min-h-screen h-screen overflow-hidden z-10">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Hero Content - Redesigned layout */}
-      <div className={`container mx-auto px-4 h-full relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: isMobile ? 'calc(var(--header-h) + 1rem)' : 'calc(var(--header-h) + 2rem)', paddingBottom: isMobile ? '1rem' : '2rem' }}>
-        <div className={`h-full flex ${isMobile ? 'flex-col justify-start pt-8' : 'flex-row'} items-center justify-between gap-8`}>
+      <div className={`container mx-auto px-4 h-full relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 2rem)', paddingBottom: '2rem' }}>
+        <div className={`h-full flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-between gap-8`}>
           {/* Left side - Text content */}
           <div className={`${isMobile ? 'w-full text-center mb-6' : 'w-1/2 text-left'} space-y-4`}>
             <HeroBanner />
@@ -80,7 +80,7 @@ const HeroSection = () => {
           
           {/* Right side - Form card */}
           <div className={`${isMobile ? 'w-full' : 'w-1/2 max-w-md'}`}>
-            <div className="bg-white rounded-lg p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <div className="bg-white rounded-lg p-6 shadow-2xl">
               <div className="text-center mb-4">
                 <div className="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
                   ⚡ Instant Estimate
@@ -107,7 +107,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      
+      <HeroScrollIndicator videoLoaded={videoLoaded} isLoading={isLoading} />
     </section>
   );
 };

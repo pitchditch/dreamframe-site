@@ -17,10 +17,9 @@ import ReferralProgramSection from '../components/ReferralProgramSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
-
+import ServiceAreasSection from '../components/home/ServiceAreasSection';
 import CityNavigation from '../components/home/CityNavigation';
 import ReferralButton from '@/components/ReferralButton';
-import PersonalizedChatbot from '@/components/PersonalizedChatbot';
 
 const Index = () => {
   const { language, t } = useTranslation();
@@ -103,7 +102,8 @@ const Index = () => {
             {/* Competitor Comparison */}
             <CompetitorComparisonSection />
             
-            {/* Service Areas Section moved to Why Us page */}
+            {/* Service Areas Section with Interactive Map */}
+            <ServiceAreasSection />
             
             {/* FAQ Section - Full width with bigger buttons */}
             <div data-section="faq" className="w-full">
@@ -133,7 +133,6 @@ const Index = () => {
       <StickyQuoteBar />
       <AfkOverlay />
       <ReferralButton />
-      <PersonalizedChatbot />
     </Layout>
   );
 };

@@ -56,15 +56,14 @@ const HeroForm = () => {
           size="lg"
           className="w-full py-3 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all"
         >
-          {t("Get My Free Quote")} <span className="inline-block animate-bounce ml-2">→</span>
+          {t("Get My Free Quote")} →
         </Button>
         <p className="text-center text-xs text-gray-500">
           Or call now for instant pricing
         </p>
         <div className="text-center">
           <a href="tel:+17788087620" className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700">
-            <span className="animate-pulse text-red-500">📞</span> 
-            <span className="animate-shake">(778) 808-7620</span>
+            📞 (778) 808-7620
           </a>
         </div>
       </div>

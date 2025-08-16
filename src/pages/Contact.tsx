@@ -99,22 +99,13 @@ const Contact = () => {
         <meta name="description" content="Get your free quote today! Contact BC Pressure Washing for professional cleaning services in White Rock, Surrey, and Metro Vancouver. Call (778) 808-7620." />
       </Helmet>
       
-      <div className="min-h-screen py-12 relative">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img 
-            src="/lovable-uploads/2e32a18b-5db1-4b84-a9d0-54a903c407ab.png"
-            alt="Premium Pressure Washing Services" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Get Your Free Quote
             </h1>
-            <p className="text-xl text-gray-200 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Ready to transform your property? Contact us today for a free, no-obligation quote.
             </p>
           </div>

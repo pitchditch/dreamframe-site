@@ -8,7 +8,6 @@ import EquipmentSection from '../components/EquipmentSection';
 import CompanyHistory from '../components/CompanyHistory';
 import CallToAction from '../components/CallToAction';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import ServiceAreasSection from '../components/home/ServiceAreasSection';
 
 const WhyUs = () => {
   const { t } = useTranslation();
@@ -170,9 +169,6 @@ const WhyUs = () => {
       
       {/* Professional Equipment Section */}
       <EquipmentSection />
-      
-      {/* Service Areas Section with Interactive Map - Moved from homepage */}
-      <ServiceAreasSection />
       
       {/* Call to Action */}
       <CallToAction 

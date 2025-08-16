@@ -158,28 +158,6 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
-        'shake': {
-          '0%, 100%': { transform: 'translateX(0)' },
-          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-2px)' },
-          '20%, 40%, 60%, 80%': { transform: 'translateX(2px)' }
-        },
-        'spin-coin': {
-          '0%': { 
-            transform: 'rotateY(0deg) rotateX(0deg)',
-          },
-          '25%': {
-            transform: 'rotateY(90deg) rotateX(15deg)',
-          },
-          '50%': {
-            transform: 'rotateY(180deg) rotateX(0deg)',
-          },
-          '75%': {
-            transform: 'rotateY(270deg) rotateX(-15deg)',
-          },
-          '100%': {
-            transform: 'rotateY(360deg) rotateX(0deg)',
-          }
-        },
       },
       animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -192,8 +170,6 @@ export default {
 				'slide-up': 'slide-up 0.3s ease-out',
 				'testimonial-carousel': 'testimonial-carousel 40s linear infinite',
         'float': 'float 3s ease-in-out infinite',
-        'shake': 'shake 0.5s ease-in-out infinite',
-        'spin-coin': 'spin-coin 2s ease-in-out infinite',
       },
     },
   },
