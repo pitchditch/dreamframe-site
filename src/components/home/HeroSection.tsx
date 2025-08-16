@@ -66,45 +66,18 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="hero-section relative w-full min-h-screen h-screen overflow-hidden z-10">
+    <section className="hero-section relative w-full h-screen overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Redesigned layout */}
-      <div className={`container mx-auto px-4 h-full relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 2rem)', paddingBottom: '2rem' }}>
-        <div className={`h-full flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-between gap-8`}>
-          {/* Left side - Text content */}
-          <div className={`${isMobile ? 'w-full text-center mb-6' : 'w-1/2 text-left'} space-y-4`}>
-            <HeroBanner />
-            <HeroHeading />
-          </div>
-          
-          {/* Right side - Form card */}
-          <div className={`${isMobile ? 'w-full' : 'w-1/2 max-w-md'}`}>
-            <div className="bg-white rounded-lg p-6 shadow-2xl">
-              <div className="text-center mb-4">
-                <div className="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
-                  ⚡ Instant Estimate
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  Get Your Free Quote in 30 Seconds
-                </h3>
-                <p className="text-sm text-gray-600">No obligation • Satisfied customers</p>
-              </div>
-              
-              <HeroForm />
-              
-              <HeroPersonalTouch />
-              
-              <div className="text-center text-sm text-gray-600 mt-4 space-y-1">
-                <div className="flex items-center justify-center gap-4">
-                  <span>✓ Free estimates</span>
-                  <span>✓ Same-day service available</span>
-                </div>
-                <div>✓ 100% satisfaction guaranteed</div>
-              </div>
-            </div>
-          </div>
+      {/* Hero Content - Positioned to fit in one viewport */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 0.5rem)', paddingBottom: '0.5rem' }}>
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
+          <HeroBanner />
+          <HeroHeading />
         </div>
+        
+        <HeroForm />
+        <HeroPersonalTouch />
       </div>
       
       <HeroScrollIndicator videoLoaded={videoLoaded} isLoading={isLoading} />

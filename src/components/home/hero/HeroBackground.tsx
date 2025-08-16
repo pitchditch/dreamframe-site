@@ -49,10 +49,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                 <div 
                   className="absolute top-1/2 left-1/2"
                   style={{
-                    width: '180vw',
-                    height: '101.25vw',
-                    minWidth: '320vh',
-                    minHeight: '180vh',
+                    width: '120vw',
+                    height: '67.5vw',
+                    minWidth: '213.33vh',
+                    minHeight: '120vh',
                     transform: 'translate(-50%, -50%)'
                   }}
                 >
