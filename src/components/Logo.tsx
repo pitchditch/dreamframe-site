@@ -12,9 +12,9 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   
-  // Much bigger logo sizes for better visibility
-  const mobileLogoHeight = 'h-20 w-auto'; 
-  const desktopLogoHeight = 'h-28 md:h-32 w-auto';
+  // Same size for both logos
+  const mobileLogoHeight = 'h-16 w-auto'; 
+  const desktopLogoHeight = 'h-20 md:h-24 w-auto';
   
   useEffect(() => {
     const handleScroll = () => {
@@ -30,19 +30,19 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto z-20">
       <div className="relative flex items-center transition-all duration-300 pt-2">
         {isOverVideo ? (
-          // White logo for hero section - using the new white logo
+          // White logo for hero section
           <img
-            src="/lovable-uploads/0982cdd6-c37b-41b9-972a-20552b7afc63.png"
+            src="/lovable-uploads/3161ca6e-9a0c-4915-87c6-e21f8d3282e4.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[500px] md:max-w-[600px] hover:scale-105 duration-300`}
+            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[400px] md:max-w-[500px] hover:scale-105 duration-300`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
           />
         ) : (
-          // Black/red logo for scrolled state with white background
+          // Black logo for after hero section
           <img
-            src="/lovable-uploads/e5143f6d-bcbe-4457-9c44-4ec4be942d89.png"
+            src="/lovable-uploads/1b56d472-a76b-4691-b0ef-4513152966ae.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[500px] md:max-w-[600px] hover:scale-105 duration-300`}
+            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[400px] md:max-w-[500px] hover:scale-105 duration-300`}
           />
         )}
       </div>

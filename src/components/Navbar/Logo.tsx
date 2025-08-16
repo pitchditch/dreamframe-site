@@ -34,8 +34,8 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
       // Set high priority and start loading immediately
       whiteLogoImg.loading = 'eager';
       blackLogoImg.loading = 'eager';
-      whiteLogoImg.src = "/lovable-uploads/0982cdd6-c37b-41b9-972a-20552b7afc63.png";
-      blackLogoImg.src = "/lovable-uploads/e5143f6d-bcbe-4457-9c44-4ec4be942d89.png";
+      whiteLogoImg.src = "/lovable-uploads/3161ca6e-9a0c-4915-87c6-e21f8d3282e4.png";
+      blackLogoImg.src = "/lovable-uploads/1b56d472-a76b-4691-b0ef-4513152966ae.png";
       
       // Wait for both images to load
       await Promise.all([whiteLogoLoaded, blackLogoLoaded]);
@@ -83,21 +83,21 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto">
       <div className="logo-container relative flex items-center perspective-1000 py-2 md:py-4">
         {shouldShowWhiteLogo ? (
-          // White logo for hero section - bigger sizing
+          // White logo for hero section - same size as black logo
           <img
-            src="/lovable-uploads/0982cdd6-c37b-41b9-972a-20552b7afc63.png"
+            src="/lovable-uploads/3161ca6e-9a0c-4915-87c6-e21f8d3282e4.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-12 md:h-16 w-auto object-contain max-w-[120px] md:max-w-[180px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-10 md:h-12 w-auto object-contain max-w-[120px] md:max-w-[150px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
             fetchPriority="high"
           />
         ) : (
-          // Black/red logo for scrolled state - bigger sizing
+          // Black logo for after hero section - same size as white logo
           <img
-            src="/lovable-uploads/e5143f6d-bcbe-4457-9c44-4ec4be942d89.png"
+            src="/lovable-uploads/1b56d472-a76b-4691-b0ef-4513152966ae.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-12 md:h-16 w-auto object-contain max-w-[120px] md:max-w-[180px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-10 md:h-12 w-auto object-contain max-w-[120px] md:max-w-[150px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
             fetchPriority="high"
           />
