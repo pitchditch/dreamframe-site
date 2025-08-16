@@ -7,8 +7,8 @@ const HeroPersonalTouch = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 ${isMobile ? 'my-2 mb-4' : 'my-0 mb-1'} animate-on-scroll delay-700 ${isMobile ? 'max-w-full' : ''}`}>
-      <div className={`bg-black/60 backdrop-blur-sm ${isMobile ? 'p-6 rounded-lg max-w-full' : 'p-4 md:p-5 rounded-lg max-w-2xl'} border border-white/40 shadow-2xl w-full sm:w-auto flex flex-row items-center`}>
+    <div className={`flex flex-col sm:flex-row items-start justify-start gap-4 ${isMobile ? 'my-3 mb-4' : 'my-2 mb-4'} animate-on-scroll delay-700 ${isMobile ? 'max-w-full' : ''}`}>
+      <div className={`bg-black/60 backdrop-blur-sm ${isMobile ? 'p-4 rounded-lg max-w-full' : 'p-4 md:p-5 rounded-lg max-w-2xl'} border border-white/40 shadow-2xl w-full sm:w-auto flex flex-row items-center`}>
         <img 
           src="/lovable-uploads/069112d9-e61f-4def-94ed-7f1c34172bfd.png"
           alt="Jayden Fisher - Owner" 
