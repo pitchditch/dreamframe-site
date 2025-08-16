@@ -11,9 +11,9 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   
-  // Reduced logo sizes by 40% for better navbar fit
-  const mobileLogoHeight = isOverVideo ? 'h-11 w-auto' : 'h-11 w-auto'; 
-  const desktopLogoHeight = isOverVideo ? 'h-16 md:h-18 w-auto' : 'h-16 md:h-18 w-auto';
+  // Bigger logo sizes for better visibility
+  const mobileLogoHeight = isOverVideo ? 'h-16 w-auto' : 'h-16 w-auto'; 
+  const desktopLogoHeight = isOverVideo ? 'h-20 md:h-24 w-auto' : 'h-20 md:h-24 w-auto';
   
   useEffect(() => {
     const handleScroll = () => {
@@ -29,19 +29,19 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto z-20">
       <div className="relative flex items-center transition-all duration-300 pt-2">
         {isOverVideo ? (
-          // White logo for hero section - using the uploaded white logo
+          // White logo for hero section - using the new white logo
           <img
-            src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
+            src="/lovable-uploads/0982cdd6-c37b-41b9-972a-20552b7afc63.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[285px] md:max-w-[375px] hover:scale-105 duration-300`}
+            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[400px] md:max-w-[500px] hover:scale-105 duration-300`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
           />
         ) : (
           // Black/red logo for scrolled state with white background
           <img
-            src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
+            src="/lovable-uploads/e5143f6d-bcbe-4457-9c44-4ec4be942d89.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[285px] md:max-w-[375px] hover:scale-105 duration-300`}
+            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[400px] md:max-w-[500px] hover:scale-105 duration-300`}
           />
         )}
       </div>
