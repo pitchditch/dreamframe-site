@@ -11,9 +11,9 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   
-  // Bigger logo sizes for better visibility
-  const mobileLogoHeight = isOverVideo ? 'h-16 w-auto' : 'h-16 w-auto'; 
-  const desktopLogoHeight = isOverVideo ? 'h-20 md:h-24 w-auto' : 'h-20 md:h-24 w-auto';
+  // Much bigger logo sizes for better visibility
+  const mobileLogoHeight = 'h-20 w-auto'; 
+  const desktopLogoHeight = 'h-28 md:h-32 w-auto';
   
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +33,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
           <img
             src="/lovable-uploads/0982cdd6-c37b-41b9-972a-20552b7afc63.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[400px] md:max-w-[500px] hover:scale-105 duration-300`}
+            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[500px] md:max-w-[600px] hover:scale-105 duration-300`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
           />
         ) : (
@@ -41,7 +41,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
           <img
             src="/lovable-uploads/e5143f6d-bcbe-4457-9c44-4ec4be942d89.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[400px] md:max-w-[500px] hover:scale-105 duration-300`}
+            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[500px] md:max-w-[600px] hover:scale-105 duration-300`}
           />
         )}
       </div>

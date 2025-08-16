@@ -15,28 +15,44 @@ interface ServiceArea {
 }
 
 const CitySlideshow = () => {
+  console.log('CitySlideshow component rendering...');
+  
   const [slides, setSlides] = useState<ServiceArea[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('CitySlideshow component mounted');
+    
     const fetchSlides = async () => {
       try {
+        console.log('Fetching slides from Supabase...');
+        
         const { data, error } = await supabase
           .from('service_areas')
           .select('*')
           .eq('is_active', true)
           .order('sort_order', { ascending: true });
 
-        if (error) throw error;
+        console.log('Supabase response:', { data, error });
+
+        if (error) {
+          console.error('Supabase error:', error);
+          throw error;
+        }
+        
         if (data) {
+          console.log('Slides loaded successfully:', data);
           setSlides(data);
+        } else {
+          console.log('No data returned from Supabase');
         }
       } catch (error) {
         console.error('Error fetching slides:', error);
       } finally {
         setLoading(false);
+        console.log('Loading state set to false');
       }
     };
 
@@ -74,7 +90,15 @@ const CitySlideshow = () => {
   }
 
   if (slides.length === 0) {
-    return null;
+    console.log('No slides to display, rendering fallback');
+    return (
+      <section className="h-96 bg-gradient-to-r from-primary/20 to-secondary/20 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">Service Areas Loading...</h2>
+          <p className="text-gray-600">If this persists, there may be a data issue.</p>
+        </div>
+      </section>
+    );
   }
 
   return (
