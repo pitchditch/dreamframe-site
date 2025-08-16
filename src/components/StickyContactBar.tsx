@@ -19,12 +19,10 @@ const StickyContactBar = () => {
       
       // Find the "Need a custom quote" section and "See the difference" section
       const customQuoteSection = document.querySelector('[data-custom-quote]') || 
-                                 document.querySelector('.service-selection-section') ||
-                                 document.querySelector('section:has-text("Need a custom quote")');
+                                 document.querySelector('.service-selection-section');
       
       const seeDifferenceSection = document.querySelector('[data-see-difference]') || 
-                                  document.querySelector('.before-after-gallery') ||
-                                  document.querySelector('h2:has-text("See The Difference")');
+                                  document.querySelector('.before-after-gallery');
       
       let showThreshold = windowHeight * 0.5; // Default fallback
       let hideThreshold = document.documentElement.scrollHeight - windowHeight - 100;
