@@ -31,7 +31,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
         {isOverVideo ? (
           // White logo for hero section - using the uploaded white logo
           <img
-            src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
+            src="/lovable-uploads/71491691-40a3-4703-a36b-ada0c116ed1e.png"
             alt="BC Pressure Washing Property Maintenance logo"
             className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[285px] md:max-w-[375px] hover:scale-105 duration-300`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
@@ -39,7 +39,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
         ) : (
           // Black/red logo for scrolled state with white background
           <img
-            src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
+            src="/lovable-uploads/1f0b984c-dbbe-4783-a61a-1fd251917fda.png"
             alt="BC Pressure Washing Property Maintenance logo"
             className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[285px] md:max-w-[375px] hover:scale-105 duration-300`}
           />
