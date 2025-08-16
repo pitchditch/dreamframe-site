@@ -3,7 +3,7 @@ import React from 'react';
 import { MapPin } from 'lucide-react';
 
 const ServiceAreaMap = () => {
-  const mapId = "1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30";
+  const mapUrl = "https://www.google.com/maps/d/u/0/edit?mid=1EFqLJEb-CuHik9j9h2e0iuzKHJwFD30&ll=49.62276379478344%2C-117.11195422848363&z=6";
   
   return (
     <div className="w-full flex flex-col items-center">
@@ -14,7 +14,7 @@ const ServiceAreaMap = () => {
         </div>
         <div className="h-[450px] w-full rounded-xl overflow-hidden relative">
           <iframe 
-            src={`https://www.google.com/maps/d/embed?mid=${mapId}`} 
+            src={mapUrl.replace('/edit?', '/embed?')} 
             width="100%" 
             height="100%" 
             title="BC Pressure Washing Service Area" 

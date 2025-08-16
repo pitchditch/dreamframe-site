@@ -26,18 +26,18 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-              alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="/lovable-uploads/a15b41db-e002-46b2-bd84-523bc920661f.png"
+              alt="House with red BC Pressure Washing car"
+              className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
-              style={{ objectPosition: '50% 100%' }}
+              style={{ objectPosition: '50% 50%' }}
             />
           ) : (
             <>
               {/* Poster image for instant loading */}
               <img 
-                src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+                src="/lovable-uploads/a15b41db-e002-46b2-bd84-523bc920661f.png"
                 alt="BC Pressure Washing Service"
                 className={`absolute w-full h-full object-cover object-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
                 loading="eager"

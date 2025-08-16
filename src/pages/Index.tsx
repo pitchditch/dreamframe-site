@@ -17,7 +17,7 @@ import ReferralProgramSection from '../components/ReferralProgramSection';
 import CompetitorComparisonSection from '../components/home/CompetitorComparisonSection';
 import FAQSection from '../components/FAQSection';
 import RedCarSection from '../components/home/RedCarSection';
-import ServiceAreasSection from '../components/home/ServiceAreasSection';
+
 import CityNavigation from '../components/home/CityNavigation';
 import ReferralButton from '@/components/ReferralButton';
 
@@ -102,8 +102,7 @@ const Index = () => {
             {/* Competitor Comparison */}
             <CompetitorComparisonSection />
             
-            {/* Service Areas Section with Interactive Map */}
-            <ServiceAreasSection />
+            {/* Service Areas Section moved to Why Us page */}
             
             {/* FAQ Section - Full width with bigger buttons */}
             <div data-section="faq" className="w-full">
