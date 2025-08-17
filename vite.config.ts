@@ -10,18 +10,14 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     allowedHosts: [
-      '.lovableproject.com',
-      '.lovable.dev',
-      '.lovable.app',
-      'localhost',
-      '127.0.0.1'
+      '997d1c18-e273-4c31-9f9c-764cd9fe584d.lovableproject.com'
     ],
     headers: {
       'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
       'X-XSS-Protection': '1; mode=block',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'Content-Security-Policy':
-        "default-src 'self'; frame-ancestors 'self' https://* http://*; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.emailjs.com https://cdn.gpteng.co https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://api.emailjs.com ws: wss: https:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com;",
+      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.emailjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.emailjs.com;"
     }
   },
   plugins: [

@@ -21,56 +21,45 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         </div>
       )}
 
-      {/* Background - Full screen video covering entire viewport */}
-      <div className="fixed inset-0 w-full h-full z-0">
+      {/* Background - Different for mobile and desktop */}
+      <div className="absolute inset-0 w-full h-full">
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/06f28e08-4c0a-446b-a310-1a4a2dfdd816.png"
-              alt="BC Pressure Washing residential service"
-              className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+              alt="House with palm tree and red BC Pressure Washing car"
+              className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
-              style={{ objectPosition: '50% 50%' }}
+              style={{ objectPosition: '50% 100%' }}
             />
           ) : (
             <>
               {/* Poster image for instant loading */}
               <img 
-                src="/lovable-uploads/677394c3-fa6d-4696-9a7e-9e6de1bedfec.png"
-                alt="BC Pressure Washing Service with quote form"
+                src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+                alt="BC Pressure Washing Service"
                 className={`absolute w-full h-full object-cover object-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
                 loading="eager"
                 fetchPriority="high"
               />
-              <div 
-                className={`absolute inset-0 transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              >
-                <div 
-                  className="absolute top-1/2 left-1/2"
-                  style={{
-                    width: '120vw',
-                    height: '67.5vw',
-                    minWidth: '213.33vh',
-                    minHeight: '140vh',
-                    transform: 'translate(-50%, -50%)'
-                  }}
-                >
-                  <iframe 
-                    id="hero-video"
-                    className="w-full h-full"
-                    style={{ pointerEvents: 'none' }}
-                    src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&fs=0&disablekb=1&enablejsapi=1&preload=metadata"
-                    title="Pressure Washing Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    loading="eager"
-                  ></iframe>
-                </div>
-              </div>
+              <iframe 
+                id="hero-desktop-video"
+                className={`absolute w-full h-full top-0 left-0 transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                style={{ 
+                  transform: window.innerWidth >= 768 && window.innerWidth <= 1024 ? 'scale(1.2)' : 'scale(1.5)',
+                  transformOrigin: 'center center'
+                }}
+                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=metadata"
+                title="Pressure Washing Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="eager"
+              ></iframe>
             </>
           )}
         </div>
+        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/80 via-black/60 to-black/80' : 'from-black/70 via-black/40 to-black/60'}`}></div>
       </div>
     </>
   );

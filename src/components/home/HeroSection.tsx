@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -58,7 +57,7 @@ const HeroSection = () => {
         if (document.body.contains(videoPreloader)) {
           document.body.removeChild(videoPreloader);
         }
-      }, 1400); // Give YouTube a bit more time to avoid showing title
+      }, 800); // Reduced from 1500ms
     }
   }, [isMobile, isHomePage]);
   
@@ -66,12 +65,12 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="hero-section relative w-full h-screen overflow-hidden">
+    <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Positioned to fit in one viewport */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-50 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: 'calc(var(--header-h) + 0.5rem)', paddingBottom: '0.5rem' }}>
-        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
+      {/* Hero Content - Positioned higher and centered */}
+      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`} style={{ paddingTop: '5vh' }}>
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-5xl'} text-left`}>
           <HeroBanner />
           <HeroHeading />
         </div>

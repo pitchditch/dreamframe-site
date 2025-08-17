@@ -3,16 +3,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale, Calculator } from 'lucide-react';
+import { ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
   isServicesMenuOpen: boolean;
   setIsServicesMenuOpen: (isOpen: boolean) => void;
-  isOverVideo?: boolean;
 }
 
-export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen, isOverVideo = false }: NavbarMobileProps) => {
+export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
   const { t } = useTranslation();
   
   // Add state for more dropdown
@@ -21,7 +20,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`${isOverVideo ? 'md:hidden' : ''} fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
+        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
           isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
         }`}
       >
@@ -173,11 +172,6 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
             
             <div className="pt-4 flex flex-col gap-3">
               <LanguageSelector />
-              
-              <Link to="/quote" className="flex items-center gap-2 py-3 px-2 text-white bg-bc-red hover:bg-red-700 transition-colors rounded-md font-medium justify-center">
-                <Calculator className="w-5 h-5" />
-                <span>Price Calculator</span>
-              </Link>
             </div>
           </nav>
         </div>

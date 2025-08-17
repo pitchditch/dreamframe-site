@@ -1,7 +1,7 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Logo } from './Logo';
+import { Logo } from '../Logo';
 import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
@@ -12,7 +12,6 @@ const Navbar = () => {
   const [isOverVideo, setIsOverVideo] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const headerRef = useRef<HTMLElement | null>(null);
 
   // Pages with hero sections
   const heroPages = [
@@ -56,36 +55,23 @@ const Navbar = () => {
     setIsOverVideo(isHeroPage);
   }, [location.pathname]);
 
-useEffect(() => {
-  const el = headerRef.current;
-  if (!el) return;
-  const setVar = () => {
-    document.documentElement.style.setProperty('--header-h', `${el.offsetHeight}px`);
-  };
-  setVar();
-  const ro = new ResizeObserver(() => setVar());
-  ro.observe(el);
-  window.addEventListener('resize', setVar);
-  window.addEventListener('orientationchange', setVar);
-  return () => {
-    ro.disconnect();
-    window.removeEventListener('resize', setVar);
-    window.removeEventListener('orientationchange', setVar);
-  };
-}, [isMenuOpen]);
-
-const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   // Check if we're on gutter cleaning page for special blue background
   const isGutterCleaningPage = location.pathname === '/services/gutter-cleaning';
 
   return (
-    <header ref={headerRef} className="site-header sticky top-0 w-full z-[1000] transition-all duration-300 bg-transparent min-h-[60px] md:min-h-[72px] h-auto">
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isOverVideo 
+        ? isGutterCleaningPage 
+          ? 'bg-gradient-to-br from-blue-900 to-gray-900 h-28 md:h-36' 
+          : 'bg-transparent h-28 md:h-36'
+        : 'bg-white/95 backdrop-blur-sm h-28 md:h-32'
+    }`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo} />
         <NavbarDesktop isOverVideo={isOverVideo} />
-        {/* Show hamburger menu: mobile always, desktop only when not over video (after hero section) */}
-        <div className={isOverVideo ? "md:hidden" : ""}>
+        <div className="md:hidden">
           <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>
@@ -93,7 +79,6 @@ const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
         isMenuOpen={isMenuOpen}
         isServicesMenuOpen={isServicesMenuOpen}
         setIsServicesMenuOpen={setIsServicesMenuOpen}
-        isOverVideo={isOverVideo}
       />
     </header>
   );

@@ -9,7 +9,6 @@ interface HeroWithContentProps {
 const HeroWithContent = ({ children }: HeroWithContentProps) => {
   const [heroLoaded, setHeroLoaded] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
-  const [overlapActive, setOverlapActive] = useState(false);
 
   useEffect(() => {
     // Wait for hero to load before showing content
@@ -47,18 +46,12 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
     };
   }, [contentVisible]);
 
-  useEffect(() => {
-    const onScroll = () => {
-      setOverlapActive(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
     <>
-      <HeroSection />
+      {/* Hero Section with Video + Price Calculator */}
+      <div className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden">
+        <HeroSection />
+      </div>
       
       {/* Loading overlay */}
       {!heroLoaded && (
@@ -67,11 +60,14 @@ const HeroWithContent = ({ children }: HeroWithContentProps) => {
         </div>
       )}
       
-      {/* Content below hero with slide-up animation (no negative margins) */}
+      {/* Content that slides over the hero */}
       <div 
-        className={`relative z-30 transition-opacity duration-500 transform transition-transform ${contentVisible ? 'opacity-100' : 'opacity-0'} ${overlapActive ? 'translate-y-0' : 'translate-y-6 md:translate-y-8'}`}
+        className={`relative z-40 transition-opacity duration-500 ${
+          contentVisible ? 'opacity-100' : 'opacity-0'
+        }`} 
+        style={{ marginTop: '100vh' }}
       >
-        <div className={`bg-white rounded-t-3xl shadow-2xl min-h-screen relative z-20`}>
+        <div className="bg-white rounded-t-3xl shadow-2xl -mt-24 md:-mt-32 min-h-screen relative z-50">
           {children}
         </div>
       </div>

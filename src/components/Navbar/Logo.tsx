@@ -81,23 +81,23 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
 
   return (
     <Link to="/" className="flex items-center mr-auto">
-      <div className="logo-container relative flex items-center perspective-1000 py-1 md:py-3">
+      <div className="logo-container relative flex items-center perspective-1000 py-2 md:py-4">
         {shouldShowWhiteLogo ? (
-          // White logo for hero section - exact same size and positioning as black logo
+          // White logo for hero section - using the uploaded white logo
           <img
             src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-3 md:h-5 w-auto object-contain max-w-[48px] md:max-w-[70px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
             fetchPriority="high"
           />
         ) : (
-          // Black/red logo for scrolled state - exact same size and positioning as white logo
+          // Black/red logo for scrolled state with white background
           <img
             src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-3 md:h-5 w-auto object-contain max-w-[48px] md:max-w-[70px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
             fetchPriority="high"
           />
