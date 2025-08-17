@@ -26,19 +26,19 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-              alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover object-bottom transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="/lovable-uploads/677394c3-fa6d-4696-9a7e-9e6de1bedfec.png"
+              alt="BC Pressure Washing Service with quote form"
+              className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"
-              style={{ objectPosition: '50% 100%' }}
+              style={{ objectPosition: '50% 50%' }}
             />
           ) : (
             <>
               {/* Poster image for instant loading */}
               <img 
-                src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-                alt="BC Pressure Washing Service"
+                src="/lovable-uploads/677394c3-fa6d-4696-9a7e-9e6de1bedfec.png"
+                alt="BC Pressure Washing Service with quote form"
                 className={`absolute w-full h-full object-cover object-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
                 loading="eager"
                 fetchPriority="high"
@@ -52,7 +52,7 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
                     width: '120vw',
                     height: '67.5vw',
                     minWidth: '213.33vh',
-                    minHeight: '120vh',
+                    minHeight: '140vh',
                     transform: 'translate(-50%, -50%)'
                   }}
                 >
