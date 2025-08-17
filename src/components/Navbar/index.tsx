@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Logo } from '../Logo';
+import { Logo } from './Logo';
 import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
@@ -84,7 +84,7 @@ const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo} />
         <NavbarDesktop isOverVideo={isOverVideo} />
-        {/* Show hamburger menu on mobile always, and on desktop when not over video (after hero section) */}
+        {/* Show hamburger menu: mobile always, desktop only when not over video (after hero section) */}
         <div className={isOverVideo ? "md:hidden" : ""}>
           <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
@@ -93,6 +93,7 @@ const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
         isMenuOpen={isMenuOpen}
         isServicesMenuOpen={isServicesMenuOpen}
         setIsServicesMenuOpen={setIsServicesMenuOpen}
+        isOverVideo={isOverVideo}
       />
     </header>
   );

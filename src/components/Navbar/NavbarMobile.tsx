@@ -9,9 +9,10 @@ interface NavbarMobileProps {
   isMenuOpen: boolean;
   isServicesMenuOpen: boolean;
   setIsServicesMenuOpen: (isOpen: boolean) => void;
+  isOverVideo?: boolean;
 }
 
-export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
+export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen, isOverVideo = false }: NavbarMobileProps) => {
   const { t } = useTranslation();
   
   // Add state for more dropdown
@@ -20,7 +21,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
   return (
     <>
       <div 
-        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
+        className={`${isOverVideo ? 'md:hidden' : ''} fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
           isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
         }`}
       >
