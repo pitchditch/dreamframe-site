@@ -20,7 +20,7 @@ const Calculator = () => {
           <div className="text-center mb-12 mt-20">
             <div className="inline-block bg-yellow-400 text-black px-6 py-3 rounded-full font-bold mb-6 animate-pulse shadow-lg">
               <Percent className="inline-block h-5 w-5 mr-2" />
-              SPRING SALE: 20% OFF ALL SERVICES
+              PACKAGE DEALS AVAILABLE
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Smart Price Calculator

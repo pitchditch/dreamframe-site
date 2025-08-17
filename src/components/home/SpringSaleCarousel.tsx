@@ -113,7 +113,7 @@ const SpringSaleCarousel = () => {
         <div className="absolute top-4 left-0 right-0 z-10 flex justify-center">
           <div className="bg-yellow-400 text-black text-sm px-6 py-2 rounded-full font-bold flex items-center shadow-lg">
             <Percent className="h-4 w-4 mr-1" />
-            SPRING SALE: 20% OFF ALL SERVICES
+            PACKAGE DEALS AVAILABLE
           </div>
         </div>
         

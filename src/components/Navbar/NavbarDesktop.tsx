@@ -21,6 +21,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  // Only show navigation items when over video (in hero section)
+  if (!isOverVideo) {
+    return null; // Hide all desktop navigation when not over video
+  }
+
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate('/');

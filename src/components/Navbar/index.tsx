@@ -84,7 +84,8 @@ const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         <Logo isOverVideo={isOverVideo} />
         <NavbarDesktop isOverVideo={isOverVideo} />
-        <div className="md:hidden">
+        {/* Show hamburger menu on mobile always, and on desktop when not over video (after hero section) */}
+        <div className={isOverVideo ? "md:hidden" : ""}>
           <MobileMenuButton isOverVideo={isOverVideo} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         </div>
       </div>

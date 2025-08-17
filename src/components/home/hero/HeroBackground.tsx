@@ -26,8 +26,8 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         <div className="relative w-full h-full overflow-hidden">
           {isMobile ? (
             <img 
-              src="/lovable-uploads/677394c3-fa6d-4696-9a7e-9e6de1bedfec.png"
-              alt="BC Pressure Washing Service with quote form"
+              src="/lovable-uploads/06f28e08-4c0a-446b-a310-1a4a2dfdd816.png"
+              alt="BC Pressure Washing residential service"
               className={`absolute w-full h-full object-cover object-center transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
               loading="eager"
               fetchPriority="high"

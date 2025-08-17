@@ -83,7 +83,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto">
       <div className="logo-container relative flex items-center perspective-1000 py-1 md:py-3">
         {shouldShowWhiteLogo ? (
-          // White logo for hero section - same size as black logo, 20% smaller than before
+          // White logo for hero section - exact same size and positioning as black logo
           <img
             src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
             alt="BC Pressure Washing Property Maintenance logo"
@@ -93,7 +93,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
             fetchPriority="high"
           />
         ) : (
-          // Black/red logo for scrolled state with white background - same size as white logo
+          // Black/red logo for scrolled state - exact same size and positioning as white logo
           <img
             src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"

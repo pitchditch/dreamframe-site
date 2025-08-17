@@ -84,10 +84,10 @@ const StepReview = ({ form, onBack, selectedPackage, isSpringSale = false }: Ste
           <CardContent className="p-4">
             <div className="flex items-center space-x-2 text-yellow-800">
               <Percent className="h-5 w-5" />
-              <h3 className="font-bold">Spring Sale: 20% Off</h3>
+              <h3 className="font-bold">Package Deal: 20% Off</h3>
             </div>
             <p className="text-sm text-yellow-700 mt-2">
-              Your 20% Spring Sale discount will be applied to your final quote.
+              Your 20% package deal discount will be applied to your final quote.
             </p>
           </CardContent>
         </Card>
@@ -135,7 +135,7 @@ const StepReview = ({ form, onBack, selectedPackage, isSpringSale = false }: Ste
           {(isSpringSale || (selectedPackage && selectedPackage.discountApplied)) && (
             <div className="flex justify-between text-green-600">
               <span>
-                {isSpringSale ? 'Spring Sale Discount (20%):' : 
+                {isSpringSale ? 'Package Deal Discount (20%):' : 
                  `Package Discount (${selectedPackage.discountPercent || 10}%):`}
               </span>
               <span>-${discount.toFixed(2)}</span>
