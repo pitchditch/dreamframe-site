@@ -29,7 +29,7 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto z-20">
       <div className="relative flex items-center transition-all duration-300 pt-2">
         {isOverVideo ? (
-          // White logo for hero section - using the new white logo
+          // White logo for hero section - using the existing white logo
           <img
             src="/lovable-uploads/93a40245-243c-48fb-8888-cb43c5bed511.png"
             alt="BC Pressure Washing Property Maintenance logo"

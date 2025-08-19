@@ -87,17 +87,17 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
           <img
             src="/lovable-uploads/93a40245-243c-48fb-8888-cb43c5bed511.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-16 md:h-20 w-auto object-contain max-w-[280px] md:max-w-[320px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
             fetchPriority="high"
           />
         ) : (
-          // Black/red logo for scrolled state with white background
+          // Black logo for scrolled state with white background
           <img
             src="/lovable-uploads/bb66ae07-493a-41df-8f82-f988949e2a7a.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-20 md:h-40 w-auto object-contain max-w-[320px] md:max-w-[480px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-16 md:h-20 w-auto object-contain max-w-[280px] md:max-w-[320px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
             fetchPriority="high"
           />
