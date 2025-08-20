@@ -69,7 +69,7 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className={`container mx-auto px-4 h-full flex flex-col items-center justify-center relative z-10 ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
         
-        {/* Main Hero Title */}
+        {/* Main Hero Title - Updated Design */}
         <div className="text-center text-white mb-8">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
             BC's <span className="text-blue-400">#1 Rated</span>
