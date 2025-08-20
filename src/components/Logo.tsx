@@ -11,9 +11,6 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   
-  // Bigger logo sizes for hero section
-  const mobileLogoHeight = isOverVideo ? 'h-24 w-auto' : 'h-24 w-auto'; 
-  const desktopLogoHeight = isOverVideo ? 'h-40 md:h-44 w-auto' : 'h-36 md:h-40 w-auto';
   
   useEffect(() => {
     const handleScroll = () => {
@@ -29,19 +26,19 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     <Link to="/" className="flex items-center mr-auto z-20">
       <div className="relative flex items-center transition-all duration-300 pt-2">
         {isOverVideo ? (
-          // White logo for hero section - using the uploaded white logo
+          // White logo for hero section
           <img
-            src="/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png"
+            src="/lovable-uploads/1edc739e-5915-4a90-b1f6-24953254b50a.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[380px] md:max-w-[500px] hover:scale-105 duration-300`}
+            className="h-12 md:h-16 w-auto object-contain hover:scale-105 duration-300"
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
           />
         ) : (
-          // Black/red logo for scrolled state with white background
+          // Black logo for scrolled state with white background
           <img
-            src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
+            src="/lovable-uploads/0fae907b-f9d4-4c1e-8d10-5cd41df6cda7.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`${isMobile ? mobileLogoHeight : desktopLogoHeight} object-contain max-w-[380px] md:max-w-[500px] hover:scale-105 duration-300`}
+            className="h-12 md:h-16 w-auto object-contain hover:scale-105 duration-300"
           />
         )}
       </div>
