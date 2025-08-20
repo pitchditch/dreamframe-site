@@ -1,54 +1,41 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../ui/button';
+import { Shield, Star, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, CheckCircle } from 'lucide-react';
 
 const BookingSection: React.FC = () => {
   return (
-    <section className="py-16 bg-bc-red text-white">
+    <section id="booking-section" className="bg-gray-100 py-16">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Schedule Your Post Construction Cleaning?
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Get your property move-in ready with our professional post construction window cleaning service.
+        <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
+          <h2 className="text-3xl font-bold mb-4 text-center">Get a Post-Construction Window Cleaning Estimate</h2>
+          <p className="text-center text-gray-600 mb-8">
+            Every job is checked personally by our team lead. We're fully insured and trusted by local builders.
           </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="text-center">
-            <div className="mb-4 flex justify-center">
-              <Phone size={48} />
+          
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="inline-flex items-center bg-green-50 text-green-800 px-4 py-2 rounded-full">
+              <Shield className="mr-2 h-5 w-5" />
+              <span className="font-medium">100% Satisfaction Guaranteed</span>
             </div>
-            <h3 className="text-xl font-bold mb-2">Call for Quote</h3>
-            <p>Get a free estimate over the phone</p>
-          </div>
-          <div className="text-center">
-            <div className="mb-4 flex justify-center">
-              <Calendar size={48} />
+            <div className="inline-flex items-center bg-yellow-50 text-yellow-800 px-4 py-2 rounded-full">
+              <Star className="mr-2 h-5 w-5 fill-yellow-500 text-yellow-500" />
+              <span className="font-medium">5-Star Google Rating</span>
             </div>
-            <h3 className="text-xl font-bold mb-2">Schedule Service</h3>
-            <p>Book your convenient cleaning time</p>
-          </div>
-          <div className="text-center">
-            <div className="mb-4 flex justify-center">
-              <CheckCircle size={48} />
+            <div className="inline-flex items-center bg-blue-50 text-blue-800 px-4 py-2 rounded-full">
+              <Check className="mr-2 h-5 w-5" />
+              <span className="font-medium">Fully Insured & Bonded</span>
             </div>
-            <h3 className="text-xl font-bold mb-2">Enjoy Clean Windows</h3>
-            <p>Crystal clear results guaranteed</p>
           </div>
-        </div>
-        
-        <div className="text-center">
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild variant="outline" className="bg-white text-bc-red hover:bg-gray-100">
-              <Link to="/calculator">Get Free Quote</Link>
+          
+          <div className="text-center">
+            <Button asChild variant="bc-red" size="lg" className="text-lg px-8 py-6">
+              <Link to="/contact">Get Your Free Estimate</Link>
             </Button>
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10">
-              <a href="tel:7788087620">Call: (778) 808-7620</a>
-            </Button>
+            <p className="mt-4 text-sm text-gray-500">
+              We'll respond within 24 hours to schedule your service.
+            </p>
           </div>
         </div>
       </div>

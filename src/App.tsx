@@ -1,95 +1,70 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import Index from "./pages/Index";
-import CityPages from "./pages/CityPages";
-import Calculator from "./pages/Calculator";
-import Contact from "./pages/Contact";
-import Services from "./pages/Services";
-import Testimonials from "./pages/Testimonials";
-import WindowCleaning from "./pages/WindowCleaning";
-import PressureWashing from "./pages/PressureWashing";
-import SoftWash from "./pages/services/SoftWash";
-import RoofCleaning from "./pages/services/RoofCleaning";
-import GutterCleaning from "./pages/services/GutterCleaning";
-import HouseWash from "./pages/services/HouseWashing";
-import Equipment from "./pages/Equipment";
-import ComparePrices from "./pages/ComparePrices";
-import CompareServices from "./pages/CompareServices";
-import CommercialWindowCleaning from "./pages/services/CommercialWindowCleaning";
-import CommercialPressureWashing from "./pages/services/CommercialPressureWashing";
-import PostConstructionWindowCleaning from "./pages/services/PostConstructionWindowCleaning";
-import FenceWashing from "./pages/services/FenceWashing";
-import WhyUs from "./pages/WhyUs";
-import HouseTracking from "./pages/HouseTracking";
-import KelownaServices from "./pages/KelownaServices";
-import ReferralHub from "./pages/ReferralHub";
-import NotFound from "./pages/NotFound";
+import { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { TranslationProvider } from '@/hooks/use-translation';
+
+// Simple Loading component
+const Loading = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+  </div>
+);
+
+// Lazy load pages for better performance
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Contact = lazy(() => import('./pages/Contact'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Calculator = lazy(() => import('./pages/Calculator'));
+const Booking = lazy(() => import('./pages/Booking'));
+const HouseTracking = lazy(() => import('./pages/HouseTracking'));
+
+// Service pages
+const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
+const PressureWashing = lazy(() => import('./pages/PressureWashing'));
+
+// Specific service pages
+const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
+const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <HelmetProvider>
+function App() {
+  return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            
-            {/* City-specific homepage routes */}
-            <Route path="/vancouver" element={<CityPages />} />
-            <Route path="/surrey" element={<CityPages />} />
-            <Route path="/burnaby" element={<CityPages />} />
-            <Route path="/richmond" element={<CityPages />} />
-            <Route path="/coquitlam" element={<CityPages />} />
-            <Route path="/langley-city" element={<CityPages />} />
-            <Route path="/township-of-langley" element={<CityPages />} />
-            <Route path="/delta" element={<CityPages />} />
-            <Route path="/new-westminster" element={<CityPages />} />
-            <Route path="/port-coquitlam" element={<CityPages />} />
-            <Route path="/port-moody" element={<CityPages />} />
-            <Route path="/maple-ridge" element={<CityPages />} />
-            <Route path="/pitt-meadows" element={<CityPages />} />
-            <Route path="/white-rock" element={<CityPages />} />
-            
-            {/* Dedicated Kelowna page */}
-            <Route path="/kelowna" element={<KelownaServices />} />
-            
-            {/* Dynamic route for all cities */}
-            <Route path="/:citySlug" element={<CityPages />} />
-            
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/why-us" element={<WhyUs />} />
-            <Route path="/services/window-cleaning" element={<WindowCleaning />} />
-            <Route path="/services/pressure-washing" element={<PressureWashing />} />
-            <Route path="/services/soft-wash" element={<SoftWash />} />
-            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
-            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
-            <Route path="/services/house-wash" element={<HouseWash />} />
-            <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
-            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
-            <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
-            <Route path="/services/fence-washing" element={<FenceWashing />} />
-            <Route path="/equipment" element={<Equipment />} />
-            <Route path="/compare-prices" element={<ComparePrices />} />
-            <Route path="/compare-services" element={<CompareServices />} />
-            <Route path="/house-tracking" element={<HouseTracking />} />
-            <Route path="/referral-hub" element={<ReferralHub />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <TranslationProvider>
+        <Router>
+          <div className="min-h-screen bg-white">
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/calculator" element={<Calculator />} />
+                <Route path="/booking" element={<Booking />} />
+                <Route path="/house-tracking" element={<HouseTracking />} />
+
+                {/* Service Routes */}
+                <Route path="/services/window-cleaning" element={<WindowCleaning />} />
+                <Route path="/services/pressure-washing" element={<PressureWashing />} />
+                
+                {/* Specific Service Pages */}
+                <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+                <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            <Toaster />
+          </div>
+        </Router>
+      </TranslationProvider>
     </QueryClientProvider>
-  </HelmetProvider>
-);
+  );
+}
 
 export default App;

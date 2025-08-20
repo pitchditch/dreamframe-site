@@ -41,45 +41,6 @@ const Calculator = () => {
             </p>
           </div>
 
-          {/* Trust Badges - Full Width Above Calculator */}
-          <div className="mb-12">
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="flex items-center bg-green-50 p-4 rounded-lg border border-green-200">
-                  <Shield className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-green-800">Fully Insured</div>
-                    <div className="text-sm text-green-600">Licensed & bonded</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center bg-blue-50 p-4 rounded-lg border border-blue-200">
-                  <Clock className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-blue-800">Same-Day Service</div>
-                    <div className="text-sm text-blue-600">Often available</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center bg-purple-50 p-4 rounded-lg border border-purple-200">
-                  <Users className="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-purple-800">500+ Happy Customers</div>
-                    <div className="text-sm text-purple-600">5-star Google rated</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                  <Star className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-yellow-800">Local & Trusted</div>
-                    <div className="text-sm text-yellow-600">White Rock & Surrey</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Main Layout */}
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-4 gap-12 items-start">
@@ -95,6 +56,41 @@ const Calculator = () => {
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">What Our Customers Say</h3>
                     <TestimonialCarousel />
+                  </div>
+
+                  {/* Trust Badges */}
+                  <div className="space-y-4">
+                    <div className="flex items-center bg-green-50 p-4 rounded-lg border border-green-200">
+                      <Shield className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
+                      <div>
+                        <div className="font-semibold text-green-800">Fully Insured</div>
+                        <div className="text-sm text-green-600">Licensed & bonded</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center bg-blue-50 p-4 rounded-lg border border-blue-200">
+                      <Clock className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" />
+                      <div>
+                        <div className="font-semibold text-blue-800">Same-Day Service</div>
+                        <div className="text-sm text-blue-600">Often available</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center bg-purple-50 p-4 rounded-lg border border-purple-200">
+                      <Users className="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" />
+                      <div>
+                        <div className="font-semibold text-purple-800">500+ Happy Customers</div>
+                        <div className="text-sm text-purple-600">5-star Google rated</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                      <Star className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0" />
+                      <div>
+                        <div className="font-semibold text-yellow-800">Local & Trusted</div>
+                        <div className="text-sm text-yellow-600">White Rock & Surrey</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

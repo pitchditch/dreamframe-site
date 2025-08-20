@@ -9,40 +9,17 @@ interface LogoProps {
 export const Logo = ({ isOverVideo }: LogoProps) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [lastActivity, setLastActivity] = useState(Date.now());
-  const [imagesPreloaded, setImagesPreloaded] = useState(false);
   const location = useLocation();
   
   // Determine if we're on the home page with hero section
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
 
   useEffect(() => {
-    // Preload both logo images immediately and aggressively
-    const preloadImages = async () => {
-      const whiteLogoImg = new Image();
-      const blackLogoImg = new Image();
-      
-      const whiteLogoLoaded = new Promise((resolve) => {
-        whiteLogoImg.onload = resolve;
-        whiteLogoImg.onerror = resolve; // resolve even on error to avoid blocking
-      });
-      
-      const blackLogoLoaded = new Promise((resolve) => {
-        blackLogoImg.onload = resolve;
-        blackLogoImg.onerror = resolve; // resolve even on error to avoid blocking
-      });
-      
-      // Set high priority and start loading immediately
-      whiteLogoImg.loading = 'eager';
-      blackLogoImg.loading = 'eager';
-      whiteLogoImg.src = "/lovable-uploads/d25c20f5-2fcf-4567-b063-eed5c674e3bd.png";
-      blackLogoImg.src = "/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png";
-      
-      // Wait for both images to load
-      await Promise.all([whiteLogoLoaded, blackLogoLoaded]);
-      setImagesPreloaded(true);
-    };
-    
-    preloadImages();
+    // Preload both logo images immediately
+    const whiteLogoImg = new Image();
+    const blackLogoImg = new Image();
+    whiteLogoImg.src = "/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png";
+    blackLogoImg.src = "/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png";
 
     // Track user activity
     const handleActivity = () => {
@@ -76,30 +53,28 @@ export const Logo = ({ isOverVideo }: LogoProps) => {
     };
   }, [lastActivity]);
 
-  // Determine which logo to show - white logo in hero sections, black logo everywhere else
-  const shouldShowWhiteLogo = isOverVideo;
+  // Determine which logo to show - prioritize white logo on home page
+  const shouldShowWhiteLogo = isHomePage && isOverVideo;
 
   return (
     <Link to="/" className="flex items-center mr-auto">
       <div className="logo-container relative flex items-center perspective-1000 py-2 md:py-4">
         {shouldShowWhiteLogo ? (
-          // White logo for hero section
+          // White logo for hero section with transparent background
           <img
-            src="/lovable-uploads/1edc739e-5915-4a90-b1f6-24953254b50a.png"
+            src="/lovable-uploads/1382a332-34e7-4830-bc43-d3dd1045dab9.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-12 md:h-16 w-auto object-contain hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-16 md:h-32 w-auto object-contain max-w-[280px] md:max-w-[420px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))' }}
             loading="eager"
-            fetchPriority="high"
           />
         ) : (
-          // Black logo for scrolled state with white background
+          // Black/red logo for scrolled state with white background
           <img
-            src="/lovable-uploads/0fae907b-f9d4-4c1e-8d10-5cd41df6cda7.png"
+            src="/lovable-uploads/61d60d2a-3ff0-4399-8e84-4ab645a84a24.png"
             alt="BC Pressure Washing Property Maintenance logo"
-            className={`h-12 md:h-16 w-auto object-contain hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
+            className={`h-16 md:h-32 w-auto object-contain max-w-[280px] md:max-w-[420px] hover:scale-105 duration-300 ${isSpinning ? 'animate-spin-coin' : ''}`}
             loading="eager"
-            fetchPriority="high"
           />
         )}
       </div>

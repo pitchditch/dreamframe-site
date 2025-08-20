@@ -10,10 +10,11 @@ import CallToAction from '../components/CallToAction';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const WhyUs = () => {
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
   
-  return (
-    <Layout>
+  return <Layout>
       <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
         <div className="absolute inset-0 opacity-30">
           {/* Use different images for mobile and desktop */}
@@ -176,8 +177,7 @@ const WhyUs = () => {
         subtitle="Contact us today for professional exterior cleaning services that exceed your expectations."
         backgroundImage="/lovable-uploads/26f6a625-a200-4106-8f94-579be5c566b6.png"
       />
-    </Layout>
-  );
+    </Layout>;
 };
 
 export default WhyUs;

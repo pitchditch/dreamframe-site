@@ -119,8 +119,8 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
           </DropdownMenuItem>
         </div>
 
-        {/* Compare Services - Fixed spacing */}
-        <div className="border-t border-gray-100 p-2 pb-4">
+        {/* Compare Services */}
+        <div className="border-t border-gray-100 p-2">
           <DropdownMenuItem asChild className="p-0">
             <Link
               to="/compare-services"

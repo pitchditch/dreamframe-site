@@ -101,34 +101,20 @@ export const submitFormData = async (
   toast: any
 ) => {
   try {
-    console.log('Submitting form data:', formData);
+    // Using EmailJS to send the form data
+    const serviceId = 'service_xrk4vas';
+    const templateId = 'template_cpivz2k';
+    const userId = 'MMzAmk5eWrjFgC_nP';
     
-    // Send to our Supabase edge function
-    const response = await fetch('/api/send-confirmations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: formData.email,
-        phone: formData.phone,
-        name: formData.name,
-        formType: 'Price Calculator Quote',
-        message: formData.message || '',
-        estimateTotal: formData.estimateTotal,
-        services: formData.services,
-        addOns: formData.addOns,
-        houseSize: formData.houseSize,
-        address: formData.address,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to submit form');
-    }
-
-    const result = await response.json();
-    console.log('Form submitted successfully:', result);
+    // Import EmailJS dynamically to avoid server-side issues
+    const emailjs = await import('@emailjs/browser');
+    
+    await emailjs.send(
+      serviceId,
+      templateId,
+      formData,
+      userId
+    );
     
     toast({
       title: 'Quote Request Submitted!',
@@ -138,32 +124,11 @@ export const submitFormData = async (
     onSuccess();
   } catch (error) {
     console.error('Error submitting form:', error);
-    
-    // Fallback to EmailJS if our API fails
-    try {
-      const emailjs = await import('@emailjs/browser');
-      
-      await emailjs.send(
-        'service_xrk4vas',
-        'template_cpivz2k',
-        formData,
-        'MMzAmk5eWrjFgC_nP'
-      );
-      
-      toast({
-        title: 'Quote Request Submitted!',
-        description: 'We\'ll contact you shortly with your personalized quote.',
-      });
-      
-      onSuccess();
-    } catch (fallbackError) {
-      console.error('Fallback email service also failed:', fallbackError);
-      toast({
-        title: 'Submission Failed',
-        description: 'There was a problem submitting your request. Please try again.',
-        variant: 'destructive'
-      });
-      setSubmitting(false);
-    }
+    toast({
+      title: 'Submission Failed',
+      description: 'There was a problem submitting your request. Please try again.',
+      variant: 'destructive'
+    });
+    setSubmitting(false);
   }
 };

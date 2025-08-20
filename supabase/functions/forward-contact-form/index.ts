@@ -13,58 +13,184 @@ const corsHeaders = {
 const BUSINESS_EMAIL = "jaydenf3800@gmail.com";
 
 serve(async (req) => {
+  console.log('Forward contact form function called');
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const body = await req.json();
+    console.log('Received form submission:', JSON.stringify(body, null, 2));
 
-    // Compose a simple HTML email body with form info
-    const htmlFields = Object.entries(body)
+    // Validate required fields
+    if (!body.name || !body.email || !body.message) {
+      console.error('Missing required fields:', { name: body.name, email: body.email, message: body.message });
+      throw new Error('Missing required fields: name, email, and message are required');
+    }
+
+    // Send email to business owner first
+    const businessHtmlFields = Object.entries(body)
+      .filter(([key]) => !['save_to_tracking', 'form'].includes(key))
       .map(
         ([key, value]) =>
-          `<tr><td style='padding:6px 0'><strong>${key}:</strong></td><td>${value ?? ""}</td></tr>`
+          `<tr><td style='padding:6px 0; font-weight:bold; text-transform:capitalize;'>${key.replace('_', ' ')}:</td><td style='padding:6px 0;'>${value ?? ""}</td></tr>`
       )
       .join("");
 
-    const html = `
-      <div>
-        <h2>New Website Form Submission</h2>
-        <table>${htmlFields}</table>
-        <p>
-          This message was forwarded by the BC Pressure Washing website contact system.<br />
-          Reply to this email to reach the customer.
-        </p>
+    const businessHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">New Website Form Submission</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f8f9fa;">
+          <table style="width: 100%; border-collapse: collapse;">
+            ${businessHtmlFields}
+          </table>
+        </div>
+        <div style="padding: 20px; background-color: white; border-top: 2px solid #1e40af;">
+          <p style="margin: 0; font-size: 14px; color: #666;">
+            This message was forwarded by the BC Pressure Washing website contact system.<br />
+            <strong>Reply to this email to reach the customer directly.</strong>
+          </p>
+        </div>
       </div>
     `;
 
-    const subject =
-      body.subject ||
-      `New Contact Form Submission from ${body.name || body.email || "Visitor"}`;
+    const businessSubject = body.subject || `New Contact Form Submission from ${body.name || body.email || "Website Visitor"}`;
 
-    const from =
-      body.email && typeof body.email === "string"
-        ? `${body.email}`
-        : "website@bcpressurewashing.ca";
-
-    // Send the email!
-    const emailRes = await resend.emails.send({
-      from: `BC Pressure Washing Site <${from}>`,
+    console.log('Sending email to business owner:', BUSINESS_EMAIL);
+    
+    const businessEmailResult = await resend.emails.send({
+      from: `BC Pressure Washing <noreply@bcpressurewashing.ca>`,
       to: [BUSINESS_EMAIL],
-      subject,
-      html,
+      subject: businessSubject,
+      html: businessHtml,
       reply_to: body.email,
     });
 
-    return new Response(JSON.stringify({ success: true, emailRes }), {
-      headers: { "Content-Type": "application/json", ...corsHeaders },
+    console.log('Business email result:', businessEmailResult);
+
+    // Send confirmation email to customer
+    console.log('Sending confirmation email to customer:', body.email);
+    
+    const customerHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">BC Pressure Washing</h1>
+          <p style="color: white; margin: 10px 0 0 0;">Professional Cleaning Services</p>
+        </div>
+        <div style="padding: 30px 20px; background-color: white;">
+          <h2 style="color: #333; margin-top: 0;">Thank you for your message!</h2>
+          <p>Hi ${body.name},</p>
+          <p>We've received your message and will get back to you within 24 hours with a personalized response.</p>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #1e40af;">
+            <h3 style="color: #333; margin-top: 0;">Your Message Details:</h3>
+            <p><strong>Service:</strong> ${body.service || 'Not specified'}</p>
+            <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
+            <p><strong>Message:</strong> ${body.message}</p>
+          </div>
+          
+          <div style="background-color: #e1f5fe; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">Contact Us Directly:</h3>
+            <p style="margin: 5px 0;"><strong>📞 Phone:</strong> (778) 808-7620</p>
+            <p style="margin: 5px 0;"><strong>📧 Email:</strong> info@bcpressurewashing.ca</p>
+            <p style="margin: 5px 0;"><strong>🕒 Hours:</strong> Mon-Sat: 7AM-7PM</p>
+          </div>
+          
+          <p>We look forward to helping you with your cleaning needs!</p>
+          
+          <p>Best regards,<br>
+          <strong>The BC Pressure Washing Team</strong></p>
+        </div>
+        <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; font-size: 12px;">
+          <p style="margin: 5px 0; color: white;">BC Pressure Washing - Professional Cleaning Services</p>
+          <p style="margin: 5px 0; color: white;">White Rock & Surrey, BC | Serving Metro Vancouver</p>
+          <p style="margin: 5px 0; color: white;">(778) 808-7620 | info@bcpressurewashing.ca</p>
+        </div>
+      </div>
+    `;
+
+    const customerEmailResult = await resend.emails.send({
+      from: "BC Pressure Washing <info@bcpressurewashing.ca>",
+      to: [body.email],
+      subject: "Thank you for contacting BC Pressure Washing!",
+      html: customerHtml,
     });
+
+    console.log('Customer confirmation email result:', customerEmailResult);
+
+    // Check if both emails were sent successfully
+    const businessEmailSuccess = businessEmailResult && !businessEmailResult.error;
+    const customerEmailSuccess = customerEmailResult && !customerEmailResult.error;
+
+    if (!businessEmailSuccess) {
+      console.error('Business email failed:', businessEmailResult?.error);
+    }
+
+    if (!customerEmailSuccess) {
+      console.error('Customer email failed:', customerEmailResult?.error);
+    }
+
+    // Save to house tracking system if requested
+    if (body.save_to_tracking && body.name && body.email) {
+      try {
+        console.log('Processing customer data for house tracking...');
+        
+        const trackingData = {
+          id: `contact-${Date.now()}`,
+          customerName: body.name,
+          email: body.email,
+          phone: body.phone || '',
+          address: '',
+          status: 'needs-quote',
+          serviceInterest: body.service || '',
+          notes: `Contact form submission: ${body.message}`,
+          dateAdded: new Date().toISOString(),
+          source: 'website-contact-form',
+          isPreviousClient: false
+        };
+
+        console.log('Customer data prepared for house tracking:', trackingData);
+      } catch (trackingError) {
+        console.error('Error preparing house tracking data:', trackingError);
+      }
+    }
+
+    console.log('Form submission processed successfully');
+
+    const response = {
+      success: true,
+      message: 'Form submitted successfully',
+      businessEmailSent: businessEmailSuccess,
+      customerEmailSent: customerEmailSuccess,
+      businessEmailId: businessEmailResult?.data?.id,
+      customerEmailId: customerEmailResult?.data?.id
+    };
+
+    console.log('Sending response:', response);
+
+    return new Response(JSON.stringify(response), {
+      headers: { "Content-Type": "application/json", ...corsHeaders },
+      status: 200,
+    });
+
   } catch (error) {
-    console.error("Forwarding error:", error);
+    console.error("Contact form forwarding error:", error);
+    
+    const errorResponse = {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
+      details: error instanceof Error ? error.stack : undefined
+    };
+
     return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      JSON.stringify(errorResponse),
+      { 
+        status: 500, 
+        headers: { "Content-Type": "application/json", ...corsHeaders } 
+      }
     );
   }
 });

@@ -51,7 +51,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               </div>
               
               <div className={`overflow-hidden transition-all duration-300 pl-4 ${
-                isServicesMenuOpen ? 'max-h-[1000px] py-2' : 'max-h-0'
+                isServicesMenuOpen ? 'max-h-[800px] py-2' : 'max-h-0'
               }`}>
                 <div className="flex flex-col space-y-1 pl-4">
                   <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential Services</div>
@@ -82,13 +82,13 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   <Link to="/services/driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/5e800a2b-cb89-4b90-8102-ff82838f2dc1.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Driveway Cleaning')}</span>
                   </Link>
                   <Link to="/services/fence-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/b1066466-b276-4928-9c97-88a44a2cbf57.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
+                      <img src="/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
                     </div>
                     <span>{t('Fence Washing')}</span>
                   </Link>
@@ -119,7 +119,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                     <span>{t('See All Services')}</span>
                   </Link>
                   
-                  <Link to="/compare-services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md font-medium mb-4">
+                  <Link to="/compare-services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md font-medium">
                     <Scale size={20} />
                     <span>{t('Compare Services')}</span>
                   </Link>
@@ -152,13 +152,16 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                   </Link>
                   
                   <div className="pt-2 border-t border-gray-100">
-                    <h4 className="font-medium text-gray-900 pb-2 text-sm">{t('Leave a Review')}</h4>
+                    <h4 className="font-medium text-gray-900 pb-2">{t('Leave a Review')}</h4>
                     <div className="flex space-x-3">
                       <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
-                        <img src="/lovable-uploads/16f0c875-4a0c-44b6-8c3c-c995877476e9.png" alt="Google" className="h-6 w-6 object-contain" />
+                        <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
                       </a>
                       <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
-                        <img src="/lovable-uploads/a012b0c4-8ea4-4bcd-a39d-e62c2c8d1a97.png" alt="Yelp" className="h-8 w-8 object-contain" />
+                        <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
+                      </a>
+                      <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
+                        <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
                       </a>
                     </div>
                   </div>

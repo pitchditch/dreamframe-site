@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,6 @@ import { Calculator, Home, MapPin, DollarSign, Loader2 } from 'lucide-react';
 import { AddressAutocomplete } from './AddressAutocomplete';
 import { useFetchSquareFootage } from '@/hooks/useFetchSquareFootage';
 import { PricingEngine, PricingRequest } from './DynamicPricing/PricingEngine';
-import PriceCalculatorForm from './PriceCalculator/PriceCalculatorForm';
 
 interface AddressDetails {
   formatted_address: string;
@@ -26,7 +24,6 @@ export const SmartPriceCalculator: React.FC = () => {
   const [houseSize, setHouseSize] = useState<string>('');
   const [quote, setQuote] = useState<any>(null);
   const [calculatingPrice, setCalculatingPrice] = useState(false);
-  const [showFullCalculator, setShowFullCalculator] = useState(false);
   
   const { getSquareFootage, loading: fetchingSquareFootage, error: squareFootageError } = useFetchSquareFootage();
 
@@ -99,8 +96,17 @@ export const SmartPriceCalculator: React.FC = () => {
   };
 
   const handleBookService = () => {
-    // Instead of navigating away, show the full calculator form with prefilled data
-    setShowFullCalculator(true);
+    // Store the quote information for the booking calendar
+    const bookingData = {
+      service: serviceType,
+      address: selectedAddress?.formatted_address,
+      squareFootage,
+      quote: quote?.adjustedPrice,
+      timestamp: Date.now()
+    };
+    
+    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+    navigate('/booking');
   };
 
   const handleGetMoreDetails = () => {
@@ -131,36 +137,6 @@ export const SmartPriceCalculator: React.FC = () => {
       minimumFractionDigits: 0
     }).format(amount);
   };
-
-  const handleCalculatorComplete = () => {
-    setShowFullCalculator(false);
-  };
-
-  // If showing full calculator, render that instead
-  if (showFullCalculator) {
-    return (
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="mb-6">
-          <Button 
-            variant="outline" 
-            onClick={() => setShowFullCalculator(false)}
-            className="mb-4"
-          >
-            ← Back to Quick Quote
-          </Button>
-        </div>
-        <PriceCalculatorForm 
-          onComplete={handleCalculatorComplete}
-          initialStep="contact"
-          prefillData={{
-            address: selectedAddress?.formatted_address,
-            houseSize,
-            postalCode: selectedAddress?.postalCode
-          }}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-4xl mx-auto p-6">

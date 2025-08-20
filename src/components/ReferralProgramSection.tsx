@@ -1,13 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from './ui/button';
 import { Gift, Users, DollarSign, ArrowRight } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import ReferralOverlay from './ReferralOverlay';
 
 const ReferralProgramSection = () => {
   const isMobile = useIsMobile();
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   return (
     <section className="py-12 md:py-16 bg-gradient-to-br from-bc-red to-red-600">
@@ -16,11 +14,11 @@ const ReferralProgramSection = () => {
           <div className="flex items-center justify-center mb-4">
             <Gift className="h-8 w-8 md:h-12 md:w-12 text-white mr-3" />
             <h2 className="text-2xl md:text-4xl font-bold text-white">
-              Refer a Friend & Get 25% Off!
+              Refer a Friend & Save 50%
             </h2>
           </div>
           <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-            Love our service? Share it with friends and family and get 25% off your next service!
+            Love our service? Share it with friends and family and both of you save big!
           </p>
         </div>
 
@@ -58,8 +56,8 @@ const ReferralProgramSection = () => {
                     3
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white text-sm mb-1">You Get 25% Off</h3>
-                    <p className="text-white/90 text-sm">You get 25% off your next service</p>
+                    <h3 className="font-semibold text-white text-sm mb-1">Both Save 50%</h3>
+                    <p className="text-white/90 text-sm">You both get 50% off next service</p>
                   </div>
                 </div>
               </div>
@@ -87,8 +85,8 @@ const ReferralProgramSection = () => {
                 <div className="bg-white text-bc-red rounded-full w-16 h-16 flex items-center justify-center font-bold text-2xl mx-auto mb-4">
                   3
                 </div>
-                <h3 className="font-bold text-xl text-white mb-2">You Get 25% Off</h3>
-                <p className="text-white/90">You get 25% off your next service!</p>
+                <h3 className="font-bold text-xl text-white mb-2">Both Save 50%</h3>
+                <p className="text-white/90">You both receive 50% off your next service!</p>
               </div>
             </div>
           )}
@@ -98,7 +96,7 @@ const ReferralProgramSection = () => {
               <div className="flex items-center justify-center mb-3">
                 <DollarSign className="h-6 w-6 md:h-8 md:w-8 text-yellow-300 mr-2" />
                 <span className="text-lg md:text-2xl font-bold text-white">
-                  Get 25% off your next service!
+                  Save up to $200 per referral!
                 </span>
               </div>
               <p className="text-white/90 text-sm md:text-base">
@@ -109,7 +107,6 @@ const ReferralProgramSection = () => {
             <Button 
               size={isMobile ? "default" : "lg"} 
               className="bg-white text-bc-red hover:bg-gray-100 font-bold transition-all hover:scale-105 w-full md:w-auto"
-              onClick={() => setIsOverlayOpen(true)}
             >
               <Users className="mr-2 h-4 w-4 md:h-5 md:w-5" />
               Start Referring Friends
@@ -118,11 +115,6 @@ const ReferralProgramSection = () => {
           </div>
         </div>
       </div>
-      
-      <ReferralOverlay 
-        isOpen={isOverlayOpen}
-        onClose={() => setIsOverlayOpen(false)}
-      />
     </section>
   );
 };

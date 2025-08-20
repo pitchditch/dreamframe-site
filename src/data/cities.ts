@@ -4,33 +4,33 @@ export interface CityData {
   slug: string;
   postalCodePrefix: string;
   nearbyAreas: string[];
-  testimonials: Array<{
+  testimonials: {
     text: string;
     author: string;
     rating: number;
-  }>;
+  }[];
 }
 
 export const cities: CityData[] = [
   {
     name: "Vancouver",
     slug: "vancouver",
-    postalCodePrefix: "V5K, V5L, V5M, V5N, V5P, V5R, V5S, V5T, V5V, V5W, V5X, V5Y, V5Z, V6A, V6B, V6C, V6E, V6G, V6H, V6J, V6K, V6L, V6M, V6N, V6P, V6R, V6S, V6T, V6V, V6W, V6X, V6Y, V6Z, V7A, V7B, V7C, V7E, V7G, V7H, V7J, V7K, V7L, V7M, V7N, V7P, V7R, V7S, V7T, V7V, V7W, V7X, V7Y",
-    nearbyAreas: ["Downtown", "West End", "Kitsilano", "Mount Pleasant", "Commercial Drive", "Yaletown", "Coal Harbour"],
+    postalCodePrefix: "V5, V6",
+    nearbyAreas: ["West End", "Kitsilano", "Mount Pleasant", "Commercial Drive"],
     testimonials: [
       {
-        text: "Outstanding service! They cleaned our downtown condo windows perfectly and the pressure washing made our patio look brand new.",
-        author: "Sarah M., Downtown Vancouver",
+        text: "Excellent service! My driveway looks brand new after their pressure washing.",
+        author: "Jennifer M., Vancouver",
         rating: 5
       },
       {
-        text: "Professional team, fair pricing, and excellent results. Our Kitsilano home looks amazing after their complete exterior cleaning.",
-        author: "Mike T., Kitsilano",
+        text: "Professional window cleaning that left our home sparkling. Highly recommend!",
+        author: "David L., Vancouver", 
         rating: 5
       },
       {
-        text: "Best window cleaning service in Vancouver! They've been maintaining our office building for over a year now.",
-        author: "Jennifer L., Yaletown",
+        text: "Fast, reliable service in Vancouver. They transformed our deck completely.",
+        author: "Sarah K., Vancouver",
         rating: 5
       }
     ]
@@ -38,22 +38,22 @@ export const cities: CityData[] = [
   {
     name: "Surrey",
     slug: "surrey",
-    postalCodePrefix: "V3R, V3S, V3T, V3V, V3W, V3X, V3Y, V3Z, V4A, V4B, V4N, V4P",
-    nearbyAreas: ["Guildford", "Fleetwood", "Newton", "Cloverdale", "South Surrey", "Whalley", "Fraser Heights"],
+    postalCodePrefix: "V3R, V3S, V3T, V3V, V3W, V3X, V4A, V4N, V4P",
+    nearbyAreas: ["Guildford", "Fleetwood", "Newton", "Cloverdale", "South Surrey"],
     testimonials: [
       {
-        text: "BC Pressure Washing transformed our Surrey home! The driveway and siding look like new. Highly recommend their services.",
-        author: "David K., Guildford",
+        text: "Outstanding pressure washing service! Our Surrey home's siding looks amazing.",
+        author: "Michael R., Surrey",
         rating: 5
       },
       {
-        text: "Reliable, professional, and thorough. They cleaned our gutters and windows - everything looks spotless!",
-        author: "Lisa R., Fleetwood",
+        text: "Crystal clear windows and professional service. Worth every penny!",
+        author: "Lisa T., Surrey",
         rating: 5
       },
       {
-        text: "Great value for money. Our Newton home's exterior cleaning exceeded our expectations.",
-        author: "James P., Newton",
+        text: "Transformed our patio and driveway. Excellent work in Surrey!",
+        author: "Robert H., Surrey",
         rating: 5
       }
     ]
@@ -61,22 +61,22 @@ export const cities: CityData[] = [
   {
     name: "Burnaby",
     slug: "burnaby", 
-    postalCodePrefix: "V3J, V3N, V5A, V5B, V5C, V5E, V5G, V5H, V5J",
-    nearbyAreas: ["Brentwood", "Metrotown", "Deer Lake", "Capitol Hill", "Sperling", "Willingdon Heights"],
+    postalCodePrefix: "V5A, V5B, V5C, V5E, V5G, V5H, V5J",
+    nearbyAreas: ["Metrotown", "Brentwood", "Lougheed", "Heights"],
     testimonials: [
       {
-        text: "Excellent window cleaning service for our Metrotown condo. Professional and reliable team.",
-        author: "Anna S., Metrotown",
+        text: "Professional team cleaned our windows perfectly. Great service in Burnaby!",
+        author: "Karen W., Burnaby",
         rating: 5
       },
       {
-        text: "They pressure washed our deck and it looks incredible. Will definitely use them again!",
-        author: "Robert M., Brentwood",
+        text: "Amazing pressure washing results on our deck and walkway.",
+        author: "James P., Burnaby",
         rating: 5
       },
       {
-        text: "Top-notch gutter cleaning service. Our Burnaby home is well-maintained thanks to their regular visits.",
-        author: "Patricia W., Capitol Hill",
+        text: "Reliable and thorough service. Our Burnaby home looks fantastic!",
+        author: "Amanda C., Burnaby",
         rating: 5
       }
     ]
@@ -84,22 +84,22 @@ export const cities: CityData[] = [
   {
     name: "Richmond",
     slug: "richmond",
-    postalCodePrefix: "V6V, V6W, V6X, V6Y, V6Z, V7A, V7B, V7C, V7E",
-    nearbyAreas: ["Steveston", "Richmond Centre", "Brighouse", "Terra Nova", "Hamilton", "Seafair"],
+    postalCodePrefix: "V6V, V6W, V6X, V6Y, V7A, V7B, V7C, V7E",
+    nearbyAreas: ["Steveston", "Terra Nova", "City Centre", "Hamilton"],
     testimonials: [
       {
-        text: "Outstanding pressure washing service! Our Richmond driveway and walkways look brand new.",
-        author: "Kevin L., Steveston",
+        text: "Exceptional window cleaning service! Our Richmond office building sparkles.",
+        author: "Thomas L., Richmond",
         rating: 5
       },
       {
-        text: "Professional window cleaning team. Our home in Terra Nova has never looked better!",
-        author: "Maria G., Terra Nova",
+        text: "Great pressure washing work on our driveway and house exterior.",
+        author: "Maria S., Richmond",
         rating: 5
       },
       {
-        text: "Reliable and thorough gutter cleaning. Highly recommend for Richmond homeowners.",
-        author: "Tom H., Brighouse",
+        text: "Professional and punctual. Highly recommend for Richmond properties!",
+        author: "Kevin D., Richmond",
         rating: 5
       }
     ]
@@ -107,22 +107,22 @@ export const cities: CityData[] = [
   {
     name: "Coquitlam",
     slug: "coquitlam",
-    postalCodePrefix: "V3B, V3C, V3E, V3H, V3J, V3K",
-    nearbyAreas: ["Port Coquitlam", "Port Moody", "Westwood Plateau", "Burke Mountain", "Town Centre", "River Springs"],
+    postalCodePrefix: "V3B, V3C, V3E, V3J, V3K",
+    nearbyAreas: ["Burke Mountain", "Westwood Plateau", "Maillardville", "Town Centre"],
     testimonials: [
       {
-        text: "BC Pressure Washing did an amazing job on our Coquitlam home. The exterior looks fantastic!",
-        author: "Michelle D., Town Centre",
+        text: "Fantastic pressure washing service! Our Coquitlam deck looks brand new.",
+        author: "Patricia B., Coquitlam",
         rating: 5
       },
       {
-        text: "Great service for our Burke Mountain home. Professional team and excellent results.",
-        author: "Andrew C., Burke Mountain", 
+        text: "Professional window cleaning with attention to detail. Very satisfied!",
+        author: "Steven G., Coquitlam",
         rating: 5
       },
       {
-        text: "Window cleaning service was perfect. Our Westwood Plateau home sparkles now!",
-        author: "Sandra K., Westwood Plateau",
+        text: "Excellent work on our home's exterior. Great service in Coquitlam!",
+        author: "Michelle F., Coquitlam",
         rating: 5
       }
     ]
@@ -130,22 +130,22 @@ export const cities: CityData[] = [
   {
     name: "Langley City",
     slug: "langley-city",
-    postalCodePrefix: "V1M, V2Y, V2Z, V3A",
-    nearbyAreas: ["Langley Township", "Walnut Grove", "Fort Langley", "Murrayville", "Brookswood", "Fernridge"],
+    postalCodePrefix: "V1M, V2Y, V3A",
+    nearbyAreas: ["Douglas", "Nicomekl", "City Centre"],
     testimonials: [
       {
-        text: "Excellent pressure washing service in Langley! Our driveway and patio look amazing.",
-        author: "Chris B., Langley City",
+        text: "Outstanding window cleaning service in Langley City. Highly professional!",
+        author: "Daniel M., Langley City",
         rating: 5
       },
       {
-        text: "Professional window cleaning team. Our Fort Langley home looks pristine!",
-        author: "Rachel T., Fort Langley",
+        text: "Amazing pressure washing results. Our property looks incredible!",
+        author: "Nicole J., Langley City",
         rating: 5
       },
       {
-        text: "Outstanding gutter cleaning service. Highly recommend for Langley residents.",
-        author: "Paul M., Walnut Grove",
+        text: "Reliable service and great results. Perfect for Langley City homes!",
+        author: "Christopher K., Langley City",
         rating: 5
       }
     ]
@@ -153,22 +153,22 @@ export const cities: CityData[] = [
   {
     name: "Township of Langley",
     slug: "township-of-langley",
-    postalCodePrefix: "V1M, V2Y, V2Z, V3A",
-    nearbyAreas: ["Walnut Grove", "Fort Langley", "Murrayville", "Brookswood", "Fernridge", "Aldergrove"],
+    postalCodePrefix: "V1M, V2Y, V2Z, V3A, V4W",
+    nearbyAreas: ["Walnut Grove", "Willoughby", "Murrayville", "Brookswood", "Fort Langley"],
     testimonials: [
       {
-        text: "Great pressure washing service for our Walnut Grove home. Everything looks brand new!",
-        author: "Nancy F., Walnut Grove",
+        text: "Excellent pressure washing service! Our Langley Township home looks amazing.",
+        author: "Rebecca A., Township of Langley",
         rating: 5
       },
       {
-        text: "Professional and thorough window cleaning. Our Murrayville home sparkles!",
-        author: "Steve L., Murrayville",
+        text: "Professional window cleaning with fantastic results. Very impressed!",
+        author: "Mark T., Township of Langley",
         rating: 5
       },
       {
-        text: "Excellent gutter cleaning service. Our Brookswood property is well-maintained.",
-        author: "Karen W., Brookswood",
+        text: "Great service throughout Langley Township. Highly recommend!",
+        author: "Jennifer L., Township of Langley",
         rating: 5
       }
     ]
@@ -177,21 +177,21 @@ export const cities: CityData[] = [
     name: "Delta",
     slug: "delta",
     postalCodePrefix: "V4C, V4E, V4K, V4L, V4M",
-    nearbyAreas: ["Ladner", "Tsawwassen", "North Delta", "Boundary Bay", "Burns Bog", "Sunshine Hills"],
+    nearbyAreas: ["Ladner", "North Delta", "Tsawwassen", "Burns Bog"],
     testimonials: [
       {
-        text: "Amazing pressure washing service in Tsawwassen! Our home's exterior looks incredible.",
-        author: "Gary H., Tsawwassen",
+        text: "Fantastic pressure washing work in Delta. Our driveway is spotless!",
+        author: "Andrew H., Delta",
         rating: 5
       },
       {
-        text: "Professional window cleaning team. Our Ladner home has never looked better!",
-        author: "Diane R., Ladner",
+        text: "Professional window cleaning service. Our Delta home sparkles!",
+        author: "Susan R., Delta",
         rating: 5
       },
       {
-        text: "Excellent gutter cleaning service. Highly recommend for Delta residents.",
-        author: "Mark S., North Delta",
+        text: "Excellent service across all Delta communities. Very satisfied!",
+        author: "Jason W., Delta",
         rating: 5
       }
     ]
@@ -200,21 +200,21 @@ export const cities: CityData[] = [
     name: "New Westminster",
     slug: "new-westminster",
     postalCodePrefix: "V3L, V3M",
-    nearbyAreas: ["Queensborough", "Uptown", "Downtown", "West End", "Connaught Heights", "Brow of the Hill"],
+    nearbyAreas: ["Queens Park", "Uptown", "Downtown", "Queensborough"],
     testimonials: [
       {
-        text: "Outstanding pressure washing service! Our New Westminster home looks fantastic.",
-        author: "Linda J., Uptown",
+        text: "Outstanding pressure washing service in New Westminster. Highly professional!",
+        author: "Catherine P., New Westminster",
         rating: 5
       },
       {
-        text: "Great window cleaning service. Our Queensborough condo windows are spotless!",
-        author: "Rick D., Queensborough",
+        text: "Amazing window cleaning results. Our heritage home looks beautiful!",
+        author: "Richard C., New Westminster",
         rating: 5
       },
       {
-        text: "Professional gutter cleaning team. Our downtown property is well-maintained.",
-        author: "Carol P., Downtown",
+        text: "Reliable and thorough service. Perfect for New Westminster properties!",
+        author: "Elizabeth D., New Westminster",
         rating: 5
       }
     ]
@@ -223,21 +223,21 @@ export const cities: CityData[] = [
     name: "Port Coquitlam",
     slug: "port-coquitlam",
     postalCodePrefix: "V3B, V3C",
-    nearbyAreas: ["Coquitlam", "Port Moody", "Pitt Meadows", "Mary Hill", "Birchland Manor", "Citadel Heights"],
+    nearbyAreas: ["Mary Hill", "Citadel Heights", "Riverwood", "Cedar Drive"],
     testimonials: [
       {
-        text: "Excellent pressure washing service in Port Coquitlam! Our driveway looks brand new.",
-        author: "Jason K., Mary Hill",
+        text: "Excellent pressure washing service! Our Port Coquitlam deck is like new.",
+        author: "Brian S., Port Coquitlam",
         rating: 5
       },
       {
-        text: "Professional window cleaning team. Our Citadel Heights home sparkles!",
-        author: "Amanda L., Citadel Heights",
+        text: "Professional window cleaning with great attention to detail.",
+        author: "Diane M., Port Coquitlam",
         rating: 5
       },
       {
-        text: "Great gutter cleaning service. Highly recommend for Port Coquitlam residents.",
-        author: "Terry N., Birchland Manor",
+        text: "Fantastic service in Port Coquitlam. Our home exterior looks amazing!",
+        author: "Timothy R., Port Coquitlam",
         rating: 5
       }
     ]
@@ -246,21 +246,21 @@ export const cities: CityData[] = [
     name: "Port Moody",
     slug: "port-moody",
     postalCodePrefix: "V3H",
-    nearbyAreas: ["Coquitlam", "Port Coquitlam", "Anmore", "Belcarra", "Heritage Woods", "College Park"],
+    nearbyAreas: ["Heritage Woods", "College Park", "Klahanie", "Suter Brook"],
     testimonials: [
       {
-        text: "Amazing pressure washing service! Our Port Moody home's exterior looks incredible.",
-        author: "Brian T., Heritage Woods",
+        text: "Outstanding window cleaning service in Port Moody. Highly recommend!",
+        author: "Sandra L., Port Moody",
         rating: 5
       },
       {
-        text: "Professional window cleaning service. Our College Park home has crystal clear windows!",
-        author: "Jennifer M., College Park",
+        text: "Amazing pressure washing results on our driveway and patio.",
+        author: "Paul N., Port Moody",
         rating: 5
       },
       {
-        text: "Excellent gutter cleaning team. Our Port Moody property is perfectly maintained.",
-        author: "Doug R., Port Moody",
+        text: "Professional service and excellent results in Port Moody!",
+        author: "Monica V., Port Moody",
         rating: 5
       }
     ]
@@ -269,21 +269,21 @@ export const cities: CityData[] = [
     name: "Maple Ridge",
     slug: "maple-ridge",
     postalCodePrefix: "V2W, V2X, V4R",
-    nearbyAreas: ["Pitt Meadows", "Mission", "Haney", "Hammond", "Silver Valley", "Albion"],
+    nearbyAreas: ["Silver Valley", "Thornhill", "Hammond", "Webster's Corners"],
     testimonials: [
       {
-        text: "Outstanding pressure washing service in Maple Ridge! Our home looks fantastic.",
-        author: "Susan C., Haney",
+        text: "Fantastic pressure washing service! Our Maple Ridge home looks incredible.",
+        author: "Gregory T., Maple Ridge",
         rating: 5
       },
       {
-        text: "Great window cleaning team. Our Silver Valley home windows are spotless!",
-        author: "Mike P., Silver Valley",
+        text: "Professional window cleaning with exceptional results.",
+        author: "Heather J., Maple Ridge",
         rating: 5
       },
       {
-        text: "Professional gutter cleaning service. Highly recommend for Maple Ridge residents.",
-        author: "Lisa H., Hammond",
+        text: "Excellent service throughout Maple Ridge. Very satisfied!",
+        author: "Douglas F., Maple Ridge",
         rating: 5
       }
     ]
@@ -292,21 +292,21 @@ export const cities: CityData[] = [
     name: "Pitt Meadows",
     slug: "pitt-meadows",
     postalCodePrefix: "V3Y",
-    nearbyAreas: ["Maple Ridge", "Port Coquitlam", "Coquitlam", "Surrey", "Meadowtown", "Harris Landing"],
+    nearbyAreas: ["South Meadows", "Harris Road", "Airport Way"],
     testimonials: [
       {
-        text: "Excellent pressure washing service! Our Pitt Meadows home looks amazing.",
-        author: "Dan W., Meadowtown",
+        text: "Outstanding pressure washing service in Pitt Meadows. Highly professional!",
+        author: "Cheryl K., Pitt Meadows",
         rating: 5
       },
       {
-        text: "Professional window cleaning team. Our Harris Landing home sparkles!",
-        author: "Kelly F., Harris Landing",
+        text: "Amazing window cleaning results. Our home sparkles!",
+        author: "Frank B., Pitt Meadows",
         rating: 5
       },
       {
-        text: "Great gutter cleaning service. Our Pitt Meadows property is well-maintained.",
-        author: "Greg L., Pitt Meadows",
+        text: "Reliable service and great results in Pitt Meadows!",
+        author: "Janet S., Pitt Meadows",
         rating: 5
       }
     ]
@@ -315,50 +315,27 @@ export const cities: CityData[] = [
     name: "White Rock",
     slug: "white-rock",
     postalCodePrefix: "V4B",
-    nearbyAreas: ["South Surrey", "Ocean Park", "Crescent Beach", "Elgin", "Five Corners", "Semiahmoo"],
+    nearbyAreas: ["East Beach", "West Beach", "Five Corners", "Hillside"],
     testimonials: [
       {
-        text: "BC Pressure Washing exceeded our expectations! Our White Rock home's exterior cleaning was perfect.",
-        author: "John D., White Rock",
+        text: "Excellent pressure washing service! Our White Rock home looks amazing.",
+        author: "Patricia G., White Rock",
         rating: 5
       },
       {
-        text: "Professional window cleaning service. Our ocean view windows are crystal clear now!",
-        author: "Mary S., Crescent Beach",
+        text: "Professional window cleaning with fantastic ocean views restored!",
+        author: "William E., White Rock",
         rating: 5
       },
       {
-        text: "Outstanding gutter cleaning and maintenance. Highly recommend for White Rock residents!",
-        author: "Robert L., Five Corners",
-        rating: 5
-      }
-    ]
-  },
-  {
-    name: "Kelowna",
-    slug: "kelowna",
-    postalCodePrefix: "V1V, V1W, V1X, V1Y, V1Z, V4T, V4V",
-    nearbyAreas: ["West Kelowna", "Peachland", "Summerland", "Penticton", "Rutland", "Glenmore", "Mission"],
-    testimonials: [
-      {
-        text: "Outstanding pressure washing service! Our Kelowna home's driveway and deck look brand new after their thorough cleaning.",
-        author: "Jennifer M., Glenmore",
-        rating: 5
-      },
-      {
-        text: "Professional window cleaning team with amazing results. Our lake view windows are crystal clear - the view is spectacular!",
-        author: "Michael K., Mission",
-        rating: 5
-      },
-      {
-        text: "Excellent gutter cleaning and soft wash service. Our Rutland home looks pristine and well-maintained year-round.",
-        author: "Sarah P., Rutland",
+        text: "Great service in White Rock. Our beachside property sparkles!",
+        author: "Margaret H., White Rock",
         rating: 5
       }
     ]
   }
 ];
 
-export const getCityBySlug = (slug: string): CityData | null => {
-  return cities.find(city => city.slug === slug) || null;
+export const getCityBySlug = (slug: string): CityData | undefined => {
+  return cities.find(city => city.slug === slug);
 };
