@@ -1,11 +1,11 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import HeroBackground from './hero/HeroBackground';
-import HeroBanner from './hero/HeroBanner';
-import HeroHeading from './hero/HeroHeading';
-import HeroForm from './hero/HeroForm';
-import HeroPersonalTouch from './hero/HeroPersonalTouch';
+import HeroQuoteForm from './hero/HeroQuoteForm';
+import HeroPersonalSection from './hero/HeroPersonalSection';
+import HeroTrustBadges from './hero/HeroTrustBadges';
 import HeroScrollIndicator from './hero/HeroScrollIndicator';
 
 const HeroSection = () => {
@@ -46,10 +46,10 @@ const HeroSection = () => {
           setIsLoading(false);
           window.dispatchEvent(new CustomEvent('heroLoaded'));
           document.body.removeChild(videoPreloader);
-        }, 300); // Reduced delay for faster loading
+        }, 300);
       };
       
-      // Fallback timer - much faster
+      // Fallback timer
       setTimeout(() => {
         setVideoLoaded(true);
         setIsLoading(false);
@@ -57,7 +57,7 @@ const HeroSection = () => {
         if (document.body.contains(videoPreloader)) {
           document.body.removeChild(videoPreloader);
         }
-      }, 800); // Reduced from 1500ms
+      }, 800);
     }
   }, [isMobile, isHomePage]);
   
@@ -68,15 +68,23 @@ const HeroSection = () => {
     <section className="hero-section relative h-screen w-full overflow-hidden">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
-      {/* Hero Content - Centered vertically */}
-      <div className={`container mx-auto px-4 h-full flex flex-col justify-center items-start relative z-10 text-white ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
-        <div className={`${isMobile ? 'max-w-full' : 'max-w-4xl'} text-left`}>
-          <HeroBanner />
-          <HeroHeading />
+      {/* Hero Content - Centered */}
+      <div className={`absolute inset-0 flex flex-col items-center justify-center px-4 z-10 ${videoLoaded && !isLoading ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
+            <span className="block">Professional</span>
+            <span className="text-bc-red animate-pulse drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.9)' }}>
+              Exterior Cleaning
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-white font-medium max-w-3xl mx-auto drop-shadow-md" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}>
+            White Rock & Surrey's most trusted pressure washing and window cleaning service
+          </p>
         </div>
         
-        <HeroForm />
-        <HeroPersonalTouch />
+        <HeroQuoteForm />
+        <HeroPersonalSection />
+        <HeroTrustBadges />
       </div>
       
       <HeroScrollIndicator videoLoaded={videoLoaded} isLoading={isLoading} />
