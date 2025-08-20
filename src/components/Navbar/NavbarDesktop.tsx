@@ -3,8 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { Star, Scale, Calculator } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Star, Scale } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -176,23 +175,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
         </NavigationMenu>
       </div>
       
-      <div className="flex items-center space-x-6">
-        <Button
-          variant={isOverVideo ? "outline" : "default"}
-          size="sm"
-          className={`transition-all duration-300 hover:scale-105 font-semibold ${
-            isOverVideo 
-              ? 'border-white bg-white/10 text-white hover:bg-white hover:text-bc-red backdrop-blur-sm' 
-              : 'bg-bc-red text-white hover:bg-red-700'
-          }`}
-          asChild
-        >
-          <Link to="/quote" className="flex items-center gap-2">
-            <Calculator className="w-4 h-4" />
-            Price Calculator
-          </Link>
-        </Button>
-        
+      <div className="flex items-center space-x-8">
         <Link 
           to="/contact" 
           className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${

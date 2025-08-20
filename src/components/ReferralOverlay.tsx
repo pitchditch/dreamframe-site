@@ -108,7 +108,7 @@ const ReferralOverlay = ({ isOpen, onClose }: ReferralOverlayProps) => {
           </Button>
           <DialogTitle className="text-3xl font-bold text-center mb-6 text-bc-red">
             <Gift className="inline-block mr-3 h-8 w-8" />
-            Refer a Friend & Get 25% Off Next Service!
+            Refer a Friend & Both Save $50!
           </DialogTitle>
         </DialogHeader>
         
@@ -149,9 +149,9 @@ const ReferralOverlay = ({ isOpen, onClose }: ReferralOverlayProps) => {
                 </div>
                 <DollarSign className="w-8 h-8 text-bc-red mb-4" />
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-lg">You Get 25% Off</h4>
+                  <h4 className="font-semibold text-lg">You Both Save</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    When they book, you get 25% off your next service!
+                    When they book, you both get $50 off your next service!
                   </p>
                 </div>
               </div>
@@ -185,7 +185,7 @@ const ReferralOverlay = ({ isOpen, onClose }: ReferralOverlayProps) => {
                     </Button>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Save this code! You can use it to track your referral and claim your 25% discount.
+                    Save this code! You can use it to track your referral and claim your $50 discount.
                   </p>
                 </div>
               </div>
@@ -303,7 +303,7 @@ const ReferralOverlay = ({ isOpen, onClose }: ReferralOverlayProps) => {
                   ) : (
                     <>
                       <Gift className="mr-2 h-6 w-6" />
-                      Send Referral & Earn 25% Off
+                      Send Referral & Earn $50
                     </>
                   )}
                 </Button>

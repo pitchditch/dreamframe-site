@@ -43,37 +43,37 @@ const Calculator = () => {
 
           {/* Trust Badges - Full Width Above Calculator */}
           <div className="mb-12">
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <div className="flex items-center bg-green-50 p-3 md:p-4 rounded-lg border border-green-200">
-                  <Shield className="w-5 h-5 md:w-6 md:h-6 text-green-600 mr-2 md:mr-3 flex-shrink-0" />
-                  <div className="min-w-0">
-                    <div className="font-semibold text-green-800 text-sm md:text-base leading-tight">Fully Insured</div>
-                    <div className="text-xs md:text-sm text-green-600 leading-tight">Licensed & bonded</div>
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="flex items-center bg-green-50 p-4 rounded-lg border border-green-200">
+                  <Shield className="w-6 h-6 text-green-600 mr-3 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-green-800">Fully Insured</div>
+                    <div className="text-sm text-green-600">Licensed & bonded</div>
                   </div>
                 </div>
 
-                <div className="flex items-center bg-blue-50 p-3 md:p-4 rounded-lg border border-blue-200">
-                  <Clock className="w-5 h-5 md:w-6 md:h-6 text-blue-600 mr-2 md:mr-3 flex-shrink-0" />
-                  <div className="min-w-0">
-                    <div className="font-semibold text-blue-800 text-sm md:text-base leading-tight">Same-Day Service</div>
-                    <div className="text-xs md:text-sm text-blue-600 leading-tight">Often available</div>
+                <div className="flex items-center bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <Clock className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-blue-800">Same-Day Service</div>
+                    <div className="text-sm text-blue-600">Often available</div>
                   </div>
                 </div>
 
-                <div className="flex items-center bg-purple-50 p-3 md:p-4 rounded-lg border border-purple-200">
-                  <Users className="w-5 h-5 md:w-6 md:h-6 text-purple-600 mr-2 md:mr-3 flex-shrink-0" />
-                  <div className="min-w-0">
-                    <div className="font-semibold text-purple-800 text-sm md:text-base leading-tight">500+ Happy Customers</div>
-                    <div className="text-xs md:text-sm text-purple-600 leading-tight">5-star Google rated</div>
+                <div className="flex items-center bg-purple-50 p-4 rounded-lg border border-purple-200">
+                  <Users className="w-6 h-6 text-purple-600 mr-3 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-purple-800">500+ Happy Customers</div>
+                    <div className="text-sm text-purple-600">5-star Google rated</div>
                   </div>
                 </div>
 
-                <div className="flex items-center bg-yellow-50 p-3 md:p-4 rounded-lg border border-yellow-200">
-                  <Star className="w-5 h-5 md:w-6 md:h-6 text-yellow-600 mr-2 md:mr-3 flex-shrink-0" />
-                  <div className="min-w-0">
-                    <div className="font-semibold text-yellow-800 text-sm md:text-base leading-tight">Local & Trusted</div>
-                    <div className="text-xs md:text-sm text-yellow-600 leading-tight">White Rock & Surrey</div>
+                <div className="flex items-center bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <Star className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-yellow-800">Local & Trusted</div>
+                    <div className="text-sm text-yellow-600">White Rock & Surrey</div>
                   </div>
                 </div>
               </div>
@@ -114,7 +114,7 @@ const Calculator = () => {
             <div className="relative p-12 text-white">
               <h3 className="text-4xl font-bold mb-6">100% Satisfaction Guarantee</h3>
               <p className="text-xl mb-8 max-w-3xl leading-relaxed">
-                We guarantee your satisfaction. Not happy? We'll return at no cost.
+                We stand behind our work with a full satisfaction guarantee. If you're not completely satisfied with our service, we'll return to address any issues at no additional cost.
               </p>
               <div className="flex items-center">
                 <img
