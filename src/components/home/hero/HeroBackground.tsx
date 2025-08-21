@@ -1,4 +1,3 @@
-
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HeroBackgroundProps {
@@ -10,10 +9,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <>
+    <div className="absolute inset-0 w-full h-full">
       {/* Loading Screen */}
       {isLoading && (
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60 z-30 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black z-30 flex items-center justify-center">
           <div className="text-center text-white">
             <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-xl font-medium">Loading...</p>
@@ -21,47 +20,51 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
         </div>
       )}
 
-      {/* Background - Different for mobile and desktop */}
-      <div className="absolute inset-0 w-full h-full">
-        <div className="relative w-full h-full overflow-hidden">
-          {isMobile ? (
+      {/* Background Video/Image */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {isMobile ? (
+          <img 
+            src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
+            alt="BC Pressure Washing Service"
+            className="w-full h-full object-cover"
+            loading="eager"
+          />
+        ) : (
+          <>
+            {/* Fallback image */}
             <img 
               src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-              alt="House with palm tree and red BC Pressure Washing car"
-              className={`absolute w-full h-full object-cover object-top transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              alt="BC Pressure Washing Service"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
               loading="eager"
-              fetchPriority="high"
-              style={{ objectPosition: '50% 20%' }}
             />
-          ) : (
-            <>
-              {/* Poster image for instant loading */}
-              <img 
-                src="/lovable-uploads/e57e6764-cc42-4943-8a89-4d56f9c96469.png"
-                alt="BC Pressure Washing Service"
-                className={`absolute w-full h-full object-cover object-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
-                loading="eager"
-                fetchPriority="high"
-              />
+            {/* YouTube Video */}
+            <div className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}>
               <iframe 
-                id="hero-desktop-video"
-                className={`absolute w-full h-full top-0 left-0 transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                className="absolute inset-0 w-full h-full"
                 style={{ 
-                  transform: window.innerWidth >= 768 && window.innerWidth <= 1024 ? 'scale(1.8)' : 'scale(1.5)',
-                  transformOrigin: 'center center'
+                  width: '177.77777778vh',  
+                  height: '56.25vw',
+                  minHeight: '100%',
+                  minWidth: '100%',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)'
                 }}
-                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=ytplayer&preload=metadata"
-                title="Pressure Washing Video"
+                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&disablekb=1"
+                title="BC Pressure Washing Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                loading="eager"
-              ></iframe>
-            </>
-          )}
-        </div>
-        <div className={`absolute inset-0 bg-gradient-to-b ${isMobile ? 'from-black/80 via-black/60 to-black/80' : 'from-black/70 via-black/40 to-black/60'}`}></div>
+                allowFullScreen
+              />
+            </div>
+          </>
+        )}
       </div>
-    </>
+      
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+    </div>
   );
 };
 

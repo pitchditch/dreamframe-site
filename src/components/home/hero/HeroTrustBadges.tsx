@@ -1,7 +1,7 @@
 
 const HeroTrustBadges = () => {
   return (
-    <div className="flex items-center justify-center gap-6 mt-8 opacity-80">
+    <div className="flex flex-wrap items-center justify-center gap-4 opacity-90">
       <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
         <span className="text-white text-sm font-medium">✓ Fully Insured</span>
       </div>
