@@ -41,18 +41,19 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
             {/* YouTube Video */}
             <div className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}>
               <iframe 
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full object-cover"
                 style={{ 
-                  width: '177.77777778vh',  
-                  height: '56.25vw',
-                  minHeight: '100%',
-                  minWidth: '100%',
+                  width: '300vh',  
+                  height: '169vw',
+                  minHeight: '100vh',
+                  minWidth: '100vw',
                   top: '50%',
                   left: '50%',
-                  transform: 'translate(-50%, -50%)'
+                  transform: 'translate(-50%, -50%)',
+                  pointerEvents: 'none'
                 }}
-                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&disablekb=1"
-                title="BC Pressure Washing Video"
+                src="https://www.youtube.com/embed/GJZpuELGJpI?autoplay=1&mute=1&controls=0&loop=1&playlist=GJZpuELGJpI&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&disablekb=1&title=0&byline=0&portrait=0"
+                title=""
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
