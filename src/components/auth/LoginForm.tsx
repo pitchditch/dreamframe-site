@@ -17,9 +17,16 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Form submitted', { email, isSignUp }); // Debug log
+    
     // Only allow specific email
     if (email !== 'jaydenf3800@gmail.com') {
       toast.error('Access denied. Only authorized users can access.');
+      return;
+    }
+
+    if (!password) {
+      toast.error('Password is required');
       return;
     }
 
@@ -27,7 +34,8 @@ const LoginForm = () => {
     
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
+        console.log('Attempting signup'); // Debug log
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -35,16 +43,21 @@ const LoginForm = () => {
           }
         });
 
+        console.log('Signup response:', { data, error }); // Debug log
+
         if (error) {
           toast.error(error.message);
         } else {
           toast.success('Account created! Check your email to verify.');
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        console.log('Attempting login'); // Debug log
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
+
+        console.log('Login response:', { data, error }); // Debug log
 
         if (error) {
           toast.error(error.message);
@@ -54,6 +67,7 @@ const LoginForm = () => {
         }
       }
     } catch (error) {
+      console.error('Auth error:', error); // Debug log
       toast.error('An unexpected error occurred');
     } finally {
       setIsLoading(false);
