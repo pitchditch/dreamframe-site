@@ -46,7 +46,12 @@ const LoginForm = () => {
         console.log('Signup response:', { data, error }); // Debug log
 
         if (error) {
-          toast.error(error.message);
+          if (error.message === 'User already registered') {
+            toast.error('Account already exists. Please use login instead.');
+            setIsSignUp(false); // Automatically switch to login mode
+          } else {
+            toast.error(error.message);
+          }
         } else {
           toast.success('Account created! Check your email to verify.');
         }
