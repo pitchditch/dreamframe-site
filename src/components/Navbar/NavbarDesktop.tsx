@@ -32,7 +32,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
     <div className="hidden md:flex items-center justify-between flex-1">
       <div className="flex-1 flex justify-center">
         <NavigationMenu>
-          <NavigationMenuList className="flex items-center justify-center space-x-12">
+          <NavigationMenuList className="flex items-center justify-center space-x-8 lg:space-x-12 whitespace-nowrap">
             <NavigationMenuItem>
               <button
                 onClick={handleHomeClick}
