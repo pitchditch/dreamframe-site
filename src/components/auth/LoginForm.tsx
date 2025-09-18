@@ -11,30 +11,47 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Only allow specific email
     if (email !== 'jaydenf3800@gmail.com') {
-      toast.error('Access denied. Only authorized users can login.');
+      toast.error('Access denied. Only authorized users can access.');
       return;
     }
 
     setIsLoading(true);
     
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      if (isSignUp) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/house-tracking`
+          }
+        });
 
-      if (error) {
-        toast.error(error.message);
+        if (error) {
+          toast.error(error.message);
+        } else {
+          toast.success('Account created! Check your email to verify.');
+        }
       } else {
-        toast.success('Login successful!');
-        navigate('/house-tracking');
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) {
+          toast.error(error.message);
+        } else {
+          toast.success('Login successful!');
+          navigate('/house-tracking');
+        }
       }
     } catch (error) {
       toast.error('An unexpected error occurred');
@@ -47,10 +64,12 @@ const LoginForm = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Login to House Tracking</CardTitle>
+          <CardTitle className="text-2xl text-center">
+            {isSignUp ? 'Sign Up for House Tracking' : 'Login to House Tracking'}
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
               <Input
@@ -74,8 +93,20 @@ const LoginForm = () => {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Login'}
+              {isLoading 
+                ? (isSignUp ? 'Creating Account...' : 'Logging in...') 
+                : (isSignUp ? 'Sign Up' : 'Login')
+              }
             </Button>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-blue-600 hover:underline"
+              >
+                {isSignUp ? 'Already have an account? Login' : 'Need an account? Sign Up'}
+              </button>
+            </div>
           </form>
         </CardContent>
       </Card>
