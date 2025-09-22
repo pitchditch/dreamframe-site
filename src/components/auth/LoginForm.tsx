@@ -79,6 +79,27 @@ const LoginForm = () => {
     }
   };
 
+  const handlePasswordReset = async () => {
+    if (email !== 'jaydenf3800@gmail.com') {
+      toast.error('Access denied. Only authorized users can access.');
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/house-tracking`
+      });
+
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success('Password reset email sent! Check your inbox.');
+      }
+    } catch (error) {
+      toast.error('Failed to send reset email');
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-md">
@@ -117,14 +138,23 @@ const LoginForm = () => {
                 : (isSignUp ? 'Sign Up' : 'Login')
               }
             </Button>
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
-                className="text-blue-600 hover:underline"
+                className="text-blue-600 hover:underline block"
               >
                 {isSignUp ? 'Already have an account? Login' : 'Need an account? Sign Up'}
               </button>
+              {!isSignUp && (
+                <button
+                  type="button"
+                  onClick={handlePasswordReset}
+                  className="text-gray-600 hover:underline text-sm block"
+                >
+                  Forgot your password?
+                </button>
+              )}
             </div>
           </form>
         </CardContent>
