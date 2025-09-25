@@ -83,8 +83,30 @@ const LoginForm = () => {
     }
   };
 
-  const handlePasswordReset = () => {
-    toast.info('Password reset not available yet. Please remember your password or contact support.');
+  const handlePasswordReset = async () => {
+    if (!email) {
+      toast.error('Please enter your email address first');
+      return;
+    }
+    
+    if (email !== 'jaydenf3800@gmail.com') {
+      toast.error('Access denied. Only authorized users can access.');
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/house-tracking`
+      });
+
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success('Password reset email sent! Check your inbox.');
+      }
+    } catch (error) {
+      toast.error('Failed to send reset email');
+    }
   };
 
   return (
