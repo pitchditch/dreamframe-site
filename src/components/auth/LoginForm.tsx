@@ -94,18 +94,23 @@ const LoginForm = () => {
       return;
     }
 
+    setIsLoading(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/house-tracking`
       });
 
       if (error) {
-        toast.error(error.message);
+        toast.error(`Reset failed: ${error.message}`);
       } else {
-        toast.success('Password reset email sent! Check your inbox.');
+        toast.success('Password reset email sent! Check your email (including spam folder) and click the link to set a new password.', {
+          duration: 8000
+        });
       }
-    } catch (error) {
-      toast.error('Failed to send reset email');
+    } catch (error: any) {
+      toast.error(error?.message || 'Failed to send reset email');
+    } finally {
+      setIsLoading(false);
     }
   };
 
