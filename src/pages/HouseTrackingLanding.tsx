@@ -6,42 +6,43 @@ import { Input } from '@/components/ui/input';
 import { Shield, Leaf, Star, MapPin, Loader2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { usePropertyData } from '@/hooks/usePropertyData';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 const HouseTrackingLanding = () => {
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
   const { searchProperty, createProperty, loading } = usePropertyData();
-  const { toast } = useToast();
 
   const handleCreateReport = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!address.trim()) return;
+    if (!address.trim()) {
+      toast.error('Please enter an address');
+      return;
+    }
+    
+    console.log('Creating report for:', address);
     
     try {
       // First search if property exists
       let property = await searchProperty(address);
+      console.log('Search result:', property);
       
       // If not found, create it
       if (!property) {
+        console.log('Creating new property...');
         property = await createProperty(address);
+        console.log('Created property:', property);
       }
       
       if (property) {
+        toast.success('Property report created!');
         navigate(`/house-tracking/${property.id}`);
       } else {
-        toast({
-          title: 'Error',
-          description: 'Could not create property report',
-          variant: 'destructive',
-        });
+        toast.error('Could not create property report');
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
-        variant: 'destructive',
-      });
+      console.error('Error creating report:', error);
+      toast.error('Something went wrong. Please try again.');
     }
   };
 
