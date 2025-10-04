@@ -3,20 +3,46 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Shield, Leaf, Star, MapPin } from 'lucide-react';
+import { Shield, Leaf, Star, MapPin, Loader2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { usePropertyData } from '@/hooks/usePropertyData';
+import { useToast } from '@/hooks/use-toast';
 
 const HouseTrackingLanding = () => {
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
+  const { searchProperty, createProperty, loading } = usePropertyData();
+  const { toast } = useToast();
 
   const handleCreateReport = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!address.trim()) return;
     
-    // For now, navigate to a demo report
-    // TODO: Implement address lookup and property creation
-    navigate('/house-tracking/demo');
+    try {
+      // First search if property exists
+      let property = await searchProperty(address);
+      
+      // If not found, create it
+      if (!property) {
+        property = await createProperty(address);
+      }
+      
+      if (property) {
+        navigate(`/house-tracking/${property.id}`);
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Could not create property report',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -50,8 +76,15 @@ const HouseTrackingLanding = () => {
                     className="pl-10 h-14 text-lg"
                   />
                 </div>
-                <Button type="submit" size="lg" className="h-14 px-8 text-lg">
-                  Create My Report
+                <Button type="submit" size="lg" className="h-14 px-8 text-lg" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Creating...
+                    </>
+                  ) : (
+                    'Create My Report'
+                  )}
                 </Button>
               </div>
             </form>

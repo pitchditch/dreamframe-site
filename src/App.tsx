@@ -49,8 +49,8 @@ function App() {
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/booking" element={<Booking />} />
                 <Route path="/house-tracking" element={<HouseTrackingLanding />} />
-                <Route path="/house-tracking/old" element={<HouseTracking />} />
-                <Route path="/house/:propertyId" element={<PropertyReport />} />
+                <Route path="/house-tracking/:propertyId" element={<PropertyReport />} />
+                <Route path="/field-tracking" element={<HouseTracking />} />
 
                 {/* Service Routes */}
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />
