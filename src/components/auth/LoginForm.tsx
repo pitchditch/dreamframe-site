@@ -17,7 +17,7 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    console.log('Form submitted', { email, isSignUp }); // Debug log
+    console.log('Form submitted', { email, isSignUp });
     
     // Only allow specific email
     if (email !== 'jaydenf3800@gmail.com') {
@@ -33,40 +33,51 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
+      const redirectUrl = window.location.origin;
+      
       if (isSignUp) {
-        console.log('Attempting signup'); // Debug log
+        console.log('Attempting signup');
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/house-tracking`
+            emailRedirectTo: redirectUrl,
+            data: {
+              email: email
+            }
           }
         });
 
-        console.log('Signup response:', { data, error }); // Debug log
+        console.log('Signup response:', { data, error });
 
         if (error) {
-          if (error.message === 'User already registered') {
+          if (error.message.includes('already registered')) {
             toast.error('Account already exists. Please use login instead.');
-            setIsSignUp(false); // Automatically switch to login mode
+            setIsSignUp(false);
+          } else if (error.message.includes('Email not confirmed')) {
+            toast.error('Please check your email and confirm your account first.');
           } else {
             toast.error(error.message);
           }
         } else {
-          toast.success('Account created! Check your email to verify.');
+          toast.success('Account created! Check your email to verify.', {
+            duration: 6000
+          });
         }
       } else {
-        console.log('Attempting login'); // Debug log
+        console.log('Attempting login');
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
 
-        console.log('Login response:', { data, error }); // Debug log
+        console.log('Login response:', { data, error });
 
         if (error) {
-          if (error.message === 'Invalid login credentials') {
-            toast.error('Wrong password! The account exists but the password is incorrect.');
+          if (error.message.includes('Invalid login credentials')) {
+            toast.error('Invalid email or password. If you just signed up, please verify your email first.');
+          } else if (error.message.includes('Email not confirmed')) {
+            toast.error('Please verify your email before logging in. Check your inbox.');
           } else {
             toast.error(error.message);
           }
@@ -76,7 +87,7 @@ const LoginForm = () => {
         }
       }
     } catch (error) {
-      console.error('Auth error:', error); // Debug log
+      console.error('Auth error:', error);
       toast.error('An unexpected error occurred');
     } finally {
       setIsLoading(false);
@@ -96,14 +107,19 @@ const LoginForm = () => {
 
     setIsLoading(true);
     try {
+      const redirectUrl = window.location.origin;
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/house-tracking`
+        redirectTo: redirectUrl
       });
 
       if (error) {
-        toast.error(`Reset failed: ${error.message}`);
+        if (error.message.includes('rate limit')) {
+          toast.error('Please wait a minute before requesting another reset email.');
+        } else {
+          toast.error(`Reset failed: ${error.message}`);
+        }
       } else {
-        toast.success('Password reset email sent! Check your email (including spam folder) and click the link to set a new password.', {
+        toast.success('Password reset email sent! Check your email (including spam folder) and click the link.', {
           duration: 8000
         });
       }
