@@ -137,6 +137,9 @@ const LoginForm = () => {
           <CardTitle className="text-2xl text-center">
             {isSignUp ? 'Sign Up for House Tracking' : 'Login to House Tracking'}
           </CardTitle>
+          <p className="text-sm text-center text-muted-foreground mt-2">
+            Access restricted to authorized users only
+          </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
