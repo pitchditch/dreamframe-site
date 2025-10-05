@@ -68,7 +68,7 @@ const Layout = ({
       </main>
       <Footer />
       <StickyContactBar />
-      <AfkOverlay />
+      {location.pathname !== '/house-tracking' && <AfkOverlay />}
     </div>
   );
 };
