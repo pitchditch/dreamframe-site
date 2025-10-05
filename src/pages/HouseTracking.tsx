@@ -1,5 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { MagicLinkLogin } from '../components/auth/MagicLinkLogin';
 import Layout from '../components/Layout';
 import MapComponent from '../components/house-tracking/MapComponent';
 import PinList from '../components/house-tracking/PinList';
@@ -15,10 +16,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, List, Facebook, BarChart3, Calculator, Settings, Search, Filter } from 'lucide-react';
+import { MapPin, List, Facebook, BarChart3, Calculator, Settings, Search, Filter, LogOut } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { toast } from 'sonner';
+
+const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 
 const HouseTracking: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [sessionTimer, setSessionTimer] = useState<NodeJS.Timeout | null>(null);
   const [pins, setPins] = useState<HousePin[]>([]);
   const [routes, setRoutes] = useState<RouteSession[]>([]);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
@@ -30,6 +37,64 @@ const HouseTracking: React.FC = () => {
   const [activeTab, setActiveTab] = useState('map');
   const [showPreviousClientsOnly, setShowPreviousClientsOnly] = useState(false);
   const [serviceReminders, setServiceReminders] = useState<HousePin[]>([]);
+
+  // Check authentication
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        setIsAuthenticated(true);
+        
+        // Set up 30-minute auto logout
+        const timer = setTimeout(() => {
+          handleLogout();
+          toast.error('Session expired. Please login again.');
+        }, SESSION_DURATION_MS);
+        
+        setSessionTimer(timer);
+      } else {
+        setIsAuthenticated(false);
+      }
+      
+      setLoading(false);
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        setIsAuthenticated(true);
+        toast.success('Successfully logged in! Session expires in 30 minutes.');
+        
+        // Clear any existing timer
+        if (sessionTimer) clearTimeout(sessionTimer);
+        
+        // Set new 30-minute timer
+        const timer = setTimeout(() => {
+          handleLogout();
+          toast.error('Session expired. Please login again.');
+        }, SESSION_DURATION_MS);
+        
+        setSessionTimer(timer);
+      } else if (event === 'SIGNED_OUT') {
+        setIsAuthenticated(false);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      if (sessionTimer) clearTimeout(sessionTimer);
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    if (sessionTimer) clearTimeout(sessionTimer);
+    await supabase.auth.signOut();
+    setIsAuthenticated(false);
+    toast.success('Logged out successfully');
+  };
 
   useEffect(() => {
     const savedPins = localStorage.getItem('housePins');
@@ -147,12 +212,32 @@ const HouseTracking: React.FC = () => {
     return matchesStatus && matchesSearch && matchesPreviousClient;
   });
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <MagicLinkLogin />;
+  }
+
   return (
     <Layout title="House Tracking System | BC Pressure Washing">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">House Tracking System</h1>
-          <p className="text-gray-600">Track visited houses, manage leads, and analyze your business performance.</p>
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">House Tracking System</h1>
+              <p className="text-gray-600">Track visited houses, manage leads, and analyze your business performance.</p>
+            </div>
+            <Button variant="outline" onClick={handleLogout}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
           
           {/* Service Reminders Alert */}
           {serviceReminders.length > 0 && (
