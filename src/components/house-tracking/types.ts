@@ -19,12 +19,27 @@ export interface HousePin {
   followUpNote?: string;
   leadScore?: 'low' | 'medium' | 'high';
   squareFootage?: number;
+  // Lead source and attribution fields
+  leadSource?: 'door-to-door' | 'facebook' | 'google' | 'referral' | 'website' | 'qr-code' | 'flyer' | 'ai-call' | 'other';
+  campaignId?: string;
+  campaignName?: string;
+  canvasserId?: string;
+  canvasserName?: string;
+  streetSegment?: string;
+  neighborhood?: string;
   // Facebook leads specific fields
-  leadSource?: 'door-to-door' | 'facebook' | 'google' | 'referral' | 'website' | 'other';
   facebookProfileUrl?: string;
   facebookLeadId?: string;
   facebookCampaignName?: string;
   facebookAdSetName?: string;
+  // Property enrichment fields
+  yearBuilt?: number;
+  stories?: number;
+  propertyType?: string;
+  lotSize?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  propertyDataSource?: 'attom' | 'bc-assessment' | 'manual';
   // Job completion fields
   jobCompletedDate?: string;
   jobDetails?: string;

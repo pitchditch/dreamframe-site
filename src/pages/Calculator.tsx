@@ -8,12 +8,30 @@ import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import QuestionsForm from '@/components/PriceCalculator/QuestionsForm';
 
 const Calculator = () => {
-  // Check if user was referred with form data
-  const savedPostalCode = localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
+  // Check if user was referred with form data or URL params
+  const searchParams = new URLSearchParams(window.location.search);
+  
+  // Get data from URL params (priority) or localStorage (fallback)
+  const urlAddress = searchParams.get('address');
+  const urlSource = searchParams.get('source');
+  const urlCampaign = searchParams.get('campaign');
+  const urlCanvasser = searchParams.get('canvasser');
+  const urlPhone = searchParams.get('phone');
+  const urlEmail = searchParams.get('email');
+  const urlName = searchParams.get('name');
+  
+  const savedPostalCode = urlAddress || localStorage.getItem('postalCode') || localStorage.getItem('calculatorPostalCode') || sessionStorage.getItem('postalCode');
   const savedHouseSize = localStorage.getItem('calculatorHouseSize');
   
   useEffect(() => {
-    // No localStorage clearing here
+    // Store URL params in sessionStorage for later use
+    if (urlAddress) sessionStorage.setItem('prefillAddress', urlAddress);
+    if (urlSource) sessionStorage.setItem('leadSource', urlSource);
+    if (urlCampaign) sessionStorage.setItem('campaignId', urlCampaign);
+    if (urlCanvasser) sessionStorage.setItem('canvasserId', urlCanvasser);
+    if (urlPhone) sessionStorage.setItem('prefillPhone', urlPhone);
+    if (urlEmail) sessionStorage.setItem('prefillEmail', urlEmail);
+    if (urlName) sessionStorage.setItem('prefillName', urlName);
   }, []);
 
   return (

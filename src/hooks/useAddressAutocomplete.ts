@@ -1,5 +1,5 @@
-
 import { useState, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AddressDetails {
   formatted_address: string;
@@ -7,6 +7,12 @@ interface AddressDetails {
   longitude: number;
   city: string;
   postalCode: string;
+  street_number?: string;
+  route?: string;
+  street_address?: string;
+  province?: string;
+  country?: string;
+  place_id?: string;
 }
 
 export function useAddressAutocomplete() {
@@ -21,71 +27,32 @@ export function useAddressAutocomplete() {
 
     setLoading(true);
     try {
-      // Create mock suggestions based on the query
-      const cleanQuery = query.trim();
-      
-      // Generate realistic BC addresses based on the input
-      const mockSuggestions: AddressDetails[] = [];
-      
-      // If it starts with a number, treat it as a street address
-      if (/^\d/.test(cleanQuery)) {
-        const streetNumber = cleanQuery.split(' ')[0];
-        mockSuggestions.push(
-          {
-            formatted_address: `${streetNumber} Main Street, Surrey, BC`,
-            latitude: 49.1913,
-            longitude: -122.8490,
-            city: 'Surrey',
-            postalCode: 'V3R 1A1'
-          },
-          {
-            formatted_address: `${streetNumber} King George Boulevard, Surrey, BC`,
-            latitude: 49.1913,
-            longitude: -122.8490,
-            city: 'Surrey',
-            postalCode: 'V3T 2W1'
-          },
-          {
-            formatted_address: `${streetNumber} Marine Drive, White Rock, BC`,
-            latitude: 49.0258,
-            longitude: -122.8030,
-            city: 'White Rock',
-            postalCode: 'V4B 1C9'
-          }
-        );
-      } else {
-        // If it's a postal code or area name
-        mockSuggestions.push(
-          {
-            formatted_address: `${cleanQuery}, Surrey, BC`,
-            latitude: 49.1913,
-            longitude: -122.8490,
-            city: 'Surrey',
-            postalCode: 'V3R 1A1'
-          },
-          {
-            formatted_address: `${cleanQuery}, White Rock, BC`,
-            latitude: 49.0258,
-            longitude: -122.8030,
-            city: 'White Rock',
-            postalCode: 'V4B 1C9'
-          },
-          {
-            formatted_address: `${cleanQuery}, Vancouver, BC`,
-            latitude: 49.2827,
-            longitude: -123.1207,
-            city: 'Vancouver',
-            postalCode: 'V6B 1A1'
-          }
-        );
-      }
-      
-      // Filter suggestions that match the query
-      const filteredSuggestions = mockSuggestions.filter(addr => 
-        addr.formatted_address.toLowerCase().includes(cleanQuery.toLowerCase())
-      );
+      const { data, error } = await supabase.functions.invoke('google-places-autocomplete', {
+        body: { input: query }
+      });
 
-      setSuggestions(filteredSuggestions);
+      if (error) {
+        console.error('Error fetching address suggestions:', error);
+        setSuggestions([]);
+        return;
+      }
+
+      if (data && data.predictions) {
+        const formattedSuggestions = data.predictions.map((pred: any) => ({
+          formatted_address: pred.formatted_address,
+          latitude: pred.latitude,
+          longitude: pred.longitude,
+          city: pred.city,
+          postalCode: pred.postal_code,
+          street_number: pred.street_number,
+          route: pred.route,
+          street_address: pred.street_address,
+          province: pred.province,
+          country: pred.country,
+          place_id: pred.place_id
+        }));
+        setSuggestions(formattedSuggestions);
+      }
     } catch (error) {
       console.error('Error fetching address suggestions:', error);
       setSuggestions([]);
