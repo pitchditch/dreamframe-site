@@ -1,7 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import LoginForm from '../components/auth/LoginForm';
 import Layout from '../components/Layout';
 import MapComponent from '../components/house-tracking/MapComponent';
 import PinList from '../components/house-tracking/PinList';
@@ -21,22 +19,6 @@ import { MapPin, List, Facebook, BarChart3, Calculator, Settings, Search, Filter
 import { Checkbox } from '@/components/ui/checkbox';
 
 const HouseTracking: React.FC = () => {
-  const { user, isLoading } = useAuth();
-  
-  // Check if user is authorized (only jaydenf3800@gmail.com)
-  const isAuthorized = user?.email === 'jaydenf3800@gmail.com';
-  
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
-  }
-  
-  if (!user || !isAuthorized) {
-    return <LoginForm />;
-  }
   const [pins, setPins] = useState<HousePin[]>([]);
   const [routes, setRoutes] = useState<RouteSession[]>([]);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);

@@ -21,8 +21,6 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
 const HouseTracking = lazy(() => import('./pages/HouseTracking'));
-const HouseTrackingLanding = lazy(() => import('./pages/HouseTrackingLanding'));
-const PropertyReport = lazy(() => import('./pages/PropertyReport'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -48,9 +46,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/booking" element={<Booking />} />
-                <Route path="/house-tracking" element={<HouseTrackingLanding />} />
-                <Route path="/house-tracking/:propertyId" element={<PropertyReport />} />
-                <Route path="/field-tracking" element={<HouseTracking />} />
+                <Route path="/house-tracking" element={<HouseTracking />} />
 
                 {/* Service Routes */}
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />

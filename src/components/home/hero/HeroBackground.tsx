@@ -43,10 +43,10 @@ const HeroBackground = ({ videoLoaded, isLoading }: HeroBackgroundProps) => {
               <iframe 
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ 
-                  width: '400vh',  
-                  height: '225vw',
-                  minHeight: '120vh',
-                  minWidth: '120vw',
+                  width: '300vh',  
+                  height: '169vw',
+                  minHeight: '100vh',
+                  minWidth: '100vw',
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
