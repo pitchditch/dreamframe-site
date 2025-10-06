@@ -24,6 +24,8 @@ const HouseTracking = lazy(() => import('./pages/HouseTracking'));
 const CRM = lazy(() => import('./pages/CRM'));
 const PropertyCapture = lazy(() => import('./pages/crm/PropertyCapture'));
 const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
+const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
+const PropertyDetail = lazy(() => import('./pages/crm/PropertyDetail'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -50,9 +52,11 @@ function App() {
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/booking" element={<Booking />} />
                 <Route path="/house-tracking" element={<HouseTracking />} />
-                <Route path="/crm" element={<CRM />} />
-                <Route path="/crm/property-capture" element={<PropertyCapture />} />
-                <Route path="/crm/canvasser" element={<CanvasserMode />} />
+          <Route path="/crm" element={<CRM />} />
+          <Route path="/crm/property-capture" element={<PropertyCapture />} />
+          <Route path="/crm/canvasser" element={<CanvasserMode />} />
+          <Route path="/crm/properties" element={<ViewProperties />} />
+          <Route path="/crm/property/:id" element={<PropertyDetail />} />
 
                 {/* Service Routes */}
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />
