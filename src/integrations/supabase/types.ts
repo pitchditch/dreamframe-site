@@ -1441,20 +1441,29 @@ export type Database = {
           bedrooms: number | null
           city: string
           created_at: string
+          customer_name: string | null
           data_source: string | null
+          email: string | null
+          follow_up_date: string | null
           frontage_glass_width: number | null
           id: string
+          last_contact_date: string | null
           lat: number | null
+          lead_score: string | null
+          lead_source: string | null
           living_sqft: number | null
           lng: number | null
           lot_size: string | null
           lot_sqft: number | null
+          notes: string | null
           opening_hours: string | null
+          phone_number: string | null
           plaza_name: string | null
           postal: string | null
           postal_code: string | null
           property_type_detail: string | null
           province: string | null
+          status: string | null
           stories: number | null
           street_view_url: string | null
           type: string | null
@@ -1468,20 +1477,29 @@ export type Database = {
           bedrooms?: number | null
           city: string
           created_at?: string
+          customer_name?: string | null
           data_source?: string | null
+          email?: string | null
+          follow_up_date?: string | null
           frontage_glass_width?: number | null
           id?: string
+          last_contact_date?: string | null
           lat?: number | null
+          lead_score?: string | null
+          lead_source?: string | null
           living_sqft?: number | null
           lng?: number | null
           lot_size?: string | null
           lot_sqft?: number | null
+          notes?: string | null
           opening_hours?: string | null
+          phone_number?: string | null
           plaza_name?: string | null
           postal?: string | null
           postal_code?: string | null
           property_type_detail?: string | null
           province?: string | null
+          status?: string | null
           stories?: number | null
           street_view_url?: string | null
           type?: string | null
@@ -1495,20 +1513,29 @@ export type Database = {
           bedrooms?: number | null
           city?: string
           created_at?: string
+          customer_name?: string | null
           data_source?: string | null
+          email?: string | null
+          follow_up_date?: string | null
           frontage_glass_width?: number | null
           id?: string
+          last_contact_date?: string | null
           lat?: number | null
+          lead_score?: string | null
+          lead_source?: string | null
           living_sqft?: number | null
           lng?: number | null
           lot_size?: string | null
           lot_sqft?: number | null
+          notes?: string | null
           opening_hours?: string | null
+          phone_number?: string | null
           plaza_name?: string | null
           postal?: string | null
           postal_code?: string | null
           property_type_detail?: string | null
           province?: string | null
+          status?: string | null
           stories?: number | null
           street_view_url?: string | null
           type?: string | null

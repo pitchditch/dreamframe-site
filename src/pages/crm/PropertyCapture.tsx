@@ -80,25 +80,25 @@ const PropertyCapture = () => {
 
     try {
       const { error } = await supabase.from('properties').insert({
-        address: formData.address,
+        address_line1: formData.address,
         city: formData.city,
         postal_code: formData.postalCode,
-        latitude: selectedLocation?.lat,
-        longitude: selectedLocation?.lng,
+        lat: selectedLocation?.lat,
+        lng: selectedLocation?.lng,
         customer_name: formData.customerName || null,
         phone_number: formData.phoneNumber || null,
         email: formData.email || null,
         notes: formData.notes || null,
         status: formData.status,
         lead_source: formData.leadSource,
-        square_footage: propertyData?.squareFootage,
+        living_sqft: propertyData?.squareFootage,
         year_built: propertyData?.yearBuilt,
         stories: propertyData?.stories,
-        property_type: propertyData?.propertyType,
+        type: propertyData?.propertyType,
         lot_size: propertyData?.lotSize,
         bedrooms: propertyData?.bedrooms,
         bathrooms: propertyData?.bathrooms,
-        property_data_source: propertyData?.source
+        data_source: propertyData?.source
       });
 
       if (error) throw error;
