@@ -55,7 +55,6 @@ function App() {
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/booking" element={<Booking />} />
                 <Route path="/house-tracking" element={<HouseTracking />} />
-          <Route path="/crm" element={<CRM />} />
           <Route path="/crm/property-capture" element={<PropertyCapture />} />
           <Route path="/crm/canvasser" element={<CanvasserMode />} />
           <Route path="/crm/properties" element={<ViewProperties />} />

@@ -11,18 +11,20 @@ import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
 import EditPinForm from '../components/house-tracking/EditPinForm';
 import { HousePin, RouteSession } from '../components/house-tracking/types';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, List, Facebook, BarChart3, Calculator, Settings, Search, Filter, LogOut } from 'lucide-react';
+import { MapPin, List, Facebook, BarChart3, Calculator, Settings, Search, Filter, LogOut, Users, Navigation } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 
 const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 
 const HouseTracking: React.FC = () => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [sessionTimer, setSessionTimer] = useState<NodeJS.Timeout | null>(null);
@@ -263,7 +265,7 @@ const HouseTracking: React.FC = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="map" className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               Map View
@@ -271,6 +273,10 @@ const HouseTracking: React.FC = () => {
             <TabsTrigger value="list" className="flex items-center gap-2">
               <List className="w-4 h-4" />
               List View
+            </TabsTrigger>
+            <TabsTrigger value="crm" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              CRM Dashboard
             </TabsTrigger>
             <TabsTrigger value="facebook" className="flex items-center gap-2">
               <Facebook className="w-4 h-4" />
@@ -404,6 +410,113 @@ const HouseTracking: React.FC = () => {
               onCancelEdit={handleCancelEdit}
               onSelectPersonalCalc={handleOpenPersonalCalc}
             />
+          </TabsContent>
+
+          <TabsContent value="crm">
+            <div className="space-y-6">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold mb-2">CRM Dashboard</h2>
+                <p className="text-muted-foreground">Manage properties, canvassing sessions, and team analytics</p>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Canvasser Mode Card */}
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/canvasser')}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <Users className="w-6 h-6 text-primary" />
+                    </div>
+                    <CardTitle>Canvasser Mode</CardTitle>
+                    <CardDescription>Track door-to-door visits with GPS</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full" variant="outline">
+                      Start Canvassing
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Property Capture Card */}
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/property-capture')}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <MapPin className="w-6 h-6 text-primary" />
+                    </div>
+                    <CardTitle>Property Capture</CardTitle>
+                    <CardDescription>Add properties with address lookup</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full" variant="outline">
+                      Add Property
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* View All Properties Card */}
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/properties')}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <List className="w-6 h-6 text-primary" />
+                    </div>
+                    <CardTitle>View Properties</CardTitle>
+                    <CardDescription>Browse all captured properties</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full" variant="outline">
+                      View All
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Map View Card */}
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/map')}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <MapPin className="w-6 h-6 text-primary" />
+                    </div>
+                    <CardTitle>Interactive Map</CardTitle>
+                    <CardDescription>Visualize properties on map</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full" variant="outline">
+                      Open Map
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Analytics Card */}
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/analytics')}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <BarChart3 className="w-6 h-6 text-primary" />
+                    </div>
+                    <CardTitle>CRM Analytics</CardTitle>
+                    <CardDescription>Performance metrics & insights</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full" variant="outline">
+                      View Dashboard
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Route History Card */}
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/routes')}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                      <Navigation className="w-6 h-6 text-primary" />
+                    </div>
+                    <CardTitle>Route History</CardTitle>
+                    <CardDescription>Review canvassing sessions</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full" variant="outline">
+                      View Routes
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="facebook">
