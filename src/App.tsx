@@ -21,6 +21,9 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
 const HouseTracking = lazy(() => import('./pages/HouseTracking'));
+const CRM = lazy(() => import('./pages/CRM'));
+const PropertyCapture = lazy(() => import('./pages/crm/PropertyCapture'));
+const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -47,6 +50,9 @@ function App() {
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/booking" element={<Booking />} />
                 <Route path="/house-tracking" element={<HouseTracking />} />
+                <Route path="/crm" element={<CRM />} />
+                <Route path="/crm/property-capture" element={<PropertyCapture />} />
+                <Route path="/crm/canvasser" element={<CanvasserMode />} />
 
                 {/* Service Routes */}
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />
