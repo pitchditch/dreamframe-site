@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { MagicLinkLogin } from '@/components/auth/MagicLinkLogin';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MapPin, Users, FileText, LogOut, Menu } from 'lucide-react';
+import { MapPin, Users, FileText, LogOut, BarChart3, Navigation } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CRM = () => {
@@ -144,6 +144,38 @@ const CRM = () => {
             <CardContent>
               <Button className="w-full" variant="outline">
                 Open Map
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Analytics Card */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/analytics')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <BarChart3 className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Analytics</CardTitle>
+              <CardDescription>View performance metrics and insights</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">
+                View Dashboard
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Route History Card */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/routes')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <Navigation className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Route History</CardTitle>
+              <CardDescription>Review past canvassing sessions and routes</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">
+                View Routes
               </Button>
             </CardContent>
           </Card>
