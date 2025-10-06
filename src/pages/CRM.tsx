@@ -131,6 +131,22 @@ const CRM = () => {
               </Button>
             </CardContent>
           </Card>
+
+          {/* Map View Card */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/map')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <MapPin className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Map View</CardTitle>
+              <CardDescription>Visualize properties on an interactive map</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">
+                Open Map
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

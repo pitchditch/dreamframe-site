@@ -26,6 +26,7 @@ const PropertyCapture = lazy(() => import('./pages/crm/PropertyCapture'));
 const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
 const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
 const PropertyDetail = lazy(() => import('./pages/crm/PropertyDetail'));
+const MapView = lazy(() => import('./pages/crm/MapView'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -57,6 +58,7 @@ function App() {
           <Route path="/crm/canvasser" element={<CanvasserMode />} />
           <Route path="/crm/properties" element={<ViewProperties />} />
           <Route path="/crm/property/:id" element={<PropertyDetail />} />
+          <Route path="/crm/map" element={<MapView />} />
 
                 {/* Service Routes */}
                 <Route path="/services/window-cleaning" element={<WindowCleaning />} />

@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MapPin, Play, Square, Users, TrendingUp } from 'lucide-react';
+import { ArrowLeft, MapPin, Play, Square, Users, TrendingUp, Navigation } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CanvasserMode = () => {
   const navigate = useNavigate();
   const [sessionActive, setSessionActive] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [locationEnabled, setLocationEnabled] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState<{ lat: number; lng: number } | null>(null);
+  const locationWatchId = useRef<number | null>(null);
   const [sessionData, setSessionData] = useState({
     startTime: null as Date | null,
     propertiesVisited: 0,
@@ -17,30 +21,144 @@ const CanvasserMode = () => {
     distance: 0
   });
 
-  const handleStartSession = () => {
-    setSessionActive(true);
-    setSessionData({
-      startTime: new Date(),
-      propertiesVisited: 0,
-      leadsGenerated: 0,
-      distance: 0
-    });
-    toast.success('Canvassing session started!');
+  useEffect(() => {
+    return () => {
+      if (locationWatchId.current !== null) {
+        navigator.geolocation.clearWatch(locationWatchId.current);
+      }
+    };
+  }, []);
+
+  const startLocationTracking = async () => {
+    if (!navigator.geolocation) {
+      toast.error('Geolocation is not supported by your browser');
+      return false;
+    }
+
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        });
+      });
+
+      setCurrentPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      });
+      setLocationEnabled(true);
+
+      locationWatchId.current = navigator.geolocation.watchPosition(
+        (pos) => {
+          setCurrentPosition({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude
+          });
+        },
+        (error) => {
+          console.error('Location tracking error:', error);
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 5000,
+          timeout: 10000
+        }
+      );
+
+      return true;
+    } catch (error) {
+      toast.error('Failed to get location. Please enable location services.');
+      return false;
+    }
+  };
+
+  const handleStartSession = async () => {
+    const locationGranted = await startLocationTracking();
+    if (!locationGranted) return;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error('Please log in to start a session');
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('employee_work_sessions')
+        .insert({
+          employee_id: user.id,
+          employee_name: user.email || 'Canvasser',
+          session_start: new Date().toISOString(),
+          start_latitude: currentPosition?.lat,
+          start_longitude: currentPosition?.lng,
+          session_status: 'active'
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setSessionId(data.id);
+      setSessionActive(true);
+      setSessionData({
+        startTime: new Date(),
+        propertiesVisited: 0,
+        leadsGenerated: 0,
+        distance: 0
+      });
+      toast.success('Session started! GPS tracking enabled.');
+    } catch (error) {
+      console.error('Error starting session:', error);
+      toast.error('Failed to start session');
+    }
   };
 
   const handleEndSession = async () => {
-    if (!sessionData.startTime) return;
+    if (!sessionId) return;
 
-    const duration = Math.floor((new Date().getTime() - sessionData.startTime.getTime()) / 1000 / 60);
-    
-    toast.success(`Session ended! Duration: ${duration} minutes`);
-    setSessionActive(false);
-    setSessionData({
-      startTime: null,
-      propertiesVisited: 0,
-      leadsGenerated: 0,
-      distance: 0
-    });
+    try {
+      const duration = sessionData.startTime 
+        ? Math.floor((new Date().getTime() - sessionData.startTime.getTime()) / 1000 / 60)
+        : 0;
+
+      const { error } = await supabase
+        .from('employee_work_sessions')
+        .update({
+          session_end: new Date().toISOString(),
+          end_latitude: currentPosition?.lat,
+          end_longitude: currentPosition?.lng,
+          session_status: 'completed',
+          total_visits: sessionData.propertiesVisited,
+          successful_contacts: sessionData.leadsGenerated,
+          total_duration_minutes: duration
+        })
+        .eq('id', sessionId);
+
+      if (error) throw error;
+
+      if (locationWatchId.current !== null) {
+        navigator.geolocation.clearWatch(locationWatchId.current);
+        locationWatchId.current = null;
+      }
+
+      toast.success(`Session ended! Duration: ${duration} minutes, Properties visited: ${sessionData.propertiesVisited}`);
+      
+      setSessionActive(false);
+      setSessionId(null);
+      setLocationEnabled(false);
+      setCurrentPosition(null);
+      setSessionData({
+        startTime: null,
+        propertiesVisited: 0,
+        leadsGenerated: 0,
+        distance: 0
+      });
+    } catch (error) {
+      console.error('Error ending session:', error);
+      toast.error('Failed to end session');
+    }
   };
 
   const formatDuration = () => {
@@ -53,23 +171,28 @@ const CanvasserMode = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-secondary/10">
-      {/* Header */}
       <header className="bg-card border-b sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate('/crm')}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <div className="flex items-center gap-2">
-            <Users className="w-6 h-6 text-primary" />
-            <h1 className="text-xl font-bold">Canvasser Mode</h1>
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/crm')}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <div className="flex items-center gap-2">
+              <Users className="w-6 h-6 text-primary" />
+              <h1 className="text-xl font-bold">Canvasser Mode</h1>
+            </div>
           </div>
+          {locationEnabled && (
+            <Badge variant="outline" className="bg-green-500/10 text-green-700 border-green-500/30">
+              <Navigation className="h-3 w-3 mr-1" />
+              GPS Active
+            </Badge>
+          )}
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-2xl">
-        {/* Session Status */}
         <Card className="mb-6">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -125,7 +248,6 @@ const CanvasserMode = () => {
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
         {sessionActive && (
           <div className="space-y-4">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/crm/property-capture')}>
@@ -171,7 +293,6 @@ const CanvasserMode = () => {
           </div>
         )}
 
-        {/* Instructions for Non-Active Session */}
         {!sessionActive && (
           <Card>
             <CardHeader>
@@ -182,25 +303,25 @@ const CanvasserMode = () => {
                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-primary">1</span>
                 </div>
-                <p>Start a session before you begin canvassing your territory</p>
+                <p>Start a session and allow GPS tracking to begin canvassing</p>
               </div>
               <div className="flex gap-3">
                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-primary">2</span>
                 </div>
-                <p>Capture property details and customer information as you go door-to-door</p>
+                <p>Capture property details as you visit each door</p>
               </div>
               <div className="flex gap-3">
                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-primary">3</span>
                 </div>
-                <p>Track your progress with real-time statistics</p>
+                <p>Your location is tracked for route optimization</p>
               </div>
               <div className="flex gap-3">
                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-primary">4</span>
                 </div>
-                <p>End your session when complete to view your results</p>
+                <p>End session when complete to save your results</p>
               </div>
             </CardContent>
           </Card>
