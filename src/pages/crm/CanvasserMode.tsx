@@ -4,8 +4,20 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MapPin, Play, Square, Users, TrendingUp, Navigation } from 'lucide-react';
+import { ArrowLeft, MapPin, Play, Square, Users, TrendingUp, Navigation, Wifi, WifiOff } from 'lucide-react';
 import { toast } from 'sonner';
+
+interface QueuedLocation {
+  employee_id: string;
+  employee_name: string;
+  session_id: string;
+  latitude: number;
+  longitude: number;
+  timestamp: string;
+  accuracy?: number;
+  heading?: number;
+  speed?: number;
+}
 
 const CanvasserMode = () => {
   const navigate = useNavigate();
@@ -13,7 +25,11 @@ const CanvasserMode = () => {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [locationEnabled, setLocationEnabled] = useState(false);
   const [currentPosition, setCurrentPosition] = useState<{ lat: number; lng: number } | null>(null);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [queuedCount, setQueuedCount] = useState(0);
   const locationWatchId = useRef<number | null>(null);
+  const locationSaveInterval = useRef<number | null>(null);
+  const syncInterval = useRef<number | null>(null);
   const [sessionData, setSessionData] = useState({
     startTime: null as Date | null,
     propertiesVisited: 0,
@@ -21,13 +37,130 @@ const CanvasserMode = () => {
     distance: 0
   });
 
+  // Online/offline detection
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      toast.success('Back online! Syncing data...');
+      syncQueuedData();
+    };
+    
+    const handleOffline = () => {
+      setIsOnline(false);
+      toast.warning('You are offline. Data will be queued and synced when back online.');
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  // Check queued items count
+  useEffect(() => {
+    const updateQueueCount = () => {
+      const queue = getLocationQueue();
+      setQueuedCount(queue.length);
+    };
+    
+    updateQueueCount();
+    const interval = setInterval(updateQueueCount, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (locationWatchId.current !== null) {
         navigator.geolocation.clearWatch(locationWatchId.current);
       }
+      if (locationSaveInterval.current !== null) {
+        clearInterval(locationSaveInterval.current);
+      }
+      if (syncInterval.current !== null) {
+        clearInterval(syncInterval.current);
+      }
     };
   }, []);
+
+  // Queue management functions
+  const getLocationQueue = (): QueuedLocation[] => {
+    const queue = localStorage.getItem('locationQueue');
+    return queue ? JSON.parse(queue) : [];
+  };
+
+  const addToLocationQueue = (location: QueuedLocation) => {
+    const queue = getLocationQueue();
+    queue.push(location);
+    localStorage.setItem('locationQueue', JSON.stringify(queue));
+    setQueuedCount(queue.length);
+  };
+
+  const clearLocationQueue = () => {
+    localStorage.setItem('locationQueue', JSON.stringify([]));
+    setQueuedCount(0);
+  };
+
+  // Sync queued data to database
+  const syncQueuedData = async () => {
+    const queue = getLocationQueue();
+    if (queue.length === 0) return;
+
+    try {
+      const { error } = await supabase
+        .from('employee_locations')
+        .insert(queue);
+
+      if (error) throw error;
+
+      clearLocationQueue();
+      toast.success(`Synced ${queue.length} location points`);
+    } catch (error) {
+      console.error('Error syncing queued data:', error);
+      toast.error('Failed to sync some data. Will retry.');
+    }
+  };
+
+  // Save location point (online or queue if offline)
+  const saveLocationPoint = async (position: GeolocationPosition) => {
+    if (!sessionId) return;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const locationData: QueuedLocation = {
+        employee_id: user.id,
+        employee_name: user.email || 'Canvasser',
+        session_id: sessionId,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        timestamp: new Date().toISOString(),
+        accuracy: position.coords.accuracy,
+        heading: position.coords.heading || undefined,
+        speed: position.coords.speed || undefined
+      };
+
+      if (isOnline) {
+        const { error } = await supabase
+          .from('employee_locations')
+          .insert([locationData]);
+
+        if (error) {
+          console.error('Error saving location:', error);
+          addToLocationQueue(locationData);
+        }
+      } else {
+        addToLocationQueue(locationData);
+      }
+    } catch (error) {
+      console.error('Error in saveLocationPoint:', error);
+    }
+  };
 
   const startLocationTracking = async () => {
     if (!navigator.geolocation) {
@@ -66,6 +199,22 @@ const CanvasserMode = () => {
           timeout: 10000
         }
       );
+
+      // Save location points every 30 seconds
+      locationSaveInterval.current = window.setInterval(async () => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => saveLocationPoint(pos),
+          (error) => console.error('Error getting position for save:', error),
+          { enableHighAccuracy: true }
+        );
+      }, 30000);
+
+      // Try to sync queued data every minute when online
+      syncInterval.current = window.setInterval(() => {
+        if (isOnline) {
+          syncQueuedData();
+        }
+      }, 60000);
 
       return true;
     } catch (error) {
@@ -143,6 +292,19 @@ const CanvasserMode = () => {
         locationWatchId.current = null;
       }
 
+      if (locationSaveInterval.current !== null) {
+        clearInterval(locationSaveInterval.current);
+        locationSaveInterval.current = null;
+      }
+
+      if (syncInterval.current !== null) {
+        clearInterval(syncInterval.current);
+        syncInterval.current = null;
+      }
+
+      // Sync any remaining queued data before ending
+      await syncQueuedData();
+
       toast.success(`Session ended! Duration: ${duration} minutes, Properties visited: ${sessionData.propertiesVisited}`);
       
       setSessionActive(false);
@@ -183,12 +345,26 @@ const CanvasserMode = () => {
               <h1 className="text-xl font-bold">Canvasser Mode</h1>
             </div>
           </div>
-          {locationEnabled && (
-            <Badge variant="outline" className="bg-green-500/10 text-green-700 border-green-500/30">
-              <Navigation className="h-3 w-3 mr-1" />
-              GPS Active
-            </Badge>
-          )}
+          <div className="flex items-center gap-2">
+            {locationEnabled && (
+              <Badge variant="outline" className="bg-green-500/10 text-green-700 border-green-500/30">
+                <Navigation className="h-3 w-3 mr-1" />
+                GPS Active
+              </Badge>
+            )}
+            {isOnline ? (
+              <Badge variant="outline" className="bg-green-500/10 text-green-700 border-green-500/30">
+                <Wifi className="h-3 w-3 mr-1" />
+                Online
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="bg-orange-500/10 text-orange-700 border-orange-500/30">
+                <WifiOff className="h-3 w-3 mr-1" />
+                Offline
+                {queuedCount > 0 && ` (${queuedCount} queued)`}
+              </Badge>
+            )}
+          </div>
         </div>
       </header>
 
