@@ -18,12 +18,15 @@ export default function MapView() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [properties, setProperties] = useState<HousePin[]>([]);
+  const [sessions, setSessions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProperty, setSelectedProperty] = useState<HousePin | null>(null);
+  const [showRoutes, setShowRoutes] = useState(true);
   const markers = useRef<mapboxgl.Marker[]>([]);
 
   useEffect(() => {
     fetchProperties();
+    fetchSessions();
   }, []);
 
   useEffect(() => {
@@ -100,21 +103,8 @@ export default function MapView() {
       if (error) throw error;
 
       setProperties(data.map(prop => ({
-        id: prop.id,
-        lat: prop.lat,
-        lng: prop.lng,
-        address: prop.address_line1 || '',
-        status: prop.status as any || 'interested',
-        notes: prop.notes || '',
-        dateAdded: prop.created_at,
-        customerName: prop.customer_name,
-        phoneNumber: prop.phone_number,
-        email: prop.email,
-        followUpDate: prop.follow_up_date,
-        leadScore: prop.lead_score as any,
-        squareFootage: prop.living_sqft,
-        leadSource: prop.lead_source as any
-      })));
+...
+      });
     } catch (error) {
       console.error('Error fetching properties:', error);
       toast({
@@ -124,6 +114,21 @@ export default function MapView() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchSessions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('employee_work_sessions')
+        .select('*')
+        .order('session_start', { ascending: false })
+        .limit(20);
+
+      if (error) throw error;
+      setSessions(data || []);
+    } catch (error) {
+      console.error('Error fetching sessions:', error);
     }
   };
 
@@ -163,7 +168,7 @@ export default function MapView() {
     <div className="h-screen flex flex-col bg-background">
       <div className="flex items-center justify-between p-4 border-b bg-card">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" onClick={() => navigate('/crm')}>
+          <Button variant="ghost" onClick={() => navigate('/house-tracking?tab=crm')}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to CRM
           </Button>
@@ -230,9 +235,9 @@ export default function MapView() {
               
               <Button 
                 className="w-full mt-2"
-                onClick={() => navigate(`/crm/property/${selectedProperty.id}`)}
+                onClick={() => navigate('/house-tracking?tab=list')}
               >
-                View Details
+                View in List
               </Button>
             </div>
           </Card>
