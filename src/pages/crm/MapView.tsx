@@ -103,8 +103,21 @@ export default function MapView() {
       if (error) throw error;
 
       setProperties(data.map(prop => ({
-...
-      });
+        id: prop.id,
+        lat: prop.lat,
+        lng: prop.lng,
+        address: prop.address_line1 || '',
+        status: prop.status as any || 'interested',
+        notes: prop.notes || '',
+        dateAdded: prop.created_at,
+        customerName: prop.customer_name,
+        phoneNumber: prop.phone_number,
+        email: prop.email,
+        followUpDate: prop.follow_up_date,
+        leadScore: prop.lead_score as any,
+        squareFootage: prop.living_sqft,
+        leadSource: prop.lead_source as any
+      })));
     } catch (error) {
       console.error('Error fetching properties:', error);
       toast({
