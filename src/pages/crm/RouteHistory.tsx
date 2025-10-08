@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, MapPin, Clock, Users, Calendar, Navigation } from 'lucide-react';
+import 'leaflet/dist/leaflet.css';
 
 interface RouteSession {
   id: string;
@@ -28,10 +29,67 @@ export default function RouteHistory() {
   const [loading, setLoading] = useState(true);
   const [sessions, setSessions] = useState<RouteSession[]>([]);
   const [selectedSession, setSelectedSession] = useState<RouteSession | null>(null);
+  const [routeLocations, setRouteLocations] = useState<any[]>([]);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
 
   useEffect(() => {
     fetchSessions();
+    fetchRouteLocations();
+    initializeMap();
   }, []);
+
+  const fetchRouteLocations = async () => {
+    const { data } = await supabase
+      .from('employee_locations')
+      .select('*')
+      .order('timestamp', { ascending: true });
+    if (data) setRouteLocations(data);
+  };
+
+  const initializeMap = async () => {
+    if (!mapRef.current || mapInstanceRef.current) return;
+    
+    const leafletModule = await import('leaflet');
+    const L = leafletModule.default || leafletModule;
+    
+    if (L.Icon && L.Icon.Default) {
+      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      });
+    }
+
+    const map = L.map(mapRef.current).setView([49.0504, -122.8048], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    
+    mapInstanceRef.current = map;
+  };
+
+  useEffect(() => {
+    if (!mapInstanceRef.current || !selectedSession) return;
+    
+    const drawRoute = async () => {
+      const leafletModule = await import('leaflet');
+      const L = leafletModule.default || leafletModule;
+      
+      const sessionLocs = routeLocations
+        .filter(loc => loc.session_id === selectedSession.id)
+        .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+      
+      if (sessionLocs.length < 2) return;
+      
+      const coords = sessionLocs.map(loc => [loc.latitude, loc.longitude]);
+      L.polyline(coords, { color: '#3b82f6', weight: 3 }).addTo(mapInstanceRef.current);
+      mapInstanceRef.current.fitBounds(coords);
+    };
+    
+    drawRoute();
+  }, [selectedSession, routeLocations]);
 
   const fetchSessions = async () => {
     try {
@@ -97,6 +155,14 @@ export default function RouteHistory() {
             <Navigation className="h-6 w-6 text-primary" />
             <h1 className="text-3xl font-bold">Route History</h1>
           </div>
+        </div>
+
+        <div className="mb-6">
+          <Card>
+            <CardContent className="p-0">
+              <div ref={mapRef} style={{ height: '400px', width: '100%' }} />
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

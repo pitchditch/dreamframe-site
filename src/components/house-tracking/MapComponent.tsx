@@ -1,6 +1,7 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HousePin, RouteSession } from './types';
+import { supabase } from '@/integrations/supabase/client';
 
 interface MapComponentProps {
   pins: HousePin[];
@@ -33,6 +34,30 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<{[key: string]: any}>({});
+  const routeLinesRef = useRef<any[]>([]);
+  const [showRoutes, setShowRoutes] = useState(true);
+  const [employeeSessions, setEmployeeSessions] = useState<any[]>([]);
+  const [routeLocations, setRouteLocations] = useState<any[]>([]);
+
+  // Fetch employee sessions and locations
+  useEffect(() => {
+    const fetchRoutesData = async () => {
+      const { data: sessions } = await supabase
+        .from('employee_work_sessions')
+        .select('*')
+        .order('session_start', { ascending: false });
+      
+      const { data: locations } = await supabase
+        .from('employee_locations')
+        .select('*')
+        .order('timestamp', { ascending: true });
+      
+      if (sessions) setEmployeeSessions(sessions);
+      if (locations) setRouteLocations(locations);
+    };
+    
+    fetchRoutesData();
+  }, []);
 
   // Load Leaflet dynamically
   useEffect(() => {
@@ -182,12 +207,78 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
   }, [pins, highlightedPinId, onPinHover]);
 
+  // Draw route lines
+  useEffect(() => {
+    if (!mapInstanceRef.current || !showRoutes) {
+      // Remove all route lines if showRoutes is false
+      routeLinesRef.current.forEach(line => {
+        mapInstanceRef.current?.removeLayer(line);
+      });
+      routeLinesRef.current = [];
+      return;
+    }
+
+    const L = (window as any).L;
+    if (!L) return;
+
+    // Clear existing route lines
+    routeLinesRef.current.forEach(line => {
+      mapInstanceRef.current?.removeLayer(line);
+    });
+    routeLinesRef.current = [];
+
+    // Group locations by session
+    const sessionColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+    
+    employeeSessions.forEach((session, index) => {
+      const sessionLocations = routeLocations
+        .filter(loc => loc.session_id === session.id)
+        .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+      
+      if (sessionLocations.length < 2) return;
+
+      const coordinates = sessionLocations.map(loc => [loc.latitude, loc.longitude]);
+      const color = sessionColors[index % sessionColors.length];
+
+      const polyline = L.polyline(coordinates, {
+        color: color,
+        weight: 3,
+        opacity: 0.7,
+        smoothFactor: 1
+      }).addTo(mapInstanceRef.current!);
+
+      polyline.bindPopup(`
+        <div class="p-2">
+          <strong>${session.employee_name}</strong><br>
+          <div class="text-sm">Session: ${new Date(session.session_start).toLocaleString()}</div>
+          <div class="text-sm">Visits: ${session.total_visits || 0}</div>
+          <div class="text-sm">Distance: ${(session.total_distance_km || 0).toFixed(2)} km</div>
+        </div>
+      `);
+
+      routeLinesRef.current.push(polyline);
+    });
+  }, [employeeSessions, routeLocations, showRoutes]);
+
   return (
-    <div 
-      ref={mapRef}
-      className="w-full h-96 border-2 border-gray-300 rounded-lg overflow-hidden"
-      style={{ minHeight: '400px' }}
-    />
+    <div className="relative">
+      <div className="absolute top-2 right-2 z-[1000] bg-background border rounded-lg shadow-lg p-2">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showRoutes}
+            onChange={(e) => setShowRoutes(e.target.checked)}
+            className="rounded"
+          />
+          <span className="text-sm font-medium">Show Routes</span>
+        </label>
+      </div>
+      <div 
+        ref={mapRef}
+        className="w-full h-96 border-2 border-gray-300 rounded-lg overflow-hidden"
+        style={{ minHeight: '400px' }}
+      />
+    </div>
   );
 };
 
