@@ -30,7 +30,7 @@ const HeroSection = () => {
   if (!isHomePage) return null;
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden pt-20 md:pt-0">
       <HeroBackground videoLoaded={videoLoaded} isLoading={isLoading} />
       
       {/* Main Hero Content */}
@@ -38,14 +38,14 @@ const HeroSection = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Title */}
-            <div className="mb-8">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                <span className="block mb-2">Professional</span>
+            <div className="mb-4 md:mb-8">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-3 md:mb-6 leading-tight">
+                <span className="block mb-1 md:mb-2">Professional</span>
                 <span className="text-red-600 drop-shadow-lg">
                   Exterior Cleaning
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-white font-medium max-w-3xl mx-auto drop-shadow-lg">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white font-medium max-w-3xl mx-auto drop-shadow-lg px-2">
                 White Rock & Surrey's most trusted pressure washing and window cleaning service
               </p>
             </div>

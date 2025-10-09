@@ -265,30 +265,36 @@ const HouseTracking: React.FC = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="map" className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              Map View
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            <TabsTrigger value="map" className="flex items-center gap-1 text-xs sm:text-sm">
+              <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Map View</span>
+              <span className="sm:hidden">Map</span>
             </TabsTrigger>
-            <TabsTrigger value="list" className="flex items-center gap-2">
-              <List className="w-4 h-4" />
-              List View
+            <TabsTrigger value="list" className="flex items-center gap-1 text-xs sm:text-sm">
+              <List className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">List View</span>
+              <span className="sm:hidden">List</span>
             </TabsTrigger>
-            <TabsTrigger value="crm" className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              CRM Dashboard
+            <TabsTrigger value="crm" className="flex items-center gap-1 text-xs sm:text-sm">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">CRM Dashboard</span>
+              <span className="sm:hidden">CRM</span>
             </TabsTrigger>
-            <TabsTrigger value="facebook" className="flex items-center gap-2">
-              <Facebook className="w-4 h-4" />
-              Facebook Leads
+            <TabsTrigger value="facebook" className="flex items-center gap-1 text-xs sm:text-sm">
+              <Facebook className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Facebook Leads</span>
+              <span className="sm:hidden">FB</span>
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2">
-              <BarChart3 className="w-4 h-4" />
-              Analytics
+            <TabsTrigger value="analytics" className="flex items-center gap-1 text-xs sm:text-sm">
+              <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Analytics</span>
+              <span className="sm:hidden">Stats</span>
             </TabsTrigger>
-            <TabsTrigger value="calculator" className="flex items-center gap-2">
-              <Calculator className="w-4 h-4" />
-              Calculator
+            <TabsTrigger value="calculator" className="flex items-center gap-1 text-xs sm:text-sm">
+              <Calculator className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Calculator</span>
+              <span className="sm:hidden">Calc</span>
             </TabsTrigger>
           </TabsList>
 
