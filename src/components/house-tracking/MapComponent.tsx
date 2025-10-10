@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HousePin, RouteSession } from './types';
 import { supabase } from '@/integrations/supabase/client';
+import { generateOptimizedRoutes, OptimizedRoute } from '@/utils/routeOptimizer';
 
 interface MapComponentProps {
   pins: HousePin[];
@@ -35,9 +36,12 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<{[key: string]: any}>({});
   const routeLinesRef = useRef<any[]>([]);
-  const [showRoutes, setShowRoutes] = useState(true);
+  const flyerRouteLinesRef = useRef<any[]>([]);
+  const [showEmployeeRoutes, setShowEmployeeRoutes] = useState(false);
+  const [showFlyerRoutes, setShowFlyerRoutes] = useState(true);
   const [employeeSessions, setEmployeeSessions] = useState<any[]>([]);
   const [routeLocations, setRouteLocations] = useState<any[]>([]);
+  const [optimizedRoutes, setOptimizedRoutes] = useState<OptimizedRoute[]>([]);
 
   // Fetch employee sessions and locations
   useEffect(() => {
@@ -207,10 +211,15 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
   }, [pins, highlightedPinId, onPinHover]);
 
-  // Draw route lines
+  // Generate optimized flyer routes when pins change
   useEffect(() => {
-    if (!mapInstanceRef.current || !showRoutes) {
-      // Remove all route lines if showRoutes is false
+    const routes = generateOptimizedRoutes(pins);
+    setOptimizedRoutes(routes);
+  }, [pins]);
+
+  // Draw employee route lines
+  useEffect(() => {
+    if (!mapInstanceRef.current || !showEmployeeRoutes) {
       routeLinesRef.current.forEach(line => {
         mapInstanceRef.current?.removeLayer(line);
       });
@@ -221,13 +230,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
     const L = (window as any).L;
     if (!L) return;
 
-    // Clear existing route lines
     routeLinesRef.current.forEach(line => {
       mapInstanceRef.current?.removeLayer(line);
     });
     routeLinesRef.current = [];
 
-    // Group locations by session
     const sessionColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
     
     employeeSessions.forEach((session, index) => {
@@ -258,20 +265,87 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
       routeLinesRef.current.push(polyline);
     });
-  }, [employeeSessions, routeLocations, showRoutes]);
+  }, [employeeSessions, routeLocations, showEmployeeRoutes]);
+
+  // Draw optimized flyer routes
+  useEffect(() => {
+    if (!mapInstanceRef.current || !showFlyerRoutes) {
+      flyerRouteLinesRef.current.forEach(line => {
+        mapInstanceRef.current?.removeLayer(line);
+      });
+      flyerRouteLinesRef.current = [];
+      return;
+    }
+
+    const L = (window as any).L;
+    if (!L) return;
+
+    flyerRouteLinesRef.current.forEach(line => {
+      mapInstanceRef.current?.removeLayer(line);
+    });
+    flyerRouteLinesRef.current = [];
+
+    optimizedRoutes.forEach(route => {
+      if (route.pins.length < 2) return;
+
+      const coordinates = route.pins.map(pin => [pin.lat, pin.lng]);
+
+      const polyline = L.polyline(coordinates, {
+        color: route.color,
+        weight: 4,
+        opacity: 0.8,
+        smoothFactor: 1,
+        dashArray: '10, 10'
+      }).addTo(mapInstanceRef.current!);
+
+      polyline.bindPopup(`
+        <div class="p-3">
+          <strong class="text-lg">${route.cityName} Flyer Route</strong><br>
+          <div class="text-sm mt-1">Properties: ${route.pins.length}</div>
+          <div class="text-sm">Total Distance: ${route.totalDistance.toFixed(2)} km</div>
+          <div class="text-xs text-gray-500 mt-1">Optimized for efficiency</div>
+        </div>
+      `);
+
+      flyerRouteLinesRef.current.push(polyline);
+    });
+  }, [optimizedRoutes, showFlyerRoutes]);
 
   return (
     <div className="relative">
-      <div className="absolute top-2 right-2 z-[1000] bg-background border rounded-lg shadow-lg p-2">
+      <div className="absolute top-2 right-2 z-[1000] bg-background border rounded-lg shadow-lg p-3 space-y-2">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
-            checked={showRoutes}
-            onChange={(e) => setShowRoutes(e.target.checked)}
+            checked={showFlyerRoutes}
+            onChange={(e) => setShowFlyerRoutes(e.target.checked)}
             className="rounded"
           />
-          <span className="text-sm font-medium">Show Routes</span>
+          <span className="text-sm font-medium">Flyer Routes</span>
         </label>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showEmployeeRoutes}
+            onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
+            className="rounded"
+          />
+          <span className="text-sm font-medium">Employee Routes</span>
+        </label>
+        {optimizedRoutes.length > 0 && showFlyerRoutes && (
+          <div className="pt-2 border-t text-xs space-y-1">
+            <div className="font-semibold text-foreground">Routes by City:</div>
+            {optimizedRoutes.map(route => (
+              <div key={route.cityName} className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: route.color }}
+                />
+                <span className="text-muted-foreground">{route.cityName} ({route.pins.length})</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div 
         ref={mapRef}
