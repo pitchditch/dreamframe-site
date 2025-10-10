@@ -42,6 +42,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const [employeeSessions, setEmployeeSessions] = useState<any[]>([]);
   const [routeLocations, setRouteLocations] = useState<any[]>([]);
   const [optimizedRoutes, setOptimizedRoutes] = useState<OptimizedRoute[]>([]);
+  const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [walkingRouteActive, setWalkingRouteActive] = useState(false);
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState<'residential' | 'commercial'>('residential');
+  const radiusCircleRef = useRef<any>(null);
+  const walkingRouteRef = useRef<any>(null);
 
   // Fetch employee sessions and locations
   useEffect(() => {
@@ -267,6 +272,154 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
   }, [employeeSessions, routeLocations, showEmployeeRoutes]);
 
+  // Handle walking route generation
+  const generateWalkingRoute = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        setCurrentLocation(location);
+        setWalkingRouteActive(true);
+        
+        // Center map on current location
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.setView([location.lat, location.lng], 15);
+        }
+      },
+      (error) => {
+        alert('Unable to get your location: ' + error.message);
+      }
+    );
+  };
+
+  // Calculate distance between two coordinates in km
+  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number) => {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng/2) * Math.sin(dLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
+
+  // Draw walking route radius and route
+  useEffect(() => {
+    if (!mapInstanceRef.current || !walkingRouteActive || !currentLocation) {
+      // Clean up
+      if (radiusCircleRef.current) {
+        mapInstanceRef.current?.removeLayer(radiusCircleRef.current);
+        radiusCircleRef.current = null;
+      }
+      if (walkingRouteRef.current) {
+        mapInstanceRef.current?.removeLayer(walkingRouteRef.current);
+        walkingRouteRef.current = null;
+      }
+      return;
+    }
+
+    const L = (window as any).L;
+    if (!L) return;
+
+    // Draw 5km radius circle
+    if (radiusCircleRef.current) {
+      mapInstanceRef.current.removeLayer(radiusCircleRef.current);
+    }
+    
+    radiusCircleRef.current = L.circle([currentLocation.lat, currentLocation.lng], {
+      radius: 5000, // 5km in meters
+      color: '#10b981',
+      fillColor: '#10b981',
+      fillOpacity: 0.1,
+      weight: 2
+    }).addTo(mapInstanceRef.current);
+
+    // Filter pins within 5km radius and by property type
+    const nearbyPins = pins.filter(pin => {
+      const distance = calculateDistance(currentLocation.lat, currentLocation.lng, pin.lat, pin.lng);
+      const withinRadius = distance <= 5;
+      
+      // Check property type if available (from properties table integration)
+      // For now, we'll use all pins, but you can add type filtering here
+      return withinRadius;
+    });
+
+    if (nearbyPins.length < 2) {
+      if (walkingRouteRef.current) {
+        mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+        walkingRouteRef.current = null;
+      }
+      return;
+    }
+
+    // Generate optimized route starting from current location
+    const routePoints = [currentLocation, ...nearbyPins];
+    const optimized = [currentLocation];
+    const remaining = [...nearbyPins];
+
+    let current = currentLocation;
+    while (remaining.length > 0) {
+      let nearest = remaining[0];
+      let nearestDist = calculateDistance(current.lat, current.lng, nearest.lat, nearest.lng);
+      let nearestIdx = 0;
+
+      for (let i = 1; i < remaining.length; i++) {
+        const dist = calculateDistance(current.lat, current.lng, remaining[i].lat, remaining[i].lng);
+        if (dist < nearestDist) {
+          nearest = remaining[i];
+          nearestDist = dist;
+          nearestIdx = i;
+        }
+      }
+
+      optimized.push(nearest);
+      remaining.splice(nearestIdx, 1);
+      current = nearest;
+    }
+
+    // Draw walking route
+    if (walkingRouteRef.current) {
+      mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+    }
+
+    const coordinates = optimized.map(point => [point.lat, point.lng]);
+    
+    walkingRouteRef.current = L.polyline(coordinates, {
+      color: '#10b981',
+      weight: 4,
+      opacity: 0.8,
+      smoothFactor: 1
+    }).addTo(mapInstanceRef.current);
+
+    walkingRouteRef.current.bindPopup(`
+      <div class="p-3">
+        <strong class="text-lg">Walking Route (${propertyTypeFilter})</strong><br>
+        <div class="text-sm mt-1">Properties: ${nearbyPins.length}</div>
+        <div class="text-sm">Radius: 5 km</div>
+        <div class="text-xs text-gray-500 mt-1">Optimized walking path</div>
+      </div>
+    `);
+
+    // Add current location marker
+    L.marker([currentLocation.lat, currentLocation.lng], {
+      icon: L.divIcon({
+        html: '<div style="background-color: #10b981; width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);"></div>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        className: 'current-location-marker'
+      })
+    }).addTo(mapInstanceRef.current).bindPopup('Your Location');
+
+  }, [walkingRouteActive, currentLocation, pins, propertyTypeFilter]);
+
   // Draw optimized flyer routes
   useEffect(() => {
     if (!mapInstanceRef.current || !showFlyerRoutes) {
@@ -313,25 +466,54 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
   return (
     <div className="relative">
-      <div className="absolute top-2 right-2 z-[1000] bg-background border rounded-lg shadow-lg p-3 space-y-2">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={showFlyerRoutes}
-            onChange={(e) => setShowFlyerRoutes(e.target.checked)}
-            className="rounded"
-          />
-          <span className="text-sm font-medium">Flyer Routes</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={showEmployeeRoutes}
-            onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
-            className="rounded"
-          />
-          <span className="text-sm font-medium">Employee Routes</span>
-        </label>
+      <div className="absolute top-2 right-2 z-[1000] bg-background border rounded-lg shadow-lg p-3 space-y-2 max-w-xs">
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showFlyerRoutes}
+              onChange={(e) => setShowFlyerRoutes(e.target.checked)}
+              className="rounded"
+            />
+            <span className="text-sm font-medium">Flyer Routes</span>
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showEmployeeRoutes}
+              onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
+              className="rounded"
+            />
+            <span className="text-sm font-medium">Employee Routes</span>
+          </label>
+        </div>
+
+        <div className="pt-2 border-t space-y-2">
+          <div className="font-semibold text-sm">Walking Route Generator</div>
+          <select
+            value={propertyTypeFilter}
+            onChange={(e) => setPropertyTypeFilter(e.target.value as 'residential' | 'commercial')}
+            className="w-full text-sm border rounded px-2 py-1"
+          >
+            <option value="residential">Residential</option>
+            <option value="commercial">Commercial</option>
+          </select>
+          <button
+            onClick={generateWalkingRoute}
+            className="w-full text-sm bg-primary text-primary-foreground rounded px-3 py-1.5 hover:bg-primary/90"
+          >
+            Generate 5km Route
+          </button>
+          {walkingRouteActive && (
+            <button
+              onClick={() => setWalkingRouteActive(false)}
+              className="w-full text-sm bg-destructive text-destructive-foreground rounded px-3 py-1.5 hover:bg-destructive/90"
+            >
+              Clear Walking Route
+            </button>
+          )}
+        </div>
+
         {optimizedRoutes.length > 0 && showFlyerRoutes && (
           <div className="pt-2 border-t text-xs space-y-1">
             <div className="font-semibold text-foreground">Routes by City:</div>
