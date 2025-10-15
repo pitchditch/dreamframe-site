@@ -44,9 +44,12 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const [optimizedRoutes, setOptimizedRoutes] = useState<OptimizedRoute[]>([]);
   const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number} | null>(null);
   const [walkingRouteActive, setWalkingRouteActive] = useState(false);
-  const [propertyTypeFilter, setPropertyTypeFilter] = useState<'residential' | 'commercial'>('residential');
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState<'all' | 'residential' | 'commercial'>('all');
+  const [nearbyProperties, setNearbyProperties] = useState<any[]>([]);
+  const [routeMessage, setRouteMessage] = useState<string>('');
   const radiusCircleRef = useRef<any>(null);
   const walkingRouteRef = useRef<any>(null);
+  const propertyMarkersRef = useRef<any[]>([]);
 
   // Fetch employee sessions and locations
   useEffect(() => {
@@ -273,24 +276,76 @@ const MapComponent: React.FC<MapComponentProps> = ({
   }, [employeeSessions, routeLocations, showEmployeeRoutes]);
 
   // Handle walking route generation
-  const generateWalkingRoute = () => {
+  const generateWalkingRoute = async () => {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser');
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const location = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
         setCurrentLocation(location);
-        setWalkingRouteActive(true);
+        
+        // Query properties from database within 5km radius
+        try {
+          setRouteMessage('Searching for properties...');
+          
+          let query = supabase
+            .from('properties')
+            .select('*')
+            .not('lat', 'is', null)
+            .not('lng', 'is', null);
+          
+          // Filter by property type if not "all"
+          if (propertyTypeFilter !== 'all') {
+            query = query.eq('type', propertyTypeFilter);
+          }
+          
+          const { data: properties, error } = await query;
+          
+          if (error) {
+            console.error('Error fetching properties:', error);
+            setRouteMessage('Error fetching properties');
+            return;
+          }
+          
+          if (!properties || properties.length === 0) {
+            setRouteMessage('No properties found in database');
+            setNearbyProperties([]);
+            return;
+          }
+          
+          // Filter properties within 5km radius
+          const nearby = properties.filter(prop => {
+            const distance = calculateDistance(
+              location.lat,
+              location.lng,
+              typeof prop.lat === 'string' ? parseFloat(prop.lat) : prop.lat,
+              typeof prop.lng === 'string' ? parseFloat(prop.lng) : prop.lng
+            );
+            return distance <= 5;
+          });
+          
+          if (nearby.length === 0) {
+            setRouteMessage(`No ${propertyTypeFilter === 'all' ? '' : propertyTypeFilter} properties found within 5km radius`);
+            setNearbyProperties([]);
+          } else {
+            setNearbyProperties(nearby);
+            setRouteMessage(`Found ${nearby.length} ${propertyTypeFilter === 'all' ? '' : propertyTypeFilter} properties within 5km`);
+            setWalkingRouteActive(true);
+          }
+        } catch (err) {
+          console.error('Error generating route:', err);
+          setRouteMessage('Error generating route');
+        }
         
         // Center map on current location
         if (mapInstanceRef.current) {
-          mapInstanceRef.current.setView([location.lat, location.lng], 15);
+          mapInstanceRef.current.setView([location.lat, location.lng], 14);
         }
       },
       (error) => {
@@ -311,9 +366,9 @@ const MapComponent: React.FC<MapComponentProps> = ({
     return R * c;
   };
 
-  // Draw walking route radius and route
+  // Draw walking route radius and route with property data
   useEffect(() => {
-    if (!mapInstanceRef.current || !walkingRouteActive || !currentLocation) {
+    if (!mapInstanceRef.current || !currentLocation) {
       // Clean up
       if (radiusCircleRef.current) {
         mapInstanceRef.current?.removeLayer(radiusCircleRef.current);
@@ -323,11 +378,21 @@ const MapComponent: React.FC<MapComponentProps> = ({
         mapInstanceRef.current?.removeLayer(walkingRouteRef.current);
         walkingRouteRef.current = null;
       }
+      propertyMarkersRef.current.forEach(marker => {
+        mapInstanceRef.current?.removeLayer(marker);
+      });
+      propertyMarkersRef.current = [];
       return;
     }
 
     const L = (window as any).L;
     if (!L) return;
+
+    // Clean up previous markers
+    propertyMarkersRef.current.forEach(marker => {
+      mapInstanceRef.current.removeLayer(marker);
+    });
+    propertyMarkersRef.current = [];
 
     // Draw 5km radius circle
     if (radiusCircleRef.current) {
@@ -342,17 +407,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
       weight: 2
     }).addTo(mapInstanceRef.current);
 
-    // Filter pins within 5km radius and by property type
-    const nearbyPins = pins.filter(pin => {
-      const distance = calculateDistance(currentLocation.lat, currentLocation.lng, pin.lat, pin.lng);
-      const withinRadius = distance <= 5;
-      
-      // Check property type if available (from properties table integration)
-      // For now, we'll use all pins, but you can add type filtering here
-      return withinRadius;
-    });
+    // Add current location marker
+    const currentMarker = L.marker([currentLocation.lat, currentLocation.lng], {
+      icon: L.divIcon({
+        html: '<div style="background-color: #10b981; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);"></div>',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        className: 'current-location-marker'
+      })
+    }).addTo(mapInstanceRef.current).bindPopup('<strong>Your Location</strong>');
+    propertyMarkersRef.current.push(currentMarker);
 
-    if (nearbyPins.length < 2) {
+    if (!walkingRouteActive || nearbyProperties.length === 0) {
       if (walkingRouteRef.current) {
         mapInstanceRef.current.removeLayer(walkingRouteRef.current);
         walkingRouteRef.current = null;
@@ -360,12 +426,85 @@ const MapComponent: React.FC<MapComponentProps> = ({
       return;
     }
 
+    // Create property markers with detailed information
+    nearbyProperties.forEach(property => {
+      const propertyType = property.type || 'unknown';
+      const markerColor = propertyType === 'residential' ? '#3b82f6' : 
+                         propertyType === 'commercial' ? '#f59e0b' : '#8b5cf6';
+      
+      const propertyIcon = L.divIcon({
+        html: `<div style="background-color: ${markerColor}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [14, 14],
+        iconAnchor: [7, 7],
+        className: 'property-marker'
+      });
+
+      const propLat = typeof property.lat === 'string' ? parseFloat(property.lat) : property.lat;
+      const propLng = typeof property.lng === 'string' ? parseFloat(property.lng) : property.lng;
+      
+      const marker = L.marker([propLat, propLng], { 
+        icon: propertyIcon 
+      }).addTo(mapInstanceRef.current);
+
+      // Build detailed popup content
+      let popupContent = `
+        <div class="p-3 max-w-xs">
+          <strong class="text-base">${property.address_line1 || property.address || 'Unknown Address'}</strong><br>
+          <div class="mt-2 space-y-1 text-sm">
+            <div><strong>Type:</strong> ${(propertyType).charAt(0).toUpperCase() + (propertyType).slice(1)}</div>
+      `;
+
+      if (property.city) {
+        popupContent += `<div><strong>City:</strong> ${property.city}</div>`;
+      }
+      if (property.living_sqft) {
+        popupContent += `<div><strong>Living Area:</strong> ${property.living_sqft.toLocaleString()} sq ft</div>`;
+      }
+      if (property.lot_sqft) {
+        popupContent += `<div><strong>Lot Size:</strong> ${property.lot_sqft.toLocaleString()} sq ft</div>`;
+      }
+      if (property.year_built) {
+        popupContent += `<div><strong>Year Built:</strong> ${property.year_built}</div>`;
+      }
+      if (property.bedrooms) {
+        popupContent += `<div><strong>Bedrooms:</strong> ${property.bedrooms}</div>`;
+      }
+      if (property.bathrooms) {
+        popupContent += `<div><strong>Bathrooms:</strong> ${property.bathrooms}</div>`;
+      }
+      if (property.stories) {
+        popupContent += `<div><strong>Stories:</strong> ${property.stories}</div>`;
+      }
+      if (property.status) {
+        popupContent += `<div><strong>Status:</strong> ${property.status}</div>`;
+      }
+      if (property.lead_score) {
+        popupContent += `<div><strong>Lead Score:</strong> ${property.lead_score}</div>`;
+      }
+      if (property.customer_name) {
+        popupContent += `<div><strong>Contact:</strong> ${property.customer_name}</div>`;
+      }
+      if (property.phone_number) {
+        popupContent += `<div><strong>Phone:</strong> ${property.phone_number}</div>`;
+      }
+
+      popupContent += `</div></div>`;
+      
+      marker.bindPopup(popupContent);
+      propertyMarkersRef.current.push(marker);
+    });
+
     // Generate optimized route starting from current location
-    const routePoints = [currentLocation, ...nearbyPins];
     const optimized = [currentLocation];
-    const remaining = [...nearbyPins];
+    const remaining = [...nearbyProperties.map(p => ({
+      lat: typeof p.lat === 'string' ? parseFloat(p.lat) : p.lat,
+      lng: typeof p.lng === 'string' ? parseFloat(p.lng) : p.lng,
+      data: p
+    }))];
 
     let current = currentLocation;
+    let totalDistance = 0;
+    
     while (remaining.length > 0) {
       let nearest = remaining[0];
       let nearestDist = calculateDistance(current.lat, current.lng, nearest.lat, nearest.lng);
@@ -381,6 +520,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
       }
 
       optimized.push(nearest);
+      totalDistance += nearestDist;
       remaining.splice(nearestIdx, 1);
       current = nearest;
     }
@@ -399,26 +539,23 @@ const MapComponent: React.FC<MapComponentProps> = ({
       smoothFactor: 1
     }).addTo(mapInstanceRef.current);
 
+    const filterText = propertyTypeFilter === 'all' ? 'All Properties' : 
+                      propertyTypeFilter.charAt(0).toUpperCase() + propertyTypeFilter.slice(1);
+    
     walkingRouteRef.current.bindPopup(`
       <div class="p-3">
-        <strong class="text-lg">Walking Route (${propertyTypeFilter})</strong><br>
-        <div class="text-sm mt-1">Properties: ${nearbyPins.length}</div>
-        <div class="text-sm">Radius: 5 km</div>
-        <div class="text-xs text-gray-500 mt-1">Optimized walking path</div>
+        <strong class="text-lg">Walking Route</strong><br>
+        <div class="text-sm mt-2 space-y-1">
+          <div><strong>Filter:</strong> ${filterText}</div>
+          <div><strong>Properties:</strong> ${nearbyProperties.length}</div>
+          <div><strong>Distance:</strong> ${totalDistance.toFixed(2)} km</div>
+          <div><strong>Radius:</strong> 5 km</div>
+        </div>
+        <div class="text-xs text-gray-500 mt-2">Optimized walking path</div>
       </div>
     `);
 
-    // Add current location marker
-    L.marker([currentLocation.lat, currentLocation.lng], {
-      icon: L.divIcon({
-        html: '<div style="background-color: #10b981; width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);"></div>',
-        iconSize: [16, 16],
-        iconAnchor: [8, 8],
-        className: 'current-location-marker'
-      })
-    }).addTo(mapInstanceRef.current).bindPopup('Your Location');
-
-  }, [walkingRouteActive, currentLocation, pins, propertyTypeFilter]);
+  }, [walkingRouteActive, currentLocation, nearbyProperties, propertyTypeFilter]);
 
   // Draw optimized flyer routes
   useEffect(() => {
@@ -492,11 +629,12 @@ const MapComponent: React.FC<MapComponentProps> = ({
           <div className="font-semibold text-sm">Walking Route Generator</div>
           <select
             value={propertyTypeFilter}
-            onChange={(e) => setPropertyTypeFilter(e.target.value as 'residential' | 'commercial')}
+            onChange={(e) => setPropertyTypeFilter(e.target.value as 'all' | 'residential' | 'commercial')}
             className="w-full text-sm border rounded px-2 py-1"
           >
-            <option value="residential">Residential</option>
-            <option value="commercial">Commercial</option>
+            <option value="all">All Properties</option>
+            <option value="residential">Residential Only</option>
+            <option value="commercial">Commercial Only</option>
           </select>
           <button
             onClick={generateWalkingRoute}
@@ -504,13 +642,27 @@ const MapComponent: React.FC<MapComponentProps> = ({
           >
             Generate 5km Route
           </button>
-          {walkingRouteActive && (
+          {(walkingRouteActive || currentLocation) && (
             <button
-              onClick={() => setWalkingRouteActive(false)}
+              onClick={() => {
+                setWalkingRouteActive(false);
+                setCurrentLocation(null);
+                setNearbyProperties([]);
+                setRouteMessage('');
+              }}
               className="w-full text-sm bg-destructive text-destructive-foreground rounded px-3 py-1.5 hover:bg-destructive/90"
             >
               Clear Walking Route
             </button>
+          )}
+          {routeMessage && (
+            <div className={`text-xs p-2 rounded ${
+              routeMessage.includes('Error') || routeMessage.includes('No properties') 
+                ? 'bg-destructive/10 text-destructive' 
+                : 'bg-primary/10 text-primary'
+            }`}>
+              {routeMessage}
+            </div>
           )}
         </div>
 
