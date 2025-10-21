@@ -44,12 +44,13 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const [optimizedRoutes, setOptimizedRoutes] = useState<OptimizedRoute[]>([]);
   const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number} | null>(null);
   const [walkingRouteActive, setWalkingRouteActive] = useState(false);
-  const [propertyTypeFilter, setPropertyTypeFilter] = useState<'all' | 'residential' | 'commercial'>('all');
-  const [nearbyProperties, setNearbyProperties] = useState<any[]>([]);
-  const [routeMessage, setRouteMessage] = useState<string>('');
+  const [routeStartLocation, setRouteStartLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [nearbyBuildings, setNearbyBuildings] = useState<any[]>([]);
+  const [routeMessage, setRouteMessage] = useState<string>('Click on map to start route');
   const radiusCircleRef = useRef<any>(null);
   const walkingRouteRef = useRef<any>(null);
-  const propertyMarkersRef = useRef<any[]>([]);
+  const buildingMarkersRef = useRef<any[]>([]);
+  const [routeSelectMode, setRouteSelectMode] = useState(false);
 
   // Fetch employee sessions and locations
   useEffect(() => {
@@ -120,6 +121,14 @@ const MapComponent: React.FC<MapComponentProps> = ({
         map.on('click', async (e: any) => {
           const { lat, lng } = e.latlng;
           console.log('Map clicked at:', lat, lng);
+          
+          // If in route select mode, generate route from this point
+          if (routeSelectMode) {
+            setRouteStartLocation({ lat, lng });
+            generateWalkingRouteFromPoint(lat, lng);
+            setRouteSelectMode(false);
+            return;
+          }
           
           try {
             const response = await fetch(
@@ -275,83 +284,79 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
   }, [employeeSessions, routeLocations, showEmployeeRoutes]);
 
-  // Handle walking route generation
-  const generateWalkingRoute = async () => {
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const location = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        setCurrentLocation(location);
-        
-        // Query properties from database within 5km radius
-        try {
-          setRouteMessage('Searching for properties...');
-          
-          let query = supabase
-            .from('properties')
-            .select('*')
-            .not('lat', 'is', null)
-            .not('lng', 'is', null);
-          
-          // Filter by property type if not "all"
-          if (propertyTypeFilter !== 'all') {
-            query = query.eq('type', propertyTypeFilter);
-          }
-          
-          const { data: properties, error } = await query;
-          
-          if (error) {
-            console.error('Error fetching properties:', error);
-            setRouteMessage('Error fetching properties');
-            return;
-          }
-          
-          if (!properties || properties.length === 0) {
-            setRouteMessage('No properties found in database');
-            setNearbyProperties([]);
-            return;
-          }
-          
-          // Filter properties within 5km radius
-          const nearby = properties.filter(prop => {
-            const distance = calculateDistance(
-              location.lat,
-              location.lng,
-              typeof prop.lat === 'string' ? parseFloat(prop.lat) : prop.lat,
-              typeof prop.lng === 'string' ? parseFloat(prop.lng) : prop.lng
-            );
-            return distance <= 5;
-          });
-          
-          if (nearby.length === 0) {
-            setRouteMessage(`No ${propertyTypeFilter === 'all' ? '' : propertyTypeFilter} properties found within 5km radius`);
-            setNearbyProperties([]);
-          } else {
-            setNearbyProperties(nearby);
-            setRouteMessage(`Found ${nearby.length} ${propertyTypeFilter === 'all' ? '' : propertyTypeFilter} properties within 5km`);
-            setWalkingRouteActive(true);
-          }
-        } catch (err) {
-          console.error('Error generating route:', err);
-          setRouteMessage('Error generating route');
-        }
-        
-        // Center map on current location
-        if (mapInstanceRef.current) {
-          mapInstanceRef.current.setView([location.lat, location.lng], 14);
-        }
-      },
-      (error) => {
-        alert('Unable to get your location: ' + error.message);
+  // Generate walking route from a clicked point
+  const generateWalkingRouteFromPoint = async (lat: number, lng: number) => {
+    setRouteMessage('Fetching buildings from OpenStreetMap...');
+    setWalkingRouteActive(true);
+    
+    // Fetch buildings from OpenStreetMap using Overpass API
+    const radius = 2000; // 2km radius
+    const overpassQuery = `
+      [out:json][timeout:25];
+      (
+        way["building"](around:${radius},${lat},${lng});
+        relation["building"](around:${radius},${lat},${lng});
+      );
+      out center;
+    `;
+    
+    try {
+      const response = await fetch('https://overpass-api.de/api/interpreter', {
+        method: 'POST',
+        body: overpassQuery
+      });
+      
+      if (!response.ok) {
+        setRouteMessage('Error fetching building data');
+        return;
       }
-    );
+      
+      const data = await response.json();
+      
+      if (!data.elements || data.elements.length === 0) {
+        setRouteMessage('No buildings found in this area');
+        setNearbyBuildings([]);
+        return;
+      }
+      
+      // Process buildings
+      const buildings = data.elements.map((element: any) => {
+        const center = element.center || { lat: element.lat, lon: element.lon };
+        const buildingType = element.tags?.building || 'yes';
+        const isResidential = ['house', 'residential', 'apartments', 'detached', 'terrace'].includes(buildingType);
+        const isCommercial = ['commercial', 'retail', 'office', 'warehouse'].includes(buildingType);
+        const yearBuilt = element.tags?.['start_date'] || element.tags?.['building:year'] || null;
+        
+        return {
+          lat: center.lat,
+          lng: center.lon,
+          type: isResidential ? 'residential' : isCommercial ? 'commercial' : 'other',
+          buildingType,
+          yearBuilt,
+          address: element.tags?.['addr:street'] ? 
+            `${element.tags['addr:housenumber'] || ''} ${element.tags['addr:street']}`.trim() : 
+            'Unknown Address',
+          tags: element.tags
+        };
+      });
+      
+      setNearbyBuildings(buildings);
+      setRouteMessage(`Found ${buildings.length} buildings within 2km`);
+      
+      // Center map on selected location
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.setView([lat, lng], 15);
+      }
+    } catch (error) {
+      console.error('Error fetching buildings:', error);
+      setRouteMessage('Error connecting to OpenStreetMap');
+    }
+  };
+
+  // Handle walking route selection
+  const startRouteSelection = () => {
+    setRouteSelectMode(true);
+    setRouteMessage('Click on the map to select starting location');
   };
 
   // Calculate distance between two coordinates in km
@@ -366,9 +371,9 @@ const MapComponent: React.FC<MapComponentProps> = ({
     return R * c;
   };
 
-  // Draw walking route radius and route with property data
+  // Draw walking route with buildings from OSM
   useEffect(() => {
-    if (!mapInstanceRef.current || !currentLocation) {
+    if (!mapInstanceRef.current || !routeStartLocation) {
       // Clean up
       if (radiusCircleRef.current) {
         mapInstanceRef.current?.removeLayer(radiusCircleRef.current);
@@ -378,10 +383,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
         mapInstanceRef.current?.removeLayer(walkingRouteRef.current);
         walkingRouteRef.current = null;
       }
-      propertyMarkersRef.current.forEach(marker => {
+      buildingMarkersRef.current.forEach(marker => {
         mapInstanceRef.current?.removeLayer(marker);
       });
-      propertyMarkersRef.current = [];
+      buildingMarkersRef.current = [];
       return;
     }
 
@@ -389,36 +394,36 @@ const MapComponent: React.FC<MapComponentProps> = ({
     if (!L) return;
 
     // Clean up previous markers
-    propertyMarkersRef.current.forEach(marker => {
+    buildingMarkersRef.current.forEach(marker => {
       mapInstanceRef.current.removeLayer(marker);
     });
-    propertyMarkersRef.current = [];
+    buildingMarkersRef.current = [];
 
-    // Draw 5km radius circle
+    // Draw 2km radius circle
     if (radiusCircleRef.current) {
       mapInstanceRef.current.removeLayer(radiusCircleRef.current);
     }
     
-    radiusCircleRef.current = L.circle([currentLocation.lat, currentLocation.lng], {
-      radius: 5000, // 5km in meters
+    radiusCircleRef.current = L.circle([routeStartLocation.lat, routeStartLocation.lng], {
+      radius: 2000, // 2km in meters
       color: '#10b981',
       fillColor: '#10b981',
       fillOpacity: 0.1,
       weight: 2
     }).addTo(mapInstanceRef.current);
 
-    // Add current location marker
-    const currentMarker = L.marker([currentLocation.lat, currentLocation.lng], {
+    // Add start location marker
+    const startMarker = L.marker([routeStartLocation.lat, routeStartLocation.lng], {
       icon: L.divIcon({
         html: '<div style="background-color: #10b981; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);"></div>',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
-        className: 'current-location-marker'
+        className: 'start-location-marker'
       })
-    }).addTo(mapInstanceRef.current).bindPopup('<strong>Your Location</strong>');
-    propertyMarkersRef.current.push(currentMarker);
+    }).addTo(mapInstanceRef.current).bindPopup('<strong>Route Start</strong>');
+    buildingMarkersRef.current.push(startMarker);
 
-    if (!walkingRouteActive || nearbyProperties.length === 0) {
+    if (!walkingRouteActive || nearbyBuildings.length === 0) {
       if (walkingRouteRef.current) {
         mapInstanceRef.current.removeLayer(walkingRouteRef.current);
         walkingRouteRef.current = null;
@@ -426,100 +431,64 @@ const MapComponent: React.FC<MapComponentProps> = ({
       return;
     }
 
-    // Create property markers with detailed information
-    nearbyProperties.forEach(property => {
-      const propertyType = property.type || 'unknown';
-      const markerColor = propertyType === 'residential' ? '#3b82f6' : 
-                         propertyType === 'commercial' ? '#f59e0b' : '#8b5cf6';
+    // Create building markers
+    nearbyBuildings.forEach(building => {
+      const markerColor = building.type === 'residential' ? '#3b82f6' : 
+                         building.type === 'commercial' ? '#f59e0b' : '#8b5cf6';
       
-      const propertyIcon = L.divIcon({
-        html: `<div style="background-color: ${markerColor}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [14, 14],
-        iconAnchor: [7, 7],
-        className: 'property-marker'
+      const buildingIcon = L.divIcon({
+        html: `<div style="background-color: ${markerColor}; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [10, 10],
+        iconAnchor: [5, 5],
+        className: 'building-marker'
       });
-
-      const propLat = typeof property.lat === 'string' ? parseFloat(property.lat) : property.lat;
-      const propLng = typeof property.lng === 'string' ? parseFloat(property.lng) : property.lng;
       
-      const marker = L.marker([propLat, propLng], { 
-        icon: propertyIcon 
+      const marker = L.marker([building.lat, building.lng], { 
+        icon: buildingIcon 
       }).addTo(mapInstanceRef.current);
 
-      // Build detailed popup content
       let popupContent = `
-        <div class="p-3 max-w-xs">
-          <strong class="text-base">${property.address_line1 || property.address || 'Unknown Address'}</strong><br>
-          <div class="mt-2 space-y-1 text-sm">
-            <div><strong>Type:</strong> ${(propertyType).charAt(0).toUpperCase() + (propertyType).slice(1)}</div>
+        <div class="p-2 max-w-xs">
+          <strong class="text-sm">${building.address}</strong><br>
+          <div class="mt-1 space-y-1 text-xs">
+            <div><strong>Type:</strong> ${building.type.charAt(0).toUpperCase() + building.type.slice(1)}</div>
+            <div><strong>Building:</strong> ${building.buildingType}</div>
       `;
 
-      if (property.city) {
-        popupContent += `<div><strong>City:</strong> ${property.city}</div>`;
-      }
-      if (property.living_sqft) {
-        popupContent += `<div><strong>Living Area:</strong> ${property.living_sqft.toLocaleString()} sq ft</div>`;
-      }
-      if (property.lot_sqft) {
-        popupContent += `<div><strong>Lot Size:</strong> ${property.lot_sqft.toLocaleString()} sq ft</div>`;
-      }
-      if (property.year_built) {
-        popupContent += `<div><strong>Year Built:</strong> ${property.year_built}</div>`;
-      }
-      if (property.bedrooms) {
-        popupContent += `<div><strong>Bedrooms:</strong> ${property.bedrooms}</div>`;
-      }
-      if (property.bathrooms) {
-        popupContent += `<div><strong>Bathrooms:</strong> ${property.bathrooms}</div>`;
-      }
-      if (property.stories) {
-        popupContent += `<div><strong>Stories:</strong> ${property.stories}</div>`;
-      }
-      if (property.status) {
-        popupContent += `<div><strong>Status:</strong> ${property.status}</div>`;
-      }
-      if (property.lead_score) {
-        popupContent += `<div><strong>Lead Score:</strong> ${property.lead_score}</div>`;
-      }
-      if (property.customer_name) {
-        popupContent += `<div><strong>Contact:</strong> ${property.customer_name}</div>`;
-      }
-      if (property.phone_number) {
-        popupContent += `<div><strong>Phone:</strong> ${property.phone_number}</div>`;
+      if (building.yearBuilt) {
+        popupContent += `<div><strong>Year Built:</strong> ${building.yearBuilt}</div>`;
       }
 
       popupContent += `</div></div>`;
       
       marker.bindPopup(popupContent);
-      propertyMarkersRef.current.push(marker);
+      buildingMarkersRef.current.push(marker);
     });
 
-    // Generate optimized route starting from current location
-    const optimized = [currentLocation];
-    const remaining = [...nearbyProperties.map(p => ({
-      lat: typeof p.lat === 'string' ? parseFloat(p.lat) : p.lat,
-      lng: typeof p.lng === 'string' ? parseFloat(p.lng) : p.lng,
-      data: p
-    }))];
-
-    let current = currentLocation;
+    // Generate optimized route using nearest neighbor algorithm
+    const routePoints = [routeStartLocation];
+    const remaining = [...nearbyBuildings];
+    let current = routeStartLocation;
     let totalDistance = 0;
     
-    while (remaining.length > 0) {
+    // Select up to 30 buildings for the route
+    const maxBuildings = Math.min(30, remaining.length);
+    
+    for (let i = 0; i < maxBuildings && remaining.length > 0; i++) {
       let nearest = remaining[0];
       let nearestDist = calculateDistance(current.lat, current.lng, nearest.lat, nearest.lng);
       let nearestIdx = 0;
 
-      for (let i = 1; i < remaining.length; i++) {
-        const dist = calculateDistance(current.lat, current.lng, remaining[i].lat, remaining[i].lng);
+      for (let j = 1; j < remaining.length; j++) {
+        const dist = calculateDistance(current.lat, current.lng, remaining[j].lat, remaining[j].lng);
         if (dist < nearestDist) {
-          nearest = remaining[i];
+          nearest = remaining[j];
           nearestDist = dist;
-          nearestIdx = i;
+          nearestIdx = j;
         }
       }
 
-      optimized.push(nearest);
+      routePoints.push(nearest);
       totalDistance += nearestDist;
       remaining.splice(nearestIdx, 1);
       current = nearest;
@@ -530,7 +499,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
       mapInstanceRef.current.removeLayer(walkingRouteRef.current);
     }
 
-    const coordinates = optimized.map(point => [point.lat, point.lng]);
+    const coordinates = routePoints.map(point => [point.lat, point.lng]);
     
     walkingRouteRef.current = L.polyline(coordinates, {
       color: '#10b981',
@@ -539,23 +508,25 @@ const MapComponent: React.FC<MapComponentProps> = ({
       smoothFactor: 1
     }).addTo(mapInstanceRef.current);
 
-    const filterText = propertyTypeFilter === 'all' ? 'All Properties' : 
-                      propertyTypeFilter.charAt(0).toUpperCase() + propertyTypeFilter.slice(1);
+    const residentialCount = nearbyBuildings.filter(b => b.type === 'residential').length;
+    const commercialCount = nearbyBuildings.filter(b => b.type === 'commercial').length;
     
     walkingRouteRef.current.bindPopup(`
       <div class="p-3">
         <strong class="text-lg">Walking Route</strong><br>
         <div class="text-sm mt-2 space-y-1">
-          <div><strong>Filter:</strong> ${filterText}</div>
-          <div><strong>Properties:</strong> ${nearbyProperties.length}</div>
-          <div><strong>Distance:</strong> ${totalDistance.toFixed(2)} km</div>
-          <div><strong>Radius:</strong> 5 km</div>
+          <div><strong>Total Buildings:</strong> ${nearbyBuildings.length}</div>
+          <div><strong>Residential:</strong> ${residentialCount}</div>
+          <div><strong>Commercial:</strong> ${commercialCount}</div>
+          <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
+          <div><strong>Est. Distance:</strong> ${totalDistance.toFixed(2)} km</div>
+          <div><strong>Radius:</strong> 2 km</div>
         </div>
-        <div class="text-xs text-gray-500 mt-2">Optimized walking path</div>
+        <div class="text-xs text-gray-500 mt-2">Data from OpenStreetMap</div>
       </div>
     `);
 
-  }, [walkingRouteActive, currentLocation, nearbyProperties, propertyTypeFilter]);
+  }, [walkingRouteActive, routeStartLocation, nearbyBuildings]);
 
   // Draw optimized flyer routes
   useEffect(() => {
@@ -627,38 +598,51 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
         <div className="pt-2 border-t space-y-2">
           <div className="font-semibold text-sm">Walking Route Generator</div>
-          <select
-            value={propertyTypeFilter}
-            onChange={(e) => setPropertyTypeFilter(e.target.value as 'all' | 'residential' | 'commercial')}
-            className="w-full text-sm border rounded px-2 py-1"
-          >
-            <option value="all">All Properties</option>
-            <option value="residential">Residential Only</option>
-            <option value="commercial">Commercial Only</option>
-          </select>
           <button
-            onClick={generateWalkingRoute}
-            className="w-full text-sm bg-primary text-primary-foreground rounded px-3 py-1.5 hover:bg-primary/90"
+            onClick={startRouteSelection}
+            disabled={routeSelectMode}
+            className={`w-full text-sm rounded px-3 py-1.5 ${
+              routeSelectMode 
+                ? 'bg-yellow-500 text-white cursor-wait' 
+                : 'bg-primary text-primary-foreground hover:bg-primary/90'
+            }`}
           >
-            Generate 5km Route
+            {routeSelectMode ? 'Click on Map...' : 'Generate 2km Route'}
           </button>
-          {(walkingRouteActive || currentLocation) && (
+          {(walkingRouteActive || routeStartLocation) && (
             <button
               onClick={() => {
                 setWalkingRouteActive(false);
-                setCurrentLocation(null);
-                setNearbyProperties([]);
-                setRouteMessage('');
+                setRouteStartLocation(null);
+                setNearbyBuildings([]);
+                setRouteMessage('Click on map to start route');
+                setRouteSelectMode(false);
               }}
               className="w-full text-sm bg-destructive text-destructive-foreground rounded px-3 py-1.5 hover:bg-destructive/90"
             >
-              Clear Walking Route
+              Clear Route
             </button>
           )}
+          <button
+            onClick={() => {
+              if (confirm('Clear all pins from the map?')) {
+                Object.values(markersRef.current).forEach(marker => {
+                  mapInstanceRef.current?.removeLayer(marker);
+                });
+                markersRef.current = {};
+                window.location.reload();
+              }
+            }}
+            className="w-full text-sm bg-orange-500 text-white rounded px-3 py-1.5 hover:bg-orange-600"
+          >
+            Clear All Pins
+          </button>
           {routeMessage && (
             <div className={`text-xs p-2 rounded ${
-              routeMessage.includes('Error') || routeMessage.includes('No properties') 
+              routeMessage.includes('Error') || routeMessage.includes('No') 
                 ? 'bg-destructive/10 text-destructive' 
+                : routeSelectMode
+                ? 'bg-yellow-100 text-yellow-800'
                 : 'bg-primary/10 text-primary'
             }`}>
               {routeMessage}
