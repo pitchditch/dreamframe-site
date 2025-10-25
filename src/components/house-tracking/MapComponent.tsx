@@ -292,30 +292,37 @@ const MapComponent: React.FC<MapComponentProps> = ({
     // Fetch buildings from OpenStreetMap using Overpass API
     const radius = 2000; // 2km radius
     const overpassQuery = `
-      [out:json][timeout:25];
+      [out:json][timeout:10];
       (
         way["building"](around:${radius},${lat},${lng});
-        relation["building"](around:${radius},${lat},${lng});
+        node["building"](around:${radius},${lat},${lng});
       );
       out center;
     `;
     
     try {
+      // Add timeout to the fetch request
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second timeout
+      
       const response = await fetch('https://overpass-api.de/api/interpreter', {
         method: 'POST',
-        body: overpassQuery
+        body: overpassQuery,
+        signal: controller.signal
       });
       
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
-        setRouteMessage('Error fetching building data');
-        return;
+        throw new Error('Failed to fetch building data');
       }
       
       const data = await response.json();
       
       if (!data.elements || data.elements.length === 0) {
-        setRouteMessage('No buildings found in this area');
+        setRouteMessage('No buildings found in this area. Try another location.');
         setNearbyBuildings([]);
+        setWalkingRouteActive(false);
         return;
       }
       
@@ -323,8 +330,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
       const buildings = data.elements.map((element: any) => {
         const center = element.center || { lat: element.lat, lon: element.lon };
         const buildingType = element.tags?.building || 'yes';
-        const isResidential = ['house', 'residential', 'apartments', 'detached', 'terrace'].includes(buildingType);
-        const isCommercial = ['commercial', 'retail', 'office', 'warehouse'].includes(buildingType);
+        const isResidential = ['house', 'residential', 'apartments', 'detached', 'terrace', 'semidetached_house', 'bungalow'].includes(buildingType);
+        const isCommercial = ['commercial', 'retail', 'office', 'warehouse', 'industrial'].includes(buildingType);
         const yearBuilt = element.tags?.['start_date'] || element.tags?.['building:year'] || null;
         
         return {
@@ -341,13 +348,13 @@ const MapComponent: React.FC<MapComponentProps> = ({
       });
       
       setNearbyBuildings(buildings);
-      setRouteMessage(`Found ${buildings.length} buildings within 2km`);
+      setRouteMessage(`Found ${buildings.length} buildings. Route generated!`);
       
       // Center map on selected location
       if (mapInstanceRef.current) {
         mapInstanceRef.current.setView([lat, lng], 15);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching buildings:', error);
       setRouteMessage('Error connecting to OpenStreetMap');
     }
