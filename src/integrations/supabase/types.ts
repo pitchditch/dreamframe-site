@@ -86,7 +86,7 @@ export type Database = {
           detected_city: string | null
           first_visit: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           last_activity: string
           page_count: number
           referrer: string | null
@@ -98,7 +98,7 @@ export type Database = {
           detected_city?: string | null
           first_visit?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           last_activity?: string
           page_count?: number
           referrer?: string | null
@@ -110,7 +110,7 @@ export type Database = {
           detected_city?: string | null
           first_visit?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           last_activity?: string
           page_count?: number
           referrer?: string | null
@@ -743,6 +743,36 @@ export type Database = {
         }
         Relationships: []
       }
+      discount_codes: {
+        Row: {
+          created_at: string
+          customer_email: string
+          discount_code: string
+          expires_at: string
+          id: string
+          service_type: string
+          used_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_email: string
+          discount_code: string
+          expires_at: string
+          id?: string
+          service_type: string
+          used_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string
+          discount_code?: string
+          expires_at?: string
+          id?: string
+          service_type?: string
+          used_at?: string
+        }
+        Relationships: []
+      }
       door_visits: {
         Row: {
           contact_email: string | null
@@ -1358,7 +1388,7 @@ export type Database = {
           created_at: string
           detected_city: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           latitude: number | null
           longitude: number | null
           page_path: string
@@ -1372,7 +1402,7 @@ export type Database = {
           created_at?: string
           detected_city?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           latitude?: number | null
           longitude?: number | null
           page_path: string
@@ -1386,7 +1416,7 @@ export type Database = {
           created_at?: string
           detected_city?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           latitude?: number | null
           longitude?: number | null
           page_path?: string
@@ -1888,6 +1918,68 @@ export type Database = {
             columns: ["property_data_id"]
             isOneToOne: false
             referencedRelation: "property_data"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      receipts: {
+        Row: {
+          created_at: string
+          customer_email: string | null
+          customer_id: string | null
+          customer_name: string
+          customer_phone: string | null
+          id: string
+          items: Json
+          notes: string | null
+          payment_method: string | null
+          receipt_date: string
+          receipt_number: string
+          subtotal: number
+          tax_amount: number
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          id?: string
+          items?: Json
+          notes?: string | null
+          payment_method?: string | null
+          receipt_date?: string
+          receipt_number: string
+          subtotal?: number
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          id?: string
+          items?: Json
+          notes?: string | null
+          payment_method?: string | null
+          receipt_date?: string
+          receipt_number?: string
+          subtotal?: number
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "receipts_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]
@@ -2610,18 +2702,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      archive_daily_chats: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_typing_indicators: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      convert_lead_to_quote: {
-        Args: { p_lead_id: string }
-        Returns: string
-      }
+      archive_daily_chats: { Args: never; Returns: undefined }
+      cleanup_old_typing_indicators: { Args: never; Returns: undefined }
+      convert_lead_to_quote: { Args: { p_lead_id: string }; Returns: string }
       convert_quote_to_job: {
         Args: {
           p_assigned_team_member?: string
@@ -2658,18 +2741,10 @@ export type Database = {
         Args: { p_due_days?: number; p_quote_id: string }
         Returns: string
       }
-      generate_gift_card_code: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      generate_invoice_number: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      is_admin: {
-        Args: { user_id?: string }
-        Returns: boolean
-      }
+      generate_gift_card_code: { Args: never; Returns: string }
+      generate_invoice_number: { Args: never; Returns: string }
+      generate_receipt_number: { Args: never; Returns: string }
+      is_admin: { Args: { user_id?: string }; Returns: boolean }
       issue_referral_reward: {
         Args: { p_admin_notes?: string; p_referral_id: string }
         Returns: undefined
