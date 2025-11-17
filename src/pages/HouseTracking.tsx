@@ -9,6 +9,7 @@ import AnalyticsDashboard from '../components/house-tracking/AnalyticsDashboard'
 import PersonalCalculator from '../components/house-tracking/PersonalCalculator';
 import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
 import EditPinForm from '../components/house-tracking/EditPinForm';
+import CanvassingMode from '../components/house-tracking/CanvassingMode';
 import { HousePin, RouteSession } from '../components/house-tracking/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -39,6 +40,9 @@ const HouseTracking: React.FC = () => {
   const [activeTab, setActiveTab] = useState('map');
   const [showPreviousClientsOnly, setShowPreviousClientsOnly] = useState(false);
   const [serviceReminders, setServiceReminders] = useState<HousePin[]>([]);
+  const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [selectedPin, setSelectedPin] = useState<HousePin | null>(null);
+  const [canvassingMode, setCanvassingMode] = useState(false);
 
   // Check authentication
   useEffect(() => {
@@ -118,6 +122,36 @@ const HouseTracking: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('routes', JSON.stringify(routes));
   }, [routes]);
+
+  // Track current location
+  useEffect(() => {
+    if (!canvassingMode) return;
+
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        setCurrentLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+      },
+      (error) => {
+        console.error('Error getting location:', error);
+        toast.error('Unable to get location');
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 5000
+      }
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, [canvassingMode]);
+
+  const handleQuickMarkProperty = (pin: HousePin) => {
+    handleAddPin(pin);
+    setSelectedPin(pin);
+  };
 
   const handleAddPin = (newPin: Omit<HousePin, 'id'>) => {
     const pin: HousePin = {
@@ -552,6 +586,29 @@ const HouseTracking: React.FC = () => {
           <StreetViewDialog
             pin={streetViewPin}
             onClose={() => setStreetViewPin(null)}
+          />
+        )}
+
+        {/* Canvassing Mode Toggle */}
+        {activeTab === 'map' && (
+          <div className="fixed top-20 right-4 z-40">
+            <Button
+              onClick={() => setCanvassingMode(!canvassingMode)}
+              variant={canvassingMode ? 'default' : 'outline'}
+              className="gap-2 shadow-lg"
+            >
+              <Navigation className="w-4 h-4" />
+              {canvassingMode ? 'Exit Canvassing' : 'Start Canvassing'}
+            </Button>
+          </div>
+        )}
+
+        {/* Canvassing Mode UI */}
+        {canvassingMode && (
+          <CanvassingMode
+            onQuickMark={handleQuickMarkProperty}
+            currentLocation={currentLocation}
+            activePin={selectedPin}
           />
         )}
       </div>
