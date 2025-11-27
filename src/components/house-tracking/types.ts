@@ -21,6 +21,10 @@ export interface HousePin {
   squareFootage?: number;
   // Lead source and attribution fields
   leadSource?: 'door-to-door' | 'facebook' | 'google' | 'referral' | 'website' | 'qr-code' | 'flyer' | 'ai-call' | 'other';
+  // Storefront categorization
+  isStorefront?: boolean;
+  storefrontType?: 'nail-salon' | 'restaurant' | 'retail' | 'office' | 'coffee-shop' | 'hair-salon' | 'gym' | 'medical' | 'automotive' | 'other';
+  businessName?: string;
   campaignId?: string;
   campaignName?: string;
   canvasserId?: string;

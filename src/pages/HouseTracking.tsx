@@ -10,6 +10,7 @@ import PersonalCalculator from '../components/house-tracking/PersonalCalculator'
 import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
 import EditPinForm from '../components/house-tracking/EditPinForm';
 import CanvassingMode from '../components/house-tracking/CanvassingMode';
+import RouteManager from '../components/house-tracking/RouteManager';
 import { HousePin, RouteSession } from '../components/house-tracking/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -43,6 +44,7 @@ const HouseTracking: React.FC = () => {
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [selectedPin, setSelectedPin] = useState<HousePin | null>(null);
   const [canvassingMode, setCanvassingMode] = useState(false);
+  const [canvassingModeType, setCanvassingModeType] = useState<'residential' | 'storefront'>('residential');
 
   // Check authentication
   useEffect(() => {
@@ -299,11 +301,16 @@ const HouseTracking: React.FC = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
             <TabsTrigger value="map" className="flex items-center gap-1 text-xs sm:text-sm">
               <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Map View</span>
               <span className="sm:hidden">Map</span>
+            </TabsTrigger>
+            <TabsTrigger value="routes" className="flex items-center gap-1 text-xs sm:text-sm">
+              <Navigation className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Routes</span>
+              <span className="sm:hidden">Routes</span>
             </TabsTrigger>
             <TabsTrigger value="list" className="flex items-center gap-1 text-xs sm:text-sm">
               <List className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -332,6 +339,29 @@ const HouseTracking: React.FC = () => {
             </TabsTrigger>
           </TabsList>
 
+          <TabsContent value="routes" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <Card>
+                  <CardContent className="p-0">
+                    <MapComponent
+                      pins={pins}
+                      routes={routes}
+                      onAddPin={handleAddPin}
+                      onUpdatePin={handleUpdatePin}
+                      onUpdateRoutes={setRoutes}
+                      highlightedPinId={highlightedPinId}
+                      onPinHover={setHighlightedPinId}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+              <div>
+                <RouteManager pins={pins} onUpdatePin={handleUpdatePin} />
+              </div>
+            </div>
+          </TabsContent>
+
           <TabsContent value="map" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               <div className="lg:col-span-3">
@@ -348,6 +378,25 @@ const HouseTracking: React.FC = () => {
                     />
                   </CardContent>
                 </Card>
+                
+                {canvassingMode && (
+                  <div className="mt-4 flex gap-2">
+                    <Button
+                      variant={canvassingModeType === 'residential' ? 'default' : 'outline'}
+                      onClick={() => setCanvassingModeType('residential')}
+                      className="flex-1"
+                    >
+                      Residential
+                    </Button>
+                    <Button
+                      variant={canvassingModeType === 'storefront' ? 'default' : 'outline'}
+                      onClick={() => setCanvassingModeType('storefront')}
+                      className="flex-1"
+                    >
+                      Storefront
+                    </Button>
+                  </div>
+                )}
               </div>
               
               <div className="space-y-4">
@@ -421,9 +470,20 @@ const HouseTracking: React.FC = () => {
                     </div>
                     
                     <div className="pt-4 border-t">
-                      <div className="text-sm text-gray-600">
+                      <Button
+                        variant={canvassingMode ? 'destructive' : 'default'}
+                        onClick={() => setCanvassingMode(!canvassingMode)}
+                        className="w-full"
+                      >
+                        {canvassingMode ? 'Exit Canvassing' : 'Start Canvassing'}
+                      </Button>
+                    </div>
+                    
+                    <div className="pt-4 border-t">
+                      <div className="text-sm text-muted-foreground">
                         <p><strong>Total Pins:</strong> {pins.length}</p>
                         <p><strong>Filtered:</strong> {filteredPins.length}</p>
+                        <p><strong>Storefronts:</strong> {pins.filter(p => p.isStorefront).length}</p>
                         <p><strong>Previous Clients:</strong> {pins.filter(p => p.isPreviousClient).length}</p>
                         <p><strong>Service Reminders:</strong> {serviceReminders.length}</p>
                       </div>
@@ -609,6 +669,7 @@ const HouseTracking: React.FC = () => {
             onQuickMark={handleQuickMarkProperty}
             currentLocation={currentLocation}
             activePin={selectedPin}
+            mode={canvassingModeType}
           />
         )}
       </div>
