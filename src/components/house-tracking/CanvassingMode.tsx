@@ -16,7 +16,9 @@ import {
   QrCode,
   Navigation,
   Play,
-  Square
+  Square,
+  Store,
+  Building2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PropertyQRCode from './PropertyQRCode';
@@ -25,12 +27,14 @@ interface CanvassingModeProps {
   onQuickMark: (pin: HousePin) => void;
   currentLocation: { lat: number; lng: number } | null;
   activePin: HousePin | null;
+  mode?: 'residential' | 'storefront';
 }
 
 const CanvassingMode: React.FC<CanvassingModeProps> = ({
   onQuickMark,
   currentLocation,
-  activePin
+  activePin,
+  mode = 'residential'
 }) => {
   const {
     isOnline,
@@ -44,6 +48,7 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
   const [sessionStart, setSessionStart] = useState<Date | null>(null);
   const [visitCount, setVisitCount] = useState(0);
   const [qrPin, setQrPin] = useState<HousePin | null>(null);
+  const [storefrontType, setStorefrontType] = useState<'nail-salon' | 'restaurant' | 'retail' | 'other'>('retail');
 
   useEffect(() => {
     if (isActive && !sessionStart) {
@@ -51,7 +56,7 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
     }
   }, [isActive, sessionStart]);
 
-  const handleQuickAction = async (status: HousePin['status'], notes?: string) => {
+  const handleQuickAction = async (status: HousePin['status'], notes?: string, isStorefrontAction?: boolean) => {
     if (!currentLocation) {
       toast.error('Location not available');
       return;
@@ -67,10 +72,16 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
       notes
     );
 
+    // Add storefront info if in storefront mode
+    if (mode === 'storefront' || isStorefrontAction) {
+      pin.isStorefront = true;
+      pin.storefrontType = storefrontType;
+    }
+
     onQuickMark(pin);
     setVisitCount(prev => prev + 1);
     
-    toast.success(`Marked as ${status}`, {
+    toast.success(mode === 'storefront' ? `Marked storefront as ${status}` : `Marked as ${status}`, {
       description: isOnline ? 'Saved to cloud' : 'Saved offline'
     });
 
@@ -137,7 +148,7 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
           </div>
 
           {/* Quick Actions */}
-          {isActive && (
+          {isActive && mode === 'residential' && (
             <div className="grid grid-cols-3 gap-2">
               <Button
                 size="lg"
@@ -152,7 +163,7 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
               <Button
                 size="lg"
                 variant="outline"
-                className="flex-col h-20 gap-1 border-green-500 text-green-600"
+                className="flex-col h-20 gap-1 border-green-500 text-green-600 dark:border-green-400 dark:text-green-400"
                 onClick={() => handleQuickAction('visited', 'Contact made')}
               >
                 <Check className="w-5 h-5" />
@@ -162,13 +173,73 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
               <Button
                 size="lg"
                 variant="outline"
-                className="flex-col h-20 gap-1 border-red-500 text-red-600"
+                className="flex-col h-20 gap-1 border-red-500 text-red-600 dark:border-red-400 dark:text-red-400"
                 onClick={() => handleQuickAction('not-interested')}
               >
                 <X className="w-5 h-5" />
                 <span className="text-xs">Skip</span>
               </Button>
             </div>
+          )}
+
+          {/* Storefront Quick Actions */}
+          {isActive && mode === 'storefront' && (
+            <>
+              <div className="grid grid-cols-4 gap-2 mb-2">
+                <Button
+                  size="sm"
+                  variant={storefrontType === 'nail-salon' ? 'default' : 'outline'}
+                  onClick={() => setStorefrontType('nail-salon')}
+                  className="text-xs"
+                >
+                  Nail
+                </Button>
+                <Button
+                  size="sm"
+                  variant={storefrontType === 'restaurant' ? 'default' : 'outline'}
+                  onClick={() => setStorefrontType('restaurant')}
+                  className="text-xs"
+                >
+                  Food
+                </Button>
+                <Button
+                  size="sm"
+                  variant={storefrontType === 'retail' ? 'default' : 'outline'}
+                  onClick={() => setStorefrontType('retail')}
+                  className="text-xs"
+                >
+                  Retail
+                </Button>
+                <Button
+                  size="sm"
+                  variant={storefrontType === 'other' ? 'default' : 'outline'}
+                  onClick={() => setStorefrontType('other')}
+                  className="text-xs"
+                >
+                  Other
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  size="lg"
+                  variant="default"
+                  className="flex-col h-20 gap-1"
+                  onClick={() => handleQuickAction('interested', `${storefrontType} - interested`, true)}
+                >
+                  <Store className="w-5 h-5" />
+                  <span className="text-xs">Mark Store</span>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="flex-col h-20 gap-1"
+                  onClick={() => handleQuickAction('not-interested', `${storefrontType} - not interested`, true)}
+                >
+                  <X className="w-5 h-5" />
+                  <span className="text-xs">Skip</span>
+                </Button>
+              </div>
+            </>
           )}
 
           {/* Additional Actions */}
