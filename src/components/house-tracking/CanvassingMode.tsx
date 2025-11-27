@@ -18,7 +18,9 @@ import {
   Play,
   Square,
   Store,
-  Building2
+  Building2,
+  Target,
+  Settings2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PropertyQRCode from './PropertyQRCode';
@@ -49,6 +51,8 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
   const [visitCount, setVisitCount] = useState(0);
   const [qrPin, setQrPin] = useState<HousePin | null>(null);
   const [storefrontType, setStorefrontType] = useState<'nail-salon' | 'restaurant' | 'retail' | 'other'>('retail');
+  const [autoLogEnabled, setAutoLogEnabled] = useState(false);
+  const [autoLogRadius, setAutoLogRadius] = useState(15); // meters
 
   useEffect(() => {
     if (isActive && !sessionStart) {
@@ -240,6 +244,54 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
                 </Button>
               </div>
             </>
+          )}
+
+          {/* Auto-Log Settings */}
+          {isActive && (
+            <div className="p-3 bg-muted/50 rounded-lg space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Target className="w-4 h-4" />
+                  <span className="text-sm font-medium">Auto-Log</span>
+                </div>
+                <Button
+                  size="sm"
+                  variant={autoLogEnabled ? 'default' : 'outline'}
+                  onClick={() => setAutoLogEnabled(!autoLogEnabled)}
+                >
+                  {autoLogEnabled ? 'On' : 'Off'}
+                </Button>
+              </div>
+              
+              {autoLogEnabled && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Radius: {autoLogRadius}m</span>
+                    <div className="flex gap-1">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 px-2"
+                        onClick={() => setAutoLogRadius(Math.max(10, autoLogRadius - 5))}
+                      >
+                        -
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 px-2"
+                        onClick={() => setAutoLogRadius(Math.min(30, autoLogRadius + 5))}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Properties within {autoLogRadius}m will be auto-marked
+                  </div>
+                </div>
+              )}
+            </div>
           )}
 
           {/* Additional Actions */}
