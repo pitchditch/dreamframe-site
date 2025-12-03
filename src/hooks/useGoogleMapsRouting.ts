@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 import { useState, useCallback } from 'react';
 import { HousePin } from '@/components/house-tracking/types';
 
@@ -7,8 +8,6 @@ interface RouteStep {
   address: string;
   distance: number;
   duration: number;
-  elevation?: number;
-  elevationGain?: number;
 }
 
 interface RouteData {
@@ -16,51 +15,9 @@ interface RouteData {
   totalDistance: number;
   totalDuration: number;
   geometry: Array<{ lat: number; lng: number }>;
-  elevationProfile?: Array<{ distance: number; elevation: number }>;
   hasUphill: boolean;
   hasDownhill: boolean;
 }
-
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-// Decode Google's encoded polyline
-const decodePolyline = (encoded: string): Array<{ lat: number; lng: number }> => {
-  const points: Array<{ lat: number; lng: number }> = [];
-  let index = 0;
-  let lat = 0;
-  let lng = 0;
-
-  while (index < encoded.length) {
-    let shift = 0;
-    let result = 0;
-    let byte: number;
-
-    do {
-      byte = encoded.charCodeAt(index++) - 63;
-      result |= (byte & 0x1f) << shift;
-      shift += 5;
-    } while (byte >= 0x20);
-
-    const dlat = result & 1 ? ~(result >> 1) : result >> 1;
-    lat += dlat;
-
-    shift = 0;
-    result = 0;
-
-    do {
-      byte = encoded.charCodeAt(index++) - 63;
-      result |= (byte & 0x1f) << shift;
-      shift += 5;
-    } while (byte >= 0x20);
-
-    const dlng = result & 1 ? ~(result >> 1) : result >> 1;
-    lng += dlng;
-
-    points.push({ lat: lat / 1e5, lng: lng / 1e5 });
-  }
-
-  return points;
-};
 
 export const useGoogleMapsRouting = () => {
   const [loading, setLoading] = useState(false);
@@ -72,8 +29,9 @@ export const useGoogleMapsRouting = () => {
       return null;
     }
 
-    if (!GOOGLE_MAPS_API_KEY) {
-      setError('Google Maps API key not configured');
+    // Wait for Google Maps to be loaded
+    if (!(window as any).google?.maps) {
+      setError('Google Maps not loaded');
       return null;
     }
 
@@ -81,76 +39,106 @@ export const useGoogleMapsRouting = () => {
     setError(null);
 
     try {
-      const origin = `${waypoints[0].lat},${waypoints[0].lng}`;
-      const destination = `${waypoints[waypoints.length - 1].lat},${waypoints[waypoints.length - 1].lng}`;
+      const directionsService = new google.maps.DirectionsService();
       
-      // Build waypoints string for intermediate stops
-      let waypointsParam = '';
-      if (waypoints.length > 2) {
-        const intermediateWaypoints = waypoints.slice(1, -1)
-          .map(p => `${p.lat},${p.lng}`)
-          .join('|');
-        waypointsParam = `&waypoints=optimize:true|${intermediateWaypoints}`;
-      }
+      const origin = { lat: waypoints[0].lat, lng: waypoints[0].lng };
+      const destination = { lat: waypoints[waypoints.length - 1].lat, lng: waypoints[waypoints.length - 1].lng };
+      
+      // Build waypoints for intermediate stops (max 25 waypoints for free tier)
+      const intermediateWaypoints = waypoints.slice(1, -1).map(p => ({
+        location: { lat: p.lat, lng: p.lng },
+        stopover: true
+      }));
 
-      const directionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}${waypointsParam}&mode=walking&key=${GOOGLE_MAPS_API_KEY}`;
+      const request: google.maps.DirectionsRequest = {
+        origin,
+        destination,
+        waypoints: intermediateWaypoints.slice(0, 23), // Google limits to 25 total waypoints
+        optimizeWaypoints: true,
+        travelMode: google.maps.TravelMode.WALKING,
+      };
 
-      // Use a CORS proxy or call through edge function for production
-      // For now, we'll use a simple fetch that works in development
-      const response = await fetch(
-        `https://corsproxy.io/?${encodeURIComponent(directionsUrl)}`
-      );
+      const result = await new Promise<google.maps.DirectionsResult>((resolve, reject) => {
+        directionsService.route(request, (response, status) => {
+          if (status === google.maps.DirectionsStatus.OK && response) {
+            resolve(response);
+          } else {
+            reject(new Error(`Directions request failed: ${status}`));
+          }
+        });
+      });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch route from Google Maps');
-      }
-
-      const data = await response.json();
-
-      if (data.status !== 'OK' || !data.routes || data.routes.length === 0) {
-        setError(data.error_message || 'No route found');
-        setLoading(false);
-        return null;
-      }
-
-      const route = data.routes[0];
+      const route = result.routes[0];
       const legs = route.legs;
 
-      // Decode polyline for map display
-      const geometry = decodePolyline(route.overview_polyline.points);
+      // Extract geometry from the route
+      const geometry: Array<{ lat: number; lng: number }> = [];
+      route.overview_path.forEach(point => {
+        geometry.push({ lat: point.lat(), lng: point.lng() });
+      });
 
-      // Calculate total distance and duration
+      // Calculate totals and build steps
       let totalDistance = 0;
       let totalDuration = 0;
+      const steps: RouteStep[] = [];
 
-      // Build route steps with time estimates
-      const steps: RouteStep[] = waypoints.map((waypoint, index) => {
-        const leg = legs[index];
-        const distance = leg?.distance?.value || 0;
-        const duration = leg?.duration?.value || 0;
+      legs.forEach((leg, index) => {
+        const distance = leg.distance?.value || 0;
+        const duration = leg.duration?.value || 0;
         totalDistance += distance;
         totalDuration += duration;
 
-        return {
-          lat: waypoint.lat,
-          lng: waypoint.lng,
-          address: waypoint.address,
+        steps.push({
+          lat: leg.start_location.lat(),
+          lng: leg.start_location.lng(),
+          address: leg.start_address || waypoints[index]?.address || 'Unknown',
           distance,
           duration
-        };
+        });
       });
 
-      // Fetch elevation data for the route
-      const elevationData = await getElevation(geometry.filter((_, i) => i % 10 === 0)); // Sample every 10th point
-      
+      // Add final destination
+      const lastLeg = legs[legs.length - 1];
+      if (lastLeg) {
+        steps.push({
+          lat: lastLeg.end_location.lat(),
+          lng: lastLeg.end_location.lng(),
+          address: lastLeg.end_address || waypoints[waypoints.length - 1]?.address || 'Unknown',
+          distance: 0,
+          duration: 0
+        });
+      }
+
+      // Check for elevation changes (simplified - using lat changes as proxy)
       let hasUphill = false;
       let hasDownhill = false;
       
-      if (elevationData && elevationData.length > 1) {
-        for (let i = 1; i < elevationData.length; i++) {
-          const diff = elevationData[i].elevation - elevationData[i - 1].elevation;
-          if (diff > 5) hasUphill = true;
-          if (diff < -5) hasDownhill = true;
+      // Use elevation service if available
+      if (google.maps.ElevationService && geometry.length > 1) {
+        try {
+          const elevationService = new google.maps.ElevationService();
+          const samplePoints = geometry.filter((_, i) => i % Math.max(1, Math.floor(geometry.length / 20)) === 0);
+          
+          const elevationResult = await new Promise<google.maps.ElevationResult[]>((resolve, reject) => {
+            elevationService.getElevationForLocations(
+              { locations: samplePoints.map(p => ({ lat: p.lat, lng: p.lng })) },
+              (results, status) => {
+                if (status === google.maps.ElevationStatus.OK && results) {
+                  resolve(results);
+                } else {
+                  reject(new Error(`Elevation request failed: ${status}`));
+                }
+              }
+            );
+          });
+
+          for (let i = 1; i < elevationResult.length; i++) {
+            const diff = elevationResult[i].elevation - elevationResult[i - 1].elevation;
+            if (diff > 5) hasUphill = true;
+            if (diff < -5) hasDownhill = true;
+          }
+        } catch (elevError) {
+          console.log('Elevation data not available:', elevError);
         }
       }
 
@@ -159,7 +147,6 @@ export const useGoogleMapsRouting = () => {
         totalDistance,
         totalDuration,
         geometry,
-        elevationProfile: elevationData,
         hasUphill,
         hasDownhill
       };
@@ -173,55 +160,6 @@ export const useGoogleMapsRouting = () => {
       return null;
     }
   }, []);
-
-  const getElevation = async (points: Array<{ lat: number; lng: number }>): Promise<Array<{ distance: number; elevation: number }> | null> => {
-    if (!GOOGLE_MAPS_API_KEY || points.length === 0) return null;
-
-    try {
-      const locations = points.map(p => `${p.lat},${p.lng}`).join('|');
-      const elevationUrl = `https://maps.googleapis.com/maps/api/elevation/json?locations=${locations}&key=${GOOGLE_MAPS_API_KEY}`;
-
-      const response = await fetch(
-        `https://corsproxy.io/?${encodeURIComponent(elevationUrl)}`
-      );
-
-      if (!response.ok) return null;
-
-      const data = await response.json();
-
-      if (data.status !== 'OK' || !data.results) return null;
-
-      let cumulativeDistance = 0;
-      return data.results.map((result: any, index: number) => {
-        if (index > 0) {
-          const prevPoint = points[index - 1];
-          const currPoint = points[index];
-          cumulativeDistance += calculateHaversineDistance(
-            prevPoint.lat, prevPoint.lng,
-            currPoint.lat, currPoint.lng
-          );
-        }
-        return {
-          distance: cumulativeDistance,
-          elevation: result.elevation
-        };
-      });
-    } catch (err) {
-      console.error('Error fetching elevation:', err);
-      return null;
-    }
-  };
-
-  const calculateHaversineDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
-    const R = 6371000;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLng = (lng2 - lng1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLng / 2) * Math.sin(dLng / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  };
 
   const formatDuration = useCallback((seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
@@ -242,11 +180,9 @@ export const useGoogleMapsRouting = () => {
 
   return {
     getRoute,
-    getElevation,
     loading,
     error,
     formatDuration,
-    formatDistance,
-    decodePolyline
+    formatDistance
   };
 };
