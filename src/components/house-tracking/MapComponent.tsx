@@ -379,7 +379,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
       
       // Center map on selected location
       if (mapInstanceRef.current) {
-        mapInstanceRef.current.setView([lat, lng], 15);
+        mapInstanceRef.current.setCenter({ lat, lng });
+        mapInstanceRef.current.setZoom(15);
       }
     } catch (error: any) {
       console.error('Error fetching buildings:', error);

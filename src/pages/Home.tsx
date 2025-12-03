@@ -72,9 +72,8 @@ const Home = () => {
         <meta name="twitter:title" content="BC Pressure Washing - Exterior Cleaning Services" />
         <meta name="twitter:description" content="Seen our red BC Pressure Washing car? Get 10% off! Window, gutter, and pressure washing in White Rock & Surrey." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
-          {`
-          {
+        <script type="application/ld+json">
+          {JSON.stringify({
             "@context": "https://schema.org",
             "@graph": [
               {
@@ -125,8 +124,8 @@ const Home = () => {
                 ]
               }
             ]
-          }
-          `}
+          })}
+        </script>
       </Helmet>
 
       <HeroSection />
