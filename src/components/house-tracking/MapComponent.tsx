@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { HousePin, RouteSession } from './types';
 import { supabase } from '@/integrations/supabase/client';
 import { generateOptimizedRoutes, OptimizedRoute } from '@/utils/routeOptimizer';
+import { useGoogleMapsRouting } from '@/hooks/useGoogleMapsRouting';
 
 interface MapComponentProps {
   pins: HousePin[];
@@ -51,6 +52,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const walkingRouteRef = useRef<any>(null);
   const buildingMarkersRef = useRef<any[]>([]);
   const [routeSelectMode, setRouteSelectMode] = useState(false);
+  const [googleRouteGeometry, setGoogleRouteGeometry] = useState<Array<{lat: number, lng: number}>>([]);
+  const [googleRouteInfo, setGoogleRouteInfo] = useState<{time: string, distance: string, hasUphill: boolean, hasDownhill: boolean} | null>(null);
+  
+  const { getRoute, formatDuration, formatDistance, loading: routeLoading } = useGoogleMapsRouting();
 
   // Fetch employee sessions and locations
   useEffect(() => {
@@ -473,13 +478,12 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
 
     // Generate optimized route using nearest neighbor algorithm
-    const routePoints = [routeStartLocation];
+    const routePoints: Array<{lat: number, lng: number, address?: string}> = [{...routeStartLocation, address: 'Start'}];
     const remaining = [...nearbyBuildings];
     let current = routeStartLocation;
-    let totalDistance = 0;
     
-    // Select up to 30 buildings for the route
-    const maxBuildings = Math.min(30, remaining.length);
+    // Select up to 20 buildings for the route (Google Directions API has waypoint limits)
+    const maxBuildings = Math.min(20, remaining.length);
     
     for (let i = 0; i < maxBuildings && remaining.length > 0; i++) {
       let nearest = remaining[0];
@@ -495,45 +499,124 @@ const MapComponent: React.FC<MapComponentProps> = ({
         }
       }
 
-      routePoints.push(nearest);
-      totalDistance += nearestDist;
+      routePoints.push({lat: nearest.lat, lng: nearest.lng, address: nearest.address});
       remaining.splice(nearestIdx, 1);
       current = nearest;
     }
 
-    // Draw walking route
-    if (walkingRouteRef.current) {
-      mapInstanceRef.current.removeLayer(walkingRouteRef.current);
-    }
+    // Fetch Google Maps walking route
+    const fetchGoogleRoute = async () => {
+      setRouteMessage('Calculating walking route with Google Maps...');
+      
+      // Convert to HousePin format for the hook
+      const waypoints = routePoints.map((p, i) => ({
+        id: `waypoint-${i}`,
+        lat: p.lat,
+        lng: p.lng,
+        address: p.address || 'Unknown',
+        status: 'visited' as const,
+        notes: '',
+        dateAdded: new Date().toISOString().split('T')[0]
+      }));
 
-    const coordinates = routePoints.map(point => [point.lat, point.lng]);
-    
-    walkingRouteRef.current = L.polyline(coordinates, {
-      color: '#10b981',
-      weight: 4,
-      opacity: 0.8,
-      smoothFactor: 1
-    }).addTo(mapInstanceRef.current);
+      try {
+        const routeData = await getRoute(waypoints);
+        
+        if (routeData && routeData.geometry.length > 0) {
+          setGoogleRouteGeometry(routeData.geometry);
+          setGoogleRouteInfo({
+            time: formatDuration(routeData.totalDuration),
+            distance: formatDistance(routeData.totalDistance),
+            hasUphill: routeData.hasUphill,
+            hasDownhill: routeData.hasDownhill
+          });
+          setRouteMessage(`Route ready! ${formatDuration(routeData.totalDuration)} walking time`);
+          
+          // Draw actual walking route from Google
+          if (walkingRouteRef.current) {
+            mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+          }
+          
+          const googleCoordinates = routeData.geometry.map(point => [point.lat, point.lng]);
+          
+          walkingRouteRef.current = L.polyline(googleCoordinates, {
+            color: '#10b981',
+            weight: 5,
+            opacity: 0.9,
+            smoothFactor: 1
+          }).addTo(mapInstanceRef.current);
 
-    const residentialCount = nearbyBuildings.filter(b => b.type === 'residential').length;
-    const commercialCount = nearbyBuildings.filter(b => b.type === 'commercial').length;
-    
-    walkingRouteRef.current.bindPopup(`
-      <div class="p-3">
-        <strong class="text-lg">Walking Route</strong><br>
-        <div class="text-sm mt-2 space-y-1">
-          <div><strong>Total Buildings:</strong> ${nearbyBuildings.length}</div>
-          <div><strong>Residential:</strong> ${residentialCount}</div>
-          <div><strong>Commercial:</strong> ${commercialCount}</div>
-          <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
-          <div><strong>Est. Distance:</strong> ${totalDistance.toFixed(2)} km</div>
-          <div><strong>Radius:</strong> 2 km</div>
+          const residentialCount = nearbyBuildings.filter(b => b.type === 'residential').length;
+          const commercialCount = nearbyBuildings.filter(b => b.type === 'commercial').length;
+          
+          walkingRouteRef.current.bindPopup(`
+            <div class="p-3">
+              <strong class="text-lg">🚶 Walking Route</strong><br>
+              <div class="text-sm mt-2 space-y-1">
+                <div><strong>Walking Time:</strong> ${formatDuration(routeData.totalDuration)}</div>
+                <div><strong>Distance:</strong> ${formatDistance(routeData.totalDistance)}</div>
+                <div><strong>Buildings:</strong> ${nearbyBuildings.length}</div>
+                <div><strong>Residential:</strong> ${residentialCount}</div>
+                <div><strong>Commercial:</strong> ${commercialCount}</div>
+                <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
+                ${routeData.hasUphill ? '<div>🔺 Has uphill sections</div>' : ''}
+                ${routeData.hasDownhill ? '<div>🔻 Has downhill sections</div>' : ''}
+              </div>
+              <div class="text-xs text-gray-500 mt-2">Route by Google Maps</div>
+            </div>
+          `);
+        } else {
+          // Fallback to straight-line route
+          drawFallbackRoute();
+        }
+      } catch (error) {
+        console.error('Google routing error:', error);
+        drawFallbackRoute();
+      }
+    };
+
+    // Fallback function for when Google API fails
+    const drawFallbackRoute = () => {
+      if (walkingRouteRef.current) {
+        mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+      }
+
+      const coordinates = routePoints.map(point => [point.lat, point.lng]);
+      let totalDistance = 0;
+      for (let i = 0; i < routePoints.length - 1; i++) {
+        totalDistance += calculateDistance(routePoints[i].lat, routePoints[i].lng, routePoints[i+1].lat, routePoints[i+1].lng);
+      }
+      
+      walkingRouteRef.current = L.polyline(coordinates, {
+        color: '#10b981',
+        weight: 4,
+        opacity: 0.8,
+        smoothFactor: 1,
+        dashArray: '10, 5'
+      }).addTo(mapInstanceRef.current);
+
+      const residentialCount = nearbyBuildings.filter(b => b.type === 'residential').length;
+      const commercialCount = nearbyBuildings.filter(b => b.type === 'commercial').length;
+      
+      walkingRouteRef.current.bindPopup(`
+        <div class="p-3">
+          <strong class="text-lg">Walking Route (Estimate)</strong><br>
+          <div class="text-sm mt-2 space-y-1">
+            <div><strong>Total Buildings:</strong> ${nearbyBuildings.length}</div>
+            <div><strong>Residential:</strong> ${residentialCount}</div>
+            <div><strong>Commercial:</strong> ${commercialCount}</div>
+            <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
+            <div><strong>Est. Distance:</strong> ${totalDistance.toFixed(2)} km</div>
+          </div>
+          <div class="text-xs text-gray-500 mt-2">Straight-line estimate</div>
         </div>
-        <div class="text-xs text-gray-500 mt-2">Data from OpenStreetMap</div>
-      </div>
-    `);
+      `);
+      
+      setRouteMessage(`Found ${nearbyBuildings.length} buildings (fallback route)`);
+    };
 
-  }, [walkingRouteActive, routeStartLocation, nearbyBuildings]);
+    fetchGoogleRoute();
+  }, [walkingRouteActive, routeStartLocation, nearbyBuildings, getRoute, formatDuration, formatDistance]);
 
   // Draw optimized flyer routes
   useEffect(() => {
