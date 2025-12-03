@@ -77,54 +77,68 @@ const MapComponent: React.FC<MapComponentProps> = ({
     fetchRoutesData();
   }, []);
 
-  // Load Leaflet dynamically
+  // Load Google Maps dynamically
   useEffect(() => {
-    const loadLeaflet = async () => {
+    const loadGoogleMaps = async () => {
       try {
-        console.log('Starting to load Leaflet...');
+        console.log('Starting to load Google Maps...');
         
-        // Load CSS first
-        if (!document.querySelector('link[href*="leaflet.css"]')) {
-          const link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-          link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
-          link.crossOrigin = '';
-          document.head.appendChild(link);
-          
-          await new Promise((resolve) => {
-            link.onload = resolve;
-            setTimeout(resolve, 1000);
+        const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+        if (!apiKey) {
+          console.error('Google Maps API key not found');
+          return;
+        }
+
+        // Load Google Maps script if not already loaded
+        if (!(window as any).google?.maps) {
+          await new Promise<void>((resolve, reject) => {
+            if ((window as any).google?.maps) {
+              resolve();
+              return;
+            }
+            
+            const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
+            if (existingScript) {
+              existingScript.addEventListener('load', () => resolve());
+              return;
+            }
+
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load Google Maps'));
+            document.head.appendChild(script);
           });
         }
 
-        const leafletModule = await import('leaflet');
-        const L = leafletModule.default || leafletModule;
-        
-        console.log('Leaflet loaded:', L);
-        
-        if (L.Icon && L.Icon.Default) {
-          delete (L.Icon.Default.prototype as any)._getIconUrl;
-          L.Icon.Default.mergeOptions({
-            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-          });
+        const google = (window as any).google;
+        if (!google?.maps) {
+          console.error('Google Maps not loaded');
+          return;
         }
 
         // Initialize map
         if (!mapRef.current || mapInstanceRef.current) return;
 
-        console.log('Initializing map...');
+        console.log('Initializing Google Maps...');
         
-        const map = L.map(mapRef.current).setView([49.0504, -122.8048], 13);
+        const map = new google.maps.Map(mapRef.current, {
+          center: { lat: 49.0504, lng: -122.8048 },
+          zoom: 13,
+          mapTypeId: 'roadmap',
+          styles: [
+            { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }
+          ],
+          mapTypeControl: true,
+          streetViewControl: true,
+          fullscreenControl: true,
+        });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        map.on('click', async (e: any) => {
-          const { lat, lng } = e.latlng;
+        map.addListener('click', async (e: any) => {
+          const lat = e.latLng.lat();
+          const lng = e.latLng.lng();
           console.log('Map clicked at:', lat, lng);
           
           // If in route select mode, generate route from this point
@@ -136,11 +150,9 @@ const MapComponent: React.FC<MapComponentProps> = ({
           }
           
           try {
-            const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
-            );
-            const data = await response.json();
-            const address = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            const geocoder = new google.maps.Geocoder();
+            const result = await geocoder.geocode({ location: { lat, lng } });
+            const address = result.results[0]?.formatted_address || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
             console.log('Found address:', address);
             
             // Create new pin
@@ -172,31 +184,29 @@ const MapComponent: React.FC<MapComponentProps> = ({
         });
 
         mapInstanceRef.current = map;
-        console.log('Map initialized successfully');
+        console.log('Google Maps initialized successfully');
 
         return () => {
-          if (mapInstanceRef.current) {
-            mapInstanceRef.current.remove();
-            mapInstanceRef.current = null;
-          }
+          mapInstanceRef.current = null;
         };
       } catch (error) {
-        console.error('Failed to load Leaflet:', error);
+        console.error('Failed to load Google Maps:', error);
       }
     };
 
-    loadLeaflet();
+    loadGoogleMaps();
   }, [onAddPin]);
 
   // Update markers when pins change
   useEffect(() => {
     if (!mapInstanceRef.current) return;
 
-    const L = (window as any).L;
-    if (!L) return;
+    const google = (window as any).google;
+    if (!google?.maps) return;
 
-    Object.values(markersRef.current).forEach(marker => {
-      mapInstanceRef.current?.removeLayer(marker);
+    // Remove existing markers
+    Object.values(markersRef.current).forEach((marker: any) => {
+      marker.setMap(null);
     });
     markersRef.current = {};
 
@@ -204,16 +214,22 @@ const MapComponent: React.FC<MapComponentProps> = ({
       const markerColor = statusConfig[pin.status].color;
       const isHighlighted = highlightedPinId === pin.id;
       
-      const customIcon = L.divIcon({
-        html: `<div style="background-color: ${markerColor}; width: ${isHighlighted ? '24px' : '20px'}; height: ${isHighlighted ? '24px' : '20px'}; border-radius: 50%; border: ${isHighlighted ? '3px solid #ffff00' : '2px solid white'}; box-shadow: 0 2px 4px rgba(0,0,0,0.3); ${isHighlighted ? 'animation: pulse 2s infinite;' : ''}"></div>`,
-        iconSize: [isHighlighted ? 24 : 20, isHighlighted ? 24 : 20],
-        iconAnchor: [isHighlighted ? 12 : 10, isHighlighted ? 12 : 10],
-        className: 'custom-pin'
+      const marker = new google.maps.Marker({
+        position: { lat: pin.lat, lng: pin.lng },
+        map: mapInstanceRef.current,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: isHighlighted ? 12 : 10,
+          fillColor: markerColor,
+          fillOpacity: 1,
+          strokeColor: isHighlighted ? '#ffff00' : '#ffffff',
+          strokeWeight: isHighlighted ? 3 : 2,
+        },
+        title: pin.address,
       });
 
-      const marker = L.marker([pin.lat, pin.lng], { icon: customIcon })
-        .addTo(mapInstanceRef.current!)
-        .bindPopup(`
+      const infoWindow = new google.maps.InfoWindow({
+        content: `
           <div class="p-2">
             <strong>${statusConfig[pin.status].label}</strong><br>
             <div class="text-sm">${pin.address}</div>
@@ -222,10 +238,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
             ${pin.phoneNumber ? `<div class="text-sm"><strong>Phone:</strong> ${pin.phoneNumber}</div>` : ''}
             <div class="text-xs text-gray-400 mt-1">${pin.dateAdded}</div>
           </div>
-        `);
+        `
+      });
 
-      marker.on('click', () => {
-        console.log('Pin clicked:', pin.address);
+      marker.addListener('click', () => {
+        infoWindow.open(mapInstanceRef.current, marker);
         onPinHover(pin.id);
       });
 
@@ -241,20 +258,17 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
   // Draw employee route lines
   useEffect(() => {
+    const google = (window as any).google;
+    
     if (!mapInstanceRef.current || !showEmployeeRoutes) {
-      routeLinesRef.current.forEach(line => {
-        mapInstanceRef.current?.removeLayer(line);
-      });
+      routeLinesRef.current.forEach((line: any) => line.setMap(null));
       routeLinesRef.current = [];
       return;
     }
 
-    const L = (window as any).L;
-    if (!L) return;
+    if (!google?.maps) return;
 
-    routeLinesRef.current.forEach(line => {
-      mapInstanceRef.current?.removeLayer(line);
-    });
+    routeLinesRef.current.forEach((line: any) => line.setMap(null));
     routeLinesRef.current = [];
 
     const sessionColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
@@ -266,24 +280,32 @@ const MapComponent: React.FC<MapComponentProps> = ({
       
       if (sessionLocations.length < 2) return;
 
-      const coordinates = sessionLocations.map(loc => [loc.latitude, loc.longitude]);
+      const path = sessionLocations.map(loc => ({ lat: loc.latitude, lng: loc.longitude }));
       const color = sessionColors[index % sessionColors.length];
 
-      const polyline = L.polyline(coordinates, {
-        color: color,
-        weight: 3,
-        opacity: 0.7,
-        smoothFactor: 1
-      }).addTo(mapInstanceRef.current!);
+      const polyline = new google.maps.Polyline({
+        path,
+        strokeColor: color,
+        strokeWeight: 3,
+        strokeOpacity: 0.7,
+        map: mapInstanceRef.current,
+      });
 
-      polyline.bindPopup(`
-        <div class="p-2">
-          <strong>${session.employee_name}</strong><br>
-          <div class="text-sm">Session: ${new Date(session.session_start).toLocaleString()}</div>
-          <div class="text-sm">Visits: ${session.total_visits || 0}</div>
-          <div class="text-sm">Distance: ${(session.total_distance_km || 0).toFixed(2)} km</div>
-        </div>
-      `);
+      const infoWindow = new google.maps.InfoWindow({
+        content: `
+          <div class="p-2">
+            <strong>${session.employee_name}</strong><br>
+            <div class="text-sm">Session: ${new Date(session.session_start).toLocaleString()}</div>
+            <div class="text-sm">Visits: ${session.total_visits || 0}</div>
+            <div class="text-sm">Distance: ${(session.total_distance_km || 0).toFixed(2)} km</div>
+          </div>
+        `
+      });
+
+      polyline.addListener('click', (e: any) => {
+        infoWindow.setPosition(e.latLng);
+        infoWindow.open(mapInstanceRef.current);
+      });
 
       routeLinesRef.current.push(polyline);
     });
@@ -385,59 +407,66 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
   // Draw walking route with buildings from OSM
   useEffect(() => {
+    const google = (window as any).google;
+    
     if (!mapInstanceRef.current || !routeStartLocation) {
       // Clean up
       if (radiusCircleRef.current) {
-        mapInstanceRef.current?.removeLayer(radiusCircleRef.current);
+        radiusCircleRef.current.setMap(null);
         radiusCircleRef.current = null;
       }
       if (walkingRouteRef.current) {
-        mapInstanceRef.current?.removeLayer(walkingRouteRef.current);
+        walkingRouteRef.current.setMap(null);
         walkingRouteRef.current = null;
       }
-      buildingMarkersRef.current.forEach(marker => {
-        mapInstanceRef.current?.removeLayer(marker);
-      });
+      buildingMarkersRef.current.forEach((marker: any) => marker.setMap(null));
       buildingMarkersRef.current = [];
       return;
     }
 
-    const L = (window as any).L;
-    if (!L) return;
+    if (!google?.maps) return;
 
     // Clean up previous markers
-    buildingMarkersRef.current.forEach(marker => {
-      mapInstanceRef.current.removeLayer(marker);
-    });
+    buildingMarkersRef.current.forEach((marker: any) => marker.setMap(null));
     buildingMarkersRef.current = [];
 
     // Draw 2km radius circle
     if (radiusCircleRef.current) {
-      mapInstanceRef.current.removeLayer(radiusCircleRef.current);
+      radiusCircleRef.current.setMap(null);
     }
     
-    radiusCircleRef.current = L.circle([routeStartLocation.lat, routeStartLocation.lng], {
-      radius: 2000, // 2km in meters
-      color: '#10b981',
+    radiusCircleRef.current = new google.maps.Circle({
+      center: { lat: routeStartLocation.lat, lng: routeStartLocation.lng },
+      radius: 2000,
+      strokeColor: '#10b981',
+      strokeWeight: 2,
       fillColor: '#10b981',
       fillOpacity: 0.1,
-      weight: 2
-    }).addTo(mapInstanceRef.current);
+      map: mapInstanceRef.current,
+    });
 
     // Add start location marker
-    const startMarker = L.marker([routeStartLocation.lat, routeStartLocation.lng], {
-      icon: L.divIcon({
-        html: '<div style="background-color: #10b981; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);"></div>',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-        className: 'start-location-marker'
-      })
-    }).addTo(mapInstanceRef.current).bindPopup('<strong>Route Start</strong>');
+    const startMarker = new google.maps.Marker({
+      position: { lat: routeStartLocation.lat, lng: routeStartLocation.lng },
+      map: mapInstanceRef.current,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillColor: '#10b981',
+        fillOpacity: 1,
+        strokeColor: '#ffffff',
+        strokeWeight: 3,
+      },
+      title: 'Route Start',
+    });
+    
+    const startInfoWindow = new google.maps.InfoWindow({ content: '<strong>Route Start</strong>' });
+    startMarker.addListener('click', () => startInfoWindow.open(mapInstanceRef.current, startMarker));
     buildingMarkersRef.current.push(startMarker);
 
     if (!walkingRouteActive || nearbyBuildings.length === 0) {
       if (walkingRouteRef.current) {
-        mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+        walkingRouteRef.current.setMap(null);
         walkingRouteRef.current = null;
       }
       return;
@@ -448,16 +477,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
       const markerColor = building.type === 'residential' ? '#3b82f6' : 
                          building.type === 'commercial' ? '#f59e0b' : '#8b5cf6';
       
-      const buildingIcon = L.divIcon({
-        html: `<div style="background-color: ${markerColor}; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [10, 10],
-        iconAnchor: [5, 5],
-        className: 'building-marker'
+      const marker = new google.maps.Marker({
+        position: { lat: building.lat, lng: building.lng },
+        map: mapInstanceRef.current,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 5,
+          fillColor: markerColor,
+          fillOpacity: 1,
+          strokeColor: '#ffffff',
+          strokeWeight: 2,
+        },
       });
-      
-      const marker = L.marker([building.lat, building.lng], { 
-        icon: buildingIcon 
-      }).addTo(mapInstanceRef.current);
 
       let popupContent = `
         <div class="p-2 max-w-xs">
@@ -473,7 +504,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
       popupContent += `</div></div>`;
       
-      marker.bindPopup(popupContent);
+      const infoWindow = new google.maps.InfoWindow({ content: popupContent });
+      marker.addListener('click', () => infoWindow.open(mapInstanceRef.current, marker));
       buildingMarkersRef.current.push(marker);
     });
 
@@ -534,37 +566,45 @@ const MapComponent: React.FC<MapComponentProps> = ({
           
           // Draw actual walking route from Google
           if (walkingRouteRef.current) {
-            mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+            walkingRouteRef.current.setMap(null);
           }
           
-          const googleCoordinates = routeData.geometry.map(point => [point.lat, point.lng]);
+          const googlePath = routeData.geometry.map(point => ({ lat: point.lat, lng: point.lng }));
           
-          walkingRouteRef.current = L.polyline(googleCoordinates, {
-            color: '#10b981',
-            weight: 5,
-            opacity: 0.9,
-            smoothFactor: 1
-          }).addTo(mapInstanceRef.current);
+          walkingRouteRef.current = new google.maps.Polyline({
+            path: googlePath,
+            strokeColor: '#10b981',
+            strokeWeight: 5,
+            strokeOpacity: 0.9,
+            map: mapInstanceRef.current,
+          });
 
           const residentialCount = nearbyBuildings.filter(b => b.type === 'residential').length;
           const commercialCount = nearbyBuildings.filter(b => b.type === 'commercial').length;
           
-          walkingRouteRef.current.bindPopup(`
-            <div class="p-3">
-              <strong class="text-lg">🚶 Walking Route</strong><br>
-              <div class="text-sm mt-2 space-y-1">
-                <div><strong>Walking Time:</strong> ${formatDuration(routeData.totalDuration)}</div>
-                <div><strong>Distance:</strong> ${formatDistance(routeData.totalDistance)}</div>
-                <div><strong>Buildings:</strong> ${nearbyBuildings.length}</div>
-                <div><strong>Residential:</strong> ${residentialCount}</div>
-                <div><strong>Commercial:</strong> ${commercialCount}</div>
-                <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
-                ${routeData.hasUphill ? '<div>🔺 Has uphill sections</div>' : ''}
-                ${routeData.hasDownhill ? '<div>🔻 Has downhill sections</div>' : ''}
+          const routeInfoWindow = new google.maps.InfoWindow({
+            content: `
+              <div class="p-3">
+                <strong class="text-lg">🚶 Walking Route</strong><br>
+                <div class="text-sm mt-2 space-y-1">
+                  <div><strong>Walking Time:</strong> ${formatDuration(routeData.totalDuration)}</div>
+                  <div><strong>Distance:</strong> ${formatDistance(routeData.totalDistance)}</div>
+                  <div><strong>Buildings:</strong> ${nearbyBuildings.length}</div>
+                  <div><strong>Residential:</strong> ${residentialCount}</div>
+                  <div><strong>Commercial:</strong> ${commercialCount}</div>
+                  <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
+                  ${routeData.hasUphill ? '<div>🔺 Has uphill sections</div>' : ''}
+                  ${routeData.hasDownhill ? '<div>🔻 Has downhill sections</div>' : ''}
+                </div>
+                <div class="text-xs text-gray-500 mt-2">Route by Google Maps</div>
               </div>
-              <div class="text-xs text-gray-500 mt-2">Route by Google Maps</div>
-            </div>
-          `);
+            `
+          });
+          
+          walkingRouteRef.current.addListener('click', (e: any) => {
+            routeInfoWindow.setPosition(e.latLng);
+            routeInfoWindow.open(mapInstanceRef.current);
+          });
         } else {
           // Fallback to straight-line route
           drawFallbackRoute();
@@ -578,39 +618,51 @@ const MapComponent: React.FC<MapComponentProps> = ({
     // Fallback function for when Google API fails
     const drawFallbackRoute = () => {
       if (walkingRouteRef.current) {
-        mapInstanceRef.current.removeLayer(walkingRouteRef.current);
+        walkingRouteRef.current.setMap(null);
       }
 
-      const coordinates = routePoints.map(point => [point.lat, point.lng]);
+      const path = routePoints.map(point => ({ lat: point.lat, lng: point.lng }));
       let totalDistance = 0;
       for (let i = 0; i < routePoints.length - 1; i++) {
         totalDistance += calculateDistance(routePoints[i].lat, routePoints[i].lng, routePoints[i+1].lat, routePoints[i+1].lng);
       }
       
-      walkingRouteRef.current = L.polyline(coordinates, {
-        color: '#10b981',
-        weight: 4,
-        opacity: 0.8,
-        smoothFactor: 1,
-        dashArray: '10, 5'
-      }).addTo(mapInstanceRef.current);
+      walkingRouteRef.current = new google.maps.Polyline({
+        path,
+        strokeColor: '#10b981',
+        strokeWeight: 4,
+        strokeOpacity: 0.8,
+        map: mapInstanceRef.current,
+        icons: [{
+          icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 2 },
+          offset: '0',
+          repeat: '10px'
+        }]
+      });
 
       const residentialCount = nearbyBuildings.filter(b => b.type === 'residential').length;
       const commercialCount = nearbyBuildings.filter(b => b.type === 'commercial').length;
       
-      walkingRouteRef.current.bindPopup(`
-        <div class="p-3">
-          <strong class="text-lg">Walking Route (Estimate)</strong><br>
-          <div class="text-sm mt-2 space-y-1">
-            <div><strong>Total Buildings:</strong> ${nearbyBuildings.length}</div>
-            <div><strong>Residential:</strong> ${residentialCount}</div>
-            <div><strong>Commercial:</strong> ${commercialCount}</div>
-            <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
-            <div><strong>Est. Distance:</strong> ${totalDistance.toFixed(2)} km</div>
+      const fallbackInfoWindow = new google.maps.InfoWindow({
+        content: `
+          <div class="p-3">
+            <strong class="text-lg">Walking Route (Estimate)</strong><br>
+            <div class="text-sm mt-2 space-y-1">
+              <div><strong>Total Buildings:</strong> ${nearbyBuildings.length}</div>
+              <div><strong>Residential:</strong> ${residentialCount}</div>
+              <div><strong>Commercial:</strong> ${commercialCount}</div>
+              <div><strong>Route Stops:</strong> ${routePoints.length - 1}</div>
+              <div><strong>Est. Distance:</strong> ${totalDistance.toFixed(2)} km</div>
+            </div>
+            <div class="text-xs text-gray-500 mt-2">Straight-line estimate</div>
           </div>
-          <div class="text-xs text-gray-500 mt-2">Straight-line estimate</div>
-        </div>
-      `);
+        `
+      });
+      
+      walkingRouteRef.current.addListener('click', (e: any) => {
+        fallbackInfoWindow.setPosition(e.latLng);
+        fallbackInfoWindow.open(mapInstanceRef.current);
+      });
       
       setRouteMessage(`Found ${nearbyBuildings.length} buildings (fallback route)`);
     };
@@ -620,43 +672,52 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
   // Draw optimized flyer routes
   useEffect(() => {
+    const google = (window as any).google;
+    
     if (!mapInstanceRef.current || !showFlyerRoutes) {
-      flyerRouteLinesRef.current.forEach(line => {
-        mapInstanceRef.current?.removeLayer(line);
-      });
+      flyerRouteLinesRef.current.forEach((line: any) => line.setMap(null));
       flyerRouteLinesRef.current = [];
       return;
     }
 
-    const L = (window as any).L;
-    if (!L) return;
+    if (!google?.maps) return;
 
-    flyerRouteLinesRef.current.forEach(line => {
-      mapInstanceRef.current?.removeLayer(line);
-    });
+    flyerRouteLinesRef.current.forEach((line: any) => line.setMap(null));
     flyerRouteLinesRef.current = [];
 
     optimizedRoutes.forEach(route => {
       if (route.pins.length < 2) return;
 
-      const coordinates = route.pins.map(pin => [pin.lat, pin.lng]);
+      const path = route.pins.map(pin => ({ lat: pin.lat, lng: pin.lng }));
 
-      const polyline = L.polyline(coordinates, {
-        color: route.color,
-        weight: 4,
-        opacity: 0.8,
-        smoothFactor: 1,
-        dashArray: '10, 10'
-      }).addTo(mapInstanceRef.current!);
+      const polyline = new google.maps.Polyline({
+        path,
+        strokeColor: route.color,
+        strokeWeight: 4,
+        strokeOpacity: 0.8,
+        map: mapInstanceRef.current,
+        icons: [{
+          icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 2 },
+          offset: '0',
+          repeat: '10px'
+        }]
+      });
 
-      polyline.bindPopup(`
-        <div class="p-3">
-          <strong class="text-lg">${route.cityName} Flyer Route</strong><br>
-          <div class="text-sm mt-1">Properties: ${route.pins.length}</div>
-          <div class="text-sm">Total Distance: ${route.totalDistance.toFixed(2)} km</div>
-          <div class="text-xs text-gray-500 mt-1">Optimized for efficiency</div>
-        </div>
-      `);
+      const infoWindow = new google.maps.InfoWindow({
+        content: `
+          <div class="p-3">
+            <strong class="text-lg">${route.cityName} Flyer Route</strong><br>
+            <div class="text-sm mt-1">Properties: ${route.pins.length}</div>
+            <div class="text-sm">Total Distance: ${route.totalDistance.toFixed(2)} km</div>
+            <div class="text-xs text-gray-500 mt-1">Optimized for efficiency</div>
+          </div>
+        `
+      });
+
+      polyline.addListener('click', (e: any) => {
+        infoWindow.setPosition(e.latLng);
+        infoWindow.open(mapInstanceRef.current);
+      });
 
       flyerRouteLinesRef.current.push(polyline);
     });
@@ -716,8 +777,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
           <button
             onClick={() => {
               if (confirm('Clear all pins from the map?')) {
-                Object.values(markersRef.current).forEach(marker => {
-                  mapInstanceRef.current?.removeLayer(marker);
+                Object.values(markersRef.current).forEach((marker: any) => {
+                  marker.setMap(null);
                 });
                 markersRef.current = {};
                 window.location.reload();
