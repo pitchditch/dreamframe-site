@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HousePin } from './types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -21,9 +21,13 @@ import {
   Trash2,
   Eye,
   Clock,
-  Navigation2
+  Navigation2,
+  TrendingUp,
+  TrendingDown,
+  Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoogleMapsRouting } from '@/hooks/useGoogleMapsRouting';
 
 interface RouteManagerProps {
   pins: HousePin[];
@@ -48,6 +52,11 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [estimatedTime, setEstimatedTime] = useState<string>('');
   const [estimatedDistance, setEstimatedDistance] = useState<string>('');
+  const [hasUphill, setHasUphill] = useState(false);
+  const [hasDownhill, setHasDownhill] = useState(false);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const { getRoute, formatDuration, formatDistance, loading: routeLoading, error: routeError } = useGoogleMapsRouting();
 
   const storefronts = pins.filter(pin => pin.isStorefront);
   
@@ -55,36 +64,57 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
     return storefronts.filter(pin => pin.storefrontType === type);
   };
 
-  // Calculate route estimates
-  const calculateRouteEstimate = (routePins: HousePin[]) => {
+  // Calculate route estimates using Google Maps API
+  const calculateRouteEstimate = async (routePins: HousePin[]) => {
     if (routePins.length < 2) {
       setEstimatedTime('N/A');
       setEstimatedDistance('N/A');
+      setHasUphill(false);
+      setHasDownhill(false);
       return;
     }
 
-    let totalDistance = 0;
-    for (let i = 0; i < routePins.length - 1; i++) {
-      const R = 6371000; // Earth's radius in meters
-      const dLat = (routePins[i + 1].lat - routePins[i].lat) * Math.PI / 180;
-      const dLng = (routePins[i + 1].lng - routePins[i].lng) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(routePins[i].lat * Math.PI / 180) * Math.cos(routePins[i + 1].lat * Math.PI / 180) *
-                Math.sin(dLng/2) * Math.sin(dLng/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      totalDistance += R * c;
-    }
+    setIsCalculating(true);
 
-    // Estimate walking time: 5 km/h average + 2 min per stop
-    const walkingTimeMinutes = (totalDistance / 1000) / 5 * 60;
-    const stopTimeMinutes = routePins.length * 2;
-    const totalMinutes = Math.round(walkingTimeMinutes + stopTimeMinutes);
-    
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    
-    setEstimatedTime(hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`);
-    setEstimatedDistance(totalDistance >= 1000 ? `${(totalDistance / 1000).toFixed(1)} km` : `${Math.round(totalDistance)} m`);
+    try {
+      const routeData = await getRoute(routePins);
+      
+      if (routeData) {
+        setEstimatedTime(formatDuration(routeData.totalDuration));
+        setEstimatedDistance(formatDistance(routeData.totalDistance));
+        setHasUphill(routeData.hasUphill);
+        setHasDownhill(routeData.hasDownhill);
+      } else {
+        // Fallback to basic calculation if API fails
+        let totalDistance = 0;
+        for (let i = 0; i < routePins.length - 1; i++) {
+          const R = 6371000;
+          const dLat = (routePins[i + 1].lat - routePins[i].lat) * Math.PI / 180;
+          const dLng = (routePins[i + 1].lng - routePins[i].lng) * Math.PI / 180;
+          const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(routePins[i].lat * Math.PI / 180) * Math.cos(routePins[i + 1].lat * Math.PI / 180) *
+                    Math.sin(dLng/2) * Math.sin(dLng/2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          totalDistance += R * c;
+        }
+
+        const walkingTimeMinutes = (totalDistance / 1000) / 5 * 60;
+        const stopTimeMinutes = routePins.length * 2;
+        const totalMinutes = Math.round(walkingTimeMinutes + stopTimeMinutes);
+        
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        
+        setEstimatedTime(hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`);
+        setEstimatedDistance(totalDistance >= 1000 ? `${(totalDistance / 1000).toFixed(1)} km` : `${Math.round(totalDistance)} m`);
+        setHasUphill(false);
+        setHasDownhill(false);
+      }
+    } catch (err) {
+      console.error('Route calculation error:', err);
+    } finally {
+      setIsCalculating(false);
+    }
   };
 
   const createRoute = () => {
@@ -190,21 +220,52 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
           </div>
 
           {selectedType && (
-            <div className="grid grid-cols-2 gap-3 p-3 bg-muted/50 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-muted-foreground" />
-                <div>
-                  <div className="text-xs text-muted-foreground">Est. Time</div>
-                  <div className="text-sm font-semibold">{estimatedTime}</div>
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3 p-3 bg-muted/50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-muted-foreground" />
+                  <div>
+                    <div className="text-xs text-muted-foreground">Est. Time</div>
+                    <div className="text-sm font-semibold">
+                      {isCalculating ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        estimatedTime
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Navigation2 className="w-4 h-4 text-muted-foreground" />
+                  <div>
+                    <div className="text-xs text-muted-foreground">Distance</div>
+                    <div className="text-sm font-semibold">
+                      {isCalculating ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        estimatedDistance
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Navigation2 className="w-4 h-4 text-muted-foreground" />
-                <div>
-                  <div className="text-xs text-muted-foreground">Distance</div>
-                  <div className="text-sm font-semibold">{estimatedDistance}</div>
+              
+              {!isCalculating && (hasUphill || hasDownhill) && (
+                <div className="flex gap-2">
+                  {hasUphill && (
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <TrendingUp className="w-3 h-3 text-orange-500" />
+                      Uphill sections
+                    </Badge>
+                  )}
+                  {hasDownhill && (
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <TrendingDown className="w-3 h-3 text-blue-500" />
+                      Downhill sections
+                    </Badge>
+                  )}
                 </div>
-              </div>
+              )}
             </div>
           )}
 
