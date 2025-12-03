@@ -1,9 +1,7 @@
 
 import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
-import { TranslationProvider } from '@/hooks/use-translation';
 
 // Simple Loading component
 const Loading = () => (
@@ -38,14 +36,10 @@ const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
 const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
 
-const queryClient = new QueryClient();
-
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TranslationProvider>
-        <Router>
-          <div className="min-h-screen bg-white">
+    <Router>
+      <div className="min-h-screen bg-white">
             <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -77,8 +71,6 @@ function App() {
             <Toaster />
           </div>
         </Router>
-      </TranslationProvider>
-    </QueryClientProvider>
   );
 }
 
