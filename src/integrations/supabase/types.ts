@@ -1291,6 +1291,77 @@ export type Database = {
           },
         ]
       }
+      live_chat_messages: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          message: string
+          sender: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          message: string
+          sender: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          message?: string
+          sender?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "live_chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "live_chat_sessions"
+            referencedColumns: ["session_id"]
+          },
+        ]
+      }
+      live_chat_sessions: {
+        Row: {
+          agent_joined: boolean | null
+          created_at: string
+          customer_email: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          id: string
+          session_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agent_joined?: boolean | null
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          id?: string
+          session_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agent_joined?: boolean | null
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          id?: string
+          session_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       love_journey_maps: {
         Row: {
           created_at: string
@@ -2646,6 +2717,65 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      virtual_estimate_sessions: {
+        Row: {
+          address: string | null
+          chat_session_id: string | null
+          created_at: string
+          current_heading: number | null
+          current_lat: number | null
+          current_lng: number | null
+          current_pitch: number | null
+          current_zoom: number | null
+          customer_name: string | null
+          customer_phone: string | null
+          id: string
+          session_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          chat_session_id?: string | null
+          created_at?: string
+          current_heading?: number | null
+          current_lat?: number | null
+          current_lng?: number | null
+          current_pitch?: number | null
+          current_zoom?: number | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          id?: string
+          session_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          chat_session_id?: string | null
+          created_at?: string
+          current_heading?: number | null
+          current_lat?: number | null
+          current_lng?: number | null
+          current_pitch?: number | null
+          current_zoom?: number | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          id?: string
+          session_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "virtual_estimate_sessions_chat_session_id_fkey"
+            columns: ["chat_session_id"]
+            isOneToOne: false
+            referencedRelation: "live_chat_sessions"
+            referencedColumns: ["session_id"]
+          },
+        ]
       }
       weather_delays: {
         Row: {

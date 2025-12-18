@@ -54,6 +54,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const [routeSelectMode, setRouteSelectMode] = useState(false);
   const [googleRouteGeometry, setGoogleRouteGeometry] = useState<Array<{lat: number, lng: number}>>([]);
   const [googleRouteInfo, setGoogleRouteInfo] = useState<{time: string, distance: string, hasUphill: boolean, hasDownhill: boolean} | null>(null);
+  const [flyerRoutesLoading, setFlyerRoutesLoading] = useState(false);
   
   const { getRoute, formatDuration, formatDistance, loading: routeLoading } = useGoogleMapsRouting();
 
@@ -250,11 +251,54 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
   }, [pins, highlightedPinId, onPinHover]);
 
-  // Generate optimized flyer routes when pins change
+  // Generate optimized flyer routes when pins change - with Google Maps routing
   useEffect(() => {
-    const routes = generateOptimizedRoutes(pins);
-    setOptimizedRoutes(routes);
-  }, [pins]);
+    const fetchGoogleRoutesForFlyers = async () => {
+      const baseRoutes = generateOptimizedRoutes(pins);
+      
+      if (baseRoutes.length === 0 || !(window as any).google?.maps) {
+        setOptimizedRoutes(baseRoutes);
+        return;
+      }
+
+      setFlyerRoutesLoading(true);
+      
+      const routesWithGoogleData: OptimizedRoute[] = [];
+      
+      for (const route of baseRoutes) {
+        if (route.pins.length < 2) {
+          routesWithGoogleData.push(route);
+          continue;
+        }
+
+        try {
+          // Use Google Directions API for each city route
+          const routeData = await getRoute(route.pins);
+          
+          if (routeData && routeData.geometry.length > 0) {
+            routesWithGoogleData.push({
+              ...route,
+              googleRouteGeometry: routeData.geometry,
+              googleRouteDuration: routeData.totalDuration,
+              googleRouteDistance: routeData.totalDistance,
+              hasUphill: routeData.hasUphill,
+              hasDownhill: routeData.hasDownhill
+            });
+          } else {
+            routesWithGoogleData.push(route);
+          }
+        } catch (error) {
+          console.error(`Error fetching Google route for ${route.cityName}:`, error);
+          routesWithGoogleData.push(route);
+        }
+      }
+      
+      setOptimizedRoutes(routesWithGoogleData);
+      setFlyerRoutesLoading(false);
+    };
+
+    fetchGoogleRoutesForFlyers();
+  }, [pins, getRoute]);
 
   // Draw employee route lines
   useEffect(() => {
@@ -671,7 +715,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
     fetchGoogleRoute();
   }, [walkingRouteActive, routeStartLocation, nearbyBuildings, getRoute, formatDuration, formatDistance]);
 
-  // Draw optimized flyer routes
+  // Draw optimized flyer routes with Google Maps geometry
   useEffect(() => {
     const google = (window as any).google;
     
@@ -689,28 +733,48 @@ const MapComponent: React.FC<MapComponentProps> = ({
     optimizedRoutes.forEach(route => {
       if (route.pins.length < 2) return;
 
-      const path = route.pins.map(pin => ({ lat: pin.lat, lng: pin.lng }));
+      // Use Google route geometry if available, otherwise fallback to straight lines
+      const path = route.googleRouteGeometry && route.googleRouteGeometry.length > 0
+        ? route.googleRouteGeometry
+        : route.pins.map(pin => ({ lat: pin.lat, lng: pin.lng }));
+
+      const hasGoogleRoute = route.googleRouteGeometry && route.googleRouteGeometry.length > 0;
 
       const polyline = new google.maps.Polyline({
         path,
         strokeColor: route.color,
-        strokeWeight: 4,
-        strokeOpacity: 0.8,
+        strokeWeight: hasGoogleRoute ? 5 : 4,
+        strokeOpacity: hasGoogleRoute ? 0.9 : 0.6,
         map: mapInstanceRef.current,
-        icons: [{
+        // Only show dashed line for fallback routes
+        icons: hasGoogleRoute ? [] : [{
           icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 2 },
           offset: '0',
           repeat: '10px'
         }]
       });
 
+      // Build info window content with accurate data
+      const distanceDisplay = route.googleRouteDistance 
+        ? formatDistance(route.googleRouteDistance)
+        : `${route.totalDistance.toFixed(2)} km (estimate)`;
+      
+      const durationDisplay = route.googleRouteDuration
+        ? formatDuration(route.googleRouteDuration)
+        : 'Not available';
+
       const infoWindow = new google.maps.InfoWindow({
         content: `
           <div class="p-3">
-            <strong class="text-lg">${route.cityName} Flyer Route</strong><br>
-            <div class="text-sm mt-1">Properties: ${route.pins.length}</div>
-            <div class="text-sm">Total Distance: ${route.totalDistance.toFixed(2)} km</div>
-            <div class="text-xs text-gray-500 mt-1">Optimized for efficiency</div>
+            <strong class="text-lg">🚶 ${route.cityName} Flyer Route</strong><br>
+            <div class="text-sm mt-2 space-y-1">
+              <div><strong>Properties:</strong> ${route.pins.length}</div>
+              <div><strong>Walking Time:</strong> ${durationDisplay}</div>
+              <div><strong>Distance:</strong> ${distanceDisplay}</div>
+              ${route.hasUphill ? '<div>🔺 Has uphill sections</div>' : ''}
+              ${route.hasDownhill ? '<div>🔻 Has downhill sections</div>' : ''}
+            </div>
+            <div class="text-xs text-gray-500 mt-2">${hasGoogleRoute ? 'Route by Google Maps' : 'Straight-line estimate'}</div>
           </div>
         `
       });
@@ -722,7 +786,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
       flyerRouteLinesRef.current.push(polyline);
     });
-  }, [optimizedRoutes, showFlyerRoutes]);
+  }, [optimizedRoutes, showFlyerRoutes, formatDistance, formatDuration]);
 
   return (
     <div className="relative">
@@ -802,7 +866,16 @@ const MapComponent: React.FC<MapComponentProps> = ({
           )}
         </div>
 
-        {optimizedRoutes.length > 0 && showFlyerRoutes && (
+        {flyerRoutesLoading && (
+          <div className="pt-2 border-t text-xs">
+            <div className="flex items-center gap-2 text-primary">
+              <div className="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              <span>Calculating smart routes...</span>
+            </div>
+          </div>
+        )}
+
+        {optimizedRoutes.length > 0 && showFlyerRoutes && !flyerRoutesLoading && (
           <div className="pt-2 border-t text-xs space-y-1">
             <div className="font-semibold text-foreground">Routes by City:</div>
             {optimizedRoutes.map(route => (
@@ -811,7 +884,14 @@ const MapComponent: React.FC<MapComponentProps> = ({
                   className="w-3 h-3 rounded-full" 
                   style={{ backgroundColor: route.color }}
                 />
-                <span className="text-muted-foreground">{route.cityName} ({route.pins.length})</span>
+                <div className="flex flex-col">
+                  <span className="text-muted-foreground">{route.cityName} ({route.pins.length})</span>
+                  {route.googleRouteDuration && (
+                    <span className="text-muted-foreground/70">
+                      {formatDuration(route.googleRouteDuration)} • {formatDistance(route.googleRouteDistance || 0)}
+                    </span>
+                  )}
+                </div>
               </div>
             ))}
           </div>
