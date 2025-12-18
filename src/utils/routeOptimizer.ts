@@ -5,6 +5,12 @@ export interface OptimizedRoute {
   pins: HousePin[];
   totalDistance: number;
   color: string;
+  // Google Maps route data (populated after fetching)
+  googleRouteGeometry?: Array<{ lat: number; lng: number }>;
+  googleRouteDuration?: number; // seconds
+  googleRouteDistance?: number; // meters
+  hasUphill?: boolean;
+  hasDownhill?: boolean;
 }
 
 /**
