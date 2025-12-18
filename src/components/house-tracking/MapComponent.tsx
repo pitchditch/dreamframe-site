@@ -789,70 +789,76 @@ const MapComponent: React.FC<MapComponentProps> = ({
   }, [optimizedRoutes, showFlyerRoutes, formatDistance, formatDuration]);
 
   return (
-    <div className="relative">
-      <div className="absolute top-2 right-2 z-[1000] bg-background border rounded-lg shadow-lg p-3 space-y-2 max-w-xs">
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={showFlyerRoutes}
-              onChange={(e) => setShowFlyerRoutes(e.target.checked)}
-              className="rounded"
-            />
-            <span className="text-sm font-medium">Flyer Routes</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={showEmployeeRoutes}
-              onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
-              className="rounded"
-            />
-            <span className="text-sm font-medium">Employee Routes</span>
-          </label>
-        </div>
+    <div className="space-y-3">
+      {/* Controls Panel - Above the map */}
+      <div className="bg-background border rounded-lg shadow-sm p-3">
+        <div className="flex flex-wrap items-start gap-4">
+          {/* Toggles */}
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showFlyerRoutes}
+                onChange={(e) => setShowFlyerRoutes(e.target.checked)}
+                className="rounded"
+              />
+              <span className="text-sm font-medium">Flyer Routes</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showEmployeeRoutes}
+                onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
+                className="rounded"
+              />
+              <span className="text-sm font-medium">Employee Routes</span>
+            </label>
+          </div>
 
-        <div className="pt-2 border-t space-y-2">
-          <div className="font-semibold text-sm">Walking Route Generator</div>
-          <button
-            onClick={startRouteSelection}
-            disabled={routeSelectMode}
-            className={`w-full text-sm rounded px-3 py-1.5 ${
-              routeSelectMode 
-                ? 'bg-yellow-500 text-white cursor-wait' 
-                : 'bg-primary text-primary-foreground hover:bg-primary/90'
-            }`}
-          >
-            {routeSelectMode ? 'Click on Map...' : 'Generate 2km Route'}
-          </button>
-          {(walkingRouteActive || routeStartLocation) && (
+          {/* Route Generator Buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={startRouteSelection}
+              disabled={routeSelectMode}
+              className={`text-sm rounded px-3 py-1.5 ${
+                routeSelectMode 
+                  ? 'bg-yellow-500 text-white cursor-wait' 
+                  : 'bg-primary text-primary-foreground hover:bg-primary/90'
+              }`}
+            >
+              {routeSelectMode ? 'Click on Map...' : 'Generate Smart Route'}
+            </button>
+            {(walkingRouteActive || routeStartLocation) && (
+              <button
+                onClick={() => {
+                  setWalkingRouteActive(false);
+                  setRouteStartLocation(null);
+                  setNearbyBuildings([]);
+                  setRouteMessage('Click on map to start route');
+                  setRouteSelectMode(false);
+                }}
+                className="text-sm bg-destructive text-destructive-foreground rounded px-3 py-1.5 hover:bg-destructive/90"
+              >
+                Clear Route
+              </button>
+            )}
             <button
               onClick={() => {
-                setWalkingRouteActive(false);
-                setRouteStartLocation(null);
-                setNearbyBuildings([]);
-                setRouteMessage('Click on map to start route');
-                setRouteSelectMode(false);
+                if (confirm('Clear all pins from the map?')) {
+                  Object.values(markersRef.current).forEach((marker: any) => {
+                    marker.setMap(null);
+                  });
+                  markersRef.current = {};
+                  window.location.reload();
+                }
               }}
-              className="w-full text-sm bg-destructive text-destructive-foreground rounded px-3 py-1.5 hover:bg-destructive/90"
+              className="text-sm bg-orange-500 text-white rounded px-3 py-1.5 hover:bg-orange-600"
             >
-              Clear Route
+              Clear All Pins
             </button>
-          )}
-          <button
-            onClick={() => {
-              if (confirm('Clear all pins from the map?')) {
-                Object.values(markersRef.current).forEach((marker: any) => {
-                  marker.setMap(null);
-                });
-                markersRef.current = {};
-                window.location.reload();
-              }
-            }}
-            className="w-full text-sm bg-orange-500 text-white rounded px-3 py-1.5 hover:bg-orange-600"
-          >
-            Clear All Pins
-          </button>
+          </div>
+
+          {/* Status Message */}
           {routeMessage && (
             <div className={`text-xs p-2 rounded ${
               routeMessage.includes('Error') || routeMessage.includes('No') 
@@ -864,43 +870,47 @@ const MapComponent: React.FC<MapComponentProps> = ({
               {routeMessage}
             </div>
           )}
-        </div>
 
-        {flyerRoutesLoading && (
-          <div className="pt-2 border-t text-xs">
-            <div className="flex items-center gap-2 text-primary">
+          {/* Loading Indicator */}
+          {flyerRoutesLoading && (
+            <div className="flex items-center gap-2 text-primary text-xs">
               <div className="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin" />
               <span>Calculating smart routes...</span>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
+        {/* Route Summary - Horizontal */}
         {optimizedRoutes.length > 0 && showFlyerRoutes && !flyerRoutesLoading && (
-          <div className="pt-2 border-t text-xs space-y-1">
-            <div className="font-semibold text-foreground">Routes by City:</div>
-            {optimizedRoutes.map(route => (
-              <div key={route.cityName} className="flex items-center gap-2">
-                <div 
-                  className="w-3 h-3 rounded-full" 
-                  style={{ backgroundColor: route.color }}
-                />
-                <div className="flex flex-col">
-                  <span className="text-muted-foreground">{route.cityName} ({route.pins.length})</span>
-                  {route.googleRouteDuration && (
-                    <span className="text-muted-foreground/70">
-                      {formatDuration(route.googleRouteDuration)} • {formatDistance(route.googleRouteDistance || 0)}
-                    </span>
-                  )}
+          <div className="mt-3 pt-3 border-t">
+            <div className="flex flex-wrap items-center gap-4 text-xs">
+              <span className="font-semibold text-foreground">Routes:</span>
+              {optimizedRoutes.map(route => (
+                <div key={route.cityName} className="flex items-center gap-1.5">
+                  <div 
+                    className="w-2.5 h-2.5 rounded-full" 
+                    style={{ backgroundColor: route.color }}
+                  />
+                  <span className="text-muted-foreground">
+                    {route.cityName} ({route.pins.length})
+                    {route.googleRouteDuration && (
+                      <span className="ml-1 text-muted-foreground/70">
+                        • {formatDuration(route.googleRouteDuration)}
+                      </span>
+                    )}
+                  </span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>
+
+      {/* Map */}
       <div 
         ref={mapRef}
-        className="w-full h-96 border-2 border-gray-300 rounded-lg overflow-hidden"
-        style={{ minHeight: '400px' }}
+        className="w-full border-2 border-border rounded-lg overflow-hidden"
+        style={{ height: '500px' }}
       />
     </div>
   );
