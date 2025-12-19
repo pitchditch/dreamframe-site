@@ -1,9 +1,10 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { HousePin, RouteSession } from './types';
 import { supabase } from '@/integrations/supabase/client';
 import { generateOptimizedRoutes, OptimizedRoute } from '@/utils/routeOptimizer';
 import { useGoogleMapsRouting } from '@/hooks/useGoogleMapsRouting';
+import { usePropertyEnrichment } from '@/hooks/usePropertyEnrichment';
+import { toast } from 'sonner';
 
 interface MapComponentProps {
   pins: HousePin[];
@@ -11,6 +12,7 @@ interface MapComponentProps {
   onAddPin: (newPin: Omit<HousePin, 'id'>) => void;
   onUpdatePin: (pinId: string, updates: Partial<HousePin>) => void;
   onUpdateRoutes: React.Dispatch<React.SetStateAction<RouteSession[]>>;
+  onClearAllPins?: () => void;
   highlightedPinId: string | null;
   onPinHover: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -30,6 +32,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   onAddPin,
   onUpdatePin,
   onUpdateRoutes,
+  onClearAllPins,
   highlightedPinId,
   onPinHover
 }) => {
@@ -40,23 +43,29 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const flyerRouteLinesRef = useRef<any[]>([]);
   const [showEmployeeRoutes, setShowEmployeeRoutes] = useState(false);
   const [showFlyerRoutes, setShowFlyerRoutes] = useState(true);
+  const [showStorefrontRoutes, setShowStorefrontRoutes] = useState(false);
   const [employeeSessions, setEmployeeSessions] = useState<any[]>([]);
   const [routeLocations, setRouteLocations] = useState<any[]>([]);
   const [optimizedRoutes, setOptimizedRoutes] = useState<OptimizedRoute[]>([]);
+  const [storefrontRoutes, setStorefrontRoutes] = useState<OptimizedRoute[]>([]);
   const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number} | null>(null);
   const [walkingRouteActive, setWalkingRouteActive] = useState(false);
   const [routeStartLocation, setRouteStartLocation] = useState<{lat: number, lng: number} | null>(null);
   const [nearbyBuildings, setNearbyBuildings] = useState<any[]>([]);
-  const [routeMessage, setRouteMessage] = useState<string>('Click on map to start route');
+  const [routeMessage, setRouteMessage] = useState<string>('Tap on map to add location');
   const radiusCircleRef = useRef<any>(null);
   const walkingRouteRef = useRef<any>(null);
+  const storefrontRouteLinesRef = useRef<any[]>([]);
   const buildingMarkersRef = useRef<any[]>([]);
   const [routeSelectMode, setRouteSelectMode] = useState(false);
+  const [storefrontRouteMode, setStorefrontRouteMode] = useState(false);
   const [googleRouteGeometry, setGoogleRouteGeometry] = useState<Array<{lat: number, lng: number}>>([]);
   const [googleRouteInfo, setGoogleRouteInfo] = useState<{time: string, distance: string, hasUphill: boolean, hasDownhill: boolean} | null>(null);
   const [flyerRoutesLoading, setFlyerRoutesLoading] = useState(false);
+  const [enrichingProperty, setEnrichingProperty] = useState(false);
   
   const { getRoute, formatDuration, formatDistance, loading: routeLoading } = useGoogleMapsRouting();
+  const { fetchPropertyData, loading: propertyLoading } = usePropertyEnrichment();
 
   // Fetch employee sessions and locations
   useEffect(() => {
@@ -150,13 +159,35 @@ const MapComponent: React.FC<MapComponentProps> = ({
             return;
           }
           
+          // If in storefront route mode, generate storefront route
+          if (storefrontRouteMode) {
+            setRouteStartLocation({ lat, lng });
+            generateStorefrontRouteFromPoint(lat, lng);
+            setStorefrontRouteMode(false);
+            return;
+          }
+          
           try {
+            setEnrichingProperty(true);
+            setRouteMessage('Detecting address and property data...');
+            
             const geocoder = new google.maps.Geocoder();
             const result = await geocoder.geocode({ location: { lat, lng } });
             const address = result.results[0]?.formatted_address || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
             console.log('Found address:', address);
             
-            // Create new pin
+            // Fetch property data (square footage, year built, etc.)
+            let propertyData = null;
+            try {
+              propertyData = await fetchPropertyData(address, lat, lng);
+              if (propertyData && propertyData.squareFootage) {
+                toast.success(`Property detected: ${propertyData.squareFootage} sq ft`);
+              }
+            } catch (err) {
+              console.log('Property enrichment unavailable:', err);
+            }
+            
+            // Create new pin with enriched data
             const newPin: Omit<HousePin, 'id'> = {
               lat,
               lng,
@@ -164,12 +195,23 @@ const MapComponent: React.FC<MapComponentProps> = ({
               status: 'visited',
               notes: '',
               dateAdded: new Date().toISOString().split('T')[0],
-              leadSource: 'door-to-door'
+              leadSource: 'door-to-door',
+              squareFootage: propertyData?.squareFootage || undefined,
+              yearBuilt: propertyData?.yearBuilt || undefined,
+              stories: propertyData?.stories || undefined,
+              propertyType: propertyData?.propertyType || undefined,
+              lotSize: propertyData?.lotSize || undefined,
+              bedrooms: propertyData?.bedrooms || undefined,
+              bathrooms: propertyData?.bathrooms || undefined,
+              propertyDataSource: propertyData?.source !== 'none' ? propertyData?.source : undefined,
             };
             
             onAddPin(newPin);
+            setRouteMessage('Location added!');
+            setEnrichingProperty(false);
           } catch (error) {
             console.log('Could not fetch address, using coordinates');
+            setEnrichingProperty(false);
             const newPin: Omit<HousePin, 'id'> = {
               lat,
               lng,
@@ -181,6 +223,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
             };
             
             onAddPin(newPin);
+            setRouteMessage('Tap on map to add location');
           }
         });
 
@@ -231,13 +274,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
       const infoWindow = new google.maps.InfoWindow({
         content: `
-          <div class="p-2">
-            <strong>${statusConfig[pin.status].label}</strong><br>
-            <div class="text-sm">${pin.address}</div>
-            ${pin.notes ? `<div class="text-sm text-gray-600 mt-1">${pin.notes}</div>` : ''}
-            ${pin.customerName ? `<div class="text-sm"><strong>Customer:</strong> ${pin.customerName}</div>` : ''}
-            ${pin.phoneNumber ? `<div class="text-sm"><strong>Phone:</strong> ${pin.phoneNumber}</div>` : ''}
-            <div class="text-xs text-gray-400 mt-1">${pin.dateAdded}</div>
+          <div class="p-3 min-w-[200px]">
+            <div class="font-bold text-sm mb-1" style="color: ${statusConfig[pin.status].color}">${statusConfig[pin.status].label}</div>
+            <div class="text-sm font-medium mb-2">${pin.address}</div>
+            ${pin.squareFootage ? `<div class="text-xs text-gray-600">📐 ${pin.squareFootage.toLocaleString()} sq ft</div>` : ''}
+            ${pin.yearBuilt ? `<div class="text-xs text-gray-600">🏠 Built ${pin.yearBuilt}</div>` : ''}
+            ${pin.bedrooms ? `<div class="text-xs text-gray-600">🛏️ ${pin.bedrooms} bed, ${pin.bathrooms || 0} bath</div>` : ''}
+            ${pin.propertyType ? `<div class="text-xs text-gray-600">🏡 ${pin.propertyType}</div>` : ''}
+            ${pin.notes ? `<div class="text-xs text-gray-500 mt-1 border-t pt-1">${pin.notes}</div>` : ''}
+            ${pin.customerName ? `<div class="text-xs mt-1"><strong>👤</strong> ${pin.customerName}</div>` : ''}
+            ${pin.phoneNumber ? `<div class="text-xs"><strong>📞</strong> <a href="tel:${pin.phoneNumber}" class="text-blue-600">${pin.phoneNumber}</a></div>` : ''}
+            <div class="text-xs text-gray-400 mt-2">${pin.dateAdded}</div>
+            ${pin.isStorefront ? `<div class="mt-1"><span class="bg-orange-100 text-orange-800 text-xs px-1.5 py-0.5 rounded">🏪 ${pin.storefrontType || 'Storefront'}</span></div>` : ''}
           </div>
         `
       });
@@ -432,10 +480,105 @@ const MapComponent: React.FC<MapComponentProps> = ({
     }
   };
 
+  // Generate storefront route (commercial businesses)
+  const generateStorefrontRouteFromPoint = async (lat: number, lng: number) => {
+    setRouteMessage('Finding storefronts and businesses...');
+    setWalkingRouteActive(true);
+    
+    const radius = 1500; // 1.5km radius for storefronts
+    const overpassQuery = `
+      [out:json][timeout:15];
+      (
+        node["shop"](around:${radius},${lat},${lng});
+        node["amenity"~"restaurant|cafe|bar|fast_food|bank|pharmacy|dentist|doctors|hairdresser|beauty|car_repair|car_wash"](around:${radius},${lat},${lng});
+        way["shop"](around:${radius},${lat},${lng});
+        way["amenity"~"restaurant|cafe|bar|fast_food|bank|pharmacy|dentist|doctors|hairdresser|beauty|car_repair|car_wash"](around:${radius},${lat},${lng});
+      );
+      out center;
+    `;
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      
+      const response = await fetch('https://overpass-api.de/api/interpreter', {
+        method: 'POST',
+        body: overpassQuery,
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) throw new Error('Failed to fetch storefront data');
+      
+      const data = await response.json();
+      
+      if (!data.elements || data.elements.length === 0) {
+        setRouteMessage('No storefronts found. Try another location.');
+        setNearbyBuildings([]);
+        setWalkingRouteActive(false);
+        return;
+      }
+      
+      // Process storefronts
+      const storefronts = data.elements.map((element: any) => {
+        const center = element.center || { lat: element.lat, lon: element.lon };
+        const shopType = element.tags?.shop || element.tags?.amenity || 'business';
+        const name = element.tags?.name || 'Unknown Business';
+        
+        // Categorize storefront type
+        let storefrontType: string = 'other';
+        if (['hairdresser', 'beauty', 'beauty_salon'].includes(shopType)) storefrontType = 'hair-salon';
+        else if (['restaurant', 'cafe', 'bar', 'fast_food'].includes(shopType)) storefrontType = 'restaurant';
+        else if (['supermarket', 'convenience', 'clothes', 'shoes'].includes(shopType)) storefrontType = 'retail';
+        else if (['car_repair', 'car_wash', 'car'].includes(shopType)) storefrontType = 'automotive';
+        else if (['dentist', 'doctors', 'pharmacy', 'clinic'].includes(shopType)) storefrontType = 'medical';
+        else if (shopType === 'fitness_centre' || shopType === 'gym') storefrontType = 'gym';
+        
+        return {
+          lat: center.lat,
+          lng: center.lon,
+          type: 'commercial',
+          buildingType: shopType,
+          businessName: name,
+          storefrontType,
+          address: element.tags?.['addr:street'] ? 
+            `${element.tags['addr:housenumber'] || ''} ${element.tags['addr:street']}`.trim() : 
+            name,
+          tags: element.tags,
+          phone: element.tags?.phone || element.tags?.['contact:phone'] || null,
+          website: element.tags?.website || element.tags?.['contact:website'] || null,
+          openingHours: element.tags?.opening_hours || null
+        };
+      });
+      
+      setNearbyBuildings(storefronts);
+      setRouteMessage(`Found ${storefronts.length} storefronts! Route generated.`);
+      toast.success(`Found ${storefronts.length} businesses in area`);
+      
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.setCenter({ lat, lng });
+        mapInstanceRef.current.setZoom(15);
+      }
+    } catch (error: any) {
+      console.error('Error fetching storefronts:', error);
+      setRouteMessage('Error finding storefronts');
+      setWalkingRouteActive(false);
+    }
+  };
+
   // Handle walking route selection
   const startRouteSelection = () => {
     setRouteSelectMode(true);
-    setRouteMessage('Click on the map to select starting location');
+    setStorefrontRouteMode(false);
+    setRouteMessage('Tap map to select starting location');
+  };
+
+  // Handle storefront route selection
+  const startStorefrontRouteSelection = () => {
+    setStorefrontRouteMode(true);
+    setRouteSelectMode(false);
+    setRouteMessage('Tap map to find nearby storefronts');
   };
 
   // Calculate distance between two coordinates in km
@@ -789,112 +932,151 @@ const MapComponent: React.FC<MapComponentProps> = ({
   }, [optimizedRoutes, showFlyerRoutes, formatDistance, formatDuration]);
 
   return (
-    <div className="space-y-3">
-      {/* Controls Panel - Above the map */}
-      <div className="bg-background border rounded-lg shadow-sm p-3">
-        <div className="flex flex-wrap items-start gap-4">
-          {/* Toggles */}
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showFlyerRoutes}
-                onChange={(e) => setShowFlyerRoutes(e.target.checked)}
-                className="rounded"
-              />
-              <span className="text-sm font-medium">Flyer Routes</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showEmployeeRoutes}
-                onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
-                className="rounded"
-              />
-              <span className="text-sm font-medium">Employee Routes</span>
-            </label>
-          </div>
+    <div className="space-y-2 sm:space-y-3">
+      {/* Controls Panel - Mobile-friendly */}
+      <div className="bg-background border rounded-lg shadow-sm p-2 sm:p-3">
+        {/* Top Row - Toggles */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-2">
+          <label className="flex items-center gap-1.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showFlyerRoutes}
+              onChange={(e) => setShowFlyerRoutes(e.target.checked)}
+              className="rounded w-4 h-4"
+            />
+            <span className="text-xs sm:text-sm font-medium">Flyer Routes</span>
+          </label>
+          <label className="flex items-center gap-1.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showStorefrontRoutes}
+              onChange={(e) => setShowStorefrontRoutes(e.target.checked)}
+              className="rounded w-4 h-4"
+            />
+            <span className="text-xs sm:text-sm font-medium">Storefront Routes</span>
+          </label>
+          <label className="flex items-center gap-1.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showEmployeeRoutes}
+              onChange={(e) => setShowEmployeeRoutes(e.target.checked)}
+              className="rounded w-4 h-4"
+            />
+            <span className="text-xs sm:text-sm font-medium">Employee</span>
+          </label>
+        </div>
 
-          {/* Route Generator Buttons */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={startRouteSelection}
-              disabled={routeSelectMode}
-              className={`text-sm rounded px-3 py-1.5 ${
-                routeSelectMode 
-                  ? 'bg-yellow-500 text-white cursor-wait' 
-                  : 'bg-primary text-primary-foreground hover:bg-primary/90'
-              }`}
-            >
-              {routeSelectMode ? 'Click on Map...' : 'Generate Smart Route'}
-            </button>
-            {(walkingRouteActive || routeStartLocation) && (
-              <button
-                onClick={() => {
-                  setWalkingRouteActive(false);
-                  setRouteStartLocation(null);
-                  setNearbyBuildings([]);
-                  setRouteMessage('Click on map to start route');
-                  setRouteSelectMode(false);
-                }}
-                className="text-sm bg-destructive text-destructive-foreground rounded px-3 py-1.5 hover:bg-destructive/90"
-              >
-                Clear Route
-              </button>
-            )}
+        {/* Buttons Row - Mobile-friendly grid */}
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1.5 sm:gap-2">
+          <button
+            onClick={startRouteSelection}
+            disabled={routeSelectMode || storefrontRouteMode}
+            className={`text-xs sm:text-sm rounded px-2 sm:px-3 py-1.5 sm:py-2 font-medium ${
+              routeSelectMode 
+                ? 'bg-yellow-500 text-white cursor-wait' 
+                : 'bg-primary text-primary-foreground hover:bg-primary/90'
+            }`}
+          >
+            {routeSelectMode ? '📍 Tap Map...' : '🏠 Residential'}
+          </button>
+          
+          <button
+            onClick={startStorefrontRouteSelection}
+            disabled={routeSelectMode || storefrontRouteMode}
+            className={`text-xs sm:text-sm rounded px-2 sm:px-3 py-1.5 sm:py-2 font-medium ${
+              storefrontRouteMode 
+                ? 'bg-orange-500 text-white cursor-wait' 
+                : 'bg-orange-600 text-white hover:bg-orange-700'
+            }`}
+          >
+            {storefrontRouteMode ? '📍 Tap Map...' : '🏪 Storefronts'}
+          </button>
+          
+          {(walkingRouteActive || routeStartLocation) && (
             <button
               onClick={() => {
-                if (confirm('Clear all pins from the map?')) {
-                  Object.values(markersRef.current).forEach((marker: any) => {
-                    marker.setMap(null);
-                  });
-                  markersRef.current = {};
+                setWalkingRouteActive(false);
+                setRouteStartLocation(null);
+                setNearbyBuildings([]);
+                setRouteMessage('Tap on map to add location');
+                setRouteSelectMode(false);
+                setStorefrontRouteMode(false);
+              }}
+              className="text-xs sm:text-sm bg-destructive text-destructive-foreground rounded px-2 sm:px-3 py-1.5 sm:py-2 font-medium hover:bg-destructive/90"
+            >
+              Clear Route
+            </button>
+          )}
+          
+          <button
+            onClick={() => {
+              if (confirm('Clear all pins from the map? This cannot be undone.')) {
+                // Clear markers from map
+                Object.values(markersRef.current).forEach((marker: any) => {
+                  marker.setMap(null);
+                });
+                markersRef.current = {};
+                
+                // Clear localStorage
+                localStorage.removeItem('housePins');
+                
+                // Call parent's clear function if provided
+                if (onClearAllPins) {
+                  onClearAllPins();
+                } else {
+                  // Fallback: reload
                   window.location.reload();
                 }
-              }}
-              className="text-sm bg-orange-500 text-white rounded px-3 py-1.5 hover:bg-orange-600"
-            >
-              Clear All Pins
-            </button>
-          </div>
+                
+                toast.success('All pins cleared');
+              }
+            }}
+            className="text-xs sm:text-sm bg-red-600 text-white rounded px-2 sm:px-3 py-1.5 sm:py-2 font-medium hover:bg-red-700"
+          >
+            🗑️ Clear All
+          </button>
+        </div>
 
-          {/* Status Message */}
+        {/* Status Message */}
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           {routeMessage && (
-            <div className={`text-xs p-2 rounded ${
+            <div className={`text-xs px-2 py-1 rounded ${
               routeMessage.includes('Error') || routeMessage.includes('No') 
                 ? 'bg-destructive/10 text-destructive' 
-                : routeSelectMode
-                ? 'bg-yellow-100 text-yellow-800'
+                : (routeSelectMode || storefrontRouteMode)
+                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
+                : routeMessage.includes('added') || routeMessage.includes('detected')
+                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
                 : 'bg-primary/10 text-primary'
             }`}>
-              {routeMessage}
+              {enrichingProperty ? '⏳ ' : ''}{routeMessage}
             </div>
           )}
 
-          {/* Loading Indicator */}
-          {flyerRoutesLoading && (
-            <div className="flex items-center gap-2 text-primary text-xs">
+          {/* Loading Indicators */}
+          {(flyerRoutesLoading || enrichingProperty) && (
+            <div className="flex items-center gap-1.5 text-primary text-xs">
               <div className="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-              <span>Calculating smart routes...</span>
+              <span>{enrichingProperty ? 'Getting property info...' : 'Calculating routes...'}</span>
             </div>
           )}
         </div>
 
-        {/* Route Summary - Horizontal */}
+        {/* Route Summary - Compact for mobile */}
         {optimizedRoutes.length > 0 && showFlyerRoutes && !flyerRoutesLoading && (
-          <div className="mt-3 pt-3 border-t">
-            <div className="flex flex-wrap items-center gap-4 text-xs">
+          <div className="mt-2 pt-2 border-t">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
               <span className="font-semibold text-foreground">Routes:</span>
               {optimizedRoutes.map(route => (
-                <div key={route.cityName} className="flex items-center gap-1.5">
+                <div key={route.cityName} className="flex items-center gap-1">
                   <div 
-                    className="w-2.5 h-2.5 rounded-full" 
+                    className="w-2 h-2 rounded-full flex-shrink-0" 
                     style={{ backgroundColor: route.color }}
                   />
-                  <span className="text-muted-foreground">
+                  <span className="text-muted-foreground whitespace-nowrap">
                     {route.cityName} ({route.pins.length})
                     {route.googleRouteDuration && (
-                      <span className="ml-1 text-muted-foreground/70">
+                      <span className="hidden sm:inline ml-1 text-muted-foreground/70">
                         • {formatDuration(route.googleRouteDuration)}
                       </span>
                     )}
@@ -906,11 +1088,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
         )}
       </div>
 
-      {/* Map */}
+      {/* Map - Responsive height */}
       <div 
         ref={mapRef}
-        className="w-full border-2 border-border rounded-lg overflow-hidden"
-        style={{ height: '500px' }}
+        className="w-full border-2 border-border rounded-lg overflow-hidden touch-manipulation"
+        style={{ height: 'calc(100vh - 280px)', minHeight: '350px', maxHeight: '600px' }}
       />
     </div>
   );
