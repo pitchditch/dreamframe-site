@@ -173,6 +173,11 @@ const HouseTracking: React.FC = () => {
     setPins(prev => prev.filter(pin => pin.id !== pinId));
   };
 
+  const handleClearAllPins = () => {
+    setPins([]);
+    localStorage.removeItem('housePins');
+  };
+
   const handleSelectPin = (pin: HousePin) => {
     setHighlightedPinId(pin.id);
     setActiveTab('map');
@@ -350,6 +355,7 @@ const HouseTracking: React.FC = () => {
                       onAddPin={handleAddPin}
                       onUpdatePin={handleUpdatePin}
                       onUpdateRoutes={setRoutes}
+                      onClearAllPins={handleClearAllPins}
                       highlightedPinId={highlightedPinId}
                       onPinHover={setHighlightedPinId}
                     />
@@ -373,6 +379,7 @@ const HouseTracking: React.FC = () => {
                       onAddPin={handleAddPin}
                       onUpdatePin={handleUpdatePin}
                       onUpdateRoutes={setRoutes}
+                      onClearAllPins={handleClearAllPins}
                       highlightedPinId={highlightedPinId}
                       onPinHover={setHighlightedPinId}
                     />
