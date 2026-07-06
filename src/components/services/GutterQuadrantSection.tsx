@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -15,15 +14,15 @@ const GutterQuadrantSection = () => {
   
   const quadrants: QuadrantDetail[] = [
     {
-      title: t("Roof Assessment & Safety"),
-      description: t("We start by carefully assessing the roof structure and setting up proper safety equipment before beginning any gutter work."),
+      title: t("Roof Edge & Gutter Assessment"),
+      description: t("We inspect the full gutter run, roof edge, hangers, outlets, and downspouts before cleaning so the work matches your gutter system."),
       features: [
-        t("Thorough roof inspection"), 
-        t("Ladder safety protocols"), 
-        t("Equipment positioning"), 
-        t("Weather condition assessment")
+        t("Long aluminum gutter inspection"), 
+        t("Roof-edge and shingle-line check"), 
+        t("Hanger and outlet review"), 
+        t("Safe ladder positioning")
       ],
-      image: "/lovable-uploads/572f285b-b3cc-4a5c-93e3-637ee1015659.jpg"
+      image: "/lovable-uploads/gutter-first-section-long.svg"
     },
     {
       title: t("Debris Removal Process"),
@@ -79,7 +78,7 @@ const GutterQuadrantSection = () => {
               <img 
                 src={quadrants[activeQuadrant].image} 
                 alt={quadrants[activeQuadrant].title}
-                className="w-full h-64 object-cover rounded-lg shadow-lg"
+                className="w-full h-72 md:h-80 object-cover rounded-lg shadow-lg"
               />
             </div>
             
