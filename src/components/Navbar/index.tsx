@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Logo } from '../Logo';
@@ -10,49 +9,59 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Pages with hero sections
+  // Standalone pages with dark/image hero sections.
   const heroPages = [
-    '/', 
-    '/why-us', 
-    '/services/gutter-cleaning', 
-    '/services/roof-cleaning',
-    '/services/window-cleaning',
-    '/services/pressure-washing',
-    '/services/post-construction-window-cleaning',
-    '/services/commercial-window-cleaning',
-    '/services/commercial-pressure-washing',
+    '/',
+    '/about',
+    '/why-us',
     '/vancouver-window-cleaning',
     '/contact'
   ];
 
+  const pageHasHero = (pathname: string) => {
+    return (
+      heroPages.includes(pathname) ||
+      pathname.startsWith('/services/') ||
+      pathname.startsWith('/locations/') ||
+      /-(window-cleaning|pressure-washing)$/.test(pathname)
+    );
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.8;
-      
-      // Check if we're in a hero section area
-      const isInHeroArea = heroPages.includes(location.pathname) && currentScrollY < heroHeight;
-      
+      const heroElement = document.querySelector('main > :first-child') as HTMLElement | null;
+      const headerElement = document.querySelector('header') as HTMLElement | null;
+      const headerHeight = headerElement?.offsetHeight ?? 112;
+
+      // Switch to the dark logo as soon as the navbar moves beyond the actual hero.
+      const heroBottom = heroElement
+        ? heroElement.getBoundingClientRect().bottom + currentScrollY
+        : window.innerHeight * 0.8;
+
+      const isInHeroArea =
+        pageHasHero(location.pathname) &&
+        currentScrollY + headerHeight < heroBottom;
+
       setIsOverVideo(isInHeroArea);
-      setIsScrolled(currentScrollY > 10);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const animationFrame = window.requestAnimationFrame(handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesMenuOpen(false);
-    
-    // Set initial state for hero pages
-    const isHeroPage = heroPages.includes(location.pathname);
-    setIsOverVideo(isHeroPage);
   }, [location.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
