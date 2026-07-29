@@ -5,29 +5,29 @@ import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import { MobileMenuButton } from './MobileMenuButton';
 
+// Standalone pages with dark/image hero sections.
+const heroPages = [
+  '/',
+  '/about',
+  '/why-us',
+  '/vancouver-window-cleaning',
+  '/contact'
+];
+
+const pageHasHero = (pathname: string) => {
+  return (
+    heroPages.includes(pathname) ||
+    pathname.startsWith('/services/') ||
+    pathname.startsWith('/locations/') ||
+    /-(window-cleaning|pressure-washing)$/.test(pathname)
+  );
+};
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isOverVideo, setIsOverVideo] = useState(false);
   const location = useLocation();
-
-  // Standalone pages with dark/image hero sections.
-  const heroPages = [
-    '/',
-    '/about',
-    '/why-us',
-    '/vancouver-window-cleaning',
-    '/contact'
-  ];
-
-  const pageHasHero = (pathname: string) => {
-    return (
-      heroPages.includes(pathname) ||
-      pathname.startsWith('/services/') ||
-      pathname.startsWith('/locations/') ||
-      /-(window-cleaning|pressure-washing)$/.test(pathname)
-    );
-  };
 
   useEffect(() => {
     const handleScroll = () => {
