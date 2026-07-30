@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
@@ -20,6 +19,7 @@ const Calculator = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
 const HouseTracking = lazy(() => import('./pages/HouseTracking'));
 const CRM = lazy(() => import('./pages/CRM'));
+const MaintenanceMemberships = lazy(() => import('./pages/MaintenanceMemberships'));
 const PropertyCapture = lazy(() => import('./pages/crm/PropertyCapture'));
 const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
 const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
@@ -40,37 +40,38 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white">
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/calculator" element={<Calculator />} />
-                <Route path="/booking" element={<Booking />} />
-                <Route path="/house-tracking" element={<HouseTracking />} />
-          <Route path="/crm/property-capture" element={<PropertyCapture />} />
-          <Route path="/crm/canvasser" element={<CanvasserMode />} />
-          <Route path="/crm/properties" element={<ViewProperties />} />
-          <Route path="/crm/property/:id" element={<PropertyDetail />} />
-          <Route path="/crm/map" element={<MapView />} />
-          <Route path="/crm/analytics" element={<Analytics />} />
-          <Route path="/crm/routes" element={<RouteHistory />} />
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/maintenance-memberships" element={<MaintenanceMemberships />} />
+            <Route path="/house-tracking" element={<HouseTracking />} />
+            <Route path="/crm/property-capture" element={<PropertyCapture />} />
+            <Route path="/crm/canvasser" element={<CanvasserMode />} />
+            <Route path="/crm/properties" element={<ViewProperties />} />
+            <Route path="/crm/property/:id" element={<PropertyDetail />} />
+            <Route path="/crm/map" element={<MapView />} />
+            <Route path="/crm/analytics" element={<Analytics />} />
+            <Route path="/crm/routes" element={<RouteHistory />} />
 
-                {/* Service Routes */}
-                <Route path="/services/window-cleaning" element={<WindowCleaning />} />
-                <Route path="/services/pressure-washing" element={<PressureWashing />} />
-                
-                {/* Specific Service Pages */}
-                <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
-                <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
+            {/* Service Routes */}
+            <Route path="/services/window-cleaning" element={<WindowCleaning />} />
+            <Route path="/services/pressure-washing" element={<PressureWashing />} />
 
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-            <Toaster />
-          </div>
-        </Router>
+            {/* Specific Service Pages */}
+            <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+            <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <Toaster />
+      </div>
+    </Router>
   );
 }
 
