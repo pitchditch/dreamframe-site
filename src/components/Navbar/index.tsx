@@ -11,7 +11,8 @@ const heroPages = [
   '/about',
   '/why-us',
   '/vancouver-window-cleaning',
-  '/contact'
+  '/contact',
+  '/maintenance-memberships'
 ];
 
 const pageHasHero = (pathname: string) => {
@@ -71,9 +72,9 @@ const Navbar = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isOverVideo 
-        ? isGutterCleaningPage 
-          ? 'bg-gradient-to-br from-blue-900 to-gray-900 h-28 md:h-36' 
+      isOverVideo
+        ? isGutterCleaningPage
+          ? 'bg-gradient-to-br from-blue-900 to-gray-900 h-28 md:h-36'
           : 'bg-transparent h-28 md:h-36'
         : 'bg-white/95 backdrop-blur-sm h-28 md:h-32'
     }`}>

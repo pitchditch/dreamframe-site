@@ -22,20 +22,41 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // Auto-fill form with booking data if available
+  // Auto-fill form with a selected maintenance plan or booking data if available.
   useEffect(() => {
+    const maintenancePlanSelection = localStorage.getItem('maintenancePlanSelection');
+
+    if (maintenancePlanSelection) {
+      try {
+        const data = JSON.parse(maintenancePlanSelection);
+        const address = data.address?.formatted_address || 'the selected property';
+        const planName = data.planName || 'a home maintenance plan';
+
+        setFormData(prev => ({
+          ...prev,
+          service: 'Maintenance Plan',
+          message: `Hi! I'm interested in ${planName} for my property at ${address}. Please review the property and contact me with the exact service scope, schedule and pricing.`
+        }));
+
+        localStorage.removeItem('maintenancePlanSelection');
+        return;
+      } catch (error) {
+        console.error('Error parsing maintenance plan selection:', error);
+      }
+    }
+
     const bookingData = localStorage.getItem('bookingData');
     if (bookingData) {
       try {
         const data = JSON.parse(bookingData);
         const prefilledMessage = `Hi! I'm interested in ${data.service} for my property at ${data.address}. ${data.squareFootage ? `Property size: ${data.squareFootage.toLocaleString()} sq ft. ` : ''}${data.quote ? `Quote received: $${data.quote}. ` : ''}Please contact me to schedule this service.`;
-        
+
         setFormData(prev => ({
           ...prev,
           service: data.service || '',
           message: prefilledMessage
         }));
-        
+
         localStorage.removeItem('bookingData');
       } catch (error) {
         console.error('Error parsing booking data:', error);
@@ -60,7 +81,7 @@ const Contact = () => {
         "https://uyyudsjqwspapmujvzmm.supabase.co/functions/v1/forward-contact-form",
         {
           method: "POST",
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5eXVkc2pxd3NwYXBtdWp2em1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4Nzc4MDQsImV4cCI6MjA2NTQ1MzgwNH0.Fwq059rw1BlfRk_Qr-NdbTmo140o-YLzN6Qt0HupSlA'}`
           },
@@ -84,10 +105,10 @@ const Contact = () => {
       if (!response.ok) {
         throw new Error(responseData.error || `Server error: ${response.status}`);
       }
-      
+
       if (responseData.success) {
         setSubmitStatus('success');
-        
+
         toast({
           title: "Message sent successfully!",
           description: "Thank you for contacting us! We'll get back to you within 24 hours. A confirmation email has been sent to you.",
@@ -116,7 +137,7 @@ const Contact = () => {
     } catch (error) {
       console.error('Error sending email:', error);
       setSubmitStatus('error');
-      
+
       toast({
         variant: "destructive",
         title: "Error sending message",
@@ -140,7 +161,7 @@ const Contact = () => {
         <title>Contact Us - Free Quotes | BC Pressure Washing</title>
         <meta name="description" content="Get your free quote today! Contact BC Pressure Washing for professional cleaning services in White Rock, Surrey, and Metro Vancouver. Call (778) 808-7620." />
       </Helmet>
-      
+
       <div className="min-h-screen bg-gray-50 pt-28 pb-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -238,6 +259,7 @@ const Contact = () => {
                       <option value="Gutter Cleaning">Gutter Cleaning</option>
                       <option value="Deck Cleaning">Deck Cleaning</option>
                       <option value="Roof Cleaning">Roof Cleaning</option>
+                      <option value="Maintenance Plan">Maintenance Plan</option>
                       <option value="Multiple Services">Multiple Services</option>
                     </select>
                   </div>

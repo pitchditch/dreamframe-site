@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
@@ -28,35 +27,29 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
     }, 100);
   };
 
+  const navLinkClasses = `transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
+    isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
+  }`;
+
   return (
     <div className="hidden md:flex items-center justify-between flex-1">
       <div className="flex-1 flex justify-center">
         <NavigationMenu>
-          <NavigationMenuList className="flex items-center justify-center space-x-12">
+          <NavigationMenuList className="flex items-center justify-center space-x-8">
             <NavigationMenuItem>
-              <button
-                onClick={handleHomeClick}
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
-              >
+              <button onClick={handleHomeClick} className={navLinkClasses}>
                 {t('Home')}
               </button>
             </NavigationMenuItem>
-            
+
             <NavigationMenuItem>
-              <Link 
-                to="/why-us" 
-                className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
-                  isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                }`}
-              >
+              <Link to="/why-us" className={navLinkClasses}>
                 {t('Why Us')}
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger 
+              <NavigationMenuTrigger
                 className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
@@ -94,7 +87,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                       </Link>
                     </div>
                   </div>
-                  
+
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 text-lg">Commercial Services</h3>
                     <div className="space-y-3">
@@ -111,7 +104,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                         <span className="text-gray-800 group-hover:text-bc-red font-semibold">{t('Post-Construction Cleaning')}</span>
                       </Link>
                     </div>
-                    
+
                     <div className="mt-6 pt-4 border-t border-gray-200">
                       <Link to="/compare-services" className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group mb-2">
                         <Scale className="w-6 h-6 text-bc-red transition-transform duration-200 group-hover:scale-110" />
@@ -127,7 +120,13 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger 
+              <Link to="/maintenance-memberships" className={navLinkClasses}>
+                {t('Maintenance Plans')}
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
                 className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide bg-transparent border-none shadow-none p-0 h-auto data-[state=open]:bg-transparent ${
                   isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
                 }`}
@@ -143,7 +142,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                       <p className="text-sm text-gray-600">Read what our customers say</p>
                     </div>
                   </Link>
-                  
+
                   <Link to="/equipment" className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-md transition-colors group">
                     <img src="/lovable-uploads/945062d9-44b6-4de9-8837-15314feb633a.png" alt="Equipment" className="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-110" />
                     <div>
@@ -151,7 +150,7 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
                       <p className="text-sm text-gray-600">Professional-grade cleaning tools</p>
                     </div>
                   </Link>
-                  
+
                   <div className="pt-6 border-t border-gray-200">
                     <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2 text-lg">
                       <Star className="h-6 w-6 text-bc-red" />
@@ -174,17 +173,11 @@ export const NavbarDesktop = ({ isOverVideo }: NavbarDesktopProps) => {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      
+
       <div className="flex items-center space-x-8">
-        <Link 
-          to="/contact" 
-          className={`transition-all duration-300 hover:scale-110 hover:text-bc-red font-bold text-xl tracking-wide ${
-            isOverVideo ? 'text-white drop-shadow-lg' : 'text-gray-800'
-          }`}
-        >
+        <Link to="/contact" className={navLinkClasses}>
           {t('Contact')}
         </Link>
-        
         <LanguageSelector />
       </div>
     </div>
