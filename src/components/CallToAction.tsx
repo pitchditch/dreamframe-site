@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -10,35 +9,42 @@ interface CallToActionProps {
 }
 
 const CallToAction = ({ title, subtitle, backgroundImage }: CallToActionProps) => {
-  // Use the new roof image if no specific background is provided and title contains "Roof"
-  const defaultRoofBackground = title.toLowerCase().includes('roof') 
-    ? '/lovable-uploads/180b21a6-5560-4b80-907a-78280186bc05.png'
-    : backgroundImage;
+  const resolvedBackground =
+    backgroundImage ||
+    (title.toLowerCase().includes('roof')
+      ? '/lovable-uploads/180b21a6-5560-4b80-907a-78280186bc05.png'
+      : undefined);
 
   return (
-    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-      {/* Background Image with full coverage */}
-      <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ 
-          backgroundImage: `url('${defaultRoofBackground || backgroundImage}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/60"></div>
-      </div>
-      
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+    <section className="relative min-h-[520px] bg-gray-950 flex items-center justify-center overflow-hidden">
+      {resolvedBackground && (
+        <img
+          src={resolvedBackground}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+      )}
+
+      <div className="absolute inset-0 bg-black/65" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/70"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 container mx-auto px-4 py-20 text-center text-white">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
           {title}
         </h2>
-        <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-lg md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto leading-relaxed">
           {subtitle}
         </p>
-        <Button asChild size="lg" variant="bc-red" className="text-lg px-8 py-4 hover:scale-105 transition-transform">
+        <Button
+          asChild
+          size="lg"
+          variant="bc-red"
+          className="min-h-12 text-lg px-8 hover:scale-105 transition-transform"
+        >
           <Link to="/calculator">Get Your Free Quote Today</Link>
         </Button>
       </div>
