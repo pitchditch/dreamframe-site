@@ -161,18 +161,11 @@ const GutterCleaning = () => {
         <meta name="keywords" content="gutter cleaning near me, clogged gutters, surrey gutter cleaning, white rock gutter cleaning services, gutter guard installation, downspout flushing, licensed insured gutter cleaners, affordable gutter cleaning" />
       </Helmet>
 
-      {/* Add spacing to account for navbar */}
       <div className="pt-28 md:pt-32">
-        {/* Hero Section with Before/After Slider */}
         <HeroSlider />
-        
-        {/* Trust Bar */}
         <TrustBar />
-        
-        {/* Sticky Quote Button */}
         <StickyQuoteButton />
 
-        {/* Benefits Section with Icons */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <ServiceBenefits 
@@ -180,7 +173,6 @@ const GutterCleaning = () => {
               subtitle="Protect your home's structural integrity and prevent costly damage with our professional gutter cleaning services" 
               benefits={benefits} 
             />
-            
             <div className="text-center mt-12">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <GutterCleaningQuoteOverlay buttonText="Check Prices & Availability" variant="bc-red" />
@@ -190,17 +182,11 @@ const GutterCleaning = () => {
           </div>
         </section>
         
-        {/* Enhanced Comparison Table */}
         <EnhancedComparisonTable />
-        
-        {/* Service Areas Map */}
         <ServiceAreasMap />
-        
-        {/* Process Section */}
         <GutterQuadrantSection />
         <GutterProcessCarousel />
         
-        {/* After Shots of Clean Gutters Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">After Shots of Clean Gutters</h2>
@@ -229,21 +215,21 @@ const GutterCleaning = () => {
                     Our Gutter Stick guard system provides superior protection against leaves, pine needles, and debris while maintaining optimal water flow through your gutters.
                   </p>
                   <h4 className="font-bold text-lg mb-2">Key Features:</h4>
-                  <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                  <ul className="space-y-3 text-gray-700 mb-4">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Perforated design allows water flow while blocking debris</span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Durable construction withstands harsh weather</span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Easy maintenance and long-lasting protection</span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Reduces cleaning frequency by up to 90%</span>
                     </li>
                   </ul>
@@ -257,21 +243,21 @@ const GutterCleaning = () => {
                     Our certified technicians ensure proper installation of your Gutter Stick guard system with precision and attention to detail.
                   </p>
                   <h4 className="font-bold text-lg mb-2">Installation Benefits:</h4>
-                  <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                  <ul className="space-y-3 text-gray-700 mb-4">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Custom fit for your specific gutter system</span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Secure mounting prevents displacement</span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Professional warranty on installation</span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" strokeWidth={2.5} />
                       <span>Maintains gutter integrity and appearance</span>
                     </li>
                   </ul>
@@ -292,7 +278,6 @@ const GutterCleaning = () => {
           </div>
         </section>
         
-        {/* Professional Installation Video */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
@@ -315,26 +300,11 @@ const GutterCleaning = () => {
                   </p>
                   <h4 className="font-bold text-lg mb-2">Benefits of Our Gutter Guards:</h4>
                   <ul className="list-disc list-inside space-y-3 text-gray-700 mb-4">
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
-                      <span>Reduce cleaning frequency by 90%</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
-                      <span>Prevent clogs and overflow</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
-                      <span>Keep pests and birds out</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
-                      <span>Extend the lifespan of your gutters</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span> 
-                      <span>Prevent ice dams in winter</span>
-                    </li>
+                    <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Reduce cleaning frequency by 90%</span></li>
+                    <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Prevent clogs and overflow</span></li>
+                    <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Keep pests and birds out</span></li>
+                    <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Extend the lifespan of your gutters</span></li>
+                    <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Prevent ice dams in winter</span></li>
                   </ul>
                   <div className="mt-6">
                     <GutterCleaningQuoteOverlay buttonText="Get a Quote for Gutter Guards" variant="bc-red" />
@@ -345,7 +315,6 @@ const GutterCleaning = () => {
           </div>
         </section>
         
-        {/* Customer Testimonials Carousel */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">What Our Gutter Cleaning Customers Say</h2>
@@ -363,8 +332,6 @@ const GutterCleaning = () => {
                 </div>
               ))}
             </div>
-            
-            {/* Seasonal Callout */}
             <div className="text-center mt-12 p-6 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg">
               <h3 className="text-2xl font-bold mb-2 text-orange-800">Fall Cleanings Fill Fast!</h3>
               <p className="text-orange-700 mb-4">Book now before the next heavy rain. Don't let clogged gutters damage your home.</p>
@@ -373,14 +340,12 @@ const GutterCleaning = () => {
           </div>
         </section>
         
-        {/* Enhanced FAQ Section */}
         <FAQSection 
           title="Frequently Asked Questions About Gutter Cleaning" 
           subtitle="Get answers to common questions about our gutter cleaning services in Surrey, White Rock and Metro Vancouver" 
           faqs={faqs} 
         />
         
-        {/* Final CTA with Cross-links */}
         <CallToAction 
           title="Ready to Book Your Gutter Cleaning?" 
           subtitle="Contact us today for a free estimate and experience the difference professional gutter maintenance makes. We also offer roof cleaning and window cleaning services."
