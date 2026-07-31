@@ -20,30 +20,37 @@ const pageHasHero = (pathname: string) => {
     heroPages.includes(pathname) ||
     pathname.startsWith('/services/') ||
     pathname.startsWith('/locations/') ||
-    /-(window-cleaning|pressure-washing)$/.test(pathname)
+    /-(window-cleaning|pressure-washing)\/?$/.test(pathname)
   );
 };
 
 const Navbar = () => {
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
-  const [isOverVideo, setIsOverVideo] = useState(false);
-  const location = useLocation();
+  const [isOverVideo, setIsOverVideo] = useState(() => pageHasHero(location.pathname));
 
   useEffect(() => {
+    const hasHero = pageHasHero(location.pathname);
+
+    // Use the transparent navbar immediately on hero pages so there is no
+    // white-navbar flash before the first scroll measurement completes.
+    setIsOverVideo(hasHero);
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const heroElement = document.querySelector('main > :first-child') as HTMLElement | null;
+      const explicitHero = document.querySelector('[data-navbar-hero="true"]') as HTMLElement | null;
+      const firstMainSection = document.querySelector('main > :first-child') as HTMLElement | null;
+      const heroElement = explicitHero ?? firstMainSection;
       const headerElement = document.querySelector('header') as HTMLElement | null;
       const headerHeight = headerElement?.offsetHeight ?? 112;
 
-      // Switch to the dark logo as soon as the navbar moves beyond the actual hero.
       const heroBottom = heroElement
         ? heroElement.getBoundingClientRect().bottom + currentScrollY
         : window.innerHeight * 0.8;
 
       const isInHeroArea =
-        pageHasHero(location.pathname) &&
+        hasHero &&
         currentScrollY + headerHeight < heroBottom;
 
       setIsOverVideo(isInHeroArea);
