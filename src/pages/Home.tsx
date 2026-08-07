@@ -15,13 +15,9 @@ import SatisfactionGuaranteeSection from '../components/home/SatisfactionGuarant
 import FeaturedProjectSection from '../components/home/FeaturedProjectSection';
 
 const Home = () => {
-  // Explicitly getting language related functions to ensure they're available
   const { language, setLanguage } = useTranslation();
 
   useEffect(() => {
-    // We don't force English as default anymore to allow language selection
-    // Leave existing preferred language if set
-    
     document.body.classList.add('has-video-header');
 
     const observerOptions = {
@@ -42,7 +38,6 @@ const Home = () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
-    // Log current language for debugging
     console.log('Current language on Home page:', language);
 
     return () => {
@@ -52,7 +47,7 @@ const Home = () => {
   }, [language, setLanguage]);
 
   return (
-    <Layout 
+    <Layout
       image="/lovable-uploads/5608bf56-7f0e-4f7f-9bb0-5ba81b9d267e.png"
       canonicalUrl="/"
       title="BC Pressure Washing - #1 Window & Pressure Washing Services in Surrey & White Rock"
@@ -129,12 +124,25 @@ const Home = () => {
       </Helmet>
 
       <HeroSection />
-      
+
       <div className="relative z-20 -mt-24 md:-mt-32">
         <div className="bg-white rounded-t-3xl shadow-xl">
           <FeaturedProjectSection />
           <PremiumSolutionsSection />
-          {/* Add data-component attribute to help with visibility detection */}
+
+          <section id="service-area-map" className="bg-slate-950 py-16 text-white sm:py-20">
+            <div className="container mx-auto px-4">
+              <div className="mb-8 text-center">
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-red-400">Interactive Service Area Map</p>
+                <h2 className="mt-3 text-3xl font-black text-white sm:text-4xl">See Where We Work</h2>
+              </div>
+              <ServiceAreaMap />
+              <div className="mt-10">
+                <ServiceAreasCarousel />
+              </div>
+            </div>
+          </section>
+
           <div data-component="owner-operated">
             <OwnerOperatedSection />
           </div>
@@ -143,22 +151,13 @@ const Home = () => {
           <TestimonialsSection />
           <PackagesSection />
 
-          <section className="bg-slate-950 py-16 text-white sm:py-20">
-            <div className="container mx-auto px-4">
-              <ServiceAreaMap />
-              <div className="mt-10">
-                <ServiceAreasCarousel />
-              </div>
-            </div>
-          </section>
-
           <ReferralButton />
 
           <footer className="text-center text-sm text-gray-500 mt-12">
             <p>BC Pressure Washing · White Rock, BC · 778-808-7620 · bcpressurewashing.ca@gmail.com</p>
-            <p>Follow us: 
-              <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Instagram</a> | 
-              <a href="https://www.youtube.com/@bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">YouTube</a> | 
+            <p>Follow us:
+              <a href="https://www.instagram.com/bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Instagram</a> |
+              <a href="https://www.youtube.com/@bc.pressure.washing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">YouTube</a> |
               <a href="https://www.facebook.com/bcpressurewashing" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-400 underline">Facebook</a>
             </p>
           </footer>
