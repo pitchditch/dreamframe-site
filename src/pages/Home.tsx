@@ -143,11 +143,12 @@ const Home = () => {
           <TestimonialsSection />
           <PackagesSection />
 
-          <section className="py-16 bg-gray-900 text-white">
+          <section className="bg-slate-950 py-16 text-white sm:py-20">
             <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">Areas We Service</h2>
               <ServiceAreaMap />
-              <ServiceAreasCarousel />
+              <div className="mt-10">
+                <ServiceAreasCarousel />
+              </div>
             </div>
           </section>
 
