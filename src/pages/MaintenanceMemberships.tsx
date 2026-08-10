@@ -1,11 +1,10 @@
 import { useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   ArrowRight,
   CalendarCheck,
   Camera,
   Check,
-  ChevronDown,
   CircleDollarSign,
   Clock3,
   Home,
@@ -38,16 +37,59 @@ interface Plan {
   badge?: string;
 }
 
+const serviceCadences = [
+  {
+    service: 'Window Cleaning',
+    oneTime: 'Available',
+    annual: 'Available',
+    biannual: 'Recommended',
+    quarterly: 'By request',
+    note: 'Biannual is the main residential maintenance option for most homes.',
+  },
+  {
+    service: 'Gutter Cleaning',
+    oneTime: 'Available',
+    annual: 'Available',
+    biannual: 'Recommended',
+    quarterly: 'By request',
+    note: 'Twice-yearly service is useful for homes exposed to trees and heavy seasonal debris.',
+  },
+  {
+    service: 'House Soft Washing',
+    oneTime: 'Available',
+    annual: 'Available',
+    biannual: 'Not standard',
+    quarterly: 'Not standard',
+    note: 'Usually handled once yearly or only when the exterior condition calls for it.',
+  },
+  {
+    service: 'Driveway / Hard Surfaces',
+    oneTime: 'Available',
+    annual: 'Available',
+    biannual: 'By request',
+    quarterly: 'Not standard',
+    note: 'Best sold as a one-time service or annual maintenance add-on.',
+  },
+  {
+    service: 'Roof Cleaning',
+    oneTime: 'Condition based',
+    annual: 'Review only',
+    biannual: 'No',
+    quarterly: 'No',
+    note: 'Roof cleaning is not automatically repeated. Treatment is recommended only when the roof condition requires it.',
+  },
+];
+
 const plans: Plan[] = [
   {
     id: 'essential-home-care',
     name: 'Essential Home Care',
     eyebrow: 'Simple annual upkeep',
-    description: 'For homeowners who want the highest-visibility maintenance handled on a dependable schedule.',
+    description: 'For homeowners who want the most visible routine maintenance handled on a dependable schedule.',
     schedule: 'Typical schedule: one gutter service and one exterior window service each year.',
     features: [
-      'Exterior window cleaning',
-      'Interior gutter cleaning',
+      'Exterior window cleaning once yearly',
+      'Interior gutter cleaning once yearly',
       'Before-and-after service photos',
       'Annual scheduling reminder',
       'Owner-checked completion',
@@ -61,8 +103,8 @@ const plans: Plan[] = [
     schedule: 'Typical schedule: gutters twice yearly, windows yearly and a house soft wash yearly.',
     features: [
       'Two interior gutter cleanings per year',
-      'Exterior window cleaning',
-      'House soft washing',
+      'Exterior window cleaning once yearly',
+      'House soft washing once yearly',
       'Priority seasonal scheduling',
       'Before-and-after service photos',
     ],
@@ -76,7 +118,7 @@ const plans: Plan[] = [
     schedule: 'Typical schedule: seasonal gutters, annual windows, annual soft wash and annual driveway cleaning.',
     features: [
       'Everything in Seasonal Home Protection',
-      'Driveway pressure washing',
+      'Driveway pressure washing once yearly',
       'Annual roof condition review',
       'Roof-treatment recommendation when needed',
       'Priority booking and maintenance reminders',
@@ -87,14 +129,19 @@ const plans: Plan[] = [
 
 const faqs = [
   {
+    question: 'Do you offer monthly residential cleaning plans?',
+    answer:
+      'Not as the standard public residential option. Residential service is normally sold as one-time, annual, biannual or, where appropriate, quarterly maintenance. True monthly, biweekly and weekly recurring service is mainly reserved for storefront and commercial properties.',
+  },
+  {
+    question: 'Can I still pay monthly?',
+    answer:
+      'If monthly installments are offered for a residential plan, they are a payment schedule for the agreed annual service plan, not a month-to-month cleaning subscription. The written plan shows the full annual service scope, payment schedule and cancellation terms before approval.',
+  },
+  {
     question: 'Why is pricing personalized by address?',
     answer:
       'Home size, roofline, access, window count, gutter length and surface area can change the amount of work required. We review the property before presenting the exact plan price.',
-  },
-  {
-    question: 'Do I have to choose a plan before entering my address?',
-    answer:
-      'No. The plans are visible first so you can compare what is included. Selecting a plan simply tells us which option you want priced for your property.',
   },
   {
     question: 'Is roof cleaning performed every year?',
@@ -105,16 +152,6 @@ const faqs = [
     question: 'What happens if weather affects a scheduled visit?',
     answer:
       'Unsafe or unsuitable work is rescheduled. Maintenance customers receive priority when a weather delay requires a new service date.',
-  },
-  {
-    question: 'How are payments and cancellation handled?',
-    answer:
-      'The written plan shows the service calendar, payment timing and cancellation terms before you approve anything. No plan is activated from this page alone.',
-  },
-  {
-    question: 'Is the 2-year moss-free guarantee included?',
-    answer:
-      'The guarantee applies only to qualifying roof-treatment work and is confirmed in writing after the roof condition and treatment scope are reviewed.',
   },
 ];
 
@@ -129,10 +166,6 @@ const MaintenanceMemberships = () => {
     () => plans.find((plan) => plan.id === selectedPlan) ?? null,
     [selectedPlan],
   );
-
-  const scrollToPackages = () => {
-    packageSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   const selectPlan = (planId: PlanId) => {
     setSelectedPlan(planId);
@@ -164,41 +197,75 @@ const MaintenanceMemberships = () => {
   return (
     <Layout
       title="Home Exterior Maintenance Plans Surrey & White Rock | BC Pressure Washing"
-      description="Compare scheduled exterior maintenance plans for gutters, windows, soft washing, driveway cleaning and roof care in Surrey, White Rock and Metro Vancouver."
+      description="Compare annual, biannual and seasonal exterior maintenance plans for windows, gutters, soft washing, driveways and roof care in Surrey, White Rock and Metro Vancouver."
       canonicalUrl="/maintenance-memberships"
     >
       <section className="relative overflow-hidden bg-slate-950 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(220,38,38,0.24),transparent_38%),radial-gradient(circle_at_bottom_left,rgba(34,197,94,0.14),transparent_36%)]" />
-        <div className="relative container mx-auto px-4 py-20 md:py-28 text-center">
+        <div className="relative container mx-auto px-4 py-20 text-center md:py-28">
           <div className="mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold">
             <ShieldCheck className="h-4 w-4 text-red-400" />
-            BC Home Protection Plans
+            Residential Maintenance Plans
           </div>
           <h1 className="mx-auto max-w-5xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            Keep your home protected without remembering every service
+            Scheduled home care without a confusing monthly subscription
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-200">
-            Compare the plans first, then enter your address for a property-specific recommendation and exact pricing.
+            Choose one-time, annual, biannual or selected quarterly maintenance. Residential service frequency is matched to what the property actually needs.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button onClick={scrollToPackages} size="lg" className="min-h-12 bg-bc-red px-7 text-base hover:bg-red-700">
-              See What Is Included <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
             <Button
-              onClick={() => plannerSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+              onClick={() => packageSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               size="lg"
-              variant="outline"
-              className="min-h-12 border-white/30 bg-white/5 px-7 text-base text-white hover:bg-white/10 hover:text-white"
+              className="min-h-12 bg-bc-red px-7 text-base hover:bg-red-700"
             >
-              Get My Personalized Plans
+              Compare Home Plans <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button asChild size="lg" variant="outline" className="min-h-12 border-white/30 bg-white/5 px-7 text-base text-white hover:bg-white/10 hover:text-white">
+              <Link to="/services/commercial-window-cleaning">Commercial Recurring Service</Link>
             </Button>
           </div>
-          <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-3 text-sm text-slate-200 sm:grid-cols-3">
-            {['Owner-checked work', 'Licensed & insured', 'Service photos included'].map((item) => (
-              <div key={item} className="flex items-center justify-center gap-2">
-                <Check className="h-4 w-4 text-green-400" /> {item}
-              </div>
-            ))}
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-semibold uppercase tracking-[0.2em] text-bc-red">Individual service options</p>
+            <h2 className="mt-3 text-3xl font-bold text-slate-950 md:text-4xl">Choose the frequency that matches the service</h2>
+            <p className="mt-4 text-slate-600">
+              Biannual service is the strongest standard residential recurring option for windows and gutters. Monthly residential cleaning is not promoted as a cancel-anytime subscription.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-7xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[850px] text-left">
+                <thead className="bg-slate-950 text-white">
+                  <tr>
+                    <th className="px-5 py-4">Service</th>
+                    <th className="px-5 py-4">One-Time</th>
+                    <th className="px-5 py-4">Annual</th>
+                    <th className="px-5 py-4">Biannual</th>
+                    <th className="px-5 py-4">Quarterly</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {serviceCadences.map((item) => (
+                    <tr key={item.service} className="border-t border-slate-200 align-top">
+                      <td className="px-5 py-5">
+                        <p className="font-bold text-slate-950">{item.service}</p>
+                        <p className="mt-1 max-w-md text-sm leading-6 text-slate-500">{item.note}</p>
+                      </td>
+                      <td className="px-5 py-5 text-sm text-slate-700">{item.oneTime}</td>
+                      <td className="px-5 py-5 text-sm text-slate-700">{item.annual}</td>
+                      <td className="px-5 py-5 text-sm font-semibold text-slate-900">{item.biannual}</td>
+                      <td className="px-5 py-5 text-sm text-slate-700">{item.quarterly}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -206,10 +273,10 @@ const MaintenanceMemberships = () => {
       <section ref={packageSectionRef} className="scroll-mt-28 bg-slate-50 py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="font-semibold uppercase tracking-[0.2em] text-bc-red">Compare before you enter details</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-950 md:text-5xl">Choose the level of protection that fits your home</h2>
+            <p className="font-semibold uppercase tracking-[0.2em] text-bc-red">Whole-home plans</p>
+            <h2 className="mt-3 text-3xl font-bold text-slate-950 md:text-5xl">Bundle the services your property actually needs</h2>
             <p className="mt-5 text-lg text-slate-600">
-              Exact pricing is based on the property. No hardcoded package price is shown until the home and service scope are reviewed.
+              Exact pricing is calculated from the property and included service scope rather than forcing every home into the same fixed package price.
             </p>
           </div>
 
@@ -245,12 +312,10 @@ const MaintenanceMemberships = () => {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-7 text-sm font-semibold text-slate-500">Pricing based on home size and condition</p>
+                  <p className="mt-7 text-sm font-semibold text-slate-500">Property-specific pricing before approval</p>
                   <Button
                     onClick={() => selectPlan(plan.id)}
-                    className={`mt-4 min-h-12 w-full ${
-                      isSelected ? 'bg-slate-900 hover:bg-slate-800' : 'bg-bc-red hover:bg-red-700'
-                    }`}
+                    className={`mt-4 min-h-12 w-full ${isSelected ? 'bg-slate-900 hover:bg-slate-800' : 'bg-bc-red hover:bg-red-700'}`}
                   >
                     {isSelected ? 'Selected' : `Choose ${plan.name}`}
                   </Button>
@@ -268,12 +333,12 @@ const MaintenanceMemberships = () => {
               <p className="font-semibold uppercase tracking-[0.2em] text-red-400">Personalized plan</p>
               <h2 className="mt-3 text-3xl font-bold md:text-4xl">Get the exact plan for your property</h2>
               <p className="mt-5 text-slate-300">
-                Select a plan and property address. We will carry your choice into the existing quote flow for a final property review.
+                Select a plan and address. The final quote shows the actual service schedule and price before anything is approved.
               </p>
               <div className="mt-7 space-y-4 text-sm text-slate-200">
                 <div className="flex gap-3"><MapPin className="h-5 w-5 text-red-400" /> Property-specific service scope</div>
                 <div className="flex gap-3"><CircleDollarSign className="h-5 w-5 text-red-400" /> Exact price before approval</div>
-                <div className="flex gap-3"><Clock3 className="h-5 w-5 text-red-400" /> Service schedule shown in writing</div>
+                <div className="flex gap-3"><Clock3 className="h-5 w-5 text-red-400" /> Written annual service schedule</div>
               </div>
             </div>
 
@@ -304,7 +369,7 @@ const MaintenanceMemberships = () => {
                 Continue for Exact Pricing <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <p className="mt-3 text-center text-xs leading-5 text-slate-500">
-                This does not enroll you or charge you. The service scope and terms are reviewed before approval.
+                No plan is activated and no charge is made from this page.
               </p>
             </div>
           </div>
@@ -314,14 +379,14 @@ const MaintenanceMemberships = () => {
       <section className="bg-slate-50 py-16 md:py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold text-slate-950 md:text-4xl">What membership service looks like</h2>
+            <h2 className="text-3xl font-bold text-slate-950 md:text-4xl">What maintenance service looks like</h2>
           </div>
           <div className="mx-auto mt-10 grid max-w-6xl gap-5 md:grid-cols-4">
             {[
-              { icon: Home, title: 'Property review', text: 'We confirm the home size, access and service scope.' },
-              { icon: CalendarCheck, title: 'Written schedule', text: 'You see when each included service is expected.' },
+              { icon: Home, title: 'Property review', text: 'We confirm the home size, access and exact service scope.' },
+              { icon: CalendarCheck, title: 'Written schedule', text: 'Annual, biannual or selected quarterly visits are shown before approval.' },
               { icon: Camera, title: 'Photo updates', text: 'Before-and-after photos document completed work.' },
-              { icon: Sparkles, title: 'Ongoing protection', text: 'Priority reminders reduce missed seasonal maintenance.' },
+              { icon: Sparkles, title: 'Priority care', text: 'Maintenance customers receive scheduling reminders and priority seasonal booking.' },
             ].map(({ icon: Icon, title, text }) => (
               <div key={title} className="rounded-2xl border border-slate-200 bg-white p-6">
                 <Icon className="h-7 w-7 text-bc-red" />
@@ -339,33 +404,18 @@ const MaintenanceMemberships = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-950 md:text-4xl">Maintenance-plan questions</h2>
-              <p className="mt-4 text-slate-600">Clear answers before you choose or approve a plan.</p>
+              <p className="font-semibold uppercase tracking-[0.2em] text-bc-red">Questions</p>
+              <h2 className="mt-3 text-3xl font-bold text-slate-950 md:text-4xl">Maintenance plan FAQ</h2>
             </div>
-            <div className="mt-10 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white px-5 md:px-8">
+            <div className="mt-10 space-y-4">
               {faqs.map((faq) => (
-                <details key={faq.question} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-950">
-                    {faq.question}
-                    <ChevronDown className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
-                  </summary>
-                  <p className="mt-3 max-w-3xl leading-7 text-slate-600">{faq.answer}</p>
+                <details key={faq.question} className="group rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <summary className="cursor-pointer list-none font-bold text-slate-950">{faq.question}</summary>
+                  <p className="mt-3 leading-7 text-slate-600">{faq.answer}</p>
                 </details>
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-bc-red py-14 text-white">
-        <div className="container mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-4 text-center md:flex-row md:text-left">
-          <div>
-            <h2 className="text-3xl font-bold">Ready to see your personalized options?</h2>
-            <p className="mt-2 text-red-100">Compare first. Approve only after the exact scope, schedule and price are clear.</p>
-          </div>
-          <Button onClick={scrollToPackages} size="lg" className="min-h-12 bg-white text-bc-red hover:bg-slate-100">
-            Compare Plans <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
         </div>
       </section>
     </Layout>
