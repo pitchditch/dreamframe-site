@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
@@ -64,6 +63,11 @@ const Footer = () => {
               <li>
                 <Link to="/services/window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
                   <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Window Cleaning
+                </Link>
+              </li>
+              <li>
+                <Link to="/white-rock-window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> White Rock Window Cleaning
                 </Link>
               </li>
               <li>

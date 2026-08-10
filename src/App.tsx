@@ -32,6 +32,9 @@ const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
 const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 
+// Local service pages
+const WhiteRockWindowCleaning = lazy(() => import('./pages/locations/WhiteRock'));
+
 // Specific service pages
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
 const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
@@ -61,6 +64,9 @@ function App() {
             {/* Service Routes */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
+
+            {/* Local Service Routes */}
+            <Route path="/white-rock-window-cleaning" element={<WhiteRockWindowCleaning />} />
 
             {/* Specific Service Pages */}
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
