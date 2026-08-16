@@ -25,7 +25,11 @@ const Layout = ({
 }: LayoutProps) => {
   const location = useLocation();
   const baseUrl = "https://www.bcpressurewashing.ca";
-  const fullCanonicalUrl = canonicalUrl ? `${baseUrl}${canonicalUrl}` : baseUrl;
+  const currentPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/+$/, '');
+  const canonicalPath = canonicalUrl
+    ? (canonicalUrl.startsWith('/') ? canonicalUrl : `/${canonicalUrl}`)
+    : currentPath;
+  const fullCanonicalUrl = `${baseUrl}${canonicalPath}`;
   
   // Scroll to top when route changes
   useEffect(() => {
