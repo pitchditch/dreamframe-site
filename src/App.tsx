@@ -27,6 +27,7 @@ const PropertyDetail = lazy(() => import('./pages/crm/PropertyDetail'));
 const MapView = lazy(() => import('./pages/crm/MapView'));
 const Analytics = lazy(() => import('./pages/crm/Analytics'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
+const Clients = lazy(() => import('./pages/crm/Clients'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -58,6 +59,7 @@ function App() {
             <Route path="/crm/map" element={<MapView />} />
             <Route path="/crm/analytics" element={<Analytics />} />
             <Route path="/crm/routes" element={<RouteHistory />} />
+            <Route path="/crm/clients" element={<Clients />} />
 
             {/* Service Routes */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
