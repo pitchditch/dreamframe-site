@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -10,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Edit3, Plus, Search, Trash2, Upload, Users } from 'lucide-react';
+import { ArrowLeft, Edit3, Plus, Search, ShieldCheck, Trash2, Upload, Users, X } from 'lucide-react';
 
 type Customer = {
   id: string;
@@ -22,6 +23,9 @@ type Customer = {
   created_at: string;
   updated_at: string;
   archived_at?: string | null;
+  is_internal?: boolean | null;
+  is_test?: boolean | null;
+  test_reason?: string | null;
 };
 
 type CustomerForm = {
@@ -31,6 +35,8 @@ type CustomerForm = {
   address: string;
   notes: string;
 };
+
+type ClientFilter = 'all' | 'real' | 'test';
 
 const emptyForm: CustomerForm = {
   name: '',
@@ -43,12 +49,14 @@ const emptyForm: CustomerForm = {
 const normalizeName = (value?: string | null) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase();
 const normalizeEmail = (value?: string | null) => (value || '').trim().toLowerCase();
 const normalizePhone = (value?: string | null) => (value || '').replace(/\D/g, '');
+const isAdminTestClient = (customer: Customer) => customer.is_test === true || customer.is_internal === true;
 
 const Clients = () => {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [clientFilter, setClientFilter] = useState<ClientFilter>('all');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogTab, setDialogTab] = useState<'single' | 'paste'>('single');
@@ -62,7 +70,7 @@ const Clients = () => {
   const loadCustomers = async () => {
     setLoading(true);
     const { data, error } = await customersTable
-      .select('id,name,email,phone,address,notes,created_at,updated_at,archived_at')
+      .select('id,name,email,phone,address,notes,created_at,updated_at,archived_at,is_internal,is_test,test_reason')
       .is('archived_at', null)
       .order('updated_at', { ascending: false });
 
@@ -80,21 +88,42 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    loadCustomers();
+    void loadCustomers();
   }, []);
+
+  const realClientCount = useMemo(
+    () => customers.filter((customer) => !isAdminTestClient(customer)).length,
+    [customers],
+  );
+  const adminTestCount = customers.length - realClientCount;
 
   const filteredCustomers = useMemo(() => {
     const term = search.trim().toLowerCase();
-    if (!term) return customers;
 
-    return customers.filter((customer) =>
-      [customer.name, customer.email, customer.phone, customer.address, customer.notes]
+    return customers.filter((customer) => {
+      const isTest = isAdminTestClient(customer);
+      if (clientFilter === 'real' && isTest) return false;
+      if (clientFilter === 'test' && !isTest) return false;
+      if (!term) return true;
+
+      return [customer.name, customer.email, customer.phone, customer.address, customer.notes, customer.test_reason]
         .filter(Boolean)
-        .some((value) => String(value).toLowerCase().includes(term))
-    );
-  }, [customers, search]);
+        .some((value) => String(value).toLowerCase().includes(term));
+    });
+  }, [customers, search, clientFilter]);
 
-  const allFilteredSelected = filteredCustomers.length > 0 && filteredCustomers.every((customer) => selectedIds.has(customer.id));
+  const allFilteredSelected =
+    filteredCustomers.length > 0 && filteredCustomers.every((customer) => selectedIds.has(customer.id));
+
+  const changeFilter = (next: ClientFilter) => {
+    setClientFilter(next);
+    setSelectedIds(new Set());
+  };
+
+  const changeSearch = (value: string) => {
+    setSearch(value);
+    setSelectedIds(new Set());
+  };
 
   const toggleCustomer = (id: string, checked: boolean) => {
     setSelectedIds((current) => {
@@ -209,8 +238,8 @@ const Clients = () => {
     await loadCustomers();
   };
 
-  const parsePastedCustomers = () => {
-    return pasteValue
+  const parsePastedCustomers = () =>
+    pasteValue
       .split(/\r?\n/)
       .map((line) => line.trim())
       .filter(Boolean)
@@ -226,7 +255,6 @@ const Clients = () => {
         } satisfies CustomerForm;
       })
       .filter((customer) => customer.name);
-  };
 
   const importPastedCustomers = async () => {
     const parsed = parsePastedCustomers();
@@ -241,7 +269,6 @@ const Clients = () => {
     const batchNames = new Set<string>();
     const batchEmails = new Set<string>();
     const batchPhones = new Set<string>();
-
     const toInsert: CustomerForm[] = [];
     let skipped = 0;
 
@@ -304,24 +331,25 @@ const Clients = () => {
     await loadCustomers();
   };
 
-  const archiveClients = async (ids: string[]) => {
+  const deleteClients = async (ids: string[]) => {
     if (ids.length === 0) return;
 
     const confirmed = window.confirm(
-      `Remove ${ids.length} client${ids.length === 1 ? '' : 's'} from the active client list? Their quote, booking, invoice and job history will be kept.`
+      `Delete ${ids.length} client${ids.length === 1 ? '' : 's'} from the active client list? Their linked quote, booking, invoice and job history will still be kept.`,
     );
     if (!confirmed) return;
 
+    const now = new Date().toISOString();
     const { error } = await customersTable
-      .update({ archived_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+      .update({ archived_at: now, updated_at: now })
       .in('id', ids);
 
     if (error) {
-      toast({ title: 'Could not remove clients', description: error.message, variant: 'destructive' });
+      toast({ title: 'Could not delete clients', description: error.message, variant: 'destructive' });
       return;
     }
 
-    toast({ title: `${ids.length} client${ids.length === 1 ? '' : 's'} removed` });
+    toast({ title: `${ids.length} client${ids.length === 1 ? '' : 's'} deleted from active clients` });
     setSelectedIds(new Set());
     await loadCustomers();
   };
@@ -336,7 +364,9 @@ const Clients = () => {
             </Button>
             <div>
               <h1 className="text-xl font-bold">Clients</h1>
-              <p className="text-xs text-muted-foreground">{customers.length} active client{customers.length === 1 ? '' : 's'}</p>
+              <p className="text-xs text-muted-foreground">
+                {realClientCount} real · {adminTestCount} admin test
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -357,46 +387,69 @@ const Clients = () => {
         <Card>
           <CardHeader className="pb-3">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Users className="h-5 w-5" />
-                  Client list
-                </CardTitle>
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                {selectedIds.size > 0 && (
-                  <>
-                    <span className="text-sm text-muted-foreground">{selectedIds.size} selected</span>
-                    <Button variant="destructive" size="sm" onClick={() => archiveClients(Array.from(selectedIds))}>
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Remove selected
-                    </Button>
-                  </>
-                )}
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Users className="h-5 w-5" />
+                Client list
+              </CardTitle>
+              <div className="flex flex-wrap gap-2">
+                <Button size="sm" variant={clientFilter === 'all' ? 'default' : 'outline'} onClick={() => changeFilter('all')}>
+                  All ({customers.length})
+                </Button>
+                <Button size="sm" variant={clientFilter === 'real' ? 'default' : 'outline'} onClick={() => changeFilter('real')}>
+                  Real ({realClientCount})
+                </Button>
+                <Button size="sm" variant={clientFilter === 'test' ? 'default' : 'outline'} onClick={() => changeFilter('test')}>
+                  Admin tests ({adminTestCount})
+                </Button>
               </div>
             </div>
           </CardHeader>
+
           <CardContent className="space-y-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) => changeSearch(event.target.value)}
                 placeholder="Search name, email, phone or address..."
                 className="pl-9"
               />
             </div>
 
             {!loading && filteredCustomers.length > 0 && (
-              <div className="flex items-center gap-2 border-b pb-3">
-                <Checkbox
-                  id="select-all-clients"
-                  checked={allFilteredSelected}
-                  onCheckedChange={(checked) => toggleAllFiltered(Boolean(checked))}
-                />
-                <Label htmlFor="select-all-clients" className="cursor-pointer text-sm">
-                  Select all {filteredCustomers.length} shown
-                </Label>
+              <div className="flex flex-col gap-3 rounded-lg border bg-background p-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <Checkbox
+                    id="select-all-clients"
+                    checked={allFilteredSelected}
+                    onCheckedChange={(checked) => toggleAllFiltered(Boolean(checked))}
+                  />
+                  <Label htmlFor="select-all-clients" className="cursor-pointer font-medium">
+                    Select all {filteredCustomers.length} shown
+                  </Label>
+                  <Badge variant="secondary">{selectedIds.size} selected</Badge>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={selectedIds.size === 0}
+                    onClick={() => setSelectedIds(new Set())}
+                  >
+                    <X className="mr-2 h-4 w-4" />
+                    Clear
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    disabled={selectedIds.size === 0}
+                    onClick={() => deleteClients(Array.from(selectedIds))}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete selected ({selectedIds.size})
+                  </Button>
+                </div>
               </div>
             )}
 
@@ -409,40 +462,54 @@ const Clients = () => {
                 <p className="mt-1 text-sm text-muted-foreground">Add one manually or paste a list of names.</p>
               </div>
             ) : (
-              <div className="divide-y rounded-md border">
-                {filteredCustomers.map((customer) => (
-                  <div key={customer.id} className="flex items-start gap-3 p-3 sm:p-4">
-                    <Checkbox
-                      checked={selectedIds.has(customer.id)}
-                      onCheckedChange={(checked) => toggleCustomer(customer.id, Boolean(checked))}
-                      aria-label={`Select ${customer.name}`}
-                      className="mt-1"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="min-w-0">
-                          <p className="truncate font-semibold">{customer.name}</p>
-                          <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground">
-                            {customer.email && <span>{customer.email}</span>}
-                            {customer.phone && <span>{customer.phone}</span>}
-                            {customer.address && <span>{customer.address}</span>}
+              <div className="divide-y rounded-md border bg-background">
+                {filteredCustomers.map((customer) => {
+                  const adminTest = isAdminTestClient(customer);
+                  return (
+                    <div key={customer.id} className="flex items-start gap-3 p-3 sm:p-4">
+                      <Checkbox
+                        checked={selectedIds.has(customer.id)}
+                        onCheckedChange={(checked) => toggleCustomer(customer.id, Boolean(checked))}
+                        aria-label={`Select ${customer.name}`}
+                        className="mt-1 h-5 w-5"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="truncate font-semibold">{customer.name}</p>
+                              {adminTest && (
+                                <Badge variant="destructive" className="gap-1">
+                                  <ShieldCheck className="h-3 w-3" />
+                                  ADMIN TEST
+                                </Badge>
+                              )}
+                            </div>
+                            {adminTest && customer.test_reason && (
+                              <p className="mt-1 text-xs font-medium text-destructive">{customer.test_reason}</p>
+                            )}
+                            <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                              {customer.email && <span>{customer.email}</span>}
+                              {customer.phone && <span>{customer.phone}</span>}
+                              {customer.address && <span>{customer.address}</span>}
+                            </div>
+                            {customer.notes && <p className="mt-2 text-sm text-muted-foreground">{customer.notes}</p>}
                           </div>
-                          {customer.notes && <p className="mt-2 text-sm text-muted-foreground">{customer.notes}</p>}
-                        </div>
-                        <div className="mt-2 flex shrink-0 gap-2 sm:mt-0">
-                          <Button variant="outline" size="sm" onClick={() => openEditDialog(customer)}>
-                            <Edit3 className="mr-2 h-4 w-4" />
-                            Edit
-                          </Button>
-                          <Button variant="ghost" size="sm" onClick={() => archiveClients([customer.id])}>
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Remove
-                          </Button>
+                          <div className="flex shrink-0 gap-2">
+                            <Button variant="outline" size="sm" onClick={() => openEditDialog(customer)}>
+                              <Edit3 className="mr-2 h-4 w-4" />
+                              Edit
+                            </Button>
+                            <Button variant="destructive" size="sm" onClick={() => deleteClients([customer.id])}>
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Delete
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </CardContent>
