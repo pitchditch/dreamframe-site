@@ -67,6 +67,16 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/post-construction-window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Post-Construction Windows
+                </Link>
+              </li>
+              <li>
+                <Link to="/storefront-window-cleaning" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Storefront Window Cleaning
+                </Link>
+              </li>
+              <li>
                 <Link to="/services/pressure-washing" className="text-gray-300 hover:text-white transition-colors flex items-center group">
                   <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Pressure Washing
                 </Link>
@@ -128,7 +138,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8 pb-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 BC Pressure Washing. All rights reserved.
+              © 2026 BC Pressure Washing. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
               <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
