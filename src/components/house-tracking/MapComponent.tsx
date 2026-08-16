@@ -257,13 +257,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
     pins.forEach(pin => {
       const markerColor = statusConfig[pin.status].color;
       const isHighlighted = highlightedPinId === pin.id;
+      const isDoorToDoorPin = pin.leadSource === 'door-to-door';
       
       const marker = new google.maps.Marker({
         position: { lat: pin.lat, lng: pin.lng },
         map: mapInstanceRef.current,
         icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: isHighlighted ? 12 : 10,
+          path: isDoorToDoorPin
+            ? 'M 0,-11 L 10,8 L -10,8 Z'
+            : google.maps.SymbolPath.CIRCLE,
+          scale: isDoorToDoorPin
+            ? (isHighlighted ? 1.25 : 1)
+            : (isHighlighted ? 12 : 10),
           fillColor: markerColor,
           fillOpacity: 1,
           strokeColor: isHighlighted ? '#ffff00' : '#ffffff',
