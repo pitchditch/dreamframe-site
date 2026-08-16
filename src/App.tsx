@@ -54,6 +54,7 @@ function App() {
             <Route path="/maintenance-memberships" element={<MaintenanceMemberships />} />
             <Route path="/house-tracking" element={<HouseTracking />} />
             <Route path="/virtual-estimate/:sessionId" element={<VirtualEstimate />} />
+            <Route path="/crm" element={<CRM />} />
             <Route path="/crm/property-capture" element={<PropertyCapture />} />
             <Route path="/crm/canvasser" element={<CanvasserMode />} />
             <Route path="/crm/properties" element={<ViewProperties />} />
