@@ -62,7 +62,6 @@ const CRM = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-secondary/10">
-      {/* Header */}
       <header className="bg-card border-b sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -76,7 +75,6 @@ const CRM = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-2">Welcome back!</h2>
@@ -84,14 +82,13 @@ const CRM = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* Clients Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/clients')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                 <Users className="w-6 h-6 text-primary" />
               </div>
               <CardTitle>Clients</CardTitle>
-              <CardDescription>Add, edit, search, select and remove clients in bulk</CardDescription>
+              <CardDescription>Add, edit, select, and delete multiple clients at once. Admin tests are labeled separately.</CardDescription>
             </CardHeader>
             <CardContent>
               <Button className="w-full" variant="outline">
@@ -100,7 +97,6 @@ const CRM = () => {
             </CardContent>
           </Card>
 
-          {/* Canvasser Mode Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/canvasser')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -110,13 +106,10 @@ const CRM = () => {
               <CardDescription>Track door-to-door visits and capture leads in real-time</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Start Canvassing
-              </Button>
+              <Button className="w-full" variant="outline">Start Canvassing</Button>
             </CardContent>
           </Card>
 
-          {/* Property Capture Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/property-capture')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -126,13 +119,10 @@ const CRM = () => {
               <CardDescription>Add and manage property information with address lookup</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Add Property
-              </Button>
+              <Button className="w-full" variant="outline">Add Property</Button>
             </CardContent>
           </Card>
 
-          {/* View All Properties Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/properties')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -142,13 +132,10 @@ const CRM = () => {
               <CardDescription>Browse and search all captured properties</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                View All
-              </Button>
+              <Button className="w-full" variant="outline">View All</Button>
             </CardContent>
           </Card>
 
-          {/* Map View Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/map')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -158,13 +145,10 @@ const CRM = () => {
               <CardDescription>Visualize properties on an interactive map</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Open Map
-              </Button>
+              <Button className="w-full" variant="outline">Open Map</Button>
             </CardContent>
           </Card>
 
-          {/* Analytics Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/analytics')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -174,13 +158,10 @@ const CRM = () => {
               <CardDescription>View performance metrics and insights</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                View Dashboard
-              </Button>
+              <Button className="w-full" variant="outline">View Dashboard</Button>
             </CardContent>
           </Card>
 
-          {/* Route History Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/routes')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -190,9 +171,7 @@ const CRM = () => {
               <CardDescription>Review past canvassing sessions and routes</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                View Routes
-              </Button>
+              <Button className="w-full" variant="outline">View Routes</Button>
             </CardContent>
           </Card>
         </div>
