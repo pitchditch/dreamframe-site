@@ -33,7 +33,8 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 
 const PAGE_SIZE = 1000;
-const NON_USER_EVENT_LABELS = new Set(['property_type_detected']);
+const NON_USER_EVENT_LABELS = new Set(['property_type_detected', 'ga4_diagnostic']);
+const NON_BUSINESS_CLICK_LABELS = new Set(['accept analytics', 'privacy choices']);
 
 type TimeRange = '24h' | '7d' | '30d';
 
@@ -159,6 +160,9 @@ const humanize = (value: string) => value.replace(/[_-]+/g, ' ').replace(/\b\w/g
 const isWebsiteLead = (row: LeadRow) => (row.lead_source || '').toLowerCase().startsWith('website');
 const isWebsiteQuote = (row: QuoteRow) =>
   (row.source || '').toLowerCase().startsWith('website') || (row.channel || '').toLowerCase() === 'web_quote';
+const isQuoteStartEvent = (event: AnalyticsEventRow) =>
+  !!event.event_name?.includes('quote_started') ||
+  (event.event_name === 'page_view' && event.page_path === '/quote-results');
 
 const leadIdentity = (row: LeadRow) => {
   const email = row.email?.trim().toLowerCase();
@@ -173,17 +177,20 @@ const isFeedInteraction = (event: AnalyticsEventRow) => {
   return !NON_USER_EVENT_LABELS.has(event.event_label || '');
 };
 
-const isCtaClick = (event: AnalyticsEventRow) =>
-  event.event_type === 'click' &&
-  event.event_label !== 'scroll_depth' &&
-  !NON_USER_EVENT_LABELS.has(event.event_label || '');
+const isCtaClick = (event: AnalyticsEventRow) => {
+  const label = (event.element_text || event.event_label || '').trim().toLowerCase();
+  return event.event_type === 'click' &&
+    event.event_label !== 'scroll_depth' &&
+    !NON_USER_EVENT_LABELS.has(event.event_label || '') &&
+    !NON_BUSINESS_CLICK_LABELS.has(label);
+};
 
 const eventLabel = (event: AnalyticsEventRow) => {
   if (event.event_label === 'scroll_depth') {
     const depth = typeof event.metadata?.depth === 'number' ? event.metadata.depth : null;
     return depth ? `Scrolled ${depth}%` : 'Scrolled page';
   }
-  if (event.event_name?.includes('quote_started')) return 'Started a quote';
+  if (isQuoteStartEvent(event)) return 'Started a quote';
   if (event.event_name === 'address_entered') return 'Entered an address';
   if (event.event_name === 'quote_click') return 'Clicked quote CTA';
   const text = event.element_text?.trim();
@@ -334,7 +341,7 @@ export default function Analytics() {
     return (r.page_count || 0) >= 2 || seconds >= 30;
   }).length;
   const quoteStarts = (rows: AnalyticsEventRow[]) => new Set(rows
-    .filter((r) => r.event_name?.includes('quote_started'))
+    .filter(isQuoteStartEvent)
     .map((r) => r.session_id || r.visitor_id || r.id)).size;
 
   const currentVisitors = uniqueVisitors(publicCurrentViews);
@@ -357,7 +364,7 @@ export default function Analytics() {
     { label: 'Page Views', value: publicCurrentViews.length.toLocaleString(), current: publicCurrentViews.length, previous: publicPreviousViews.length, note: 'Admin, bot and test traffic excluded', icon: Eye },
     { label: 'Engaged Sessions', value: currentEngaged.toLocaleString(), current: currentEngaged, previous: previousEngaged, note: '2+ pages or 30+ seconds', icon: Activity },
     { label: 'Website Leads', value: currentLeads.toLocaleString(), current: currentLeads, previous: previousLeads, note: 'Unique website-sourced contacts', icon: Target },
-    { label: 'Quote Starts', value: currentQuoteStarts.toLocaleString(), current: currentQuoteStarts, previous: previousQuoteStarts, note: 'Distinct public sessions', icon: MousePointerClick },
+    { label: 'Quote Starts', value: currentQuoteStarts.toLocaleString(), current: currentQuoteStarts, previous: previousQuoteStarts, note: 'Tracked starts + quote-results sessions', icon: MousePointerClick },
     { label: 'Bookings', value: currentBookingCount.toLocaleString(), current: currentBookingCount, previous: previousBookingCount, note: 'Bookings tied to web quotes', icon: CalendarCheck },
     { label: 'Conversion Rate', value: `${currentConversion.toFixed(1)}%`, current: currentConversion, previous: previousConversion, note: 'Visitors → website leads', icon: BarChart3 },
   ];
@@ -385,7 +392,7 @@ export default function Analytics() {
   }, [publicCurrentViews, publicPreviousViews, previousStart, start, timeRange]);
 
   const quoteStartSessions = useMemo(() => new Set(currentEvents
-    .filter((e) => e.event_name?.includes('quote_started'))
+    .filter(isQuoteStartEvent)
     .map((e) => e.session_id).filter(Boolean)), [currentEvents]);
 
   const topPages = useMemo(() => {
@@ -402,7 +409,7 @@ export default function Analytics() {
       const row = map.get(event.page_path);
       if (!row) return;
       if (isCtaClick(event)) row.clicks += 1;
-      if (event.event_name?.includes('quote_started') && event.session_id) row.starts.add(event.session_id);
+      if (isQuoteStartEvent(event) && event.session_id) row.starts.add(event.session_id);
     });
     return Array.from(map.entries()).map(([path, row]) => ({
       path,
@@ -673,7 +680,7 @@ export default function Analytics() {
           </Card>
 
           <Card>
-            <CardHeader><CardTitle>Top buttons & CTAs</CardTitle><CardDescription>Scroll events are excluded so this is actual CTA activity</CardDescription></CardHeader>
+            <CardHeader><CardTitle>Top buttons & CTAs</CardTitle><CardDescription>Scroll and privacy-control events are excluded from business clicks</CardDescription></CardHeader>
             <CardContent>
               {topCtas.map((cta) => (
                 <div key={cta.label} className="grid grid-cols-[minmax(0,1fr)_60px_72px_82px] items-center gap-2 border-b py-3 text-sm last:border-0">
