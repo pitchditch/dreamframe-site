@@ -84,6 +84,22 @@ const CRM = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Clients Card */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/clients')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <Users className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Clients</CardTitle>
+              <CardDescription>Add, edit, search, select and remove clients in bulk</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">
+                Manage Clients
+              </Button>
+            </CardContent>
+          </Card>
+
           {/* Canvasser Mode Card */}
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/canvasser')}>
             <CardHeader>
