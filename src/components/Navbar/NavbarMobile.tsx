@@ -123,8 +123,8 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               </div>
             </div>
 
-            <Link to="/maintenance-memberships" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
-              <CalendarCheck className="w-5 h-5 text-bc-red" />
+            <Link to="/maintenance-memberships" className="flex items-center gap-3 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
+              <CalendarCheck className="w-7 h-7 shrink-0 text-bc-red" strokeWidth={2.25} />
               <span>{t('Maintenance Plans')}</span>
             </Link>
 
