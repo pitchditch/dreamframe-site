@@ -34,7 +34,8 @@ const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 
 // Specific service pages
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
-const StorefrontWindowCleaning = lazy(() => import('./pages/services/StorefrontWindowCleaning'));
+const StorefrontRecurringWindowCleaning = lazy(() => import('./pages/services/StorefrontRecurringWindowCleaning'));
+const PostConstructionWindowCleaning = lazy(() => import('./pages/services/PostConstructionWindowCleaning'));
 
 function App() {
   return (
@@ -64,7 +65,10 @@ function App() {
 
             {/* Specific Service Pages */}
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
-            <Route path="/services/storefront-window-cleaning" element={<StorefrontWindowCleaning />} />
+            <Route path="/storefront-window-cleaning" element={<StorefrontRecurringWindowCleaning />} />
+            <Route path="/services/storefront-window-cleaning" element={<StorefrontRecurringWindowCleaning />} />
+            <Route path="/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+            <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
