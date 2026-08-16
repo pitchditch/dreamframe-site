@@ -28,6 +28,7 @@ const MapView = lazy(() => import('./pages/crm/MapView'));
 const Analytics = lazy(() => import('./pages/crm/Analytics'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const Clients = lazy(() => import('./pages/crm/Clients'));
+const VirtualEstimate = lazy(() => import('./pages/VirtualEstimate'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -52,6 +53,7 @@ function App() {
             <Route path="/booking" element={<Booking />} />
             <Route path="/maintenance-memberships" element={<MaintenanceMemberships />} />
             <Route path="/house-tracking" element={<HouseTracking />} />
+            <Route path="/virtual-estimate/:sessionId" element={<VirtualEstimate />} />
             <Route path="/crm/property-capture" element={<PropertyCapture />} />
             <Route path="/crm/canvasser" element={<CanvasserMode />} />
             <Route path="/crm/properties" element={<ViewProperties />} />
