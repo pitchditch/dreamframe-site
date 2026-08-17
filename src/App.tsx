@@ -28,6 +28,7 @@ const MapView = lazy(() => import('./pages/crm/MapView'));
 const Analytics = lazy(() => import('./pages/crm/Analytics'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const Clients = lazy(() => import('./pages/crm/Clients'));
+const CallDesk = lazy(() => import('./pages/crm/CallDesk'));
 const VirtualEstimate = lazy(() => import('./pages/VirtualEstimate'));
 
 // Service pages
@@ -64,6 +65,7 @@ function App() {
             <Route path="/crm/analytics" element={<Analytics />} />
             <Route path="/crm/routes" element={<RouteHistory />} />
             <Route path="/crm/clients" element={<Clients />} />
+            <Route path="/crm/call-desk" element={<CallDesk />} />
 
             {/* Service Routes */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
