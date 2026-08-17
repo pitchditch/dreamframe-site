@@ -18,14 +18,12 @@ const Footer = () => {
               <Link to="/">
                 <img src="/lovable-uploads/9fd8e651-7601-4cbe-8e73-c48efe84a1fa.png" alt="BC Pressure Washing Logo" className="h-24 md:h-28 mb-4" />
               </Link>
-              {/* Car image moved below the logo */}
               <img alt="BC Pressure Washing Service Car" className="h-20 mt-2" src="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" />
             </div>
             <p className="text-gray-300 mb-6 text-base text-center">
               Professional pressure washing services for residential and commercial properties. We deliver top-quality cleaning solutions with attention to detail.
             </p>
             
-            {/* Enhanced Social Media Section */}
             <div className="text-center mb-6">
               <h4 className="text-lg font-semibold mb-4 text-white">Follow Us</h4>
               <div className="flex space-x-4 justify-center mb-4">
@@ -41,7 +39,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Enhanced Contact Section */}
             <div className="text-center">
               <h4 className="text-lg font-semibold mb-4 text-white">Contact Us</h4>
               <div className="space-y-3">
@@ -57,7 +54,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Our Services links */}
           <div className="col-span-1">
             <h4 className="text-xl font-semibold mb-6 text-white">Our Services</h4>
             <ul className="space-y-3">
@@ -79,6 +75,11 @@ const Footer = () => {
               <li>
                 <Link to="/services/pressure-washing" className="text-gray-300 hover:text-white transition-colors flex items-center group">
                   <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Pressure Washing
+                </Link>
+              </li>
+              <li>
+                <Link to="/services/fleet-washing" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                  <span className="mr-2 transform transition-transform duration-200 group-hover:scale-125">→</span> Fleet Washing
                 </Link>
               </li>
               <li>
@@ -109,7 +110,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Business Information */}
           <div className="col-span-1">
             <h4 className="text-xl font-semibold mb-6 text-white">Business Information</h4>
             <ul className="space-y-4">
@@ -128,13 +128,11 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Footer Weather Service */}
           <div className="col-span-1">
             <FooterWeatherService />
           </div>
         </div>
 
-        {/* Copyright and bottom links */}
         <div className="border-t border-gray-800 pt-8 pb-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
@@ -155,16 +153,13 @@ const Footer = () => {
         </div>
       </div>
       
-      {/* Full-width Marine Drive image below footer content - only show on homepage */}
       {isHomePage ? (
         <div className="w-full">
           <img 
             src="/lovable-uploads/2b1c86bf-f351-48ad-831b-a33b68b7bcdc.png" 
             alt="White Rock Marine Drive" 
             className="w-full h-auto object-cover" 
-            style={{
-              maxHeight: "400px"
-            }} 
+            style={{ maxHeight: "400px" }} 
           />
         </div>
       ) : (
@@ -173,10 +168,7 @@ const Footer = () => {
             src="/lovable-uploads/32eacf1b-1b0c-4d77-8a7e-2d495f635e4f.png" 
             alt="White Rock Based Business - Marine Drive" 
             className="w-full h-auto object-cover"
-            style={{
-              minHeight: "300px",
-              maxHeight: "500px"
-            }}
+            style={{ minHeight: "300px", maxHeight: "500px" }}
           />
         </div>
       )}
