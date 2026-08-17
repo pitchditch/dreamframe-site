@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Building2 } from 'lucide-react';
+import { ChevronDown, Truck } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +31,6 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
         <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 uppercase px-4 py-2">Residential Services</div>
           
-          {/* All residential services in a 2-column grid */}
           <div className="grid grid-cols-2 gap-1">
             <DropdownMenuItem asChild className="p-0">
               <Link
@@ -85,7 +84,6 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
               </Link>
             </DropdownMenuItem>
             
-            {/* REPLACED DRIVEWAY CLEANING WITH FENCE WASHING */}
             <DropdownMenuItem asChild className="p-0 col-span-2">
               <Link
                 to="/services/fence-washing"
@@ -114,6 +112,19 @@ const ServicesDropdown = ({ isOverVideo }: ServicesDropdownProps) => {
               <div>
                 <div className="font-medium">Commercial Services</div>
                 <div className="text-sm text-gray-500">Professional building maintenance</div>
+              </div>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild className="p-0">
+            <Link
+              to="/services/fleet-washing"
+              className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-bc-red transition-colors w-full rounded-md"
+            >
+              <Truck className="mr-3 h-5 w-5 flex-shrink-0 text-bc-red" />
+              <div>
+                <div className="font-medium">Fleet Washing</div>
+                <div className="text-sm text-gray-500">Recurring mobile vehicle washing</div>
               </div>
             </Link>
           </DropdownMenuItem>
