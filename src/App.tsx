@@ -33,6 +33,7 @@ const VirtualEstimate = lazy(() => import('./pages/VirtualEstimate'));
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
 const PressureWashing = lazy(() => import('./pages/PressureWashing'));
+const FleetWashing = lazy(() => import('./pages/FleetWashing'));
 
 // Specific service pages
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
@@ -67,6 +68,8 @@ function App() {
             {/* Service Routes */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
+            <Route path="/services/fleet-washing" element={<FleetWashing />} />
+            <Route path="/fleet-washing" element={<FleetWashing />} />
 
             {/* Specific Service Pages */}
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
