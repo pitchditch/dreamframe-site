@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ServiceCard from '../components/ServiceCard';
 import CallToAction from '../components/CallToAction';
-import { Droplets, Home, CloudRain, Car, Building, Warehouse } from 'lucide-react';
+import { Droplets, Home, CloudRain, Car, Building, Warehouse, Truck } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 const Services = () => {
@@ -80,7 +80,7 @@ const Services = () => {
       <section className="py-16 md:py-24 bg-gray-50 w-full">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8">{t("Commercial Services")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ServiceCard 
               icon={<Building size={24} />} 
               title={t("Commercial Window Cleaning")} 
@@ -105,6 +105,14 @@ const Services = () => {
               image="/lovable-uploads/b3e01fd9-0f50-4524-b794-26a9f6f93ee5.png" 
               imageAlt="Commercial Building Washing in South Surrey | Professional Exterior Cleaning by BC Pressure Washing" 
             />
+            <ServiceCard 
+              icon={<Truck size={24} />} 
+              title={t("Fleet Washing")} 
+              description={t("Recurring on-site washing for service vans, pickups, Sprinters and commercial fleets with volume pricing.")} 
+              link="/services/fleet-washing" 
+              image="/lovable-uploads/3da7ac70-3771-4584-b170-acc52f801bf8.png" 
+              imageAlt="Mobile Fleet Washing in Surrey and Metro Vancouver by BC Pressure Washing" 
+            />
           </div>
         </div>
       </section>
@@ -112,7 +120,6 @@ const Services = () => {
       <section className="py-16 md:py-24 w-full">
         <div className="container mx-auto px-4">
           <div className="bg-bc-gray p-8 md:p-12 rounded-lg relative overflow-hidden">
-            {/* Background image */}
             <div className="absolute inset-0 w-full h-full">
               <img 
                 src="/lovable-uploads/e7d22891-296d-4f9b-befc-796245f0f540.png" 
@@ -159,9 +166,7 @@ const Services = () => {
                   <button className="bg-white hover:bg-gray-100 text-black font-semibold py-3 px-6 rounded-md transition duration-300">{t("Get a Custom Maintenance Plan")}</button>
                 </Link>
               </div>
-              <div className="hidden md:block"> {/* Hide this on mobile since we have the background image */}
-                {/* Intentionally left empty as the background image covers this area */}
-              </div>
+              <div className="hidden md:block"></div>
             </div>
           </div>
         </div>
