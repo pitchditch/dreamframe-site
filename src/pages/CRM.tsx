@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { MagicLinkLogin } from '@/components/auth/MagicLinkLogin';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MapPin, Users, FileText, LogOut, BarChart3, Navigation } from 'lucide-react';
+import { MapPin, Users, FileText, LogOut, BarChart3, Navigation, PhoneCall } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CRM = () => {
@@ -82,6 +82,19 @@ const CRM = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/call-desk')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <PhoneCall className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Human Call Desk</CardTitle>
+              <CardDescription>Cold-call queue with AI prep, notes, callbacks, follow-ups, and caller performance tracking.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">Open Call Desk</Button>
+            </CardContent>
+          </Card>
+
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/clients')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
