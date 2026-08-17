@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const PUBLIC_SITE_ORIGIN = "https://bcpressurewashing.ca";
+const PUBLIC_SITE_ORIGIN = "https://www.bcpressurewashing.ca";
 const SESSION_PATH_PATTERN = /^\/virtual-estimate\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\/?$/i;
 
 const json = (body: Record<string, unknown>, status = 200) =>
@@ -56,8 +56,6 @@ const canonicalizeSessionUrl = (value: unknown) => {
     throw new Error("Invalid virtual estimate session URL");
   }
 
-  // Never send customers a Lovable/preview/developer URL. Preserve only the
-  // validated virtual-estimate path and its query string on the public site.
   return `${PUBLIC_SITE_ORIGIN}${url.pathname.replace(/\/$/, "")}${url.search}`;
 };
 
