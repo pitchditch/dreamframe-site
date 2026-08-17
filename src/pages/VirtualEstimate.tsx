@@ -28,7 +28,7 @@ interface VirtualEstimateSession {
 const VirtualEstimate = () => {
   const { sessionId = '' } = useParams();
   const [searchParams] = useSearchParams();
-  const inviteToken = searchParams.get('token') || '';
+  const inviteToken = searchParams.get('token') || searchParams.get('invite_token') || '';
   const [session, setSession] = useState<VirtualEstimateSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
