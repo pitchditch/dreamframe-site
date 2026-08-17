@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { CalendarCheck, ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale } from 'lucide-react';
+import { CalendarCheck, ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale, Truck } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -47,7 +47,7 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
               </div>
 
               <div className={`overflow-hidden transition-all duration-300 pl-4 ${
-                isServicesMenuOpen ? 'max-h-[800px] py-2' : 'max-h-0'
+                isServicesMenuOpen ? 'max-h-[900px] py-2' : 'max-h-0'
               }`}>
                 <div className="flex flex-col space-y-1 pl-4">
                   <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential Services</div>
@@ -102,6 +102,12 @@ export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenu
                       <img src="/lovable-uploads/0cd8002e-089f-4aee-9688-39cf7966604e.png" alt="Commercial Pressure Washing Icon" className="w-8 h-8 object-contain" />
                     </div>
                     <span>{t('Commercial Pressure Washing')}</span>
+                  </Link>
+                  <Link to="/services/fleet-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
+                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10 text-bc-red">
+                      <Truck className="w-7 h-7" />
+                    </div>
+                    <span>{t('Fleet Washing')}</span>
                   </Link>
                   <Link to="/services/post-construction-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
                     <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
