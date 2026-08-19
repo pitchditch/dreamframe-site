@@ -23,8 +23,8 @@ const VirtualEstimateDesk = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  const load = useCallback(async (showSpinner = true) => {
+    if (showSpinner) setLoading(true);
     try {
       const { data, error: invokeError } = await supabase.functions.invoke('virtual-estimate-session', {
         body: { action: 'admin_list' },
@@ -37,11 +37,15 @@ const VirtualEstimateDesk = () => {
       const message = loadError instanceof Error ? loadError.message : 'Could not load virtual estimates.';
       setError(message.includes('FunctionsHttpError') ? 'Sign in with an admin account to manage virtual estimates.' : message);
     } finally {
-      setLoading(false);
+      if (showSpinner) setLoading(false);
     }
   }, []);
 
-  useEffect(() => { void load(); }, [load]);
+  useEffect(() => {
+    void load(true);
+    const timer = window.setInterval(() => void load(false), 3000);
+    return () => window.clearInterval(timer);
+  }, [load]);
 
   const ordered = useMemo(() => [...sessions].sort((a, b) => {
     if (a.customerPresent !== b.customerPresent) return a.customerPresent ? -1 : 1;
@@ -54,9 +58,9 @@ const VirtualEstimateDesk = () => {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4">
           <div className="flex items-center gap-3">
             <Button asChild variant="ghost" size="icon" className="text-slate-300"><Link to="/crm"><ArrowLeft className="h-5 w-5" /></Link></Button>
-            <div><h1 className="text-xl font-bold">Virtual Estimates</h1><p className="text-xs text-slate-400">Join customer video estimate sessions</p></div>
+            <div><h1 className="text-xl font-bold">Virtual Estimates</h1><p className="text-xs text-slate-400">Live customer sessions update automatically</p></div>
           </div>
-          <Button onClick={() => void load()} variant="outline" disabled={loading}><RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />Refresh</Button>
+          <Button onClick={() => void load(true)} variant="outline" disabled={loading}><RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />Refresh</Button>
         </div>
       </header>
 
@@ -75,13 +79,13 @@ const VirtualEstimateDesk = () => {
         ) : (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {ordered.map((session) => (
-              <article key={session.sessionId} className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
+              <article key={session.sessionId} className={`rounded-2xl border bg-slate-900 p-5 shadow-lg ${session.customerPresent ? 'border-emerald-500/50' : 'border-slate-800'}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/10"><UserRound className="h-5 w-5 text-red-400" /></div>
                     <div className="min-w-0"><h2 className="truncate font-bold">{session.customerName || 'Customer'}</h2><p className="truncate text-xs text-slate-500">{session.address || session.customerEmail || session.customerPhone || 'No address yet'}</p></div>
                   </div>
-                  <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${session.customerPresent ? 'bg-emerald-500/15 text-emerald-300' : 'bg-slate-800 text-slate-400'}`}>{session.customerPresent ? 'Online' : session.status}</span>
+                  <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${session.customerPresent ? 'bg-emerald-500/15 text-emerald-300' : 'bg-slate-800 text-slate-400'}`}>{session.customerPresent ? 'Live now' : session.status}</span>
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
@@ -89,7 +93,7 @@ const VirtualEstimateDesk = () => {
                   <div className="rounded-lg bg-slate-950 p-2.5"><span className="text-slate-500">Phone</span><p className="mt-0.5 truncate font-semibold text-slate-200">{session.customerPhone || '—'}</p></div>
                 </div>
 
-                <Button onClick={() => navigate(`/crm/virtual-estimate/${session.sessionId}`)} className="mt-4 w-full bg-red-600 hover:bg-red-700"><Video className="mr-2 h-4 w-4" />Open host call</Button>
+                <Button onClick={() => navigate(`/crm/virtual-estimate/${session.sessionId}`)} className="mt-4 w-full bg-red-600 hover:bg-red-700"><Video className="mr-2 h-4 w-4" />{session.customerPresent ? 'Join live customer' : 'Open host call'}</Button>
               </article>
             ))}
           </div>
