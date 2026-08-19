@@ -219,12 +219,19 @@ export const upsertD2DCloudRoutes = async (routes: RouteSession[]) => {
   if (error) throw error;
 };
 
-export const loadD2DCloudRouteState = async (): Promise<D2DCloudRouteState> => {
+export const loadD2DCloudRouteState = async (
+  options: { syncAuto?: boolean } = {},
+): Promise<D2DCloudRouteState> => {
   const userId = await getAuthenticatedUserId();
   const client = supabase as any;
 
-  const { error: syncError } = await client.rpc('sync_d2d_auto_routes_for_user');
-  if (syncError) throw syncError;
+  // Normal hydration explicitly refreshes the server-owned auto-route projection.
+  // Realtime callbacks pass syncAuto:false so reading an emitted row cannot write
+  // the same row again and create a Realtime feedback loop.
+  if (options.syncAuto !== false) {
+    const { error: syncError } = await client.rpc('sync_d2d_auto_routes_for_user');
+    if (syncError) throw syncError;
+  }
 
   const { data, error } = await client
     .from('d2d_field_routes')
