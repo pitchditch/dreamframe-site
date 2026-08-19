@@ -164,7 +164,9 @@ begin
     raise exception 'p_routes must be a JSON array';
   end if;
 
-  perform public.d2d_sync_auto_routes_for_user_id(v_user);
+  -- Use the authenticated wrapper so callers never receive permission to sync
+  -- another user's auto-route projection directly.
+  perform public.sync_d2d_auto_routes_for_user();
 
   for v_item in select value from jsonb_array_elements(p_routes)
   loop
