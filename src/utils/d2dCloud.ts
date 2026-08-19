@@ -74,14 +74,14 @@ export const d2dPinIdentity = (
   const businessName = normalizeIdentityText(pin.businessName || pin.customerName);
   const coordinates = `${pin.lat.toFixed(5)},${pin.lng.toFixed(5)}`;
 
-  if (pin.isStorefront && pin.externalId) {
-    return `storefront-source:${normalizeIdentityText(pin.externalId)}`;
+  if (pin.isStorefront && businessName) {
+    // Name + location stays compatible with storefronts saved before OSM source IDs
+    // were introduced, while still keeping separate branches of a chain distinct.
+    return `storefront:${businessName}|${coordinates}`;
   }
 
-  if (pin.isStorefront && businessName) {
-    // Coordinates prevent separate branches of the same chain from collapsing when
-    // OpenStreetMap has no street address or uses the business name as the fallback.
-    return `storefront:${businessName}|${address && address !== businessName ? address : 'no-address'}|${coordinates}`;
+  if (pin.isStorefront && pin.externalId) {
+    return `storefront-source:${normalizeIdentityText(pin.externalId)}`;
   }
 
   if (address) return `address:${address}`;
