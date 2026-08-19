@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TranslationProvider } from "./hooks/use-translation.tsx";
 
 const queryClient = new QueryClient();
+const VIRTUAL_ESTIMATE_ORIGIN = "https://dreamframe-site.vercel.app";
 
 const hostname = window.location.hostname.toLowerCase();
 const pathname = window.location.pathname;
@@ -20,7 +21,7 @@ const isVirtualEstimateRoute =
 
 if (isLovablePreview && isVirtualEstimateRoute) {
   window.location.replace(
-    `https://bcpressurewashing.ca${window.location.pathname}${window.location.search}${window.location.hash}`,
+    `${VIRTUAL_ESTIMATE_ORIGIN}${window.location.pathname}${window.location.search}${window.location.hash}`,
   );
 } else {
   ReactDOM.createRoot(document.getElementById("root")!).render(
