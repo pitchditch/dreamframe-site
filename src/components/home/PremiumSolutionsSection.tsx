@@ -47,7 +47,7 @@ const PremiumSolutionsSection = () => {
     {
       title: t('House Washing'),
       description: t('Gentle soft-washing to remove dirt, mold, and algae without damage.'),
-      link: '/services/pressure-washing',
+      link: '/services/house-washing',
       image: '/lovable-uploads/ff861e81-c504-47c8-aae7-5319b9ad2ab4.png',
       slideImages: houseWashingImages,
       videoId: 'lYnXijewxCM',
