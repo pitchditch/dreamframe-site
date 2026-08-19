@@ -12,11 +12,14 @@ const Loading = () => (
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
+const WhyUs = lazy(() => import('./pages/WhyUs'));
+const Testimonials = lazy(() => import('./pages/Testimonials'));
 const Services = lazy(() => import('./pages/Services'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const Booking = lazy(() => import('./pages/Booking'));
+const CityPages = lazy(() => import('./pages/CityPages'));
 const HouseTracking = lazy(() => import('./pages/HouseTracking'));
 const CRM = lazy(() => import('./pages/CRM'));
 const MaintenanceMemberships = lazy(() => import('./pages/MaintenanceMemberships'));
@@ -37,6 +40,11 @@ const VirtualEstimateHost = lazy(() => import('./pages/VirtualEstimateHost'));
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
 const PressureWashing = lazy(() => import('./pages/PressureWashing'));
 const FleetWashing = lazy(() => import('./pages/FleetWashing'));
+const GutterCleaning = lazy(() => import('./pages/services/GutterCleaning'));
+const RoofCleaning = lazy(() => import('./pages/services/RoofCleaning'));
+const HouseWashing = lazy(() => import('./pages/services/HouseWashing'));
+const FenceWashing = lazy(() => import('./pages/services/FenceWashing'));
+const CommercialPressureWashing = lazy(() => import('./pages/services/CommercialPressureWashing'));
 
 // Specific service pages
 const CommercialWindowCleaning = lazy(() => import('./pages/services/CommercialWindowCleaning'));
@@ -51,6 +59,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/why-us" element={<WhyUs />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/reviews" element={<Testimonials />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/calculator" element={<Calculator />} />
@@ -71,18 +82,27 @@ function App() {
             <Route path="/crm/virtual-estimates" element={<VirtualEstimateDesk />} />
             <Route path="/crm/virtual-estimate/:sessionId" element={<VirtualEstimateHost />} />
 
-            {/* Service Routes */}
+            {/* Residential service routes */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
             <Route path="/services/pressure-washing" element={<PressureWashing />} />
+            <Route path="/services/gutter-cleaning" element={<GutterCleaning />} />
+            <Route path="/services/roof-cleaning" element={<RoofCleaning />} />
+            <Route path="/services/house-washing" element={<HouseWashing />} />
+            <Route path="/services/fence-washing" element={<FenceWashing />} />
+
+            {/* Commercial service routes */}
             <Route path="/services/fleet-washing" element={<FleetWashing />} />
             <Route path="/fleet-washing" element={<FleetWashing />} />
-
-            {/* Specific Service Pages */}
             <Route path="/services/commercial-window-cleaning" element={<CommercialWindowCleaning />} />
+            <Route path="/services/commercial-pressure-washing" element={<CommercialPressureWashing />} />
             <Route path="/storefront-window-cleaning" element={<StorefrontRecurringWindowCleaning />} />
             <Route path="/services/storefront-window-cleaning" element={<StorefrontRecurringWindowCleaning />} />
             <Route path="/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
             <Route path="/services/post-construction-window-cleaning" element={<PostConstructionWindowCleaning />} />
+
+            {/* City/service-area pages. Keep these after all named routes. */}
+            <Route path="/locations/:citySlug" element={<CityPages />} />
+            <Route path="/:citySlug" element={<CityPages />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
