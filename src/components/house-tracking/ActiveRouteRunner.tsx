@@ -1,0 +1,483 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { AlertTriangle, CheckCircle2, MapPin, Navigation2, Pause, RotateCcw, Route, SkipForward, WifiOff } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from 'sonner';
+import StreetViewDialog from './StreetViewDialog';
+import StreetViewPreview from './StreetViewPreview';
+import { HousePin, RouteSession, RouteStop } from './types';
+import { publishD2DRoute } from '@/utils/d2dRouteBus';
+import {
+  queueD2DAutoStopMutation,
+  updateD2DAutoRouteStopStatus,
+} from '@/utils/d2dCloud';
+import {
+  ROUTE_DEVIATION_METERS,
+  distanceToPolylineMeters,
+  findNextUnworkedIndex,
+  haversineMeters,
+  orientStopsForLocation,
+  reorderRemainingFromLocation,
+  routePathDistanceMeters,
+  routeProgressBreakdown,
+} from '@/utils/d2dRouteRuntime';
+import { markD2DPending, readD2DSyncStatus, subscribeD2DSyncStatus } from '@/utils/d2dSyncStatus';
+
+export const ACTIVE_ROUTE_RUN_KEY = 'd2d-active-route-run-v1';
+
+interface ActiveRouteRunState {
+  routeId: string;
+  routeName: string;
+  startedAt: string;
+  updatedAt: string;
+  orderedStopIds: string[];
+  currentIndex: number;
+  skippedStopIds: string[];
+  statusOverrides: Record<string, string>;
+  gpsPath: Array<{ lat: number; lng: number; timestamp: string }>;
+  startLocation?: { lat: number; lng: number };
+}
+
+interface ActiveRouteRunnerProps {
+  route: RouteSession;
+  pins: HousePin[];
+  onUpdatePin: (pinId: string, updates: Partial<HousePin>) => void;
+  startSignal?: number;
+  onClose: () => void;
+  onFinished?: (historyRoute: RouteSession) => void;
+}
+
+const normalizeAddress = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+const validHouseStatus = (value: unknown): HousePin['status'] => {
+  const status = String(value || '');
+  if (status === 'visited' || status === 'interested' || status === 'not-interested' || status === 'completed' || status === 'revisit-later' || status === 'needs-quote') return status;
+  return 'visited';
+};
+
+const readStoredRun = (): ActiveRouteRunState | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const parsed = JSON.parse(localStorage.getItem(ACTIVE_ROUTE_RUN_KEY) || 'null');
+    if (!parsed || typeof parsed !== 'object' || typeof parsed.routeId !== 'string') return null;
+    return {
+      routeId: parsed.routeId,
+      routeName: String(parsed.routeName || 'Route'),
+      startedAt: String(parsed.startedAt || new Date().toISOString()),
+      updatedAt: String(parsed.updatedAt || new Date().toISOString()),
+      orderedStopIds: Array.isArray(parsed.orderedStopIds) ? parsed.orderedStopIds.filter((id: unknown) => typeof id === 'string') : [],
+      currentIndex: Number.isFinite(Number(parsed.currentIndex)) ? Math.max(0, Number(parsed.currentIndex)) : 0,
+      skippedStopIds: Array.isArray(parsed.skippedStopIds) ? parsed.skippedStopIds.filter((id: unknown) => typeof id === 'string') : [],
+      statusOverrides: parsed.statusOverrides && typeof parsed.statusOverrides === 'object' ? parsed.statusOverrides : {},
+      gpsPath: Array.isArray(parsed.gpsPath) ? parsed.gpsPath : [],
+      startLocation: parsed.startLocation && Number.isFinite(Number(parsed.startLocation.lat)) && Number.isFinite(Number(parsed.startLocation.lng))
+        ? { lat: Number(parsed.startLocation.lat), lng: Number(parsed.startLocation.lng) }
+        : undefined,
+    };
+  } catch {
+    return null;
+  }
+};
+
+export const readStoredActiveRouteId = () => readStoredRun()?.routeId || null;
+
+const currentPositionOnce = () => new Promise<{ lat: number; lng: number } | null>((resolve) => {
+  if (typeof navigator === 'undefined' || !navigator.geolocation) {
+    resolve(null);
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (position) => resolve({ lat: position.coords.latitude, lng: position.coords.longitude }),
+    () => resolve(null),
+    { enableHighAccuracy: true, maximumAge: 5000, timeout: 8000 },
+  );
+});
+
+const ActiveRouteRunner: React.FC<ActiveRouteRunnerProps> = ({
+  route,
+  pins,
+  onUpdatePin,
+  startSignal = 0,
+  onClose,
+  onFinished,
+}) => {
+  const [run, setRun] = useState<ActiveRouteRunState | null>(() => {
+    const stored = readStoredRun();
+    return stored?.routeId === route.id ? stored : null;
+  });
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [streetViewPin, setStreetViewPin] = useState<HousePin | null>(null);
+  const [ignoreDeviationUntil, setIgnoreDeviationUntil] = useState(0);
+  const [syncStatus, setSyncStatus] = useState(readD2DSyncStatus);
+
+  const baseStops = useMemo(() => [...(route.stops || [])].sort((a, b) => a.order - b.order), [route.stops]);
+
+  const pinForStop = (stop: RouteStop) => pins.find((pin) => {
+    if (pin.id === stop.id) return true;
+    if (normalizeAddress(pin.address) && normalizeAddress(pin.address) === normalizeAddress(stop.address)) return true;
+    return Math.abs(pin.lat - stop.lat) < 0.00002 && Math.abs(pin.lng - stop.lng) < 0.00002;
+  }) || null;
+
+  const liveStops = useMemo(() => baseStops.map((stop) => {
+    const pin = pinForStop(stop);
+    return { ...stop, status: pin?.status || stop.status };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [baseStops, pins]);
+
+  const stopById = useMemo(() => new Map(liveStops.map((stop) => [stop.id, stop])), [liveStops]);
+
+  const orderedStops = useMemo(() => {
+    if (!run) return liveStops;
+    const ordered = run.orderedStopIds.map((id) => stopById.get(id)).filter(Boolean) as RouteStop[];
+    const included = new Set(ordered.map((stop) => stop.id));
+    liveStops.forEach((stop) => {
+      if (!included.has(stop.id)) ordered.push(stop);
+    });
+    return ordered;
+  }, [liveStops, run, stopById]);
+
+  const progress = useMemo(
+    () => routeProgressBreakdown(liveStops, run?.statusOverrides || {}),
+    [liveStops, run?.statusOverrides],
+  );
+
+  const currentStop = run && run.currentIndex < run.orderedStopIds.length
+    ? stopById.get(run.orderedStopIds[run.currentIndex]) || null
+    : null;
+
+  const currentPin = useMemo(() => {
+    if (!currentStop) return null;
+    const matching = pinForStop(currentStop);
+    if (matching) return matching;
+    return {
+      id: currentStop.id,
+      lat: currentStop.lat,
+      lng: currentStop.lng,
+      address: currentStop.address,
+      status: validHouseStatus(run?.statusOverrides[currentStop.id] || currentStop.status),
+      notes: '',
+      dateAdded: new Date().toISOString().slice(0, 10),
+    } satisfies HousePin;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStop, pins, run?.statusOverrides]);
+
+  useEffect(() => subscribeD2DSyncStatus(setSyncStatus), []);
+
+  useEffect(() => {
+    if (!run) return;
+    localStorage.setItem(ACTIVE_ROUTE_RUN_KEY, JSON.stringify(run));
+  }, [run]);
+
+  useEffect(() => {
+    if (!run || !navigator.geolocation) return;
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const point = { lat: position.coords.latitude, lng: position.coords.longitude };
+        setLocation(point);
+        setRun((current) => {
+          if (!current) return current;
+          const previous = current.gpsPath[current.gpsPath.length - 1];
+          const now = new Date().toISOString();
+          const moved = !previous || haversineMeters(point, previous) >= 4;
+          const stale = !previous || new Date(now).getTime() - new Date(previous.timestamp).getTime() >= 5000;
+          if (!moved && !stale) return current;
+          return {
+            ...current,
+            gpsPath: [...current.gpsPath, { ...point, timestamp: now }],
+            updatedAt: now,
+          };
+        });
+      },
+      (error) => console.error('Active route GPS error:', error),
+      { enableHighAccuracy: true, maximumAge: 1500, timeout: 10000 },
+    );
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, [Boolean(run)]);
+
+  const startRun = async () => {
+    if (liveStops.length === 0) {
+      toast.error('This route has no stops');
+      return;
+    }
+    const currentLocation = await currentPositionOnce();
+    if (currentLocation) setLocation(currentLocation);
+    const oriented = orientStopsForLocation(liveStops, currentLocation);
+    const firstUnworked = findNextUnworkedIndex(oriented, 0);
+    const now = new Date().toISOString();
+    const newRun: ActiveRouteRunState = {
+      routeId: route.id,
+      routeName: route.name,
+      startedAt: now,
+      updatedAt: now,
+      orderedStopIds: oriented.map((stop) => stop.id),
+      currentIndex: firstUnworked >= 0 ? firstUnworked : oriented.length,
+      skippedStopIds: [],
+      statusOverrides: {},
+      gpsPath: currentLocation ? [{ ...currentLocation, timestamp: now }] : [],
+      startLocation: currentLocation || undefined,
+    };
+    localStorage.setItem(ACTIVE_ROUTE_RUN_KEY, JSON.stringify(newRun));
+    setRun(newRun);
+  };
+
+  useEffect(() => {
+    if (!startSignal || run) return;
+    void startRun();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startSignal, route.id]);
+
+  const nextIndexForRun = (candidate: ActiveRouteRunState, startIndex: number) => {
+    const stops = candidate.orderedStopIds.map((id) => stopById.get(id)).filter(Boolean) as RouteStop[];
+    return findNextUnworkedIndex(stops, startIndex, candidate.statusOverrides, candidate.skippedStopIds);
+  };
+
+  const advance = (candidate: ActiveRouteRunState) => {
+    const nextIndex = nextIndexForRun(candidate, candidate.currentIndex + 1);
+    return {
+      ...candidate,
+      currentIndex: nextIndex >= 0 ? nextIndex : candidate.orderedStopIds.length,
+      updatedAt: new Date().toISOString(),
+    };
+  };
+
+  const persistAutoStatus = (stopId: string, status: HousePin['status']) => {
+    const mutation = { houseId: stopId, status, updatedAt: new Date().toISOString() };
+    if (!navigator.onLine) {
+      queueD2DAutoStopMutation(mutation);
+      markD2DPending(`auto-stop:${stopId}`);
+      return;
+    }
+    void updateD2DAutoRouteStopStatus(stopId, status).catch((error) => {
+      console.error('Could not update auto-route stop immediately:', error);
+      queueD2DAutoStopMutation(mutation);
+      markD2DPending(`auto-stop:${stopId}`);
+    });
+  };
+
+  const markCurrent = (status: HousePin['status']) => {
+    if (!run || !currentStop) return;
+    const now = new Date().toISOString();
+    const matchingPin = pinForStop(currentStop);
+    if (matchingPin) {
+      onUpdatePin(matchingPin.id, { status, updatedAt: now });
+      if (!navigator.onLine) markD2DPending(`pin:${matchingPin.id}`);
+    }
+
+    if (route.source === 'auto-street' || route.autoGenerated) {
+      persistAutoStatus(currentStop.id, status);
+    } else {
+      const updatedStops = liveStops.map((stop) => stop.id === currentStop.id ? { ...stop, status } : stop);
+      const breakdown = routeProgressBreakdown(updatedStops, { ...run.statusOverrides, [currentStop.id]: status });
+      const updatedRoute: RouteSession = {
+        ...route,
+        stops: updatedStops,
+        homesVisited: breakdown.worked,
+        totalStops: breakdown.total,
+        completedStops: breakdown.worked,
+        completionRate: breakdown.workedRate,
+        workedStops: breakdown.worked,
+        interestedStops: breakdown.interested,
+        quoteStops: breakdown.quotes,
+        notInterestedStops: breakdown.notInterested,
+        revisitStops: breakdown.revisitLater,
+        completedJobs: breakdown.completedJobs,
+        updatedAt: now,
+      };
+      publishD2DRoute(updatedRoute);
+      if (!navigator.onLine) markD2DPending(`route:${route.id}`);
+    }
+
+    const candidate: ActiveRouteRunState = {
+      ...run,
+      statusOverrides: { ...run.statusOverrides, [currentStop.id]: status },
+      skippedStopIds: run.skippedStopIds.filter((id) => id !== currentStop.id),
+      updatedAt: now,
+    };
+    setRun(advance(candidate));
+  };
+
+  const skipCurrent = () => {
+    if (!run || !currentStop) return;
+    const candidate: ActiveRouteRunState = {
+      ...run,
+      skippedStopIds: Array.from(new Set([...run.skippedStopIds, currentStop.id])),
+      updatedAt: new Date().toISOString(),
+    };
+    setRun(advance(candidate));
+  };
+
+  const reviewSkipped = () => {
+    if (!run || run.skippedStopIds.length === 0) return;
+    setRun({
+      ...run,
+      orderedStopIds: [...run.skippedStopIds],
+      currentIndex: 0,
+      skippedStopIds: [],
+      updatedAt: new Date().toISOString(),
+    });
+  };
+
+  const remainingPath = useMemo(() => {
+    if (!run) return [];
+    return run.orderedStopIds
+      .slice(Math.min(run.currentIndex, run.orderedStopIds.length))
+      .map((id) => stopById.get(id))
+      .filter(Boolean)
+      .map((stop) => ({ lat: stop!.lat, lng: stop!.lng }));
+  }, [run, stopById]);
+
+  const deviationMeters = location && remainingPath.length > 0
+    ? distanceToPolylineMeters(location, remainingPath)
+    : 0;
+  const showDeviation = Boolean(run && location && deviationMeters > ROUTE_DEVIATION_METERS && Date.now() >= ignoreDeviationUntil);
+
+  const rerouteFromLocation = () => {
+    if (!run || !location) return;
+    const prefix = run.orderedStopIds.slice(0, Math.min(run.currentIndex, run.orderedStopIds.length));
+    const remaining = run.orderedStopIds
+      .slice(Math.min(run.currentIndex, run.orderedStopIds.length))
+      .map((id) => stopById.get(id))
+      .filter(Boolean) as RouteStop[];
+    const rerouted = reorderRemainingFromLocation(remaining, location);
+    setRun({
+      ...run,
+      orderedStopIds: [...prefix, ...rerouted.map((stop) => stop.id)],
+      currentIndex: prefix.length,
+      updatedAt: new Date().toISOString(),
+    });
+    setIgnoreDeviationUntil(Date.now() + 60_000);
+    toast.success('Route updated from your current location');
+  };
+
+  const finishRun = () => {
+    if (!run) return;
+    const now = new Date().toISOString();
+    const finishedProgress = routeProgressBreakdown(liveStops, run.statusOverrides);
+    const path = run.gpsPath.length > 1 ? run.gpsPath : route.path;
+    const historyRoute: RouteSession = {
+      id: `field-run-${Date.now()}-${route.id.replace(/[^a-z0-9]+/gi, '-').slice(0, 50)}`,
+      name: `${route.name} · Field run`,
+      source: 'gps-session',
+      parentRouteId: route.id,
+      startTime: run.startedAt,
+      endTime: now,
+      duration: Math.max(0, Math.round((new Date(now).getTime() - new Date(run.startedAt).getTime()) / 1000)),
+      distance: routePathDistanceMeters(path),
+      path,
+      stops: liveStops.map((stop) => ({ ...stop, status: run.statusOverrides[stop.id] || stop.status })),
+      homesVisited: finishedProgress.worked,
+      totalStops: finishedProgress.total,
+      completedStops: finishedProgress.worked,
+      completionRate: finishedProgress.workedRate,
+      workedStops: finishedProgress.worked,
+      interestedStops: finishedProgress.interested,
+      quoteStops: finishedProgress.quotes,
+      notInterestedStops: finishedProgress.notInterested,
+      revisitStops: finishedProgress.revisitLater,
+      completedJobs: finishedProgress.completedJobs,
+      skippedStops: run.skippedStopIds.length,
+      color: route.color || '#2563eb',
+      isActive: false,
+      updatedAt: now,
+    };
+    publishD2DRoute(historyRoute);
+    if (!navigator.onLine) markD2DPending(`route:${historyRoute.id}`);
+    localStorage.removeItem(ACTIVE_ROUTE_RUN_KEY);
+    setRun(null);
+    onFinished?.(historyRoute);
+    onClose();
+    toast.success('Route run saved to Route History');
+  };
+
+  if (!run) {
+    return (
+      <Card className="border-primary/30">
+        <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="font-semibold">{route.name}</div>
+            <div className="text-sm text-muted-foreground">{liveStops.length} stops · start from the end closest to your GPS position.</div>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={onClose}>Cancel</Button>
+            <Button onClick={() => void startRun()}><Navigation2 className="mr-2 h-4 w-4" />Start Route</Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const passComplete = run.currentIndex >= run.orderedStopIds.length || !currentStop;
+
+  return (
+    <Card className="border-primary shadow-sm">
+      <CardHeader className="pb-3">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-lg"><Route className="h-5 w-5" />{route.name}</CardTitle>
+            <div className="mt-1 text-xs text-muted-foreground">
+              {progress.worked}/{progress.total} worked · {progress.interested} interested · {progress.quotes} quotes · {progress.completedJobs} jobs complete
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {!syncStatus.online && <Badge variant="destructive"><WifiOff className="mr-1 h-3 w-3" />Offline · {syncStatus.pendingKeys.length} pending</Badge>}
+            {syncStatus.online && syncStatus.pendingKeys.length > 0 && <Badge variant="secondary">Syncing · {syncStatus.pendingKeys.length} pending</Badge>}
+            <Button size="sm" variant="outline" onClick={onClose}><Pause className="mr-1 h-4 w-4" />Pause</Button>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <div className="mb-1 flex justify-between text-xs text-muted-foreground">
+            <span>Route worked</span><span>{Math.round(progress.workedRate)}%</span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-muted"><div className="h-full bg-primary transition-all" style={{ width: `${Math.min(100, progress.workedRate)}%` }} /></div>
+        </div>
+
+        {showDeviation && (
+          <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-amber-950">
+            <div className="flex items-start gap-2"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /><div className="text-sm"><strong>You are about {Math.round(deviationMeters)} m off the route.</strong><div className="mt-2 flex flex-wrap gap-2"><Button size="sm" variant="outline" onClick={() => setIgnoreDeviationUntil(Date.now() + 60_000)}>Continue route</Button><Button size="sm" onClick={rerouteFromLocation}><RotateCcw className="mr-1 h-4 w-4" />Re-route from here</Button></div></div></div>
+          </div>
+        )}
+
+        {passComplete ? (
+          <div className="rounded-lg border bg-muted/30 p-4 text-center">
+            <CheckCircle2 className="mx-auto h-8 w-8 text-primary" />
+            <div className="mt-2 font-semibold">Route pass complete</div>
+            <div className="mt-1 text-sm text-muted-foreground">{run.skippedStopIds.length > 0 ? `${run.skippedStopIds.length} skipped stops are still available.` : 'All available stops have been worked or passed.'}</div>
+            <div className="mt-3 flex flex-wrap justify-center gap-2">
+              {run.skippedStopIds.length > 0 && <Button variant="outline" onClick={reviewSkipped}><RotateCcw className="mr-1 h-4 w-4" />Review skipped</Button>}
+              <Button onClick={finishRun}>Finish & Save History</Button>
+            </div>
+          </div>
+        ) : currentStop && currentPin ? (
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
+            <div className="space-y-3">
+              <div className="rounded-lg border p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0"><div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Current stop {run.currentIndex + 1} of {run.orderedStopIds.length}</div><div className="mt-1 flex items-start gap-2 font-semibold"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" /><span>{currentStop.address}</span></div></div>
+                  <Badge variant="outline">{String(run.statusOverrides[currentStop.id] || currentStop.status || 'unvisited').replace(/-/g, ' ')}</Badge>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <Button onClick={() => markCurrent('visited')}>Hit</Button>
+                <Button onClick={() => markCurrent('interested')}>Interested</Button>
+                <Button onClick={() => markCurrent('needs-quote')}>Quote</Button>
+                <Button variant="outline" onClick={() => markCurrent('not-interested')}>Not interested</Button>
+                <Button variant="outline" onClick={() => markCurrent('revisit-later')}>Revisit later</Button>
+                <Button variant="ghost" onClick={skipCurrent}><SkipForward className="mr-1 h-4 w-4" />Skip</Button>
+              </div>
+              <div className="text-xs text-muted-foreground">Every action above advances automatically to the next unworked stop.</div>
+            </div>
+
+            <StreetViewPreview pin={currentPin} onOpen={() => setStreetViewPin(currentPin)} />
+          </div>
+        ) : null}
+      </CardContent>
+      <StreetViewDialog pin={streetViewPin} onClose={() => setStreetViewPin(null)} />
+    </Card>
+  );
+};
+
+export default ActiveRouteRunner;
