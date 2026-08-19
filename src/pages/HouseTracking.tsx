@@ -29,13 +29,11 @@ import {
   Store,
   Home,
   Users,
-  ExternalLink,
   Bell,
   Route,
   ShieldAlert,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
 
 const makePinId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return `pin_${crypto.randomUUID()}`;
@@ -96,7 +94,6 @@ const HouseTracking: React.FC = () => {
     };
 
     void checkAuth();
-
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT') {
         setIsAuthenticated(false);
@@ -144,16 +141,6 @@ const HouseTracking: React.FC = () => {
   }, [routes]);
 
   useEffect(() => {
-    const handleRouteSaved = (event: Event) => {
-      const route = (event as CustomEvent<RouteSession>).detail;
-      if (!route?.id) return;
-      setRoutes((previous) => [route, ...previous.filter((item) => item.id !== route.id)]);
-    };
-    window.addEventListener('d2d-route-saved', handleRouteSaved);
-    return () => window.removeEventListener('d2d-route-saved', handleRouteSaved);
-  }, []);
-
-  useEffect(() => {
     if (!canvassingMode) {
       setLocationError(null);
       return;
@@ -166,20 +153,13 @@ const HouseTracking: React.FC = () => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         setLocationError(null);
-        setCurrentLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
+        setCurrentLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
       },
       (error) => {
         console.error('House Tracking GPS error:', error);
         setLocationError(error.message || 'Unable to get live location');
       },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 1500,
-        timeout: 10000,
-      },
+      { enableHighAccuracy: true, maximumAge: 1500, timeout: 10000 },
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
@@ -223,16 +203,30 @@ const HouseTracking: React.FC = () => {
     )));
   };
 
-  const handleDeletePin = (pinId: string) => {
-    if (!window.confirm('Delete this property from House Tracking?')) return;
+  const removePin = (pinId: string) => {
     setPins((previous) => previous.filter((pin) => pin.id !== pinId));
     setHighlightedPinId((current) => current === pinId ? null : current);
+  };
+
+  const handleDeletePin = (pinId: string) => {
+    if (!window.confirm('Delete this property from House Tracking?')) return;
+    removePin(pinId);
   };
 
   const handleClearAllPins = () => {
     setPins([]);
     setHighlightedPinId(null);
     localStorage.removeItem('housePins');
+  };
+
+  const handleSessionSaved = (route: RouteSession) => {
+    setRoutes((previous) => {
+      const index = previous.findIndex((item) => item.id === route.id);
+      if (index < 0) return [...previous, route];
+      const next = [...previous];
+      next[index] = route;
+      return next;
+    });
   };
 
   const selectedPin = useMemo(
@@ -275,10 +269,6 @@ const HouseTracking: React.FC = () => {
     });
   };
 
-  const handleSessionSaved = (route: RouteSession) => {
-    setRoutes((previous) => [route, ...previous.filter((item) => item.id !== route.id)]);
-  };
-
   const followUpsDue = pins.filter((pin) => pin.followUpDate && new Date(pin.followUpDate).getTime() <= Date.now()).length;
   const interestedCount = pins.filter((pin) => ['interested', 'needs-quote'].includes(pin.status)).length;
   const quoteCount = pins.filter((pin) => pin.status === 'needs-quote').length;
@@ -304,6 +294,20 @@ const HouseTracking: React.FC = () => {
       </Layout>
     );
   }
+
+  const map = (
+    <MapComponent
+      pins={pins}
+      routes={routes}
+      onAddPin={handleAddPin}
+      onUpdatePin={handleUpdatePin}
+      onDeletePin={removePin}
+      onUpdateRoutes={setRoutes}
+      onClearAllPins={handleClearAllPins}
+      highlightedPinId={highlightedPinId}
+      onPinHover={setHighlightedPinId}
+    />
+  );
 
   return (
     <Layout title="House Tracking | BC Pressure Washing">
@@ -386,8 +390,7 @@ const HouseTracking: React.FC = () => {
             )}
 
             <LiveFieldTracker currentLocation={currentLocation} active={canvassingMode} />
-
-            <Card><CardContent className="p-0"><MapComponent pins={pins} routes={routes} onAddPin={handleAddPin} onUpdatePin={handleUpdatePin} onDeletePin={handleDeletePin} onUpdateRoutes={setRoutes} onClearAllPins={handleClearAllPins} highlightedPinId={highlightedPinId} onPinHover={setHighlightedPinId} /></CardContent></Card>
+            <Card><CardContent className="p-0">{map}</CardContent></Card>
           </TabsContent>
 
           <TabsContent value="list">
@@ -410,8 +413,8 @@ const HouseTracking: React.FC = () => {
 
           <TabsContent value="routes" className="space-y-4">
             <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
-              <Card><CardContent className="p-0"><MapComponent pins={pins} routes={routes} onAddPin={handleAddPin} onUpdatePin={handleUpdatePin} onDeletePin={handleDeletePin} onUpdateRoutes={setRoutes} onClearAllPins={handleClearAllPins} highlightedPinId={highlightedPinId} onPinHover={setHighlightedPinId} /></CardContent></Card>
-              <RouteManager pins={pins} onUpdatePin={handleUpdatePin} onRouteSaved={handleSessionSaved} />
+              <Card><CardContent className="p-0">{map}</CardContent></Card>
+              <RouteManager pins={pins} onUpdatePin={handleUpdatePin} />
             </div>
 
             <Card>
@@ -419,8 +422,11 @@ const HouseTracking: React.FC = () => {
               <CardContent className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
                 {[...routes].sort((a, b) => new Date(b.updatedAt || b.endTime || b.startTime).getTime() - new Date(a.updatedAt || a.endTime || a.startTime).getTime()).slice(0, 30).map((route) => (
                   <div key={route.id} className="rounded-lg border p-3">
-                    <div className="flex items-start justify-between gap-2"><div className="font-medium">{route.name}</div>{route.id.startsWith('auto-street:') && <Badge variant="secondary">Auto 5+</Badge>}</div>
-                    <div className="mt-1 text-xs text-muted-foreground">{route.homesVisited} stops{route.distance ? ` · ${(route.distance / 1000).toFixed(1)} km` : ''}{route.duration ? ` · ${Math.round(route.duration / 60)} min` : ''}</div>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="font-medium">{route.name}</div>
+                      {(route.source === 'auto-street' || route.autoGenerated) && <Badge variant="secondary">Auto 5+</Badge>}
+                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground">{route.totalStops ?? route.homesVisited} stops{route.distance ? ` · ${(route.distance / 1000).toFixed(1)} km` : ''}{route.duration ? ` · ${Math.round(route.duration / 60)} min` : ''}</div>
                   </div>
                 ))}
                 {routes.length === 0 && <p className="text-sm text-muted-foreground">No saved routes yet. Street routes appear automatically after 5 eligible pins on the same street.</p>}
