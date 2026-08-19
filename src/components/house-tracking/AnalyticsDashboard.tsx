@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { HousePin } from './types';
+import D2DReadinessCheck from './D2DReadinessCheck';
 
 interface AnalyticsDashboardProps {
   pins: HousePin[];
@@ -84,6 +85,8 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ pins }) => {
           Open Google Analytics
         </Button>
       </div>
+
+      <D2DReadinessCheck />
 
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
