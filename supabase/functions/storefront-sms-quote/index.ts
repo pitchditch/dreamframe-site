@@ -16,6 +16,9 @@ const corsHeaders = {
 
 const SMS_CONSENT_TEXT = "I agree to receive occasional marketing text messages from BC Pressure Washing about local pricing, nearby service availability and referral discounts. Message frequency varies. Reply STOP to unsubscribe.";
 const AI_CONSENT_TEXT = "I agree to receive automated or AI-generated voice calls from BC Pressure Washing at this phone number, no more than once per month, about storefront cleaning, pricing and availability. I can withdraw consent at any time.";
+const VERIFY_TTL_MINUTES = 10;
+const VERIFY_MAX_ATTEMPTS = 5;
+const VERIFY_MAX_REQUESTS_PER_HOUR = 3;
 
 const RATES: Record<string, { low: number; high: number }> = {
   small: { low: 8, high: 10 },
@@ -73,6 +76,21 @@ function samePhone(a: unknown, b: unknown) {
 
 function makeReferralCode() {
   return `BC${crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase()}`;
+}
+
+function clientIp(req: Request) {
+  return (req.headers.get("x-forwarded-for") || "").split(",")[0]?.trim() || null;
+}
+
+async function sha256Hex(value: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function makeVerificationCode() {
+  const values = new Uint32Array(1);
+  crypto.getRandomValues(values);
+  return String(100000 + (values[0] % 900000));
 }
 
 function calcQuote(count: number, size: string, freq: string, svcType: string) {
@@ -136,6 +154,8 @@ async function requireInternal(req: Request) {
     if (user) {
       const { data: allowed } = await supabase.rpc("is_admin", { user_id: user.id });
       if (allowed === true) return;
+      const { data: staff } = await supabase.from("admin_users").select("role").ilike("email", user.email || "").maybeSingle();
+      if (["admin", "caller"].includes(String(staff?.role || ""))) return;
     }
   }
   throw new Error("Internal authorization required");
@@ -210,49 +230,118 @@ function parseIncomingMessage(body: string, lead: any): { updates: any; reply: s
   return { updates, reply };
 }
 
-async function saveMarketingOptIn(req: Request, body: any) {
-  if (String(body.website || "").trim()) return json({ success: true });
+type OptInPayload = {
+  business_name: string;
+  contact_name: string | null;
+  contact_email: string | null;
+  city: string | null;
+  phone: string;
+  sms_consent: true;
+  ai_call_consent: boolean;
+  referral_code: string | null;
+};
+
+function validateOptInPayload(body: any): { payload?: OptInPayload; error?: string } {
   const businessName = String(body.business_name || "").trim();
-  const contactName = String(body.contact_name || "").trim() || null;
-  const contactEmail = String(body.contact_email || "").trim() || null;
-  const city = String(body.city || "").trim() || null;
   const phone = normalizePhone(body.phone);
   const smsConsent = body.sms_consent === true;
-  const aiConsent = body.ai_call_consent === true;
-  const referredBy = String(body.referral_code || "").trim().toUpperCase() || null;
+  if (!businessName) return { error: "Business name is required" };
+  if (!phone) return { error: "Enter a valid Canadian or US phone number" };
+  if (!smsConsent) return { error: "SMS consent is required to join storefront updates" };
+  return {
+    payload: {
+      business_name: businessName,
+      contact_name: String(body.contact_name || "").trim() || null,
+      contact_email: String(body.contact_email || "").trim() || null,
+      city: String(body.city || "").trim() || null,
+      phone,
+      sms_consent: true,
+      ai_call_consent: body.ai_call_consent === true,
+      referral_code: String(body.referral_code || "").trim().toUpperCase() || null,
+    },
+  };
+}
 
-  if (!businessName) return json({ success: false, error: "Business name is required" }, 400);
-  if (!phone) return json({ success: false, error: "Enter a valid Canadian or US phone number" }, 400);
-  if (!smsConsent) return json({ success: false, error: "SMS consent is required to join storefront updates" }, 400);
+async function requestMarketingOptIn(req: Request, body: any) {
+  if (String(body.website || "").trim()) return json({ success: true, verification_required: true });
+  const validated = validateOptInPayload(body);
+  if (!validated.payload) return json({ success: false, error: validated.error }, 400);
+  const payload = validated.payload;
 
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  const { count, error: countError } = await supabase
+    .from("storefront_opt_in_challenges")
+    .select("id", { count: "exact", head: true })
+    .eq("phone", payload.phone)
+    .gte("created_at", oneHourAgo);
+  if (countError) throw countError;
+  if ((count || 0) >= VERIFY_MAX_REQUESTS_PER_HOUR) {
+    return json({ success: false, error: "Too many verification requests for this number. Try again later." }, 429);
+  }
+
+  const code = makeVerificationCode();
+  const codeHash = await sha256Hex(code);
+  const challengeToken = crypto.randomUUID();
+  const expiresAt = new Date(Date.now() + VERIFY_TTL_MINUTES * 60 * 1000).toISOString();
+  const ip = clientIp(req);
+  const userAgent = req.headers.get("user-agent") || null;
+
+  const { error: insertError } = await supabase.from("storefront_opt_in_challenges").insert({
+    challenge_token: challengeToken,
+    phone: payload.phone,
+    code_hash: codeHash,
+    payload,
+    ip_address: ip,
+    user_agent: userAgent,
+    expires_at: expiresAt,
+  });
+  if (insertError) throw insertError;
+
+  try {
+    await sendSms(payload.phone, `BC Pressure Washing verification code: ${code}. It expires in ${VERIFY_TTL_MINUTES} minutes. If you did not request storefront updates, ignore this message.`);
+  } catch (error) {
+    await supabase.from("storefront_opt_in_challenges").delete().eq("challenge_token", challengeToken);
+    throw error;
+  }
+
+  return json({
+    success: true,
+    verification_required: true,
+    challenge_token: challengeToken,
+    expires_in_minutes: VERIFY_TTL_MINUTES,
+    masked_phone: `***-***-${payload.phone.slice(-4)}`,
+  });
+}
+
+async function finalizeMarketingOptIn(req: Request, payload: OptInPayload, source: string, proof: Record<string, unknown> = {}) {
   const now = new Date().toISOString();
-  const existing = await findStorefrontLeadByPhone(phone);
+  const existing = await findStorefrontLeadByPhone(payload.phone);
   const referralCode = existing?.marketing_referral_code || makeReferralCode();
   const changes: Record<string, unknown> = {
-    business_name: businessName,
-    contact_name: contactName,
-    contact_email: contactEmail,
-    city,
-    phone,
+    business_name: payload.business_name,
+    contact_name: payload.contact_name,
+    contact_email: payload.contact_email,
+    city: payload.city,
+    phone: payload.phone,
     sms_marketing_consent: true,
     sms_marketing_consent_at: now,
-    sms_marketing_consent_source: "web_opt_in",
+    sms_marketing_consent_source: source,
     sms_marketing_consent_text: SMS_CONSENT_TEXT,
     sms_opted_out_at: null,
-    consent_phone: phone,
+    consent_phone: payload.phone,
     marketing_referral_code: referralCode,
     updated_at: now,
   };
 
-  if (aiConsent) {
+  if (payload.ai_call_consent) {
     changes.ai_call_consent = true;
     changes.ai_call_consent_at = now;
-    changes.ai_call_consent_source = "web_opt_in";
+    changes.ai_call_consent_source = source;
     changes.ai_call_consent_text = AI_CONSENT_TEXT;
     changes.ai_call_consent_revoked_at = null;
     changes.ai_call_frequency = "monthly";
     changes.ai_next_call_at = now;
-    changes.consent_phone = phone;
+    changes.consent_phone = payload.phone;
     changes.call_permission = true;
     changes.do_not_call = false;
   }
@@ -262,64 +351,71 @@ async function saveMarketingOptIn(req: Request, body: any) {
     const { error } = await supabase.from("storefront_call_leads").update(changes).eq("id", leadId);
     if (error) throw error;
   } else {
-    const { data: inserted, error } = await supabase.from("storefront_call_leads").insert({ ...changes, status: "new", call_permission: true, do_not_call: false, attempts: 0, route_order: 0 }).select("id").single();
+    const { data: inserted, error } = await supabase.from("storefront_call_leads").insert({
+      ...changes,
+      status: "new",
+      call_permission: payload.ai_call_consent,
+      do_not_call: false,
+      attempts: 0,
+      route_order: 0,
+    }).select("id").single();
     if (error) throw error;
     leadId = inserted.id;
   }
 
-  const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0]?.trim() || null;
+  const ip = clientIp(req);
   const userAgent = req.headers.get("user-agent") || null;
   const consentRows: Record<string, unknown>[] = [{
     lead_id: leadId,
-    phone,
+    phone: payload.phone,
     consent_type: "sms_marketing",
     granted: true,
-    source: "web_opt_in",
+    source,
     consent_text: SMS_CONSENT_TEXT,
     ip_address: ip,
     user_agent: userAgent,
-    metadata: { consent_version: "2026-08-18", business_name: businessName },
+    metadata: { consent_version: "2026-08-19", business_name: payload.business_name, ...proof },
   }];
-  if (aiConsent) consentRows.push({
+  if (payload.ai_call_consent) consentRows.push({
     lead_id: leadId,
-    phone,
+    phone: payload.phone,
     consent_type: "ai_voice_monthly",
     granted: true,
-    source: "web_opt_in",
+    source,
     consent_text: AI_CONSENT_TEXT,
     ip_address: ip,
     user_agent: userAgent,
-    metadata: { consent_version: "2026-08-18", frequency: "monthly", business_name: businessName },
+    metadata: { consent_version: "2026-08-19", frequency: "monthly", business_name: payload.business_name, ...proof },
   });
   const { error: consentError } = await supabase.from("storefront_contact_consents").insert(consentRows);
   if (consentError) throw consentError;
 
-  if (referredBy) {
-    const { data: referrer } = await supabase.from("storefront_call_leads").select("id,marketing_referral_code").eq("marketing_referral_code", referredBy).maybeSingle();
+  if (payload.referral_code) {
+    const { data: referrer } = await supabase.from("storefront_call_leads").select("id,marketing_referral_code").eq("marketing_referral_code", payload.referral_code).maybeSingle();
     if (referrer?.id && referrer.id !== leadId) {
-      await supabase.from("storefront_call_leads").update({ referred_by_marketing_code: referredBy }).eq("id", leadId);
+      await supabase.from("storefront_call_leads").update({ referred_by_marketing_code: payload.referral_code }).eq("id", leadId);
       await supabase.from("storefront_referrals").upsert({
         referrer_lead_id: referrer.id,
         referred_lead_id: leadId,
-        referral_code: referredBy,
+        referral_code: payload.referral_code,
         status: "pending",
-        metadata: { source: "storefront_updates_opt_in" },
+        metadata: { source: "storefront_updates_verified_opt_in" },
       }, { onConflict: "referred_lead_id", ignoreDuplicates: true });
     }
   }
 
   const shareUrl = `https://bcpressurewashing.ca/storefront-updates?ref=${encodeURIComponent(referralCode)}`;
-  const confirmation = aiConsent
-    ? `BC Pressure Washing: You're subscribed to storefront pricing/referral texts and monthly AI-call follow-ups. Referral link: ${shareUrl} Reply STOP to stop texts.`
-    : `BC Pressure Washing: You're subscribed to storefront pricing/referral texts. Referral link: ${shareUrl} Reply STOP to unsubscribe.`;
+  const confirmation = payload.ai_call_consent
+    ? `BC Pressure Washing: Your number is verified. You're subscribed to storefront pricing/referral texts and monthly AI-call follow-ups. Referral link: ${shareUrl} Reply STOP to stop texts.`
+    : `BC Pressure Washing: Your number is verified. You're subscribed to storefront pricing/referral texts. Referral link: ${shareUrl} Reply STOP to unsubscribe.`;
 
   let messageSid: string | null = null;
   let deliveryError: string | null = null;
-  try { messageSid = await sendSms(phone, confirmation); } catch (error) { deliveryError = error instanceof Error ? error.message : "SMS failed"; }
+  try { messageSid = await sendSms(payload.phone, confirmation); } catch (error) { deliveryError = error instanceof Error ? error.message : "SMS failed"; }
   await supabase.from("storefront_marketing_deliveries").insert({
     lead_id: leadId,
     message_type: "consent_confirmation",
-    phone,
+    phone: payload.phone,
     message_body: confirmation,
     twilio_message_sid: messageSid,
     status: messageSid ? "sent" : "failed",
@@ -327,7 +423,61 @@ async function saveMarketingOptIn(req: Request, body: any) {
     sent_at: messageSid ? now : null,
   });
 
-  return json({ success: true, lead_id: leadId, sms_consent: true, ai_call_consent: aiConsent, ai_call_frequency: aiConsent ? "monthly" : existing?.ai_call_frequency || "none", referral_code: referralCode, referral_url: shareUrl, confirmation_sms_sent: Boolean(messageSid) });
+  return {
+    success: true,
+    lead_id: leadId,
+    sms_consent: true,
+    ai_call_consent: payload.ai_call_consent,
+    ai_call_frequency: payload.ai_call_consent ? "monthly" : existing?.ai_call_frequency || "none",
+    referral_code: referralCode,
+    referral_url: shareUrl,
+    confirmation_sms_sent: Boolean(messageSid),
+    phone_verified: true,
+  };
+}
+
+async function verifyMarketingOptIn(req: Request, body: any) {
+  const challengeToken = String(body.challenge_token || "").trim();
+  const code = String(body.code || "").replace(/\D/g, "");
+  if (!challengeToken || code.length !== 6) return json({ success: false, error: "Enter the 6-digit verification code." }, 400);
+
+  const { data: challenge, error } = await supabase
+    .from("storefront_opt_in_challenges")
+    .select("id,challenge_token,phone,code_hash,payload,attempts,expires_at,verified_at,consumed_at,ip_address,user_agent")
+    .eq("challenge_token", challengeToken)
+    .maybeSingle();
+  if (error) throw error;
+  if (!challenge || challenge.consumed_at) return json({ success: false, error: "This verification request is no longer active." }, 410);
+  if (new Date(challenge.expires_at).getTime() <= Date.now()) return json({ success: false, error: "That verification code expired. Request a new code." }, 410);
+  if (Number(challenge.attempts || 0) >= VERIFY_MAX_ATTEMPTS) return json({ success: false, error: "Too many incorrect attempts. Request a new code." }, 429);
+
+  const incomingHash = await sha256Hex(code);
+  if (incomingHash !== challenge.code_hash) {
+    await supabase.from("storefront_opt_in_challenges").update({ attempts: Number(challenge.attempts || 0) + 1 }).eq("id", challenge.id);
+    return json({ success: false, error: "That verification code is incorrect." }, 400);
+  }
+
+  const payload = challenge.payload as OptInPayload;
+  if (!payload || !samePhone(payload.phone, challenge.phone)) return json({ success: false, error: "Verification data is invalid." }, 400);
+
+  const claimTime = new Date().toISOString();
+  const { data: claimed, error: claimError } = await supabase
+    .from("storefront_opt_in_challenges")
+    .update({ verified_at: claimTime, consumed_at: claimTime })
+    .eq("id", challenge.id)
+    .is("consumed_at", null)
+    .select("id")
+    .maybeSingle();
+  if (claimError) throw claimError;
+  if (!claimed) return json({ success: false, error: "This verification request was already used." }, 409);
+
+  try {
+    const result = await finalizeMarketingOptIn(req, payload, "web_verified_opt_in", { challenge_id: challenge.id, verified_phone: true });
+    return json(result);
+  } catch (finalizeError) {
+    await supabase.from("storefront_opt_in_challenges").update({ consumed_at: null }).eq("id", challenge.id);
+    throw finalizeError;
+  }
 }
 
 async function processLocalUpdates(req: Request) {
@@ -380,7 +530,16 @@ async function processLocalUpdates(req: Request) {
 serve(async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
-    if (req.method === "GET") return json({ status: "ok", service: "storefront-sms-quote", marketingConsent: true, endpoints: { "POST form-encoded": "Twilio inbound SMS webhook", "POST JSON": "Quote actions plus marketing_opt_in / process_local_updates" } });
+    if (req.method === "GET") return json({
+      status: "ok",
+      service: "storefront-sms-quote",
+      phoneVerification: true,
+      marketingConsent: true,
+      endpoints: {
+        "POST form-encoded": "Twilio inbound SMS webhook",
+        "POST JSON": "request_marketing_opt_in / verify_marketing_opt_in plus protected quote actions",
+      },
+    });
 
     const contentType = req.headers.get("content-type") || "";
     if (contentType.includes("x-www-form-urlencoded") || contentType.includes("form-data")) {
@@ -455,8 +614,14 @@ serve(async (req: Request): Promise<Response> => {
     }
 
     const action = String(body.action || "");
-    if (action === "marketing_opt_in") return await saveMarketingOptIn(req, body);
+    if (action === "request_marketing_opt_in") return await requestMarketingOptIn(req, body);
+    if (action === "verify_marketing_opt_in") return await verifyMarketingOptIn(req, body);
+    if (action === "marketing_opt_in") {
+      return json({ success: false, verification_required: true, error: "Phone verification is required before storefront consent can be activated." }, 409);
+    }
     if (action === "process_local_updates") return await processLocalUpdates(req);
+
+    await requireInternal(req);
 
     const { phone, leadSource, templateIndex, leadId, businessName, customMessage } = body;
     if (action === "send_outbound") {
@@ -499,6 +664,7 @@ serve(async (req: Request): Promise<Response> => {
     const message = error instanceof Error ? error.message : "Storefront SMS error";
     const contentType = req.headers.get("content-type") || "";
     if (contentType.includes("form") || contentType.includes("urlencoded")) return emptyTwiml();
-    return json({ error: message }, message.includes("authorization") ? 401 : 500);
+    const status = message.includes("authorization") ? 401 : 500;
+    return json({ error: message }, status);
   }
 });
