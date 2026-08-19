@@ -23,6 +23,9 @@ export type EditableCustomerPlan = {
   billing_frequency: string;
   one_time_amount: number | string | null;
   recurring_amount: number | string | null;
+  renewal_interval: string | null;
+  include_interior: boolean | null;
+  travel_surcharge: number | string | null;
   discount_percent: number | string | null;
   next_service_date: string | null;
 };
@@ -40,6 +43,9 @@ type PlanDraft = {
   billing_frequency: string;
   one_time_amount: string;
   recurring_amount: string;
+  renewal_interval: string;
+  include_interior: boolean;
+  travel_surcharge: string;
   discount_percent: string;
   next_service_date: string;
 };
@@ -47,6 +53,7 @@ type PlanDraft = {
 const PLAN_STATUSES = ['draft', 'sent', 'viewed', 'accepted', 'active', 'paused', 'cancelled', 'expired'];
 const CADENCE_OPTIONS = ['Weekly', 'Biweekly', 'Monthly', 'Quarterly', 'Seasonal', 'Semiannual', 'Annual'];
 const BILLING_OPTIONS = ['weekly', 'biweekly', 'monthly', 'quarterly', 'semiannual', 'annual'];
+const RENEWAL_OPTIONS = ['monthly', 'quarterly', 'semiannual', 'annual'];
 
 const money = (value: string | number | null | undefined) =>
   new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(Number(value || 0));
@@ -64,6 +71,9 @@ const toDraft = (plan: EditableCustomerPlan): PlanDraft => ({
   billing_frequency: plan.billing_frequency || 'monthly',
   one_time_amount: plan.one_time_amount == null ? '' : String(plan.one_time_amount),
   recurring_amount: plan.recurring_amount == null ? '' : String(plan.recurring_amount),
+  renewal_interval: plan.renewal_interval || 'annual',
+  include_interior: Boolean(plan.include_interior),
+  travel_surcharge: plan.travel_surcharge == null ? '' : String(plan.travel_surcharge),
   discount_percent: plan.discount_percent == null ? '' : String(plan.discount_percent),
   next_service_date: plan.next_service_date || '',
 });
@@ -82,6 +92,13 @@ const readableFrequency = (value: string) => {
   return `${normalized.charAt(0).toUpperCase()}${normalized.slice(1)} billing`;
 };
 
+const readableInterval = (value: string) => {
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) return 'No renewal interval set';
+  if (normalized === 'semiannual') return 'Renews every 6 months';
+  return `Renews ${normalized}`;
+};
+
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <label className="space-y-1.5 text-sm">
     <span className="font-medium">{label}</span>
@@ -94,6 +111,7 @@ export const CustomerPlanPreview = ({ draft }: { draft: PlanDraft }) => {
   const discount = Number(draft.discount_percent || 0);
   const recurring = Number(draft.recurring_amount || 0);
   const oneTime = Number(draft.one_time_amount || 0);
+  const travel = Number(draft.travel_surcharge || 0);
 
   return (
     <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
@@ -134,21 +152,31 @@ export const CustomerPlanPreview = ({ draft }: { draft: PlanDraft }) => {
               <span className="float-right font-semibold">{money(oneTime)}</span>
             </div>
           )}
+          {travel > 0 && (
+            <div className="mt-2 text-sm">
+              <span className="text-muted-foreground">Travel surcharge</span>
+              <span className="float-right font-semibold">{money(travel)}</span>
+            </div>
+          )}
         </div>
 
-        {(services.length > 0 || draft.service_description.trim()) && (
+        {(services.length > 0 || draft.service_description.trim() || draft.include_interior) && (
           <div>
             <p className="font-semibold">What’s included</p>
-            {services.length > 0 && (
-              <div className="mt-2 space-y-2">
-                {services.map((service) => (
-                  <div key={service} className="flex items-start gap-2 text-sm">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"><Check className="h-3.5 w-3.5" /></span>
-                    <span>{service}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="mt-2 space-y-2">
+              {services.map((service) => (
+                <div key={service} className="flex items-start gap-2 text-sm">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"><Check className="h-3.5 w-3.5" /></span>
+                  <span>{service}</span>
+                </div>
+              ))}
+              {draft.include_interior && (
+                <div className="flex items-start gap-2 text-sm">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"><Check className="h-3.5 w-3.5" /></span>
+                  <span>Interior cleaning included</span>
+                </div>
+              )}
+            </div>
             {draft.service_description.trim() && <p className="mt-3 whitespace-pre-wrap text-sm text-muted-foreground">{draft.service_description.trim()}</p>}
           </div>
         )}
@@ -159,6 +187,10 @@ export const CustomerPlanPreview = ({ draft }: { draft: PlanDraft }) => {
             <p className="mt-1 font-medium">{draft.cadence.trim() || 'To be scheduled'}</p>
           </div>
           <div className="rounded-lg border p-3">
+            <p className="text-xs text-muted-foreground">Renewal</p>
+            <p className="mt-1 font-medium">{readableInterval(draft.renewal_interval)}</p>
+          </div>
+          <div className="rounded-lg border p-3 sm:col-span-2">
             <p className="text-xs text-muted-foreground">Next service</p>
             <p className="mt-1 flex items-center gap-1.5 font-medium"><CalendarDays className="h-4 w-4" />{draft.next_service_date || 'To be scheduled'}</p>
           </div>
@@ -181,15 +213,16 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
     if (!open) setDraft(toDraft(plan));
   }, [plan, open]);
 
-  const set = (key: keyof PlanDraft, value: string) => setDraft((current) => ({ ...current, [key]: value }));
+  const set = (key: Exclude<keyof PlanDraft, 'include_interior'>, value: string) => setDraft((current) => ({ ...current, [key]: value }));
 
   const save = async () => {
     const recurringAmount = draft.recurring_amount === '' ? null : Number(draft.recurring_amount);
     const oneTimeAmount = draft.one_time_amount === '' ? null : Number(draft.one_time_amount);
+    const travelSurcharge = draft.travel_surcharge === '' ? null : Number(draft.travel_surcharge);
     const discountPercent = draft.discount_percent === '' ? null : Number(draft.discount_percent);
 
-    if ([recurringAmount, oneTimeAmount, discountPercent].some((value) => value != null && !Number.isFinite(value))) {
-      toast({ title: 'Check plan pricing', description: 'Price and discount fields must be valid numbers.', variant: 'destructive' });
+    if ([recurringAmount, oneTimeAmount, travelSurcharge, discountPercent].some((value) => value != null && !Number.isFinite(value))) {
+      toast({ title: 'Check plan pricing', description: 'Price, surcharge, and discount fields must be valid numbers.', variant: 'destructive' });
       return;
     }
 
@@ -208,6 +241,9 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
         billing_frequency: draft.billing_frequency,
         one_time_amount: oneTimeAmount,
         recurring_amount: recurringAmount,
+        renewal_interval: draft.renewal_interval.trim() || null,
+        include_interior: draft.include_interior,
+        travel_surcharge: travelSurcharge,
         discount_percent: discountPercent,
         next_service_date: draft.next_service_date || null,
       })
@@ -250,9 +286,10 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
               <Field label="Services included"><Input value={draft.service_types} onChange={(event) => set('service_types', event.target.value)} placeholder="Window Cleaning, Gutter Cleaning, Pressure Washing" /></Field>
               <Field label="Service description"><Textarea rows={4} value={draft.service_description} onChange={(event) => set('service_description', event.target.value)} /></Field>
 
-              <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <Field label="One-time price"><Input type="number" min="0" step="0.01" value={draft.one_time_amount} onChange={(event) => set('one_time_amount', event.target.value)} /></Field>
                 <Field label="Recurring price"><Input type="number" min="0" step="0.01" value={draft.recurring_amount} onChange={(event) => set('recurring_amount', event.target.value)} /></Field>
+                <Field label="Travel surcharge"><Input type="number" min="0" step="0.01" value={draft.travel_surcharge} onChange={(event) => set('travel_surcharge', event.target.value)} /></Field>
                 <Field label="Discount %"><Input type="number" min="0" max="100" step="0.01" value={draft.discount_percent} onChange={(event) => set('discount_percent', event.target.value)} /></Field>
               </div>
 
@@ -260,12 +297,20 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
                 <Field label="Cadence">
                   <select value={draft.cadence} onChange={(event) => set('cadence', event.target.value)} className="h-10 w-full rounded-md border bg-background px-3 text-sm">
                     <option value="">Choose cadence</option>
+                    {draft.cadence && !CADENCE_OPTIONS.includes(draft.cadence) && <option value={draft.cadence}>{draft.cadence}</option>}
                     {CADENCE_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
                   </select>
                 </Field>
                 <Field label="Billing frequency">
                   <select value={draft.billing_frequency} onChange={(event) => set('billing_frequency', event.target.value)} className="h-10 w-full rounded-md border bg-background px-3 text-sm">
+                    {draft.billing_frequency && !BILLING_OPTIONS.includes(draft.billing_frequency) && <option value={draft.billing_frequency}>{draft.billing_frequency}</option>}
                     {BILLING_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
+                  </select>
+                </Field>
+                <Field label="Renewal interval">
+                  <select value={draft.renewal_interval} onChange={(event) => set('renewal_interval', event.target.value)} className="h-10 w-full rounded-md border bg-background px-3 text-sm">
+                    {draft.renewal_interval && !RENEWAL_OPTIONS.includes(draft.renewal_interval) && <option value={draft.renewal_interval}>{draft.renewal_interval}</option>}
+                    {RENEWAL_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
                   </select>
                 </Field>
                 <Field label="Next service date"><Input type="date" value={draft.next_service_date} onChange={(event) => set('next_service_date', event.target.value)} /></Field>
@@ -274,6 +319,10 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
                     {PLAN_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}
                   </select>
                 </Field>
+                <label className="flex min-h-10 items-center gap-3 rounded-md border px-3 py-2 text-sm">
+                  <input type="checkbox" checked={draft.include_interior} onChange={(event) => setDraft((current) => ({ ...current, include_interior: event.target.checked }))} className="h-4 w-4" />
+                  <span><span className="font-medium">Include interior cleaning</span><span className="block text-xs text-muted-foreground">Shown in the customer preview</span></span>
+                </label>
               </div>
 
               <div className="flex flex-col-reverse gap-2 border-t pt-4 sm:flex-row sm:justify-end">
