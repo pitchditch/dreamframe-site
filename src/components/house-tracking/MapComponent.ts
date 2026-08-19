@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import MapComponentFixed from './MapComponentFixed';
+import MapComponentV3 from './MapComponentV3';
 import { HousePin } from './types';
 import {
   d2dPinIdentity,
@@ -24,7 +24,7 @@ const saveDeletedIdentities = (identities: string[]) => {
   localStorage.setItem(DELETED_IDENTITIES_KEY, JSON.stringify(Array.from(new Set(identities))));
 };
 
-const MapComponent: React.FC<React.ComponentProps<typeof MapComponentFixed>> = (props) => {
+const MapComponent: React.FC<React.ComponentProps<typeof MapComponentV3>> = (props) => {
   const [, setMapReadyTick] = useState(0);
   const [cloudReady, setCloudReady] = useState(false);
   const [onlineRevision, setOnlineRevision] = useState(0);
@@ -145,7 +145,7 @@ const MapComponent: React.FC<React.ComponentProps<typeof MapComponentFixed>> = (
     }, 350);
   }, [props.pins, cloudReady, onlineRevision]);
 
-  return React.createElement(MapComponentFixed, {
+  return React.createElement(MapComponentV3, {
     ...props,
     pins: [...props.pins],
     routes: [...props.routes],
