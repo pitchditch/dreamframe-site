@@ -29,7 +29,8 @@ const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
 const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
 const PropertyDetail = lazy(() => import('./pages/crm/PropertyDetail'));
 const MapView = lazy(() => import('./pages/crm/MapView'));
-const Analytics = lazy(() => import('./pages/crm/AnalyticsEnhanced'));
+const Analytics = lazy(() => import('./pages/crm/AnalyticsCommandCenter'));
+const WebsiteAnalytics = lazy(() => import('./pages/crm/AnalyticsEnhanced'));
 const SEO = lazy(() => import('./pages/crm/SEO'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const Clients = lazy(() => import('./pages/crm/Clients'));
@@ -80,6 +81,7 @@ function App() {
             <Route path="/crm/property/:id" element={<PropertyDetail />} />
             <Route path="/crm/map" element={<MapView />} />
             <Route path="/crm/analytics" element={<Analytics />} />
+            <Route path="/crm/analytics/website" element={<WebsiteAnalytics />} />
             <Route path="/crm/seo" element={<SEO />} />
             <Route path="/crm/routes" element={<RouteHistory />} />
             <Route path="/crm/clients" element={<Clients />} />
