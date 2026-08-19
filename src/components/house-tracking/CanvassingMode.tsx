@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HousePin, RouteSession } from './types';
 import { useOfflineCanvassing } from '@/hooks/useOfflineCanvassing';
-import { upsertD2DCloudRoutes } from '@/utils/d2dCloud';
+import { publishD2DRoute } from '@/utils/d2dRouteBus';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -53,17 +53,6 @@ const reverseGeocode = async (lat: number, lng: number) => {
   } catch (error) {
     console.error('Canvassing reverse geocode failed:', error);
     return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-  }
-};
-
-const saveRouteLocally = (route: RouteSession) => {
-  try {
-    const stored = JSON.parse(localStorage.getItem('routes') || '[]');
-    const existing: RouteSession[] = Array.isArray(stored) ? stored : [];
-    const next = [route, ...existing.filter((item) => item.id !== route.id)].slice(0, 100);
-    localStorage.setItem('routes', JSON.stringify(next));
-  } catch (error) {
-    console.error('Could not persist canvassing route locally:', error);
   }
 };
 
@@ -154,15 +143,13 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
 
     onQuickMark(pin);
     setVisitCount((previous) => previous + 1);
-
     toast.success(`Marked ${address} as ${status.replace('-', ' ')}`, {
       description: cloudSaved ? 'Saved to Supabase' : 'Saved locally · cloud retry queued',
     });
-
     if ('vibrate' in navigator) navigator.vibrate(50);
   };
 
-  const endAndSaveSession = async () => {
+  const endAndSaveSession = () => {
     const endedAt = new Date();
     const startedAt = sessionStart || endedAt;
     const path = pathRef.current.length > 0
@@ -174,28 +161,22 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
     const route: RouteSession = {
       id: `field-${mode}-${startedAt.getTime()}`,
       name: `${mode === 'storefront' ? 'Storefront' : 'Residential'} field session · ${startedAt.toLocaleDateString()}`,
+      source: 'gps-session',
       startTime: startedAt.toISOString(),
       endTime: endedAt.toISOString(),
       duration: Math.max(0, Math.round((endedAt.getTime() - startedAt.getTime()) / 1000)),
       path,
       homesVisited: visitCount,
+      totalStops: visitCount,
+      completedStops: visitCount,
+      completionRate: visitCount > 0 ? 100 : 0,
       color: mode === 'storefront' ? '#f97316' : '#2563eb',
       isActive: false,
       updatedAt: endedAt.toISOString(),
     };
 
-    saveRouteLocally(route);
     onSessionSaved?.(route);
-    window.dispatchEvent(new CustomEvent('d2d-route-saved', { detail: route }));
-
-    if (isOnline) {
-      try {
-        await upsertD2DCloudRoutes([route]);
-      } catch (error) {
-        console.error('Could not save canvassing route to cloud:', error);
-        toast.warning('Session saved locally; cloud route sync will retry from the map.');
-      }
-    }
+    publishD2DRoute(route);
 
     setIsActive(false);
     setSessionStart(null);
@@ -207,7 +188,7 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
 
   const toggleSession = () => {
     if (isActive) {
-      void endAndSaveSession();
+      endAndSaveSession();
       return;
     }
 
@@ -248,54 +229,30 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
 
         <CardContent className="space-y-3">
           <div className="grid grid-cols-3 gap-2 rounded-lg bg-muted p-2 text-sm">
-            <div>
-              <div className="text-xs text-muted-foreground">Session</div>
-              <div className="font-semibold">{isActive ? getSessionDuration() : 'Stopped'}</div>
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground">Doors</div>
-              <div className="font-semibold">{visitCount}</div>
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground">GPS points</div>
-              <div className="font-semibold">{pathCount}</div>
-            </div>
+            <div><div className="text-xs text-muted-foreground">Session</div><div className="font-semibold">{isActive ? getSessionDuration() : 'Stopped'}</div></div>
+            <div><div className="text-xs text-muted-foreground">Doors</div><div className="font-semibold">{visitCount}</div></div>
+            <div><div className="text-xs text-muted-foreground">GPS points</div><div className="font-semibold">{pathCount}</div></div>
           </div>
 
           {selectedTarget && mode === 'residential' && (
             <div className="flex items-start gap-2 rounded-lg border bg-primary/5 p-2 text-xs">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              <div className="min-w-0">
-                <div className="font-semibold">Selected property</div>
-                <div className="truncate text-muted-foreground">{selectedTarget.address}</div>
-              </div>
+              <div className="min-w-0"><div className="font-semibold">Selected property</div><div className="truncate text-muted-foreground">{selectedTarget.address}</div></div>
             </div>
           )}
 
           {isActive && mode === 'residential' && (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <Button size="lg" className="h-16 flex-col gap-1" onClick={() => void handleQuickAction('visited', 'Door hit / flyer dropped')}>
-                <Check className="h-5 w-5" />
-                <span className="text-xs">Hit</span>
-              </Button>
-              <Button size="lg" variant="outline" className="h-16 flex-col gap-1 border-green-500 text-green-700" onClick={() => void handleQuickAction('interested', 'Interested at door')}>
-                <FileText className="h-5 w-5" />
-                <span className="text-xs">Interested</span>
-              </Button>
-              <Button size="lg" variant="outline" className="h-16 flex-col gap-1 border-orange-500 text-orange-700" onClick={() => void handleQuickAction('needs-quote', 'Quote requested')}>
-                <DollarSign className="h-5 w-5" />
-                <span className="text-xs">Quote</span>
-              </Button>
-              <Button size="lg" variant="outline" className="h-16 flex-col gap-1 border-red-500 text-red-700" onClick={() => void handleQuickAction('not-interested')}>
-                <X className="h-5 w-5" />
-                <span className="text-xs">Skip</span>
-              </Button>
+              <Button size="lg" className="h-16 flex-col gap-1" onClick={() => void handleQuickAction('visited', 'Door hit / flyer dropped')}><Check className="h-5 w-5" /><span className="text-xs">Hit</span></Button>
+              <Button size="lg" variant="outline" className="h-16 flex-col gap-1 border-green-500 text-green-700" onClick={() => void handleQuickAction('interested', 'Interested at door')}><FileText className="h-5 w-5" /><span className="text-xs">Interested</span></Button>
+              <Button size="lg" variant="outline" className="h-16 flex-col gap-1 border-orange-500 text-orange-700" onClick={() => void handleQuickAction('needs-quote', 'Quote requested')}><DollarSign className="h-5 w-5" /><span className="text-xs">Quote</span></Button>
+              <Button size="lg" variant="outline" className="h-16 flex-col gap-1 border-red-500 text-red-700" onClick={() => void handleQuickAction('not-interested')}><X className="h-5 w-5" /><span className="text-xs">Skip</span></Button>
             </div>
           )}
 
           {isActive && mode === 'storefront' && (
             <div className="rounded-md border bg-muted/40 p-3 text-xs text-muted-foreground">
-              Use the storefront crawler markers on the map for Hit, Interested, Skip or Quote. That keeps the OSM/business identity attached and prevents duplicate storefront records.
+              Use the storefront crawler markers on the map for Hit, Interested, Skip or Quote. That keeps the business identity attached and prevents duplicate storefront records.
             </div>
           )}
 
@@ -303,23 +260,12 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
             <Button variant={isActive ? 'destructive' : 'default'} onClick={toggleSession} className="gap-2">
               {isActive ? <><Square className="h-4 w-4" />End & Save</> : <><Play className="h-4 w-4" />Start Session</>}
             </Button>
-            <Button variant="outline" onClick={() => activePin && setQrPin(activePin)} disabled={!activePin} className="gap-2">
-              <QrCode className="h-4 w-4" />QR Code
-            </Button>
+            <Button variant="outline" onClick={() => activePin && setQrPin(activePin)} disabled={!activePin} className="gap-2"><QrCode className="h-4 w-4" />QR Code</Button>
           </div>
 
           {pendingActions > 0 && (
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => void syncPendingActions()}
-              disabled={isSyncing || !isOnline}
-            >
-              {isSyncing
-                ? 'Syncing to Supabase…'
-                : isOnline
-                  ? `Sync ${pendingActions} queued action${pendingActions === 1 ? '' : 's'}`
-                  : `${pendingActions} action${pendingActions === 1 ? '' : 's'} waiting for internet`}
+            <Button variant="outline" className="w-full" onClick={() => void syncPendingActions()} disabled={isSyncing || !isOnline}>
+              {isSyncing ? 'Syncing to Supabase…' : isOnline ? `Sync ${pendingActions} queued action${pendingActions === 1 ? '' : 's'}` : `${pendingActions} action${pendingActions === 1 ? '' : 's'} waiting for internet`}
             </Button>
           )}
         </CardContent>
