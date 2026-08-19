@@ -1,27 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { MagicLinkLogin } from '../components/auth/MagicLinkLogin';
 import Layout from '../components/Layout';
 import MapComponent from '../components/house-tracking/MapComponent';
 import PinList from '../components/house-tracking/PinList';
-import FacebookLeadsPanel from '../components/house-tracking/FacebookLeadsPanel';
 import AnalyticsDashboard from '../components/house-tracking/AnalyticsDashboard';
 import PersonalCalculator from '../components/house-tracking/PersonalCalculator';
 import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
 import EditPinForm from '../components/house-tracking/EditPinForm';
 import CanvassingMode from '../components/house-tracking/CanvassingMode';
 import RouteManager from '../components/house-tracking/RouteManager';
+import LiveFieldTracker from '../components/house-tracking/LiveFieldTracker';
 import { HousePin, NewHousePin, RouteSession } from '../components/house-tracking/types';
 import { d2dPinIdentity, ensureD2DPinUpdatedAt } from '@/utils/d2dCloud';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, List, Facebook, BarChart3, Calculator, Settings, Search, Filter, LogOut, Users, Navigation } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  MapPin,
+  List,
+  BarChart3,
+  LogOut,
+  Navigation,
+  Search,
+  Store,
+  Home,
+  Users,
+  ExternalLink,
+  Bell,
+  Route,
+  ShieldAlert,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const makePinId = () => {
@@ -29,9 +42,19 @@ const makePinId = () => {
   return `pin_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 };
 
+const statusOptions: Array<{ value: HousePin['status']; label: string }> = [
+  { value: 'visited', label: 'Visited' },
+  { value: 'interested', label: 'Interested' },
+  { value: 'needs-quote', label: 'Needs Quote' },
+  { value: 'revisit-later', label: 'Revisit Later' },
+  { value: 'not-interested', label: 'Not Interested' },
+  { value: 'completed', label: 'Completed' },
+];
+
 const HouseTracking: React.FC = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pins, setPins] = useState<HousePin[]>([]);
   const [routes, setRoutes] = useState<RouteSession[]>([]);
@@ -40,25 +63,35 @@ const HouseTracking: React.FC = () => {
   const [streetViewPin, setStreetViewPin] = useState<HousePin | null>(null);
   const [personalCalcPin, setPersonalCalcPin] = useState<HousePin | null>(null);
   const [searchAddress, setSearchAddress] = useState('');
-  const [statusFilters, setStatusFilters] = useState<Set<string>>(new Set(['visited', 'interested', 'not-interested', 'completed', 'revisit-later', 'needs-quote']));
+  const [statusFilters, setStatusFilters] = useState<Set<string>>(
+    new Set(statusOptions.map((status) => status.value)),
+  );
   const [activeTab, setActiveTab] = useState('map');
   const [showPreviousClientsOnly, setShowPreviousClientsOnly] = useState(false);
-  const [serviceReminders, setServiceReminders] = useState<HousePin[]>([]);
-  const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [selectedPin, setSelectedPin] = useState<HousePin | null>(null);
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState<'all' | 'residential' | 'storefront'>('all');
   const [canvassingMode, setCanvassingMode] = useState(false);
   const [canvassingModeType, setCanvassingModeType] = useState<'residential' | 'storefront'>('residential');
+  const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
 
-  // Supabase persists and refreshes browser sessions. Do not force-log out an active
-  // field canvassing session after an arbitrary client-side timer.
   useEffect(() => {
     let cancelled = false;
 
     const checkAuth = async () => {
       const { data: { user }, error } = await supabase.auth.getUser();
       if (cancelled) return;
-      if (error) console.error('House tracking auth check failed:', error);
-      setIsAuthenticated(Boolean(user));
+      if (error || !user) {
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        setLoading(false);
+        return;
+      }
+
+      setIsAuthenticated(true);
+      const { data: adminResult, error: adminError } = await supabase.rpc('is_admin', { user_id: user.id });
+      if (cancelled) return;
+      if (adminError) console.error('House Tracking admin check failed:', adminError);
+      setIsAdmin(Boolean(adminResult));
       setLoading(false);
     };
 
@@ -67,12 +100,10 @@ const HouseTracking: React.FC = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT') {
         setIsAuthenticated(false);
+        setIsAdmin(false);
         return;
       }
-      if (session?.user) {
-        setIsAuthenticated(true);
-        if (event === 'SIGNED_IN') toast.success('Successfully logged in!');
-      }
+      if (session?.user) void checkAuth();
     });
 
     return () => {
@@ -80,12 +111,6 @@ const HouseTracking: React.FC = () => {
       subscription.unsubscribe();
     };
   }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(false);
-    toast.success('Logged out successfully');
-  };
 
   useEffect(() => {
     const savedPins = localStorage.getItem('housePins');
@@ -118,34 +143,52 @@ const HouseTracking: React.FC = () => {
     localStorage.setItem('routes', JSON.stringify(routes));
   }, [routes]);
 
-  // Track current location
   useEffect(() => {
-    if (!canvassingMode) return;
+    const handleRouteSaved = (event: Event) => {
+      const route = (event as CustomEvent<RouteSession>).detail;
+      if (!route?.id) return;
+      setRoutes((previous) => [route, ...previous.filter((item) => item.id !== route.id)]);
+    };
+    window.addEventListener('d2d-route-saved', handleRouteSaved);
+    return () => window.removeEventListener('d2d-route-saved', handleRouteSaved);
+  }, []);
+
+  useEffect(() => {
+    if (!canvassingMode) {
+      setLocationError(null);
+      return;
+    }
+    if (!navigator.geolocation) {
+      setLocationError('This device does not support GPS location.');
+      return;
+    }
 
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
+        setLocationError(null);
         setCurrentLocation({
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         });
       },
       (error) => {
-        console.error('Error getting location:', error);
-        toast.error('Unable to get location');
+        console.error('House Tracking GPS error:', error);
+        setLocationError(error.message || 'Unable to get live location');
       },
       {
         enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 5000
-      }
+        maximumAge: 1500,
+        timeout: 10000,
+      },
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
   }, [canvassingMode]);
 
-  const handleQuickMarkProperty = (pin: HousePin) => {
-    handleAddPin(pin);
-    setSelectedPin(pin);
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsAuthenticated(false);
+    setIsAdmin(false);
   };
 
   const handleAddPin = (newPin: NewHousePin) => {
@@ -167,528 +210,240 @@ const HouseTracking: React.FC = () => {
       if (Number.isFinite(existingTime) && Number.isFinite(incomingTime) && existingTime > incomingTime) return previous;
 
       const next = [...previous];
-      next[existingIndex] = pin;
+      next[existingIndex] = { ...existing, ...pin };
       return next;
     });
   };
 
   const handleUpdatePin = (pinId: string, updates: Partial<HousePin>) => {
-    setPins(prev => prev.map(pin =>
+    setPins((previous) => previous.map((pin) => (
       pin.id === pinId
         ? { ...pin, ...updates, updatedAt: updates.updatedAt || new Date().toISOString() }
         : pin
-    ));
+    )));
   };
 
   const handleDeletePin = (pinId: string) => {
-    setPins(prev => prev.filter(pin => pin.id !== pinId));
-    setSelectedPin((previous) => previous?.id === pinId ? null : previous);
+    if (!window.confirm('Delete this property from House Tracking?')) return;
+    setPins((previous) => previous.filter((pin) => pin.id !== pinId));
+    setHighlightedPinId((current) => current === pinId ? null : current);
   };
 
   const handleClearAllPins = () => {
     setPins([]);
-    setSelectedPin(null);
+    setHighlightedPinId(null);
     localStorage.removeItem('housePins');
   };
 
-  const handleSelectPin = (pin: HousePin) => {
-    setHighlightedPinId(pin.id);
-    setActiveTab('map');
-  };
+  const selectedPin = useMemo(
+    () => pins.find((pin) => pin.id === highlightedPinId) || null,
+    [pins, highlightedPinId],
+  );
 
-  const handleEditPin = (pinId: string) => {
-    setEditingPin(pinId);
-  };
+  const serviceReminders = useMemo(() => pins.filter((pin) => {
+    if (!pin.serviceReminder || !pin.lastServiceDate) return false;
+    const last = new Date(pin.lastServiceDate).getTime();
+    return Number.isFinite(last) && Date.now() - last >= 365 * 24 * 60 * 60 * 1000;
+  }), [pins]);
 
-  const handleSavePin = (pinId: string, updates: Partial<HousePin>) => {
-    handleUpdatePin(pinId, updates);
-    setEditingPin(null);
-  };
+  const typeFilteredPins = useMemo(() => pins.filter((pin) => {
+    if (showPreviousClientsOnly && !pin.isPreviousClient) return false;
+    if (propertyTypeFilter === 'residential' && pin.isStorefront) return false;
+    if (propertyTypeFilter === 'storefront' && !pin.isStorefront) return false;
+    return true;
+  }), [pins, propertyTypeFilter, showPreviousClientsOnly]);
 
-  const handleCancelEdit = () => {
-    setEditingPin(null);
-  };
+  const visibleListCount = useMemo(() => {
+    const query = searchAddress.trim().toLowerCase();
+    return typeFilteredPins.filter((pin) => {
+      if (!statusFilters.has(pin.status)) return false;
+      if (!query) return true;
+      return [pin.address, pin.notes, pin.customerName, pin.businessName, pin.phoneNumber, pin.email]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(query);
+    }).length;
+  }, [typeFilteredPins, searchAddress, statusFilters]);
 
-  const handleOpenStreetView = (pin: HousePin) => {
-    setStreetViewPin(pin);
-  };
-
-  const handleOpenPersonalCalc = (pin: HousePin) => {
-    setPersonalCalcPin(pin);
-  };
-
-  const handleStatusFilterChange = (status: string, checked: boolean) => {
-    setStatusFilters(prev => {
-      const newFilters = new Set(prev);
-      if (checked) {
-        newFilters.add(status);
-      } else {
-        newFilters.delete(status);
-      }
-      return newFilters;
+  const toggleStatus = (status: HousePin['status']) => {
+    setStatusFilters((current) => {
+      const next = new Set(current);
+      if (next.has(status)) next.delete(status);
+      else next.add(status);
+      return next;
     });
   };
 
-  const statusOptions = [
-    { value: 'visited', label: 'Visited', color: '#3b82f6' },
-    { value: 'interested', label: 'Interested', color: '#10b981' },
-    { value: 'not-interested', label: 'Not Interested', color: '#ef4444' },
-    { value: 'completed', label: 'Completed', color: '#8b5cf6' },
-    { value: 'revisit-later', label: 'Revisit Later', color: '#fbbf24' },
-    { value: 'needs-quote', label: 'Needs Quote', color: '#f97316' }
-  ];
+  const handleSessionSaved = (route: RouteSession) => {
+    setRoutes((previous) => [route, ...previous.filter((item) => item.id !== route.id)]);
+  };
 
-  // Check for service reminders (yearly alerts)
-  useEffect(() => {
-    const checkServiceReminders = () => {
-      const today = new Date();
-      const reminders = pins.filter(pin => {
-        if (!pin.serviceReminder || !pin.lastServiceDate) return false;
-
-        const lastService = new Date(pin.lastServiceDate);
-        const yearsSinceService = (today.getTime() - lastService.getTime()) / (1000 * 60 * 60 * 24 * 365);
-
-        return yearsSinceService >= 1;
-      });
-
-      setServiceReminders(reminders);
-    };
-
-    checkServiceReminders();
-  }, [pins]);
-
-  // Enhanced filtering to include previous clients
-  const filteredPins = pins.filter(pin => {
-    const matchesStatus = statusFilters.has(pin.status);
-    const matchesSearch = pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
-                         pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
-                         (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()));
-    const matchesPreviousClient = showPreviousClientsOnly ? pin.isPreviousClient : true;
-
-    return matchesStatus && matchesSearch && matchesPreviousClient;
-  });
+  const followUpsDue = pins.filter((pin) => pin.followUpDate && new Date(pin.followUpDate).getTime() <= Date.now()).length;
+  const interestedCount = pins.filter((pin) => ['interested', 'needs-quote'].includes(pin.status)).length;
+  const quoteCount = pins.filter((pin) => pin.status === 'needs-quote').length;
 
   if (loading) {
+    return <div className="flex min-h-screen items-center justify-center"><div className="h-12 w-12 animate-spin rounded-full border-2 border-muted border-b-primary" /></div>;
+  }
+
+  if (!isAuthenticated) return <MagicLinkLogin />;
+
+  if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-      </div>
+      <Layout title="House Tracking | BC Pressure Washing">
+        <div className="container mx-auto max-w-2xl px-4 py-16">
+          <Card>
+            <CardContent className="flex flex-col items-center gap-4 p-8 text-center">
+              <ShieldAlert className="h-10 w-10 text-destructive" />
+              <div><h1 className="text-xl font-bold">Admin access required</h1><p className="mt-1 text-sm text-muted-foreground">House Tracking contains private field and customer records.</p></div>
+              <Button variant="outline" onClick={() => void handleLogout()}><LogOut className="mr-2 h-4 w-4" />Sign out</Button>
+            </CardContent>
+          </Card>
+        </div>
+      </Layout>
     );
   }
 
-  if (!isAuthenticated) {
-    return <MagicLinkLogin />;
-  }
-
   return (
-    <Layout title="House Tracking System | BC Pressure Washing">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h1 className="text-3xl font-bold mb-2">House Tracking System</h1>
-              <p className="text-gray-600">Track visited houses, manage leads, and analyze your business performance.</p>
-            </div>
-            <Button variant="outline" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
+    <Layout title="House Tracking | BC Pressure Washing">
+      <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6">
+        <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold sm:text-3xl">House Tracking</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Map, Street View, D2D sessions, storefront crawling and saved routes in one field workspace.</p>
           </div>
-
-          {/* Service Reminders Alert */}
-          {serviceReminders.length > 0 && (
-            <div className="mt-4 p-4 bg-orange-100 border border-orange-400 rounded-lg">
-              <h3 className="font-semibold text-orange-800 mb-2">🔔 Service Reminders</h3>
-              <p className="text-orange-700 mb-2">
-                {serviceReminders.length} client(s) are due for yearly service:
-              </p>
-              <div className="space-y-1">
-                {serviceReminders.slice(0, 3).map(pin => (
-                  <div key={pin.id} className="text-sm text-orange-600">
-                    • {pin.customerName || pin.address} - Last service: {pin.lastServiceDate ? new Date(pin.lastServiceDate).toLocaleDateString() : 'Unknown'}
-                  </div>
-                ))}
-                {serviceReminders.length > 3 && (
-                  <div className="text-sm text-orange-600">
-                    ... and {serviceReminders.length - 3} more
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm" onClick={() => navigate('/crm/properties')}><Users className="mr-2 h-4 w-4" />CRM Properties</Button>
+            <Button variant="outline" size="sm" onClick={() => navigate('/crm/analytics')}><BarChart3 className="mr-2 h-4 w-4" />Main Analytics</Button>
+            <Button variant="outline" size="sm" onClick={() => void handleLogout()}><LogOut className="mr-2 h-4 w-4" />Logout</Button>
+          </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
-            <TabsTrigger value="map" className="flex items-center gap-1 text-xs sm:text-sm">
-              <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">Map View</span>
-              <span className="sm:hidden">Map</span>
-            </TabsTrigger>
-            <TabsTrigger value="routes" className="flex items-center gap-1 text-xs sm:text-sm">
-              <Navigation className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">Routes</span>
-              <span className="sm:hidden">Routes</span>
-            </TabsTrigger>
-            <TabsTrigger value="list" className="flex items-center gap-1 text-xs sm:text-sm">
-              <List className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">List View</span>
-              <span className="sm:hidden">List</span>
-            </TabsTrigger>
-            <TabsTrigger value="crm" className="flex items-center gap-1 text-xs sm:text-sm">
-              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">CRM Dashboard</span>
-              <span className="sm:hidden">CRM</span>
-            </TabsTrigger>
-            <TabsTrigger value="facebook" className="flex items-center gap-1 text-xs sm:text-sm">
-              <Facebook className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">Facebook Leads</span>
-              <span className="sm:hidden">FB</span>
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-1 text-xs sm:text-sm">
-              <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">Analytics</span>
-              <span className="sm:hidden">Stats</span>
-            </TabsTrigger>
-            <TabsTrigger value="calculator" className="flex items-center gap-1 text-xs sm:text-sm">
-              <Calculator className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">Calculator</span>
-              <span className="sm:hidden">Calc</span>
-            </TabsTrigger>
+        <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <Card><CardContent className="p-3"><div className="text-xs text-muted-foreground">Properties</div><div className="text-xl font-bold">{pins.length}</div></CardContent></Card>
+          <Card><CardContent className="p-3"><div className="text-xs text-muted-foreground">Interested</div><div className="text-xl font-bold">{interestedCount}</div></CardContent></Card>
+          <Card><CardContent className="p-3"><div className="text-xs text-muted-foreground">Needs Quote</div><div className="text-xl font-bold">{quoteCount}</div></CardContent></Card>
+          <Card><CardContent className="p-3"><div className="text-xs text-muted-foreground">Follow-ups Due</div><div className="text-xl font-bold">{followUpsDue}</div></CardContent></Card>
+        </div>
+
+        {serviceReminders.length > 0 && (
+          <div className="mb-4 flex items-start gap-2 rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm text-orange-900">
+            <Bell className="mt-0.5 h-4 w-4 shrink-0" />
+            <div><strong>{serviceReminders.length} service reminder{serviceReminders.length === 1 ? '' : 's'} due.</strong> {serviceReminders.slice(0, 3).map((pin) => pin.customerName || pin.address).join(', ')}{serviceReminders.length > 3 ? ` +${serviceReminders.length - 3} more` : ''}</div>
+          </div>
+        )}
+
+        <Card className="mb-4">
+          <CardContent className="space-y-3 p-3 sm:p-4">
+            <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input value={searchAddress} onChange={(event) => setSearchAddress(event.target.value)} placeholder="Search address, customer, business, phone, notes…" className="pl-9" />
+              </div>
+              <div className="grid grid-cols-3 gap-2 lg:w-auto">
+                <Button size="sm" variant={propertyTypeFilter === 'all' ? 'default' : 'outline'} onClick={() => setPropertyTypeFilter('all')}>All</Button>
+                <Button size="sm" variant={propertyTypeFilter === 'residential' ? 'default' : 'outline'} onClick={() => setPropertyTypeFilter('residential')}><Home className="mr-1 h-3.5 w-3.5" />Homes</Button>
+                <Button size="sm" variant={propertyTypeFilter === 'storefront' ? 'default' : 'outline'} onClick={() => setPropertyTypeFilter('storefront')}><Store className="mr-1 h-3.5 w-3.5" />Stores</Button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              {statusOptions.map((status) => (
+                <Button key={status.value} type="button" size="sm" variant={statusFilters.has(status.value) ? 'secondary' : 'outline'} onClick={() => toggleStatus(status.value)} className="h-8 text-xs">
+                  {status.label}
+                </Button>
+              ))}
+              <label className="ml-auto flex items-center gap-2 text-xs font-medium sm:text-sm">
+                <Checkbox checked={showPreviousClientsOnly} onCheckedChange={(checked) => setShowPreviousClientsOnly(Boolean(checked))} />
+                Previous clients only
+              </label>
+              <Badge variant="outline">{visibleListCount} shown</Badge>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="map" className="gap-1"><MapPin className="h-4 w-4" /><span className="hidden sm:inline">Map</span></TabsTrigger>
+            <TabsTrigger value="list" className="gap-1"><List className="h-4 w-4" /><span className="hidden sm:inline">List</span></TabsTrigger>
+            <TabsTrigger value="routes" className="gap-1"><Route className="h-4 w-4" /><span className="hidden sm:inline">Routes</span></TabsTrigger>
+            <TabsTrigger value="analytics" className="gap-1"><BarChart3 className="h-4 w-4" /><span className="hidden sm:inline">Analytics</span></TabsTrigger>
           </TabsList>
 
-          <TabsContent value="routes" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <Card>
-                  <CardContent className="p-0">
-                    <MapComponent
-                      pins={pins}
-                      routes={routes}
-                      onAddPin={handleAddPin}
-                      onUpdatePin={handleUpdatePin}
-                      onDeletePin={handleDeletePin}
-                      onUpdateRoutes={setRoutes}
-                      onClearAllPins={handleClearAllPins}
-                      highlightedPinId={highlightedPinId}
-                      onPinHover={setHighlightedPinId}
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div>
-                <RouteManager pins={pins} onUpdatePin={handleUpdatePin} />
-              </div>
+          <TabsContent value="map" className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant={canvassingMode ? 'destructive' : 'default'} onClick={() => setCanvassingMode((value) => !value)}>
+                <Navigation className="mr-2 h-4 w-4" />{canvassingMode ? 'Exit Field Mode' : 'Start Field Mode'}
+              </Button>
+              <Button variant={canvassingModeType === 'residential' ? 'default' : 'outline'} onClick={() => setCanvassingModeType('residential')} disabled={!canvassingMode}>Residential</Button>
+              <Button variant={canvassingModeType === 'storefront' ? 'default' : 'outline'} onClick={() => setCanvassingModeType('storefront')} disabled={!canvassingMode}>Storefront</Button>
+              {currentLocation && <Badge variant="secondary">GPS {currentLocation.lat.toFixed(5)}, {currentLocation.lng.toFixed(5)}</Badge>}
             </div>
-          </TabsContent>
 
-          <TabsContent value="map" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <div className="lg:col-span-3">
-                <Card>
-                  <CardContent className="p-0">
-                    <MapComponent
-                      pins={pins}
-                      routes={routes}
-                      onAddPin={handleAddPin}
-                      onUpdatePin={handleUpdatePin}
-                      onDeletePin={handleDeletePin}
-                      onUpdateRoutes={setRoutes}
-                      onClearAllPins={handleClearAllPins}
-                      highlightedPinId={highlightedPinId}
-                      onPinHover={setHighlightedPinId}
-                    />
-                  </CardContent>
-                </Card>
+            {locationError && canvassingMode && (
+              <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">GPS: {locationError}</div>
+            )}
 
-                {canvassingMode && (
-                  <div className="mt-4 flex gap-2">
-                    <Button
-                      variant={canvassingModeType === 'residential' ? 'default' : 'outline'}
-                      onClick={() => setCanvassingModeType('residential')}
-                      className="flex-1"
-                    >
-                      Residential
-                    </Button>
-                    <Button
-                      variant={canvassingModeType === 'storefront' ? 'default' : 'outline'}
-                      onClick={() => setCanvassingModeType('storefront')}
-                      className="flex-1"
-                    >
-                      Storefront
-                    </Button>
-                  </div>
-                )}
-              </div>
+            <LiveFieldTracker currentLocation={currentLocation} active={canvassingMode} />
 
-              <div className="space-y-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Settings className="w-5 h-5" />
-                      Controls
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <Label htmlFor="search">Search Address</Label>
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <Input
-                          id="search"
-                          value={searchAddress}
-                          onChange={(e) => setSearchAddress(e.target.value)}
-                          placeholder="Search addresses..."
-                          className="pl-10"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label className="flex items-center gap-2 mb-3">
-                        <Filter className="w-4 h-4" />
-                        Filter by Status
-                      </Label>
-                      <div className="space-y-2">
-                        {statusOptions.map((status) => (
-                          <div key={status.value} className="flex items-center space-x-2">
-                            <Checkbox
-                              id={status.value}
-                              checked={statusFilters.has(status.value)}
-                              onCheckedChange={(checked) =>
-                                handleStatusFilterChange(status.value, checked as boolean)
-                              }
-                            />
-                            <label
-                              htmlFor={status.value}
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
-                            >
-                              <div
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: status.color }}
-                              ></div>
-                              {status.label}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Previous Client Filter */}
-                    <div className="pt-4 border-t">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="previousClients"
-                          checked={showPreviousClientsOnly}
-                          onCheckedChange={(checked) => setShowPreviousClientsOnly(checked as boolean)}
-                        />
-                        <label
-                          htmlFor="previousClients"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Show Previous Clients Only
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t">
-                      <Button
-                        variant={canvassingMode ? 'destructive' : 'default'}
-                        onClick={() => setCanvassingMode(!canvassingMode)}
-                        className="w-full"
-                      >
-                        {canvassingMode ? 'Exit Canvassing' : 'Start Canvassing'}
-                      </Button>
-                    </div>
-
-                    <div className="pt-4 border-t">
-                      <div className="text-sm text-muted-foreground">
-                        <p><strong>Total Pins:</strong> {pins.length}</p>
-                        <p><strong>Filtered:</strong> {filteredPins.length}</p>
-                        <p><strong>Storefronts:</strong> {pins.filter(p => p.isStorefront).length}</p>
-                        <p><strong>Previous Clients:</strong> {pins.filter(p => p.isPreviousClient).length}</p>
-                        <p><strong>Service Reminders:</strong> {serviceReminders.length}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+            <Card><CardContent className="p-0"><MapComponent pins={pins} routes={routes} onAddPin={handleAddPin} onUpdatePin={handleUpdatePin} onDeletePin={handleDeletePin} onUpdateRoutes={setRoutes} onClearAllPins={handleClearAllPins} highlightedPinId={highlightedPinId} onPinHover={setHighlightedPinId} /></CardContent></Card>
           </TabsContent>
 
           <TabsContent value="list">
             <PinList
-              pins={filteredPins}
+              pins={typeFilteredPins}
               highlightedPinId={highlightedPinId}
               editingPin={editingPin}
               statusFilters={statusFilters}
               searchAddress={searchAddress}
-              onSelectPin={handleSelectPin}
-              onEditPin={handleEditPin}
+              onSelectPin={(pin) => { setHighlightedPinId(pin.id); setActiveTab('map'); }}
+              onEditPin={setEditingPin}
               onDeletePin={handleDeletePin}
-              onOpenStreetView={handleOpenStreetView}
+              onOpenStreetView={setStreetViewPin}
               EditPinForm={EditPinForm}
-              onSavePin={handleSavePin}
-              onCancelEdit={handleCancelEdit}
-              onSelectPersonalCalc={handleOpenPersonalCalc}
+              onSavePin={(pinId, updates) => { handleUpdatePin(pinId, updates); setEditingPin(null); }}
+              onCancelEdit={() => setEditingPin(null)}
+              onSelectPersonalCalc={setPersonalCalcPin}
             />
           </TabsContent>
 
-          <TabsContent value="crm">
-            <div className="space-y-6">
-              <div className="mb-4">
-                <h2 className="text-2xl font-bold mb-2">CRM Dashboard</h2>
-                <p className="text-muted-foreground">Manage properties, canvassing sessions, and team analytics</p>
-              </div>
-
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Canvasser Mode Card */}
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/canvasser')}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <Users className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle>Canvasser Mode</CardTitle>
-                    <CardDescription>Track door-to-door visits with GPS</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" variant="outline">
-                      Start Canvassing
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* Property Capture Card */}
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/property-capture')}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <MapPin className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle>Property Capture</CardTitle>
-                    <CardDescription>Add properties with address lookup</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" variant="outline">
-                      Add Property
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* View All Properties Card */}
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/properties')}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <List className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle>View Properties</CardTitle>
-                    <CardDescription>Browse all captured properties</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" variant="outline">
-                      View All
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* Map View Card */}
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/map')}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <MapPin className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle>Interactive Map</CardTitle>
-                    <CardDescription>Visualize properties on map</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" variant="outline">
-                      Open Map
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* Analytics Card */}
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/analytics')}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <BarChart3 className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle>CRM Analytics</CardTitle>
-                    <CardDescription>Performance metrics & insights</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" variant="outline">
-                      View Dashboard
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* Route History Card */}
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/routes')}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <Navigation className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle>Route History</CardTitle>
-                    <CardDescription>Review canvassing sessions</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" variant="outline">
-                      View Routes
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
+          <TabsContent value="routes" className="space-y-4">
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
+              <Card><CardContent className="p-0"><MapComponent pins={pins} routes={routes} onAddPin={handleAddPin} onUpdatePin={handleUpdatePin} onDeletePin={handleDeletePin} onUpdateRoutes={setRoutes} onClearAllPins={handleClearAllPins} highlightedPinId={highlightedPinId} onPinHover={setHighlightedPinId} /></CardContent></Card>
+              <RouteManager pins={pins} onUpdatePin={handleUpdatePin} onRouteSaved={handleSessionSaved} />
             </div>
+
+            <Card>
+              <CardHeader><CardTitle className="flex items-center gap-2"><Route className="h-5 w-5" />Saved Routes ({routes.length})</CardTitle></CardHeader>
+              <CardContent className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+                {[...routes].sort((a, b) => new Date(b.updatedAt || b.endTime || b.startTime).getTime() - new Date(a.updatedAt || a.endTime || a.startTime).getTime()).slice(0, 30).map((route) => (
+                  <div key={route.id} className="rounded-lg border p-3">
+                    <div className="flex items-start justify-between gap-2"><div className="font-medium">{route.name}</div>{route.id.startsWith('auto-street:') && <Badge variant="secondary">Auto 5+</Badge>}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{route.homesVisited} stops{route.distance ? ` · ${(route.distance / 1000).toFixed(1)} km` : ''}{route.duration ? ` · ${Math.round(route.duration / 60)} min` : ''}</div>
+                  </div>
+                ))}
+                {routes.length === 0 && <p className="text-sm text-muted-foreground">No saved routes yet. Street routes appear automatically after 5 eligible pins on the same street.</p>}
+              </CardContent>
+            </Card>
           </TabsContent>
 
-          <TabsContent value="facebook">
-            <FacebookLeadsPanel
-              pins={pins}
-              onUpdatePin={handleUpdatePin}
-              onCreatePin={handleAddPin}
-            />
-          </TabsContent>
-
-          <TabsContent value="analytics">
-            <AnalyticsDashboard pins={pins} />
-          </TabsContent>
-
-          <TabsContent value="calculator">
-            <PersonalCalculator
-              pins={pins}
-              selectedPin={personalCalcPin}
-              onUpdatePin={handleUpdatePin}
-              onClose={() => setPersonalCalcPin(null)}
-            />
-          </TabsContent>
+          <TabsContent value="analytics"><AnalyticsDashboard pins={pins} /></TabsContent>
         </Tabs>
 
-        {/* Dialogs */}
-        {streetViewPin && (
-          <StreetViewDialog
-            pin={streetViewPin}
-            onClose={() => setStreetViewPin(null)}
-          />
-        )}
-
-        {/* Canvassing Mode Toggle */}
-        {activeTab === 'map' && (
-          <div className="fixed top-20 right-4 z-40">
-            <Button
-              onClick={() => setCanvassingMode(!canvassingMode)}
-              variant={canvassingMode ? 'default' : 'outline'}
-              className="gap-2 shadow-lg"
-            >
-              <Navigation className="w-4 h-4" />
-              {canvassingMode ? 'Exit Canvassing' : 'Start Canvassing'}
-            </Button>
+        {personalCalcPin && (
+          <div className="mt-4">
+            <PersonalCalculator pins={pins} selectedPin={personalCalcPin} onUpdatePin={handleUpdatePin} onClose={() => setPersonalCalcPin(null)} />
           </div>
         )}
 
-        {/* Canvassing Mode UI */}
+        {streetViewPin && <StreetViewDialog pin={streetViewPin} onClose={() => setStreetViewPin(null)} />}
+
         {canvassingMode && (
           <CanvassingMode
-            onQuickMark={handleQuickMarkProperty}
+            onQuickMark={(pin) => { handleAddPin(pin); setHighlightedPinId(pin.id); }}
+            onUpdatePin={handleUpdatePin}
+            onSessionSaved={handleSessionSaved}
             currentLocation={currentLocation}
             activePin={selectedPin}
             mode={canvassingModeType}
