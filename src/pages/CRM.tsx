@@ -5,7 +5,7 @@ import { MagicLinkLogin } from '@/components/auth/MagicLinkLogin';
 import { WebsiteSpeedTest } from '@/components/admin/WebsiteSpeedTest';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MapPin, Users, FileText, LogOut, BarChart3, Navigation, PhoneCall, Video } from 'lucide-react';
+import { MapPin, Users, FileText, LogOut, BarChart3, Navigation, PhoneCall, ShieldCheck, Video } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CRM = () => {
@@ -110,6 +110,19 @@ const CRM = () => {
             </CardHeader>
             <CardContent>
               <Button className="w-full" variant="outline">Open Call Desk</Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/outbound-consent')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <ShieldCheck className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Outbound Consent</CardTitle>
+              <CardDescription>Record SMS and monthly AI-call permission, see what is due, and manage opt-outs without mixing the two consent types.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">Manage Consent</Button>
             </CardContent>
           </Card>
 
