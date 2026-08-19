@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { HousePin } from '@/components/house-tracking/types';
-import { upsertD2DCloudPin } from '@/utils/d2dCloud';
+import { ensureD2DPinUpdatedAt, upsertD2DCloudPin } from '@/utils/d2dCloud';
 import { toast } from 'sonner';
 
 interface OfflineAction {
@@ -22,14 +22,19 @@ const readPendingActions = (): OfflineAction[] => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     const parsed = stored ? JSON.parse(stored) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((action) => ({
+      ...action,
+      pin: ensureD2DPinUpdatedAt(action.pin as HousePin),
+    }));
   } catch (error) {
     console.error('Failed to load pending canvassing actions:', error);
     return [];
   }
 };
 
-const saveLocalPin = (pin: HousePin) => {
+const saveLocalPin = (rawPin: HousePin) => {
+  const pin = ensureD2DPinUpdatedAt(rawPin);
   try {
     const stored = localStorage.getItem(LOCAL_PINS_KEY);
     const pins: HousePin[] = stored ? JSON.parse(stored) : [];
@@ -59,7 +64,8 @@ export const useOfflineCanvassing = () => {
     }
   }, []);
 
-  const queueAction = useCallback((pin: HousePin, type: OfflineAction['type'] = 'create') => {
+  const queueAction = useCallback((rawPin: HousePin, type: OfflineAction['type'] = 'create') => {
+    const pin = ensureD2DPinUpdatedAt(rawPin);
     const existing = pendingRef.current.filter((action) => action.pin.id !== pin.id);
     const next: OfflineAction[] = [
       ...existing,
@@ -86,7 +92,7 @@ export const useOfflineCanvassing = () => {
     try {
       for (const action of actions) {
         try {
-          await upsertD2DCloudPin(action.pin);
+          await upsertD2DCloudPin(ensureD2DPinUpdatedAt(action.pin));
           synced += 1;
         } catch (error) {
           console.error('Failed to sync canvassing action:', error);
@@ -132,7 +138,9 @@ export const useOfflineCanvassing = () => {
     try {
       const stored = localStorage.getItem(LOCAL_PINS_KEY);
       const parsed = stored ? JSON.parse(stored) : [];
-      return Array.isArray(parsed) ? parsed : [];
+      return Array.isArray(parsed)
+        ? parsed.map((pin) => ensureD2DPinUpdatedAt(pin as HousePin))
+        : [];
     } catch (error) {
       console.error('Failed to read local canvassing pins:', error);
       return [];
@@ -147,6 +155,7 @@ export const useOfflineCanvassing = () => {
     notes?: string,
     extra?: Partial<HousePin>
   ): Promise<QuickMarkResult> => {
+    const now = new Date().toISOString();
     const pin: HousePin = {
       id: `pin_${Date.now()}_${Math.random().toString(36).slice(2)}`,
       lat,
@@ -154,7 +163,8 @@ export const useOfflineCanvassing = () => {
       address,
       status,
       notes: notes || '',
-      dateAdded: new Date().toISOString(),
+      dateAdded: now,
+      updatedAt: now,
       leadSource: 'door-to-door',
       ...extra,
     };
