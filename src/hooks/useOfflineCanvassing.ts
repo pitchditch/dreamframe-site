@@ -144,7 +144,8 @@ export const useOfflineCanvassing = () => {
     lng: number,
     address: string,
     status: HousePin['status'],
-    notes?: string
+    notes?: string,
+    extra?: Partial<HousePin>
   ): Promise<QuickMarkResult> => {
     const pin: HousePin = {
       id: `pin_${Date.now()}_${Math.random().toString(36).slice(2)}`,
@@ -155,6 +156,7 @@ export const useOfflineCanvassing = () => {
       notes: notes || '',
       dateAdded: new Date().toISOString(),
       leadSource: 'door-to-door',
+      ...extra,
     };
 
     saveLocalPin(pin);
