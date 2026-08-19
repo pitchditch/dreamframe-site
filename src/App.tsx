@@ -28,7 +28,7 @@ const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
 const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
 const PropertyDetail = lazy(() => import('./pages/crm/PropertyDetail'));
 const MapView = lazy(() => import('./pages/crm/MapView'));
-const Analytics = lazy(() => import('./pages/crm/Analytics'));
+const Analytics = lazy(() => import('./pages/crm/AnalyticsEnhanced'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const Clients = lazy(() => import('./pages/crm/Clients'));
 const CallDesk = lazy(() => import('./pages/crm/CallDesk'));
