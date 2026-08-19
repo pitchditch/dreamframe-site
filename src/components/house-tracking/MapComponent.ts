@@ -163,9 +163,9 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
     });
   }, [props.onUpdateRoutes]);
 
-  const refreshRoutes = useCallback(async () => {
+  const refreshRoutes = useCallback(async (syncAuto = true) => {
     if (!navigator.onLine) return;
-    const routeState = await loadD2DCloudRouteState();
+    const routeState = await loadD2DCloudRouteState({ syncAuto });
     if (mountedRef.current) mergeCloudRoutes(routeState.routes, routeState.tombstones);
   }, [mergeCloudRoutes]);
 
@@ -260,7 +260,7 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
         previousPinsRef.current = new Map(Array.from(localById.values()).map((pin) => [pin.id, trackedPin(pin)]));
 
         try {
-          await refreshRoutes();
+          await refreshRoutes(true);
         } catch (error) {
           console.error('Could not hydrate D2D cloud routes:', error);
         }
@@ -272,7 +272,8 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
               await tombstoneD2DCloudPins(queued);
               saveDeletionQueue([]);
             }
-            await flushQueuedD2DAutoStopMutations();
+            const autoFlush = await flushQueuedD2DAutoStopMutations();
+            if (autoFlush.remaining > 0) throw new Error(`${autoFlush.remaining} D2D stop change(s) are still pending`);
           } catch (error) {
             console.error('Could not flush D2D offline queues:', error);
             setD2DSyncError(error);
@@ -341,10 +342,11 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
             await tombstoneD2DCloudPins(deletionQueue);
             saveDeletionQueue([]);
           }
-          await flushQueuedD2DAutoStopMutations();
+          const autoFlush = await flushQueuedD2DAutoStopMutations();
+          if (autoFlush.remaining > 0) throw new Error(`${autoFlush.remaining} D2D stop change(s) are still pending`);
           await upsertD2DCloudPins(props.pins.map(ensureD2DPinUpdatedAt));
           await upsertD2DCloudRoutes(props.routes.map(ensureD2DRouteUpdatedAt));
-          await refreshRoutes();
+          await refreshRoutes(true);
           clearD2DPending();
         } catch (error) {
           console.error('D2D cloud sync failed:', error);
@@ -365,7 +367,9 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
     let unsubscribe = () => undefined;
 
     void subscribeD2DCloudRouteChanges(() => {
-      if (!cancelled) void refreshRoutes().catch((error) => console.error('Could not refresh realtime D2D routes:', error));
+      // The Realtime row is already the result of a source/projection write. Read it
+      // without projecting again, otherwise every event would manufacture another event.
+      if (!cancelled) void refreshRoutes(false).catch((error) => console.error('Could not refresh realtime D2D routes:', error));
     })
       .then((cleanup) => {
         if (cancelled) cleanup();
