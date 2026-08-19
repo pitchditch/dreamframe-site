@@ -3,17 +3,18 @@
 -- current House Tracking UI actually writes.
 
 alter table public.properties
+  add column if not exists d2d_user_id uuid,
   add column if not exists d2d_client_pin_id text,
   add column if not exists d2d_identity_key text,
   add column if not exists d2d_is_storefront boolean not null default false;
 
-create unique index if not exists properties_d2d_client_pin_uidx
-  on public.properties (d2d_client_pin_id)
-  where d2d_client_pin_id is not null;
-
 create unique index if not exists properties_d2d_identity_uidx
-  on public.properties (d2d_identity_key)
-  where d2d_identity_key is not null;
+  on public.properties (d2d_user_id, d2d_identity_key)
+  where d2d_user_id is not null and d2d_identity_key is not null;
+
+create index if not exists properties_d2d_client_pin_idx
+  on public.properties (d2d_user_id, d2d_client_pin_id)
+  where d2d_user_id is not null and d2d_client_pin_id is not null;
 
 create or replace function public.sync_d2d_field_pin_to_property()
 returns trigger
@@ -29,8 +30,8 @@ declare
 begin
   if tg_op = 'DELETE' then
     delete from public.properties
-    where d2d_client_pin_id = old.client_pin_id
-       or d2d_identity_key = old.identity_key;
+    where d2d_user_id = old.user_id
+      and (d2d_client_pin_id = old.client_pin_id or d2d_identity_key = old.identity_key);
     return old;
   end if;
 
@@ -38,8 +39,8 @@ begin
 
   if v_row.deleted_at is not null then
     delete from public.properties
-    where d2d_client_pin_id = v_row.client_pin_id
-       or d2d_identity_key = v_row.identity_key;
+    where d2d_user_id = v_row.user_id
+      and (d2d_client_pin_id = v_row.client_pin_id or d2d_identity_key = v_row.identity_key);
     return new;
   end if;
 
@@ -74,6 +75,7 @@ begin
     status,
     created_at,
     updated_at,
+    d2d_user_id,
     d2d_client_pin_id,
     d2d_identity_key,
     d2d_is_storefront
@@ -99,13 +101,15 @@ begin
     coalesce(nullif(v_row.lead_source, ''), 'door-to-door'),
     coalesce(v_row.pin_data->>'notes', ''),
     v_row.status,
-    coalesce((v_row.pin_data->>'dateAdded')::timestamptz, v_row.created_at, now()),
+    coalesce(nullif(v_row.pin_data->>'dateAdded', '')::timestamptz, v_row.created_at, now()),
     v_updated,
+    v_row.user_id,
     v_row.client_pin_id,
     v_row.identity_key,
     v_row.is_storefront
   )
-  on conflict (d2d_client_pin_id) where d2d_client_pin_id is not null
+  on conflict (d2d_user_id, d2d_identity_key)
+  where d2d_user_id is not null and d2d_identity_key is not null
   do update set
     address_line1 = excluded.address_line1,
     city = excluded.city,
@@ -129,7 +133,7 @@ begin
     notes = excluded.notes,
     status = excluded.status,
     updated_at = excluded.updated_at,
-    d2d_identity_key = excluded.d2d_identity_key,
+    d2d_client_pin_id = excluded.d2d_client_pin_id,
     d2d_is_storefront = excluded.d2d_is_storefront;
 
   return new;
