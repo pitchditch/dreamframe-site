@@ -33,7 +33,8 @@ const Analytics = lazy(() => import('./pages/crm/AnalyticsCommandCenter'));
 const WebsiteAnalytics = lazy(() => import('./pages/crm/AnalyticsEnhanced'));
 const SEO = lazy(() => import('./pages/crm/SEO'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
-const Clients = lazy(() => import('./pages/crm/Clients'));
+const ClientRoute = lazy(() => import('./pages/crm/ClientRoute'));
+const Quotes = lazy(() => import('./pages/crm/Quotes'));
 const CallDesk = lazy(() => import('./pages/crm/CallDesk'));
 const OutboundConsent = lazy(() => import('./pages/crm/OutboundConsent'));
 const VirtualEstimate = lazy(() => import('./pages/VirtualEstimate'));
@@ -84,7 +85,12 @@ function App() {
             <Route path="/crm/analytics/website" element={<WebsiteAnalytics />} />
             <Route path="/crm/seo" element={<SEO />} />
             <Route path="/crm/routes" element={<RouteHistory />} />
-            <Route path="/crm/clients" element={<Clients />} />
+            <Route path="/crm/clients" element={<ClientRoute />} />
+            <Route path="/crm/quotes" element={<Quotes initialTab="quotes" />} />
+            <Route path="/crm/follow-ups" element={<Quotes initialTab="followups" />} />
+            <Route path="/crm/invoices" element={<Quotes initialTab="finance" />} />
+            <Route path="/crm/receipts" element={<Quotes initialTab="finance" />} />
+            <Route path="/crm/plans" element={<Quotes initialTab="plans" />} />
             <Route path="/crm/call-desk" element={<CallDesk />} />
             <Route path="/crm/outbound-consent" element={<OutboundConsent />} />
             <Route path="/crm/virtual-estimates" element={<VirtualEstimateDesk />} />
