@@ -71,4 +71,6 @@ export interface RouteSession {
   homesVisited: number;
   color: string;
   isActive: boolean;
+  /** Client-side route revision timestamp used for cross-device cloud sync. */
+  updatedAt?: string;
 }
