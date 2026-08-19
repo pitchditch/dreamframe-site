@@ -30,6 +30,8 @@ const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const Clients = lazy(() => import('./pages/crm/Clients'));
 const CallDesk = lazy(() => import('./pages/crm/CallDesk'));
 const VirtualEstimate = lazy(() => import('./pages/VirtualEstimate'));
+const VirtualEstimateDesk = lazy(() => import('./pages/VirtualEstimateDesk'));
+const VirtualEstimateHost = lazy(() => import('./pages/VirtualEstimateHost'));
 
 // Service pages
 const WindowCleaning = lazy(() => import('./pages/WindowCleaning'));
@@ -66,6 +68,8 @@ function App() {
             <Route path="/crm/routes" element={<RouteHistory />} />
             <Route path="/crm/clients" element={<Clients />} />
             <Route path="/crm/call-desk" element={<CallDesk />} />
+            <Route path="/crm/virtual-estimates" element={<VirtualEstimateDesk />} />
+            <Route path="/crm/virtual-estimate/:sessionId" element={<VirtualEstimateHost />} />
 
             {/* Service Routes */}
             <Route path="/services/window-cleaning" element={<WindowCleaning />} />
