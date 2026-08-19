@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { MagicLinkLogin } from '@/components/auth/MagicLinkLogin';
+import { PlanEditor } from '@/components/crm/PlanEditor';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -651,7 +652,7 @@ const Quotes = ({ initialTab = 'quotes' as WorkspaceTab }) => {
           </TabsContent>
 
           <TabsContent value="plans" className="mt-4 space-y-3">
-            <Card><CardContent className="p-4 text-sm text-muted-foreground">Templates define the offer. Customer plans are managed here. Legacy anonymous calculator plans stay unlinked instead of becoming fake clients.</CardContent></Card>
+            <Card><CardContent className="p-4 text-sm text-muted-foreground">Templates define the offer. Customer plans are managed here. Edit + preview shows the customer-facing plan live before you save.</CardContent></Card>
             {plans.length === 0 ? (
               <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No customer plans yet.</CardContent></Card>
             ) : plans.map((plan) => {
@@ -674,9 +675,12 @@ const Quotes = ({ initialTab = 'quotes' as WorkspaceTab }) => {
                       </div>
                       <div><p className="text-xs text-muted-foreground">Recurring</p><p className="font-semibold">{money(plan.recurring_amount)}</p></div>
                       <div className="space-y-1"><p className="text-xs text-muted-foreground">Next service</p><Input type="date" defaultValue={plan.next_service_date || ''} onBlur={(event) => { const value = event.target.value || null; if (value !== plan.next_service_date) void updatePlan(plan, { next_service_date: value }, value ? 'Next service updated' : 'Next service cleared'); }} /></div>
-                      <select value={plan.status} disabled={savingId === plan.id} onChange={(event) => void updatePlan(plan, { status: event.target.value }, `Plan marked ${event.target.value}`)} className="h-9 rounded-md border bg-background px-2 text-sm">
-                        {PLAN_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}
-                      </select>
+                      <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+                        <select value={plan.status} disabled={savingId === plan.id} onChange={(event) => void updatePlan(plan, { status: event.target.value }, `Plan marked ${event.target.value}`)} className="h-9 rounded-md border bg-background px-2 text-sm">
+                          {PLAN_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}
+                        </select>
+                        <PlanEditor plan={plan} onSaved={() => loadWorkspace(true)} />
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
