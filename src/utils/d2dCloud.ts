@@ -28,6 +28,16 @@ export interface D2DCloudState {
   tombstones: D2DCloudTombstone[];
 }
 
+export interface D2DCloudRouteTombstone {
+  clientRouteId: string;
+  updatedAt: string;
+}
+
+export interface D2DCloudRouteState {
+  routes: RouteSession[];
+  tombstones: D2DCloudRouteTombstone[];
+}
+
 const normalizeIdentityText = (value: unknown) =>
   String(value || '')
     .toLowerCase()
@@ -215,7 +225,7 @@ export const upsertD2DCloudRoutes = async (routes: RouteSession[]) => {
   if (error) throw error;
 };
 
-export const loadD2DCloudRoutes = async (): Promise<RouteSession[]> => {
+export const loadD2DCloudRouteState = async (): Promise<D2DCloudRouteState> => {
   const userId = await getAuthenticatedUserId();
   const client = supabase as any;
 
@@ -227,20 +237,36 @@ export const loadD2DCloudRoutes = async (): Promise<RouteSession[]> => {
     .from('d2d_field_routes')
     .select('client_route_id,route_data,client_updated_at,deleted_at')
     .eq('user_id', userId)
-    .is('deleted_at', null)
     .order('client_updated_at', { ascending: true });
   if (error) throw error;
 
-  return (data || [])
-    .map((row: any) => {
-      if (!row?.route_data || typeof row.route_data !== 'object') return null;
-      return {
-        ...row.route_data,
-        id: String(row.client_route_id || row.route_data.id),
-        updatedAt: safeIso(row.client_updated_at),
-      } as RouteSession;
-    })
-    .filter((route: RouteSession | null): route is RouteSession => Boolean(route));
+  const routes: RouteSession[] = [];
+  const tombstones: D2DCloudRouteTombstone[] = [];
+
+  for (const row of data || []) {
+    const routeId = String(row?.client_route_id || '');
+    const updatedAt = safeIso(row?.client_updated_at);
+    if (!routeId) continue;
+
+    if (row?.deleted_at) {
+      tombstones.push({ clientRouteId: routeId, updatedAt });
+      continue;
+    }
+
+    if (!row?.route_data || typeof row.route_data !== 'object') continue;
+    routes.push({
+      ...row.route_data,
+      id: routeId || String(row.route_data.id),
+      updatedAt,
+    } as RouteSession);
+  }
+
+  return { routes, tombstones };
+};
+
+export const loadD2DCloudRoutes = async (): Promise<RouteSession[]> => {
+  const state = await loadD2DCloudRouteState();
+  return state.routes;
 };
 
 export const saveD2DCrawlSession = async <TCandidate>(snapshot: D2DCrawlSnapshot<TCandidate>) => {
