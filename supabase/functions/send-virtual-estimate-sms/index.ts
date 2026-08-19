@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const PUBLIC_SITE_ORIGIN = "https://www.bcpressurewashing.ca";
+const PUBLIC_SITE_ORIGIN = "https://bcpressurewashing.ca";
 const SESSION_PATH_PATTERN = /^\/virtual-estimate\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\/?$/i;
 
 const json = (body: Record<string, unknown>, status = 200) =>
@@ -59,6 +59,13 @@ const canonicalizeSessionUrl = (value: unknown) => {
   return `${PUBLIC_SITE_ORIGIN}${url.pathname.replace(/\/$/, "")}${url.search}`;
 };
 
+const getSessionIdFromUrl = (sessionUrl: string) => {
+  const url = new URL(sessionUrl);
+  const [, route, sessionId] = url.pathname.split("/");
+  if (route !== "virtual-estimate" || !sessionId) throw new Error("Invalid virtual estimate session URL");
+  return sessionId;
+};
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -70,6 +77,8 @@ const handler = async (req: Request): Promise<Response> => {
     const to = formatNorthAmericanPhone(customerPhone);
     const normalizedEmail = normalizeEmail(customerEmail);
     const safeSessionUrl = canonicalizeSessionUrl(sessionUrl);
+    const sessionId = getSessionIdFromUrl(safeSessionUrl);
+    const adminHostUrl = `${PUBLIC_SITE_ORIGIN}/crm/virtual-estimate/${sessionId}`;
     const displayName = typeof customerName === "string"
       ? customerName.replace(/[\r\n]+/g, " ").trim().slice(0, 120)
       : "";
@@ -169,7 +178,7 @@ const handler = async (req: Request): Promise<Response> => {
       try {
         const safeName = escapeHtml(displayName || "Unknown");
         const safePhone = escapeHtml(customerPhone);
-        const safeUrl = escapeHtml(safeSessionUrl);
+        const safeAdminUrl = escapeHtml(adminHostUrl);
         const emailResponse = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
@@ -180,7 +189,7 @@ const handler = async (req: Request): Promise<Response> => {
             from: "BC Pressure Washing <quotes@bcpressurewashing.ca>",
             to: ["jaydenf3800@gmail.com"],
             subject: `New Virtual Estimate - ${displayName || "New Customer"} (${customerPhone})`,
-            html: `<h2>New Virtual Estimate</h2><p><strong>Customer:</strong> ${safeName}</p><p><strong>Phone:</strong> <a href="tel:${safePhone}">${safePhone}</a></p><p><a href="${safeUrl}">Join Virtual Estimate</a></p>`,
+            html: `<h2>New Virtual Estimate</h2><p><strong>Customer:</strong> ${safeName}</p><p><strong>Phone:</strong> <a href="tel:${safePhone}">${safePhone}</a></p><p><a href="${safeAdminUrl}">Open Host Call</a></p>`,
           }),
         });
         adminEmailSent = emailResponse.ok;
@@ -203,6 +212,7 @@ const handler = async (req: Request): Promise<Response> => {
       messageStatus: typeof twilioPayload.status === "string" ? twilioPayload.status : null,
       customerEmailId,
       sessionUrl: safeSessionUrl,
+      adminHostUrl,
     });
   } catch (error) {
     console.error("Virtual estimate invite error", error);
