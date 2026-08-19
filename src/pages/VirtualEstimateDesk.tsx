@@ -25,6 +25,17 @@ interface InviteResponse {
 }
 
 const emptyInvite = { customerName: '', customerPhone: '', customerEmail: '', address: '' };
+const LIVE_INVITE_ORIGIN = 'https://dreamframe-site.vercel.app';
+
+const toLiveInviteUrl = (value?: string) => {
+  if (!value) return '';
+  try {
+    const url = new URL(value);
+    return `${LIVE_INVITE_ORIGIN}${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return value;
+  }
+};
 
 const VirtualEstimateDesk = () => {
   const [sessions, setSessions] = useState<DeskSession[]>([]);
@@ -80,10 +91,11 @@ const VirtualEstimateDesk = () => {
     setLatestInviteUrl('');
     try {
       const result = await runInviteAction({ action: 'admin_create', ...invite, send: true });
-      setLatestInviteUrl(result.inviteUrl || '');
+      const liveUrl = toLiveInviteUrl(result.inviteUrl);
+      setLatestInviteUrl(liveUrl);
       setInviteNotice(result.sent
-        ? 'Invite created and sent. The customer link is on bcpressurewashing.ca.'
-        : `Invite created. ${result.delivery?.error || 'Delivery was not confirmed — copy the secure link below.'}`);
+        ? 'Invite created and sent with the secure live Virtual Estimate link.'
+        : `Invite created. ${result.delivery?.error || 'Delivery was not confirmed — copy the secure live link below.'}`);
       setInvite(emptyInvite);
       await load(false);
     } catch (inviteError) {
@@ -98,10 +110,11 @@ const VirtualEstimateDesk = () => {
     setInviteNotice('');
     try {
       const result = await runInviteAction({ action: 'admin_get_link', sessionId });
-      if (!result.inviteUrl) throw new Error('Customer link was not returned.');
-      await navigator.clipboard.writeText(result.inviteUrl);
-      setLatestInviteUrl(result.inviteUrl);
-      setInviteNotice('Secure customer link copied. It includes the invite token and uses bcpressurewashing.ca.');
+      const liveUrl = toLiveInviteUrl(result.inviteUrl);
+      if (!liveUrl) throw new Error('Customer link was not returned.');
+      await navigator.clipboard.writeText(liveUrl);
+      setLatestInviteUrl(liveUrl);
+      setInviteNotice('Secure customer link copied. It includes the invite token and opens the current live call app.');
     } catch (linkError) {
       setInviteNotice(linkError instanceof Error ? linkError.message : 'Could not copy the customer link.');
     } finally {
@@ -114,9 +127,9 @@ const VirtualEstimateDesk = () => {
     setInviteNotice('');
     try {
       const result = await runInviteAction({ action: 'admin_resend', sessionId });
-      setLatestInviteUrl(result.inviteUrl || '');
+      setLatestInviteUrl(toLiveInviteUrl(result.inviteUrl));
       setInviteNotice(result.sent
-        ? 'Invite resent with the correct secure bcpressurewashing.ca link.'
+        ? 'Invite resent with the correct secure live Virtual Estimate link.'
         : `Secure link generated, but delivery was not confirmed. ${result.delivery?.error || ''}`.trim());
     } catch (resendError) {
       setInviteNotice(resendError instanceof Error ? resendError.message : 'Could not resend the invite.');
@@ -141,7 +154,7 @@ const VirtualEstimateDesk = () => {
         <form onSubmit={createInvite} className="mb-6 rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
           <div className="mb-4 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10"><Plus className="h-5 w-5 text-red-400" /></div>
-            <div><h2 className="font-bold">Invite a customer</h2><p className="text-xs text-slate-400">Links are generated server-side — never from a preview URL.</p></div>
+            <div><h2 className="font-bold">Invite a customer</h2><p className="text-xs text-slate-400">Links are generated server-side and opened on the current live app.</p></div>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             <input value={invite.customerName} onChange={(e) => setInvite((v) => ({ ...v, customerName: e.target.value }))} placeholder="Customer name" className="h-11 rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm outline-none focus:border-red-500" />
