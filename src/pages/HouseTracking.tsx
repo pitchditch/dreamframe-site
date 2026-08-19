@@ -11,7 +11,8 @@ import StreetViewDialog from '../components/house-tracking/StreetViewDialog';
 import EditPinForm from '../components/house-tracking/EditPinForm';
 import CanvassingMode from '../components/house-tracking/CanvassingMode';
 import RouteManager from '../components/house-tracking/RouteManager';
-import { HousePin, RouteSession } from '../components/house-tracking/types';
+import { HousePin, NewHousePin, RouteSession } from '../components/house-tracking/types';
+import { d2dPinIdentity, ensureD2DPinUpdatedAt } from '@/utils/d2dCloud';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,13 +24,15 @@ import { useNavigate } from 'react-router-dom';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 
-const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+const makePinId = () => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return `pin_${crypto.randomUUID()}`;
+  return `pin_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+};
 
 const HouseTracking: React.FC = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [sessionTimer, setSessionTimer] = useState<NodeJS.Timeout | null>(null);
   const [pins, setPins] = useState<HousePin[]>([]);
   const [routes, setRoutes] = useState<RouteSession[]>([]);
   const [highlightedPinId, setHighlightedPinId] = useState<string | null>(null);
@@ -46,59 +49,39 @@ const HouseTracking: React.FC = () => {
   const [canvassingMode, setCanvassingMode] = useState(false);
   const [canvassingModeType, setCanvassingModeType] = useState<'residential' | 'storefront'>('residential');
 
-  // Check authentication
+  // Supabase persists and refreshes browser sessions. Do not force-log out an active
+  // field canvassing session after an arbitrary client-side timer.
   useEffect(() => {
+    let cancelled = false;
+
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session?.user) {
-        setIsAuthenticated(true);
-        
-        // Set up 30-minute auto logout
-        const timer = setTimeout(() => {
-          handleLogout();
-          toast.error('Session expired. Please login again.');
-        }, SESSION_DURATION_MS);
-        
-        setSessionTimer(timer);
-      } else {
-        setIsAuthenticated(false);
-      }
-      
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (cancelled) return;
+      if (error) console.error('House tracking auth check failed:', error);
+      setIsAuthenticated(Boolean(user));
       setLoading(false);
     };
 
-    checkAuth();
+    void checkAuth();
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        setIsAuthenticated(true);
-        toast.success('Successfully logged in! Session expires in 30 minutes.');
-        
-        // Clear any existing timer
-        if (sessionTimer) clearTimeout(sessionTimer);
-        
-        // Set new 30-minute timer
-        const timer = setTimeout(() => {
-          handleLogout();
-          toast.error('Session expired. Please login again.');
-        }, SESSION_DURATION_MS);
-        
-        setSessionTimer(timer);
-      } else if (event === 'SIGNED_OUT') {
+      if (event === 'SIGNED_OUT') {
         setIsAuthenticated(false);
+        return;
+      }
+      if (session?.user) {
+        setIsAuthenticated(true);
+        if (event === 'SIGNED_IN') toast.success('Successfully logged in!');
       }
     });
 
     return () => {
+      cancelled = true;
       subscription.unsubscribe();
-      if (sessionTimer) clearTimeout(sessionTimer);
     };
   }, []);
 
   const handleLogout = async () => {
-    if (sessionTimer) clearTimeout(sessionTimer);
     await supabase.auth.signOut();
     setIsAuthenticated(false);
     toast.success('Logged out successfully');
@@ -107,13 +90,23 @@ const HouseTracking: React.FC = () => {
   useEffect(() => {
     const savedPins = localStorage.getItem('housePins');
     const savedRoutes = localStorage.getItem('routes');
-    
+
     if (savedPins) {
-      setPins(JSON.parse(savedPins));
+      try {
+        const parsed = JSON.parse(savedPins);
+        if (Array.isArray(parsed)) setPins(parsed.map((pin) => ensureD2DPinUpdatedAt(pin as HousePin)));
+      } catch (error) {
+        console.error('Could not load saved house pins:', error);
+      }
     }
-    
+
     if (savedRoutes) {
-      setRoutes(JSON.parse(savedRoutes));
+      try {
+        const parsed = JSON.parse(savedRoutes);
+        if (Array.isArray(parsed)) setRoutes(parsed);
+      } catch (error) {
+        console.error('Could not load saved routes:', error);
+      }
     }
   }, []);
 
@@ -155,26 +148,46 @@ const HouseTracking: React.FC = () => {
     setSelectedPin(pin);
   };
 
-  const handleAddPin = (newPin: Omit<HousePin, 'id'>) => {
-    const pin: HousePin = {
+  const handleAddPin = (newPin: NewHousePin) => {
+    const now = new Date().toISOString();
+    const pin = ensureD2DPinUpdatedAt({
       ...newPin,
-      id: `pin-${Date.now()}`,
-    };
-    setPins(prev => [...prev, pin]);
+      id: newPin.id || makePinId(),
+      updatedAt: newPin.updatedAt || now,
+    } as HousePin);
+    const identity = d2dPinIdentity(pin);
+
+    setPins((previous) => {
+      const existingIndex = previous.findIndex((item) => item.id === pin.id || d2dPinIdentity(item) === identity);
+      if (existingIndex < 0) return [...previous, pin];
+
+      const existing = previous[existingIndex];
+      const existingTime = new Date(existing.updatedAt || existing.dateAdded || 0).getTime();
+      const incomingTime = new Date(pin.updatedAt || pin.dateAdded || 0).getTime();
+      if (Number.isFinite(existingTime) && Number.isFinite(incomingTime) && existingTime > incomingTime) return previous;
+
+      const next = [...previous];
+      next[existingIndex] = pin;
+      return next;
+    });
   };
 
   const handleUpdatePin = (pinId: string, updates: Partial<HousePin>) => {
-    setPins(prev => prev.map(pin => 
-      pin.id === pinId ? { ...pin, ...updates } : pin
+    setPins(prev => prev.map(pin =>
+      pin.id === pinId
+        ? { ...pin, ...updates, updatedAt: updates.updatedAt || new Date().toISOString() }
+        : pin
     ));
   };
 
   const handleDeletePin = (pinId: string) => {
     setPins(prev => prev.filter(pin => pin.id !== pinId));
+    setSelectedPin((previous) => previous?.id === pinId ? null : previous);
   };
 
   const handleClearAllPins = () => {
     setPins([]);
+    setSelectedPin(null);
     localStorage.removeItem('housePins');
   };
 
@@ -231,13 +244,13 @@ const HouseTracking: React.FC = () => {
       const today = new Date();
       const reminders = pins.filter(pin => {
         if (!pin.serviceReminder || !pin.lastServiceDate) return false;
-        
+
         const lastService = new Date(pin.lastServiceDate);
         const yearsSinceService = (today.getTime() - lastService.getTime()) / (1000 * 60 * 60 * 24 * 365);
-        
+
         return yearsSinceService >= 1;
       });
-      
+
       setServiceReminders(reminders);
     };
 
@@ -251,7 +264,7 @@ const HouseTracking: React.FC = () => {
                          pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
                          (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()));
     const matchesPreviousClient = showPreviousClientsOnly ? pin.isPreviousClient : true;
-    
+
     return matchesStatus && matchesSearch && matchesPreviousClient;
   });
 
@@ -281,7 +294,7 @@ const HouseTracking: React.FC = () => {
               Logout
             </Button>
           </div>
-          
+
           {/* Service Reminders Alert */}
           {serviceReminders.length > 0 && (
             <div className="mt-4 p-4 bg-orange-100 border border-orange-400 rounded-lg">
@@ -354,6 +367,7 @@ const HouseTracking: React.FC = () => {
                       routes={routes}
                       onAddPin={handleAddPin}
                       onUpdatePin={handleUpdatePin}
+                      onDeletePin={handleDeletePin}
                       onUpdateRoutes={setRoutes}
                       onClearAllPins={handleClearAllPins}
                       highlightedPinId={highlightedPinId}
@@ -378,6 +392,7 @@ const HouseTracking: React.FC = () => {
                       routes={routes}
                       onAddPin={handleAddPin}
                       onUpdatePin={handleUpdatePin}
+                      onDeletePin={handleDeletePin}
                       onUpdateRoutes={setRoutes}
                       onClearAllPins={handleClearAllPins}
                       highlightedPinId={highlightedPinId}
@@ -385,7 +400,7 @@ const HouseTracking: React.FC = () => {
                     />
                   </CardContent>
                 </Card>
-                
+
                 {canvassingMode && (
                   <div className="mt-4 flex gap-2">
                     <Button
@@ -405,7 +420,7 @@ const HouseTracking: React.FC = () => {
                   </div>
                 )}
               </div>
-              
+
               <div className="space-y-4">
                 <Card>
                   <CardHeader>
@@ -428,7 +443,7 @@ const HouseTracking: React.FC = () => {
                         />
                       </div>
                     </div>
-                    
+
                     <div>
                       <Label className="flex items-center gap-2 mb-3">
                         <Filter className="w-4 h-4" />
@@ -440,7 +455,7 @@ const HouseTracking: React.FC = () => {
                             <Checkbox
                               id={status.value}
                               checked={statusFilters.has(status.value)}
-                              onCheckedChange={(checked) => 
+                              onCheckedChange={(checked) =>
                                 handleStatusFilterChange(status.value, checked as boolean)
                               }
                             />
@@ -448,8 +463,8 @@ const HouseTracking: React.FC = () => {
                               htmlFor={status.value}
                               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
                             >
-                              <div 
-                                className="w-3 h-3 rounded-full" 
+                              <div
+                                className="w-3 h-3 rounded-full"
                                 style={{ backgroundColor: status.color }}
                               ></div>
                               {status.label}
@@ -458,7 +473,7 @@ const HouseTracking: React.FC = () => {
                         ))}
                       </div>
                     </div>
-                    
+
                     {/* Previous Client Filter */}
                     <div className="pt-4 border-t">
                       <div className="flex items-center space-x-2">
@@ -475,7 +490,7 @@ const HouseTracking: React.FC = () => {
                         </label>
                       </div>
                     </div>
-                    
+
                     <div className="pt-4 border-t">
                       <Button
                         variant={canvassingMode ? 'destructive' : 'default'}
@@ -485,7 +500,7 @@ const HouseTracking: React.FC = () => {
                         {canvassingMode ? 'Exit Canvassing' : 'Start Canvassing'}
                       </Button>
                     </div>
-                    
+
                     <div className="pt-4 border-t">
                       <div className="text-sm text-muted-foreground">
                         <p><strong>Total Pins:</strong> {pins.length}</p>
