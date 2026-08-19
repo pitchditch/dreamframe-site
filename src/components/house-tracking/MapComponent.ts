@@ -5,10 +5,14 @@ import {
   D2DCloudTombstone,
   d2dPinIdentity,
   d2dPinUpdatedAtMs,
+  d2dRouteUpdatedAtMs,
   ensureD2DPinUpdatedAt,
+  ensureD2DRouteUpdatedAt,
+  loadD2DCloudRoutes,
   loadD2DCloudState,
   tombstoneD2DCloudPins,
   upsertD2DCloudPins,
+  upsertD2DCloudRoutes,
 } from '@/utils/d2dCloud';
 import { toast } from 'sonner';
 
@@ -167,6 +171,26 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
           Array.from(localById.values()).map((pin) => [pin.id, trackedPin(pin)]),
         );
 
+        try {
+          const cloudRoutes = await loadD2DCloudRoutes();
+          if (!cancelled && mountedRef.current && cloudRoutes.length > 0) {
+            props.onUpdateRoutes((previous) => {
+              const next = [...previous];
+              cloudRoutes.forEach((cloudRoute) => {
+                const index = next.findIndex((route) => route.id === cloudRoute.id);
+                if (index < 0) {
+                  next.push(cloudRoute);
+                  return;
+                }
+                if (d2dRouteUpdatedAtMs(cloudRoute) > d2dRouteUpdatedAtMs(next[index])) next[index] = cloudRoute;
+              });
+              return next;
+            });
+          }
+        } catch (error) {
+          console.error('Could not hydrate D2D cloud routes:', error);
+        }
+
         if (navigator.onLine) {
           const queued = readDeletionQueue();
           if (queued.length > 0) {
@@ -229,12 +253,13 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
             saveDeletionQueue([]);
           }
           await upsertD2DCloudPins(props.pins.map(ensureD2DPinUpdatedAt));
+          await upsertD2DCloudRoutes(props.routes.map(ensureD2DRouteUpdatedAt));
         } catch (error) {
           console.error('D2D cloud sync failed:', error);
         }
       })();
     }, 350);
-  }, [props.pins, cloudReady, onlineRevision]);
+  }, [props.pins, props.routes, cloudReady, onlineRevision]);
 
   const { onDeletePin: _onDeletePin, ...mapProps } = props;
   return React.createElement(MapComponentV4, {
