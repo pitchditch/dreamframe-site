@@ -1,258 +1,110 @@
-
-import React, { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Users, MapPin, Calendar, ExternalLink } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { BarChart3, TrendingUp, MapPin, Calendar, Route, Clock, DollarSign, Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { HousePin } from './types';
+import { HousePin, RouteSession } from './types';
 import D2DReadinessCheck from './D2DReadinessCheck';
 
 interface AnalyticsDashboardProps {
   pins: HousePin[];
 }
 
+const readRoutes = (): RouteSession[] => {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('routes') || '[]');
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
 const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ pins }) => {
-  const [analytics, setAnalytics] = useState({
-    totalLeads: 0,
-    facebookLeads: 0,
-    doorToDoorLeads: 0,
-    conversionRate: 0,
-    completedJobs: 0,
-    averageLeadScore: 0
-  });
+  const routes = useMemo(readRoutes, [pins.length]);
+  const now = Date.now();
+  const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
+  const monthAgo = now - 30 * 24 * 60 * 60 * 1000;
 
-  useEffect(() => {
-    const facebookLeads = pins.filter(pin => pin.leadSource === 'facebook').length;
-    const doorToDoorLeads = pins.filter(pin => pin.leadSource === 'door-to-door').length;
-    const completedJobs = pins.filter(pin => pin.status === 'completed').length;
-    const totalLeads = pins.length;
-    
-    const leadScores = pins
-      .filter(pin => pin.leadScore)
-      .map(pin => {
-        switch (pin.leadScore) {
-          case 'high': return 3;
-          case 'medium': return 2;
-          case 'low': return 1;
-          default: return 2;
-        }
-      });
-    
-    const averageLeadScore = leadScores.length > 0 
-      ? leadScores.reduce((sum, score) => sum + score, 0) / leadScores.length
-      : 0;
+  const d2dPins = pins.filter((pin) => pin.leadSource === 'door-to-door');
+  const storefronts = d2dPins.filter((pin) => pin.isStorefront);
+  const residential = d2dPins.filter((pin) => !pin.isStorefront);
+  const interested = d2dPins.filter((pin) => ['interested', 'needs-quote', 'completed'].includes(pin.status));
+  const quoteReady = d2dPins.filter((pin) => ['needs-quote', 'completed'].includes(pin.status));
+  const completed = d2dPins.filter((pin) => pin.status === 'completed');
+  const notInterested = d2dPins.filter((pin) => pin.status === 'not-interested');
+  const followUps = pins.filter((pin) => pin.followUpDate && new Date(pin.followUpDate).getTime() <= now);
+  const revenue = pins.reduce((sum, pin) => sum + (Number(pin.jobValue) || 0), 0);
 
-    setAnalytics({
-      totalLeads,
-      facebookLeads,
-      doorToDoorLeads,
-      conversionRate: totalLeads > 0 ? (completedJobs / totalLeads) * 100 : 0,
-      completedJobs,
-      averageLeadScore
-    });
-  }, [pins]);
+  const fieldRoutes = routes.filter((route) => route.id.startsWith('field-'));
+  const routeSeconds = fieldRoutes.reduce((sum, route) => sum + (Number(route.duration) || 0), 0);
+  const routeHours = routeSeconds / 3600;
+  const recordedVisits = fieldRoutes.reduce((sum, route) => sum + (Number(route.homesVisited) || 0), 0);
+  const doorsPerHour = routeHours > 0 ? recordedVisits / routeHours : 0;
 
-  const openGoogleAnalytics = () => {
-    window.open('https://analytics.google.com/', '_blank');
-  };
+  const interestRate = d2dPins.length > 0 ? (interested.length / d2dPins.length) * 100 : 0;
+  const quoteRate = d2dPins.length > 0 ? (quoteReady.length / d2dPins.length) * 100 : 0;
+  const closeRate = quoteReady.length > 0 ? (completed.length / quoteReady.length) * 100 : 0;
 
-  const thisWeekLeads = pins.filter(pin => {
-    const pinDate = new Date(pin.dateAdded);
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    return pinDate >= weekAgo;
-  }).length;
+  const thisWeek = pins.filter((pin) => new Date(pin.dateAdded).getTime() >= weekAgo).length;
+  const thisMonth = pins.filter((pin) => new Date(pin.dateAdded).getTime() >= monthAgo).length;
 
-  const thisMonthLeads = pins.filter(pin => {
-    const pinDate = new Date(pin.dateAdded);
-    const monthAgo = new Date();
-    monthAgo.setMonth(monthAgo.getMonth() - 1);
-    return pinDate >= monthAgo;
-  }).length;
+  const statusRows = [
+    ['Visited', d2dPins.filter((pin) => pin.status === 'visited').length],
+    ['Interested', d2dPins.filter((pin) => pin.status === 'interested').length],
+    ['Needs Quote', d2dPins.filter((pin) => pin.status === 'needs-quote').length],
+    ['Not Interested', notInterested.length],
+    ['Revisit Later', d2dPins.filter((pin) => pin.status === 'revisit-later').length],
+    ['Completed', completed.length],
+  ] as const;
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div>
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-5 h-5 text-blue-600" />
-          <h2 className="text-xl font-bold">Analytics Dashboard</h2>
+          <BarChart3 className="h-5 w-5 text-primary" />
+          <h2 className="text-xl font-bold">D2D Field Analytics</h2>
         </div>
-        <Button 
-          onClick={openGoogleAnalytics}
-          className="bg-orange-500 hover:bg-orange-600 text-white flex items-center gap-2"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Open Google Analytics
-        </Button>
+        <p className="mt-1 text-sm text-muted-foreground">Field activity only. Website analytics stays in the main CRM analytics dashboard.</p>
       </div>
 
       <D2DReadinessCheck />
 
-      {/* Analytics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center justify-between text-sm font-medium">Doors<MapPin className="h-4 w-4 text-muted-foreground" /></CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{d2dPins.length}</div><p className="text-xs text-muted-foreground">{residential.length} homes · {storefronts.length} storefronts</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center justify-between text-sm font-medium">Interest rate<Target className="h-4 w-4 text-muted-foreground" /></CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{interestRate.toFixed(1)}%</div><p className="text-xs text-muted-foreground">{interested.length} interested/quote/completed</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center justify-between text-sm font-medium">Quote rate<TrendingUp className="h-4 w-4 text-muted-foreground" /></CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{quoteRate.toFixed(1)}%</div><p className="text-xs text-muted-foreground">{quoteReady.length} quote-ready/completed</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center justify-between text-sm font-medium">Close rate<DollarSign className="h-4 w-4 text-muted-foreground" /></CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{closeRate.toFixed(1)}%</div><p className="text-xs text-muted-foreground">{completed.length} completed jobs</p></CardContent></Card>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center gap-2 text-sm"><Route className="h-4 w-4" />Saved sessions</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{fieldRoutes.length}</div></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center gap-2 text-sm"><Clock className="h-4 w-4" />Field time</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{routeHours.toFixed(1)}h</div></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center gap-2 text-sm"><TrendingUp className="h-4 w-4" />Doors / hour</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{doorsPerHour.toFixed(1)}</div><p className="text-xs text-muted-foreground">From saved field sessions</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="flex items-center gap-2 text-sm"><DollarSign className="h-4 w-4" />Recorded job value</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">${revenue.toLocaleString()}</div></CardContent></Card>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{analytics.totalLeads}</div>
-            <p className="text-xs text-muted-foreground">
-              All time tracking data
-            </p>
+          <CardHeader><CardTitle>Status breakdown</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            {statusRows.map(([label, count]) => (
+              <div key={label} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
+                <span className="text-sm">{label}</span>
+                <Badge variant="secondary">{count}</Badge>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Facebook Leads</CardTitle>
-            <TrendingUp className="h-4 w-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{analytics.facebookLeads}</div>
-            <p className="text-xs text-muted-foreground">
-              {analytics.totalLeads > 0 ? Math.round((analytics.facebookLeads / analytics.totalLeads) * 100) : 0}% of total leads
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
-            <BarChart3 className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{analytics.conversionRate.toFixed(1)}%</div>
-            <p className="text-xs text-muted-foreground">
-              {analytics.completedJobs} completed jobs
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Lead Quality</CardTitle>
-            <MapPin className="h-4 w-4 text-yellow-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">{analytics.averageLeadScore.toFixed(1)}/3</div>
-            <p className="text-xs text-muted-foreground">
-              Average lead score
-            </p>
+          <CardHeader><CardTitle className="flex items-center gap-2"><Calendar className="h-4 w-4" />Activity & follow-ups</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center justify-between"><span className="text-sm">New records · 7 days</span><Badge variant="outline">{thisWeek}</Badge></div>
+            <div className="flex items-center justify-between"><span className="text-sm">New records · 30 days</span><Badge variant="outline">{thisMonth}</Badge></div>
+            <div className="flex items-center justify-between"><span className="text-sm">Follow-ups due</span><Badge variant={followUps.length > 0 ? 'destructive' : 'outline'}>{followUps.length}</Badge></div>
+            <div className="flex items-center justify-between"><span className="text-sm">Not interested</span><Badge variant="outline">{notInterested.length}</Badge></div>
           </CardContent>
         </Card>
       </div>
-
-      {/* Lead Source Breakdown */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
-            Lead Sources Breakdown
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span>Facebook Leads</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary">{analytics.facebookLeads}</Badge>
-                <span className="text-sm text-gray-500">
-                  {analytics.totalLeads > 0 ? Math.round((analytics.facebookLeads / analytics.totalLeads) * 100) : 0}%
-                </span>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span>Door-to-Door</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary">{analytics.doorToDoorLeads}</Badge>
-                <span className="text-sm text-gray-500">
-                  {analytics.totalLeads > 0 ? Math.round((analytics.doorToDoorLeads / analytics.totalLeads) * 100) : 0}%
-                </span>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-                <span>Other Sources</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary">{analytics.totalLeads - analytics.facebookLeads - analytics.doorToDoorLeads}</Badge>
-                <span className="text-sm text-gray-500">
-                  {analytics.totalLeads > 0 ? Math.round(((analytics.totalLeads - analytics.facebookLeads - analytics.doorToDoorLeads) / analytics.totalLeads) * 100) : 0}%
-                </span>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Recent Activity */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="w-5 h-5" />
-            Recent Activity
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span>This Week</span>
-              <Badge variant="outline">{thisWeekLeads} new leads</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>This Month</span>
-              <Badge variant="outline">{thisMonthLeads} new leads</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Pending Follow-ups</span>
-              <Badge variant="outline">
-                {pins.filter(pin => pin.followUpDate && new Date(pin.followUpDate) <= new Date()).length} due
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Google Analytics Integration Info */}
-      <Card className="border-orange-200">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-600">
-            <BarChart3 className="w-5 h-5" />
-            Google Analytics Integration
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <p className="text-sm text-gray-600">
-              Your website is already connected to Google Analytics. You can view detailed website traffic, 
-              conversion data, and user behavior analytics by clicking the button above.
-            </p>
-            <div className="text-sm">
-              <p><strong>What you can track in Google Analytics:</strong></p>
-              <ul className="list-disc list-inside mt-2 space-y-1 text-gray-600">
-                <li>Website visitors and page views</li>
-                <li>Form submissions and quote requests</li>
-                <li>Traffic sources (Google, Facebook, direct, etc.)</li>
-                <li>User behavior and conversion funnels</li>
-                <li>Geographic data of your visitors</li>
-              </ul>
-            </div>
-            <Badge className="bg-green-100 text-green-800">
-              ✓ Google Analytics Active
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
