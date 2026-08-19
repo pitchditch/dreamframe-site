@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.app.json",
   "include": [
+    "src/vite-env.d.ts",
     "src/components/house-tracking/MapComponent.ts",
     "src/components/house-tracking/MapComponentV4.tsx",
     "src/components/house-tracking/RouteManager.tsx",
