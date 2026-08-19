@@ -77,6 +77,20 @@ export const useVirtualEstimateCall = ({ sessionId, inviteToken = '', role }: Us
     await request('signal', { kind, payload });
   }, [request]);
 
+  const stopLocalMedia = useCallback(() => {
+    localStreamRef.current?.getTracks().forEach((track) => track.stop());
+    localStreamRef.current = null;
+    setLocalStream(null);
+    setMuted(false);
+    setCameraOff(false);
+  }, []);
+
+  const stopRemoteMedia = useCallback(() => {
+    remoteStreamRef.current?.getTracks().forEach((track) => track.stop());
+    remoteStreamRef.current = null;
+    setRemoteStream(null);
+  }, []);
+
   const updateRemoteStream = useCallback((track: MediaStreamTrack) => {
     if (!remoteStreamRef.current) remoteStreamRef.current = new MediaStream();
     if (!remoteStreamRef.current.getTracks().some((existing) => existing.id === track.id)) remoteStreamRef.current.addTrack(track);
@@ -142,9 +156,10 @@ export const useVirtualEstimateCall = ({ sessionId, inviteToken = '', role }: Us
     if (incoming.kind === 'hangup') {
       peerRef.current?.close();
       peerRef.current = null;
-      remoteStreamRef.current?.getTracks().forEach((track) => track.stop());
-      remoteStreamRef.current = null;
-      setRemoteStream(null);
+      pendingOfferRef.current = null;
+      pendingIceRef.current = [];
+      stopLocalMedia();
+      stopRemoteMedia();
       setIncomingCall(false);
       setCallState('ended');
       return;
@@ -175,7 +190,7 @@ export const useVirtualEstimateCall = ({ sessionId, inviteToken = '', role }: Us
       await flushPendingIce(peer);
       setCallState('connecting');
     }
-  }, [answerOffer, flushPendingIce, role]);
+  }, [answerOffer, flushPendingIce, role, stopLocalMedia, stopRemoteMedia]);
 
   const pollSignals = useCallback(async () => {
     if (!sessionId || processingSignalRef.current) return;
@@ -262,19 +277,13 @@ export const useVirtualEstimateCall = ({ sessionId, inviteToken = '', role }: Us
     try { await request('call_state', { state: 'ended' }); } catch { /* best effort */ }
     peerRef.current?.close();
     peerRef.current = null;
-    localStreamRef.current?.getTracks().forEach((track) => track.stop());
-    localStreamRef.current = null;
-    remoteStreamRef.current?.getTracks().forEach((track) => track.stop());
-    remoteStreamRef.current = null;
     pendingOfferRef.current = null;
     pendingIceRef.current = [];
-    setLocalStream(null);
-    setRemoteStream(null);
+    stopLocalMedia();
+    stopRemoteMedia();
     setIncomingCall(false);
-    setMuted(false);
-    setCameraOff(false);
     setCallState('ended');
-  }, [request, signal]);
+  }, [request, signal, stopLocalMedia, stopRemoteMedia]);
 
   const toggleMute = useCallback(() => {
     const audioTracks = localStreamRef.current?.getAudioTracks() || [];
