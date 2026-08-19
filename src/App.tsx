@@ -30,7 +30,7 @@ const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
 const PropertyDetail = lazy(() => import('./pages/crm/PropertyDetail'));
 const MapView = lazy(() => import('./pages/crm/MapView'));
 const Analytics = lazy(() => import('./pages/crm/AnalyticsCommandCenter'));
-const WebsiteAnalytics = lazy(() => import('./pages/crm/AnalyticsEnhanced'));
+const WebsiteAnalytics = lazy(() => import('./pages/crm/AnalyticsWebsite'));
 const SEO = lazy(() => import('./pages/crm/SEO'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const ClientRoute = lazy(() => import('./pages/crm/ClientRoute'));
