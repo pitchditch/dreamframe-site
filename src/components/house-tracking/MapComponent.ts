@@ -8,12 +8,13 @@ import {
   d2dRouteUpdatedAtMs,
   ensureD2DPinUpdatedAt,
   ensureD2DRouteUpdatedAt,
-  loadD2DCloudRoutes,
+  loadD2DCloudRouteState,
   loadD2DCloudState,
   tombstoneD2DCloudPins,
   upsertD2DCloudPins,
   upsertD2DCloudRoutes,
 } from '@/utils/d2dCloud';
+import { subscribeD2DRoutes } from '@/utils/d2dRouteBus';
 import { toast } from 'sonner';
 
 const DELETION_QUEUE_KEY = 'd2d-cloud-deletion-queue-v2';
@@ -129,6 +130,23 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
     return () => window.removeEventListener('online', handleOnline);
   }, []);
 
+  // Route creation/clearing can happen in sibling controls. Feed those changes into
+  // the same route state that the map, localStorage and cloud-sync effects already use.
+  useEffect(() => subscribeD2DRoutes(
+    (incomingRoute) => {
+      props.onUpdateRoutes((previous) => {
+        const index = previous.findIndex((route) => route.id === incomingRoute.id);
+        if (index < 0) return [...previous, incomingRoute];
+        const next = [...previous];
+        next[index] = incomingRoute;
+        return next;
+      });
+    },
+    (routeId) => {
+      props.onUpdateRoutes((previous) => previous.filter((route) => route.id !== routeId));
+    },
+  ), [props.onUpdateRoutes]);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -172,10 +190,17 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
         );
 
         try {
-          const cloudRoutes = await loadD2DCloudRoutes();
-          if (!cancelled && mountedRef.current && cloudRoutes.length > 0) {
+          const { routes: cloudRoutes, tombstones: routeTombstones } = await loadD2DCloudRouteState();
+          if (!cancelled && mountedRef.current) {
             props.onUpdateRoutes((previous) => {
-              const next = [...previous];
+              const tombstoneById = new Map(
+                routeTombstones.map((tombstone) => [tombstone.clientRouteId, toTimestamp(tombstone.updatedAt)]),
+              );
+              const next = previous.filter((route) => {
+                const deletedAt = tombstoneById.get(route.id);
+                return deletedAt === undefined || d2dRouteUpdatedAtMs(route) > deletedAt;
+              });
+
               cloudRoutes.forEach((cloudRoute) => {
                 const index = next.findIndex((route) => route.id === cloudRoute.id);
                 if (index < 0) {
