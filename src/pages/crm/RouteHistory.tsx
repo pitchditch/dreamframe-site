@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Calendar, Clock, MapPin, Navigation, Route as RouteIcon } from 'lucide-react';
 import { loadD2DCloudRouteState } from '@/utils/d2dCloud';
+import { routeProgressBreakdown } from '@/utils/d2dRouteRuntime';
 import { RouteSession } from '@/components/house-tracking/types';
 import 'leaflet/dist/leaflet.css';
 
@@ -37,8 +38,14 @@ interface UnifiedHistoryRoute {
   durationSeconds?: number;
   distanceMeters?: number;
   totalStops: number;
-  completedStops: number;
-  completionRate: number;
+  workedStops: number;
+  unvisitedStops: number;
+  interestedStops: number;
+  quoteStops: number;
+  notInterestedStops: number;
+  completedJobs: number;
+  workedRate: number;
+  successfulContacts?: number;
   status: 'planned' | 'active' | 'completed';
   path: Array<{ lat: number; lng: number }>;
 }
@@ -60,10 +67,12 @@ const sourceLabel = (source: string) => {
 };
 
 const normalizeFieldRoute = (route: RouteSession): UnifiedHistoryRoute => {
-  const totalStops = route.totalStops ?? route.stops?.length ?? route.homesVisited ?? 0;
-  const completedStops = route.completedStops ?? route.homesVisited ?? 0;
-  const completionRate = route.completionRate ?? (
-    totalStops > 0 ? Math.min(100, Math.round((completedStops / totalStops) * 100)) : 0
+  const stopMetrics = route.stops?.length ? routeProgressBreakdown(route.stops) : null;
+  const totalStops = stopMetrics?.total ?? route.totalStops ?? route.homesVisited ?? 0;
+  const workedStops = stopMetrics?.worked ?? route.workedStops ?? route.completedStops ?? route.homesVisited ?? 0;
+  const unvisitedStops = stopMetrics?.unvisited ?? Math.max(0, totalStops - workedStops);
+  const workedRate = stopMetrics?.workedRate ?? route.completionRate ?? (
+    totalStops > 0 ? Math.min(100, workedStops / totalStops * 100) : 0
   );
 
   return {
@@ -73,10 +82,15 @@ const normalizeFieldRoute = (route: RouteSession): UnifiedHistoryRoute => {
     startTime: route.startTime,
     endTime: route.endTime,
     durationSeconds: normalizeDurationSeconds(route.duration),
-    distanceMeters: route.source === 'storefront' ? route.distance : undefined,
+    distanceMeters: route.distance,
     totalStops,
-    completedStops,
-    completionRate,
+    workedStops,
+    unvisitedStops,
+    interestedStops: stopMetrics?.interested ?? route.interestedStops ?? 0,
+    quoteStops: stopMetrics?.quotes ?? route.quoteStops ?? 0,
+    notInterestedStops: stopMetrics?.notInterested ?? route.notInterestedStops ?? 0,
+    completedJobs: stopMetrics?.completedJobs ?? route.completedJobs ?? 0,
+    workedRate,
     status: route.isActive ? 'active' : route.endTime ? 'completed' : 'planned',
     path: (route.path || []).map((point) => ({ lat: point.lat, lng: point.lng })),
   };
@@ -155,22 +169,26 @@ export default function RouteHistory() {
         });
 
         ((legacySessionsResult.data || []) as LegacySession[]).forEach((session) => {
-          // If a newer unified route has the same stable id, do not duplicate it.
           if (unified.some((route) => route.id === session.id)) return;
           const sessionLocations = locationsBySession.get(session.id) || [];
           const completed = session.session_status === 'completed';
+          const totalVisits = session.total_visits || 0;
           unified.push({
             id: session.id,
             name: session.employee_name ? `${session.employee_name} canvassing` : 'Canvassing session',
             source: 'legacy-canvassing',
             startTime: session.session_start,
             endTime: session.session_end || undefined,
-            durationSeconds: session.total_duration_minutes
-              ? session.total_duration_minutes * 60
-              : undefined,
-            totalStops: session.total_visits || 0,
-            completedStops: session.total_visits || 0,
-            completionRate: completed && session.total_visits > 0 ? 100 : 0,
+            durationSeconds: session.total_duration_minutes ? session.total_duration_minutes * 60 : undefined,
+            totalStops: totalVisits,
+            workedStops: totalVisits,
+            unvisitedStops: 0,
+            interestedStops: 0,
+            quoteStops: 0,
+            notInterestedStops: 0,
+            completedJobs: 0,
+            successfulContacts: session.successful_contacts || 0,
+            workedRate: completed && totalVisits > 0 ? 100 : totalVisits > 0 ? 100 : 0,
             status: session.session_status === 'active' ? 'active' : completed ? 'completed' : 'planned',
             path: sessionLocations.map((location) => ({
               lat: Number(location.latitude),
@@ -241,91 +259,49 @@ export default function RouteHistory() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading route history...</div>
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center"><div className="text-lg">Loading route history...</div></div>;
   }
 
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-4 mb-6">
-          <Button variant="ghost" onClick={() => navigate('/house-tracking')}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to D2D
-          </Button>
+          <Button variant="ghost" onClick={() => navigate('/house-tracking')}><ArrowLeft className="h-4 w-4 mr-2" />Back to D2D</Button>
           <div className="flex items-center gap-2">
             <Navigation className="h-6 w-6 text-primary" />
-            <div>
-              <h1 className="text-3xl font-bold">Route History</h1>
-              <p className="text-sm text-muted-foreground">Auto streets, storefront routes and field sessions in one timeline.</p>
-            </div>
+            <div><h1 className="text-3xl font-bold">Route History</h1><p className="text-sm text-muted-foreground">Auto streets, storefront routes and field sessions in one timeline.</p></div>
           </div>
         </div>
 
-        <Card className="mb-6">
-          <CardContent className="p-0">
-            <div ref={mapRef} style={{ height: '400px', width: '100%' }} />
-          </CardContent>
-        </Card>
+        <Card className="mb-6"><CardContent className="p-0"><div ref={mapRef} style={{ height: '400px', width: '100%' }} /></CardContent></Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             {routes.length === 0 ? (
-              <Card className="p-8 text-center">
-                <RouteIcon className="h-10 w-10 mx-auto mb-3 text-muted-foreground" />
-                <p className="text-muted-foreground">No routes have been created yet.</p>
-                <Button className="mt-4" onClick={() => navigate('/house-tracking')}>
-                  Open D2D Map
-                </Button>
-              </Card>
+              <Card className="p-8 text-center"><RouteIcon className="h-10 w-10 mx-auto mb-3 text-muted-foreground" /><p className="text-muted-foreground">No routes have been created yet.</p><Button className="mt-4" onClick={() => navigate('/house-tracking')}>Open D2D Map</Button></Card>
             ) : routes.map((route) => (
-              <Card
-                key={route.id}
-                className={`cursor-pointer transition-all ${selectedRoute?.id === route.id ? 'ring-2 ring-primary' : 'hover:shadow-lg'}`}
-                onClick={() => setSelectedRoute(route)}
-              >
+              <Card key={route.id} className={`cursor-pointer transition-all ${selectedRoute?.id === route.id ? 'ring-2 ring-primary' : 'hover:shadow-lg'}`} onClick={() => setSelectedRoute(route)}>
                 <CardHeader>
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <CardTitle className="text-lg truncate">{route.name}</CardTitle>
-                        <Badge variant="outline">{sourceLabel(route.source)}</Badge>
-                        <Badge className={statusClass(route.status)}>{route.status}</Badge>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {new Date(route.startTime).toLocaleDateString()}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {new Date(route.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </div>
-                      </div>
+                      <div className="flex flex-wrap items-center gap-2 mb-2"><CardTitle className="text-lg truncate">{route.name}</CardTitle><Badge variant="outline">{sourceLabel(route.source)}</Badge><Badge className={statusClass(route.status)}>{route.status}</Badge></div>
+                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground"><div className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(route.startTime).toLocaleDateString()}</div><div className="flex items-center gap-1"><Clock className="h-3 w-3" />{new Date(route.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div></div>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-bold">{route.totalStops}</div>
-                      <div className="text-xs text-muted-foreground">Stops</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold">{route.completedStops}</div>
-                      <div className="text-xs text-muted-foreground">Done</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold">{Math.round(route.completionRate)}%</div>
-                      <div className="text-xs text-muted-foreground">Progress</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold">{formatDuration(route.durationSeconds)}</div>
-                      <div className="text-xs text-muted-foreground">Duration</div>
-                    </div>
+                    <div><div className="text-2xl font-bold">{route.totalStops}</div><div className="text-xs text-muted-foreground">Stops</div></div>
+                    <div><div className="text-2xl font-bold">{route.workedStops}</div><div className="text-xs text-muted-foreground">Worked</div></div>
+                    <div><div className="text-2xl font-bold">{route.completedJobs}</div><div className="text-xs text-muted-foreground">Jobs Complete</div></div>
+                    <div><div className="text-2xl font-bold">{formatDuration(route.durationSeconds)}</div><div className="text-xs text-muted-foreground">Duration</div></div>
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                    <Badge variant="outline">{route.unvisitedStops} unvisited</Badge>
+                    <Badge variant="outline">{route.interestedStops} interested</Badge>
+                    <Badge variant="outline">{route.quoteStops} quotes</Badge>
+                    <Badge variant="outline">{route.notInterestedStops} not interested</Badge>
+                    <Badge variant="secondary">{Math.round(route.workedRate)}% worked</Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -335,66 +311,30 @@ export default function RouteHistory() {
           <div className="lg:col-span-1">
             {selectedRoute ? (
               <Card className="sticky top-6">
-                <CardHeader>
-                  <CardTitle>Route Details</CardTitle>
-                </CardHeader>
+                <CardHeader><CardTitle>Route Details</CardTitle></CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium mb-1">Route</p>
-                    <p className="text-sm text-muted-foreground">{selectedRoute.name}</p>
-                  </div>
-                  <div className="flex gap-2 flex-wrap">
-                    <Badge variant="outline">{sourceLabel(selectedRoute.source)}</Badge>
-                    <Badge className={statusClass(selectedRoute.status)}>{selectedRoute.status}</Badge>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium mb-1">Start</p>
-                    <p className="text-sm text-muted-foreground">{new Date(selectedRoute.startTime).toLocaleString()}</p>
-                  </div>
-                  {selectedRoute.endTime && (
-                    <div>
-                      <p className="text-sm font-medium mb-1">End</p>
-                      <p className="text-sm text-muted-foreground">{new Date(selectedRoute.endTime).toLocaleString()}</p>
-                    </div>
-                  )}
+                  <div><p className="text-sm font-medium mb-1">Route</p><p className="text-sm text-muted-foreground">{selectedRoute.name}</p></div>
+                  <div className="flex gap-2 flex-wrap"><Badge variant="outline">{sourceLabel(selectedRoute.source)}</Badge><Badge className={statusClass(selectedRoute.status)}>{selectedRoute.status}</Badge></div>
+                  <div><p className="text-sm font-medium mb-1">Start</p><p className="text-sm text-muted-foreground">{new Date(selectedRoute.startTime).toLocaleString()}</p></div>
+                  {selectedRoute.endTime && <div><p className="text-sm font-medium mb-1">End</p><p className="text-sm text-muted-foreground">{new Date(selectedRoute.endTime).toLocaleString()}</p></div>}
                   <div className="pt-4 border-t space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Stops</span>
-                      <span className="font-medium">{selectedRoute.totalStops}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Completed</span>
-                      <span className="font-medium">{selectedRoute.completedStops}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Progress</span>
-                      <span className="font-medium">{Math.round(selectedRoute.completionRate)}%</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Duration</span>
-                      <span className="font-medium">{formatDuration(selectedRoute.durationSeconds)}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Distance</span>
-                      <span className="font-medium">{formatDistance(selectedRoute.distanceMeters)}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Map points</span>
-                      <span className="font-medium flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {selectedRoute.path.length}
-                      </span>
-                    </div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Stops</span><span className="font-medium">{selectedRoute.totalStops}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Worked</span><span className="font-medium">{selectedRoute.workedStops}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Unvisited</span><span className="font-medium">{selectedRoute.unvisitedStops}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Interested</span><span className="font-medium">{selectedRoute.interestedStops}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Quotes</span><span className="font-medium">{selectedRoute.quoteStops}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Not interested</span><span className="font-medium">{selectedRoute.notInterestedStops}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Jobs complete</span><span className="font-medium">{selectedRoute.completedJobs}</span></div>
+                    {typeof selectedRoute.successfulContacts === 'number' && <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Legacy contacts</span><span className="font-medium">{selectedRoute.successfulContacts}</span></div>}
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Worked rate</span><span className="font-medium">{Math.round(selectedRoute.workedRate)}%</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Duration</span><span className="font-medium">{formatDuration(selectedRoute.durationSeconds)}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Distance</span><span className="font-medium">{formatDistance(selectedRoute.distanceMeters)}</span></div>
+                    <div className="flex items-center justify-between"><span className="text-sm text-muted-foreground">Map points</span><span className="font-medium flex items-center gap-1"><MapPin className="h-3 w-3" />{selectedRoute.path.length}</span></div>
                   </div>
                 </CardContent>
               </Card>
             ) : (
-              <Card className="sticky top-6">
-                <CardContent className="py-12 text-center">
-                  <MapPin className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">Select a route to view details.</p>
-                </CardContent>
-              </Card>
+              <Card className="sticky top-6"><CardContent className="py-12 text-center"><MapPin className="h-12 w-12 mx-auto text-muted-foreground mb-4" /><p className="text-muted-foreground">Select a route to view details.</p></CardContent></Card>
             )}
           </div>
         </div>
