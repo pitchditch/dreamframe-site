@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import MapComponentV3 from './MapComponentV3';
+import MapComponentV4 from './MapComponentV4';
 import { HousePin } from './types';
 import {
   D2DCloudTombstone,
@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 const DELETION_QUEUE_KEY = 'd2d-cloud-deletion-queue-v2';
 const LEGACY_DELETED_IDENTITIES_KEY = 'd2d-cloud-deleted-identities-v1';
 
-type MapWrapperProps = React.ComponentProps<typeof MapComponentV3> & {
+type MapWrapperProps = React.ComponentProps<typeof MapComponentV4> & {
   onDeletePin?: (pinId: string) => void;
 };
 
@@ -237,7 +237,7 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
   }, [props.pins, cloudReady, onlineRevision]);
 
   const { onDeletePin: _onDeletePin, ...mapProps } = props;
-  return React.createElement(MapComponentV3, {
+  return React.createElement(MapComponentV4, {
     ...mapProps,
     pins: [...props.pins],
     routes: [...props.routes],
