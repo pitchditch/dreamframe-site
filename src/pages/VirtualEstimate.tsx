@@ -97,7 +97,7 @@ const VirtualEstimate = () => {
   const call = useVirtualEstimateCall({ sessionId, inviteToken, role: 'customer' });
   const ai = useVirtualEstimateAi({ sessionId, inviteToken, role: 'customer', sourceStream: call.localStream });
 
-  useEffect(() => { if (localVideoRef.current) localVideoRef.current.srcObject = call.localStream; }, [call.localStream]);
+  useEffect(() => { if (localVideoRef.current) localVideoRef.current.srcObject = call.localStream; }, [call.localStream, call.remoteStream]);
   useEffect(() => { if (remoteVideoRef.current) remoteVideoRef.current.srcObject = call.remoteStream; }, [call.remoteStream]);
 
   const loadSession = useCallback(async (showLoader = false) => {
