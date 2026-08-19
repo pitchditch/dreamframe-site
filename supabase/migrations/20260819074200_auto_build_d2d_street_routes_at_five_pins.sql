@@ -114,7 +114,7 @@ begin
       'status', status,
       'streetSide', street_side
     ) order by
-      case street_side when 'left' then 0 when street_side = 'right' then 1 else 2 end,
+      case street_side when 'left' then 0 when 'right' then 1 else 2 end,
       case when street_side = 'right' then -coalesce(house_number, 0) else coalesce(house_number, 0) end,
       address,
       id
