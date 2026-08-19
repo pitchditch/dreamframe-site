@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,6 +16,14 @@ interface AddressDetails {
   postalCode: string;
 }
 
+const validServiceTypes = [
+  'Window Cleaning',
+  'House Washing',
+  'Driveway Washing',
+  'Deck Washing',
+  'Gutter Cleaning',
+];
+
 export const SmartPriceCalculator: React.FC = () => {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState<AddressDetails | null>(null);
@@ -24,25 +32,59 @@ export const SmartPriceCalculator: React.FC = () => {
   const [houseSize, setHouseSize] = useState<string>('');
   const [quote, setQuote] = useState<any>(null);
   const [calculatingPrice, setCalculatingPrice] = useState(false);
-  
   const { getSquareFootage, loading: fetchingSquareFootage, error: squareFootageError } = useFetchSquareFootage();
 
-  // Auto-fill postal code from homepage if available
+  const applySquareFootage = (sqft: number | null) => {
+    if (!sqft) return;
+    setSquareFootage(sqft);
+    if (sqft < 1500) setHouseSize('small');
+    else if (sqft < 2500) setHouseSize('medium');
+    else if (sqft < 3500) setHouseSize('large');
+    else setHouseSize('xlarge');
+  };
+
   useEffect(() => {
-    const savedPostalCode = localStorage.getItem('postalCode') || 
-                           localStorage.getItem('calculatorPostalCode') || 
-                           sessionStorage.getItem('postalCode');
-    
-    if (savedPostalCode && !selectedAddress) {
-      // Create a mock address object with the saved postal code
-      const mockAddress: AddressDetails = {
+    const params = new URLSearchParams(window.location.search);
+    const requestedService = params.get('service');
+    if (requestedService && validServiceTypes.includes(requestedService)) {
+      setServiceType(requestedService);
+    }
+
+    const prefillAddress = params.get('address') || sessionStorage.getItem('prefillAddress');
+    const prefillPostalCode = sessionStorage.getItem('prefillPostalCode') || '';
+    const prefillCity = sessionStorage.getItem('prefillCity') || 'Metro Vancouver';
+    const prefillLatitude = Number(sessionStorage.getItem('prefillLatitude')) || 49.2827;
+    const prefillLongitude = Number(sessionStorage.getItem('prefillLongitude')) || -123.1207;
+
+    if (prefillAddress) {
+      const address: AddressDetails = {
+        formatted_address: prefillAddress,
+        latitude: prefillLatitude,
+        longitude: prefillLongitude,
+        city: prefillCity,
+        postalCode: prefillPostalCode,
+      };
+      setSelectedAddress(address);
+      if (prefillPostalCode) localStorage.setItem('postalCode', prefillPostalCode);
+
+      getSquareFootage(prefillAddress)
+        .then((sqft) => applySquareFootage(sqft || null))
+        .catch((error) => console.error('Error fetching square footage for prefilled address:', error));
+      return;
+    }
+
+    const savedPostalCode = localStorage.getItem('postalCode') ||
+      localStorage.getItem('calculatorPostalCode') ||
+      sessionStorage.getItem('postalCode');
+
+    if (savedPostalCode) {
+      setSelectedAddress({
         formatted_address: `${savedPostalCode}, BC`,
         latitude: 49.2827,
         longitude: -123.1207,
         city: 'Vancouver',
-        postalCode: savedPostalCode
-      };
-      setSelectedAddress(mockAddress);
+        postalCode: savedPostalCode,
+      });
     }
   }, []);
 
@@ -50,25 +92,10 @@ export const SmartPriceCalculator: React.FC = () => {
     setSelectedAddress(address);
     setSquareFootage(null);
     setQuote(null);
-    
-    console.log('Address selected:', address);
-    
-    // Fetch square footage for the selected address
+
     try {
       const sqft = await getSquareFootage(address.formatted_address);
-      if (sqft) {
-        setSquareFootage(sqft);
-        // Auto-determine house size based on square footage
-        if (sqft < 1500) {
-          setHouseSize('small');
-        } else if (sqft < 2500) {
-          setHouseSize('medium');
-        } else if (sqft < 3500) {
-          setHouseSize('large');
-        } else {
-          setHouseSize('xlarge');
-        }
-      }
+      applySquareFootage(sqft || null);
     } catch (error) {
       console.error('Error fetching square footage:', error);
     }
@@ -83,11 +110,9 @@ export const SmartPriceCalculator: React.FC = () => {
         postalCode: selectedAddress.postalCode,
         serviceType,
         houseSize,
-        squareFootage: squareFootage || undefined
+        squareFootage: squareFootage || undefined,
       };
-
-      const result = PricingEngine.calculatePrice(pricingRequest);
-      setQuote(result);
+      setQuote(PricingEngine.calculatePrice(pricingRequest));
     } catch (error) {
       console.error('Error calculating price:', error);
     } finally {
@@ -96,47 +121,32 @@ export const SmartPriceCalculator: React.FC = () => {
   };
 
   const handleBookService = () => {
-    // Store the quote information for the booking calendar
-    const bookingData = {
+    localStorage.setItem('bookingData', JSON.stringify({
       service: serviceType,
       address: selectedAddress?.formatted_address,
       squareFootage,
       quote: quote?.adjustedPrice,
-      timestamp: Date.now()
-    };
-    
-    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+      timestamp: Date.now(),
+    }));
     navigate('/booking');
   };
 
   const handleGetMoreDetails = () => {
-    if (!serviceType) return;
-    
-    // Map service types to their corresponding routes
-    const serviceRoutes: { [key: string]: string } = {
+    const serviceRoutes: Record<string, string> = {
       'Window Cleaning': '/services/window-cleaning',
-      'House Washing': '/services/house-wash',
+      'House Washing': '/services/house-washing',
       'Driveway Washing': '/services/pressure-washing',
-      'Deck Washing': '/services/deck-cleaning',
-      'Gutter Cleaning': '/services/gutter-cleaning'
+      'Deck Washing': '/services/pressure-washing',
+      'Gutter Cleaning': '/services/gutter-cleaning',
     };
-
-    const route = serviceRoutes[serviceType];
-    if (route) {
-      navigate(route);
-    } else {
-      // Fallback to general services page
-      navigate('/services');
-    }
+    navigate(serviceRoutes[serviceType] || '/services');
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD',
-      minimumFractionDigits: 0
-    }).format(amount);
-  };
+  const formatCurrency = (amount: number) => new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    minimumFractionDigits: 0,
+  }).format(amount);
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -146,13 +156,10 @@ export const SmartPriceCalculator: React.FC = () => {
             <Calculator className="mr-3 w-6 h-6" />
             Smart Price Calculator
           </CardTitle>
-          <p className="text-blue-100">
-            Get an instant quote with automatic square footage detection
-          </p>
+          <p className="text-blue-100">Get an instant quote with automatic square footage detection</p>
         </CardHeader>
-        
+
         <CardContent className="p-8 space-y-6">
-          {/* Address Selection */}
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700 flex items-center">
               <MapPin className="w-4 h-4 mr-2" />
@@ -162,17 +169,15 @@ export const SmartPriceCalculator: React.FC = () => {
               onAddressSelect={handleAddressSelect}
               placeholder="Start typing your address..."
               className="w-full"
+              initialValue={selectedAddress?.formatted_address || sessionStorage.getItem('prefillAddress') || ''}
             />
             {selectedAddress && (
               <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-sm text-green-800">
-                  <strong>Selected:</strong> {selectedAddress.formatted_address}
-                </p>
+                <p className="text-sm text-green-800"><strong>Selected:</strong> {selectedAddress.formatted_address}</p>
               </div>
             )}
           </div>
 
-          {/* Square Footage Display */}
           {selectedAddress && (
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700 flex items-center">
@@ -187,36 +192,23 @@ export const SmartPriceCalculator: React.FC = () => {
                   </div>
                 ) : squareFootage ? (
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-semibold text-gray-900">
-                      {squareFootage.toLocaleString()} sq ft
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      Auto-detected
-                    </span>
+                    <span className="text-lg font-semibold text-gray-900">{squareFootage.toLocaleString()} sq ft</span>
+                    <span className="text-sm text-gray-500">Auto-detected</span>
                   </div>
                 ) : (
                   <div className="text-gray-600">
-                    {squareFootageError ? (
-                      <span className="text-amber-600">{squareFootageError}</span>
-                    ) : (
-                      'Property size information not available'
-                    )}
+                    {squareFootageError ? <span className="text-amber-600">{squareFootageError}</span> : 'Property size information not available'}
                   </div>
                 )}
               </div>
             </div>
           )}
 
-          {/* Service Selection */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">
-                Service Type
-              </label>
+              <label className="text-sm font-semibold text-gray-700">Service Type</label>
               <Select value={serviceType} onValueChange={setServiceType}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select service" />
-                </SelectTrigger>
+                <SelectTrigger><SelectValue placeholder="Select service" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Window Cleaning">Window Cleaning</SelectItem>
                   <SelectItem value="House Washing">House Washing</SelectItem>
@@ -228,13 +220,9 @@ export const SmartPriceCalculator: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">
-                Property Size Category
-              </label>
+              <label className="text-sm font-semibold text-gray-700">Property Size Category</label>
               <Select value={houseSize} onValueChange={setHouseSize}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select size" />
-                </SelectTrigger>
+                <SelectTrigger><SelectValue placeholder="Select size" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="small">Small (Under 1,500 sq ft)</SelectItem>
                   <SelectItem value="medium">Medium (1,500-2,500 sq ft)</SelectItem>
@@ -245,48 +233,31 @@ export const SmartPriceCalculator: React.FC = () => {
             </div>
           </div>
 
-          {/* Calculate Button */}
-          <Button 
+          <Button
             onClick={calculatePrice}
             disabled={!selectedAddress || !serviceType || !houseSize || calculatingPrice}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
             size="lg"
           >
             {calculatingPrice ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Calculating Quote...
-              </>
+              <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Calculating Quote...</>
             ) : (
-              <>
-                <DollarSign className="w-5 h-5 mr-2" />
-                Get Instant Quote
-              </>
+              <><DollarSign className="w-5 h-5 mr-2" />Get Instant Quote</>
             )}
           </Button>
 
-          {/* Quote Results */}
           {quote && (
             <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
               <CardContent className="p-6">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Your Instant Quote
-                  </h3>
-                  <div className="text-4xl font-bold text-green-600 mb-2">
-                    {formatCurrency(quote.adjustedPrice)}
-                  </div>
-                  <p className="text-gray-600">
-                    for {serviceType} • {quote.zoneName}
-                  </p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Your Instant Quote</h3>
+                  <div className="text-4xl font-bold text-green-600 mb-2">{formatCurrency(quote.adjustedPrice)}</div>
+                  <p className="text-gray-600">for {serviceType} • {quote.zoneName}</p>
                   {squareFootage && (
-                    <p className="text-sm text-gray-500">
-                      Based on {squareFootage.toLocaleString()} sq ft property
-                    </p>
+                    <p className="text-sm text-gray-500">Based on {squareFootage.toLocaleString()} sq ft property</p>
                   )}
                 </div>
 
-                {/* Pricing Breakdown */}
                 <div className="bg-white p-4 rounded-lg shadow-sm">
                   <h4 className="font-semibold mb-3 text-gray-900">Price Breakdown</h4>
                   <div className="space-y-2 text-sm">
@@ -322,19 +293,8 @@ export const SmartPriceCalculator: React.FC = () => {
                 </div>
 
                 <div className="mt-6 flex gap-3">
-                  <Button 
-                    className="flex-1 bg-green-600 hover:bg-green-700"
-                    onClick={handleBookService}
-                  >
-                    Book This Service
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="flex-1"
-                    onClick={handleGetMoreDetails}
-                  >
-                    Get More Details
-                  </Button>
+                  <Button className="flex-1 bg-green-600 hover:bg-green-700" onClick={handleBookService}>Book This Service</Button>
+                  <Button variant="outline" className="flex-1" onClick={handleGetMoreDetails}>Get More Details</Button>
                 </div>
               </CardContent>
             </Card>

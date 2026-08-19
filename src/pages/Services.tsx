@@ -61,17 +61,17 @@ const Services = () => {
               icon={<Car size={24} />} 
               title={t("Driveway Cleaning")} 
               description={t("Deep cleaning to remove oil stains, tire marks, and built-up grime from your driveway and walkways.")} 
-              link="/services/driveway-cleaning" 
+              link="/services/pressure-washing" 
               image="/lovable-uploads/b5967047-dddc-47e1-a23c-dd4a5feb9125.png" 
-              imageAlt="Driveway Cleaning in Abbotsford | Oil Stain Removal by BC Pressure Washing" 
+              imageAlt="Driveway Pressure Washing in Surrey and White Rock by BC Pressure Washing" 
             />
             <ServiceCard 
               icon={<Droplets size={24} />} 
               title={t("Deck/Patio Cleaning")} 
               description={t("Specialized cleaning for wood and composite decks and patios to restore their beauty and extend their life.")} 
-              link="/services/deck-cleaning" 
+              link="/services/pressure-washing" 
               image="/lovable-uploads/6efc066c-cf14-4550-a6ab-dd1184a2b519.png" 
-              imageAlt="Deck Cleaning in Mission | Patio Restoration by BC Pressure Washing" 
+              imageAlt="Patio and Exterior Surface Cleaning in Surrey and White Rock by BC Pressure Washing" 
             />
           </div>
         </div>
@@ -93,7 +93,7 @@ const Services = () => {
               icon={<Warehouse size={24} />} 
               title={t("Parking Lot Cleaning")} 
               description={t("Professional parking lot cleaning services that enhance your property's appearance, safety, and longevity.")} 
-              link="/services/parking-lot-cleaning" 
+              link="/services/commercial-pressure-washing" 
               image="/lovable-uploads/0413d26c-fb32-4ac3-ad1c-8e24f7878b90.png" 
               imageAlt="Parking Lot Cleaning in White Rock | Commercial Surface Cleaning by BC Pressure Washing" 
             />
@@ -101,7 +101,7 @@ const Services = () => {
               icon={<Building size={24} />} 
               title={t("Commercial Building Washing")} 
               description={t("Exterior cleaning for commercial buildings to maintain professional appearance and structural integrity.")} 
-              link="/services/commercial-building-washing" 
+              link="/services/commercial-pressure-washing" 
               image="/lovable-uploads/b3e01fd9-0f50-4524-b794-26a9f6f93ee5.png" 
               imageAlt="Commercial Building Washing in South Surrey | Professional Exterior Cleaning by BC Pressure Washing" 
             />
