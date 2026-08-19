@@ -56,7 +56,7 @@ const VirtualEstimateDesk = () => {
   }, []);
 
   const runInviteAction = useCallback(async (body: Record<string, unknown>): Promise<InviteResponse> => {
-    const { data, error: invokeError } = await supabase.functions.invoke('virtual-estimate-admin', { body });
+    const { data, error: invokeError } = await supabase.functions.invoke('virtual-estimate-session', { body });
     if (invokeError) throw invokeError;
     if (data?.error) throw new Error(data.error);
     return data as InviteResponse;
@@ -79,7 +79,7 @@ const VirtualEstimateDesk = () => {
     setInviteNotice('');
     setLatestInviteUrl('');
     try {
-      const result = await runInviteAction({ action: 'create', ...invite, send: true });
+      const result = await runInviteAction({ action: 'admin_create', ...invite, send: true });
       setLatestInviteUrl(result.inviteUrl || '');
       setInviteNotice(result.sent
         ? 'Invite created and sent. The customer link is on bcpressurewashing.ca.'
@@ -97,7 +97,7 @@ const VirtualEstimateDesk = () => {
     setSessionBusy(sessionId);
     setInviteNotice('');
     try {
-      const result = await runInviteAction({ action: 'get_link', sessionId });
+      const result = await runInviteAction({ action: 'admin_get_link', sessionId });
       if (!result.inviteUrl) throw new Error('Customer link was not returned.');
       await navigator.clipboard.writeText(result.inviteUrl);
       setLatestInviteUrl(result.inviteUrl);
@@ -113,7 +113,7 @@ const VirtualEstimateDesk = () => {
     setSessionBusy(sessionId);
     setInviteNotice('');
     try {
-      const result = await runInviteAction({ action: 'resend', sessionId });
+      const result = await runInviteAction({ action: 'admin_resend', sessionId });
       setLatestInviteUrl(result.inviteUrl || '');
       setInviteNotice(result.sent
         ? 'Invite resent with the correct secure bcpressurewashing.ca link.'
