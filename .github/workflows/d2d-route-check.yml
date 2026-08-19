@@ -10,6 +10,7 @@ on:
       - 'src/utils/d2dRouteBus.ts'
       - 'src/utils/routeOptimizer.ts'
       - 'supabase/migrations/**'
+      - 'tsconfig.d2d-routes.json'
       - '.github/workflows/d2d-route-check.yml'
 
 permissions:
@@ -27,4 +28,4 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npx tsc -p tsconfig.app.json --noEmit
+      - run: npx tsc -p tsconfig.d2d-routes.json --noEmit
