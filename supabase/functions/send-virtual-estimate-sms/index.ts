@@ -5,7 +5,10 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const PUBLIC_SITE_ORIGIN = "https://bcpressurewashing.ca";
+// Temporary canonical Virtual Estimate host while the branded domain still serves
+// a separate preview/published build. Keep customer + host call routes on the same
+// known-good Vercel deployment so invites cannot fall back to the legacy UI.
+const PUBLIC_SITE_ORIGIN = "https://dreamframe-site.vercel.app";
 const SESSION_PATH_PATTERN = /^\/virtual-estimate\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\/?$/i;
 
 const json = (body: Record<string, unknown>, status = 200) =>
@@ -46,6 +49,7 @@ const canonicalizeSessionUrl = (value: unknown) => {
   const allowedInputHost =
     url.hostname === "bcpressurewashing.ca" ||
     url.hostname === "www.bcpressurewashing.ca" ||
+    url.hostname === "dreamframe-site.vercel.app" ||
     url.hostname === "localhost" ||
     url.hostname === "127.0.0.1" ||
     url.hostname.endsWith(".lovable.app") ||
