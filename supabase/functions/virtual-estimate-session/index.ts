@@ -224,7 +224,7 @@ serve(async (req: Request): Promise<Response> => {
       updates = { current_lat: lat, current_lng: lng, current_heading: heading ?? 0, current_pitch: pitch ?? 0, current_zoom: zoom ?? 1, updated_at: now };
     } else if (action === "location") {
       const latitude = finiteNumber(body.latitude); const longitude = finiteNumber(body.longitude);
-      if (latitude === null || latitude < -90 || latitude > 90 || longitude === null || longitude > 180) return json(req, { error: "Invalid location" }, 400);
+      if (latitude === null || latitude < -90 || latitude > 90 || longitude === null || longitude < -180 || longitude > 180) return json(req, { error: "Invalid location" }, 400);
       updates = { customer_lat: latitude, customer_lng: longitude, location_requested: false, customer_last_seen: now };
     } else if (action === "address") {
       const address = typeof body.address === "string" ? body.address.trim().slice(0, 250) : "";
