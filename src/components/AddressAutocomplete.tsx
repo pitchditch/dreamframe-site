@@ -16,19 +16,27 @@ interface AddressAutocompleteProps {
   onAddressSelect: (address: AddressDetails) => void;
   placeholder?: string;
   className?: string;
+  initialValue?: string;
 }
 
 export const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   onAddressSelect,
   placeholder = "Enter your address...",
-  className = ""
+  className = "",
+  initialValue = ""
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(initialValue);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { suggestions, loading, searchAddresses } = useAddressAutocomplete();
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout>();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialValue && initialValue !== inputValue) {
+      setInputValue(initialValue);
+    }
+  }, [initialValue]);
 
   useEffect(() => {
     if (timeoutRef.current) {
@@ -51,7 +59,6 @@ export const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     };
   }, [inputValue, searchAddresses]);
 
-  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -68,6 +75,13 @@ export const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   const handleSelect = (address: AddressDetails) => {
     setInputValue(address.formatted_address);
     setShowSuggestions(false);
+
+    sessionStorage.setItem('prefillAddress', address.formatted_address);
+    sessionStorage.setItem('prefillPostalCode', address.postalCode);
+    sessionStorage.setItem('prefillCity', address.city);
+    sessionStorage.setItem('prefillLatitude', String(address.latitude));
+    sessionStorage.setItem('prefillLongitude', String(address.longitude));
+
     onAddressSelect(address);
   };
 
@@ -75,7 +89,6 @@ export const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     const value = e.target.value;
     setInputValue(value);
     
-    // Show suggestions again if user starts typing after selecting
     if (suggestions.length > 0 && value.length >= 3) {
       setShowSuggestions(true);
     }
