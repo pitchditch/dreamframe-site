@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { TranslationProvider } from "./hooks/use-translation.tsx";
 
+// Keep Vercel Web Analytics mounted once at the application root.
 const queryClient = new QueryClient();
 const VIRTUAL_ESTIMATE_ORIGIN = "https://dreamframe-site.vercel.app";
 
