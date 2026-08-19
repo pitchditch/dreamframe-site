@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { HousePin } from './types';
+import React, { useEffect, useState } from 'react';
+import { HousePin, RouteSession } from './types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Plus, 
-  Route, 
-  MapPin, 
+import {
+  Plus,
+  Route,
   Store,
   Scissors,
   UtensilsCrossed,
@@ -19,15 +18,16 @@ import {
   Car,
   Building2,
   Trash2,
-  Eye,
   Clock,
   Navigation2,
   TrendingUp,
   TrendingDown,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useGoogleMapsRouting } from '@/hooks/useGoogleMapsRouting';
+import { RouteData, useGoogleMapsRouting } from '@/hooks/useGoogleMapsRouting';
+import { calculateRouteDistance, optimizeRouteOrder } from '@/utils/routeOptimizer';
+import { publishD2DRoute, removeD2DRoute } from '@/utils/d2dRouteBus';
 
 interface RouteManagerProps {
   pins: HousePin[];
@@ -44,136 +44,171 @@ const storefrontTypes = [
   { value: 'medical', label: 'Medical/Dental', icon: Stethoscope, color: 'hsl(200, 80%, 50%)' },
   { value: 'automotive', label: 'Automotive', icon: Car, color: 'hsl(0, 0%, 30%)' },
   { value: 'office', label: 'Office', icon: Building2, color: 'hsl(210, 30%, 50%)' },
-  { value: 'other', label: 'Other', icon: Store, color: 'hsl(var(--muted-foreground))' }
+  { value: 'other', label: 'Other', icon: Store, color: 'hsl(var(--muted-foreground))' },
 ];
 
 const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
   const [routeName, setRouteName] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [estimatedTime, setEstimatedTime] = useState<string>('');
-  const [estimatedDistance, setEstimatedDistance] = useState<string>('');
+  const [estimatedTime, setEstimatedTime] = useState('');
+  const [estimatedDistance, setEstimatedDistance] = useState('');
   const [hasUphill, setHasUphill] = useState(false);
   const [hasDownhill, setHasDownhill] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [calculatedRoute, setCalculatedRoute] = useState<RouteData | null>(null);
 
-  const { getRoute, formatDuration, formatDistance, loading: routeLoading, error: routeError } = useGoogleMapsRouting();
+  const { getRoute, formatDuration, formatDistance } = useGoogleMapsRouting();
+  const storefronts = pins.filter((pin) => pin.isStorefront);
 
-  const storefronts = pins.filter(pin => pin.isStorefront);
-  
-  const getStorefrontsOfType = (type: string) => {
-    return storefronts.filter(pin => pin.storefrontType === type);
+  const getStorefrontsOfType = (type: string) =>
+    storefronts.filter((pin) => pin.storefrontType === type);
+
+  const buildFallbackRoute = (routePins: HousePin[]): RouteData => {
+    const orderedWaypoints = optimizeRouteOrder(routePins);
+    const totalDistance = calculateRouteDistance(orderedWaypoints) * 1000;
+    const walkingSeconds = (totalDistance / 1000 / 5) * 3600;
+    const stopSeconds = orderedWaypoints.length * 120;
+    return {
+      steps: [],
+      totalDistance,
+      totalDuration: Math.round(walkingSeconds + stopSeconds),
+      geometry: orderedWaypoints.map((pin) => ({ lat: pin.lat, lng: pin.lng })),
+      orderedWaypoints,
+      hasUphill: false,
+      hasDownhill: false,
+    };
   };
 
-  // Calculate route estimates using Google Maps API
   const calculateRouteEstimate = async (routePins: HousePin[]) => {
     if (routePins.length < 2) {
+      const fallback = routePins.length === 1 ? buildFallbackRoute(routePins) : null;
+      setCalculatedRoute(fallback);
       setEstimatedTime('N/A');
       setEstimatedDistance('N/A');
       setHasUphill(false);
       setHasDownhill(false);
-      return;
+      return fallback;
     }
 
     setIsCalculating(true);
-
     try {
-      const routeData = await getRoute(routePins);
-      
-      if (routeData) {
-        setEstimatedTime(formatDuration(routeData.totalDuration));
-        setEstimatedDistance(formatDistance(routeData.totalDistance));
-        setHasUphill(routeData.hasUphill);
-        setHasDownhill(routeData.hasDownhill);
-      } else {
-        // Fallback to basic calculation if API fails
-        let totalDistance = 0;
-        for (let i = 0; i < routePins.length - 1; i++) {
-          const R = 6371000;
-          const dLat = (routePins[i + 1].lat - routePins[i].lat) * Math.PI / 180;
-          const dLng = (routePins[i + 1].lng - routePins[i].lng) * Math.PI / 180;
-          const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                    Math.cos(routePins[i].lat * Math.PI / 180) * Math.cos(routePins[i + 1].lat * Math.PI / 180) *
-                    Math.sin(dLng/2) * Math.sin(dLng/2);
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-          totalDistance += R * c;
-        }
-
-        const walkingTimeMinutes = (totalDistance / 1000) / 5 * 60;
-        const stopTimeMinutes = routePins.length * 2;
-        const totalMinutes = Math.round(walkingTimeMinutes + stopTimeMinutes);
-        
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
-        
-        setEstimatedTime(hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`);
-        setEstimatedDistance(totalDistance >= 1000 ? `${(totalDistance / 1000).toFixed(1)} km` : `${Math.round(totalDistance)} m`);
-        setHasUphill(false);
-        setHasDownhill(false);
-      }
-    } catch (err) {
-      console.error('Route calculation error:', err);
+      const googleRoute = await getRoute(routePins);
+      const routeData = googleRoute || buildFallbackRoute(routePins);
+      setCalculatedRoute(routeData);
+      setEstimatedTime(formatDuration(routeData.totalDuration));
+      setEstimatedDistance(formatDistance(routeData.totalDistance));
+      setHasUphill(routeData.hasUphill);
+      setHasDownhill(routeData.hasDownhill);
+      return routeData;
+    } catch (error) {
+      console.error('Route calculation error:', error);
+      const fallback = buildFallbackRoute(routePins);
+      setCalculatedRoute(fallback);
+      setEstimatedTime(formatDuration(fallback.totalDuration));
+      setEstimatedDistance(formatDistance(fallback.totalDistance));
+      setHasUphill(false);
+      setHasDownhill(false);
+      return fallback;
     } finally {
       setIsCalculating(false);
     }
   };
 
-  const createRoute = () => {
+  const createRoute = async () => {
     if (!routeName.trim()) {
       toast.error('Please enter a route name');
       return;
     }
-
     if (!selectedType) {
       toast.error('Please select a storefront type');
       return;
     }
 
     const routePins = getStorefrontsOfType(selectedType);
-    
     if (routePins.length === 0) {
-      toast.error(`No ${storefrontTypes.find(t => t.value === selectedType)?.label}s found`);
+      toast.error(`No ${storefrontTypes.find((type) => type.value === selectedType)?.label}s found`);
       return;
     }
 
-    // Add route information to pins
+    const routeData = calculatedRoute || await calculateRouteEstimate(routePins) || buildFallbackRoute(routePins);
+    const orderedPins = routeData.orderedWaypoints.length > 0
+      ? routeData.orderedWaypoints
+      : optimizeRouteOrder(routePins);
+    const now = new Date().toISOString();
     const routeId = `route-${Date.now()}`;
-    routePins.forEach((pin, index) => {
+
+    orderedPins.forEach((pin, index) => {
       onUpdatePin(pin.id, {
         routeId,
         routeOrder: index + 1,
-        routeTimestamp: new Date().toISOString()
+        routeTimestamp: now,
       });
     });
 
-    toast.success(`Created route "${routeName}" with ${routePins.length} stops`);
+    const route: RouteSession = {
+      id: routeId,
+      name: routeName.trim(),
+      source: 'storefront',
+      startTime: now,
+      duration: routeData.totalDuration,
+      distance: routeData.totalDistance,
+      path: (routeData.geometry.length > 0
+        ? routeData.geometry
+        : orderedPins.map((pin) => ({ lat: pin.lat, lng: pin.lng })))
+        .map((point) => ({ ...point, timestamp: now })),
+      stops: orderedPins.map((pin, index) => ({
+        id: pin.id,
+        address: pin.address,
+        lat: pin.lat,
+        lng: pin.lng,
+        order: index + 1,
+        status: pin.status,
+      })),
+      homesVisited: 0,
+      totalStops: orderedPins.length,
+      completedStops: 0,
+      completionRate: 0,
+      color: '#2563eb',
+      isActive: false,
+      updatedAt: now,
+    };
+
+    publishD2DRoute(route);
+    toast.success(`Created route "${route.name}" with ${orderedPins.length} stops`);
     setRouteName('');
     setSelectedType(null);
+    setCalculatedRoute(null);
   };
 
   const clearRoute = (type: string) => {
-    const routePins = getStorefrontsOfType(type);
-    routePins.forEach(pin => {
+    const routePins = getStorefrontsOfType(type).filter((pin) => pin.routeId);
+    const routeIds = Array.from(new Set(routePins.map((pin) => pin.routeId).filter(Boolean))) as string[];
+
+    routePins.forEach((pin) => {
       onUpdatePin(pin.id, {
         routeId: undefined,
         routeOrder: undefined,
-        routeTimestamp: undefined
+        routeTimestamp: undefined,
       });
     });
-    toast.success('Route cleared');
+    routeIds.forEach(removeD2DRoute);
+    toast.success(routeIds.length > 1 ? 'Routes cleared' : 'Route cleared');
   };
 
-  // Update estimates when selection changes
-  React.useEffect(() => {
+  useEffect(() => {
+    setCalculatedRoute(null);
     if (selectedType) {
-      const routePins = getStorefrontsOfType(selectedType);
-      calculateRouteEstimate(routePins);
+      void calculateRouteEstimate(getStorefrontsOfType(selectedType));
     } else {
       setEstimatedTime('');
       setEstimatedDistance('');
+      setHasUphill(false);
+      setHasDownhill(false);
     }
+    // Pins are intentionally omitted: changing a pin status should not constantly
+    // call Directions again while the user is working through a route.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedType]);
-
-  const typeConfig = storefrontTypes.find(t => t.value === selectedType);
 
   return (
     <div className="space-y-4">
@@ -190,7 +225,7 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
             <Input
               id="routeName"
               value={routeName}
-              onChange={(e) => setRouteName(e.target.value)}
+              onChange={(event) => setRouteName(event.target.value)}
               placeholder="e.g., Downtown Nail Salons"
             />
           </div>
@@ -210,9 +245,7 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
                   >
                     <Icon className="w-5 h-5" />
                     <span className="text-xs">{type.label}</span>
-                    <Badge variant="secondary" className="text-xs">
-                      {count}
-                    </Badge>
+                    <Badge variant="secondary" className="text-xs">{count}</Badge>
                   </Button>
                 );
               })}
@@ -227,11 +260,7 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
                   <div>
                     <div className="text-xs text-muted-foreground">Est. Time</div>
                     <div className="text-sm font-semibold">
-                      {isCalculating ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        estimatedTime
-                      )}
+                      {isCalculating ? <Loader2 className="w-4 h-4 animate-spin" /> : estimatedTime}
                     </div>
                   </div>
                 </div>
@@ -240,16 +269,12 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
                   <div>
                     <div className="text-xs text-muted-foreground">Distance</div>
                     <div className="text-sm font-semibold">
-                      {isCalculating ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        estimatedDistance
-                      )}
+                      {isCalculating ? <Loader2 className="w-4 h-4 animate-spin" /> : estimatedDistance}
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               {!isCalculating && (hasUphill || hasDownhill) && (
                 <div className="flex gap-2">
                   {hasUphill && (
@@ -269,10 +294,10 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
             </div>
           )}
 
-          <Button 
-            onClick={createRoute} 
+          <Button
+            onClick={() => void createRoute()}
             className="w-full"
-            disabled={!routeName.trim() || !selectedType}
+            disabled={!routeName.trim() || !selectedType || isCalculating}
           >
             <Plus className="w-4 h-4 mr-2" />
             Create Route
@@ -292,8 +317,8 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
             {storefrontTypes.map((type) => {
               const Icon = type.icon;
               const pinsOfType = getStorefrontsOfType(type.value);
-              const hasRoute = pinsOfType.some(p => p.routeId);
-              
+              const hasRoute = pinsOfType.some((pin) => pin.routeId);
+
               return (
                 <div key={type.value} className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
@@ -313,11 +338,7 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
                       </Badge>
                     )}
                     {pinsOfType.length > 0 && hasRoute && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => clearRoute(type.value)}
-                      >
+                      <Button size="sm" variant="ghost" onClick={() => clearRoute(type.value)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     )}
@@ -340,9 +361,7 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
               <div className="text-sm text-muted-foreground">Total Storefronts</div>
             </div>
             <div className="p-4 bg-muted rounded-lg">
-              <div className="text-2xl font-bold">
-                {storefronts.filter(p => p.routeId).length}
-              </div>
+              <div className="text-2xl font-bold">{storefronts.filter((pin) => pin.routeId).length}</div>
               <div className="text-sm text-muted-foreground">In Routes</div>
             </div>
           </div>
