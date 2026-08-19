@@ -170,14 +170,15 @@ export function WebsiteSpeedTest() {
       const stored = window.localStorage.getItem(STORAGE_KEY);
       if (stored) setResults(JSON.parse(stored) as SpeedResults);
     } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+      // The test still works when browser storage is unavailable.
     }
   }, []);
 
   const lastTested = useMemo(() => {
     const timestamps = [results.mobile?.testedAt, results.desktop?.testedAt].filter(Boolean) as string[];
     if (!timestamps.length) return null;
-    return timestamps.sort().at(-1) || null;
+    timestamps.sort();
+    return timestamps[timestamps.length - 1] || null;
   }, [results]);
 
   const runTest = async () => {
