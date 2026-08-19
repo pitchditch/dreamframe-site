@@ -1,0 +1,30 @@
+name: D2D route check
+
+on:
+  pull_request:
+    paths:
+      - 'src/components/house-tracking/**'
+      - 'src/hooks/useGoogleMapsRouting.ts'
+      - 'src/pages/crm/RouteHistory.tsx'
+      - 'src/utils/d2dCloud.ts'
+      - 'src/utils/d2dRouteBus.ts'
+      - 'src/utils/routeOptimizer.ts'
+      - 'supabase/migrations/**'
+      - '.github/workflows/d2d-route-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx tsc -p tsconfig.app.json --noEmit
