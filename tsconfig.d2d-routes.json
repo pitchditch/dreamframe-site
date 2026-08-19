@@ -2,14 +2,19 @@
   "extends": "./tsconfig.app.json",
   "include": [
     "src/vite-env.d.ts",
+    "src/components/house-tracking/ActiveRouteRunner.tsx",
     "src/components/house-tracking/MapComponent.ts",
     "src/components/house-tracking/MapComponentV4.tsx",
     "src/components/house-tracking/RouteManager.tsx",
+    "src/components/house-tracking/StreetViewDialog.tsx",
+    "src/components/house-tracking/StreetViewPreview.tsx",
     "src/components/house-tracking/types.ts",
     "src/hooks/useGoogleMapsRouting.ts",
     "src/pages/crm/RouteHistory.tsx",
     "src/utils/d2dCloud.ts",
     "src/utils/d2dRouteBus.ts",
+    "src/utils/d2dRouteRuntime.ts",
+    "src/utils/d2dSyncStatus.ts",
     "src/utils/routeOptimizer.ts"
   ]
 }
