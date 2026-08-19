@@ -23,9 +23,9 @@ export type EditableCustomerPlan = {
   billing_frequency: string;
   one_time_amount: number | string | null;
   recurring_amount: number | string | null;
-  renewal_interval: string | null;
-  include_interior: boolean | null;
-  travel_surcharge: number | string | null;
+  renewal_interval?: string | null;
+  include_interior?: boolean | null;
+  travel_surcharge?: number | string | null;
   discount_percent: number | string | null;
   next_service_date: string | null;
 };
@@ -207,6 +207,7 @@ export const CustomerPlanPreview = ({ draft }: { draft: PlanDraft }) => {
 export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSaved?: () => void | Promise<void> }) => {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [loadingPlan, setLoadingPlan] = useState(false);
   const [draft, setDraft] = useState<PlanDraft>(() => toDraft(plan));
 
   useEffect(() => {
@@ -214,6 +215,23 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
   }, [plan, open]);
 
   const set = (key: Exclude<keyof PlanDraft, 'include_interior'>, value: string) => setDraft((current) => ({ ...current, [key]: value }));
+
+  const openEditor = async () => {
+    setDraft(toDraft(plan));
+    setOpen(true);
+    setLoadingPlan(true);
+    const { data, error } = await (supabase.from('admin_custom_subscriptions') as any)
+      .select('customer_name,customer_email,customer_phone,address,plan_title,service_description,service_types,status,cadence,billing_frequency,one_time_amount,recurring_amount,renewal_interval,include_interior,travel_surcharge,discount_percent,next_service_date')
+      .eq('id', plan.id)
+      .maybeSingle();
+    setLoadingPlan(false);
+
+    if (error) {
+      toast({ title: 'Could not load complete plan', description: error.message, variant: 'destructive' });
+      return;
+    }
+    if (data) setDraft(toDraft({ ...plan, ...data } as EditableCustomerPlan));
+  };
 
   const save = async () => {
     const recurringAmount = draft.recurring_amount === '' ? null : Number(draft.recurring_amount);
@@ -262,7 +280,7 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
 
   return (
     <>
-      <Button type="button" size="sm" variant="outline" onClick={() => setOpen(true)}>
+      <Button type="button" size="sm" variant="outline" onClick={() => void openEditor()}>
         <Pencil className="mr-2 h-4 w-4" />Edit + preview
       </Button>
 
@@ -275,6 +293,8 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
 
           <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.85fr)]">
             <div className="space-y-5 p-5 lg:border-r">
+              {loadingPlan && <div className="flex items-center gap-2 rounded-md border bg-muted/20 px-3 py-2 text-sm text-muted-foreground"><RefreshCw className="h-4 w-4 animate-spin" />Loading the complete saved plan…</div>}
+
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Customer name"><Input value={draft.customer_name} onChange={(event) => set('customer_name', event.target.value)} /></Field>
                 <Field label="Email"><Input type="email" value={draft.customer_email} onChange={(event) => set('customer_email', event.target.value)} /></Field>
@@ -327,7 +347,7 @@ export const PlanEditor = ({ plan, onSaved }: { plan: EditableCustomerPlan; onSa
 
               <div className="flex flex-col-reverse gap-2 border-t pt-4 sm:flex-row sm:justify-end">
                 <Button type="button" variant="outline" onClick={() => { setDraft(toDraft(plan)); setOpen(false); }} disabled={saving}>Cancel</Button>
-                <Button type="button" onClick={() => void save()} disabled={saving}>
+                <Button type="button" onClick={() => void save()} disabled={saving || loadingPlan}>
                   {saving ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}
                   Update Plan
                 </Button>
