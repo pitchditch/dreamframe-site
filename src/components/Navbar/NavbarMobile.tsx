@@ -1,8 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Building2,
+  Calculator,
+  CalendarCheck,
+  Car,
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  ContactRound,
+  Droplets,
+  HardHat,
+  Home,
+  MapPin,
+  MessageCircle,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Store,
+  Truck,
+  Wrench,
+} from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 import LanguageSelector from '../LanguageSelector';
-import { CalendarCheck, ChevronDown, ChevronUp, Home, Box, Star, Wrench, Scale, Truck } from 'lucide-react';
 
 interface NavbarMobileProps {
   isMenuOpen: boolean;
@@ -10,182 +31,186 @@ interface NavbarMobileProps {
   setIsServicesMenuOpen: (isOpen: boolean) => void;
 }
 
+const iconWrap = 'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-800';
+const rowClass = 'flex min-h-14 w-full items-center gap-3 px-4 py-3 text-left font-semibold text-gray-900 transition-colors hover:bg-gray-50 hover:text-bc-red';
+const subRowClass = 'flex min-h-12 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-800 transition-colors hover:bg-white hover:text-bc-red';
+
 export const NavbarMobile = ({ isMenuOpen, isServicesMenuOpen, setIsServicesMenuOpen }: NavbarMobileProps) => {
   const { t } = useTranslation();
-  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
+  const [isCommercialOpen, setIsCommercialOpen] = useState(false);
+  const [isAreasOpen, setIsAreasOpen] = useState(false);
 
   return (
-    <>
-      <div
-        className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 overflow-hidden bg-white ${
-          isMenuOpen ? 'max-h-[90vh] shadow-lg top-28' : 'max-h-0 top-28'
-        }`}
-      >
-        <div className="container mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
-          <nav className="flex flex-col space-y-4">
-            <Link to="/" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
-              <Home className="w-5 h-5" />
-              <span>{t('Home')}</span>
+    <div
+      className={`md:hidden fixed left-0 right-0 z-40 overflow-hidden bg-white transition-[max-height,box-shadow] duration-300 top-28 ${
+        isMenuOpen ? 'max-h-[calc(100dvh-7rem)] shadow-2xl' : 'max-h-0'
+      }`}
+    >
+      <div className="max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <nav aria-label="Mobile navigation" className="divide-y divide-gray-200">
+          <div className="bg-gray-50 px-4 py-3 text-center text-sm font-medium text-gray-600">
+            Locally Owned <span aria-hidden="true">•</span> Owner-Checked on Every Job
+          </div>
+
+          <div className="bg-bc-red px-4 py-4">
+            <Link
+              to="/calculator"
+              className="flex min-h-16 items-center justify-center gap-3 rounded-2xl bg-white px-4 text-lg font-bold text-bc-red shadow-sm transition-transform active:scale-[0.99]"
+            >
+              <Calculator className="h-6 w-6" />
+              <span>{t('Get Instant Estimate')}</span>
             </Link>
+            <p className="mt-2 text-center text-xs font-medium text-white/90">Takes about 30 seconds — no visit required</p>
+          </div>
 
-            <Link to="/why-us" className="flex items-center gap-2 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
-              <img
-                src="/lovable-uploads/4b1c2d66-50f8-40ca-abe3-c072141788ed.png"
-                alt="Logo Icon"
-                className="w-5 h-5 object-contain"
-              />
-              <span>{t('Why Us')}</span>
-            </Link>
+          <Link to="/" className={rowClass}>
+            <span className={iconWrap}><Home className="h-5 w-5" /></span>
+            <span className="flex-1">{t('Home')}</span>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </Link>
 
-            <div className="pb-2">
-              <div
-                className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
-                onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
-              >
-                <span>{t('Services')}</span>
-                {isServicesMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-
-              <div className={`overflow-hidden transition-all duration-300 pl-4 ${
-                isServicesMenuOpen ? 'max-h-[900px] py-2' : 'max-h-0'
-              }`}>
-                <div className="flex flex-col space-y-1 pl-4">
-                  <div className="text-xs font-semibold text-gray-500 uppercase py-2">Residential Services</div>
-
-                  <Link to="/services/window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/165b02c3-f25e-42d7-aa8f-7cf0a7ed27a9.png" alt="Window Cleaning Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>{t('Window Cleaning')}</span>
-                  </Link>
-                  <Link to="/services/pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/bed5edc5-3ddc-443c-b591-b46a2d863422.png" alt="House Soft Wash Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>{t('Pressure Washing')}</span>
-                  </Link>
-                  <Link to="/services/gutter-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/4c194a64-57a3-4315-baab-181509b591a1.png" alt="Gutter Cleaning Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>{t('Gutter Cleaning')}</span>
-                  </Link>
-                  <Link to="/services/roof-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/19292b37-93b3-4443-abf4-b0f8928efab4.png" alt="Roof Cleaning Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>{t('Roof Cleaning')}</span>
-                  </Link>
-                  <Link to="/services/driveway-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/10a21fe9-0eca-443f-b4f9-44ace5b2071f.png" alt="Driveway Cleaning Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>{t('Driveway Cleaning')}</span>
-                  </Link>
-                  <Link to="/services/fence-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/b0019f19-4638-4339-adae-7cf734f98b50.png" alt="Fence Washing Icon" className="w-8 h-8 object-cover" />
-                    </div>
-                    <span>{t('Fence Washing')}</span>
-                  </Link>
-
-                  <div className="text-xs font-semibold text-gray-500 uppercase py-2 mt-2">Commercial Services</div>
-
-                  <Link to="/services/commercial-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/5b1d271e-15e2-4bf4-87ce-4ad9e9aadc75.png" alt="Commercial Window Cleaning Icon" className="w-8 h-8 object-contain" />
-                    </div>
-                    <span>{t('Commercial Window Cleaning')}</span>
-                  </Link>
-                  <Link to="/services/commercial-pressure-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/0cd8002e-089f-4aee-9688-39cf7966604e.png" alt="Commercial Pressure Washing Icon" className="w-8 h-8 object-contain" />
-                    </div>
-                    <span>{t('Commercial Pressure Washing')}</span>
-                  </Link>
-                  <Link to="/services/fleet-washing" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10 text-bc-red">
-                      <Truck className="w-7 h-7" />
-                    </div>
-                    <span>{t('Fleet Washing')}</span>
-                  </Link>
-                  <Link to="/services/post-construction-window-cleaning" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <div className="p-1.5 rounded-md flex items-center justify-center w-10 h-10">
-                      <img src="/lovable-uploads/9aaa04e0-6635-47e9-9412-f86e8c9190ce.png" alt="Post-Construction Cleaning Icon" className="w-8 h-8 object-contain" />
-                    </div>
-                    <span>{t('Post-Construction Cleaning')}</span>
-                  </Link>
-
-                  <Link to="/services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md mt-2 font-medium">
-                    <Box size={20} />
-                    <span>{t('See All Services')}</span>
-                  </Link>
-
-                  <Link to="/compare-services" className="flex items-center gap-2 text-bc-red hover:text-red-700 transition-colors py-2 px-2 hover:bg-gray-50 rounded-md font-medium">
-                    <Scale size={20} />
-                    <span>{t('Compare Services')}</span>
-                  </Link>
-                </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
+              className={rowClass}
+              aria-expanded={isServicesMenuOpen}
+              aria-controls="mobile-services-menu"
+            >
+              <span className={iconWrap}><Wrench className="h-5 w-5" /></span>
+              <span className="flex-1">{t('Services')}</span>
+              {isServicesMenuOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+            </button>
+            <div
+              id="mobile-services-menu"
+              className={`overflow-hidden bg-gray-50 transition-[max-height,padding] duration-300 ${
+                isServicesMenuOpen ? 'max-h-[520px] px-4 pb-4' : 'max-h-0 px-4'
+              }`}
+            >
+              <div className="grid gap-1 pt-1">
+                <Link to="/services/window-cleaning" className={subRowClass}><Sparkles className="h-5 w-5 text-bc-red" />Window Cleaning</Link>
+                <Link to="/services/gutter-cleaning" className={subRowClass}><Droplets className="h-5 w-5 text-bc-red" />Gutter Cleaning</Link>
+                <Link to="/services/roof-cleaning" className={subRowClass}><Home className="h-5 w-5 text-bc-red" />Roof Cleaning</Link>
+                <Link to="/services/house-washing" className={subRowClass}><ShieldCheck className="h-5 w-5 text-bc-red" />House Washing</Link>
+                <Link to="/services/pressure-washing" className={subRowClass}><Wrench className="h-5 w-5 text-bc-red" />Pressure Washing</Link>
+                <Link to="/services/pressure-washing" className={subRowClass}><Car className="h-5 w-5 text-bc-red" />Driveways &amp; Concrete</Link>
+                <Link to="/services" className="mt-1 flex items-center justify-between rounded-xl bg-white px-3 py-3 text-sm font-bold text-bc-red shadow-sm">
+                  View All Services <ChevronRight className="h-4 w-4" />
+                </Link>
               </div>
             </div>
+          </div>
 
-            <Link to="/maintenance-memberships" className="flex items-center gap-3 py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
-              <CalendarCheck className="w-7 h-7 shrink-0 text-bc-red" strokeWidth={2.25} />
-              <span>{t('Maintenance Plans')}</span>
-            </Link>
-
-            <div className="pb-2">
-              <div
-                className="flex items-center justify-between py-3 px-2 text-gray-800 hover:text-bc-red transition-colors cursor-pointer hover:bg-gray-50 rounded-md font-medium"
-                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
-              >
-                <span>{t('More')}</span>
-                {isMoreMenuOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-
-              <div className={`overflow-hidden transition-all duration-300 pl-4 ${
-                isMoreMenuOpen ? 'max-h-[500px] py-2' : 'max-h-0'
-              }`}>
-                <div className="flex flex-col space-y-4 pl-4">
-                  <Link to="/testimonials" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <Star size={20} className="text-bc-red" />
-                    <span>{t('Testimonials')}</span>
-                  </Link>
-
-                  <Link to="/equipment" className="flex items-center gap-2 text-black hover:text-bc-red transition-colors py-2 px-2 hover:bg-gray-50 rounded-md">
-                    <Wrench size={20} className="text-bc-red" />
-                    <span>{t('Our Equipment')}</span>
-                  </Link>
-
-                  <div className="pt-2 border-t border-gray-100">
-                    <h4 className="font-medium text-gray-900 pb-2">{t('Leave a Review')}</h4>
-                    <div className="flex space-x-3">
-                      <a href="https://g.page/r/CbeicZxdYHsKEAI/review" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
-                        <img src="/lovable-uploads/c7a06e2a-86f1-4622-81b0-513491105641.png" alt="Google" className="h-6 w-6 object-contain" />
-                      </a>
-                      <a href="https://www.yelp.ca/writeareview/biz/BKJYWQSYBxvKcTA5hkHHsg" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
-                        <img src="/lovable-uploads/e8c22c20-e153-4bde-aeb8-f0ae12a4eae0.png" alt="Yelp" className="h-6 w-6 object-contain" />
-                      </a>
-                      <a href="https://www.bbb.org/ca/bc/white-rock/profile/window-cleaning/bc-pressure-washing-0037-2263134/customer-reviews" target="_blank" rel="noopener noreferrer" className="block p-2 bg-gray-50 hover:bg-gray-100 rounded-md">
-                        <img src="/lovable-uploads/8f646c66-5a09-4335-a82d-e15a1d86a4c4.png" alt="BBB" className="h-6 w-6 object-contain" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => setIsCommercialOpen(!isCommercialOpen)}
+              className={rowClass}
+              aria-expanded={isCommercialOpen}
+              aria-controls="mobile-commercial-menu"
+            >
+              <span className={iconWrap}><Building2 className="h-5 w-5" /></span>
+              <span className="flex-1">{t('Commercial')}</span>
+              {isCommercialOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+            </button>
+            <div
+              id="mobile-commercial-menu"
+              className={`overflow-hidden bg-gray-50 transition-[max-height,padding] duration-300 ${
+                isCommercialOpen ? 'max-h-[400px] px-4 pb-4' : 'max-h-0 px-4'
+              }`}
+            >
+              <div className="grid gap-1 pt-1">
+                <Link to="/services/storefront-window-cleaning" className={subRowClass}><Store className="h-5 w-5 text-bc-red" />Storefront Cleaning</Link>
+                <Link to="/services/fleet-washing" className={subRowClass}><Truck className="h-5 w-5 text-bc-red" />Fleet Washing</Link>
+                <Link to="/services/commercial-pressure-washing" className={subRowClass}><Building2 className="h-5 w-5 text-bc-red" />Commercial Pressure Washing</Link>
+                <Link to="/services/post-construction-window-cleaning" className={subRowClass}><HardHat className="h-5 w-5 text-bc-red" />Post-Construction Cleaning</Link>
+                <Link to="/contact" className={subRowClass}><ContactRound className="h-5 w-5 text-bc-red" />Property Managers</Link>
               </div>
             </div>
+          </div>
 
-            <Link to="/contact" className="py-3 px-2 text-gray-800 hover:text-bc-red transition-colors hover:bg-gray-50 rounded-md font-medium">
-              {t('Contact')}
-            </Link>
+          <div>
+            <button
+              type="button"
+              onClick={() => setIsAreasOpen(!isAreasOpen)}
+              className={rowClass}
+              aria-expanded={isAreasOpen}
+              aria-controls="mobile-service-areas-menu"
+            >
+              <span className={iconWrap}><MapPin className="h-5 w-5" /></span>
+              <span className="flex-1">{t('Service Areas')}</span>
+              {isAreasOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+            </button>
+            <div
+              id="mobile-service-areas-menu"
+              className={`overflow-hidden bg-gray-50 transition-[max-height,padding] duration-300 ${
+                isAreasOpen ? 'max-h-[430px] px-4 pb-4' : 'max-h-0 px-4'
+              }`}
+            >
+              <div className="grid grid-cols-2 gap-1 pt-1">
+                <Link to="/white-rock" className={subRowClass}>White Rock</Link>
+                <Link to="/surrey" className={subRowClass}>Surrey</Link>
+                <Link to="/delta" className={subRowClass}>Delta</Link>
+                <Link to="/langley-city" className={subRowClass}>Langley</Link>
+                <Link to="/vancouver" className={subRowClass}>Vancouver</Link>
+                <Link to="/coquitlam" className={subRowClass}>Coquitlam</Link>
+                <Link to="/new-westminster" className={subRowClass}>New Westminster</Link>
+                <Link to="/burnaby" className={subRowClass}>Burnaby</Link>
+              </div>
+              <Link to="/surrey" className="mt-2 flex items-center justify-between rounded-xl bg-white px-3 py-3 text-sm font-bold text-bc-red shadow-sm">
+                View Service Areas <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
 
-            <div className="pt-4 flex flex-col gap-3">
+          <Link to="/testimonials" className={rowClass}>
+            <span className={iconWrap}><Star className="h-5 w-5" /></span>
+            <span className="flex-1">{t('Reviews & Results')}</span>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </Link>
+
+          <Link to="/maintenance-memberships" className={rowClass}>
+            <span className={iconWrap}><CalendarCheck className="h-5 w-5" /></span>
+            <span className="flex-1">{t('Maintenance Plans')}</span>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </Link>
+
+          <Link to="/why-us" className={rowClass}>
+            <span className={iconWrap}><ShieldCheck className="h-5 w-5" /></span>
+            <span className="flex-1">{t('Why Choose Us')}</span>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </Link>
+
+          <Link to="/contact" className={rowClass}>
+            <span className={iconWrap}><ContactRound className="h-5 w-5" /></span>
+            <span className="flex-1">{t('Contact')}</span>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </Link>
+
+          <div className="bg-gray-50 p-4">
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href="tel:7788087620"
+                className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gray-950 px-3 font-bold text-white transition-colors hover:bg-gray-800"
+              >
+                <Phone className="h-5 w-5" />
+                Call Now
+              </a>
+              <a
+                href="sms:7788087620"
+                className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-3 font-bold text-gray-950 transition-colors hover:bg-gray-100"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Text Us
+              </a>
+            </div>
+            <div className="mt-4">
               <LanguageSelector />
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
       </div>
-    </>
+    </div>
   );
 };
 
