@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HousePin } from './types';
 import { useOfflineCanvassing } from '@/hooks/useOfflineCanvassing';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  MapPin, 
-  Check, 
-  X, 
-  Clock, 
-  FileText, 
-  Home,
+import {
+  Check,
+  X,
+  FileText,
   Wifi,
   WifiOff,
   QrCode,
@@ -18,9 +15,6 @@ import {
   Play,
   Square,
   Store,
-  Building2,
-  Target,
-  Settings2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PropertyQRCode from './PropertyQRCode';
@@ -36,14 +30,14 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
   onQuickMark,
   currentLocation,
   activePin,
-  mode = 'residential'
+  mode = 'residential',
 }) => {
   const {
     isOnline,
     pendingActions,
     isSyncing,
     quickMarkProperty,
-    syncPendingActions
+    syncPendingActions,
   } = useOfflineCanvassing();
 
   const [isActive, setIsActive] = useState(false);
@@ -51,60 +45,53 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
   const [visitCount, setVisitCount] = useState(0);
   const [qrPin, setQrPin] = useState<HousePin | null>(null);
   const [storefrontType, setStorefrontType] = useState<'nail-salon' | 'restaurant' | 'retail' | 'other'>('retail');
-  const [autoLogEnabled, setAutoLogEnabled] = useState(false);
-  const [autoLogRadius, setAutoLogRadius] = useState(15); // meters
 
   useEffect(() => {
-    if (isActive && !sessionStart) {
-      setSessionStart(new Date());
-    }
+    if (isActive && !sessionStart) setSessionStart(new Date());
   }, [isActive, sessionStart]);
 
-  const handleQuickAction = async (status: HousePin['status'], notes?: string, isStorefrontAction?: boolean) => {
+  const handleQuickAction = async (
+    status: HousePin['status'],
+    notes?: string,
+    isStorefrontAction?: boolean,
+  ) => {
     if (!currentLocation) {
       toast.error('Location not available');
       return;
     }
 
     const address = `${currentLocation.lat.toFixed(6)}, ${currentLocation.lng.toFixed(6)}`;
-    
-    const pin = quickMarkProperty(
+    const storefront = mode === 'storefront' || isStorefrontAction;
+    const { pin, cloudSaved } = await quickMarkProperty(
       currentLocation.lat,
       currentLocation.lng,
       address,
       status,
-      notes
+      notes,
+      storefront ? { isStorefront: true, storefrontType } : undefined,
     );
 
-    // Add storefront info if in storefront mode
-    if (mode === 'storefront' || isStorefrontAction) {
-      pin.isStorefront = true;
-      pin.storefrontType = storefrontType;
-    }
-
     onQuickMark(pin);
-    setVisitCount(prev => prev + 1);
-    
-    toast.success(mode === 'storefront' ? `Marked storefront as ${status}` : `Marked as ${status}`, {
-      description: isOnline ? 'Saved to cloud' : 'Saved offline'
+    setVisitCount((previous) => previous + 1);
+
+    toast.success(storefront ? `Marked GPS storefront as ${status}` : `Marked as ${status}`, {
+      description: cloudSaved ? 'Saved to Supabase' : 'Saved locally · cloud retry queued',
     });
 
-    // Vibrate if supported
-    if ('vibrate' in navigator) {
-      navigator.vibrate(50);
-    }
+    if ('vibrate' in navigator) navigator.vibrate(50);
   };
 
   const toggleSession = () => {
     if (isActive) {
       setIsActive(false);
       toast.success(`Session ended. ${visitCount} properties visited`);
-    } else {
-      setIsActive(true);
-      setSessionStart(new Date());
-      setVisitCount(0);
-      toast.success('Canvassing session started');
+      return;
     }
+
+    setIsActive(true);
+    setSessionStart(new Date());
+    setVisitCount(0);
+    toast.success('Canvassing session started');
   };
 
   const getSessionDuration = () => {
@@ -128,57 +115,40 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
               <Badge variant={isOnline ? 'default' : 'secondary'}>
                 {isOnline ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
               </Badge>
-              {pendingActions > 0 && (
-                <Badge variant="outline">
-                  {pendingActions} pending
-                </Badge>
-              )}
+              {pendingActions > 0 && <Badge variant="outline">{pendingActions} pending</Badge>}
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-3">
-          {/* Session Status */}
           <div className="flex items-center justify-between p-2 bg-muted rounded-lg">
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground'}`} />
-              <span className="text-sm font-medium">
-                {isActive ? getSessionDuration() : 'Not Active'}
-              </span>
+              <span className="text-sm font-medium">{isActive ? getSessionDuration() : 'Not Active'}</span>
             </div>
-            <div className="text-sm text-muted-foreground">
-              {visitCount} visits
-            </div>
+            <div className="text-sm text-muted-foreground">{visitCount} visits</div>
           </div>
 
-          {/* Quick Actions */}
           {isActive && mode === 'residential' && (
             <div className="grid grid-cols-3 gap-2">
-              <Button
-                size="lg"
-                variant="default"
-                className="flex-col h-20 gap-1"
-                onClick={() => handleQuickAction('interested', 'Flyer dropped')}
-              >
+              <Button size="lg" className="flex-col h-20 gap-1" onClick={() => void handleQuickAction('interested', 'Flyer dropped')}>
                 <FileText className="w-5 h-5" />
                 <span className="text-xs">Flyer</span>
               </Button>
-              
               <Button
                 size="lg"
                 variant="outline"
                 className="flex-col h-20 gap-1 border-green-500 text-green-600 dark:border-green-400 dark:text-green-400"
-                onClick={() => handleQuickAction('visited', 'Contact made')}
+                onClick={() => void handleQuickAction('visited', 'Contact made')}
               >
                 <Check className="w-5 h-5" />
                 <span className="text-xs">Visited</span>
               </Button>
-              
               <Button
                 size="lg"
                 variant="outline"
                 className="flex-col h-20 gap-1 border-red-500 text-red-600 dark:border-red-400 dark:text-red-400"
-                onClick={() => handleQuickAction('not-interested')}
+                onClick={() => void handleQuickAction('not-interested')}
               >
                 <X className="w-5 h-5" />
                 <span className="text-xs">Skip</span>
@@ -186,167 +156,62 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
             </div>
           )}
 
-          {/* Storefront Quick Actions */}
           {isActive && mode === 'storefront' && (
-            <>
-              <div className="grid grid-cols-4 gap-2 mb-2">
-                <Button
-                  size="sm"
-                  variant={storefrontType === 'nail-salon' ? 'default' : 'outline'}
-                  onClick={() => setStorefrontType('nail-salon')}
-                  className="text-xs"
-                >
-                  Nail
-                </Button>
-                <Button
-                  size="sm"
-                  variant={storefrontType === 'restaurant' ? 'default' : 'outline'}
-                  onClick={() => setStorefrontType('restaurant')}
-                  className="text-xs"
-                >
-                  Food
-                </Button>
-                <Button
-                  size="sm"
-                  variant={storefrontType === 'retail' ? 'default' : 'outline'}
-                  onClick={() => setStorefrontType('retail')}
-                  className="text-xs"
-                >
-                  Retail
-                </Button>
-                <Button
-                  size="sm"
-                  variant={storefrontType === 'other' ? 'default' : 'outline'}
-                  onClick={() => setStorefrontType('other')}
-                  className="text-xs"
-                >
-                  Other
-                </Button>
+            <div className="space-y-2">
+              <div className="rounded-md border bg-muted/40 p-2 text-xs text-muted-foreground">
+                For crawled businesses, use the store marker actions on the map so the exact business name, address and coordinates stay attached. These buttons are only for a manual GPS storefront.
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {(['nail-salon', 'restaurant', 'retail', 'other'] as const).map((type) => (
+                  <Button
+                    key={type}
+                    size="sm"
+                    variant={storefrontType === type ? 'default' : 'outline'}
+                    onClick={() => setStorefrontType(type)}
+                    className="text-xs"
+                  >
+                    {type === 'nail-salon' ? 'Nail' : type === 'restaurant' ? 'Food' : type === 'retail' ? 'Retail' : 'Other'}
+                  </Button>
+                ))}
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <Button
-                  size="lg"
-                  variant="default"
-                  className="flex-col h-20 gap-1"
-                  onClick={() => handleQuickAction('interested', `${storefrontType} - interested`, true)}
-                >
+                <Button size="lg" className="flex-col h-20 gap-1" onClick={() => void handleQuickAction('interested', `${storefrontType} - manual GPS interested`, true)}>
                   <Store className="w-5 h-5" />
-                  <span className="text-xs">Mark Store</span>
+                  <span className="text-xs">GPS Interested</span>
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="flex-col h-20 gap-1"
-                  onClick={() => handleQuickAction('not-interested', `${storefrontType} - not interested`, true)}
-                >
+                <Button size="lg" variant="outline" className="flex-col h-20 gap-1" onClick={() => void handleQuickAction('not-interested', `${storefrontType} - manual GPS skipped`, true)}>
                   <X className="w-5 h-5" />
-                  <span className="text-xs">Skip</span>
+                  <span className="text-xs">GPS Skip</span>
                 </Button>
               </div>
-            </>
-          )}
-
-          {/* Auto-Log Settings */}
-          {isActive && (
-            <div className="p-3 bg-muted/50 rounded-lg space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Target className="w-4 h-4" />
-                  <span className="text-sm font-medium">Auto-Log</span>
-                </div>
-                <Button
-                  size="sm"
-                  variant={autoLogEnabled ? 'default' : 'outline'}
-                  onClick={() => setAutoLogEnabled(!autoLogEnabled)}
-                >
-                  {autoLogEnabled ? 'On' : 'Off'}
-                </Button>
-              </div>
-              
-              {autoLogEnabled && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">Radius: {autoLogRadius}m</span>
-                    <div className="flex gap-1">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="h-6 px-2"
-                        onClick={() => setAutoLogRadius(Math.max(10, autoLogRadius - 5))}
-                      >
-                        -
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="h-6 px-2"
-                        onClick={() => setAutoLogRadius(Math.min(30, autoLogRadius + 5))}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Properties within {autoLogRadius}m will be auto-marked
-                  </div>
-                </div>
-              )}
             </div>
           )}
 
-          {/* Additional Actions */}
           <div className="grid grid-cols-2 gap-2">
-            <Button
-              variant={isActive ? 'destructive' : 'default'}
-              onClick={toggleSession}
-              className="gap-2"
-            >
-              {isActive ? (
-                <>
-                  <Square className="w-4 h-4" />
-                  End Session
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4" />
-                  Start Session
-                </>
-              )}
+            <Button variant={isActive ? 'destructive' : 'default'} onClick={toggleSession} className="gap-2">
+              {isActive ? <><Square className="w-4 h-4" />End Session</> : <><Play className="w-4 h-4" />Start Session</>}
             </Button>
-
             {activePin && (
-              <Button
-                variant="outline"
-                onClick={() => setQrPin(activePin)}
-                className="gap-2"
-              >
-                <QrCode className="w-4 h-4" />
-                QR Code
+              <Button variant="outline" onClick={() => setQrPin(activePin)} className="gap-2">
+                <QrCode className="w-4 h-4" />QR Code
               </Button>
             )}
           </div>
 
-          {/* Sync Button */}
-          {!isOnline && pendingActions > 0 && (
+          {pendingActions > 0 && (
             <Button
               variant="outline"
               className="w-full"
-              onClick={syncPendingActions}
-              disabled={isSyncing}
+              onClick={() => void syncPendingActions()}
+              disabled={isSyncing || !isOnline}
             >
-              {isSyncing ? 'Syncing...' : `Sync ${pendingActions} actions`}
+              {isSyncing ? 'Syncing to Supabase...' : isOnline ? `Sync ${pendingActions} queued action${pendingActions === 1 ? '' : 's'}` : `${pendingActions} action${pendingActions === 1 ? '' : 's'} waiting for internet`}
             </Button>
           )}
         </CardContent>
       </Card>
 
-      {qrPin && (
-        <PropertyQRCode
-          pin={qrPin}
-          isOpen={true}
-          onClose={() => setQrPin(null)}
-        />
-      )}
+      {qrPin && <PropertyQRCode pin={qrPin} isOpen={true} onClose={() => setQrPin(null)} />}
     </div>
   );
 };
