@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapPin, Edit, Trash2, Eye, Phone, Mail, Calendar, Star, Bell } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { MapPin, Edit, Trash2, Eye, Phone, Mail, Calendar, Star, Bell, Store, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,20 +22,39 @@ interface PinListProps {
   onSelectPersonalCalc?: (pin: HousePin) => void;
 }
 
-const statusConfig = {
-  'visited': { color: '#3b82f6', label: 'Visited' },
-  'interested': { color: '#10b981', label: 'Interested' },
+const statusConfig: Record<HousePin['status'], { color: string; label: string }> = {
+  visited: { color: '#3b82f6', label: 'Visited' },
+  interested: { color: '#10b981', label: 'Interested' },
   'not-interested': { color: '#ef4444', label: 'Not Interested' },
-  'completed': { color: '#8b5cf6', label: 'Completed' },
+  completed: { color: '#8b5cf6', label: 'Completed' },
   'revisit-later': { color: '#fbbf24', label: 'Revisit Later' },
-  'needs-quote': { color: '#f97316', label: 'Needs Quote' }
+  'needs-quote': { color: '#f97316', label: 'Needs Quote' },
 };
 
 const leadScoreConfig = {
-  'low': { color: '#94a3b8', label: 'Low', stars: 1 },
-  'medium': { color: '#fbbf24', label: 'Medium', stars: 2 },
-  'high': { color: '#10b981', label: 'High', stars: 3 }
+  low: { color: '#94a3b8', label: 'Low' },
+  medium: { color: '#fbbf24', label: 'Medium' },
+  high: { color: '#10b981', label: 'High' },
 };
+
+const timestamp = (pin: HousePin) => {
+  const value = new Date(pin.updatedAt || pin.routeTimestamp || pin.dateAdded || 0).getTime();
+  return Number.isFinite(value) ? value : 0;
+};
+
+const searchableText = (pin: HousePin) => [
+  pin.address,
+  pin.notes,
+  pin.customerName,
+  pin.businessName,
+  pin.phoneNumber,
+  pin.email,
+  pin.contactInfo,
+  pin.campaignName,
+  pin.neighborhood,
+  pin.streetSegment,
+  pin.serviceType,
+].filter(Boolean).join(' ').toLowerCase();
 
 const PinList: React.FC<PinListProps> = ({
   pins,
@@ -50,279 +69,136 @@ const PinList: React.FC<PinListProps> = ({
   EditPinForm,
   onSavePin,
   onCancelEdit,
-  onSelectPersonalCalc
+  onSelectPersonalCalc,
 }) => {
-  const filteredPins = pins.filter(pin => 
-    statusFilters.has(pin.status) && (
-      pin.address.toLowerCase().includes(searchAddress.toLowerCase()) ||
-      pin.notes.toLowerCase().includes(searchAddress.toLowerCase()) ||
-      (pin.customerName && pin.customerName.toLowerCase().includes(searchAddress.toLowerCase()))
-    )
-  );
-
-  const handlePhoneCall = (phoneNumber: string) => {
-    window.open(`tel:${phoneNumber}`, '_self');
-  };
-
-  const handleEmail = (email: string) => {
-    window.open(`mailto:${email}`, '_self');
-  };
+  const filteredPins = useMemo(() => {
+    const query = searchAddress.trim().toLowerCase();
+    return pins
+      .filter((pin) => statusFilters.has(pin.status))
+      .filter((pin) => !query || searchableText(pin).includes(query))
+      .sort((a, b) => timestamp(b) - timestamp(a));
+  }, [pins, searchAddress, statusFilters]);
 
   const isFollowUpDue = (followUpDate?: string) => {
     if (!followUpDate) return false;
-    const today = new Date();
-    const followUp = new Date(followUpDate);
-    return followUp <= today;
+    const followUp = new Date(followUpDate).getTime();
+    return Number.isFinite(followUp) && followUp <= Date.now();
   };
 
   const isServiceReminderDue = (pin: HousePin) => {
     if (!pin.serviceReminder || !pin.lastServiceDate) return false;
-    
-    const today = new Date();
-    const lastService = new Date(pin.lastServiceDate);
-    const yearsSinceService = (today.getTime() - lastService.getTime()) / (1000 * 60 * 60 * 24 * 365);
-    
-    return yearsSinceService >= 1;
+    const last = new Date(pin.lastServiceDate).getTime();
+    if (!Number.isFinite(last)) return false;
+    return Date.now() - last >= 365 * 24 * 60 * 60 * 1000;
   };
 
   if (filteredPins.length === 0) {
     return (
       <Card>
-        <CardContent className="p-6 sm:p-8 text-center">
-          <MapPin className="w-8 sm:w-12 h-8 sm:h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-sm sm:text-base text-gray-600">
-            No houses tracked yet. Click on the map or search for an address to start tracking!
-          </p>
+        <CardContent className="p-8 text-center">
+          <MapPin className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
+          <p className="font-medium">No matching properties</p>
+          <p className="mt-1 text-sm text-muted-foreground">Clear the search or status filters, or add a property from the map.</p>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <div className="space-y-3 sm:space-y-4">
-      {filteredPins.map((pin) => (
-        <Card 
-          key={pin.id}
-          className={`overflow-hidden transition-all ${highlightedPinId === pin.id ? 'ring-2 ring-yellow-400 shadow-lg' : ''}`}
-        >
-          <CardContent className="p-3 sm:p-4">
-            {editingPin === pin.id ? (
-              <EditPinForm 
-                pin={pin} 
-                onSave={(updates: Partial<HousePin>) => onSavePin(pin.id, updates)}
-                onCancel={onCancelEdit}
-              />
-            ) : (
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_auto]">
-                <StreetViewPreview pin={pin} onOpen={() => onOpenStreetView(pin)} />
+    <div className="space-y-3">
+      {filteredPins.map((pin) => {
+        const status = statusConfig[pin.status];
+        return (
+          <Card
+            key={pin.id}
+            className={`overflow-hidden transition-all ${highlightedPinId === pin.id ? 'ring-2 ring-yellow-400 shadow-lg' : ''}`}
+          >
+            <CardContent className="p-3 sm:p-4">
+              {editingPin === pin.id ? (
+                <EditPinForm
+                  pin={pin}
+                  onSave={(updates: Partial<HousePin>) => onSavePin(pin.id, updates)}
+                  onCancel={onCancelEdit}
+                />
+              ) : (
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_auto]">
+                  <StreetViewPreview pin={pin} onOpen={() => onOpenStreetView(pin)} />
 
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <MapPin className="w-4 h-4 text-bc-red flex-shrink-0" />
-                    <h3 
-                      className="font-semibold text-gray-900 text-sm sm:text-base truncate cursor-pointer hover:text-blue-600 hover:underline"
-                      onClick={() => onSelectPin(pin)}
-                    >
-                      {pin.address}
-                    </h3>
-                    <Badge 
-                      style={{ 
-                        backgroundColor: statusConfig[pin.status].color, 
-                        color: 'white' 
-                      }}
-                      className="text-xs"
-                    >
-                      {statusConfig[pin.status].label}
-                    </Badge>
-                    
-                    {pin.isPreviousClient && (
-                      <Badge className="bg-blue-500 text-white text-xs">
-                        Previous Client
-                      </Badge>
-                    )}
-                    
-                    {isServiceReminderDue(pin) && (
-                      <Badge className="bg-orange-500 text-white text-xs flex items-center gap-1">
-                        <Bell className="w-3 h-3" />
-                        Service Due
-                      </Badge>
-                    )}
-                    
-                    {pin.routeId && (
-                      <Badge variant="outline" className="text-xs">
-                        Route #{pin.routeOrder}
-                      </Badge>
-                    )}
-                    {pin.followUpDate && isFollowUpDue(pin.followUpDate) && (
-                      <Badge className="bg-red-500 text-white text-xs flex items-center gap-1">
-                        <Bell className="w-3 h-3" />
-                        Follow-up Due
-                      </Badge>
-                    )}
-                    {pin.leadScore && (
-                      <Badge 
-                        style={{ 
-                          backgroundColor: leadScoreConfig[pin.leadScore].color, 
-                          color: 'white' 
-                        }}
-                        className="text-xs flex items-center gap-1"
+                  <div className="min-w-0">
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      {pin.isStorefront ? <Store className="h-4 w-4 shrink-0 text-orange-600" /> : <MapPin className="h-4 w-4 shrink-0 text-bc-red" />}
+                      <button
+                        type="button"
+                        className="min-w-0 truncate text-left text-sm font-semibold hover:text-blue-600 hover:underline sm:text-base"
+                        onClick={() => onSelectPin(pin)}
                       >
-                        <Star className="w-3 h-3" />
-                        {leadScoreConfig[pin.leadScore].label}
+                        {pin.businessName || pin.address}
+                      </button>
+                      <Badge style={{ backgroundColor: status.color, color: 'white' }} className="text-xs">
+                        {status.label}
                       </Badge>
+                      {pin.isStorefront && <Badge variant="outline" className="text-xs">Storefront</Badge>}
+                      {pin.isPreviousClient && <Badge className="bg-blue-500 text-xs text-white">Previous Client</Badge>}
+                      {isServiceReminderDue(pin) && (
+                        <Badge className="flex items-center gap-1 bg-orange-500 text-xs text-white"><Bell className="h-3 w-3" />Service Due</Badge>
+                      )}
+                      {pin.followUpDate && isFollowUpDue(pin.followUpDate) && (
+                        <Badge className="flex items-center gap-1 bg-red-500 text-xs text-white"><Bell className="h-3 w-3" />Follow-up Due</Badge>
+                      )}
+                      {pin.leadScore && (
+                        <Badge style={{ backgroundColor: leadScoreConfig[pin.leadScore].color, color: 'white' }} className="flex items-center gap-1 text-xs">
+                          <Star className="h-3 w-3" />{leadScoreConfig[pin.leadScore].label}
+                        </Badge>
+                      )}
+                    </div>
+
+                    {pin.businessName && <p className="mb-1 text-sm text-muted-foreground">{pin.address}</p>}
+                    {pin.customerName && <p className="mb-1 text-sm"><strong>Customer:</strong> {pin.customerName}</p>}
+
+                    <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                      {pin.phoneNumber && (
+                        <button type="button" onClick={() => window.location.href = `tel:${pin.phoneNumber}`} className="flex items-center gap-1 text-green-700 hover:underline">
+                          <Phone className="h-3.5 w-3.5" />{pin.phoneNumber}
+                        </button>
+                      )}
+                      {pin.email && (
+                        <button type="button" onClick={() => window.location.href = `mailto:${pin.email}`} className="flex items-center gap-1 text-blue-700 hover:underline">
+                          <Mail className="h-3.5 w-3.5" />{pin.email}
+                        </button>
+                      )}
+                    </div>
+
+                    {pin.followUpDate && (
+                      <p className="mb-1 flex items-center gap-1 text-sm"><Calendar className="h-3.5 w-3.5" /><strong>Follow-up:</strong> {new Date(pin.followUpDate).toLocaleDateString()} {pin.followUpNote ? `· ${pin.followUpNote}` : ''}</p>
                     )}
+                    {pin.notes && <p className="mb-2 text-sm text-muted-foreground">{pin.notes}</p>}
+
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-muted-foreground sm:grid-cols-3">
+                      {pin.squareFootage ? <span><strong>Sqft:</strong> {pin.squareFootage.toLocaleString()}</span> : null}
+                      {pin.stories ? <span><strong>Stories:</strong> {pin.stories}</span> : null}
+                      {pin.serviceType ? <span><strong>Service:</strong> {pin.serviceType}</span> : null}
+                      {pin.jobValue ? <span><strong>Job:</strong> ${pin.jobValue.toLocaleString()}</span> : null}
+                      {pin.routeId ? <span className="flex items-center gap-1"><Route className="h-3 w-3" />Route #{pin.routeOrder || '—'}</span> : null}
+                      <span><strong>Added:</strong> {new Date(pin.dateAdded).toLocaleDateString()}</span>
+                    </div>
                   </div>
-                  
-                  {pin.customerName && (
-                    <p className="text-sm text-gray-700 mb-1">
-                      <strong>Customer:</strong> {pin.customerName}
-                    </p>
-                  )}
-                  
-                  {pin.phoneNumber && (
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm text-gray-700">
-                        <strong>Phone:</strong> {pin.phoneNumber}
-                      </p>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handlePhoneCall(pin.phoneNumber!)}
-                        className="h-6 w-6 p-0 text-green-600 hover:text-green-700"
-                        title="Call"
-                      >
-                        <Phone className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
-                  
-                  {pin.email && (
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm text-gray-700">
-                        <strong>Email:</strong> {pin.email}
-                      </p>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleEmail(pin.email!)}
-                        className="h-6 w-6 p-0 text-blue-600 hover:text-blue-700"
-                        title="Send Email"
-                      >
-                        <Mail className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
-                  
-                  {pin.followUpDate && (
-                    <p className="text-sm text-gray-700 mb-1 flex items-center gap-2">
-                      <Calendar className="w-3 h-3" />
-                      <strong>Follow-up:</strong> {new Date(pin.followUpDate).toLocaleDateString()}
-                      {pin.followUpNote && <span className="text-gray-500">- {pin.followUpNote}</span>}
-                    </p>
-                  )}
-                  
-                  {pin.notes && (
-                    <p className="text-sm text-gray-600 mb-2">{pin.notes}</p>
-                  )}
-                  
-                  {pin.contactInfo && (
-                    <p className="text-sm text-gray-500 mb-1">Contact: {pin.contactInfo}</p>
-                  )}
-                  
-                  {(pin.beforePhoto || pin.afterPhoto) && (
-                    <div className="flex gap-2 mb-2">
-                      {pin.beforePhoto && (
-                        <div className="flex flex-col">
-                          <span className="text-xs text-gray-500 mb-1">Before</span>
-                          <img 
-                            src={pin.beforePhoto} 
-                            alt="Before" 
-                            className="w-16 h-16 object-cover rounded border cursor-pointer hover:scale-110 transition-transform"
-                            onClick={() => window.open(pin.beforePhoto, '_blank')}
-                          />
-                        </div>
-                      )}
-                      {pin.afterPhoto && (
-                        <div className="flex flex-col">
-                          <span className="text-xs text-gray-500 mb-1">After</span>
-                          <img 
-                            src={pin.afterPhoto} 
-                            alt="After" 
-                            className="w-16 h-16 object-cover rounded border cursor-pointer hover:scale-110 transition-transform"
-                            onClick={() => window.open(pin.afterPhoto, '_blank')}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )}
 
-                  {pin.squareFootage !== undefined && pin.squareFootage !== null && pin.squareFootage > 0 && (
-                    <p className="text-xs text-gray-500 mb-1"><strong>Sqft:</strong> {pin.squareFootage.toLocaleString()}</p>
-                  )}
-                  
-                  {pin.jobCompletedDate && (
-                    <p className="text-sm text-gray-700 mb-1">
-                      <strong>Job Completed:</strong> {new Date(pin.jobCompletedDate).toLocaleDateString()}
-                      {pin.serviceType && <span> - {pin.serviceType}</span>}
-                      {pin.jobValue && <span> - ${pin.jobValue.toLocaleString()}</span>}
-                    </p>
-                  )}
-                  
-                  {pin.jobDetails && (
-                    <p className="text-sm text-gray-600 mb-2">
-                      <strong>Job Details:</strong> {pin.jobDetails}
-                    </p>
-                  )}
-                  
-                  {pin.lastServiceDate && (
-                    <p className="text-sm text-gray-700 mb-1">
-                      <strong>Last Service:</strong> {new Date(pin.lastServiceDate).toLocaleDateString()}
-                    </p>
-                  )}
-                  
-                  <div className="flex flex-wrap gap-2 text-xs text-gray-400">
-                    <span>Added: {pin.dateAdded}</span>
-                    <span>•</span>
-                    <span>Coordinates: {pin.lat.toFixed(6)}, {pin.lng.toFixed(6)}</span>
-                    {pin.routeTimestamp && (
-                      <>
-                        <span>•</span>
-                        <span>Route: {new Date(pin.routeTimestamp).toLocaleString()}</span>
-                      </>
+                  <div className="flex flex-wrap items-start gap-2 md:col-start-2 xl:col-start-auto xl:flex-col xl:items-stretch">
+                    <Button size="sm" variant="outline" onClick={() => onOpenStreetView(pin)}><Eye className="mr-1.5 h-4 w-4" />Street View</Button>
+                    <Button size="sm" variant="outline" onClick={() => onEditPin(pin.id)}><Edit className="mr-1.5 h-4 w-4" />Edit</Button>
+                    <Button size="sm" variant="outline" onClick={() => onDeletePin(pin.id)}><Trash2 className="mr-1.5 h-4 w-4" />Delete</Button>
+                    {onSelectPersonalCalc && (
+                      <Button size="sm" variant="secondary" className="bg-amber-200 text-amber-900 hover:bg-amber-300" onClick={() => onSelectPersonalCalc(pin)}>
+                        💸 Estimate
+                      </Button>
                     )}
                   </div>
                 </div>
-
-                <div className="flex flex-wrap items-start gap-2 md:col-start-2 xl:col-start-auto xl:flex-col xl:items-stretch">
-                  <Button size="sm" variant="outline" onClick={() => onOpenStreetView(pin)} title="View in Street View">
-                    <Eye className="w-4 h-4 mr-1.5" />
-                    Street View
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => onEditPin(pin.id)} title="Edit">
-                    <Edit className="w-4 h-4 mr-1.5" />
-                    Edit
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => onDeletePin(pin.id)} title="Delete">
-                    <Trash2 className="w-4 h-4 mr-1.5" />
-                    Delete
-                  </Button>
-                  {onSelectPersonalCalc && (
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      className="bg-amber-200 text-amber-800 hover:bg-amber-300"
-                      onClick={() => onSelectPersonalCalc(pin)}
-                      title="Open Personal Calculator"
-                    >
-                      💸 Estimate
-                    </Button>
-                  )}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      ))}
+              )}
+            </CardContent>
+          </Card>
+        );
+      })}
     </div>
   );
 };
