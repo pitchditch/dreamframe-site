@@ -1,5 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
-import { HousePin } from '@/components/house-tracking/types';
+import { HousePin, RouteSession } from '@/components/house-tracking/types';
 
 export interface D2DCrawlStats {
   rawCount: number;
@@ -51,6 +51,19 @@ export const ensureD2DPinUpdatedAt = <TPin extends HousePin>(pin: TPin): TPin =>
   return {
     ...pin,
     updatedAt: safeIso(pin.dateAdded),
+  };
+};
+
+export const d2dRouteUpdatedAtMs = (route: Pick<RouteSession, 'updatedAt' | 'endTime' | 'startTime'>) => {
+  const parsed = new Date(route.updatedAt || route.endTime || route.startTime || 0).getTime();
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+export const ensureD2DRouteUpdatedAt = <TRoute extends RouteSession>(route: TRoute): TRoute => {
+  if (route.updatedAt) return route;
+  return {
+    ...route,
+    updatedAt: safeIso(route.endTime || route.startTime),
   };
 };
 
@@ -179,6 +192,43 @@ export const deleteD2DCloudPinsByIdentity = async (identityKeys: string[]) => {
       updatedAt: now,
     })),
   );
+};
+
+export const upsertD2DCloudRoutes = async (routes: RouteSession[]) => {
+  if (routes.length === 0) return;
+  await getAuthenticatedUserId();
+  const client = supabase as any;
+  const normalized = routes.map(ensureD2DRouteUpdatedAt);
+  const { error } = await client.rpc('upsert_d2d_field_routes', {
+    p_routes: normalized.map((route) => ({
+      client_route_id: route.id,
+      route_data: route,
+      client_updated_at: route.updatedAt,
+    })),
+  });
+  if (error) throw error;
+};
+
+export const loadD2DCloudRoutes = async (): Promise<RouteSession[]> => {
+  const userId = await getAuthenticatedUserId();
+  const client = supabase as any;
+  const { data, error } = await client
+    .from('d2d_field_routes')
+    .select('client_route_id,route_data,client_updated_at')
+    .eq('user_id', userId)
+    .order('client_updated_at', { ascending: true });
+  if (error) throw error;
+
+  return (data || [])
+    .map((row: any) => {
+      if (!row?.route_data || typeof row.route_data !== 'object') return null;
+      return {
+        ...row.route_data,
+        id: String(row.client_route_id || row.route_data.id),
+        updatedAt: safeIso(row.client_updated_at),
+      } as RouteSession;
+    })
+    .filter((route: RouteSession | null): route is RouteSession => Boolean(route));
 };
 
 export const saveD2DCrawlSession = async <TCandidate>(snapshot: D2DCrawlSnapshot<TCandidate>) => {
