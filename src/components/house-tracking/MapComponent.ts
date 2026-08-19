@@ -2,33 +2,94 @@ import React, { useEffect, useRef, useState } from 'react';
 import MapComponentV3 from './MapComponentV3';
 import { HousePin } from './types';
 import {
+  D2DCloudTombstone,
   d2dPinIdentity,
-  deleteD2DCloudPinsByIdentity,
-  loadD2DCloudPins,
+  d2dPinUpdatedAtMs,
+  ensureD2DPinUpdatedAt,
+  loadD2DCloudState,
+  tombstoneD2DCloudPins,
   upsertD2DCloudPins,
 } from '@/utils/d2dCloud';
 import { toast } from 'sonner';
 
-const DELETED_IDENTITIES_KEY = 'd2d-cloud-deleted-identities-v1';
+const DELETION_QUEUE_KEY = 'd2d-cloud-deletion-queue-v2';
+const LEGACY_DELETED_IDENTITIES_KEY = 'd2d-cloud-deleted-identities-v1';
 
-const readDeletedIdentities = (): string[] => {
+type MapWrapperProps = React.ComponentProps<typeof MapComponentV3> & {
+  onDeletePin?: (pinId: string) => void;
+};
+
+interface TrackedPin {
+  clientPinId: string;
+  identityKey: string;
+  updatedAt: string;
+}
+
+const toTimestamp = (value: string) => {
+  const parsed = new Date(value).getTime();
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+const trackedPin = (pin: HousePin): TrackedPin => {
+  const normalized = ensureD2DPinUpdatedAt(pin);
+  return {
+    clientPinId: normalized.id,
+    identityKey: d2dPinIdentity(normalized),
+    updatedAt: normalized.updatedAt || normalized.dateAdded,
+  };
+};
+
+const readDeletionQueue = (): D2DCloudTombstone[] => {
+  const queue: D2DCloudTombstone[] = [];
   try {
-    const parsed = JSON.parse(localStorage.getItem(DELETED_IDENTITIES_KEY) || '[]');
-    return Array.isArray(parsed) ? parsed.filter((item) => typeof item === 'string') : [];
+    const parsed = JSON.parse(localStorage.getItem(DELETION_QUEUE_KEY) || '[]');
+    if (Array.isArray(parsed)) {
+      parsed.forEach((item) => {
+        if (!item || typeof item !== 'object') return;
+        if (typeof item.identityKey !== 'string' || typeof item.updatedAt !== 'string') return;
+        queue.push({
+          identityKey: item.identityKey,
+          clientPinId: typeof item.clientPinId === 'string' ? item.clientPinId : '',
+          updatedAt: item.updatedAt,
+        });
+      });
+    }
   } catch {
-    return [];
+    // Keep working with any legacy queue below.
   }
+
+  try {
+    const legacy = JSON.parse(localStorage.getItem(LEGACY_DELETED_IDENTITIES_KEY) || '[]');
+    if (Array.isArray(legacy)) {
+      const updatedAt = new Date().toISOString();
+      legacy.filter((item) => typeof item === 'string').forEach((identityKey) => {
+        queue.push({ identityKey, clientPinId: '', updatedAt });
+      });
+    }
+  } catch {
+    // Legacy data is optional.
+  }
+
+  return queue;
 };
 
-const saveDeletedIdentities = (identities: string[]) => {
-  localStorage.setItem(DELETED_IDENTITIES_KEY, JSON.stringify(Array.from(new Set(identities))));
+const saveDeletionQueue = (items: D2DCloudTombstone[]) => {
+  const newest = new Map<string, D2DCloudTombstone>();
+  items.forEach((item) => {
+    const key = item.clientPinId || item.identityKey;
+    if (!key) return;
+    const previous = newest.get(key);
+    if (!previous || toTimestamp(item.updatedAt) >= toTimestamp(previous.updatedAt)) newest.set(key, item);
+  });
+  localStorage.setItem(DELETION_QUEUE_KEY, JSON.stringify(Array.from(newest.values())));
+  localStorage.removeItem(LEGACY_DELETED_IDENTITIES_KEY);
 };
 
-const MapComponent: React.FC<React.ComponentProps<typeof MapComponentV3>> = (props) => {
+const MapComponent: React.FC<MapWrapperProps> = (props) => {
   const [, setMapReadyTick] = useState(0);
   const [cloudReady, setCloudReady] = useState(false);
   const [onlineRevision, setOnlineRevision] = useState(0);
-  const previousIdentitiesRef = useRef<Set<string>>(new Set());
+  const previousPinsRef = useRef<Map<string, TrackedPin>>(new Map());
   const syncTimerRef = useRef<number | null>(null);
   const hydrationTimerRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
@@ -67,39 +128,60 @@ const MapComponent: React.FC<React.ComponentProps<typeof MapComponentV3>> = (pro
   useEffect(() => {
     let cancelled = false;
 
-    void loadD2DCloudPins()
-      .then(async (cloudPins) => {
+    void loadD2DCloudState()
+      .then(async ({ pins: cloudPins, tombstones }) => {
         if (cancelled || !mountedRef.current) return;
 
-        const deleted = new Set(readDeletedIdentities());
-        const usableCloudPins = cloudPins.filter((pin) => !deleted.has(d2dPinIdentity(pin)));
-        const localIdentities = new Set(props.pins.map(d2dPinIdentity));
+        const localById = new Map(props.pins.map((pin) => [pin.id, pin]));
+        const localByIdentity = new Map(props.pins.map((pin) => [d2dPinIdentity(pin), pin]));
 
-        usableCloudPins.forEach((cloudPin) => {
+        for (const tombstone of tombstones) {
+          const local = localById.get(tombstone.clientPinId) || localByIdentity.get(tombstone.identityKey);
+          if (!local) continue;
+          if (d2dPinUpdatedAtMs(local) <= toTimestamp(tombstone.updatedAt)) {
+            props.onDeletePin?.(local.id);
+            localById.delete(local.id);
+            localByIdentity.delete(d2dPinIdentity(local));
+          }
+        }
+
+        for (const cloudPin of cloudPins) {
           const identity = d2dPinIdentity(cloudPin);
-          if (localIdentities.has(identity)) return;
-          const { id: _cloudId, ...pinWithoutId } = cloudPin;
-          props.onAddPin(pinWithoutId as Omit<HousePin, 'id'>);
-          localIdentities.add(identity);
-        });
+          const local = localById.get(cloudPin.id) || localByIdentity.get(identity);
+          if (!local) {
+            props.onAddPin(cloudPin as any);
+            localById.set(cloudPin.id, cloudPin);
+            localByIdentity.set(identity, cloudPin);
+            continue;
+          }
 
-        previousIdentitiesRef.current = new Set([
-          ...props.pins.map(d2dPinIdentity),
-          ...usableCloudPins.map(d2dPinIdentity),
-        ]);
+          if (d2dPinUpdatedAtMs(cloudPin) > d2dPinUpdatedAtMs(local)) {
+            props.onUpdatePin(local.id, cloudPin);
+            localById.delete(local.id);
+            localById.set(cloudPin.id, cloudPin);
+            localByIdentity.set(identity, cloudPin);
+          }
+        }
 
-        if (deleted.size > 0 && navigator.onLine) {
-          try {
-            await deleteD2DCloudPinsByIdentity(Array.from(deleted));
-            saveDeletedIdentities([]);
-          } catch (error) {
-            console.error('Could not flush D2D deletion queue:', error);
+        previousPinsRef.current = new Map(
+          Array.from(localById.values()).map((pin) => [pin.id, trackedPin(pin)]),
+        );
+
+        if (navigator.onLine) {
+          const queued = readDeletionQueue();
+          if (queued.length > 0) {
+            try {
+              await tombstoneD2DCloudPins(queued);
+              saveDeletionQueue([]);
+            } catch (error) {
+              console.error('Could not flush D2D deletion queue:', error);
+            }
           }
         }
 
         hydrationTimerRef.current = window.setTimeout(() => {
           if (!cancelled && mountedRef.current) setCloudReady(true);
-        }, 250);
+        }, 350);
       })
       .catch((error) => {
         console.error('D2D cloud hydration failed:', error);
@@ -112,19 +194,28 @@ const MapComponent: React.FC<React.ComponentProps<typeof MapComponentV3>> = (pro
     return () => {
       cancelled = true;
     };
-    // Hydrate cloud pins once for this map mount. Subsequent changes are handled by the sync effect.
+    // Hydrate cloud state once for this map mount. Later changes use conflict-safe sync below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!cloudReady) return;
 
-    const currentIdentities = new Set(props.pins.map(d2dPinIdentity));
-    const removed = Array.from(previousIdentitiesRef.current).filter((identity) => !currentIdentities.has(identity));
-    if (removed.length > 0) {
-      saveDeletedIdentities([...readDeletedIdentities(), ...removed]);
-    }
-    previousIdentitiesRef.current = currentIdentities;
+    const current = new Map(props.pins.map((pin) => [pin.id, trackedPin(pin)]));
+    const currentIdentities = new Set(Array.from(current.values()).map((item) => item.identityKey));
+    const removed: D2DCloudTombstone[] = [];
+
+    previousPinsRef.current.forEach((previous, pinId) => {
+      if (current.has(pinId) || currentIdentities.has(previous.identityKey)) return;
+      removed.push({
+        identityKey: previous.identityKey,
+        clientPinId: previous.clientPinId,
+        updatedAt: new Date().toISOString(),
+      });
+    });
+
+    if (removed.length > 0) saveDeletionQueue([...readDeletionQueue(), ...removed]);
+    previousPinsRef.current = current;
 
     if (!navigator.onLine) return;
     if (syncTimerRef.current) window.clearTimeout(syncTimerRef.current);
@@ -132,12 +223,12 @@ const MapComponent: React.FC<React.ComponentProps<typeof MapComponentV3>> = (pro
     syncTimerRef.current = window.setTimeout(() => {
       void (async () => {
         try {
-          const deletionQueue = readDeletedIdentities();
+          const deletionQueue = readDeletionQueue();
           if (deletionQueue.length > 0) {
-            await deleteD2DCloudPinsByIdentity(deletionQueue);
-            saveDeletedIdentities([]);
+            await tombstoneD2DCloudPins(deletionQueue);
+            saveDeletionQueue([]);
           }
-          await upsertD2DCloudPins(props.pins);
+          await upsertD2DCloudPins(props.pins.map(ensureD2DPinUpdatedAt));
         } catch (error) {
           console.error('D2D cloud sync failed:', error);
         }
@@ -145,8 +236,9 @@ const MapComponent: React.FC<React.ComponentProps<typeof MapComponentV3>> = (pro
     }, 350);
   }, [props.pins, cloudReady, onlineRevision]);
 
+  const { onDeletePin: _onDeletePin, ...mapProps } = props;
   return React.createElement(MapComponentV3, {
-    ...props,
+    ...mapProps,
     pins: [...props.pins],
     routes: [...props.routes],
   });
