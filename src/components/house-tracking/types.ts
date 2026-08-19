@@ -23,9 +23,7 @@ export interface HousePin {
   followUpNote?: string;
   leadScore?: 'low' | 'medium' | 'high';
   squareFootage?: number;
-  // Lead source and attribution fields
   leadSource?: 'door-to-door' | 'facebook' | 'google' | 'referral' | 'website' | 'qr-code' | 'flyer' | 'ai-call' | 'other';
-  // Storefront categorization
   isStorefront?: boolean;
   storefrontType?: 'nail-salon' | 'restaurant' | 'retail' | 'office' | 'coffee-shop' | 'hair-salon' | 'gym' | 'medical' | 'automotive' | 'other';
   businessName?: string;
@@ -35,12 +33,10 @@ export interface HousePin {
   canvasserName?: string;
   streetSegment?: string;
   neighborhood?: string;
-  // Facebook leads specific fields
   facebookProfileUrl?: string;
   facebookLeadId?: string;
   facebookCampaignName?: string;
   facebookAdSetName?: string;
-  // Property enrichment fields
   yearBuilt?: number;
   stories?: number;
   propertyType?: string;
@@ -48,14 +44,13 @@ export interface HousePin {
   bedrooms?: number;
   bathrooms?: number;
   propertyDataSource?: 'attom' | 'bc-assessment' | 'manual';
-  // Job completion fields
   jobCompletedDate?: string;
   jobDetails?: string;
   serviceType?: string;
   jobValue?: number;
   isPreviousClient?: boolean;
   lastServiceDate?: string;
-  serviceReminder?: boolean; // Alert for yearly service
+  serviceReminder?: boolean;
 }
 
 export type NewHousePin = Omit<HousePin, 'id'> & { id?: string };
@@ -92,6 +87,16 @@ export interface RouteSession {
   totalStops?: number;
   completedStops?: number;
   completionRate?: number;
+  /** Stops with a canvassing outcome, distinct from completed paid jobs. */
+  workedStops?: number;
+  interestedStops?: number;
+  quoteStops?: number;
+  notInterestedStops?: number;
+  revisitStops?: number;
+  completedJobs?: number;
+  skippedStops?: number;
+  /** Original route when this row represents a completed field run/history session. */
+  parentRouteId?: string;
   /** Client-side route revision timestamp used for cross-device cloud sync. */
   updatedAt?: string;
 }
