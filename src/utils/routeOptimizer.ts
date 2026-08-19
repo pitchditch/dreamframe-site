@@ -12,7 +12,7 @@ export interface OptimizedRoute {
   hasDownhill?: boolean;
 }
 
-function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+export function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371;
   const dLat = toRad(lat2 - lat1);
   const dLng = toRad(lng2 - lng1);
@@ -43,8 +43,8 @@ function extractCityFromAddress(address: string): string {
   return 'Unknown';
 }
 
-function optimizeRouteOrder(pins: HousePin[]): HousePin[] {
-  if (pins.length <= 1) return pins;
+export function optimizeRouteOrder(pins: HousePin[]): HousePin[] {
+  if (pins.length <= 1) return [...pins];
 
   const unvisited = [...pins];
   const route: HousePin[] = [];
@@ -75,7 +75,7 @@ function optimizeRouteOrder(pins: HousePin[]): HousePin[] {
   return route;
 }
 
-function calculateRouteDistance(pins: HousePin[]): number {
+export function calculateRouteDistance(pins: HousePin[]): number {
   let totalDistance = 0;
   for (let i = 0; i < pins.length - 1; i++) {
     totalDistance += calculateDistance(
