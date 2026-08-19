@@ -23,6 +23,7 @@ const CityPages = lazy(() => import('./pages/CityPages'));
 const HouseTracking = lazy(() => import('./pages/HouseTracking'));
 const CRM = lazy(() => import('./pages/CRM'));
 const MaintenanceMemberships = lazy(() => import('./pages/MaintenanceMemberships'));
+const StorefrontUpdates = lazy(() => import('./pages/StorefrontUpdates'));
 const PropertyCapture = lazy(() => import('./pages/crm/PropertyCapture'));
 const CanvasserMode = lazy(() => import('./pages/crm/CanvasserMode'));
 const ViewProperties = lazy(() => import('./pages/crm/ViewProperties'));
@@ -32,6 +33,7 @@ const Analytics = lazy(() => import('./pages/crm/AnalyticsEnhanced'));
 const RouteHistory = lazy(() => import('./pages/crm/RouteHistory'));
 const Clients = lazy(() => import('./pages/crm/Clients'));
 const CallDesk = lazy(() => import('./pages/crm/CallDesk'));
+const OutboundConsent = lazy(() => import('./pages/crm/OutboundConsent'));
 const VirtualEstimate = lazy(() => import('./pages/VirtualEstimate'));
 const VirtualEstimateDesk = lazy(() => import('./pages/VirtualEstimateDesk'));
 const VirtualEstimateHost = lazy(() => import('./pages/VirtualEstimateHost'));
@@ -67,6 +69,7 @@ function App() {
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/maintenance-memberships" element={<MaintenanceMemberships />} />
+            <Route path="/storefront-updates" element={<StorefrontUpdates />} />
             <Route path="/house-tracking" element={<HouseTracking />} />
             <Route path="/virtual-estimate/:sessionId" element={<VirtualEstimate />} />
             <Route path="/crm" element={<CRM />} />
@@ -79,6 +82,7 @@ function App() {
             <Route path="/crm/routes" element={<RouteHistory />} />
             <Route path="/crm/clients" element={<Clients />} />
             <Route path="/crm/call-desk" element={<CallDesk />} />
+            <Route path="/crm/outbound-consent" element={<OutboundConsent />} />
             <Route path="/crm/virtual-estimates" element={<VirtualEstimateDesk />} />
             <Route path="/crm/virtual-estimate/:sessionId" element={<VirtualEstimateHost />} />
 
