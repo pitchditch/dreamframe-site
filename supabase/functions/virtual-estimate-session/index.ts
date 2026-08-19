@@ -1,9 +1,12 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const PUBLIC_SITE_ORIGIN = "https://bcpressurewashing.ca";
 const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  SUPABASE_URL,
+  SERVICE_ROLE_KEY,
   { auth: { persistSession: false, autoRefreshToken: false } },
 );
 
@@ -11,7 +14,8 @@ const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3
 const TOKEN_PATTERN = /^[0-9a-f]{64}$/i;
 const ALLOWED_ACTIONS = new Set([
   "view", "join", "presence", "position", "location", "address", "end",
-  "admin_list", "host_presence", "host_leave", "call_reset", "signal", "signals", "call_state",
+  "admin_list", "admin_create", "admin_get_link", "admin_resend",
+  "host_presence", "host_leave", "call_reset", "signal", "signals", "call_state",
 ]);
 const SIGNAL_KINDS = new Set(["offer", "answer", "ice", "hangup"]);
 const CALL_STATES = new Set(["ready", "connecting", "connected", "ended", "failed"]);
@@ -34,7 +38,7 @@ function corsHeaders(req: Request): Record<string, string> {
     /^https:\/\/[a-z0-9-]+(?:--[a-z0-9-]+)?\.netlify\.app$/i.test(origin) ||
     /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin);
   return {
-    "Access-Control-Allow-Origin": allowed ? origin : "https://bcpressurewashing.ca",
+    "Access-Control-Allow-Origin": allowed ? origin : PUBLIC_SITE_ORIGIN,
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Vary": "Origin",
@@ -64,6 +68,50 @@ function isRecent(value: unknown, maxAgeMs = 20_000): boolean {
   if (typeof value !== "string" || !value) return false;
   const time = new Date(value).getTime();
   return Number.isFinite(time) && Date.now() - time <= maxAgeMs;
+}
+
+function normalizePhone(value: unknown): string {
+  if (typeof value !== "string" || !value.trim()) return "";
+  let digits = value.replace(/\D/g, "");
+  if (digits.length === 10) digits = `1${digits}`;
+  if (digits.length !== 11 || !digits.startsWith("1")) throw new Error("Enter a valid Canadian or US phone number.");
+  return `+${digits}`;
+}
+
+function normalizeEmail(value: unknown): string {
+  if (typeof value !== "string" || !value.trim()) return "";
+  const email = value.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Enter a valid customer email.");
+  return email;
+}
+
+function newInviteToken(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function customerInviteUrl(sessionId: string, token: string): string {
+  return `${PUBLIC_SITE_ORIGIN}/virtual-estimate/${sessionId}?token=${encodeURIComponent(token)}`;
+}
+
+async function deliverInvite(params: { customerName: string; customerPhone: string; customerEmail: string; url: string }) {
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/send-virtual-estimate-sms`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+      apikey: SERVICE_ROLE_KEY,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      customerName: params.customerName,
+      customerPhone: params.customerPhone,
+      customerEmail: params.customerEmail,
+      sessionUrl: params.url,
+      requestType: "invite",
+    }),
+  });
+  const payload = await response.json().catch(() => ({}));
+  return { ok: response.ok && payload?.success !== false, payload };
 }
 
 async function isAdminRequest(req: Request): Promise<boolean> {
@@ -138,10 +186,80 @@ serve(async (req: Request): Promise<Response> => {
       return json(req, { sessions: (rows || []).map((row) => publicSession(row)) });
     }
 
+    if (action === "admin_create") {
+      if (!adminRequest) return json(req, { error: "Admin access required" }, 403);
+      const customerName = typeof body.customerName === "string" ? body.customerName.trim().slice(0, 120) : "";
+      const customerPhone = normalizePhone(body.customerPhone);
+      const customerEmail = normalizeEmail(body.customerEmail);
+      const address = typeof body.address === "string" ? body.address.trim().slice(0, 250) : "";
+      if (!customerPhone && !customerEmail) return json(req, { error: "Enter a phone number or email." }, 400);
+
+      const newSessionId = crypto.randomUUID();
+      const token = newInviteToken();
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+      const { data: created, error: createError } = await supabase.from("virtual_estimate_sessions").insert({
+        session_id: newSessionId,
+        customer_name: customerName || null,
+        customer_phone: customerPhone || null,
+        customer_email: customerEmail || null,
+        address: address || null,
+        status: "invited",
+        invite_token: token,
+        invite_status: "invited",
+        invite_expires_at: expiresAt,
+        direct_join_allowed: true,
+        waiting_for_host: true,
+        participant_role: "customer",
+        participant_source: "admin_invite",
+        call_state: "idle",
+      }).select(SELECT_FIELDS).single();
+      if (createError || !created) {
+        console.error("[virtual-estimate-session] invite create failed", createError);
+        return json(req, { error: "Could not create the virtual estimate invite." }, 500);
+      }
+      const url = customerInviteUrl(newSessionId, token);
+      const delivery = body.send === false ? null : await deliverInvite({ customerName, customerPhone, customerEmail, url });
+      return json(req, {
+        session: publicSession(created),
+        inviteUrl: url,
+        inviteExpiresAt: expiresAt,
+        sent: delivery?.ok ?? false,
+        delivery: delivery?.payload ?? null,
+      });
+    }
+
     if (!UUID_PATTERN.test(sessionId)) return json(req, { error: "This session link is invalid" }, 400);
     const { data: existing, error: lookupError } = await fetchSession(sessionId);
     if (lookupError) return json(req, { error: "Session lookup failed" }, 500);
     if (!existing) return json(req, { error: "Session not found" }, 404);
+
+    if (action === "admin_get_link" || action === "admin_resend") {
+      if (!adminRequest) return json(req, { error: "Admin access required" }, 403);
+      let token = String(existing.invite_token || "").trim().toLowerCase();
+      let expiresAt = existing.invite_expires_at ? String(existing.invite_expires_at) : "";
+      if (!TOKEN_PATTERN.test(token) || !expiresAt || new Date(expiresAt).getTime() <= Date.now()) {
+        token = newInviteToken();
+        expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+        const { error: refreshError } = await supabase.from("virtual_estimate_sessions").update({
+          invite_token: token,
+          invite_expires_at: expiresAt,
+          invite_status: "invited",
+          direct_join_allowed: true,
+          status: ["completed", "expired", "cancelled", "canceled"].includes(String(existing.status || "").toLowerCase()) ? "invited" : existing.status,
+          updated_at: new Date().toISOString(),
+        }).eq("session_id", sessionId);
+        if (refreshError) return json(req, { error: "Could not refresh invite link" }, 500);
+      }
+      const url = customerInviteUrl(sessionId, token);
+      if (action === "admin_resend") {
+        const customerPhone = normalizePhone(existing.customer_phone);
+        const customerEmail = normalizeEmail(existing.customer_email);
+        const customerName = typeof existing.customer_name === "string" ? existing.customer_name : "";
+        const delivery = await deliverInvite({ customerName, customerPhone, customerEmail, url });
+        return json(req, { inviteUrl: url, inviteExpiresAt: expiresAt, sent: delivery.ok, delivery: delivery.payload });
+      }
+      return json(req, { inviteUrl: url, inviteExpiresAt: expiresAt });
+    }
 
     if (!adminRequest) {
       const storedToken = String(existing.invite_token || "").trim().toLowerCase();
@@ -246,6 +364,6 @@ serve(async (req: Request): Promise<Response> => {
     return json(req, { session: publicSession(current) });
   } catch (error) {
     console.error("[virtual-estimate-session] unexpected error", error);
-    return json(req, { error: "Unexpected session error" }, 500);
+    return json(req, { error: error instanceof Error ? error.message : "Unexpected session error" }, 500);
   }
 });
