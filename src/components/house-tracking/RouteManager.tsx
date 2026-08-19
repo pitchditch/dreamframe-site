@@ -135,10 +135,10 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
     let cancelled = false;
     let unsubscribeRealtime = () => undefined;
 
-    const refresh = async () => {
+    const refresh = async (syncAuto = true) => {
       if (!navigator.onLine) return;
       try {
-        const state = await loadD2DCloudRouteState();
+        const state = await loadD2DCloudRouteState({ syncAuto });
         if (!cancelled) setKnownRoutes((previous) => mergeRouteSet(previous, state.routes, state.tombstones));
       } catch (error) {
         console.error('Could not refresh route list:', error);
@@ -150,15 +150,15 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
       (routeId) => setKnownRoutes((previous) => previous.filter((route) => route.id !== routeId)),
     );
 
-    void refresh();
-    void subscribeD2DCloudRouteChanges(() => void refresh())
+    void refresh(true);
+    void subscribeD2DCloudRouteChanges(() => void refresh(false))
       .then((unsubscribe) => {
         if (cancelled) unsubscribe();
         else unsubscribeRealtime = unsubscribe;
       })
       .catch((error) => console.error('Could not subscribe to realtime D2D routes:', error));
 
-    const handleOnline = () => void refresh();
+    const handleOnline = () => void refresh(true);
     window.addEventListener('online', handleOnline);
     return () => {
       cancelled = true;
@@ -381,7 +381,8 @@ const RouteManager: React.FC<RouteManagerProps> = ({ pins, onUpdatePin }) => {
             <div className="space-y-2 max-h-[32rem] overflow-y-auto pr-1">
               {sortedRoutes.map((route) => {
                 const metrics = routeMetrics(route);
-                const canStart = Boolean(route.stops?.length);
+                const isHistoryRun = route.source === 'gps-session' && Boolean(route.parentRouteId);
+                const canStart = Boolean(route.stops?.length && !isHistoryRun);
                 const isCurrent = activeRouteId === route.id;
                 return (
                   <div key={route.id} className={`rounded-lg border p-3 ${isCurrent ? 'border-primary bg-primary/5' : ''}`}>
