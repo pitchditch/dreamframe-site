@@ -145,7 +145,7 @@ const VirtualEstimate = () => {
   }, [inviteToken, sessionId]);
 
   const aiRequest = useCallback(async (action: string, extra: Record<string, unknown> = {}) => {
-    const { data, error: invokeError } = await supabase.functions.invoke('virtual-estimate-ai', {
+    const { data, error: invokeError } = await supabase.functions.invoke('transcribe-voice-note', {
       body: { action, sessionId, inviteToken, ...extra },
     });
 
