@@ -58,7 +58,7 @@
     "emailjs-com": "^3.2.0",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^12.6.3",
-    "input-otp": "^1.4.1",
+    "input-otp": "^1.2.4",
     "jszip": "^3.10.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.462.0",
