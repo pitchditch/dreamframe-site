@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { HousePin } from './types';
+import StreetViewPreview from './StreetViewPreview';
 
 interface PinListProps {
   pins: HousePin[];
@@ -102,7 +103,7 @@ const PinList: React.FC<PinListProps> = ({
       {filteredPins.map((pin) => (
         <Card 
           key={pin.id}
-          className={`transition-all ${highlightedPinId === pin.id ? 'ring-2 ring-yellow-400 shadow-lg' : ''}`}
+          className={`overflow-hidden transition-all ${highlightedPinId === pin.id ? 'ring-2 ring-yellow-400 shadow-lg' : ''}`}
         >
           <CardContent className="p-3 sm:p-4">
             {editingPin === pin.id ? (
@@ -112,8 +113,10 @@ const PinList: React.FC<PinListProps> = ({
                 onCancel={onCancelEdit}
               />
             ) : (
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_auto]">
+                <StreetViewPreview pin={pin} onOpen={() => onOpenStreetView(pin)} />
+
+                <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
                     <MapPin className="w-4 h-4 text-bc-red flex-shrink-0" />
                     <h3 
@@ -132,14 +135,12 @@ const PinList: React.FC<PinListProps> = ({
                       {statusConfig[pin.status].label}
                     </Badge>
                     
-                    {/* Previous Client Badge */}
                     {pin.isPreviousClient && (
                       <Badge className="bg-blue-500 text-white text-xs">
                         Previous Client
                       </Badge>
                     )}
                     
-                    {/* Service Reminder Alert */}
                     {isServiceReminderDue(pin) && (
                       <Badge className="bg-orange-500 text-white text-xs flex items-center gap-1">
                         <Bell className="w-3 h-3" />
@@ -255,12 +256,10 @@ const PinList: React.FC<PinListProps> = ({
                     </div>
                   )}
 
-                  {/* ADDED: Show square footage if present */}
                   {pin.squareFootage !== undefined && pin.squareFootage !== null && pin.squareFootage > 0 && (
                     <p className="text-xs text-gray-500 mb-1"><strong>Sqft:</strong> {pin.squareFootage.toLocaleString()}</p>
                   )}
                   
-                  {/* Job Completion Information */}
                   {pin.jobCompletedDate && (
                     <p className="text-sm text-gray-700 mb-1">
                       <strong>Job Completed:</strong> {new Date(pin.jobCompletedDate).toLocaleDateString()}
@@ -293,19 +292,20 @@ const PinList: React.FC<PinListProps> = ({
                     )}
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 flex-shrink-0">
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => onOpenStreetView(pin)} title="View in Street View">
-                      <Eye className="w-4 h-4" />
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={() => onEditPin(pin.id)} title="Edit">
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={() => onDeletePin(pin.id)} title="Delete">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                  {/* Personal Calculator Button */}
+
+                <div className="flex flex-wrap items-start gap-2 md:col-start-2 xl:col-start-auto xl:flex-col xl:items-stretch">
+                  <Button size="sm" variant="outline" onClick={() => onOpenStreetView(pin)} title="View in Street View">
+                    <Eye className="w-4 h-4 mr-1.5" />
+                    Street View
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => onEditPin(pin.id)} title="Edit">
+                    <Edit className="w-4 h-4 mr-1.5" />
+                    Edit
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => onDeletePin(pin.id)} title="Delete">
+                    <Trash2 className="w-4 h-4 mr-1.5" />
+                    Delete
+                  </Button>
                   {onSelectPersonalCalc && (
                     <Button
                       size="sm"
