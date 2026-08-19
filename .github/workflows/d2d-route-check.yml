@@ -8,9 +8,13 @@ on:
       - 'src/pages/crm/RouteHistory.tsx'
       - 'src/utils/d2dCloud.ts'
       - 'src/utils/d2dRouteBus.ts'
+      - 'src/utils/d2dRouteRuntime.ts'
+      - 'src/utils/d2dSyncStatus.ts'
       - 'src/utils/routeOptimizer.ts'
       - 'supabase/migrations/**'
+      - 'tests/d2d-route-runtime.test.ts'
       - 'tsconfig.d2d-routes.json'
+      - 'tsconfig.d2d-tests.json'
       - '.github/workflows/d2d-route-check.yml'
 
 permissions:
@@ -29,3 +33,8 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx tsc -p tsconfig.d2d-routes.json --noEmit
+      - name: Run D2D route runtime tests
+        run: |
+          node -e "require('fs').rmSync('.d2d-test-build',{recursive:true,force:true})"
+          npx tsc -p tsconfig.d2d-tests.json
+          node --test .d2d-test-build/tests/d2d-route-runtime.test.js

@@ -38,6 +38,14 @@ export interface D2DCloudRouteState {
   tombstones: D2DCloudRouteTombstone[];
 }
 
+export interface D2DAutoStopMutation {
+  houseId: string;
+  status: HousePin['status'];
+  updatedAt: string;
+}
+
+const AUTO_STOP_QUEUE_KEY = 'd2d-auto-stop-mutation-queue-v1';
+
 const normalizeIdentityText = (value: unknown) =>
   String(value || '')
     .toLowerCase()
@@ -84,16 +92,8 @@ export const d2dPinIdentity = (
   const businessName = normalizeIdentityText(pin.businessName || pin.customerName);
   const coordinates = `${pin.lat.toFixed(5)},${pin.lng.toFixed(5)}`;
 
-  if (pin.isStorefront && businessName) {
-    // Name + location stays compatible with storefronts saved before OSM source IDs
-    // were introduced, while still keeping separate branches of a chain distinct.
-    return `storefront:${businessName}|${coordinates}`;
-  }
-
-  if (pin.isStorefront && pin.externalId) {
-    return `storefront-source:${normalizeIdentityText(pin.externalId)}`;
-  }
-
+  if (pin.isStorefront && businessName) return `storefront:${businessName}|${coordinates}`;
+  if (pin.isStorefront && pin.externalId) return `storefront-source:${normalizeIdentityText(pin.externalId)}`;
   if (address) return `address:${address}`;
   return `geo:${coordinates}`;
 };
@@ -192,7 +192,6 @@ export const tombstoneD2DCloudPins = async (items: D2DCloudTombstone[]) => {
   if (error) throw error;
 };
 
-/** Backward-compatible helper. New callers should pass stable client pin IDs too. */
 export const deleteD2DCloudPinsByIdentity = async (identityKeys: string[]) => {
   const now = new Date().toISOString();
   await tombstoneD2DCloudPins(
@@ -204,11 +203,6 @@ export const deleteD2DCloudPinsByIdentity = async (identityKeys: string[]) => {
   );
 };
 
-/**
- * Reconciles the complete client-owned route set with Supabase. The RPC handles
- * deletion tombstones for routes that disappeared locally and ignores server-owned
- * auto-street routes, so even an empty array must be sent.
- */
 export const upsertD2DCloudRoutes = async (routes: RouteSession[]) => {
   await getAuthenticatedUserId();
   const client = supabase as any;
@@ -225,13 +219,19 @@ export const upsertD2DCloudRoutes = async (routes: RouteSession[]) => {
   if (error) throw error;
 };
 
-export const loadD2DCloudRouteState = async (): Promise<D2DCloudRouteState> => {
+export const loadD2DCloudRouteState = async (
+  options: { syncAuto?: boolean } = {},
+): Promise<D2DCloudRouteState> => {
   const userId = await getAuthenticatedUserId();
   const client = supabase as any;
 
-  // Project the live 5+-pin street routes into the same per-user route table first.
-  const { error: syncError } = await client.rpc('sync_d2d_auto_routes_for_user');
-  if (syncError) throw syncError;
+  // Normal hydration explicitly refreshes the server-owned auto-route projection.
+  // Realtime callbacks pass syncAuto:false so reading an emitted row cannot write
+  // the same row again and create a Realtime feedback loop.
+  if (options.syncAuto !== false) {
+    const { error: syncError } = await client.rpc('sync_d2d_auto_routes_for_user');
+    if (syncError) throw syncError;
+  }
 
   const { data, error } = await client
     .from('d2d_field_routes')
@@ -267,6 +267,87 @@ export const loadD2DCloudRouteState = async (): Promise<D2DCloudRouteState> => {
 export const loadD2DCloudRoutes = async (): Promise<RouteSession[]> => {
   const state = await loadD2DCloudRouteState();
   return state.routes;
+};
+
+export const subscribeD2DCloudRouteChanges = async (onChange: () => void) => {
+  const userId = await getAuthenticatedUserId();
+  const channel = supabase
+    .channel(`d2d-field-routes-${userId}-${Math.random().toString(36).slice(2)}`)
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'd2d_field_routes',
+        filter: `user_id=eq.${userId}`,
+      },
+      () => onChange(),
+    )
+    .subscribe();
+
+  return () => {
+    void supabase.removeChannel(channel);
+  };
+};
+
+export const updateD2DAutoRouteStopStatus = async (houseId: string, status: HousePin['status']) => {
+  await getAuthenticatedUserId();
+  const client = supabase as any;
+  const { error } = await client.rpc('update_d2d_auto_route_stop_status', {
+    p_house_id: houseId,
+    p_status: status,
+  });
+  if (error) throw error;
+};
+
+export const readQueuedD2DAutoStopMutations = (): D2DAutoStopMutation[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const parsed = JSON.parse(localStorage.getItem(AUTO_STOP_QUEUE_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((item) => item && typeof item === 'object' && typeof item.houseId === 'string' && typeof item.status === 'string')
+      .map((item) => ({
+        houseId: item.houseId,
+        status: item.status as HousePin['status'],
+        updatedAt: safeIso(item.updatedAt),
+      }));
+  } catch {
+    return [];
+  }
+};
+
+const saveQueuedD2DAutoStopMutations = (items: D2DAutoStopMutation[]) => {
+  if (typeof window === 'undefined') return;
+  const latest = new Map<string, D2DAutoStopMutation>();
+  items.forEach((item) => {
+    const previous = latest.get(item.houseId);
+    if (!previous || new Date(item.updatedAt).getTime() >= new Date(previous.updatedAt).getTime()) latest.set(item.houseId, item);
+  });
+  localStorage.setItem(AUTO_STOP_QUEUE_KEY, JSON.stringify(Array.from(latest.values())));
+};
+
+export const queueD2DAutoStopMutation = (mutation: D2DAutoStopMutation) => {
+  saveQueuedD2DAutoStopMutations([...readQueuedD2DAutoStopMutations(), mutation]);
+};
+
+export const flushQueuedD2DAutoStopMutations = async () => {
+  const queued = readQueuedD2DAutoStopMutations();
+  if (queued.length === 0) return { flushed: 0, remaining: 0 };
+
+  const remaining: D2DAutoStopMutation[] = [];
+  let flushed = 0;
+  for (const mutation of queued) {
+    try {
+      await updateD2DAutoRouteStopStatus(mutation.houseId, mutation.status);
+      flushed += 1;
+    } catch (error) {
+      console.error('Could not flush queued D2D auto-stop mutation:', error);
+      remaining.push(mutation);
+    }
+  }
+  saveQueuedD2DAutoStopMutations(remaining);
+  return { flushed, remaining: remaining.length };
 };
 
 export const saveD2DCrawlSession = async <TCandidate>(snapshot: D2DCrawlSnapshot<TCandidate>) => {
