@@ -10,6 +10,13 @@ import { Label } from '@/components/ui/label';
 const SMS_CONSENT_TEXT = 'I agree to receive occasional marketing text messages from BC Pressure Washing about local pricing, nearby service availability and referral discounts. Message frequency varies. Reply STOP to unsubscribe.';
 const AI_CONSENT_TEXT = 'I agree to receive automated or AI-generated voice calls from BC Pressure Washing at this phone number, no more than once per month, about storefront cleaning, pricing and availability. I can withdraw consent at any time.';
 
+type OptInResult = {
+  referral_code?: string;
+  referral_url?: string;
+  confirmation_sms_sent?: boolean;
+  phone_verified?: boolean;
+};
+
 const StorefrontUpdates = () => {
   const [searchParams] = useSearchParams();
   const referralCode = useMemo(() => searchParams.get('ref')?.trim().toUpperCase() || '', [searchParams]);
@@ -21,11 +28,14 @@ const StorefrontUpdates = () => {
   const [smsConsent, setSmsConsent] = useState(false);
   const [aiConsent, setAiConsent] = useState(false);
   const [website, setWebsite] = useState('');
+  const [challengeToken, setChallengeToken] = useState('');
+  const [maskedPhone, setMaskedPhone] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [result, setResult] = useState<{ referral_code?: string; referral_url?: string; confirmation_sms_sent?: boolean } | null>(null);
+  const [result, setResult] = useState<OptInResult | null>(null);
 
-  const handleSubmit = async (event: FormEvent) => {
+  const requestVerification = async (event: FormEvent) => {
     event.preventDefault();
     setError('');
     if (!smsConsent) {
@@ -37,7 +47,7 @@ const StorefrontUpdates = () => {
     try {
       const { data, error: invokeError } = await supabase.functions.invoke('storefront-sms-quote', {
         body: {
-          action: 'marketing_opt_in',
+          action: 'request_marketing_opt_in',
           business_name: businessName.trim(),
           contact_name: contactName.trim() || null,
           contact_email: email.trim() || null,
@@ -51,10 +61,40 @@ const StorefrontUpdates = () => {
       });
 
       if (invokeError) throw invokeError;
-      if (!data?.success) throw new Error(data?.error || 'Could not save your preferences.');
+      if (!data?.success || !data?.challenge_token) throw new Error(data?.error || 'Could not send the verification code.');
+      setChallengeToken(data.challenge_token);
+      setMaskedPhone(data.masked_phone || 'your phone');
+      setVerificationCode('');
+    } catch (submitError: any) {
+      setError(submitError?.message || 'Could not send the verification code. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const verifyCode = async (event: FormEvent) => {
+    event.preventDefault();
+    setError('');
+    const code = verificationCode.replace(/\D/g, '');
+    if (code.length !== 6) {
+      setError('Enter the 6-digit verification code from the text message.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke('storefront-sms-quote', {
+        body: {
+          action: 'verify_marketing_opt_in',
+          challenge_token: challengeToken,
+          code,
+        },
+      });
+      if (invokeError) throw invokeError;
+      if (!data?.success || !data?.phone_verified) throw new Error(data?.error || 'Could not verify this phone number.');
       setResult(data);
     } catch (submitError: any) {
-      setError(submitError?.message || 'Could not save your preferences. Please try again.');
+      setError(submitError?.message || 'Could not verify this phone number. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -75,7 +115,7 @@ const StorefrontUpdates = () => {
           </div>
           <h1 className="text-3xl font-black tracking-tight sm:text-5xl">Get local pricing updates and referral discounts</h1>
           <p className="mt-4 text-base text-slate-300 sm:text-lg">
-            Join the storefront update list. Text updates and automated voice calls are separate choices — you control both.
+            Text updates and automated voice calls are separate choices. Your phone number is verified before either consent becomes active.
           </p>
         </div>
 
@@ -83,7 +123,7 @@ const StorefrontUpdates = () => {
           <Card className="mx-auto max-w-2xl border-emerald-500/30 bg-white text-slate-950 shadow-2xl">
             <CardHeader className="text-center">
               <CheckCircle2 className="mx-auto mb-2 h-12 w-12 text-emerald-600" />
-              <CardTitle className="text-2xl">You're subscribed</CardTitle>
+              <CardTitle className="text-2xl">Phone verified — you're subscribed</CardTitle>
               <CardDescription>
                 Your preferences were saved. {result.confirmation_sms_sent ? 'A confirmation text was sent.' : 'Your preferences are active.'}
               </CardDescription>
@@ -97,15 +137,45 @@ const StorefrontUpdates = () => {
               <p className="text-center text-xs text-slate-500">Reply STOP to a marketing text to stop text updates. You can also ask us to stop automated calls at any time.</p>
             </CardContent>
           </Card>
+        ) : challengeToken ? (
+          <Card className="mx-auto max-w-xl border-white/10 bg-white text-slate-950 shadow-2xl">
+            <CardHeader>
+              <CardTitle>Verify your phone</CardTitle>
+              <CardDescription>We sent a 6-digit code to {maskedPhone}. Consent does not become active until this code is verified.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={verifyCode} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="verification-code">Verification code</Label>
+                  <Input
+                    id="verification-code"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    maxLength={6}
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="123456"
+                    className="text-center text-2xl tracking-[0.35em]"
+                    autoFocus
+                  />
+                </div>
+                {error && <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
+                <Button type="submit" className="w-full bg-red-600 hover:bg-red-700" disabled={submitting}>{submitting ? 'Verifying…' : 'Verify & activate preferences'}</Button>
+                <Button type="button" variant="ghost" className="w-full" disabled={submitting} onClick={() => { setChallengeToken(''); setVerificationCode(''); setError(''); }}>
+                  Edit phone or preferences
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         ) : (
           <div className="grid gap-6 lg:grid-cols-[1.15fr_.85fr]">
             <Card className="border-white/10 bg-white text-slate-950 shadow-2xl">
               <CardHeader>
                 <CardTitle>Storefront update preferences</CardTitle>
-                <CardDescription>Enter the number you want BC Pressure Washing to use.</CardDescription>
+                <CardDescription>Enter the number you want BC Pressure Washing to use. We'll text it a verification code first.</CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={requestVerification} className="space-y-5">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2 sm:col-span-2">
                       <Label htmlFor="business-name">Business name *</Label>
@@ -152,7 +222,7 @@ const StorefrontUpdates = () => {
 
                   {referralCode && <div className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">Referral code applied: <strong>{referralCode}</strong></div>}
                   {error && <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
-                  <Button type="submit" className="w-full bg-red-600 hover:bg-red-700" disabled={submitting}>{submitting ? 'Saving…' : 'Join storefront updates'}</Button>
+                  <Button type="submit" className="w-full bg-red-600 hover:bg-red-700" disabled={submitting}>{submitting ? 'Sending code…' : 'Text me a verification code'}</Button>
                 </form>
               </CardContent>
             </Card>
@@ -164,6 +234,7 @@ const StorefrontUpdates = () => {
                   <div className="flex gap-3"><MessageSquareText className="mt-0.5 h-5 w-5 shrink-0 text-red-400" /><span>Occasional pricing, nearby-service and referral updates by text.</span></div>
                   <div className="flex gap-3"><Gift className="mt-0.5 h-5 w-5 shrink-0 text-red-400" /><span>A personal referral link you can share with another local business.</span></div>
                   <div className="flex gap-3"><PhoneCall className="mt-0.5 h-5 w-5 shrink-0 text-red-400" /><span>Only if you separately check the AI option: automated voice follow-up no more than monthly.</span></div>
+                  <div className="flex gap-3"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" /><span>Your number must pass a one-time verification code before these permissions activate.</span></div>
                 </CardContent>
               </Card>
             </div>
