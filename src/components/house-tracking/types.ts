@@ -6,6 +6,10 @@ export interface HousePin {
   status: 'visited' | 'interested' | 'not-interested' | 'completed' | 'revisit-later' | 'needs-quote';
   notes: string;
   dateAdded: string;
+  /** Client-side mutation timestamp used for conflict-safe cloud sync. */
+  updatedAt?: string;
+  /** Stable external/source identifier when a provider such as OSM supplies one. */
+  externalId?: string;
   contactInfo?: string;
   beforePhoto?: string;
   afterPhoto?: string;
@@ -53,6 +57,8 @@ export interface HousePin {
   lastServiceDate?: string;
   serviceReminder?: boolean; // Alert for yearly service
 }
+
+export type NewHousePin = Omit<HousePin, 'id'> & { id?: string };
 
 export interface RouteSession {
   id: string;
