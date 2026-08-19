@@ -14,7 +14,6 @@ import {
   Navigation,
   Play,
   Square,
-  Store,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PropertyQRCode from './PropertyQRCode';
@@ -42,18 +41,25 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
 
   const [isActive, setIsActive] = useState(false);
   const [sessionStart, setSessionStart] = useState<Date | null>(null);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [visitCount, setVisitCount] = useState(0);
   const [qrPin, setQrPin] = useState<HousePin | null>(null);
-  const [storefrontType, setStorefrontType] = useState<'nail-salon' | 'restaurant' | 'retail' | 'other'>('retail');
 
   useEffect(() => {
     if (isActive && !sessionStart) setSessionStart(new Date());
   }, [isActive, sessionStart]);
 
+  useEffect(() => {
+    if (!isActive || !sessionStart) return;
+    const tick = () => setElapsedSeconds(Math.max(0, Math.floor((Date.now() - sessionStart.getTime()) / 1000)));
+    tick();
+    const timer = window.setInterval(tick, 1000);
+    return () => window.clearInterval(timer);
+  }, [isActive, sessionStart]);
+
   const handleQuickAction = async (
     status: HousePin['status'],
     notes?: string,
-    isStorefrontAction?: boolean,
   ) => {
     if (!currentLocation) {
       toast.error('Location not available');
@@ -61,20 +67,18 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
     }
 
     const address = `${currentLocation.lat.toFixed(6)}, ${currentLocation.lng.toFixed(6)}`;
-    const storefront = mode === 'storefront' || isStorefrontAction;
     const { pin, cloudSaved } = await quickMarkProperty(
       currentLocation.lat,
       currentLocation.lng,
       address,
       status,
       notes,
-      storefront ? { isStorefront: true, storefrontType } : undefined,
     );
 
     onQuickMark(pin);
     setVisitCount((previous) => previous + 1);
 
-    toast.success(storefront ? `Marked GPS storefront as ${status}` : `Marked as ${status}`, {
+    toast.success(`Marked as ${status}`, {
       description: cloudSaved ? 'Saved to Supabase' : 'Saved locally · cloud retry queued',
     });
 
@@ -90,15 +94,14 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
 
     setIsActive(true);
     setSessionStart(new Date());
+    setElapsedSeconds(0);
     setVisitCount(0);
     toast.success('Canvassing session started');
   };
 
   const getSessionDuration = () => {
-    if (!sessionStart) return '0:00';
-    const diff = Date.now() - sessionStart.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
@@ -157,33 +160,8 @@ const CanvassingMode: React.FC<CanvassingModeProps> = ({
           )}
 
           {isActive && mode === 'storefront' && (
-            <div className="space-y-2">
-              <div className="rounded-md border bg-muted/40 p-2 text-xs text-muted-foreground">
-                For crawled businesses, use the store marker actions on the map so the exact business name, address and coordinates stay attached. These buttons are only for a manual GPS storefront.
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                {(['nail-salon', 'restaurant', 'retail', 'other'] as const).map((type) => (
-                  <Button
-                    key={type}
-                    size="sm"
-                    variant={storefrontType === type ? 'default' : 'outline'}
-                    onClick={() => setStorefrontType(type)}
-                    className="text-xs"
-                  >
-                    {type === 'nail-salon' ? 'Nail' : type === 'restaurant' ? 'Food' : type === 'retail' ? 'Retail' : 'Other'}
-                  </Button>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Button size="lg" className="flex-col h-20 gap-1" onClick={() => void handleQuickAction('interested', `${storefrontType} - manual GPS interested`, true)}>
-                  <Store className="w-5 h-5" />
-                  <span className="text-xs">GPS Interested</span>
-                </Button>
-                <Button size="lg" variant="outline" className="flex-col h-20 gap-1" onClick={() => void handleQuickAction('not-interested', `${storefrontType} - manual GPS skipped`, true)}>
-                  <X className="w-5 h-5" />
-                  <span className="text-xs">GPS Skip</span>
-                </Button>
-              </div>
+            <div className="rounded-md border bg-muted/40 p-3 text-xs text-muted-foreground">
+              Use the storefront crawler markers on the map for Hit, Interested, Skip or Quote. Manual GPS storefront marking is disabled so the same business cannot be saved twice without its business identity.
             </div>
           )}
 
