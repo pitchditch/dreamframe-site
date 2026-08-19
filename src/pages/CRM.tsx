@@ -5,28 +5,49 @@ import { MagicLinkLogin } from '@/components/auth/MagicLinkLogin';
 import { WebsiteSpeedTest } from '@/components/admin/WebsiteSpeedTest';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MapPin, Users, FileText, LogOut, BarChart3, Navigation, PhoneCall, ShieldCheck, Video } from 'lucide-react';
+import { MapPin, Users, FileText, LogOut, BarChart3, Navigation, PhoneCall, ShieldCheck, Video, Receipt } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CRM = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    let cancelled = false;
+
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session?.user);
-      setLoading(false);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        if (!cancelled) {
+          setIsAuthorized(false);
+          setLoading(false);
+        }
+        return;
+      }
+
+      const { data: isAdmin, error } = await (supabase as any).rpc('is_admin', {});
+      if (!cancelled) {
+        setIsAuthorized(!error && isAdmin === true);
+        setLoading(false);
+      }
     };
 
-    checkAuth();
+    void checkAuth();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setIsAuthenticated(!!session?.user);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') {
+        setIsAuthorized(false);
+        setLoading(false);
+        return;
+      }
+      void checkAuth();
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -42,16 +63,16 @@ const CRM = () => {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthorized) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-secondary/10 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-              <MapPin className="w-6 h-6 text-primary" />
+              <ShieldCheck className="w-6 h-6 text-primary" />
             </div>
-            <CardTitle className="text-2xl">House Tracking CRM</CardTitle>
-            <CardDescription>Sign in to access your dashboard</CardDescription>
+            <CardTitle className="text-2xl">BC Admin</CardTitle>
+            <CardDescription>Sign in with an authorized admin account</CardDescription>
           </CardHeader>
           <CardContent>
             <MagicLinkLogin />
@@ -66,8 +87,8 @@ const CRM = () => {
       <header className="bg-card border-b sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <MapPin className="w-6 h-6 text-primary" />
-            <h1 className="text-xl font-bold">House Tracking CRM</h1>
+            <ShieldCheck className="w-6 h-6 text-primary" />
+            <h1 className="text-xl font-bold">BC Admin</h1>
           </div>
           <Button variant="ghost" size="sm" onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
@@ -87,6 +108,19 @@ const CRM = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group border-primary/20" onClick={() => navigate('/crm/quotes')}>
+            <CardHeader>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <Receipt className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Quotes & Sales</CardTitle>
+              <CardDescription>Manage quotes, exact-record follow-ups, invoices, receipts, approvals and customer plans in one workspace.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full">Open Quotes & Sales</Button>
+            </CardContent>
+          </Card>
+
           <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => navigate('/crm/virtual-estimates')}>
             <CardHeader>
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
@@ -135,9 +169,7 @@ const CRM = () => {
               <CardDescription>Add, edit, select, and delete multiple clients at once. Admin tests are labeled separately.</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Manage Clients
-              </Button>
+              <Button className="w-full" variant="outline">Manage Clients</Button>
             </CardContent>
           </Card>
 
