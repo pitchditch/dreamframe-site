@@ -135,6 +135,27 @@ type Journey = {
   eventCount: number;
 };
 
+type PageAnalytics = {
+  path: string;
+  views: number;
+  visitors: number;
+  clicks: number;
+  starts: number;
+  rate: number;
+  lastViewed: string;
+};
+
+type ServicePageGroup = {
+  family: string;
+  pages: PageAnalytics[];
+  views: number;
+  visitors: number;
+  clicks: number;
+  starts: number;
+  rate: number;
+  lastViewed: string;
+};
+
 const ranges: Record<TimeRange, { days: number; label: string; previousLabel: string }> = {
   '24h': { days: 1, label: 'Last 24 Hours', previousLabel: 'previous 24 hours' },
   '7d': { days: 7, label: 'Last 7 Days', previousLabel: 'previous 7 days' },
@@ -163,6 +184,18 @@ const isWebsiteQuote = (row: QuoteRow) =>
 const isQuoteStartEvent = (event: AnalyticsEventRow) =>
   !!event.event_name?.includes('quote_started') ||
   (event.event_name === 'page_view' && event.page_path === '/quote-results');
+
+const serviceFamilyForPath = (path: string) => {
+  const normalized = path.toLowerCase();
+  if (normalized.includes('window-cleaning') || normalized.includes('storefront')) return 'Window Cleaning';
+  if (normalized.includes('fleet-washing')) return 'Fleet Washing';
+  if (normalized.includes('pressure-washing')) return 'Pressure Washing';
+  if (normalized.includes('gutter-cleaning')) return 'Gutter Cleaning';
+  if (normalized.includes('roof-cleaning')) return 'Roof Cleaning';
+  if (normalized.includes('house-washing')) return 'House Washing';
+  if (normalized.includes('fence-washing')) return 'Fence Washing';
+  return null;
+};
 
 const leadIdentity = (row: LeadRow) => {
   const email = row.email?.trim().toLowerCase();
@@ -395,13 +428,15 @@ export default function Analytics() {
     .filter(isQuoteStartEvent)
     .map((e) => e.session_id).filter(Boolean)), [currentEvents]);
 
-  const topPages = useMemo(() => {
-    const map = new Map<string, { views: number; visitors: Set<string>; clicks: number; starts: Set<string> }>();
+  const pageAnalytics = useMemo<PageAnalytics[]>(() => {
+    const map = new Map<string, { views: number; visitors: Set<string>; clicks: number; starts: Set<string>; lastViewed: string }>();
     publicCurrentViews.forEach((view) => {
       const path = view.page_path || '(unknown)';
-      const row = map.get(path) || { views: 0, visitors: new Set<string>(), clicks: 0, starts: new Set<string>() };
+      const viewedAt = getPageViewTime(view);
+      const row = map.get(path) || { views: 0, visitors: new Set<string>(), clicks: 0, starts: new Set<string>(), lastViewed: viewedAt };
       row.views += 1;
       if (view.visitor_id || view.session_id) row.visitors.add(view.visitor_id || view.session_id || '');
+      if (!row.lastViewed || new Date(viewedAt).getTime() > new Date(row.lastViewed).getTime()) row.lastViewed = viewedAt;
       map.set(path, row);
     });
     currentEvents.forEach((event) => {
@@ -418,8 +453,64 @@ export default function Analytics() {
       clicks: row.clicks,
       starts: row.starts.size,
       rate: row.visitors.size ? (row.starts.size / row.visitors.size) * 100 : 0,
-    })).sort((a, b) => b.views - a.views).slice(0, 8);
+      lastViewed: row.lastViewed,
+    })).sort((a, b) => new Date(b.lastViewed).getTime() - new Date(a.lastViewed).getTime());
   }, [currentEvents, publicCurrentViews]);
+
+  const servicePageGroups = useMemo<ServicePageGroup[]>(() => {
+    const groups = new Map<string, {
+      pages: Set<string>;
+      views: number;
+      visitors: Set<string>;
+      clicks: number;
+      starts: Set<string>;
+      lastViewed: string;
+    }>();
+
+    publicCurrentViews.forEach((view) => {
+      const path = view.page_path || '(unknown)';
+      const family = serviceFamilyForPath(path);
+      if (!family) return;
+      const viewedAt = getPageViewTime(view);
+      const group = groups.get(family) || {
+        pages: new Set<string>(),
+        views: 0,
+        visitors: new Set<string>(),
+        clicks: 0,
+        starts: new Set<string>(),
+        lastViewed: viewedAt,
+      };
+      group.pages.add(path);
+      group.views += 1;
+      if (view.visitor_id || view.session_id) group.visitors.add(view.visitor_id || view.session_id || '');
+      if (!group.lastViewed || new Date(viewedAt).getTime() > new Date(group.lastViewed).getTime()) group.lastViewed = viewedAt;
+      groups.set(family, group);
+    });
+
+    currentEvents.forEach((event) => {
+      if (!event.page_path) return;
+      const family = serviceFamilyForPath(event.page_path);
+      if (!family) return;
+      const group = groups.get(family);
+      if (!group) return;
+      if (isCtaClick(event)) group.clicks += 1;
+      if (isQuoteStartEvent(event) && event.session_id) group.starts.add(event.session_id);
+    });
+
+    return Array.from(groups.entries()).map(([family, group]) => {
+      const pages = pageAnalytics.filter((page) => group.pages.has(page.path));
+      return {
+        family,
+        pages,
+        views: group.views,
+        visitors: group.visitors.size,
+        clicks: group.clicks,
+        starts: group.starts.size,
+        rate: group.visitors.size ? (group.starts.size / group.visitors.size) * 100 : 0,
+        lastViewed: group.lastViewed,
+      };
+    }).sort((a, b) => new Date(b.lastViewed).getTime() - new Date(a.lastViewed).getTime());
+  }, [currentEvents, pageAnalytics, publicCurrentViews]);
 
   const topCtas = useMemo(() => {
     const map = new Map<string, { clicks: number; sessions: Set<string>; quoteStarts: Set<string> }>();
@@ -667,30 +758,111 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Card>
-            <CardHeader><CardTitle>Top pages</CardTitle><CardDescription>Pages attracting attention and starting quotes</CardDescription></CardHeader>
-            <CardContent className="overflow-x-auto">
-              <table className="w-full min-w-[650px] text-sm">
-                <thead><tr className="border-b text-left text-xs text-muted-foreground"><th className="pb-3 font-medium">Page</th><th className="pb-3 text-right font-medium">Views</th><th className="pb-3 text-right font-medium">Visitors</th><th className="pb-3 text-right font-medium">CTA clicks</th><th className="pb-3 text-right font-medium">Quote starts</th><th className="pb-3 text-right font-medium">Start rate</th></tr></thead>
-                <tbody>{topPages.map((page) => <tr key={page.path} className="border-b last:border-0"><td className="max-w-[260px] truncate py-3 font-medium">{page.path}</td><td className="py-3 text-right">{page.views}</td><td className="py-3 text-right">{page.visitors}</td><td className="py-3 text-right">{page.clicks}</td><td className="py-3 text-right">{page.starts}</td><td className="py-3 text-right">{page.rate.toFixed(1)}%</td></tr>)}</tbody>
-              </table>
-              {!topPages.length && <p className="py-8 text-center text-sm text-muted-foreground">No public page views in this period.</p>}
-            </CardContent>
-          </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Page views — most recent first</CardTitle>
+            <CardDescription>Every public page with traffic in this period, ordered by its latest recorded visit</CardDescription>
+          </CardHeader>
+          <CardContent className="overflow-x-auto">
+            <table className="w-full min-w-[840px] text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-muted-foreground">
+                  <th className="pb-3 font-medium">Page</th>
+                  <th className="pb-3 font-medium">Most recent</th>
+                  <th className="pb-3 text-right font-medium">Views</th>
+                  <th className="pb-3 text-right font-medium">Visitors</th>
+                  <th className="pb-3 text-right font-medium">CTA clicks</th>
+                  <th className="pb-3 text-right font-medium">Quote starts</th>
+                  <th className="pb-3 text-right font-medium">Start rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pageAnalytics.map((page) => (
+                  <tr key={page.path} className="border-b last:border-0">
+                    <td className="max-w-[300px] truncate py-3 font-medium" title={page.path}>{page.path}</td>
+                    <td className="whitespace-nowrap py-3 text-muted-foreground">{new Date(page.lastViewed).toLocaleString()}</td>
+                    <td className="py-3 text-right">{page.views}</td>
+                    <td className="py-3 text-right">{page.visitors}</td>
+                    <td className="py-3 text-right">{page.clicks}</td>
+                    <td className="py-3 text-right">{page.starts}</td>
+                    <td className="py-3 text-right">{page.rate.toFixed(1)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {!pageAnalytics.length && <p className="py-8 text-center text-sm text-muted-foreground">No public page views in this period.</p>}
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader><CardTitle>Top buttons & CTAs</CardTitle><CardDescription>Scroll and privacy-control events are excluded from business clicks</CardDescription></CardHeader>
-            <CardContent>
-              {topCtas.map((cta) => (
-                <div key={cta.label} className="grid grid-cols-[minmax(0,1fr)_60px_72px_82px] items-center gap-2 border-b py-3 text-sm last:border-0">
-                  <span className="truncate font-medium" title={cta.label}>{cta.label}</span><span className="text-right">{cta.clicks}</span><span className="text-right text-muted-foreground">{cta.sessions} users</span><span className="text-right text-muted-foreground">{cta.quoteStarts} starts</span>
+        <Card>
+          <CardHeader>
+            <CardTitle>Paired service page analytics</CardTitle>
+            <CardDescription>Related service pages are combined for family totals, with analytics for every individual page underneath</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {servicePageGroups.map((group) => (
+              <div key={group.family} className="overflow-hidden rounded-xl border bg-background">
+                <div className="flex flex-col gap-3 border-b bg-muted/30 p-4 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="font-semibold">{group.family}</h3>
+                      <Badge variant="secondary">{group.pages.length} page{group.pages.length === 1 ? '' : 's'}</Badge>
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">Last visit {new Date(group.lastViewed).toLocaleString()}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-5 gap-y-1 text-xs sm:grid-cols-5">
+                    <span><strong className="text-foreground">{group.views}</strong> views</span>
+                    <span><strong className="text-foreground">{group.visitors}</strong> visitors</span>
+                    <span><strong className="text-foreground">{group.clicks}</strong> CTA clicks</span>
+                    <span><strong className="text-foreground">{group.starts}</strong> starts</span>
+                    <span><strong className="text-foreground">{group.rate.toFixed(1)}%</strong> start rate</span>
+                  </div>
                 </div>
-              ))}
-              {!topCtas.length && <p className="py-8 text-center text-sm text-muted-foreground">No CTA clicks in this period.</p>}
-            </CardContent>
-          </Card>
-        </div>
+                <div className="overflow-x-auto p-4">
+                  <table className="w-full min-w-[760px] text-sm">
+                    <thead>
+                      <tr className="border-b text-left text-xs text-muted-foreground">
+                        <th className="pb-3 font-medium">Page</th>
+                        <th className="pb-3 font-medium">Most recent</th>
+                        <th className="pb-3 text-right font-medium">Views</th>
+                        <th className="pb-3 text-right font-medium">Visitors</th>
+                        <th className="pb-3 text-right font-medium">CTA clicks</th>
+                        <th className="pb-3 text-right font-medium">Quote starts</th>
+                        <th className="pb-3 text-right font-medium">Rate</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {group.pages.map((page) => (
+                        <tr key={page.path} className="border-b last:border-0">
+                          <td className="max-w-[300px] truncate py-3 font-medium" title={page.path}>{page.path}</td>
+                          <td className="whitespace-nowrap py-3 text-muted-foreground">{new Date(page.lastViewed).toLocaleString()}</td>
+                          <td className="py-3 text-right">{page.views}</td>
+                          <td className="py-3 text-right">{page.visitors}</td>
+                          <td className="py-3 text-right">{page.clicks}</td>
+                          <td className="py-3 text-right">{page.starts}</td>
+                          <td className="py-3 text-right">{page.rate.toFixed(1)}%</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+            {!servicePageGroups.length && <p className="py-8 text-center text-sm text-muted-foreground">No service-page traffic in this period.</p>}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader><CardTitle>Top buttons & CTAs</CardTitle><CardDescription>Scroll and privacy-control events are excluded from business clicks</CardDescription></CardHeader>
+          <CardContent>
+            {topCtas.map((cta) => (
+              <div key={cta.label} className="grid grid-cols-[minmax(0,1fr)_60px_72px_82px] items-center gap-2 border-b py-3 text-sm last:border-0">
+                <span className="truncate font-medium" title={cta.label}>{cta.label}</span><span className="text-right">{cta.clicks}</span><span className="text-right text-muted-foreground">{cta.sessions} users</span><span className="text-right text-muted-foreground">{cta.quoteStarts} starts</span>
+              </div>
+            ))}
+            {!topCtas.length && <p className="py-8 text-center text-sm text-muted-foreground">No CTA clicks in this period.</p>}
+          </CardContent>
+        </Card>
 
         <Card>
           <CardHeader><CardTitle>Conversion funnel</CardTitle><CardDescription>Website journey from public traffic to booked work</CardDescription></CardHeader>
