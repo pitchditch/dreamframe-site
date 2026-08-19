@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { MagicLinkLogin } from '@/components/auth/MagicLinkLogin';
+import { WebsiteSpeedTest } from '@/components/admin/WebsiteSpeedTest';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { MapPin, Users, FileText, LogOut, BarChart3, Navigation, PhoneCall, Video } from 'lucide-react';
@@ -79,6 +80,10 @@ const CRM = () => {
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-2">Welcome back!</h2>
           <p className="text-muted-foreground">Choose an action to get started</p>
+        </div>
+
+        <div className="mb-8">
+          <WebsiteSpeedTest />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
