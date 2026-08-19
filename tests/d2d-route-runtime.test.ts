@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   ROUTE_DEVIATION_METERS,
+  buildStreetSweepOrder,
   distanceToPolylineMeters,
   findNextUnworkedIndex,
   isAutoRouteEligible,
@@ -22,6 +23,17 @@ test('auto street route threshold is exactly five eligible stops', () => {
   assert.equal(isAutoRouteEligible(4), false);
   assert.equal(isAutoRouteEligible(5), true);
   assert.equal(isAutoRouteEligible(6), true);
+});
+
+test('missing street-side geometry falls back to odd/even civic-address sweep', () => {
+  const unordered = [
+    { id: '104', address: '104 Main St', lat: 0, lng: 0 },
+    { id: '101', address: '101 Main St', lat: 0, lng: 0 },
+    { id: '103', address: '103 Main St', lat: 0, lng: 0 },
+    { id: '102', address: '102 Main St', lat: 0, lng: 0 },
+  ];
+  const swept = buildStreetSweepOrder(unordered);
+  assert.deepEqual(swept.map((stop) => stop.id), ['101', '103', '104', '102']);
 });
 
 test('route starts from the endpoint closest to live GPS while preserving the street sweep', () => {
