@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MapComponentV4 from './MapComponentV4';
-import { HousePin } from './types';
+import { HousePin, RouteSession } from './types';
 import {
+  D2DCloudRouteTombstone,
   D2DCloudTombstone,
   d2dPinIdentity,
   d2dPinUpdatedAtMs,
@@ -19,6 +20,7 @@ import { toast } from 'sonner';
 
 const DELETION_QUEUE_KEY = 'd2d-cloud-deletion-queue-v2';
 const LEGACY_DELETED_IDENTITIES_KEY = 'd2d-cloud-deleted-identities-v1';
+const ROUTE_REFRESH_MS = 5000;
 
 type MapWrapperProps = React.ComponentProps<typeof MapComponentV4> & {
   onDeletePin?: (pinId: string) => void;
@@ -99,6 +101,39 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
   const hydrationTimerRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
 
+  const mergeCloudRoutes = useCallback((
+    cloudRoutes: RouteSession[],
+    routeTombstones: D2DCloudRouteTombstone[],
+  ) => {
+    props.onUpdateRoutes((previous) => {
+      const tombstoneById = new Map(
+        routeTombstones.map((tombstone) => [tombstone.clientRouteId, toTimestamp(tombstone.updatedAt)]),
+      );
+      let next = previous.filter((route) => {
+        const deletedAt = tombstoneById.get(route.id);
+        return deletedAt === undefined || d2dRouteUpdatedAtMs(route) > deletedAt;
+      });
+      let changed = next.length !== previous.length;
+
+      cloudRoutes.forEach((cloudRoute) => {
+        const index = next.findIndex((route) => route.id === cloudRoute.id);
+        if (index < 0) {
+          if (!changed) next = [...next];
+          next.push(cloudRoute);
+          changed = true;
+          return;
+        }
+        if (d2dRouteUpdatedAtMs(cloudRoute) > d2dRouteUpdatedAtMs(next[index])) {
+          if (!changed) next = [...next];
+          next[index] = cloudRoute;
+          changed = true;
+        }
+      });
+
+      return changed ? next : previous;
+    });
+  }, [props.onUpdateRoutes]);
+
   useEffect(() => {
     mountedRef.current = true;
     return () => {
@@ -137,13 +172,16 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
       props.onUpdateRoutes((previous) => {
         const index = previous.findIndex((route) => route.id === incomingRoute.id);
         if (index < 0) return [...previous, incomingRoute];
+        if (d2dRouteUpdatedAtMs(previous[index]) >= d2dRouteUpdatedAtMs(incomingRoute)) return previous;
         const next = [...previous];
         next[index] = incomingRoute;
         return next;
       });
     },
     (routeId) => {
-      props.onUpdateRoutes((previous) => previous.filter((route) => route.id !== routeId));
+      props.onUpdateRoutes((previous) => previous.some((route) => route.id === routeId)
+        ? previous.filter((route) => route.id !== routeId)
+        : previous);
     },
   ), [props.onUpdateRoutes]);
 
@@ -190,28 +228,8 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
         );
 
         try {
-          const { routes: cloudRoutes, tombstones: routeTombstones } = await loadD2DCloudRouteState();
-          if (!cancelled && mountedRef.current) {
-            props.onUpdateRoutes((previous) => {
-              const tombstoneById = new Map(
-                routeTombstones.map((tombstone) => [tombstone.clientRouteId, toTimestamp(tombstone.updatedAt)]),
-              );
-              const next = previous.filter((route) => {
-                const deletedAt = tombstoneById.get(route.id);
-                return deletedAt === undefined || d2dRouteUpdatedAtMs(route) > deletedAt;
-              });
-
-              cloudRoutes.forEach((cloudRoute) => {
-                const index = next.findIndex((route) => route.id === cloudRoute.id);
-                if (index < 0) {
-                  next.push(cloudRoute);
-                  return;
-                }
-                if (d2dRouteUpdatedAtMs(cloudRoute) > d2dRouteUpdatedAtMs(next[index])) next[index] = cloudRoute;
-              });
-              return next;
-            });
-          }
+          const routeState = await loadD2DCloudRouteState();
+          if (!cancelled && mountedRef.current) mergeCloudRoutes(routeState.routes, routeState.tombstones);
         } catch (error) {
           console.error('Could not hydrate D2D cloud routes:', error);
         }
@@ -279,12 +297,38 @@ const MapComponent: React.FC<MapWrapperProps> = (props) => {
           }
           await upsertD2DCloudPins(props.pins.map(ensureD2DPinUpdatedAt));
           await upsertD2DCloudRoutes(props.routes.map(ensureD2DRouteUpdatedAt));
+
+          const routeState = await loadD2DCloudRouteState();
+          if (mountedRef.current) mergeCloudRoutes(routeState.routes, routeState.tombstones);
         } catch (error) {
           console.error('D2D cloud sync failed:', error);
         }
       })();
     }, 350);
-  }, [props.pins, props.routes, cloudReady, onlineRevision]);
+  }, [props.pins, props.routes, cloudReady, onlineRevision, mergeCloudRoutes]);
+
+  // Street-crawler/DB changes can happen outside this mounted React tree. Refresh the
+  // small route set so a newly-created 5-pin street route appears without a page reload.
+  useEffect(() => {
+    if (!cloudReady) return;
+    let cancelled = false;
+
+    const refreshRoutes = async () => {
+      if (!navigator.onLine) return;
+      try {
+        const routeState = await loadD2DCloudRouteState();
+        if (!cancelled && mountedRef.current) mergeCloudRoutes(routeState.routes, routeState.tombstones);
+      } catch (error) {
+        console.error('Could not refresh D2D routes:', error);
+      }
+    };
+
+    const interval = window.setInterval(() => void refreshRoutes(), ROUTE_REFRESH_MS);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [cloudReady, onlineRevision, mergeCloudRoutes]);
 
   const { onDeletePin: _onDeletePin, ...mapProps } = props;
   return React.createElement(MapComponentV4, {
