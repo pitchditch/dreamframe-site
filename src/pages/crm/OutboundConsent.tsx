@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Clock3, Copy, MessageSquareText, PhoneCall, RefreshCw, Search, ShieldCheck, ShieldX } from 'lucide-react';
+import { ArrowLeft, Clock3, Copy, MessageSquareText, PhoneCall, RefreshCw, Search, ShieldCheck, ShieldX } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,7 +11,6 @@ import { toast } from 'sonner';
 const SMS_CONSENT_TEXT = 'I agree to receive occasional marketing text messages from BC Pressure Washing about local pricing, nearby service availability and referral discounts. Message frequency varies. Reply STOP to unsubscribe.';
 const AI_CONSENT_TEXT = 'I agree to receive automated or AI-generated voice calls from BC Pressure Washing at this phone number, no more than once per month, about storefront cleaning, pricing and availability. I can withdraw consent at any time.';
 const PUBLIC_OPT_IN_URL = 'https://bcpressurewashing.ca/storefront-updates';
-
 const db = supabase as any;
 
 type Lead = {
@@ -66,8 +65,7 @@ const OutboundConsent = () => {
     if (!lead.ai_call_consent || lead.ai_call_consent_revoked_at || lead.do_not_call || lead.call_permission === false) return false;
     if (lead.ai_call_frequency === 'one_time') return !lead.ai_last_call_at;
     if (lead.ai_call_frequency !== 'monthly') return false;
-    if (!lead.ai_next_call_at) return true;
-    return new Date(lead.ai_next_call_at).getTime() <= Date.now();
+    return !lead.ai_next_call_at || new Date(lead.ai_next_call_at).getTime() <= Date.now();
   };
 
   const loadData = async (preserveId?: string | null) => {
@@ -98,12 +96,7 @@ const OutboundConsent = () => {
 
     const next = (data || []) as Lead[];
     setLeads(next);
-    const nextActive = preserveId && next.some((lead) => lead.id === preserveId)
-      ? preserveId
-      : activeLeadId && next.some((lead) => lead.id === activeLeadId)
-        ? activeLeadId
-        : next[0]?.id || null;
-    setActiveLeadId(nextActive);
+    setActiveLeadId(preserveId && next.some((lead) => lead.id === preserveId) ? preserveId : next[0]?.id || null);
   };
 
   useEffect(() => {
@@ -134,8 +127,28 @@ const OutboundConsent = () => {
     });
   }, [leads, search, filter]);
 
+  const logConsent = async (lead: Lead, consentType: string, granted: boolean, source: string, consentText: string, metadata: Record<string, unknown> = {}) => {
+    if (!sessionUser) return;
+    const { error } = await db.from('storefront_contact_consents').insert({
+      lead_id: lead.id,
+      phone: lead.phone,
+      consent_type: consentType,
+      granted,
+      source,
+      consent_text: consentText,
+      actor_user_id: sessionUser.id,
+      metadata: { recorded_from: 'outbound_consent_workspace', ...metadata },
+    });
+    if (error) throw error;
+  };
+
   const recordConsent = async (type: 'sms' | 'ai', granted: boolean) => {
     if (!activeLead || !sessionUser) return;
+    if (type === 'ai' && granted && activeLead.do_not_call) {
+      toast.error('DNC is active. Clear DNC separately only after the contact explicitly asks to receive calls again.');
+      return;
+    }
+
     setSaving(true);
     const now = new Date().toISOString();
     try {
@@ -150,18 +163,7 @@ const OutboundConsent = () => {
           updated_at: now,
         }).eq('id', activeLead.id);
         if (error) throw error;
-
-        const { error: logError } = await db.from('storefront_contact_consents').insert({
-          lead_id: activeLead.id,
-          phone: activeLead.phone,
-          consent_type: 'sms_marketing',
-          granted,
-          source: granted ? 'd2d_verbal' : 'admin_revocation',
-          consent_text: granted ? SMS_CONSENT_TEXT : 'SMS marketing consent withdrawn',
-          actor_user_id: sessionUser.id,
-          metadata: { recorded_from: 'outbound_consent_workspace' },
-        });
-        if (logError) throw logError;
+        await logConsent(activeLead, 'sms_marketing', granted, granted ? 'd2d_verbal' : 'admin_revocation', granted ? SMS_CONSENT_TEXT : 'SMS marketing consent withdrawn');
       } else {
         const { error } = await db.from('storefront_call_leads').update({
           ai_call_consent: granted,
@@ -173,22 +175,10 @@ const OutboundConsent = () => {
           ai_next_call_at: granted ? now : null,
           consent_phone: granted ? activeLead.phone : activeLead.consent_phone,
           call_permission: granted ? true : activeLead.call_permission,
-          do_not_call: granted ? false : activeLead.do_not_call,
           updated_at: now,
         }).eq('id', activeLead.id);
         if (error) throw error;
-
-        const { error: logError } = await db.from('storefront_contact_consents').insert({
-          lead_id: activeLead.id,
-          phone: activeLead.phone,
-          consent_type: 'ai_voice_monthly',
-          granted,
-          source: granted ? 'd2d_verbal' : 'admin_revocation',
-          consent_text: granted ? AI_CONSENT_TEXT : 'Monthly AI voice consent withdrawn',
-          actor_user_id: sessionUser.id,
-          metadata: { recorded_from: 'outbound_consent_workspace', frequency: 'monthly' },
-        });
-        if (logError) throw logError;
+        await logConsent(activeLead, 'ai_voice_monthly', granted, granted ? 'd2d_verbal' : 'admin_revocation', granted ? AI_CONSENT_TEXT : 'Monthly AI voice consent withdrawn', { frequency: 'monthly' });
       }
 
       toast.success(granted ? 'Consent recorded.' : 'Consent withdrawn.');
@@ -201,14 +191,31 @@ const OutboundConsent = () => {
     }
   };
 
+  const clearDnc = async () => {
+    if (!activeLead || !sessionUser || !activeLead.do_not_call) return;
+    if (!window.confirm('Only clear DNC if this contact explicitly asked to receive calls again. Continue?')) return;
+    setSaving(true);
+    try {
+      const now = new Date().toISOString();
+      const { error } = await db.from('storefront_call_leads').update({ do_not_call: false, call_permission: true, updated_at: now }).eq('id', activeLead.id);
+      if (error) throw error;
+      await logConsent(activeLead, 'do_not_call', true, 'admin_explicit_reenable', 'Contact explicitly requested calls be re-enabled');
+      toast.success('DNC cleared. Record the specific AI consent separately if applicable.');
+      await loadData(activeLead.id);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message || 'Could not clear DNC.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const copyPublicLink = async () => {
     await navigator.clipboard.writeText(PUBLIC_OPT_IN_URL);
     toast.success('Public opt-in link copied.');
   };
 
-  if (loading) {
-    return <div className="flex min-h-screen items-center justify-center bg-slate-50"><RefreshCw className="h-7 w-7 animate-spin text-red-600" /></div>;
-  }
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-slate-50"><RefreshCw className="h-7 w-7 animate-spin text-red-600" /></div>;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -216,10 +223,7 @@ const OutboundConsent = () => {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="icon" onClick={() => navigate('/crm')}><ArrowLeft className="h-5 w-5" /></Button>
-            <div>
-              <h1 className="font-bold text-slate-950">Outbound Consent</h1>
-              <p className="text-xs text-slate-500">SMS + AI voice permissions and monthly eligibility</p>
-            </div>
+            <div><h1 className="font-bold text-slate-950">Outbound Consent</h1><p className="text-xs text-slate-500">SMS + AI voice permissions and monthly eligibility</p></div>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={copyPublicLink}><Copy className="mr-2 h-4 w-4" /> Opt-in link</Button>
@@ -241,23 +245,17 @@ const OutboundConsent = () => {
             <CardHeader className="space-y-3 border-b">
               <div><CardTitle>Contacts</CardTitle><CardDescription>Only documented consent enters the AI queue.</CardDescription></div>
               <div className="relative"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><Input className="pl-9" placeholder="Search business, owner, phone or city" value={search} onChange={(e) => setSearch(e.target.value)} /></div>
-              <div className="flex flex-wrap gap-2">
-                {(['all', 'sms', 'monthly', 'due', 'blocked'] as FilterKey[]).map((key) => <Button key={key} size="sm" variant={filter === key ? 'default' : 'outline'} onClick={() => setFilter(key)} className={filter === key ? 'bg-slate-950' : ''}>{key === 'all' ? 'All' : key === 'sms' ? 'SMS' : key === 'monthly' ? 'Monthly AI' : key === 'due' ? 'Due now' : 'Blocked'}</Button>)}
-              </div>
+              <div className="flex flex-wrap gap-2">{(['all', 'sms', 'monthly', 'due', 'blocked'] as FilterKey[]).map((key) => <Button key={key} size="sm" variant={filter === key ? 'default' : 'outline'} onClick={() => setFilter(key)} className={filter === key ? 'bg-slate-950' : ''}>{key === 'all' ? 'All' : key === 'sms' ? 'SMS' : key === 'monthly' ? 'Monthly AI' : key === 'due' ? 'Due now' : 'Blocked'}</Button>)}</div>
             </CardHeader>
             <CardContent className="max-h-[66vh] space-y-2 overflow-y-auto p-3">
               {visibleLeads.length === 0 && <div className="py-10 text-center text-sm text-slate-500">No contacts match this filter.</div>}
               {visibleLeads.map((lead) => (
                 <button key={lead.id} onClick={() => setActiveLeadId(lead.id)} className={`w-full rounded-xl border p-3 text-left transition ${activeLeadId === lead.id ? 'border-red-400 bg-red-50' : 'bg-white hover:border-slate-300'}`}>
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0"><div className="truncate font-semibold text-slate-950">{lead.business_name}</div><div className="truncate text-xs text-slate-500">{lead.contact_name || 'No owner name'} · {lead.phone}</div></div>
-                    {isAiDue(lead) && <Badge className="shrink-0 bg-amber-100 text-amber-800 hover:bg-amber-100">AI due</Badge>}
-                  </div>
+                  <div className="flex items-start justify-between gap-3"><div className="min-w-0"><div className="truncate font-semibold text-slate-950">{lead.business_name}</div><div className="truncate text-xs text-slate-500">{lead.contact_name || 'No owner name'} · {lead.phone}</div></div>{isAiDue(lead) && <Badge className="shrink-0 bg-amber-100 text-amber-800 hover:bg-amber-100">AI due</Badge>}</div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {lead.sms_marketing_consent && !lead.sms_opted_out_at && <Badge variant="outline" className="border-emerald-300 text-emerald-700">SMS</Badge>}
-                    {lead.ai_call_consent && !lead.ai_call_consent_revoked_at && <Badge variant="outline" className="border-blue-300 text-blue-700">{lead.ai_call_frequency === 'monthly' ? 'AI monthly' : 'AI one-time'}</Badge>}
-                    {(lead.do_not_call || lead.call_permission === false) && <Badge variant="destructive">DNC</Badge>}
-                    {lead.city && <Badge variant="secondary">{lead.city}</Badge>}
+                    {lead.ai_call_consent && !lead.ai_call_consent_revoked_at && <Badge variant="outline" className="border-blue-300 text-blue-700">{lead.ai_call_frequency === 'monthly' ? 'Monthly AI' : 'One-time AI'}</Badge>}
+                    {(lead.do_not_call || lead.call_permission === false) && <Badge variant="destructive">Blocked</Badge>}
                   </div>
                 </button>
               ))}
@@ -265,57 +263,19 @@ const OutboundConsent = () => {
           </Card>
 
           <Card>
-            {!activeLead ? (
-              <CardContent className="py-16 text-center text-slate-500">Choose a contact to manage consent.</CardContent>
-            ) : (
-              <>
-                <CardHeader className="border-b">
-                  <div className="flex items-start justify-between gap-4">
-                    <div><CardTitle>{activeLead.business_name}</CardTitle><CardDescription>{activeLead.contact_name || 'Owner/contact not recorded'} · {activeLead.phone}{activeLead.city ? ` · ${activeLead.city}` : ''}</CardDescription></div>
-                    {activeLead.marketing_referral_code && <Badge variant="secondary">{activeLead.marketing_referral_code}</Badge>}
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-5 p-5">
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border p-4">
-                      <div className="mb-2 flex items-center gap-2 font-semibold"><MessageSquareText className="h-4 w-4 text-emerald-600" /> SMS marketing</div>
-                      <div className="text-sm text-slate-600">{activeLead.sms_marketing_consent && !activeLead.sms_opted_out_at ? 'Active' : 'Not active'}</div>
-                      <div className="mt-1 text-xs text-slate-400">Recorded: {formatWhen(activeLead.sms_marketing_consent_at)}</div>
-                      <div className="text-xs text-slate-400">Source: {activeLead.sms_marketing_consent_source || '—'}</div>
-                    </div>
-                    <div className="rounded-xl border p-4">
-                      <div className="mb-2 flex items-center gap-2 font-semibold"><PhoneCall className="h-4 w-4 text-blue-600" /> AI voice</div>
-                      <div className="text-sm text-slate-600">{activeLead.ai_call_consent && !activeLead.ai_call_consent_revoked_at ? `${activeLead.ai_call_frequency} consent` : 'Not active'}</div>
-                      <div className="mt-1 text-xs text-slate-400">Last AI call: {formatWhen(activeLead.ai_last_call_at)}</div>
-                      <div className="text-xs text-slate-400">Next eligible: {formatWhen(activeLead.ai_next_call_at)}</div>
-                    </div>
-                  </div>
+            <CardHeader><CardTitle>{activeLead?.business_name || 'Select a contact'}</CardTitle><CardDescription>{activeLead ? `${activeLead.contact_name || 'No owner name'} · ${activeLead.phone}${activeLead.city ? ` · ${activeLead.city}` : ''}` : 'Choose a contact to review permission history.'}</CardDescription></CardHeader>
+            <CardContent className="space-y-5">
+              {!activeLead ? <div className="py-12 text-center text-sm text-slate-500">No contact selected.</div> : <>
+                {activeLead.do_not_call && <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800"><div className="font-semibold">Do Not Call is active</div><p className="mt-1">Granting AI consent will not silently remove this block. Clear DNC only after explicit re-consent.</p><Button size="sm" variant="outline" className="mt-3 border-red-300" onClick={clearDnc} disabled={saving}>Clear DNC after explicit re-consent</Button></div>}
 
-                  <div className="rounded-xl bg-slate-950 p-4 text-white">
-                    <div className="mb-2 flex items-center gap-2 font-semibold"><ShieldCheck className="h-4 w-4 text-emerald-400" /> Verbal consent script to show/read</div>
-                    <p className="text-xs leading-5 text-slate-300"><strong className="text-white">SMS:</strong> {SMS_CONSENT_TEXT}</p>
-                    <p className="mt-3 text-xs leading-5 text-slate-300"><strong className="text-white">Monthly AI:</strong> {AI_CONSENT_TEXT}</p>
-                  </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-xl border p-4"><div className="mb-2 flex items-center justify-between"><div className="font-semibold">SMS marketing</div><ShieldCheck className={`h-5 w-5 ${activeLead.sms_marketing_consent && !activeLead.sms_opted_out_at ? 'text-emerald-600' : 'text-slate-300'}`} /></div><div className="text-xs text-slate-500">Granted: {formatWhen(activeLead.sms_marketing_consent_at)} · {activeLead.sms_marketing_consent_source || 'no source'}</div><div className="mt-3 flex gap-2"><Button size="sm" onClick={() => recordConsent('sms', true)} disabled={saving}>Record SMS yes</Button><Button size="sm" variant="outline" onClick={() => recordConsent('sms', false)} disabled={saving}>Withdraw</Button></div></div>
+                  <div className="rounded-xl border p-4"><div className="mb-2 flex items-center justify-between"><div className="font-semibold">AI voice</div><PhoneCall className={`h-5 w-5 ${activeLead.ai_call_consent && !activeLead.ai_call_consent_revoked_at ? 'text-blue-600' : 'text-slate-300'}`} /></div><div className="text-xs text-slate-500">Frequency: {activeLead.ai_call_frequency} · Next: {formatWhen(activeLead.ai_next_call_at)}</div><div className="mt-3 flex gap-2"><Button size="sm" onClick={() => recordConsent('ai', true)} disabled={saving || Boolean(activeLead.do_not_call)}>Record monthly AI yes</Button><Button size="sm" variant="outline" onClick={() => recordConsent('ai', false)} disabled={saving}>Withdraw</Button></div></div>
+                </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {activeLead.sms_marketing_consent && !activeLead.sms_opted_out_at ? (
-                      <Button variant="outline" disabled={saving} onClick={() => recordConsent('sms', false)}><ShieldX className="mr-2 h-4 w-4" /> Withdraw SMS consent</Button>
-                    ) : (
-                      <Button disabled={saving} onClick={() => recordConsent('sms', true)} className="bg-emerald-600 hover:bg-emerald-700"><CheckCircle2 className="mr-2 h-4 w-4" /> Record SMS consent</Button>
-                    )}
-                    {activeLead.ai_call_consent && activeLead.ai_call_frequency === 'monthly' && !activeLead.ai_call_consent_revoked_at ? (
-                      <Button variant="outline" disabled={saving} onClick={() => recordConsent('ai', false)}><ShieldX className="mr-2 h-4 w-4" /> Withdraw monthly AI</Button>
-                    ) : (
-                      <Button disabled={saving} onClick={() => recordConsent('ai', true)} className="bg-blue-600 hover:bg-blue-700"><PhoneCall className="mr-2 h-4 w-4" /> Record monthly AI consent</Button>
-                    )}
-                  </div>
-
-                  <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-900">
-                    Record consent only after the contact agrees to the wording above. Monthly AI consent makes the first AI follow-up eligible immediately; later calls are limited by the stored monthly cadence.
-                  </div>
-                </CardContent>
-              </>
-            )}
+                <div className="rounded-xl bg-slate-100 p-4 text-sm text-slate-700"><div className="font-semibold">Consent proof</div><div className="mt-2 grid gap-1 text-xs"><div>Consent phone: {activeLead.consent_phone || '—'}</div><div>Last AI call: {formatWhen(activeLead.ai_last_call_at)}</div><div>Referral code: {activeLead.marketing_referral_code || '—'}</div><div>Last marketing SMS: {formatWhen(activeLead.last_marketing_sms_at)}</div></div></div>
+              </>}
+            </CardContent>
           </Card>
         </div>
       </main>
